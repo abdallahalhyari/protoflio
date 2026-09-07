@@ -1,496 +1,161 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
-import 'package:profile/module/home/widget/details_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../../theme/tokens.dart';
+import '../../theme_controller.dart';
+import 'data/experience_data.dart';
+import 'data/hats_data.dart';
+import 'data/projects_data.dart';
+import 'data/skills_data.dart';
+import 'widget/experience_tile.dart';
+import 'widget/hat_card.dart';
+import 'widget/page_background.dart';
+import 'widget/primary_button.dart';
+import 'widget/project_card.dart';
+import 'widget/skill_tile.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  static const int _pageCount = 7;
+  final PageController _controller = PageController();
+  final FocusNode _focusNode = FocusNode();
+  int _pageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final page = _controller.page?.round() ?? 0;
+    if (page != _pageIndex) setState(() => _pageIndex = page);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onScroll);
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _goTo(int page) {
+    _controller.animateToPage(
+      page.clamp(0, _pageCount - 1),
+      duration: AppMotion.lg,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _next() => _goTo(_pageIndex + 1);
+  void _prev() => _goTo(_pageIndex - 1);
+
+  KeyEventResult _handleKey(FocusNode _, KeyEvent event) {
+    if (event is! KeyDownEvent) return KeyEventResult.ignored;
+    final k = event.logicalKey;
+    if (k == LogicalKeyboardKey.arrowDown ||
+        k == LogicalKeyboardKey.pageDown ||
+        k == LogicalKeyboardKey.space) {
+      _next();
+      return KeyEventResult.handled;
+    }
+    if (k == LogicalKeyboardKey.arrowUp || k == LogicalKeyboardKey.pageUp) {
+      _prev();
+      return KeyEventResult.handled;
+    }
+    if (k == LogicalKeyboardKey.home) {
+      _goTo(0);
+      return KeyEventResult.handled;
+    }
+    if (k == LogicalKeyboardKey.end) {
+      _goTo(_pageCount - 1);
+      return KeyEventResult.handled;
+    }
+    return KeyEventResult.ignored;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      body: PageView(
-        scrollDirection: Axis.vertical,
-        children: [
-          // First Page
-          Stack(
-            children: [
-              Positioned.fill(
-                child: Image.asset(
-                  'assets/background.webp',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: screenHeight * 0.6,
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: CircleAvatar(
-                                radius:screenWidth > 1200
-                                    ? 160
-                                    : screenWidth > 600
-                                    ? 140
-                                    : 90,
-                                backgroundColor: Colors.brown.shade300,
-                                backgroundImage:
-                                Image.asset('assets/my_image.png').image,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                           top:
-                           screenWidth > 1200
-                               ?  screenHeight/9
-                               : screenWidth > 600
-                               ?  screenHeight/9
-                               :  screenHeight/5,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.05),
-                              child: Text(
-                                'HELLO THERE!\nI\'M ABDALLAH',
-                                style: TextStyle(
-                                  fontSize: getResponsiveFontSize(40, context),
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              'Why Should Hire Me?',
-                              style: TextStyle(
-                                fontSize: getResponsiveFontSize(24, context),
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: screenHeight * 0.08),
-                    _buildResponsiveButton(
-                      context,
-                      text: 'Scroll Down',
-                      onPressed: () {},
-                    ),
-                    SizedBox(height: screenHeight * 0.02),
-                    Lottie.asset('assets/arrow_white.json',
-                        height: screenHeight * 0.1),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          // Second Page
-          Stack(
-            children: [
-              Positioned.fill(
-                child: Image.asset(
-                  'assets/hats_background.webp',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Center(
-                child: Container(
-                  height: screenHeight * 0.7,
-                  width: screenWidth * 0.8,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black54,
-                        Colors.black38,
-                        Colors.black26,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'BECAUSE...',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: getResponsiveFontSize(24, context),
-                            fontWeight: FontWeight.w100,
-                          ),
-                        ),
-                        SizedBox(height: screenHeight * 0.01),
-                        Text(
-                          'I WEAR MANY HATS',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: getResponsiveFontSize(40, context),
-                            fontWeight: FontWeight.w900,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: screenHeight * 0.05),
-                        _buildResponsiveButton(
-                          context,
-                          text: 'Allow Me to Explain',
-                          onPressed: () {},
-                        ),
-                        SizedBox(height: screenHeight * 0.03),
-                        Lottie.asset('assets/arrow.json',
-                            height: screenHeight * 0.2),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          // Third Page (Grid View)
-          Container(
-            color: Colors.black,
-            padding: const EdgeInsets.all(8),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final crossAxisCount = constraints.maxWidth > 1200
-                    ? 3
-                    : constraints.maxWidth > 600
-                    ? 3
-                    : 2;
-                return GridView.count(
-                  physics: BouncingScrollPhysics(),
-                  crossAxisCount: crossAxisCount,
-                  childAspectRatio:constraints.maxWidth > 1200
-                      ? 1.3
-                      : constraints.maxWidth > 600
-                      ? 1.3
-                      : .9 ,
-                  mainAxisSpacing: 5,
-                  crossAxisSpacing: 5,
-                  children: [
-                    FadeInLeft(
-                      child: _buildGridItem(
-                        context,
-                        color: Colors.brown.shade900.withOpacity(.9),
-                        title: 'Thinking',
-                        imageUrl:
-                        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394cedd72e210c65688_Grad%20Cap.png',
-                        titleDesc: 'I AM A QUICK LEARNER',
-                          desc: 'There is nothing I love more than learning something new! This passion inspires me to jump into complex applications with excitement instead of fear. Because I have learned "how to learn" I will be able to quickly pick up new technical integrations and teach them.',
-                          constraints: constraints
-                      ),
-                    ),
-                    FadeInDown(
-                      child: FadeInUp(
-                        child: FadeInRight(
-                          child: FadeInDown(
-                            child: _buildGridItem(
-                              context,
-                              color: Colors.orange.shade900.withOpacity(.9),
-                              title: 'Communicating',
-                              imageUrl:
-                              'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4cfd6087595af9f4bd_Comms%20Hat.png',
-                              titleDesc: 'I LISTEN CAREFULLY AND RESPOND CLEARLY',
-                                desc: 'I believe the key to success in any industry, career, or relationship is clear communication. Over the years, I learned that listening is the first (and arguably most important) step in great communication. Thus, I challenged myself to become a great listener, which elevated my written and verbal communication skills to an expert level. I believe my communication skills will empower me to be successful in the Solutions Engineer position.',
-                                constraints: constraints
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    FadeInUpBig(
-                      child: _buildGridItem(
-                        context,
-                        color: Colors.amber.shade700.withOpacity(.9),
-                        title: 'Sorting',
-                        imageUrl: 'assets/hat.png',
-                        titleDesc: 'I AM WELL ORGANIZED',
-                          desc: 'There is nothing worse than the feeling of needing something and not being able to find it. That\'s why I go through painstaking detail to not only get organized, but to stay organized. Being able to effectively compartmentalize information allows me to juggle multiple projects and clients simultaneously.',
-                          constraints: constraints
-                      ),
-                    ),
-                    FadeInDownBig(
-                      child: _buildGridItem(
-                        context,
-                        color: Colors.red.shade800.withOpacity(.9),
-                        title: 'Building',
-                        imageUrl:
-                        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394611cbb78872e2ccd_Hard%20Hat.png',
-                        titleDesc: 'I LOVE MAKING THINGS',
-                       desc: 'As an mobile developer, there is nothing more rewarding than starting with a app and ending with something meaningful. This passion for creation inspires me to meet new challenges head on with enthusiasm and determination. Whether I am building a app, you will often find me completely obsessed with learning the intricate details of new creative tools.',
-                        constraints: constraints
-                      ),
-                    ),
-                    FadeInDownBig(
-                      child: _buildGridItem(
-                        context,
-                        color: Colors.green.shade700.withOpacity(.9),
-                        title: 'Fixing',
-                        imageUrl:
-                        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4d8ed2f6dde086c99c_DT%20Hat.png',
-                        titleDesc: 'I AM A PROBLEM SOLVER',
-                          desc: 'My greatest strength is my resourcefulness. I love being challenged, and working my way toward "AH-HA" moments. The sense of pride I feel when I am able to solve problems for myself and others keeps me going at night, and gets me out of bed in the morning. The opportunity to achieve this feeling on a daily basis through the Solutions Engineer role gets me pumped up!',
-                          constraints: constraints
-                      ),
-                    ),
-                    FadeInDownBig(
-                      child: _buildGridItem(
-                        context,
-                        color: Colors.deepPurple.shade700.withOpacity(.9),
-                        title: 'Compassion',
-                        imageUrl:
-                        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608c53df121d44d8d5ab6439_Nurses%20Cap.png',
-                        titleDesc: 'I LIVE BY THE GOLDEN RULE',
-                          desc: 'No matter the challenge, I always try to begin with empathy. Having a customer-first mindset is the key to providing lasting, meaningful solutions to problems. My high standard of excellence, relentless work ethic, and positive attitude are direct results of me "caring at a high level". I believe I will be an asset in Developer\'s mission of providing world-class customer support by practicing extraordinary kindness, and leading by serving others.',
-                          constraints: constraints
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-
-          // Contact Page
-          Stack(
-            children: [
-              Positioned.fill(
-                child: Image.asset(
-                  'assets/hats_background.webp',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Center(
-                child: Container(
-                  height: screenHeight * 0.7,
-                  width: screenWidth * 0.8,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black26,
-                        Colors.black38,
-                        Colors.black54,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'CONTACT INFORMATION',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: getResponsiveFontSize(40, context),
-                            fontWeight: FontWeight.w900,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: screenHeight * 0.05),
-                        _buildContactInfo(
-                          context,
-                          label: 'EMAIL:',
-                          value: 'alhyariabdallh@gmail.com',
-                        ),
-                        _buildContactInfo(
-                          context,
-                          label: 'PHONE:',
-                          value: '+962-787032264',
-                        ),
-                        _buildLinkedIn(context),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildResponsiveButton(
-      BuildContext context, {
-        required String text,
-        required VoidCallback onPressed,
-      }) {
-    return LayoutBuilder(
-      builder: (context,constraints) {
-        return ElevatedButton(
-          onPressed: onPressed,
-          style: ButtonStyle(
-            backgroundColor: const WidgetStatePropertyAll(Colors.black),
-            elevation: const WidgetStatePropertyAll(3),
-            shape: WidgetStatePropertyAll(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: constraints.maxWidth > 1200
-                  ? MediaQuery.of(context).size.width * 0.04
-                  : constraints.maxWidth > 600
-                  ? MediaQuery.of(context).size.width * 0.04
-                  : MediaQuery.of(context).size.width * 0.01 ,
-              vertical:constraints.maxWidth > 1200
-                  ? MediaQuery.of(context).size.width * 0.01
-                  : constraints.maxWidth > 600
-                  ? MediaQuery.of(context).size.width * 0.01
-                  : MediaQuery.of(context).size.width * 0.005,
-            ),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: getResponsiveFontSize(14, context),
-              ),
-            ),
-          ),
-        );
-      }
-    );
-  }
-
-  Widget _buildGridItem(
-      BuildContext context, {
-        required Color color,
-        required String title,
-        required String imageUrl,
-        required String desc,
-        required String titleDesc,
-        required BoxConstraints constraints
-      }) {
-        return Container(
-          color: color,
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: getResponsiveFontSize(
-                      constraints.maxWidth > 1200
-                          ? 24
-                          : constraints.maxWidth > 600
-                          ? 24
-                          :  15
-                      , context),
-                  fontWeight: FontWeight.w900,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Hero(
-                tag: '$title Hat',
-                child:imageUrl.contains('/hat.png')
-                    ?Image.asset(
-                  imageUrl,
-                  height:constraints.maxWidth > 1200
-                      ?  MediaQuery.of(context).size.height * 0.2
-                      : constraints.maxWidth > 600
-                      ?  MediaQuery.of(context).size.height * 0.2
-                      :  MediaQuery.of(context).size.height * 0.09,
-                ) :Image.network(
-                  imageUrl,
-                  height:constraints.maxWidth > 1200
-                      ?  MediaQuery.of(context).size.height * 0.2
-                      : constraints.maxWidth > 600
-                      ?  MediaQuery.of(context).size.height * 0.2
-                      :  MediaQuery.of(context).size.height * 0.09,
-                ),
-              ),
-              Text(
-                'Hat',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: getResponsiveFontSize(  constraints.maxWidth > 1200
-                      ? 24
-                      : constraints.maxWidth > 600
-                      ? 24
-                      :  15, context),
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              _buildResponsiveButton(
-                context,
-                text: 'Expand',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (cxt) => DetailsWidget(
-                        color: color,
-                        image: imageUrl,
-                        title: '$title Hat',
-                        desc: desc,
-                        titleDesc: titleDesc,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-
-
-  }
-
-  Widget _buildContactInfo(BuildContext context,
-      {required String label, required String value}) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
+      body: Focus(
+        focusNode: _focusNode,
+        autofocus: true,
+        onKeyEvent: _handleKey,
+        child: Stack(
           children: [
-            TextSpan(
-              text: '$label ',
-              style: TextStyle(
-                fontFamily: 'Tenada',
-                fontSize: getResponsiveFontSize(20, context),
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            PageView(
+              controller: _controller,
+              scrollDirection: Axis.vertical,
+              children: [
+                _IntroPage(onScrollDown: _next),
+                _HatsIntroPage(onExplain: _next),
+                const _HatsGridPage(),
+                const _SkillsPage(),
+                const _ProjectsPage(),
+                const _ExperiencePage(),
+                const _ContactPage(),
+              ],
+            ),
+            Positioned(
+              right: 12,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: _PageIndicator(
+                  count: _pageCount,
+                  current: _pageIndex,
+                  onTap: _goTo,
+                ),
               ),
             ),
-            TextSpan(
-              text: value,
-              style: TextStyle(
-                fontFamily: 'Tenada',
-                fontWeight: FontWeight.w100,
-                fontSize: getResponsiveFontSize(18, context),
-                color: Colors.white,
+            if (MediaQuery.sizeOf(context).width >= 900)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: SafeArea(
+                  child: _TopNav(
+                    current: _pageIndex,
+                    onTap: _goTo,
+                  ),
+                ),
+              ),
+            Positioned(
+              top: 12,
+              right: 12,
+              child: SafeArea(
+                child: ValueListenableBuilder<ThemeMode>(
+                  valueListenable: ThemeController.mode,
+                  builder: (_, mode, __) {
+                    final dark = mode == ThemeMode.dark;
+                    return Semantics(
+                      toggled: dark,
+                      label: 'Dark mode',
+                      child: Material(
+                        color: Colors.black45,
+                        shape: const CircleBorder(),
+                        child: IconButton(
+                          tooltip: dark ? 'Switch to light' : 'Switch to dark',
+                          icon: Icon(
+                            dark ? Icons.light_mode : Icons.dark_mode,
+                            color: Colors.white,
+                          ),
+                          onPressed: ThemeController.toggle,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -498,33 +163,809 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildLinkedIn(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+class _TopNav extends StatelessWidget {
+  final int current;
+  final ValueChanged<int> onTap;
+
+  static const List<String> _labels = [
+    'About',
+    'Why',
+    'Hats',
+    'Skills',
+    'Projects',
+    'Roles',
+    'Contact',
+  ];
+
+  const _TopNav({required this.current, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      explicitChildNodes: true,
+      label: 'Section navigation',
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.sizeOf(context).width - AppSpacing.xl,
+          ),
+          child: Container(
+            margin: const EdgeInsets.only(top: AppSpacing.smd),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.45),
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(color: Colors.white24, width: 1),
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (var i = 0; i < _labels.length; i++)
+                    _NavItem(
+                      label: _labels[i],
+                      active: current == i,
+                      onTap: () => onTap(i),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NavItem extends StatelessWidget {
+  final String label;
+  final bool active;
+  final VoidCallback onTap;
+
+  const _NavItem({
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: active,
+      label: 'Go to $label',
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        child: AnimatedContainer(
+          duration: AppMotion.sm,
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.smd, vertical: AppSpacing.sm),
+          decoration: BoxDecoration(
+            color: active
+                ? Colors.white.withValues(alpha: 0.15)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: AppTypography.small,
+              fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+              letterSpacing: 0.3,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PageIndicator extends StatelessWidget {
+  final int count;
+  final int current;
+  final ValueChanged<int> onTap;
+
+  const _PageIndicator({
+    required this.count,
+    required this.current,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(count, (i) {
+        final active = i == current;
+        return Semantics(
+          button: true,
+          selected: active,
+          label: 'Go to page ${i + 1} of $count',
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: InkResponse(
+              onTap: () => onTap(i),
+              radius: 22,
+              child: Center(
+                child: AnimatedContainer(
+                  duration: AppMotion.sm,
+                  width: active ? 12 : 8,
+                  height: active ? 12 : 8,
+                  decoration: BoxDecoration(
+                    color: active ? Colors.white : Colors.white70,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.black45, width: 1),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class _IntroPage extends StatelessWidget {
+  final VoidCallback onScrollDown;
+  const _IntroPage({required this.onScrollDown});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final isWide = size.width >= 800;
+    final avatarRadius = (size.shortestSide * 0.22).clamp(80.0, 180.0);
+    final titleSize =
+        (size.width * 0.06).clamp(AppTypography.heading, AppTypography.heroLg);
+    final subtitleSize =
+        (size.width * 0.035).clamp(AppTypography.title, AppTypography.display);
+
+    return PageBackground(
+      asset: 'assets/background.webp',
+      overlay: AppColors.scrimMedium,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: size.height),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: isWide ? AppSpacing.xxl - 8 : AppSpacing.lg),
+                Semantics(
+                  header: true,
+                  child: Text(
+                    'HELLO THERE!\nI\'M ABDALLAH',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: titleSize,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                      height: 1.1,
+                      shadows: const [
+                        Shadow(color: Colors.black87, blurRadius: 12),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                Semantics(
+                  label: 'Portrait of Abdallah Alhyari',
+                  image: true,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(AppSpacing.xs - 1),
+                    child: CircleAvatar(
+                      radius: avatarRadius,
+                      backgroundColor: Colors.brown.shade300,
+                      backgroundImage: const AssetImage('assets/my_image.png'),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  'Senior Mobile Engineer  ·  Flutter / Android',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: subtitleSize,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: const [
+                      Shadow(color: Colors.black87, blurRadius: 10),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  'Amman, Jordan  →  Brno, Czech Republic · 2027',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: (subtitleSize * 0.55)
+                        .clamp(AppTypography.body, AppTypography.title),
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white.withValues(alpha: 0.85),
+                    letterSpacing: 0.5,
+                    shadows: const [
+                      Shadow(color: Colors.black87, blurRadius: 8),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                PrimaryButton(label: 'Scroll Down', onPressed: onScrollDown),
+                const SizedBox(height: AppSpacing.md),
+                ExcludeSemantics(
+                    child: Lottie.asset('assets/arrow_white.json', height: 80)),
+                const SizedBox(height: AppSpacing.md),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HatsIntroPage extends StatelessWidget {
+  final VoidCallback onExplain;
+  const _HatsIntroPage({required this.onExplain});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading + 2, AppTypography.hero);
+    final overlineSize = (size.width * 0.028)
+        .clamp(AppTypography.titleSm, AppTypography.heading + 2);
+
+    return PageBackground(
+      asset: 'assets/hats_background.webp',
+      overlay: AppColors.scrimLight,
+      child: Center(
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: size.width / 1.3,
+            maxHeight: size.height * 0.85,
+          ),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.black54, Colors.black38, Colors.black26],
+            ),
+          ),
+          padding: const EdgeInsets.all(AppSpacing.md + 2),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'BECAUSE...',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: overlineSize,
+                    fontWeight: FontWeight.w100,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xs + 1),
+                Text(
+                  'I WEAR MANY HATS',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: headingSize,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                PrimaryButton(
+                    label: 'Allow Me to Explain', onPressed: onExplain),
+                const SizedBox(height: AppSpacing.md),
+                ExcludeSemantics(
+                    child: Lottie.asset('assets/arrow.json', height: 140)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HatsGridPage extends StatelessWidget {
+  const _HatsGridPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final crossAxisCount = constraints.maxWidth >= 900
+                ? 3
+                : constraints.maxWidth >= 600
+                    ? 2
+                    : 1;
+            return GridView.builder(
+              itemCount: kHats.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 1.05,
+              ),
+              itemBuilder: (context, i) => HatCard(hat: kHats[i]),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _SkillsPage extends StatelessWidget {
+  const _SkillsPage();
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
+    final cross = size.width >= 900 ? 3 : size.width >= 600 ? 2 : 1;
+
+    final theme = Theme.of(context);
+    final textColor = theme.colorScheme.onSurface;
+    return Container(
+      color: theme.scaffoldBackgroundColor,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg, vertical: AppSpacing.xl),
+          child: Column(
+            children: [
+              Text(
+                'SKILLS',
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: headingSize,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Expanded(
+                child: GridView.builder(
+                  itemCount: kSkills.length,
+                  gridDelegate:
+                      SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: cross,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    mainAxisExtent: 84,
+                  ),
+                  itemBuilder: (_, i) => SkillTile(
+                    skill: kSkills[i],
+                    delay: Duration(milliseconds: 80 * i), // staggered — keep raw
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProjectsPage extends StatelessWidget {
+  const _ProjectsPage();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final size = MediaQuery.sizeOf(context);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
+    final cross = size.width >= 1100 ? 2 : 1;
+
+    return Container(
+      color: theme.scaffoldBackgroundColor,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg, AppSpacing.lg + 4, AppSpacing.lg, AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'PROJECTS',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: headingSize,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Expanded(
+                child: cross == 1
+                    ? ListView.separated(
+                        itemCount: kProjects.length,
+                        separatorBuilder: (_, __) =>
+                            const SizedBox(height: AppSpacing.smd),
+                        itemBuilder: (_, i) => ProjectCard(project: kProjects[i]),
+                      )
+                    : GridView.builder(
+                        itemCount: kProjects.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: AppSpacing.smd,
+                          crossAxisSpacing: AppSpacing.smd,
+                          mainAxisExtent: 380,
+                        ),
+                        itemBuilder: (_, i) =>
+                            ProjectCard(project: kProjects[i]),
+                      ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ExperiencePage extends StatelessWidget {
+  const _ExperiencePage();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final size = MediaQuery.sizeOf(context);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
+    final isWide = size.width >= 900;
+
+    final expList = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (var i = 0; i < kExperience.length; i++)
+          ExperienceTile(
+            exp: kExperience[i],
+            isFirst: i == 0,
+            isLast: i == kExperience.length - 1,
+          ),
+      ],
+    );
+
+    final eduSection = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'EDUCATION',
+          style: TextStyle(
+            color: scheme.onSurface,
+            fontSize: AppTypography.title,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.5,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.smd),
+        ...kEducation.map(
+          (e) => Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.md - 2),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  e.degree,
+                  style: TextStyle(
+                    fontSize: AppTypography.bodyMd,
+                    fontWeight: FontWeight.w700,
+                    color: scheme.onSurface,
+                  ),
+                ),
+                Text(
+                  '${e.institution} · ${e.period}',
+                  style: TextStyle(
+                    fontSize: AppTypography.small,
+                    color: scheme.primary,
+                  ),
+                ),
+                if (e.note != null)
+                  Text(
+                    e.note!,
+                    style: TextStyle(
+                      fontSize: AppTypography.caption,
+                      color: scheme.onSurface.withValues(alpha: 0.7),
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.lg - 4),
+        Text(
+          'CERTIFICATIONS',
+          style: TextStyle(
+            color: scheme.onSurface,
+            fontSize: AppTypography.title,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.5,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm + 2),
+        ...kCertifications.map(
+          (c) => Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm - 2),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: AppSpacing.sm - 2),
+                  child: Icon(Icons.verified,
+                      size: 14, color: scheme.primary),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    c,
+                    style: TextStyle(
+                      fontSize: AppTypography.small,
+                      color: scheme.onSurface.withValues(alpha: 0.85),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+
+    return Container(
+      color: theme.scaffoldBackgroundColor,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg, AppSpacing.lg + 4, AppSpacing.lg, AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'EXPERIENCE',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: headingSize,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg - 4),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: isWide
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(flex: 3, child: expList),
+                            const SizedBox(width: AppSpacing.xl + 8),
+                            Expanded(flex: 2, child: eduSection),
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            expList,
+                            const SizedBox(height: AppSpacing.lg - 4),
+                            eduSection,
+                          ],
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ContactPage extends StatelessWidget {
+  const _ContactPage();
+
+  Future<void> _open(BuildContext context, String url) async {
+    final uri = Uri.parse(url);
+    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!ok && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not open $url')),
+      );
+    }
+  }
+
+  Future<void> _copy(BuildContext context, String value) async {
+    await Clipboard.setData(ClipboardData(text: value));
+    if (!context.mounted) return;
+    final msg = 'Copied: $value';
+    // ignore: deprecated_member_use
+    SemanticsService.announce(msg, TextDirection.ltr);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), duration: const Duration(seconds: 2)),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.hero);
+    final rowSize =
+        (size.width * 0.035).clamp(AppTypography.bodyLg, AppTypography.head + 6);
+
+    return PageBackground(
+      asset: 'assets/hats_background.webp',
+      overlay: AppColors.scrimHeavy,
+      child: Center(
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: size.width / 1.15,
+            maxHeight: size.height * 0.9,
+          ),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.black26, Colors.black38, Colors.black54],
+            ),
+          ),
+          padding: const EdgeInsets.all(AppSpacing.md + 2),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'CONTACT',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: headingSize,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  'Tap to open · long-press to copy',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize:
+                        (rowSize * 0.55).clamp(AppTypography.micro, AppTypography.bodyLg),
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                _ContactRow(
+                  label: 'EMAIL',
+                  value: 'alhyariabdallh@gmail.com',
+                  onTap: () =>
+                      _open(context, 'mailto:alhyariabdallh@gmail.com'),
+                  onLongPress: () =>
+                      _copy(context, 'alhyariabdallh@gmail.com'),
+                  fontSize: rowSize,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _ContactRow(
+                  label: 'PHONE',
+                  value: '+962-787032264',
+                  onTap: () => _open(context, 'tel:+962787032264'),
+                  onLongPress: () => _copy(context, '+962787032264'),
+                  fontSize: rowSize,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _ContactRow(
+                  label: 'LINKEDIN',
+                  value: 'abdallah-alhyari',
+                  onTap: () => _open(context,
+                      'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
+                  onLongPress: () => _copy(
+                      context,
+                      'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
+                  fontSize: rowSize,
+                  linkStyle: true,
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                Semantics(
+                  label: 'Download CV, PDF, 54 kilobytes, opens in new tab',
+                  button: true,
+                  child: PrimaryButton(
+                    label: 'Download CV (PDF)',
+                    onPressed: () => _open(context, 'cv.pdf'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ContactRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final VoidCallback onTap;
+  final VoidCallback? onLongPress;
+  final double fontSize;
+  final bool linkStyle;
+
+  const _ContactRow({
+    required this.label,
+    required this.value,
+    required this.onTap,
+    required this.fontSize,
+    this.onLongPress,
+    this.linkStyle = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: '$label $value',
+      button: true,
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           Text(
-            'LINKEDIN: ',
+            '$label : ',
             style: TextStyle(
-              fontSize: getResponsiveFontSize(20, context),
-              fontWeight: FontWeight.bold,
               color: Colors.white,
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
             ),
           ),
           InkWell(
-            onTap: () {
-              launchUrl(Uri.parse(
-                  'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'));
-            },
-            child: Text(
-              'abdallah-alhyari',
-              style: TextStyle(
-                fontWeight: FontWeight.w100,
-                fontSize: getResponsiveFontSize(18, context),
-                color: Colors.blue.shade300,
-                decoration: TextDecoration.underline,
+            onTap: onTap,
+            onLongPress: onLongPress,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 44),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm - 2, vertical: AppSpacing.sm + 2),
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    color: linkStyle ? Colors.lightBlueAccent : Colors.white,
+                    decoration: linkStyle
+                        ? TextDecoration.underline
+                        : TextDecoration.none,
+                    decorationColor: Colors.white,
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.bold,
+                    shadows: const [
+                      Shadow(color: Colors.black87, blurRadius: 6),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -532,8 +973,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-double getResponsiveFontSize(double size, BuildContext context) {
-  return size * MediaQuery.of(context).textScaleFactor.clamp(0.8, 1.2);
 }

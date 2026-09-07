@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:profile/module/home/home_screen.dart';
+import 'package:profile/theme/app_theme.dart';
+import 'package:profile/theme_controller.dart';
 
-void main() => runApp(PortfolioApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ThemeController.load();
+  runApp(const PortfolioApp());
+}
 
 class PortfolioApp extends StatelessWidget {
+  const PortfolioApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      builder: (context, child) => child!,
-      title: 'Abdallah Alhyari - Portfolio',
-      theme: ThemeData(
-        fontFamily: 'Tenada',
-        primarySwatch: Colors.blue,
-        textTheme: TextTheme(
-          bodyMedium: TextStyle(color: Colors.black),
-          bodySmall: TextStyle(color: Colors.grey[700]),
-        ),
-      ),
-      home: HomeScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeController.mode,
+      builder: (context, mode, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Abdallah Alhyari - Portfolio',
+          themeMode: mode,
+          theme: AppTheme.light(),
+          darkTheme: AppTheme.dark(),
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }
-
