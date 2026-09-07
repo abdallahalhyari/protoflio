@@ -1,44 +1,208 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../model/hat_info.dart';
+import 'network_hat_image.dart';
 
-class DetailsWidget extends StatelessWidget {
-   DetailsWidget({super.key,required this.image,required this.desc,required this.title,required this.titleDesc,required this.color});
-   String image,title,desc,titleDesc;
-   Color color;
+class DetailsWidget extends StatefulWidget {
+  final HatInfo hat;
+
+  const DetailsWidget({super.key, required this.hat});
+
+  @override
+  State<DetailsWidget> createState() => _DetailsWidgetState();
+
+  static Route<void> route(HatInfo hat) {
+    return PageRouteBuilder<void>(
+      transitionDuration: const Duration(milliseconds: 450),
+      reverseTransitionDuration: const Duration(milliseconds: 350),
+      pageBuilder: (_, __, ___) => DetailsWidget(hat: hat),
+      transitionsBuilder: (_, animation, __, child) {
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+          reverseCurve: Curves.easeInCubic,
+        );
+        return FadeTransition(
+          opacity: curved,
+          child: child,
+        );
+      },
+    );
+  }
+}
+
+class _DetailsWidgetState extends State<DetailsWidget>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _entryController;
+  late final Animation<double> _textFade;
+  late final Animation<Offset> _textSlide;
+
+  @override
+  void initState() {
+    super.initState();
+    _entryController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 700),
+    );
+    _textFade = CurvedAnimation(
+      parent: _entryController,
+      curve: const Interval(0.35, 1.0, curve: Curves.easeOut),
+    );
+    _textSlide = Tween<Offset>(
+      begin: const Offset(0, 0.15),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _entryController,
+        curve: const Interval(0.35, 1.0, curve: Curves.easeOutCubic),
+      ),
+    );
+    _entryController.forward();
+  }
+
+  @override
+  void dispose() {
+    _entryController.dispose();
+    super.dispose();
+  }
+
+  RectTween _arcTween(Rect? begin, Rect? end) =>
+      MaterialRectArcTween(begin: begin, end: end);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: MediaQuery.sizeOf(context).height,
-        width: MediaQuery.sizeOf(context).width,
-        color: color,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Opacity(
-              opacity: .5,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Hero(tag: title,child: image.contains('png')?Image.network(image,height:300):Image.asset(image,height: 300,)),
-                  Text(title,style: TextStyle(color: Colors.white,fontSize: 40,fontWeight: FontWeight.w600),),
-                ],
-              ),
-            ),
-            SizedBox(width: 100),
-            SizedBox(width: 600,child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(maxLines:8,style: TextStyle(color: Colors.white,fontSize:40,fontWeight: FontWeight.bold),titleDesc),
+    final hat = widget.hat;
+    final size = MediaQuery.sizeOf(context);
+    final isWide = size.width >= 800;
 
-                Text(maxLines:8,style: TextStyle(color: Colors.white,fontSize:20),desc),
+    final image = Opacity(
+      opacity: .55,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Hero(
+            tag: hat.heroTag,
+            createRectTween: _arcTween,
+            flightShuttleBuilder: (_, animation, __, ___, toHero) {
+              return ScaleTransition(
+                scale: Tween<double>(begin: 0.9, end: 1.0).animate(
+                  CurvedAnimation(
+                      parent: animation, curve: Curves.easeOutBack),
+                ),
+                child: toHero.widget,
+              );
+            },
+            child: HatImage(
+              path: hat.image,
+              height: isWide ? 300 : 180,
+              semanticLabel: '${hat.title} hat illustration',
+            ),
+          ),
+          Text(
+            hat.title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: isWide ? 40 : 26,
+              fontWeight: FontWeight.w600,
+              shadows: const [
+                Shadow(color: Colors.black87, blurRadius: 10),
               ],
-            ))
-          ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    final text = SlideTransition(
+      position: _textSlide,
+      child: FadeTransition(
+        opacity: _textFade,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: isWide ? 600 : size.width - 32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment:
+                isWide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                hat.titleDesc,
+                textAlign: isWide ? TextAlign.start : TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: isWide ? 40 : 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                hat.desc,
+                textAlign: isWide ? TextAlign.start : TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: isWide ? 20 : 15,
+                  height: 1.5,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+    );
 
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.escape): () {
+          Navigator.of(context).maybePop();
+        },
+      },
+      child: Focus(
+        autofocus: true,
+        child: Scaffold(
+          backgroundColor: hat.color,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            iconTheme: const IconThemeData(color: Colors.white),
+            actions: [
+              IconButton(
+                tooltip: 'Close (Esc)',
+                icon: const Icon(Icons.close, color: Colors.white),
+                onPressed: () => Navigator.of(context).maybePop(),
+              ),
+            ],
+          ),
+          extendBodyBehindAppBar: true,
+          body: SafeArea(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: isWide
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            image,
+                            const SizedBox(width: 80),
+                            text,
+                          ],
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            image,
+                            const SizedBox(height: 24),
+                            text,
+                          ],
+                        ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
