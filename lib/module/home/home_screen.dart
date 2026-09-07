@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../theme/tokens.dart';
 import '../../theme_controller.dart';
 import 'data/experience_data.dart';
 import 'data/hats_data.dart';
@@ -210,7 +211,7 @@ class _IntroPage extends StatelessWidget {
 
     return PageBackground(
       asset: 'assets/background.webp',
-      overlay: Colors.black.withValues(alpha: 0.35),
+      overlay: AppColors.scrimMedium,
       child: SafeArea(
         child: SingleChildScrollView(
           child: ConstrainedBox(
@@ -292,7 +293,7 @@ class _HatsIntroPage extends StatelessWidget {
 
     return PageBackground(
       asset: 'assets/hats_background.webp',
-      overlay: Colors.black.withValues(alpha: 0.3),
+      overlay: AppColors.scrimLight,
       child: Center(
         child: Container(
           constraints: BoxConstraints(
@@ -618,7 +619,7 @@ class _ContactPage extends StatelessWidget {
 
     return PageBackground(
       asset: 'assets/hats_background.webp',
-      overlay: Colors.black.withValues(alpha: 0.4),
+      overlay: AppColors.scrimHeavy,
       child: Center(
         child: Container(
           constraints: BoxConstraints(

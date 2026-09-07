@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile/module/home/home_screen.dart';
+import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme_controller.dart';
 
 void main() => runApp(const PortfolioApp());
@@ -16,16 +17,8 @@ class PortfolioApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Abdallah Alhyari - Portfolio',
           themeMode: mode,
-          theme: ThemeData(
-            useMaterial3: true,
-            brightness: Brightness.light,
-            colorSchemeSeed: Colors.blue,
-          ),
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            brightness: Brightness.dark,
-            colorSchemeSeed: Colors.blue,
-          ),
+          theme: AppTheme.light(),
+          darkTheme: AppTheme.dark(),
           home: const HomeScreen(),
         );
       },
