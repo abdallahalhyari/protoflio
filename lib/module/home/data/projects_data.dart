@@ -37,12 +37,14 @@ const List<Project> kProjects = [
     stack: ['Flutter', 'Dart', 'MVVM', 'REST', 'SQL Server'],
   ),
   Project(
-    name: 'Solutions Now Design Library',
+    name: 'Loyalty + Social Media Apps',
     company: 'Solutions Now IT',
-    tagline: 'Reusable Flutter templates + patterns library for commissioned apps.',
+    tagline:
+        'Loyalty rewards app and a Snapchat-style social media app for commissioned clients.',
     highlights: [
-      'Established design principles + reusable widget templates.',
-      'Documented patterns for reuse across iterative delivery.',
+      'Loyalty app: points, rewards, and redemption flow tied to a REST backend.',
+      'Snapchat-style social app: camera capture, stories, ephemeral media, feed.',
+      'Established reusable Flutter design principles + template library reused across both.',
       'Integrated dynamic REST datasets into typed models.',
     ],
     stack: ['Flutter', 'REST', 'AWS', 'SQL Server'],
