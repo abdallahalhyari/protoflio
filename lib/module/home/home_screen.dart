@@ -8,11 +8,13 @@ import '../../theme/tokens.dart';
 import '../../theme_controller.dart';
 import 'data/experience_data.dart';
 import 'data/hats_data.dart';
+import 'data/projects_data.dart';
 import 'data/skills_data.dart';
 import 'widget/experience_tile.dart';
 import 'widget/hat_card.dart';
 import 'widget/page_background.dart';
 import 'widget/primary_button.dart';
+import 'widget/project_card.dart';
 import 'widget/skill_tile.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const int _pageCount = 6;
+  static const int _pageCount = 7;
   final PageController _controller = PageController();
   final FocusNode _focusNode = FocusNode();
   int _pageIndex = 0;
@@ -99,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _HatsIntroPage(onExplain: _next),
                 const _HatsGridPage(),
                 const _SkillsPage(),
+                const _ProjectsPage(),
                 const _ExperiencePage(),
                 const _ContactPage(),
               ],
@@ -427,6 +430,67 @@ class _SkillsPage extends StatelessWidget {
                     delay: Duration(milliseconds: 80 * i), // staggered — keep raw
                   ),
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProjectsPage extends StatelessWidget {
+  const _ProjectsPage();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final size = MediaQuery.sizeOf(context);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
+    final cross = size.width >= 1100 ? 2 : 1;
+
+    return Container(
+      color: theme.scaffoldBackgroundColor,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg, AppSpacing.lg + 4, AppSpacing.lg, AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'PROJECTS',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: headingSize,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Expanded(
+                child: cross == 1
+                    ? ListView.separated(
+                        itemCount: kProjects.length,
+                        separatorBuilder: (_, __) =>
+                            const SizedBox(height: AppSpacing.smd),
+                        itemBuilder: (_, i) => ProjectCard(project: kProjects[i]),
+                      )
+                    : GridView.builder(
+                        itemCount: kProjects.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: AppSpacing.smd,
+                          crossAxisSpacing: AppSpacing.smd,
+                          mainAxisExtent: 380,
+                        ),
+                        itemBuilder: (_, i) =>
+                            ProjectCard(project: kProjects[i]),
+                      ),
               ),
             ],
           ),
