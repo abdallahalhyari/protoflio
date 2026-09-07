@@ -258,9 +258,9 @@ class _IntroPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: AppSpacing.md),
                 Text(
-                  'Why Should You Hire Me?',
+                  'Senior Mobile Engineer  ·  Flutter / Android',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: subtitleSize,
@@ -268,6 +268,21 @@ class _IntroPage extends StatelessWidget {
                     color: Colors.white,
                     shadows: const [
                       Shadow(color: Colors.black87, blurRadius: 10),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  'Amman, Jordan  →  Brno, Czech Republic · 2027',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: (subtitleSize * 0.55)
+                        .clamp(AppTypography.body, AppTypography.title),
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white.withValues(alpha: 0.85),
+                    letterSpacing: 0.5,
+                    shadows: const [
+                      Shadow(color: Colors.black87, blurRadius: 8),
                     ],
                   ),
                 ),
@@ -714,7 +729,7 @@ class _ContactPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'CONTACT INFORMATION',
+                  'CONTACT',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,

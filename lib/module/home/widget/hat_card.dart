@@ -20,13 +20,11 @@ class HatCard extends StatelessWidget {
           final imageHeight = (constraints.maxHeight * 0.45).clamp(80.0, 200.0);
           final titleSize = (constraints.maxWidth * 0.11)
               .clamp(AppTypography.titleSm, AppTypography.display - 2);
-          final hatSize = (constraints.maxWidth * 0.08)
-              .clamp(AppTypography.body, AppTypography.heading);
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                hat.title,
+                '${hat.title} Hat',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -42,14 +40,6 @@ class HatCard extends StatelessWidget {
                   path: hat.image,
                   height: imageHeight,
                   semanticLabel: '${hat.title} hat illustration',
-                ),
-              ),
-              Text(
-                'Hat',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: hatSize,
-                  fontWeight: FontWeight.w900,
                 ),
               ),
               PrimaryButton(
