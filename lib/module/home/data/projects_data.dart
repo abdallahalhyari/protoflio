@@ -2,13 +2,14 @@ import '../model/project.dart';
 
 const List<Project> kProjects = [
   Project(
-    name: 'E-Health Gate + Ring App',
+    name: 'NatHealth Mobile Suite',
     company: 'NatHealth',
     tagline:
-        'Secure NFC-based health-insurance mobile stack and the Ring companion app.',
+        'Secure NFC-based health-insurance mobile stack: Ring, E-Health Gate, Compliance and more.',
     highlights: [
-      'Ring App: mobile client shipped alongside the E-Health Gate NFC platform.',
+      'Ring App: mobile companion client for the NFC platform.',
       'E-Health Gate: designed NFCCardReader interface supporting multiple smart-card technologies for paperless medical processing.',
+      'Compliance System: workflows for regulatory/audit compliance across the mobile clients.',
       'Token-lifecycle security framework: two-step JWT issuance, secure storage, GUID device binding.',
       'Offline-first WorkManager pipeline for background sync, status polling, and token refresh — critical ops without connectivity.',
       'Client-side error protocol: exponential-backoff retries + standardized failure handling.',
