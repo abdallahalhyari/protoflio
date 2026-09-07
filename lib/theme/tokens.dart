@@ -5,10 +5,12 @@ class AppSpacing {
   AppSpacing._();
   static const double xs = 4;
   static const double sm = 8;
+  static const double smd = 12;
   static const double md = 16;
   static const double lg = 24;
   static const double xl = 32;
   static const double xxl = 48;
+  static const double huge = 80;
 }
 
 /// Border-radius scale.
@@ -18,6 +20,7 @@ class AppRadius {
   static const double sm = 8;
   static const double md = 12;
   static const double lg = 20;
+  static const double xl = 22;
   static const double pill = 999;
 }
 
@@ -26,8 +29,10 @@ class AppMotion {
   AppMotion._();
   static const Duration xs = Duration(milliseconds: 150);
   static const Duration sm = Duration(milliseconds: 250);
-  static const Duration md = Duration(milliseconds: 400);
-  static const Duration lg = Duration(milliseconds: 700);
+  static const Duration md = Duration(milliseconds: 350);
+  static const Duration lg = Duration(milliseconds: 500);
+  static const Duration xl = Duration(milliseconds: 700);
+  static const Duration xxl = Duration(milliseconds: 900);
   static const Curve enter = Curves.easeOutCubic;
   static const Curve exit = Curves.easeInCubic;
   static const Curve emphasized = Curves.easeOutBack;

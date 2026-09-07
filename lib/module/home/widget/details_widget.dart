@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../theme/tokens.dart';
 import '../model/hat_info.dart';
 import 'network_hat_image.dart';
 
@@ -13,8 +14,8 @@ class DetailsWidget extends StatefulWidget {
 
   static Route<void> route(HatInfo hat) {
     return PageRouteBuilder<void>(
-      transitionDuration: const Duration(milliseconds: 450),
-      reverseTransitionDuration: const Duration(milliseconds: 350),
+      transitionDuration: AppMotion.md,
+      reverseTransitionDuration: AppMotion.md,
       pageBuilder: (_, __, ___) => DetailsWidget(hat: hat),
       transitionsBuilder: (_, animation, __, child) {
         final curved = CurvedAnimation(
@@ -42,7 +43,7 @@ class _DetailsWidgetState extends State<DetailsWidget>
     super.initState();
     _entryController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 700),
+      duration: AppMotion.xl,
     );
     _textFade = CurvedAnimation(
       parent: _entryController,
@@ -135,7 +136,7 @@ class _DetailsWidgetState extends State<DetailsWidget>
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.md),
               Text(
                 hat.desc,
                 textAlign: isWide ? TextAlign.start : TextAlign.center,
@@ -177,7 +178,8 @@ class _DetailsWidgetState extends State<DetailsWidget>
           body: SafeArea(
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                  const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.md, vertical: AppSpacing.lg),
               child: Center(
                 child: SingleChildScrollView(
                   child: isWide
@@ -185,7 +187,7 @@ class _DetailsWidgetState extends State<DetailsWidget>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             image,
-                            const SizedBox(width: 80),
+                            const SizedBox(width: AppSpacing.huge),
                             text,
                           ],
                         )
@@ -193,7 +195,7 @@ class _DetailsWidgetState extends State<DetailsWidget>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             image,
-                            const SizedBox(height: 24),
+                            const SizedBox(height: AppSpacing.lg),
                             text,
                           ],
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/tokens.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String label;
@@ -10,7 +11,7 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.label,
     required this.onPressed,
-    this.fontSize = 18,
+    this.fontSize = AppTypography.bodyLg + 2,
     this.horizontalPadding = 28,
   });
 
@@ -39,13 +40,14 @@ class PrimaryButton extends StatelessWidget {
           return BorderSide.none;
         }),
         shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.sm)),
         ),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding,
-          vertical: 8,
+          vertical: AppSpacing.sm,
         ),
         child: Text(label, style: TextStyle(fontSize: fontSize)),
       ),

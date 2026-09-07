@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/tokens.dart';
 import '../model/hat_info.dart';
 import 'details_widget.dart';
 import 'network_hat_image.dart';
@@ -13,7 +14,7 @@ class HatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: hat.color,
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppSpacing.smd),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final imageHeight = (constraints.maxHeight * 0.45).clamp(80.0, 200.0);

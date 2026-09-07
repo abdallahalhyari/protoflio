@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _goTo(int page) {
     _controller.animateToPage(
       page.clamp(0, _pageCount - 1),
-      duration: const Duration(milliseconds: 500),
+      duration: AppMotion.lg,
       curve: Curves.easeInOut,
     );
   }
@@ -179,7 +179,7 @@ class _PageIndicator extends StatelessWidget {
               radius: 22,
               child: Center(
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
+                  duration: AppMotion.sm,
                   width: active ? 12 : 8,
                   height: active ? 12 : 8,
                   decoration: BoxDecoration(
@@ -219,7 +219,7 @@ class _IntroPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: isWide ? 40 : 24),
+                SizedBox(height: isWide ? AppSpacing.xxl - 8 : AppSpacing.lg),
                 Semantics(
                   header: true,
                   child: Text(
@@ -236,7 +236,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.lg),
                 Semantics(
                   label: 'Portrait of Abdallah Alhyari',
                   image: true,
@@ -245,7 +245,7 @@ class _IntroPage extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: Colors.white,
                     ),
-                    padding: const EdgeInsets.all(3),
+                    padding: const EdgeInsets.all(AppSpacing.xs - 1),
                     child: CircleAvatar(
                       radius: avatarRadius,
                       backgroundColor: Colors.brown.shade300,
@@ -253,7 +253,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.lg),
                 Text(
                   'Why Should You Hire Me?',
                   textAlign: TextAlign.center,
@@ -266,12 +266,12 @@ class _IntroPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: AppSpacing.xl),
                 PrimaryButton(label: 'Scroll Down', onPressed: onScrollDown),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.md),
                 ExcludeSemantics(
                     child: Lottie.asset('assets/arrow_white.json', height: 80)),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.md),
               ],
             ),
           ),
@@ -307,7 +307,7 @@ class _HatsIntroPage extends StatelessWidget {
               colors: [Colors.black54, Colors.black38, Colors.black26],
             ),
           ),
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.all(AppSpacing.md + 2),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -320,7 +320,7 @@ class _HatsIntroPage extends StatelessWidget {
                     fontWeight: FontWeight.w100,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: AppSpacing.xs + 1),
                 Text(
                   'I WEAR MANY HATS',
                   textAlign: TextAlign.center,
@@ -330,10 +330,10 @@ class _HatsIntroPage extends StatelessWidget {
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: AppSpacing.xl),
                 PrimaryButton(
                     label: 'Allow Me to Explain', onPressed: onExplain),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.md),
                 ExcludeSemantics(
                     child: Lottie.asset('assets/arrow.json', height: 140)),
               ],
@@ -352,7 +352,7 @@ class _HatsGridPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(AppSpacing.sm),
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -393,7 +393,8 @@ class _SkillsPage extends StatelessWidget {
       color: theme.scaffoldBackgroundColor,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg, vertical: AppSpacing.xl),
           child: Column(
             children: [
               Text(
@@ -405,7 +406,7 @@ class _SkillsPage extends StatelessWidget {
                   letterSpacing: 2,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.lg),
               Expanded(
                 child: GridView.builder(
                   itemCount: kSkills.length,
@@ -418,7 +419,7 @@ class _SkillsPage extends StatelessWidget {
                   ),
                   itemBuilder: (_, i) => SkillTile(
                     skill: kSkills[i],
-                    delay: Duration(milliseconds: 80 * i),
+                    delay: Duration(milliseconds: 80 * i), // staggered — keep raw
                   ),
                 ),
               ),
@@ -465,10 +466,10 @@ class _ExperiencePage extends StatelessWidget {
             letterSpacing: 1.5,
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: AppSpacing.smd),
         ...kEducation.map(
           (e) => Padding(
-            padding: const EdgeInsets.only(bottom: 14),
+            padding: const EdgeInsets.only(bottom: AppSpacing.md - 2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -500,7 +501,7 @@ class _ExperiencePage extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: AppSpacing.lg - 4),
         Text(
           'CERTIFICATIONS',
           style: TextStyle(
@@ -510,19 +511,19 @@ class _ExperiencePage extends StatelessWidget {
             letterSpacing: 1.5,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: AppSpacing.sm + 2),
         ...kCertifications.map(
           (c) => Padding(
-            padding: const EdgeInsets.only(bottom: 6),
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm - 2),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 6),
+                  padding: const EdgeInsets.only(top: AppSpacing.sm - 2),
                   child: Icon(Icons.verified,
                       size: 14, color: scheme.primary),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
                     c,
@@ -543,7 +544,8 @@ class _ExperiencePage extends StatelessWidget {
       color: theme.scaffoldBackgroundColor,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
+          padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg, AppSpacing.lg + 4, AppSpacing.lg, AppSpacing.md),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -557,7 +559,7 @@ class _ExperiencePage extends StatelessWidget {
                   letterSpacing: 2,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.lg - 4),
               Expanded(
                 child: SingleChildScrollView(
                   child: isWide
@@ -565,7 +567,7 @@ class _ExperiencePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(flex: 3, child: expList),
-                            const SizedBox(width: 40),
+                            const SizedBox(width: AppSpacing.xl + 8),
                             Expanded(flex: 2, child: eduSection),
                           ],
                         )
@@ -573,7 +575,7 @@ class _ExperiencePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             expList,
-                            const SizedBox(height: 20),
+                            const SizedBox(height: AppSpacing.lg - 4),
                             eduSection,
                           ],
                         ),
@@ -633,7 +635,7 @@ class _ContactPage extends StatelessWidget {
               colors: [Colors.black26, Colors.black38, Colors.black54],
             ),
           ),
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.all(AppSpacing.md + 2),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -648,7 +650,7 @@ class _ContactPage extends StatelessWidget {
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   'Tap to open · long-press to copy',
                   style: TextStyle(
@@ -657,7 +659,7 @@ class _ContactPage extends StatelessWidget {
                     fontStyle: FontStyle.italic,
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: AppSpacing.xl),
                 _ContactRow(
                   label: 'EMAIL',
                   value: 'alhyariabdallh@gmail.com',
@@ -667,7 +669,7 @@ class _ContactPage extends StatelessWidget {
                       _copy(context, 'alhyariabdallh@gmail.com'),
                   fontSize: rowSize,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.md),
                 _ContactRow(
                   label: 'PHONE',
                   value: '+962-787032264',
@@ -675,7 +677,7 @@ class _ContactPage extends StatelessWidget {
                   onLongPress: () => _copy(context, '+962787032264'),
                   fontSize: rowSize,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.md),
                 _ContactRow(
                   label: 'LINKEDIN',
                   value: 'abdallah-alhyari',
@@ -687,7 +689,7 @@ class _ContactPage extends StatelessWidget {
                   fontSize: rowSize,
                   linkStyle: true,
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: AppSpacing.xl),
                 Semantics(
                   label: 'Download CV, PDF, 54 kilobytes, opens in new tab',
                   button: true,
@@ -746,7 +748,7 @@ class _ContactRow extends StatelessWidget {
               constraints: const BoxConstraints(minHeight: 44),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 6, vertical: 10),
+                    horizontal: AppSpacing.sm - 2, vertical: AppSpacing.sm + 2),
                 child: Text(
                   value,
                   style: TextStyle(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/tokens.dart';
 import '../model/experience.dart';
 
 class ExperienceTile extends StatelessWidget {
@@ -25,10 +26,10 @@ class ExperienceTile extends StatelessWidget {
             isFirst: isFirst,
             isLast: isLast,
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: AppSpacing.md - 2),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.only(bottom: AppSpacing.lg - 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -54,7 +55,7 @@ class ExperienceTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: AppSpacing.xs / 2),
                   Text(
                     exp.company,
                     style: TextStyle(
@@ -63,22 +64,22 @@ class ExperienceTile extends StatelessWidget {
                       color: scheme.primary,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   ...exp.highlights.map(
                     (h) => Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
+                      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 6),
+                            padding: const EdgeInsets.only(top: AppSpacing.sm - 2),
                             child: Icon(
                               Icons.circle,
                               size: 5,
                               color: scheme.onSurface.withValues(alpha: 0.5),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: AppSpacing.sm),
                           Expanded(
                             child: Text(
                               h,

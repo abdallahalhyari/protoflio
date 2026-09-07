@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/tokens.dart';
 import '../model/skill.dart';
 
 class SkillTile extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SkillTileState extends State<SkillTile>
     with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 900),
+    duration: AppMotion.xxl,
   );
   late final Animation<double> _a =
       CurvedAnimation(parent: _c, curve: Curves.easeOutCubic);
@@ -43,16 +44,17 @@ class _SkillTileState extends State<SkillTile>
     final scheme = Theme.of(context).colorScheme;
     final onSurface = scheme.onSurface;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md, vertical: AppSpacing.smd),
       decoration: BoxDecoration(
         color: onSurface.withValues(alpha: 0.06),
         border: Border.all(color: onSurface.withValues(alpha: 0.18)),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
       ),
       child: Row(
         children: [
           Icon(widget.skill.icon, color: onSurface, size: 28),
-          const SizedBox(width: 14),
+          const SizedBox(width: AppSpacing.md - 2),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,12 +83,12 @@ class _SkillTileState extends State<SkillTile>
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: AppSpacing.sm),
                 Semantics(
                   label: '${widget.skill.name} proficiency',
                   value: '${(widget.skill.level * 100).round()} percent',
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(AppRadius.xs),
                     child: AnimatedBuilder(
                       animation: _a,
                       builder: (_, __) => LinearProgressIndicator(
