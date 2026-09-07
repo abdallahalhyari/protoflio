@@ -3,7 +3,11 @@ import 'package:profile/module/home/home_screen.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme_controller.dart';
 
-void main() => runApp(const PortfolioApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ThemeController.load();
+  runApp(const PortfolioApp());
+}
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
