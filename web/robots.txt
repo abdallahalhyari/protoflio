@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://testfirestore-9b0b0.web.app/sitemap.xml
+Sitemap: https://abdallah-alhyari.web.app/sitemap.xml

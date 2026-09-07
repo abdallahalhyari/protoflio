@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../theme/tokens.dart';
@@ -96,7 +97,8 @@ class _DetailsWidgetState extends State<DetailsWidget>
             child: HatImage(
               path: hat.image,
               height: isWide ? 300 : 180,
-              semanticLabel: '${hat.title} hat illustration',
+              semanticLabel: 'hat_card.image_alt'
+                  .tr(namedArgs: {'title': hat.title}),
             ),
           ),
           Text(
@@ -168,7 +170,7 @@ class _DetailsWidgetState extends State<DetailsWidget>
             iconTheme: const IconThemeData(color: Colors.white),
             actions: [
               IconButton(
-                tooltip: 'Close (Esc)',
+                tooltip: 'details.close_tooltip'.tr(),
                 icon: const Icon(Icons.close, color: Colors.white),
                 onPressed: () => Navigator.of(context).maybePop(),
               ),

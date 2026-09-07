@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 import '../model/skill.dart';
@@ -81,8 +82,11 @@ class _SkillTileState extends State<SkillTile>
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Semantics(
-                  label: '${widget.skill.name} proficiency',
-                  value: '${(widget.skill.level * 100).round()} percent',
+                  label: 'skills.proficiency'
+                      .tr(namedArgs: {'name': widget.skill.name}),
+                  value: 'skills.percent'.tr(namedArgs: {
+                    'n': '${(widget.skill.level * 100).round()}'
+                  }),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppRadius.xs),
                     child: AnimatedBuilder(

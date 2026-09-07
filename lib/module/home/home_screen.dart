@@ -1,3 +1,6 @@
+import 'dart:ui' as ui;
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
@@ -24,19 +27,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Single source of truth for section labels + page count. Order must
+  // Single source of truth for section label KEYS + page count. Order must
   // match PageView children below. _pageCount is derived so nav + pages
-  // can never drift apart.
-  static const List<String> _sectionLabels = [
-    'About',
-    'Why',
-    'Hats',
-    'Skills',
-    'Projects',
-    'Roles',
-    'Contact',
+  // can never drift apart. Labels resolved via easy_localization at render.
+  static const List<String> _sectionLabelKeys = [
+    'nav.about',
+    'nav.why',
+    'nav.hats',
+    'nav.skills',
+    'nav.projects',
+    'nav.roles',
+    'nav.contact',
   ];
-  static final int _pageCount = _sectionLabels.length;
+  static final int _pageCount = _sectionLabelKeys.length;
   final PageController _controller = PageController();
   final FocusNode _focusNode = FocusNode();
   int _pageIndex = 0;
@@ -136,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 right: 0,
                 child: SafeArea(
                   child: _TopNav(
-                    labels: _sectionLabels,
+                    labelKeys: _sectionLabelKeys,
                     current: _pageIndex,
                     onTap: _goTo,
                   ),
@@ -146,27 +149,13 @@ class _HomeScreenState extends State<HomeScreen> {
               top: 12,
               right: 12,
               child: SafeArea(
-                child: ValueListenableBuilder<ThemeMode>(
-                  valueListenable: ThemeController.mode,
-                  builder: (_, mode, __) {
-                    final dark = mode == ThemeMode.dark;
-                    return Semantics(
-                      toggled: dark,
-                      label: 'Dark mode',
-                      child: Material(
-                        color: Colors.black45,
-                        shape: const CircleBorder(),
-                        child: IconButton(
-                          tooltip: dark ? 'Switch to light' : 'Switch to dark',
-                          icon: Icon(
-                            dark ? Icons.light_mode : Icons.dark_mode,
-                            color: Colors.white,
-                          ),
-                          onPressed: () => ThemeController.toggle(),
-                        ),
-                      ),
-                    );
-                  },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _LanguageToggle(),
+                    const SizedBox(width: AppSpacing.sm),
+                    _ThemeToggle(),
+                  ],
                 ),
               ),
             ),
@@ -177,13 +166,71 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+class _ThemeToggle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: ThemeController.mode,
+      builder: (_, mode, __) {
+        final dark = mode == ThemeMode.dark;
+        return Semantics(
+          toggled: dark,
+          label: 'theme.label'.tr(),
+          child: Material(
+            color: Colors.black45,
+            shape: const CircleBorder(),
+            child: IconButton(
+              tooltip:
+                  (dark ? 'theme.switch_to_light' : 'theme.switch_to_dark').tr(),
+              icon: Icon(
+                dark ? Icons.light_mode : Icons.dark_mode,
+                color: Colors.white,
+              ),
+              onPressed: () => ThemeController.toggle(),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _LanguageToggle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final isArabic = context.locale.languageCode == 'ar';
+    return Semantics(
+      label: 'language.label'.tr(),
+      child: Material(
+        color: Colors.black45,
+        shape: const CircleBorder(),
+        child: IconButton(
+          tooltip: 'language.toggle_tooltip'.tr(),
+          icon: Text(
+            isArabic ? 'EN' : 'ع',
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: AppTypography.body,
+            ),
+          ),
+          onPressed: () {
+            context.setLocale(
+                isArabic ? const Locale('en') : const Locale('ar'));
+          },
+        ),
+      ),
+    );
+  }
+}
+
 class _TopNav extends StatelessWidget {
-  final List<String> labels;
+  final List<String> labelKeys;
   final int current;
   final ValueChanged<int> onTap;
 
   const _TopNav({
-    required this.labels,
+    required this.labelKeys,
     required this.current,
     required this.onTap,
   });
@@ -193,7 +240,7 @@ class _TopNav extends StatelessWidget {
     return Semantics(
       container: true,
       explicitChildNodes: true,
-      label: 'Section navigation',
+      label: 'a11y.section_nav'.tr(),
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(
@@ -213,9 +260,9 @@ class _TopNav extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  for (var i = 0; i < labels.length; i++)
+                  for (var i = 0; i < labelKeys.length; i++)
                     _NavItem(
-                      label: labels[i],
+                      label: labelKeys[i].tr(),
                       active: current == i,
                       onTap: () => onTap(i),
                     ),
@@ -245,7 +292,7 @@ class _NavItem extends StatelessWidget {
     return Semantics(
       button: true,
       selected: active,
-      label: 'Go to $label',
+      label: 'a11y.goto_section'.tr(namedArgs: {'label': label}),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -294,7 +341,8 @@ class _PageIndicator extends StatelessWidget {
         return Semantics(
           button: true,
           selected: active,
-          label: 'Go to page ${i + 1} of $count',
+          label: 'a11y.goto_page'.tr(
+              namedArgs: {'n': '${i + 1}', 'total': '$count'}),
           child: SizedBox(
             width: 44,
             height: 44,
@@ -349,7 +397,7 @@ class _IntroPage extends StatelessWidget {
                 Semantics(
                   header: true,
                   child: Text(
-                    'HELLO THERE!\nI\'M ABDALLAH',
+                    '${'intro.hello_line1'.tr()}\n${'intro.hello_line2'.tr()}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: titleSize,
@@ -364,7 +412,7 @@ class _IntroPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Semantics(
-                  label: 'Portrait of Abdallah Alhyari',
+                  label: 'intro.portrait_alt'.tr(),
                   image: true,
                   child: Container(
                     decoration: const BoxDecoration(
@@ -381,7 +429,7 @@ class _IntroPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  'Senior Mobile Engineer  ·  Flutter / Android',
+                  'intro.role'.tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: subtitleSize,
@@ -394,7 +442,7 @@ class _IntroPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  'Amman, Jordan  →  Brno, Czech Republic · 2027',
+                  'intro.tagline'.tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: (subtitleSize * 0.55)
@@ -408,7 +456,8 @@ class _IntroPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                PrimaryButton(label: 'Scroll Down', onPressed: onScrollDown),
+                PrimaryButton(
+                    label: 'intro.scroll_down'.tr(), onPressed: onScrollDown),
                 const SizedBox(height: AppSpacing.md),
                 ExcludeSemantics(
                     child: Lottie.asset('assets/arrow_white.json', height: 80)),
@@ -456,7 +505,7 @@ class _HatsIntroPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'BECAUSE...',
+                  'hats_intro.overline'.tr(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: overlineSize,
@@ -465,7 +514,7 @@ class _HatsIntroPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xs + 1),
                 Text(
-                  'I WEAR MANY HATS',
+                  'hats_intro.heading'.tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -475,7 +524,7 @@ class _HatsIntroPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 PrimaryButton(
-                    label: 'Allow Me to Explain', onPressed: onExplain),
+                    label: 'hats_intro.cta'.tr(), onPressed: onExplain),
                 const SizedBox(height: AppSpacing.md),
                 ExcludeSemantics(
                     child: Lottie.asset('assets/arrow.json', height: 140)),
@@ -542,7 +591,7 @@ class _SkillsPage extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'SKILLS',
+                'skills.heading'.tr(),
                 style: TextStyle(
                   color: textColor,
                   fontSize: headingSize,
@@ -597,7 +646,7 @@ class _ProjectsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'PROJECTS',
+                'projects.heading'.tr(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: scheme.onSurface,
@@ -664,7 +713,7 @@ class _ExperiencePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'EDUCATION',
+          'experience.education'.tr(),
           style: TextStyle(
             color: scheme.onSurface,
             fontSize: AppTypography.title,
@@ -709,7 +758,7 @@ class _ExperiencePage extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.lg - 4),
         Text(
-          'CERTIFICATIONS',
+          'experience.certifications'.tr(),
           style: TextStyle(
             color: scheme.onSurface,
             fontSize: AppTypography.title,
@@ -756,7 +805,7 @@ class _ExperiencePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'EXPERIENCE',
+                'experience.heading'.tr(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: scheme.onSurface,
@@ -803,9 +852,9 @@ class _ContactPage extends StatelessWidget {
   Future<void> _copy(BuildContext context, String value) async {
     await Clipboard.setData(ClipboardData(text: value));
     if (!context.mounted) return;
-    final msg = 'Copied: $value';
+    final msg = 'contact.copied'.tr(namedArgs: {'value': value});
     // ignore: deprecated_member_use
-    SemanticsService.announce(msg, TextDirection.ltr);
+    SemanticsService.announce(msg, ui.TextDirection.ltr);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(msg), duration: const Duration(seconds: 2)),
     );
@@ -842,7 +891,7 @@ class _ContactPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'CONTACT',
+                  'contact.heading'.tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -852,7 +901,7 @@ class _ContactPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  'Tap to open · long-press to copy',
+                  'contact.hint'.tr(),
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize:
@@ -862,7 +911,7 @@ class _ContactPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 _ContactRow(
-                  label: 'EMAIL',
+                  label: 'contact.email'.tr(),
                   value: 'alhyariabdallh@gmail.com',
                   onTap: () =>
                       _open(context, 'mailto:alhyariabdallh@gmail.com'),
@@ -872,7 +921,7 @@ class _ContactPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _ContactRow(
-                  label: 'PHONE',
+                  label: 'contact.phone'.tr(),
                   value: '+962-787032264',
                   onTap: () => _open(context, 'tel:+962787032264'),
                   onLongPress: () => _copy(context, '+962787032264'),
@@ -880,7 +929,7 @@ class _ContactPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _ContactRow(
-                  label: 'LINKEDIN',
+                  label: 'contact.linkedin'.tr(),
                   value: 'abdallah-alhyari',
                   onTap: () => _open(context,
                       'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
@@ -892,10 +941,10 @@ class _ContactPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 Semantics(
-                  label: 'Download CV, PDF, 54 kilobytes, opens in new tab',
+                  label: 'contact.download_cv_semantic'.tr(),
                   button: true,
                   child: PrimaryButton(
-                    label: 'Download CV (PDF)',
+                    label: 'contact.download_cv'.tr(),
                     onPressed: () => _open(context, 'cv.pdf'),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 import '../../../util/open_url.dart';
@@ -40,7 +41,7 @@ class ProjectCard extends StatelessWidget {
               ),
               if (project.url != null)
                 IconButton(
-                  tooltip: 'Open project link',
+                  tooltip: 'projects.open_link'.tr(),
                   visualDensity: VisualDensity.compact,
                   icon: Icon(Icons.open_in_new,
                       size: 18, color: scheme.primary),

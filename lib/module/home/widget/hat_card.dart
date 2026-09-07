@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 import '../model/hat_info.dart';
@@ -25,7 +26,7 @@ class HatCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                '${hat.title} Hat',
+                '${hat.title} ${'hat_card.suffix'.tr()}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -40,11 +41,12 @@ class HatCard extends StatelessWidget {
                 child: HatImage(
                   path: hat.image,
                   height: imageHeight,
-                  semanticLabel: '${hat.title} hat illustration',
+                  semanticLabel: 'hat_card.image_alt'
+                      .tr(namedArgs: {'title': hat.title}),
                 ),
               ),
               PrimaryButton(
-                label: 'Expand',
+                label: 'hat_card.expand'.tr(),
                 horizontalPadding: 16,
                 fontSize: AppTypography.body,
                 onPressed: () {

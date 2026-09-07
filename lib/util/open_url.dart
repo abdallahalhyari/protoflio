@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -9,7 +10,10 @@ Future<void> openUrl(BuildContext context, String url) async {
   final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
   if (!ok && context.mounted) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Could not open $url')),
+      SnackBar(
+        content: Text(
+            'contact.open_failed'.tr(namedArgs: {'url': url})),
+      ),
     );
   }
 }
