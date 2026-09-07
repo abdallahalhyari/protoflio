@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 import '../model/skill.dart';
+import 'app_card.dart';
 
 class SkillTile extends StatefulWidget {
   final Skill skill;
@@ -43,14 +44,9 @@ class _SkillTileState extends State<SkillTile>
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final onSurface = scheme.onSurface;
-    return Container(
+    return AppCard.outlined(
       padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.md, vertical: AppSpacing.smd),
-      decoration: BoxDecoration(
-        color: onSurface.withValues(alpha: 0.06),
-        border: Border.all(color: onSurface.withValues(alpha: 0.18)),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-      ),
       child: Row(
         children: [
           Icon(widget.skill.icon, color: onSurface, size: 28),

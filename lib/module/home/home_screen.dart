@@ -118,6 +118,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            if (MediaQuery.sizeOf(context).width >= 900)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: SafeArea(
+                  child: _TopNav(
+                    current: _pageIndex,
+                    onTap: _goTo,
+                  ),
+                ),
+              ),
             Positioned(
               top: 12,
               right: 12,
@@ -147,6 +159,100 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TopNav extends StatelessWidget {
+  final int current;
+  final ValueChanged<int> onTap;
+
+  static const List<String> _labels = [
+    'About',
+    'Hats',
+    'Traits',
+    'Skills',
+    'Projects',
+    'Experience',
+    'Contact',
+  ];
+
+  const _TopNav({required this.current, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      container: true,
+      explicitChildNodes: true,
+      label: 'Section navigation',
+      child: Center(
+        child: Container(
+          margin: const EdgeInsets.only(top: AppSpacing.smd),
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+          decoration: BoxDecoration(
+            color: Colors.black.withValues(alpha: 0.45),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            border: Border.all(color: Colors.white24, width: 1),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (var i = 0; i < _labels.length; i++)
+                _NavItem(
+                  label: _labels[i],
+                  active: current == i,
+                  onTap: () => onTap(i),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NavItem extends StatelessWidget {
+  final String label;
+  final bool active;
+  final VoidCallback onTap;
+
+  const _NavItem({
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      selected: active,
+      label: 'Go to $label',
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        child: AnimatedContainer(
+          duration: AppMotion.sm,
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.smd, vertical: AppSpacing.sm),
+          decoration: BoxDecoration(
+            color: active
+                ? Colors.white.withValues(alpha: 0.15)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: AppTypography.small,
+              fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+              letterSpacing: 0.3,
+            ),
+          ),
         ),
       ),
     );

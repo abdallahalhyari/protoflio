@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/tokens.dart';
 import '../model/project.dart';
+import 'app_card.dart';
 
 class ProjectCard extends StatelessWidget {
   final Project project;
@@ -25,13 +26,8 @@ class ProjectCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final onSurface = scheme.onSurface;
 
-    return Container(
+    return AppCard.outlined(
       padding: const EdgeInsets.all(AppSpacing.md + 2),
-      decoration: BoxDecoration(
-        color: onSurface.withValues(alpha: 0.05),
-        border: Border.all(color: onSurface.withValues(alpha: 0.15)),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

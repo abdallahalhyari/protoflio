@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 import '../model/hat_info.dart';
+import 'app_card.dart';
 import 'details_widget.dart';
 import 'network_hat_image.dart';
 import 'primary_button.dart';
@@ -12,7 +13,7 @@ class HatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AppCard.filled(
       color: hat.color,
       padding: const EdgeInsets.all(AppSpacing.smd),
       child: LayoutBuilder(
