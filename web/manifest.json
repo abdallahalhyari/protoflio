@@ -1,13 +1,15 @@
 {
-    "name": "profile",
-    "short_name": "profile",
+    "name": "Abdallah Alhyari — Portfolio",
+    "short_name": "Alhyari",
     "start_url": ".",
+    "scope": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#0E0E10",
+    "theme_color": "#0E0E10",
+    "description": "Portfolio of Abdallah Alhyari — Senior Mobile Engineer (Flutter / Android). NFC, JWT, healthcare, enterprise.",
     "prefer_related_applications": false,
+    "categories": ["portfolio", "productivity", "business"],
+    "lang": "en",
     "icons": [
         {
             "src": "icons/Icon-192.png",
