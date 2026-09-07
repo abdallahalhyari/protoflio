@@ -171,11 +171,11 @@ class _TopNav extends StatelessWidget {
 
   static const List<String> _labels = [
     'About',
+    'Why',
     'Hats',
-    'Traits',
     'Skills',
     'Projects',
-    'Experience',
+    'Roles',
     'Contact',
   ];
 
@@ -188,25 +188,33 @@ class _TopNav extends StatelessWidget {
       explicitChildNodes: true,
       label: 'Section navigation',
       child: Center(
-        child: Container(
-          margin: const EdgeInsets.only(top: AppSpacing.smd),
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md, vertical: AppSpacing.xs),
-          decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: 0.45),
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            border: Border.all(color: Colors.white24, width: 1),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.sizeOf(context).width - AppSpacing.xl,
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (var i = 0; i < _labels.length; i++)
-                _NavItem(
-                  label: _labels[i],
-                  active: current == i,
-                  onTap: () => onTap(i),
-                ),
-            ],
+          child: Container(
+            margin: const EdgeInsets.only(top: AppSpacing.smd),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.45),
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(color: Colors.white24, width: 1),
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (var i = 0; i < _labels.length; i++)
+                    _NavItem(
+                      label: _labels[i],
+                      active: current == i,
+                      onTap: () => onTap(i),
+                    ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
