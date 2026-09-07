@@ -18,8 +18,10 @@ class HatCard extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final imageHeight = (constraints.maxHeight * 0.45).clamp(80.0, 200.0);
-          final titleSize = (constraints.maxWidth * 0.11).clamp(18.0, 38.0);
-          final hatSize = (constraints.maxWidth * 0.08).clamp(14.0, 28.0);
+          final titleSize = (constraints.maxWidth * 0.11)
+              .clamp(AppTypography.titleSm, AppTypography.display - 2);
+          final hatSize = (constraints.maxWidth * 0.08)
+              .clamp(AppTypography.body, AppTypography.heading);
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -53,7 +55,7 @@ class HatCard extends StatelessWidget {
               PrimaryButton(
                 label: 'Expand',
                 horizontalPadding: 16,
-                fontSize: 14,
+                fontSize: AppTypography.body,
                 onPressed: () {
                   Navigator.of(context).push(DetailsWidget.route(hat));
                 },

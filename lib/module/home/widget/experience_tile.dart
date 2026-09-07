@@ -39,7 +39,7 @@ class ExperienceTile extends StatelessWidget {
                         child: Text(
                           exp.role,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: AppTypography.titleSm,
                             fontWeight: FontWeight.w800,
                             color: scheme.onSurface,
                           ),
@@ -48,7 +48,7 @@ class ExperienceTile extends StatelessWidget {
                       Text(
                         exp.period,
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: AppTypography.caption,
                           color: scheme.onSurface.withValues(alpha: 0.6),
                           fontStyle: FontStyle.italic,
                         ),
@@ -59,7 +59,7 @@ class ExperienceTile extends StatelessWidget {
                   Text(
                     exp.company,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: AppTypography.body,
                       fontWeight: FontWeight.w600,
                       color: scheme.primary,
                     ),
@@ -84,7 +84,7 @@ class ExperienceTile extends StatelessWidget {
                             child: Text(
                               h,
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: AppTypography.small,
                                 height: 1.4,
                                 color:
                                     scheme.onSurface.withValues(alpha: 0.85),

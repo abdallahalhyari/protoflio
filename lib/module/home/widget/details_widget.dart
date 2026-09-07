@@ -104,7 +104,7 @@ class _DetailsWidgetState extends State<DetailsWidget>
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: isWide ? 40 : 26,
+              fontSize: isWide ? AppTypography.display : AppTypography.head,
               fontWeight: FontWeight.w600,
               shadows: const [
                 Shadow(color: Colors.black87, blurRadius: 10),
@@ -132,7 +132,7 @@ class _DetailsWidgetState extends State<DetailsWidget>
                 textAlign: isWide ? TextAlign.start : TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: isWide ? 40 : 24,
+                  fontSize: isWide ? AppTypography.display : AppTypography.subhead,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -142,7 +142,7 @@ class _DetailsWidgetState extends State<DetailsWidget>
                 textAlign: isWide ? TextAlign.start : TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: isWide ? 20 : 15,
+                  fontSize: isWide ? AppTypography.title : AppTypography.bodyMd,
                   height: 1.5,
                 ),
               ),

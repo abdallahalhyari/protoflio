@@ -67,7 +67,7 @@ class _SkillTileState extends State<SkillTile>
                       widget.skill.name,
                       style: TextStyle(
                         color: onSurface,
-                        fontSize: 16,
+                        fontSize: AppTypography.bodyLg,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -77,7 +77,7 @@ class _SkillTileState extends State<SkillTile>
                         '${(widget.skill.level * _a.value * 100).round()}%',
                         style: TextStyle(
                           color: onSurface.withValues(alpha: 0.7),
-                          fontSize: 13,
+                          fontSize: AppTypography.small,
                         ),
                       ),
                     ),

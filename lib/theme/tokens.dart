@@ -75,11 +75,19 @@ class AppColors {
 /// when responsive.
 class AppTypography {
   AppTypography._();
+  static const double micro = 11;
   static const double caption = 12;
+  static const double small = 13;
   static const double body = 14;
+  static const double bodyMd = 15;
   static const double bodyLg = 16;
+  static const double titleSm = 18;
   static const double title = 20;
+  static const double subhead = 24;
+  static const double head = 26;
   static const double heading = 28;
   static const double display = 40;
+  static const double displayLg = 56;
   static const double hero = 60;
+  static const double heroLg = 65;
 }

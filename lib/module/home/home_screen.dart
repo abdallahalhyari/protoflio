@@ -206,8 +206,10 @@ class _IntroPage extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     final isWide = size.width >= 800;
     final avatarRadius = (size.shortestSide * 0.22).clamp(80.0, 180.0);
-    final titleSize = (size.width * 0.06).clamp(28.0, 65.0);
-    final subtitleSize = (size.width * 0.035).clamp(20.0, 40.0);
+    final titleSize =
+        (size.width * 0.06).clamp(AppTypography.heading, AppTypography.heroLg);
+    final subtitleSize =
+        (size.width * 0.035).clamp(AppTypography.title, AppTypography.display);
 
     return PageBackground(
       asset: 'assets/background.webp',
@@ -288,8 +290,10 @@ class _HatsIntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final headingSize = (size.width * 0.055).clamp(30.0, 60.0);
-    final overlineSize = (size.width * 0.028).clamp(18.0, 30.0);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading + 2, AppTypography.hero);
+    final overlineSize = (size.width * 0.028)
+        .clamp(AppTypography.titleSm, AppTypography.heading + 2);
 
     return PageBackground(
       asset: 'assets/hats_background.webp',
@@ -384,7 +388,8 @@ class _SkillsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final headingSize = (size.width * 0.055).clamp(28.0, 56.0);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
     final cross = size.width >= 900 ? 3 : size.width >= 600 ? 2 : 1;
 
     final theme = Theme.of(context);
@@ -439,7 +444,8 @@ class _ExperiencePage extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
-    final headingSize = (size.width * 0.055).clamp(28.0, 56.0);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
     final isWide = size.width >= 900;
 
     final expList = Column(
@@ -461,7 +467,7 @@ class _ExperiencePage extends StatelessWidget {
           'EDUCATION',
           style: TextStyle(
             color: scheme.onSurface,
-            fontSize: 20,
+            fontSize: AppTypography.title,
             fontWeight: FontWeight.w900,
             letterSpacing: 1.5,
           ),
@@ -476,7 +482,7 @@ class _ExperiencePage extends StatelessWidget {
                 Text(
                   e.degree,
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: AppTypography.bodyMd,
                     fontWeight: FontWeight.w700,
                     color: scheme.onSurface,
                   ),
@@ -484,7 +490,7 @@ class _ExperiencePage extends StatelessWidget {
                 Text(
                   '${e.institution} · ${e.period}',
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: AppTypography.small,
                     color: scheme.primary,
                   ),
                 ),
@@ -492,7 +498,7 @@ class _ExperiencePage extends StatelessWidget {
                   Text(
                     e.note!,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: AppTypography.caption,
                       color: scheme.onSurface.withValues(alpha: 0.7),
                       fontStyle: FontStyle.italic,
                     ),
@@ -506,7 +512,7 @@ class _ExperiencePage extends StatelessWidget {
           'CERTIFICATIONS',
           style: TextStyle(
             color: scheme.onSurface,
-            fontSize: 20,
+            fontSize: AppTypography.title,
             fontWeight: FontWeight.w900,
             letterSpacing: 1.5,
           ),
@@ -528,7 +534,7 @@ class _ExperiencePage extends StatelessWidget {
                   child: Text(
                     c,
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: AppTypography.small,
                       color: scheme.onSurface.withValues(alpha: 0.85),
                     ),
                   ),
@@ -616,8 +622,10 @@ class _ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final headingSize = (size.width * 0.055).clamp(28.0, 60.0);
-    final rowSize = (size.width * 0.035).clamp(16.0, 32.0);
+    final headingSize =
+        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.hero);
+    final rowSize =
+        (size.width * 0.035).clamp(AppTypography.bodyLg, AppTypography.head + 6);
 
     return PageBackground(
       asset: 'assets/hats_background.webp',
@@ -655,7 +663,8 @@ class _ContactPage extends StatelessWidget {
                   'Tap to open · long-press to copy',
                   style: TextStyle(
                     color: Colors.white70,
-                    fontSize: (rowSize * 0.55).clamp(11.0, 16.0),
+                    fontSize:
+                        (rowSize * 0.55).clamp(AppTypography.micro, AppTypography.bodyLg),
                     fontStyle: FontStyle.italic,
                   ),
                 ),
