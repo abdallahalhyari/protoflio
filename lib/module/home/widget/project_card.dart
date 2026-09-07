@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/tokens.dart';
+import '../../../util/open_url.dart';
 import '../model/project.dart';
 import 'app_card.dart';
 
@@ -12,13 +12,7 @@ class ProjectCard extends StatelessWidget {
   Future<void> _open(BuildContext context) async {
     final url = project.url;
     if (url == null) return;
-    final ok =
-        await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    if (!ok && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not open $url')),
-      );
-    }
+    await openUrl(context, url);
   }
 
   @override

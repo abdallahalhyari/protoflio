@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../theme/tokens.dart';
+import '../../util/open_url.dart';
 import '../../theme_controller.dart';
 import 'data/experience_data.dart';
 import 'data/hats_data.dart';
@@ -25,7 +24,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const int _pageCount = 7;
+  // Single source of truth for section labels + page count. Order must
+  // match PageView children below. _pageCount is derived so nav + pages
+  // can never drift apart.
+  static const List<String> _sectionLabels = [
+    'About',
+    'Why',
+    'Hats',
+    'Skills',
+    'Projects',
+    'Roles',
+    'Contact',
+  ];
+  static final int _pageCount = _sectionLabels.length;
   final PageController _controller = PageController();
   final FocusNode _focusNode = FocusNode();
   int _pageIndex = 0;
@@ -125,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 right: 0,
                 child: SafeArea(
                   child: _TopNav(
+                    labels: _sectionLabels,
                     current: _pageIndex,
                     onTap: _goTo,
                   ),
@@ -150,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             dark ? Icons.light_mode : Icons.dark_mode,
                             color: Colors.white,
                           ),
-                          onPressed: ThemeController.toggle,
+                          onPressed: () => ThemeController.toggle(),
                         ),
                       ),
                     );
@@ -166,20 +178,15 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _TopNav extends StatelessWidget {
+  final List<String> labels;
   final int current;
   final ValueChanged<int> onTap;
 
-  static const List<String> _labels = [
-    'About',
-    'Why',
-    'Hats',
-    'Skills',
-    'Projects',
-    'Roles',
-    'Contact',
-  ];
-
-  const _TopNav({required this.current, required this.onTap});
+  const _TopNav({
+    required this.labels,
+    required this.current,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -206,9 +213,9 @@ class _TopNav extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  for (var i = 0; i < _labels.length; i++)
+                  for (var i = 0; i < labels.length; i++)
                     _NavItem(
-                      label: _labels[i],
+                      label: labels[i],
                       active: current == i,
                       onTap: () => onTap(i),
                     ),
@@ -791,15 +798,7 @@ class _ExperiencePage extends StatelessWidget {
 class _ContactPage extends StatelessWidget {
   const _ContactPage();
 
-  Future<void> _open(BuildContext context, String url) async {
-    final uri = Uri.parse(url);
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!ok && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not open $url')),
-      );
-    }
-  }
+  Future<void> _open(BuildContext context, String url) => openUrl(context, url);
 
   Future<void> _copy(BuildContext context, String value) async {
     await Clipboard.setData(ClipboardData(text: value));
@@ -954,7 +953,7 @@ class _ContactRow extends StatelessWidget {
                 child: Text(
                   value,
                   style: TextStyle(
-                    color: linkStyle ? Colors.lightBlueAccent : Colors.white,
+                    color: linkStyle ? AppColors.linkOnScrim : Colors.white,
                     decoration: linkStyle
                         ? TextDecoration.underline
                         : TextDecoration.none,

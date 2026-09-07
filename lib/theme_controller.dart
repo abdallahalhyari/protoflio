@@ -10,27 +10,35 @@ class ThemeController {
       ValueNotifier<ThemeMode>(ThemeMode.dark);
 
   static Future<void> load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString(_prefsKey);
-    switch (raw) {
-      case 'light':
-        mode.value = ThemeMode.light;
-      case 'system':
-        mode.value = ThemeMode.system;
-      case 'dark':
-      default:
-        mode.value = ThemeMode.dark;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_prefsKey);
+      switch (raw) {
+        case 'light':
+          mode.value = ThemeMode.light;
+        case 'system':
+          mode.value = ThemeMode.system;
+        case 'dark':
+        default:
+          mode.value = ThemeMode.dark;
+      }
+    } catch (e) {
+      debugPrint('ThemeController.load failed: $e');
     }
   }
 
   static Future<void> _persist() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_prefsKey, mode.value.name);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_prefsKey, mode.value.name);
+    } catch (e) {
+      debugPrint('ThemeController._persist failed: $e');
+    }
   }
 
-  static void toggle() {
+  static Future<void> toggle() async {
     mode.value =
         mode.value == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-    _persist();
+    await _persist();
   }
 }

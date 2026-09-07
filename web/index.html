@@ -13,6 +13,14 @@
   <meta name="keywords" content="Abdallah Alhyari, Flutter developer, Android developer, mobile engineer, NFC, JWT, healthcare apps, Jordan, Brno, portfolio">
   <meta name="theme-color" content="#0E0E10">
 
+  <!--
+    SITE_URL: canonical + og:url. Update this ONE line per-deploy for
+    a custom domain. All other <meta href/content> below use relative
+    paths so they follow automatically. A runtime script at page end
+    also rewrites canonical/og:url from location.origin so real
+    browsers always agree with the URL bar (crawlers ignore JS and
+    read the tags below verbatim — that's why the string still matters).
+  -->
   <link rel="canonical" href="https://testfirestore-9b0b0.web.app/">
 
   <!-- Open Graph -->
@@ -120,6 +128,16 @@
   </noscript>
 
   <script>
+    // Rewrite canonical + og:url from location.origin so browsers see the
+    // real URL. Crawlers ignore JS and use the hardcoded values above.
+    (function () {
+      var origin = location.origin + location.pathname;
+      var canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.setAttribute('href', origin);
+      var ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute('content', origin);
+    })();
+
     // Hide loader once Flutter is running.
     window.addEventListener('flutter-first-frame', function () {
       var l = document.getElementById('boot-loader');

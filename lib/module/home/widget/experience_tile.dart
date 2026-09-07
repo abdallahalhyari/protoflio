@@ -122,14 +122,11 @@ class _Timeline extends StatelessWidget {
       width: 14,
       child: Column(
         children: [
-          Expanded(
-            flex: 0,
-            child: SizedBox(
-              height: 6,
-              child: isFirst
-                  ? const SizedBox.shrink()
-                  : Container(width: 2, color: color.withValues(alpha: 0.35)),
-            ),
+          SizedBox(
+            height: 6,
+            child: isFirst
+                ? const SizedBox.shrink()
+                : Container(width: 2, color: color.withValues(alpha: 0.35)),
           ),
           Container(
             width: 12,
