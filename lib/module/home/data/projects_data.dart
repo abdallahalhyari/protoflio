@@ -2,16 +2,25 @@ import '../model/project.dart';
 
 const List<Project> kProjects = [
   Project(
-    name: 'NatHealth NFC Auth',
+    name: 'E-Health Gate + Ring App',
     company: 'NatHealth',
-    tagline: 'Secure smart-card authentication for healthcare mobile clients.',
+    tagline:
+        'Secure NFC-based health-insurance mobile stack and the Ring companion app.',
     highlights: [
-      'Designed NFCCardReader interface supporting multiple card technologies.',
-      'Two-step JWT issuance + secure storage + GUID device binding.',
-      'Offline-first WorkManager pipeline for background sync & token refresh.',
-      'Exponential-backoff retries + standardized failure protocol.',
+      'Ring App: mobile client shipped alongside the E-Health Gate NFC platform.',
+      'E-Health Gate: designed NFCCardReader interface supporting multiple smart-card technologies for paperless medical processing.',
+      'Token-lifecycle security framework: two-step JWT issuance, secure storage, GUID device binding.',
+      'Offline-first WorkManager pipeline for background sync, status polling, and token refresh — critical ops without connectivity.',
+      'Client-side error protocol: exponential-backoff retries + standardized failure handling.',
     ],
-    stack: ['Flutter', 'Kotlin', 'NFC', 'JWT', 'WorkManager', 'Clean Arch'],
+    stack: [
+      'Flutter',
+      'Kotlin',
+      'NFC',
+      'JWT',
+      'WorkManager',
+      'Clean Arch',
+    ],
   ),
   Project(
     name: 'E-Learning & Healthcare Flutter Clients',
