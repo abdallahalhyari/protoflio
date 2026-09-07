@@ -14,13 +14,15 @@ const List<Project> kProjects = [
     stack: ['Flutter', 'Kotlin', 'NFC', 'JWT', 'WorkManager', 'Clean Arch'],
   ),
   Project(
-    name: 'ESKADENIA Enterprise Apps',
+    name: 'E-Learning & Healthcare Flutter Clients',
     company: 'ESKADENIA Software',
-    tagline: 'Rebuilt Flutter enterprise apps for performance + modularity.',
+    tagline:
+        'Mobile clients for ESKADENIA\'s Education and Health & Wellbeing product lines.',
     highlights: [
-      'Refactored monolithic Flutter apps into modular architecture.',
-      'Applied profiling and optimization; measurable perf wins per release.',
-      'Led testing cycles across stakeholders before ship.',
+      'Education dept: mobile clients tied to School Management, University Management, and Training Centres platforms.',
+      'Health dept: mobile clients for Hospital Information System, Clinics Management, Laboratory & Radiology, and Pharmacy Management.',
+      'Rebuilt legacy Flutter apps into modular architecture; measurable perf wins per release.',
+      'Applied profiling + testing cycles across stakeholders before ship.',
     ],
     stack: ['Flutter', 'Dart', 'MVVM', 'REST', 'SQL Server'],
   ),
