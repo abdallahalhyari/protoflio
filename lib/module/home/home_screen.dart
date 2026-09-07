@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:profile/module/home/widget/details_widget.dart';
@@ -8,57 +9,77 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: PageView(
         scrollDirection: Axis.vertical,
         children: [
+          // First Page
           Stack(
             children: [
-              // Background Image
               Positioned.fill(
                 child: Image.asset(
-                  'assets/background.webp', // Ensure this image is added in pubspec.yaml
+                  'assets/background.webp',
                   fit: BoxFit.cover,
                 ),
               ),
-
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: SizedBox(
-                      height: 500,
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: screenHeight * 0.6,
                       child: Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
                           Container(
-                            decoration: BoxDecoration(shape:BoxShape.circle,color: Colors.white),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: CircleAvatar(
-                                radius: 180,
+                                radius:screenWidth > 1200
+                                    ? 160
+                                    : screenWidth > 600
+                                    ? 140
+                                    : 90,
                                 backgroundColor: Colors.brown.shade300,
-                                backgroundImage: Image.asset('assets/my_image.png').image,
+                                backgroundImage:
+                                Image.asset('assets/my_image.png').image,
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Text(
-                              'HELLO THERE!\nI\'M ABDALLAH',
-                              style: TextStyle(
-                                fontSize: 65,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white,
+                          Positioned(
+                           top:
+                           screenWidth > 1200
+                               ?  screenHeight/9
+                               : screenWidth > 600
+                               ?  screenHeight/9
+                               :  screenHeight/5,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.05),
+                              child: Text(
+                                'HELLO THERE!\nI\'M ABDALLAH',
+                                style: TextStyle(
+                                  fontSize: getResponsiveFontSize(40, context),
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Text(
-                              'Why Should Hire Me  ?',
+                              'Why Should Hire Me?',
                               style: TextStyle(
-                                fontSize: 40,
+                                fontSize: getResponsiveFontSize(24, context),
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87,
                               ),
@@ -67,313 +88,452 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(height: 40),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Colors.black),
-                        elevation: WidgetStatePropertyAll(3),
-                        shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Scroll Down',style: TextStyle(color: Colors.white,fontSize: 18),),
-                      ),
+                    SizedBox(height: screenHeight * 0.08),
+                    _buildResponsiveButton(
+                      context,
+                      text: 'Scroll Down',
+                      onPressed: () {},
                     ),
-                  ),
-                  SizedBox(height: 30),
-                  Lottie.asset('assets/arrow_white.json',height: 100)
-                ],
+                    SizedBox(height: screenHeight * 0.02),
+                    Lottie.asset('assets/arrow_white.json',
+                        height: screenHeight * 0.1),
+                  ],
+                ),
               ),
             ],
           ),
 
+          // Second Page
           Stack(
             children: [
-              // Background Image
               Positioned.fill(
                 child: Image.asset(
-                  'assets/hats_background.webp', // Ensure this image is added in pubspec.yaml
+                  'assets/hats_background.webp',
                   fit: BoxFit.cover,
                 ),
               ),
               Center(
-                child: Container(height: 500,
-                width: MediaQuery.sizeOf(context).width/1.3,
-                  decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter,end: Alignment.bottomCenter,colors: [
-
-                    Colors.black54,
-                    Colors.black38,
-                    Colors.black26,
-
-
-                  ])),
+                child: Container(
+                  height: screenHeight * 0.7,
+                  width: screenWidth * 0.8,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black54,
+                        Colors.black38,
+                        Colors.black26,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('BECAUSE...',style: TextStyle(color: Colors.white,fontSize:30,fontWeight: FontWeight.w100),),
-                        SizedBox(height:5),
-                        Text('I WEAR MANY HATS',style: TextStyle(color: Colors.white,fontSize:60,fontWeight: FontWeight.w900),)
-                       , SizedBox(height: 40),
-                        ElevatedButton(
+                        Text(
+                          'BECAUSE...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getResponsiveFontSize(24, context),
+                            fontWeight: FontWeight.w100,
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.01),
+                        Text(
+                          'I WEAR MANY HATS',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getResponsiveFontSize(40, context),
+                            fontWeight: FontWeight.w900,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: screenHeight * 0.05),
+                        _buildResponsiveButton(
+                          context,
+                          text: 'Allow Me to Explain',
                           onPressed: () {},
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStatePropertyAll(Colors.black),
-                              elevation: WidgetStatePropertyAll(3),
-                              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)))),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('Allow Me to Explain',style: TextStyle(color: Colors.white,fontSize: 18),),
+                        ),
+                        SizedBox(height: screenHeight * 0.03),
+                        Lottie.asset('assets/arrow.json',
+                            height: screenHeight * 0.2),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          // Third Page (Grid View)
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.all(8),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final crossAxisCount = constraints.maxWidth > 1200
+                    ? 3
+                    : constraints.maxWidth > 600
+                    ? 3
+                    : 2;
+                return GridView.count(
+                  physics: BouncingScrollPhysics(),
+                  crossAxisCount: crossAxisCount,
+                  childAspectRatio:constraints.maxWidth > 1200
+                      ? 1.3
+                      : constraints.maxWidth > 600
+                      ? 1.3
+                      : .9 ,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                  children: [
+                    FadeInLeft(
+                      child: _buildGridItem(
+                        context,
+                        color: Colors.brown.shade900.withOpacity(.9),
+                        title: 'Thinking',
+                        imageUrl:
+                        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394cedd72e210c65688_Grad%20Cap.png',
+                        titleDesc: 'I AM A QUICK LEARNER',
+                          desc: 'There is nothing I love more than learning something new! This passion inspires me to jump into complex applications with excitement instead of fear. Because I have learned "how to learn" I will be able to quickly pick up new technical integrations and teach them.',
+                          constraints: constraints
+                      ),
+                    ),
+                    FadeInDown(
+                      child: FadeInUp(
+                        child: FadeInRight(
+                          child: FadeInDown(
+                            child: _buildGridItem(
+                              context,
+                              color: Colors.orange.shade900.withOpacity(.9),
+                              title: 'Communicating',
+                              imageUrl:
+                              'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4cfd6087595af9f4bd_Comms%20Hat.png',
+                              titleDesc: 'I LISTEN CAREFULLY AND RESPOND CLEARLY',
+                                desc: 'I believe the key to success in any industry, career, or relationship is clear communication. Over the years, I learned that listening is the first (and arguably most important) step in great communication. Thus, I challenged myself to become a great listener, which elevated my written and verbal communication skills to an expert level. I believe my communication skills will empower me to be successful in the Solutions Engineer position.',
+                                constraints: constraints
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Lottie.asset('assets/arrow.json',height: 200)
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              )
-            ],
-          ),
-
-
-          Container(
-            color: Colors.black,
-            padding: EdgeInsets.all(8),
-            height: MediaQuery.sizeOf(context).height,
-            width: MediaQuery.sizeOf(context).width,
-            child: Center(
-              child: GridView(
-                gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                        crossAxisSpacing: 0,
-                    childAspectRatio:1.15
-                ),
-              children: [
-                Container(color: Colors.brown.shade900.withOpacity(.9),
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text('Thinking',style: TextStyle(color: Colors.white,fontSize: 38,fontWeight: FontWeight.w900)),
-                    Hero(tag: 'Thinking Cap',child: Image.network('https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394cedd72e210c65688_Grad%20Cap.png',height:160,)),
-                  Text('Hat',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.w900)),
-                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (cxt)=>DetailsWidget(color: Colors.brown.shade900.withOpacity(.9),image: 'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394cedd72e210c65688_Grad%20Cap.png',title: 'Thinking Cap',desc:'There is nothing I love more than learning something new! This passion inspires me to jump into complex applications with excitement instead of fear. Because I have learned "how to learn" I will be able to quickly pick up new technical integrations and teach them.',titleDesc: 'I AM A QUICK LEARNER',)));
-                      },
-                      style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(Colors.black),
-                          elevation: WidgetStatePropertyAll(3),
-                          shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Expand',style: TextStyle(color: Colors.white,fontSize: 18),),
-                        ),
+                    FadeInUpBig(
+                      child: _buildGridItem(
+                        context,
+                        color: Colors.amber.shade700.withOpacity(.9),
+                        title: 'Sorting',
+                        imageUrl: 'assets/hat.png',
+                        titleDesc: 'I AM WELL ORGANIZED',
+                          desc: 'There is nothing worse than the feeling of needing something and not being able to find it. That\'s why I go through painstaking detail to not only get organized, but to stay organized. Being able to effectively compartmentalize information allows me to juggle multiple projects and clients simultaneously.',
+                          constraints: constraints
+                      ),
+                    ),
+                    FadeInDownBig(
+                      child: _buildGridItem(
+                        context,
+                        color: Colors.red.shade800.withOpacity(.9),
+                        title: 'Building',
+                        imageUrl:
+                        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394611cbb78872e2ccd_Hard%20Hat.png',
+                        titleDesc: 'I LOVE MAKING THINGS',
+                       desc: 'As an mobile developer, there is nothing more rewarding than starting with a app and ending with something meaningful. This passion for creation inspires me to meet new challenges head on with enthusiasm and determination. Whether I am building a app, you will often find me completely obsessed with learning the intricate details of new creative tools.',
+                        constraints: constraints
+                      ),
+                    ),
+                    FadeInDownBig(
+                      child: _buildGridItem(
+                        context,
+                        color: Colors.green.shade700.withOpacity(.9),
+                        title: 'Fixing',
+                        imageUrl:
+                        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4d8ed2f6dde086c99c_DT%20Hat.png',
+                        titleDesc: 'I AM A PROBLEM SOLVER',
+                          desc: 'My greatest strength is my resourcefulness. I love being challenged, and working my way toward "AH-HA" moments. The sense of pride I feel when I am able to solve problems for myself and others keeps me going at night, and gets me out of bed in the morning. The opportunity to achieve this feeling on a daily basis through the Solutions Engineer role gets me pumped up!',
+                          constraints: constraints
+                      ),
+                    ),
+                    FadeInDownBig(
+                      child: _buildGridItem(
+                        context,
+                        color: Colors.deepPurple.shade700.withOpacity(.9),
+                        title: 'Compassion',
+                        imageUrl:
+                        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608c53df121d44d8d5ab6439_Nurses%20Cap.png',
+                        titleDesc: 'I LIVE BY THE GOLDEN RULE',
+                          desc: 'No matter the challenge, I always try to begin with empathy. Having a customer-first mindset is the key to providing lasting, meaningful solutions to problems. My high standard of excellence, relentless work ethic, and positive attitude are direct results of me "caring at a high level". I believe I will be an asset in Developer\'s mission of providing world-class customer support by practicing extraordinary kindness, and leading by serving others.',
+                          constraints: constraints
                       ),
                     ),
                   ],
-                ),
-                ),
-                Container(color: Colors.orange.shade900.withOpacity(.9),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Communicating',style: TextStyle(color: Colors.white,fontSize: 38,fontWeight: FontWeight.w900)),
-                        Hero(tag: 'Communicating hat',child: Image.network('https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4cfd6087595af9f4bd_Comms%20Hat.png',height:160,)),
-                      Text('Hat',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.w900)),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (cxt)=>DetailsWidget(color: Colors.orange.shade900.withOpacity(.9),image: 'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4cfd6087595af9f4bd_Comms%20Hat.png',title: 'Communicating hat',desc:'I believe the key to success in any industry, career, or relationship is clear communication. Over the years, I learned that listening is the first (and arguably most important) step in great communication. Thus, I challenged myself to become a great listener, which elevated my written and verbal communication skills to an expert level. I believe my communication skills will empower me to be successful in the Solutions Engineer position.',titleDesc: 'I LISTEN CAREFULLY AND RESPOND CLEARLY',)));
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(Colors.black),
-                            elevation: WidgetStatePropertyAll(3),
-                            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Expand',style: TextStyle(color: Colors.white,fontSize: 18),),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(color: Colors.amber.shade700.withOpacity(.9),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Sorting',style: TextStyle(color: Colors.white,fontSize: 38,fontWeight: FontWeight.w900)),
-                      Hero(tag:'Sorting hat',child: Image.asset('assets/hat.png',height:160,)),
-                      Text('Hat',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.w900)),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (cxt)=>DetailsWidget(color:Colors.amber.shade700.withOpacity(.9),image: 'assets/hat.png',title: 'Sorting hat',desc:'There is nothing worse than the feeling of needing something and not being able to find it. That\'s why I go through painstaking detail to not only get organized, but to stay organized. Being able to effectively compartmentalize information allows me to juggle multiple projects and clients simultaneously.',titleDesc: 'I AM WELL ORGANIZED',)));
-
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(Colors.black),
-                            elevation: WidgetStatePropertyAll(3),
-                            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Expand',style: TextStyle(color: Colors.white,fontSize: 18),),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),),
-                Container(color: Colors.red.shade800.withOpacity(.9),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Building',style: TextStyle(color: Colors.white,fontSize: 38,fontWeight: FontWeight.w900)),
-                      Hero(tag: 'Building Hat',child: Image.network('https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394611cbb78872e2ccd_Hard%20Hat.png',height:160,)),
-                      Text('Hat',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.w900)),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (cxt)=>DetailsWidget(color:Colors.red.shade800.withOpacity(.9),image: 'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394611cbb78872e2ccd_Hard%20Hat.png',title: 'Building Hat',desc:'As an mobile developer, there is nothing more rewarding than starting with a app and ending with something meaningful. This passion for creation inspires me to meet new challenges head on with enthusiasm and determination. Whether I am building a app, you will often find me completely obsessed with learning the intricate details of new creative tools.',titleDesc: 'I LOVE MAKING THINGS',)));
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(Colors.black),
-                            elevation: WidgetStatePropertyAll(3),
-                            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Expand',style: TextStyle(color: Colors.white,fontSize: 18),),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),),
-                Container(color: Colors.green.shade700.withOpacity(.9),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Fixing',style: TextStyle(color: Colors.white,fontSize: 38,fontWeight: FontWeight.w900)),
-                      Hero(tag:'Fixing Hat',child: Image.network('https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4d8ed2f6dde086c99c_DT%20Hat.png',height:160,)),
-                      Text('Hat',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.w900)),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (cxt)=>DetailsWidget(color:Colors.green.shade700.withOpacity(.9),image: 'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4d8ed2f6dde086c99c_DT%20Hat.png',title: 'Fixing Hat',desc:'My greatest strength is my resourcefulness. I love being challenged, and working my way toward "AH-HA" moments. The sense of pride I feel when I am able to solve problems for myself and others keeps me going at night, and gets me out of bed in the morning. The opportunity to achieve this feeling on a daily basis through the Solutions Engineer role gets me pumped up!',titleDesc: 'I AM A PROBLEM SOLVER',)));
-
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(Colors.black),
-                            elevation: WidgetStatePropertyAll(3),
-                            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Expand',style: TextStyle(color: Colors.white,fontSize: 18),),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),),
-                Container(color: Colors.deepPurple.shade700.withOpacity(.9),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Compassion',style: TextStyle(color: Colors.white,fontSize: 38,fontWeight: FontWeight.w900)),
-                      Hero(tag:'Compassion Hat',child: Image.network('https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608c53df121d44d8d5ab6439_Nurses%20Cap.png',height:160,)),
-                      Text('Hat',style: TextStyle(color: Colors.white,fontSize: 28,fontWeight: FontWeight.w900)),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (cxt)=>DetailsWidget(color:Colors.deepPurple.shade700.withOpacity(.9),image: 'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608c53df121d44d8d5ab6439_Nurses%20Cap.png',title: 'Compassion Hat',desc:'No matter the challenge, I always try to begin with empathy. Having a customer-first mindset is the key to providing lasting, meaningful solutions to problems. My high standard of excellence, relentless work ethic, and positive attitude are direct results of me "caring at a high level". I believe I will be an asset in Developer\'s mission of providing world-class customer support by practicing extraordinary kindness, and leading by serving others.',titleDesc: 'I LIVE BY THE GOLDEN RULE',)));
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(Colors.black),
-                            elevation: WidgetStatePropertyAll(3),
-                            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Expand',style: TextStyle(color: Colors.white,fontSize: 18),),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),),
-              ],
-                        ),
+                );
+              },
             ),
           ),
 
-
+          // Contact Page
           Stack(
             children: [
-              // Background Image
               Positioned.fill(
                 child: Image.asset(
-                  'assets/hats_background.webp', // Ensure this image is added in pubspec.yaml
+                  'assets/hats_background.webp',
                   fit: BoxFit.cover,
                 ),
               ),
               Center(
-                child: Container(height: 500,
-                  width: MediaQuery.sizeOf(context).width/1.3,
-                  decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter,end: Alignment.bottomCenter,colors: [
-                    Colors.black26,
-                    Colors.black38,
-                    Colors.black54,
-
-                  ])),
+                child: Container(
+                  height: screenHeight * 0.7,
+                  width: screenWidth * 0.8,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black26,
+                        Colors.black38,
+                        Colors.black54,
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Column(
-
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text('CONTACT INFORMATION',style: TextStyle(color: Colors.white,fontSize:60,fontWeight: FontWeight.w900),)
-                        , SizedBox(height: 40),
-
-                        Text('EMAIL :  alhyariabdallh@gmail.com',style: TextStyle(color: Colors.white,fontSize: 40,fontWeight: FontWeight.bold),),
-                        SizedBox(height:20),
-                        Text('PHONE :  +962-787032264',style: TextStyle(color: Colors.white,fontSize: 40,fontWeight: FontWeight.bold),),
-                        SizedBox(height:20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('LINKEDIN : ',style: TextStyle(color: Colors.white,fontSize: 40,fontWeight: FontWeight.bold),),
-                            InkWell(onTap: (){launchUrl(Uri.parse('https://www.linkedin.com/in/abdallah-alhyari-95b915201/'));},child: Text('abdallah-alhyari',style: TextStyle(color: Colors.blue.shade300,decorationColor: Colors.white,decoration: TextDecoration.underline,fontSize: 40,fontWeight: FontWeight.bold),)),
-                          ],
-                        )
+                        Text(
+                          'CONTACT INFORMATION',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: getResponsiveFontSize(40, context),
+                            fontWeight: FontWeight.w900,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: screenHeight * 0.05),
+                        _buildContactInfo(
+                          context,
+                          label: 'EMAIL:',
+                          value: 'alhyariabdallh@gmail.com',
+                        ),
+                        _buildContactInfo(
+                          context,
+                          label: 'PHONE:',
+                          value: '+962-787032264',
+                        ),
+                        _buildLinkedIn(context),
                       ],
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],
       ),
     );
   }
+
+  Widget _buildResponsiveButton(
+      BuildContext context, {
+        required String text,
+        required VoidCallback onPressed,
+      }) {
+    return LayoutBuilder(
+      builder: (context,constraints) {
+        return ElevatedButton(
+          onPressed: onPressed,
+          style: ButtonStyle(
+            backgroundColor: const WidgetStatePropertyAll(Colors.black),
+            elevation: const WidgetStatePropertyAll(3),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: constraints.maxWidth > 1200
+                  ? MediaQuery.of(context).size.width * 0.04
+                  : constraints.maxWidth > 600
+                  ? MediaQuery.of(context).size.width * 0.04
+                  : MediaQuery.of(context).size.width * 0.01 ,
+              vertical:constraints.maxWidth > 1200
+                  ? MediaQuery.of(context).size.width * 0.01
+                  : constraints.maxWidth > 600
+                  ? MediaQuery.of(context).size.width * 0.01
+                  : MediaQuery.of(context).size.width * 0.005,
+            ),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: getResponsiveFontSize(14, context),
+              ),
+            ),
+          ),
+        );
+      }
+    );
+  }
+
+  Widget _buildGridItem(
+      BuildContext context, {
+        required Color color,
+        required String title,
+        required String imageUrl,
+        required String desc,
+        required String titleDesc,
+        required BoxConstraints constraints
+      }) {
+        return Container(
+          color: color,
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: getResponsiveFontSize(
+                      constraints.maxWidth > 1200
+                          ? 24
+                          : constraints.maxWidth > 600
+                          ? 24
+                          :  15
+                      , context),
+                  fontWeight: FontWeight.w900,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Hero(
+                tag: '$title Hat',
+                child:imageUrl.contains('/hat.png')
+                    ?Image.asset(
+                  imageUrl,
+                  height:constraints.maxWidth > 1200
+                      ?  MediaQuery.of(context).size.height * 0.2
+                      : constraints.maxWidth > 600
+                      ?  MediaQuery.of(context).size.height * 0.2
+                      :  MediaQuery.of(context).size.height * 0.09,
+                ) :Image.network(
+                  imageUrl,
+                  height:constraints.maxWidth > 1200
+                      ?  MediaQuery.of(context).size.height * 0.2
+                      : constraints.maxWidth > 600
+                      ?  MediaQuery.of(context).size.height * 0.2
+                      :  MediaQuery.of(context).size.height * 0.09,
+                ),
+              ),
+              Text(
+                'Hat',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: getResponsiveFontSize(  constraints.maxWidth > 1200
+                      ? 24
+                      : constraints.maxWidth > 600
+                      ? 24
+                      :  15, context),
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              _buildResponsiveButton(
+                context,
+                text: 'Expand',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (cxt) => DetailsWidget(
+                        color: color,
+                        image: imageUrl,
+                        title: '$title Hat',
+                        desc: desc,
+                        titleDesc: titleDesc,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+
+
+  }
+
+  Widget _buildContactInfo(BuildContext context,
+      {required String label, required String value}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01),
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: '$label ',
+              style: TextStyle(
+                fontFamily: 'Tenada',
+                fontSize: getResponsiveFontSize(20, context),
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            TextSpan(
+              text: value,
+              style: TextStyle(
+                fontFamily: 'Tenada',
+                fontWeight: FontWeight.w100,
+                fontSize: getResponsiveFontSize(18, context),
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLinkedIn(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'LINKEDIN: ',
+            style: TextStyle(
+              fontSize: getResponsiveFontSize(20, context),
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              launchUrl(Uri.parse(
+                  'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'));
+            },
+            child: Text(
+              'abdallah-alhyari',
+              style: TextStyle(
+                fontWeight: FontWeight.w100,
+                fontSize: getResponsiveFontSize(18, context),
+                color: Colors.blue.shade300,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+double getResponsiveFontSize(double size, BuildContext context) {
+  return size * MediaQuery.of(context).textScaleFactor.clamp(0.8, 1.2);
 }

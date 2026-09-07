@@ -8,8 +8,10 @@ class PortfolioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      builder: (context, child) => child!,
       title: 'Abdallah Alhyari - Portfolio',
       theme: ThemeData(
+        fontFamily: 'Tenada',
         primarySwatch: Colors.blue,
         textTheme: TextTheme(
           bodyMedium: TextStyle(color: Colors.black),
