@@ -16,7 +16,10 @@ const List<Project> kProjects = [
     ],
     stack: [
       'Flutter',
+      'Android',
+      'iOS',
       'Kotlin',
+      'Swift',
       'NFC',
       'JWT',
       'WorkManager',
