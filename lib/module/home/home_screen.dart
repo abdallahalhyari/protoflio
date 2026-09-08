@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:easy_localization/easy_localization.dart';
@@ -177,6 +178,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: _goTo,
                   controller: _controller,
                 ),
+              ),
+            ),
+            Positioned(
+              right: 56,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: _CurrentSectionLabel(
+                  controller: _controller,
+                  labelKeys: _sectionLabelKeys,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: _TopProgressBar(
+                controller: _controller,
+                count: _pageCount,
               ),
             ),
             if (MediaQuery.sizeOf(context).width >= 900)
@@ -1675,6 +1696,138 @@ class _AvailabilityChipState extends State<_AvailabilityChip>
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Thin primary progress bar at the top edge of the viewport that fills
+/// as the outer PageView scrolls between sections (0 -> pageCount-1).
+class _TopProgressBar extends StatelessWidget {
+  final PageController controller;
+  final int count;
+  const _TopProgressBar({required this.controller, required this.count});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return SizedBox(
+      height: 2,
+      child: AnimatedBuilder(
+        animation: controller,
+        builder: (context, _) {
+          final page =
+              controller.hasClients && controller.page != null
+                  ? controller.page!
+                  : 0.0;
+          final t = (count > 1 ? page / (count - 1) : 0.0).clamp(0.0, 1.0);
+          return Row(
+            children: [
+              Expanded(
+                flex: (t * 1000).round().clamp(0, 1000),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: scheme.primary),
+                ),
+              ),
+              Expanded(
+                flex: 1000 - (t * 1000).round().clamp(0, 1000),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: scheme.primary.withValues(alpha: 0.12),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// Small floating label next to the right-edge page indicator that fades
+/// in while the PageView is scrolling and fades out ~900ms after the
+/// last movement, showing the label of the section currently under the
+/// scroll offset.
+class _CurrentSectionLabel extends StatefulWidget {
+  final PageController controller;
+  final List<String> labelKeys;
+  const _CurrentSectionLabel({
+    required this.controller,
+    required this.labelKeys,
+  });
+
+  @override
+  State<_CurrentSectionLabel> createState() => _CurrentSectionLabelState();
+}
+
+class _CurrentSectionLabelState extends State<_CurrentSectionLabel> {
+  Timer? _idle;
+  bool _visible = false;
+  double _lastPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onScroll);
+    _idle?.cancel();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (!widget.controller.hasClients) return;
+    final page = widget.controller.page ?? 0;
+    if ((page - _lastPage).abs() < 0.005) return;
+    _lastPage = page;
+    if (!_visible) setState(() => _visible = true);
+    _idle?.cancel();
+    _idle = Timer(const Duration(milliseconds: 900), () {
+      if (mounted) setState(() => _visible = false);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: widget.controller,
+      builder: (context, _) {
+        final page = widget.controller.hasClients &&
+                widget.controller.page != null
+            ? widget.controller.page!
+            : 0.0;
+        final idx = page
+            .round()
+            .clamp(0, widget.labelKeys.length - 1);
+        return AnimatedOpacity(
+          duration: AppMotion.sm,
+          curve: Curves.easeOut,
+          opacity: _visible ? 1 : 0,
+          child: IgnorePointer(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.smd, vertical: AppSpacing.smx),
+              decoration: BoxDecoration(
+                color: AppColors.scrimSurface,
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                border: Border.all(color: Colors.white24, width: 1),
+              ),
+              child: Text(
+                widget.labelKeys[idx].tr(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: AppTypography.micro,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.6,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
