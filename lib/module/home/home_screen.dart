@@ -172,6 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   count: _pageCount,
                   current: _pageIndex,
                   onTap: _goTo,
+                  controller: _controller,
                 ),
               ),
             ),
@@ -378,46 +379,87 @@ class _PageIndicator extends StatelessWidget {
   final int count;
   final int current;
   final ValueChanged<int> onTap;
+  final PageController controller;
+
+  static const double _slot = 44;
 
   const _PageIndicator({
     required this.count,
     required this.current,
     required this.onTap,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(count, (i) {
-        final active = i == current;
-        return Semantics(
-          button: true,
-          selected: active,
-          label: 'a11y.goto_page'.tr(
-              namedArgs: {'n': '${i + 1}', 'total': '$count'}),
-          child: SizedBox(
-            width: 44,
-            height: 44,
-            child: InkResponse(
-              onTap: () => onTap(i),
-              radius: 22,
-              child: Center(
-                child: AnimatedContainer(
-                  duration: AppMotion.sm,
-                  width: active ? 12 : 8,
-                  height: active ? 12 : 8,
+    final scheme = Theme.of(context).colorScheme;
+    return SizedBox(
+      width: _slot,
+      height: _slot * count,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: controller,
+            builder: (context, _) {
+              // controller.page is null until first paint completes; fall
+              // back to the currently-snapped page in that window.
+              final page = controller.hasClients && controller.page != null
+                  ? controller.page!
+                  : current.toDouble();
+              final clamped = page.clamp(0, count - 1);
+              return Positioned(
+                top: clamped * _slot + (_slot - 22) / 2,
+                child: Container(
+                  width: 22,
+                  height: 22,
                   decoration: BoxDecoration(
-                    color: active ? Colors.white : Colors.white70,
+                    color: scheme.primary.withValues(alpha: 0.22),
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.black45, width: 1),
+                    border: Border.all(
+                      color: scheme.primary.withValues(alpha: 0.55),
+                      width: 1,
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
-        );
-      }),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(count, (i) {
+              final active = i == current;
+              return Semantics(
+                button: true,
+                selected: active,
+                label: 'a11y.goto_page'.tr(
+                    namedArgs: {'n': '${i + 1}', 'total': '$count'}),
+                child: SizedBox(
+                  width: _slot,
+                  height: _slot,
+                  child: InkResponse(
+                    onTap: () => onTap(i),
+                    radius: 22,
+                    child: Center(
+                      child: AnimatedContainer(
+                        duration: AppMotion.sm,
+                        width: active ? 10 : 6,
+                        height: active ? 10 : 6,
+                        decoration: BoxDecoration(
+                          color: active ? Colors.white : Colors.white70,
+                          shape: BoxShape.circle,
+                          border:
+                              Border.all(color: Colors.black45, width: 1),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1301,7 +1343,7 @@ class _ContactPage extends StatelessWidget {
   }
 }
 
-class _ContactRow extends StatelessWidget {
+class _ContactRow extends StatefulWidget {
   final IconData icon;
   final String label;
   final String value;
@@ -1321,26 +1363,80 @@ class _ContactRow extends StatelessWidget {
   });
 
   @override
+  State<_ContactRow> createState() => _ContactRowState();
+}
+
+class _ContactRowState extends State<_ContactRow>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pulse = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 550),
+  );
+  bool _showCopied = false;
+
+  @override
+  void dispose() {
+    _pulse.dispose();
+    super.dispose();
+  }
+
+  void _flash({bool asCopy = false}) {
+    _pulse.forward(from: 0);
+    if (asCopy) {
+      setState(() => _showCopied = true);
+      Future.delayed(const Duration(milliseconds: 1200), () {
+        if (mounted) setState(() => _showCopied = false);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final labelSize = (fontSize * 0.5).clamp(AppTypography.caption, AppTypography.body);
+    final scheme = Theme.of(context).colorScheme;
+    final labelSize =
+        (widget.fontSize * 0.5).clamp(AppTypography.caption, AppTypography.body);
     return Semantics(
-      label: '$label $value',
+      label: '${widget.label} ${widget.value}',
       button: true,
       child: InkWell(
-        onTap: onTap,
-        onLongPress: onLongPress,
+        onTap: () {
+          widget.onTap();
+          _flash();
+        },
+        onLongPress: widget.onLongPress == null
+            ? null
+            : () {
+                widget.onLongPress!();
+                _flash(asCopy: true);
+              },
         borderRadius: BorderRadius.circular(AppRadius.md),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 44),
-          child: Padding(
+        child: AnimatedBuilder(
+          animation: _pulse,
+          builder: (context, child) {
+            final t = 1 - _pulse.value;
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppRadius.md),
+                color: scheme.primary.withValues(alpha: 0.35 * t),
+                border: Border.all(
+                  color: scheme.primary.withValues(alpha: 0.6 * t),
+                  width: 1,
+                ),
+              ),
+              child: child,
+            );
+          },
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 44),
+            child: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.md, vertical: AppSpacing.smd),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ExcludeSemantics(
-                  child: Icon(icon,
-                      color: Colors.white, size: fontSize * 1.1),
+                  child: Icon(widget.icon,
+                      color: Colors.white, size: widget.fontSize * 1.1),
                 ),
                 const SizedBox(width: AppSpacing.md),
                 Flexible(
@@ -1348,29 +1444,65 @@ class _ContactRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        label,
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: labelSize,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 1.2,
-                          shadows: const [
-                            Shadow(color: Colors.black87, blurRadius: 4),
-                          ],
-                        ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            widget.label,
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: labelSize,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 1.2,
+                              shadows: const [
+                                Shadow(color: Colors.black87, blurRadius: 4),
+                              ],
+                            ),
+                          ),
+                          AnimatedSwitcher(
+                            duration: AppMotion.sm,
+                            child: _showCopied
+                                ? Padding(
+                                    key: const ValueKey('copied'),
+                                    padding: const EdgeInsets.only(
+                                        left: AppSpacing.sm),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: AppSpacing.sm,
+                                          vertical: 2),
+                                      decoration: BoxDecoration(
+                                        color: scheme.primary
+                                            .withValues(alpha: 0.9),
+                                        borderRadius: BorderRadius.circular(
+                                            AppRadius.pill),
+                                      ),
+                                      child: Text(
+                                        'contact.copied_chip'.tr(),
+                                        style: TextStyle(
+                                          color: scheme.onPrimary,
+                                          fontSize: AppTypography.micro,
+                                          fontWeight: FontWeight.w700,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(
+                                    key: ValueKey('empty'), width: 0),
+                          ),
+                        ],
                       ),
                       Text(
-                        value,
+                        widget.value,
                         style: TextStyle(
-                          color: linkStyle
+                          color: widget.linkStyle
                               ? AppColors.linkOnScrim
                               : Colors.white,
-                          decoration: linkStyle
+                          decoration: widget.linkStyle
                               ? TextDecoration.underline
                               : TextDecoration.none,
                           decorationColor: Colors.white,
-                          fontSize: fontSize,
+                          fontSize: widget.fontSize,
                           fontWeight: FontWeight.bold,
                           shadows: const [
                             Shadow(color: Colors.black87, blurRadius: 6),
@@ -1382,6 +1514,7 @@ class _ContactRow extends StatelessWidget {
                 ),
               ],
             ),
+          ),
           ),
         ),
       ),
