@@ -5,25 +5,54 @@ import '../../../util/open_url.dart';
 import '../model/project.dart';
 import 'app_card.dart';
 
-class ProjectCard extends StatelessWidget {
+class ProjectCard extends StatefulWidget {
   final Project project;
 
   const ProjectCard({super.key, required this.project});
 
+  @override
+  State<ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends State<ProjectCard> {
+  bool _hover = false;
+
   Future<void> _open(BuildContext context) async {
-    final url = project.url;
+    final url = widget.project.url;
     if (url == null) return;
     await openUrl(context, url);
   }
 
   @override
   Widget build(BuildContext context) {
+    final project = widget.project;
     final scheme = Theme.of(context).colorScheme;
     final onSurface = scheme.onSurface;
+    final canOpen = project.url != null;
 
-    return AppCard.outlined(
-      padding: const EdgeInsets.all(AppSpacing.md + 2),
-      child: Column(
+    return MouseRegion(
+      cursor: canOpen ? SystemMouseCursors.click : MouseCursor.defer,
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: AppMotion.sm,
+        curve: Curves.easeOut,
+        transform: Matrix4.translationValues(0, _hover ? -6 : 0, 0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          boxShadow: _hover
+              ? [
+                  BoxShadow(
+                    color: scheme.primary.withValues(alpha: 0.25),
+                    blurRadius: 28,
+                    offset: const Offset(0, 12),
+                  ),
+                ]
+              : const [],
+        ),
+        child: AppCard.outlined(
+          padding: const EdgeInsets.all(AppSpacing.md + 2),
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -123,6 +152,8 @@ class ProjectCard extends StatelessWidget {
                 .toList(),
           ),
         ],
+      ),
+        ),
       ),
     );
   }

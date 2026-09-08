@@ -18,6 +18,7 @@ import 'widget/hat_card.dart';
 import 'widget/page_background.dart';
 import 'widget/primary_button.dart';
 import 'widget/project_card.dart';
+import 'widget/site_cursor.dart';
 import 'widget/skill_tile.dart';
 
 /// Vertical space (px) reserved at the top of content pages so the floating
@@ -138,7 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SiteCursor(
+      child: Scaffold(
       body: Focus(
         focusNode: _focusNode,
         autofocus: true,
@@ -202,6 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -419,9 +422,27 @@ class _PageIndicator extends StatelessWidget {
   }
 }
 
-class _IntroPage extends StatelessWidget {
+class _IntroPage extends StatefulWidget {
   final VoidCallback onScrollDown;
   const _IntroPage({required this.onScrollDown});
+
+  @override
+  State<_IntroPage> createState() => _IntroPageState();
+}
+
+class _IntroPageState extends State<_IntroPage>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _spin = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 18),
+  )..repeat();
+  Offset _parallax = Offset.zero;
+
+  @override
+  void dispose() {
+    _spin.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -469,21 +490,11 @@ class _IntroPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                Semantics(
-                  label: 'intro.portrait_alt'.tr(),
-                  image: true,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    padding: const EdgeInsets.all(AppSpacing.xs - 1),
-                    child: CircleAvatar(
-                      radius: avatarRadius,
-                      backgroundColor: Colors.brown.shade300,
-                      backgroundImage: const AssetImage('assets/my_image.png'),
-                    ),
-                  ),
+                _AnimatedPortrait(
+                  radius: avatarRadius,
+                  spin: _spin,
+                  parallax: _parallax,
+                  onParallax: (o) => setState(() => _parallax = o),
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
@@ -517,7 +528,8 @@ class _IntroPage extends StatelessWidget {
                 const _PlatformChips(),
                 const SizedBox(height: AppSpacing.xl),
                 PrimaryButton(
-                    label: 'intro.scroll_down'.tr(), onPressed: onScrollDown),
+                    label: 'intro.scroll_down'.tr(),
+                    onPressed: widget.onScrollDown),
                 const SizedBox(height: AppSpacing.md),
                 ExcludeSemantics(
                     child: Lottie.asset('assets/arrow_white.json', height: 80)),
@@ -526,6 +538,97 @@ class _IntroPage extends StatelessWidget {
             ),
           ),
         ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AnimatedPortrait extends StatelessWidget {
+  final double radius;
+  final Animation<double> spin;
+  final Offset parallax;
+  final ValueChanged<Offset> onParallax;
+
+  const _AnimatedPortrait({
+    required this.radius,
+    required this.spin,
+    required this.parallax,
+    required this.onParallax,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final glowSize = radius * 2 + AppSpacing.lg;
+    return Semantics(
+      label: 'intro.portrait_alt'.tr(),
+      image: true,
+      child: MouseRegion(
+        onHover: (e) {
+          // Translate relative pointer offset from widget center into a small
+          // parallax vector (max ~12px each axis). Non-desktop hover events
+          // just don't fire, so this is a no-op on touch.
+          final box = context.findRenderObject() as RenderBox?;
+          if (box == null) return;
+          final local = box.globalToLocal(e.position);
+          final center = box.size.center(Offset.zero);
+          final rel = (local - center) / box.size.longestSide;
+          onParallax(Offset(rel.dx * 12, rel.dy * 12));
+        },
+        onExit: (_) => onParallax(Offset.zero),
+        child: SizedBox(
+          width: glowSize,
+          height: glowSize,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              AnimatedBuilder(
+                animation: spin,
+                builder: (context, _) {
+                  return Transform.rotate(
+                    angle: spin.value * 2 * 3.14159,
+                    child: Container(
+                      width: glowSize,
+                      height: glowSize,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: SweepGradient(
+                          colors: [
+                            scheme.primary.withValues(alpha: 0.0),
+                            scheme.primary.withValues(alpha: 0.55),
+                            scheme.primary.withValues(alpha: 0.0),
+                            scheme.tertiary.withValues(alpha: 0.55),
+                            scheme.primary.withValues(alpha: 0.0),
+                          ],
+                          stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              AnimatedContainer(
+                duration: AppMotion.md,
+                curve: Curves.easeOut,
+                transform:
+                    Matrix4.translationValues(parallax.dx, parallax.dy, 0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.all(AppSpacing.xs - 1),
+                  child: CircleAvatar(
+                    radius: radius,
+                    backgroundColor: Colors.brown.shade300,
+                    backgroundImage:
+                        const AssetImage('assets/my_image.png'),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
