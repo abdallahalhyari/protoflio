@@ -190,6 +190,8 @@ class _ThemeToggle extends StatelessWidget {
             child: IconButton(
               tooltip:
                   (dark ? 'theme.switch_to_light' : 'theme.switch_to_dark').tr(),
+              focusColor: Colors.white.withValues(alpha: 0.30),
+              hoverColor: Colors.white.withValues(alpha: 0.10),
               icon: Icon(
                 dark ? Icons.light_mode : Icons.dark_mode,
                 color: Colors.white,
@@ -214,6 +216,8 @@ class _LanguageToggle extends StatelessWidget {
         shape: const CircleBorder(),
         child: IconButton(
           tooltip: 'language.toggle_tooltip'.tr(),
+          focusColor: Colors.white.withValues(alpha: 0.30),
+          hoverColor: Colors.white.withValues(alpha: 0.10),
           icon: Text(
             isArabic ? 'EN' : 'ع',
             style: const TextStyle(
@@ -304,15 +308,20 @@ class _NavItem extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.pill),
+        focusColor: Colors.white.withValues(alpha: 0.30),
+        hoverColor: Colors.white.withValues(alpha: 0.10),
         child: AnimatedContainer(
           duration: AppMotion.sm,
           padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.smd, vertical: AppSpacing.sm),
           decoration: BoxDecoration(
             color: active
-                ? Colors.white.withValues(alpha: 0.15)
+                ? Colors.white.withValues(alpha: 0.25)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(AppRadius.pill),
+            border: active
+                ? Border.all(color: Colors.white70, width: 1)
+                : null,
           ),
           child: Text(
             label,
@@ -1031,7 +1040,10 @@ class _ContactRow extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon, color: Colors.white, size: fontSize * 1.1),
+                ExcludeSemantics(
+                  child: Icon(icon,
+                      color: Colors.white, size: fontSize * 1.1),
+                ),
                 const SizedBox(width: AppSpacing.md),
                 Flexible(
                   child: Column(
