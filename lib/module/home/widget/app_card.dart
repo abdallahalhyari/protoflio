@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 
 /// Shared card surface: consistent radius, padding rhythm, border style.
-/// Two constructors:
-///  - `AppCard.outlined()` — dark surface tinted from Theme with onSurface border.
-///  - `AppCard.filled(color: ...)` — solid brand color with subtle white border.
+///
+/// | Variant | Use when |
+/// | ------- | -------- |
+/// | `AppCard.outlined()` | Neutral card on a theme scaffold background — used for skill / project / education tiles. Fill is a low-alpha `onSurface` tint; border is a stronger `onSurface` line so the shape reads without competing with hero content. |
+/// | `AppCard.filled(color:)` | Card whose identity comes from a brand or category color — used for `HatCard`, where each hat has its own tinted surface. Border is a 12 %-white hairline (`AppColors.borderOverlay`) so any fill color still has a soft edge on dark backgrounds. |
 class AppCard extends StatelessWidget {
   final Widget child;
   final Color? _fillOverride;
@@ -27,7 +29,7 @@ class AppCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(AppSpacing.md),
     this.radius = AppRadius.md,
   })  : _fillOverride = color,
-        _borderOverride = const Color(0x1FFFFFFF); // white @ ~12%
+        _borderOverride = AppColors.borderOverlay;
 
   @override
   Widget build(BuildContext context) {

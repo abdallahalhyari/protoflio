@@ -106,7 +106,7 @@ class _ProjectCardState extends State<ProjectCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.sm - 2),
+                    padding: const EdgeInsets.only(top: AppSpacing.smx),
                     child: Icon(Icons.check_circle,
                         size: 12, color: scheme.primary),
                   ),
@@ -127,8 +127,8 @@ class _ProjectCardState extends State<ProjectCard> {
           ),
           const SizedBox(height: AppSpacing.smd),
           Wrap(
-            spacing: AppSpacing.sm - 2,
-            runSpacing: AppSpacing.sm - 2,
+            spacing: AppSpacing.smx,
+            runSpacing: AppSpacing.smx,
             children: project.stack
                 .map(
                   (t) => Container(

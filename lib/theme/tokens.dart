@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-/// Spacing scale (4pt base). Use these instead of magic numbers.
+/// Spacing scale (2pt/4pt base). Use these instead of magic numbers.
+///
+/// The odd-stop values (`smx = 6`, `mdx = 14`) exist to eliminate the
+/// `AppSpacing.sm - 2` / `AppSpacing.md + 2` arithmetic that used to
+/// litter widgets whenever we needed something between two stops.
 class AppSpacing {
   AppSpacing._();
   static const double xs = 4;
+  static const double smx = 6;
   static const double sm = 8;
   static const double smd = 12;
+  static const double mdx = 14;
   static const double md = 16;
   static const double lg = 24;
   static const double xl = 32;
@@ -31,8 +37,16 @@ class AppMotion {
   static const Duration sm = Duration(milliseconds: 250);
   static const Duration md = Duration(milliseconds: 350);
   static const Duration lg = Duration(milliseconds: 500);
+  // Wheel-snap cooldown between page changes.
+  static const Duration wheelCooldown = Duration(milliseconds: 450);
+  // Contact-row copy pulse.
+  static const Duration chip = Duration(milliseconds: 550);
   static const Duration xl = Duration(milliseconds: 700);
   static const Duration xxl = Duration(milliseconds: 900);
+  // "Copied" chip hold before it fades out.
+  static const Duration toast = Duration(milliseconds: 1200);
+  // SnackBar auto-dismiss.
+  static const Duration snack = Duration(seconds: 2);
   static const Curve enter = Curves.easeOutCubic;
   static const Curve exit = Curves.easeInCubic;
   static const Curve emphasized = Curves.easeOutBack;
@@ -69,6 +83,14 @@ class AppColors {
   static Color scrimLight = Colors.black.withValues(alpha: 0.3);
   static Color scrimMedium = Colors.black.withValues(alpha: 0.35);
   static Color scrimHeavy = Colors.black.withValues(alpha: 0.4);
+
+  // Semi-opaque black used for floating surfaces (nav pill, top-right
+  // theme/language toggle circles) that sit above any page background
+  // and need a consistent contrast base.
+  static Color scrimSurface = Colors.black.withValues(alpha: 0.45);
+
+  // 12% white — hairline border for outlined cards on the dark theme.
+  static const Color borderOverlay = Color(0x1FFFFFFF);
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site
