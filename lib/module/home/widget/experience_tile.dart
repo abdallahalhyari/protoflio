@@ -129,9 +129,19 @@ class _Timeline extends StatelessWidget {
                 : Container(width: 2, color: color.withValues(alpha: 0.35)),
           ),
           Container(
-            width: 12,
-            height: 12,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            width: 14,
+            height: 14,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.55),
+                  blurRadius: 8,
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: isLast

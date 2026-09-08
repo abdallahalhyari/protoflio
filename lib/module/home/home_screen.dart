@@ -385,7 +385,11 @@ class _IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final isWide = size.width >= 800;
-    final avatarRadius = (size.shortestSide * 0.22).clamp(80.0, 180.0);
+    // Cap avatar by BOTH height and shortestSide so it doesn't crowd the
+    // title/CTA on short viewports (900px height was overlapping the title).
+    final maxAvatar = (size.height * 0.28).clamp(80.0, 180.0);
+    final avatarRadius =
+        (size.shortestSide * 0.22).clamp(80.0, maxAvatar).toDouble();
     final titleSize =
         (size.width * 0.06).clamp(AppTypography.heading, AppTypography.heroLg);
     final subtitleSize =
@@ -941,6 +945,7 @@ class _ContactPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 _ContactRow(
+                  icon: Icons.mail_outline,
                   label: 'contact.email'.tr(),
                   value: 'alhyariabdallh@gmail.com',
                   onTap: () =>
@@ -951,6 +956,7 @@ class _ContactPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _ContactRow(
+                  icon: Icons.phone_outlined,
                   label: 'contact.phone'.tr(),
                   value: '+962-787032264',
                   onTap: () => _open(context, 'tel:+962787032264'),
@@ -959,6 +965,7 @@ class _ContactPage extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _ContactRow(
+                  icon: Icons.link,
                   label: 'contact.linkedin'.tr(),
                   value: 'abdallah-alhyari',
                   onTap: () => _open(context,
@@ -988,6 +995,7 @@ class _ContactPage extends StatelessWidget {
 }
 
 class _ContactRow extends StatelessWidget {
+  final IconData icon;
   final String label;
   final String value;
   final VoidCallback onTap;
@@ -996,6 +1004,7 @@ class _ContactRow extends StatelessWidget {
   final bool linkStyle;
 
   const _ContactRow({
+    required this.icon,
     required this.label,
     required this.value,
     required this.onTap,
@@ -1006,48 +1015,65 @@ class _ContactRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final labelSize = (fontSize * 0.5).clamp(AppTypography.caption, AppTypography.body);
     return Semantics(
       label: '$label $value',
       button: true,
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Text(
-            '$label : ',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          InkWell(
-            onTap: onTap,
-            onLongPress: onLongPress,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 44),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm - 2, vertical: AppSpacing.sm + 2),
-                child: Text(
-                  value,
-                  style: TextStyle(
-                    color: linkStyle ? AppColors.linkOnScrim : Colors.white,
-                    decoration: linkStyle
-                        ? TextDecoration.underline
-                        : TextDecoration.none,
-                    decorationColor: Colors.white,
-                    fontSize: fontSize,
-                    fontWeight: FontWeight.bold,
-                    shadows: const [
-                      Shadow(color: Colors.black87, blurRadius: 6),
+      child: InkWell(
+        onTap: onTap,
+        onLongPress: onLongPress,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 44),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md, vertical: AppSpacing.smd),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, color: Colors.white, size: fontSize * 1.1),
+                const SizedBox(width: AppSpacing.md),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        label,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: labelSize,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                          shadows: const [
+                            Shadow(color: Colors.black87, blurRadius: 4),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        value,
+                        style: TextStyle(
+                          color: linkStyle
+                              ? AppColors.linkOnScrim
+                              : Colors.white,
+                          decoration: linkStyle
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
+                          decorationColor: Colors.white,
+                          fontSize: fontSize,
+                          fontWeight: FontWeight.bold,
+                          shadows: const [
+                            Shadow(color: Colors.black87, blurRadius: 6),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
