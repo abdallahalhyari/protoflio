@@ -21,10 +21,12 @@ class ExperienceTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _Timeline(
-            color: scheme.primary,
-            isFirst: isFirst,
-            isLast: isLast,
+          ExcludeSemantics(
+            child: _Timeline(
+              color: scheme.primary,
+              isFirst: isFirst,
+              isLast: isLast,
+            ),
           ),
           const SizedBox(width: AppSpacing.md - 2),
           Expanded(
