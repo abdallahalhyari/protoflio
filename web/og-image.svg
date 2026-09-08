@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0E0E10"/>
+      <stop offset="60%" stop-color="#131A2A"/>
+      <stop offset="100%" stop-color="#0A2540"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4A90E2"/>
+      <stop offset="100%" stop-color="#7DB8F7"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.15" cy="0.5" r="0.6">
+      <stop offset="0%" stop-color="#4A90E2" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4A90E2" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Left accent bar -->
+  <rect x="0" y="0" width="10" height="630" fill="url(#accent)"/>
+
+  <!-- Decorative dots (circuit-ish) -->
+  <g fill="#4A90E2" opacity="0.15">
+    <circle cx="1050" cy="120" r="4"/>
+    <circle cx="1090" cy="160" r="3"/>
+    <circle cx="1130" cy="130" r="5"/>
+    <circle cx="1080" cy="480" r="4"/>
+    <circle cx="1120" cy="520" r="3"/>
+    <circle cx="1050" cy="540" r="5"/>
+  </g>
+
+  <!-- Name (huge) -->
+  <text x="90" y="230"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="88"
+        font-weight="900"
+        fill="#FFFFFF"
+        letter-spacing="-2">
+    Abdallah Alhyari
+  </text>
+
+  <!-- Role -->
+  <text x="90" y="300"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="38"
+        font-weight="600"
+        fill="url(#accent)">
+    Senior Mobile Engineer · Flutter / Android
+  </text>
+
+  <!-- Divider -->
+  <rect x="90" y="335" width="120" height="4" fill="#FFFFFF" opacity="0.7"/>
+
+  <!-- Tagline -->
+  <text x="90" y="405"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="30"
+        font-weight="400"
+        fill="#B5C7E0">
+    Amman, Jordan  →  Brno, Czech Republic · 2027
+  </text>
+
+  <!-- Skills row -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+     font-size="22"
+     font-weight="600"
+     fill="#FFFFFF">
+    <g>
+      <rect x="90" y="455" width="150" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.10" stroke="#4A90E2" stroke-opacity="0.4"/>
+      <text x="165" y="486" text-anchor="middle">Flutter</text>
+    </g>
+    <g>
+      <rect x="255" y="455" width="150" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.10" stroke="#4A90E2" stroke-opacity="0.4"/>
+      <text x="330" y="486" text-anchor="middle">NFC</text>
+    </g>
+    <g>
+      <rect x="420" y="455" width="150" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.10" stroke="#4A90E2" stroke-opacity="0.4"/>
+      <text x="495" y="486" text-anchor="middle">Kotlin</text>
+    </g>
+    <g>
+      <rect x="585" y="455" width="180" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.10" stroke="#4A90E2" stroke-opacity="0.4"/>
+      <text x="675" y="486" text-anchor="middle">Secure JWT</text>
+    </g>
+    <g>
+      <rect x="780" y="455" width="200" height="46" rx="23" fill="#FFFFFF" fill-opacity="0.10" stroke="#4A90E2" stroke-opacity="0.4"/>
+      <text x="880" y="486" text-anchor="middle">AI / LLM</text>
+    </g>
+  </g>
+
+  <!-- Bottom bar -->
+  <line x1="90" y1="555" x2="1110" y2="555" stroke="#FFFFFF" stroke-opacity="0.15" stroke-width="1"/>
+
+  <!-- Footer left: URL -->
+  <text x="90" y="595"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace"
+        font-size="22"
+        font-weight="500"
+        fill="#7DB8F7">
+    testfirestore-9b0b0.web.app
+  </text>
+
+  <!-- Footer right: 5+ yrs badge -->
+  <g>
+    <rect x="940" y="570" width="170" height="46" rx="8" fill="#4A90E2"/>
+    <text x="1025" y="600"
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+          font-size="22"
+          font-weight="700"
+          fill="#FFFFFF"
+          text-anchor="middle">
+      5+ yrs mobile
+    </text>
+  </g>
+</svg>
