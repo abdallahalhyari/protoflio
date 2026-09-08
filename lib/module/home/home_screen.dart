@@ -17,7 +17,9 @@ import 'widget/experience_tile.dart';
 import 'widget/hat_card.dart';
 import 'widget/page_background.dart';
 import 'widget/primary_button.dart';
+import 'widget/grain_overlay.dart';
 import 'widget/project_card.dart';
+import 'widget/section_heading.dart';
 import 'widget/site_cursor.dart';
 import 'widget/skill_tile.dart';
 
@@ -203,6 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            const Positioned.fill(child: GrainOverlay(opacity: 0.045)),
           ],
         ),
       ),
@@ -899,14 +902,12 @@ class _SkillsPage extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(
-                'skills.heading'.tr(),
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: headingSize,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                ),
+              SectionHeading(
+                index: 3,
+                total: 7,
+                title: 'skills.heading'.tr(),
+                titleSize: headingSize,
+                color: textColor,
               ),
               const SizedBox(height: AppSpacing.lg),
               Expanded(
@@ -974,15 +975,12 @@ class _ProjectsPageState extends State<_ProjectsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'projects.heading'.tr(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: headingSize,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                ),
+              SectionHeading(
+                index: 4,
+                total: 7,
+                title: 'projects.heading'.tr(),
+                titleSize: headingSize,
+                color: scheme.onSurface,
               ),
               const SizedBox(height: AppSpacing.lg),
               Expanded(
@@ -1221,15 +1219,12 @@ class _ExperiencePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'experience.heading'.tr(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: headingSize,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                ),
+              SectionHeading(
+                index: 5,
+                total: 7,
+                title: 'experience.heading'.tr(),
+                titleSize: headingSize,
+                color: scheme.onSurface,
               ),
               const SizedBox(height: AppSpacing.lg - 4),
               Expanded(
