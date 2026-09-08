@@ -20,6 +20,8 @@ const List<Project> kProjects = [
       'NFC',
       'JWT',
       'WorkManager',
+      'RabbitMQ',
+      'AI / LLM',
       'Clean Arch',
     ],
   ),
