@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 import '../../../util/open_url.dart';
@@ -17,11 +18,24 @@ class ProjectCard extends StatefulWidget {
 
 class _ProjectCardState extends State<ProjectCard> {
   bool _hover = false;
+  Offset _tilt = Offset.zero; // -1..1 on each axis
 
   Future<void> _open(BuildContext context) async {
     final url = widget.project.url;
     if (url == null) return;
     await openUrl(context, url);
+  }
+
+  void _updateTilt(PointerHoverEvent e) {
+    if (MediaQuery.of(context).disableAnimations) return;
+    final box = context.findRenderObject() as RenderBox?;
+    if (box == null) return;
+    final local = box.globalToLocal(e.position);
+    final rel = Offset(
+      (local.dx / box.size.width) * 2 - 1,
+      (local.dy / box.size.height) * 2 - 1,
+    );
+    setState(() => _tilt = rel);
   }
 
   @override
@@ -39,20 +53,35 @@ class _ProjectCardState extends State<ProjectCard> {
     final reduce = MediaQuery.of(context).disableAnimations;
     final hovered = _hover && !reduce;
 
+    // Small 3D tilt tracking the pointer. Clamps to ~6deg on each axis
+    // so the card feels responsive without looking gimmicky. Reset to
+    // zero when the pointer leaves.
+    const maxTiltDeg = 6.0;
+    final tiltMatrix = Matrix4.identity()
+      ..setEntry(3, 2, 0.001) // enable perspective
+      ..translateByDouble(0, hovered ? -6 : 0, 0, 1)
+      ..rotateX(hovered ? -_tilt.dy * maxTiltDeg * 3.14159 / 180 : 0)
+      ..rotateY(hovered ? _tilt.dx * maxTiltDeg * 3.14159 / 180 : 0);
+
     return MouseRegion(
       cursor: canOpen ? SystemMouseCursors.click : MouseCursor.defer,
       onEnter: (_) {
         setState(() => _hover = true);
         if (canOpen) SiteCursor.hot.value++;
       },
+      onHover: _updateTilt,
       onExit: (_) {
-        setState(() => _hover = false);
+        setState(() {
+          _hover = false;
+          _tilt = Offset.zero;
+        });
         if (canOpen) SiteCursor.hot.value--;
       },
       child: AnimatedContainer(
-        duration: AppMotion.sm,
+        duration: AppMotion.xs,
         curve: Curves.easeOut,
-        transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0),
+        transformAlignment: Alignment.center,
+        transform: tiltMatrix,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppRadius.md),
           boxShadow: hovered
