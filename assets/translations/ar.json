@@ -62,6 +62,8 @@
     "download_cv_semantic": "تحميل السيرة الذاتية، PDF، 54 كيلوبايت، يفتح في تبويب جديد",
     "copied": "تم النسخ: {value}",
     "copied_chip": "نُسخ",
+    "availability": "متاح للفرص · برنو 2027",
+    "availability_a11y": "متاح للفرص، انتقال إلى برنو في 2027",
     "open_failed": "تعذّر فتح {url}"
   },
   "details": {
