@@ -480,6 +480,8 @@ class _IntroPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: AppSpacing.md),
+                const _PlatformChips(),
                 const SizedBox(height: AppSpacing.xl),
                 PrimaryButton(
                     label: 'intro.scroll_down'.tr(), onPressed: onScrollDown),
@@ -492,6 +494,60 @@ class _IntroPage extends StatelessWidget {
           ),
         ),
         ),
+      ),
+    );
+  }
+}
+
+class _PlatformChips extends StatelessWidget {
+  const _PlatformChips();
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: AppSpacing.smd,
+      runSpacing: AppSpacing.sm,
+      children: const [
+        _PlatformChip(icon: Icons.flutter_dash, label: 'Flutter'),
+        _PlatformChip(icon: Icons.android, label: 'Android'),
+        _PlatformChip(icon: Icons.phone_iphone, label: 'iOS'),
+      ],
+    );
+  }
+}
+
+class _PlatformChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  const _PlatformChip({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.35)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.white, size: AppTypography.title),
+          const SizedBox(width: AppSpacing.sm),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: AppTypography.body,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.3,
+              shadows: [Shadow(color: Colors.black87, blurRadius: 6)],
+            ),
+          ),
+        ],
       ),
     );
   }
