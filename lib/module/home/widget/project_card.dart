@@ -4,6 +4,7 @@ import '../../../theme/tokens.dart';
 import '../../../util/open_url.dart';
 import '../model/project.dart';
 import 'app_card.dart';
+import 'site_cursor.dart';
 
 class ProjectCard extends StatefulWidget {
   final Project project;
@@ -24,6 +25,12 @@ class _ProjectCardState extends State<ProjectCard> {
   }
 
   @override
+  void dispose() {
+    if (_hover && widget.project.url != null) SiteCursor.hot.value--;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final project = widget.project;
     final scheme = Theme.of(context).colorScheme;
@@ -34,8 +41,14 @@ class _ProjectCardState extends State<ProjectCard> {
 
     return MouseRegion(
       cursor: canOpen ? SystemMouseCursors.click : MouseCursor.defer,
-      onEnter: (_) => setState(() => _hover = true),
-      onExit: (_) => setState(() => _hover = false),
+      onEnter: (_) {
+        setState(() => _hover = true);
+        if (canOpen) SiteCursor.hot.value++;
+      },
+      onExit: (_) {
+        setState(() => _hover = false);
+        if (canOpen) SiteCursor.hot.value--;
+      },
       child: AnimatedContainer(
         duration: AppMotion.sm,
         curve: Curves.easeOut,
