@@ -10,6 +10,8 @@ const List<Experience> kExperience = [
       'Built token-lifecycle security framework: two-step JWT issuance, secure storage, GUID-based device binding.',
       'Established client-side error-handling protocols with exponential-backoff retries and standardized failure guidelines.',
       'Implemented offline-first submission policy via WorkManager for background sync, status polling, and token refresh.',
+      'Integrated RabbitMQ-based async messaging across the mobile stack for event-driven flows.',
+      'Applied AI/LLM tooling to accelerate delivery and support compliance workflows.',
     ],
   ),
   Experience(
