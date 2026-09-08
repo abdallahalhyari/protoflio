@@ -1302,6 +1302,8 @@ class _ContactPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
+                const _AvailabilityChip(),
+                const SizedBox(height: AppSpacing.md),
                 Text(
                   'contact.heading'.tr(),
                   textAlign: TextAlign.center,
@@ -1545,6 +1547,103 @@ class _ContactRowState extends State<_ContactRow>
             ),
           ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "Open for roles · Brno 2027" pill shown above the contact heading.
+/// Green outline, pulsing dot on the left; pulse disables when the OS
+/// "reduce motion" setting is on.
+class _AvailabilityChip extends StatefulWidget {
+  const _AvailabilityChip();
+
+  @override
+  State<_AvailabilityChip> createState() => _AvailabilityChipState();
+}
+
+class _AvailabilityChipState extends State<_AvailabilityChip>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pulse = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1400),
+  );
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_started && !MediaQuery.of(context).disableAnimations) {
+      _pulse.repeat(reverse: true);
+      _started = true;
+    }
+  }
+
+  @override
+  void dispose() {
+    _pulse.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const green = Color(0xFF22C55E);
+    return Semantics(
+      label: 'contact.availability_a11y'.tr(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.smd, vertical: AppSpacing.smx),
+        decoration: BoxDecoration(
+          color: green.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+          border: Border.all(color: green.withValues(alpha: 0.55), width: 1),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedBuilder(
+              animation: _pulse,
+              builder: (_, __) {
+                final t = _pulse.value;
+                return SizedBox(
+                  width: 12,
+                  height: 12,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 8 + 4 * t,
+                        height: 8 + 4 * t,
+                        decoration: BoxDecoration(
+                          color: green.withValues(alpha: 0.35 * (1 - t)),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      Container(
+                        width: 6,
+                        height: 6,
+                        decoration: const BoxDecoration(
+                          color: green,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            Text(
+              'contact.availability'.tr(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: AppTypography.micro,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.6,
+              ),
+            ),
+          ],
         ),
       ),
     );
