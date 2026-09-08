@@ -35,7 +35,9 @@ class PortfolioApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          home: const HomeScreen(),
+          // Key on locale so the entire home subtree rebuilds when the
+          // user swaps language — otherwise .tr() strings stay stale.
+          home: HomeScreen(key: ValueKey(context.locale.languageCode)),
         );
       },
     );
