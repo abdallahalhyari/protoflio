@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 import '../model/skill.dart';
 import 'app_card.dart';
+import 'site_cursor.dart';
 
 class SkillTile extends StatefulWidget {
   final Skill skill;
@@ -38,6 +39,7 @@ class _SkillTileState extends State<SkillTile>
 
   @override
   void dispose() {
+    if (_hover) SiteCursor.hot.value--;
     _c.dispose();
     super.dispose();
   }
@@ -130,8 +132,14 @@ class _SkillTileState extends State<SkillTile>
         : card;
 
     return MouseRegion(
-      onEnter: (_) => setState(() => _hover = true),
-      onExit: (_) => setState(() => _hover = false),
+      onEnter: (_) {
+        setState(() => _hover = true);
+        SiteCursor.hot.value++;
+      },
+      onExit: (_) {
+        setState(() => _hover = false);
+        SiteCursor.hot.value--;
+      },
       child: AnimatedContainer(
         duration: AppMotion.sm,
         curve: Curves.easeOut,

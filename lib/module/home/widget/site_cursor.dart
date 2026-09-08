@@ -11,9 +11,23 @@ import '../../../theme/tokens.dart';
 /// The system cursor stays visible underneath so that hit-testing feedback
 /// (`SystemMouseCursors.click`, `.text`, etc.) still communicates
 /// interactivity in the usual way.
+///
+/// ### Hot state
+///
+/// The ring can grow + tint primary when the pointer sits over a widget
+/// that has opted in. Any hover-aware widget (project card, hat card,
+/// nav item, etc.) just calls `SiteCursor.hot.value++` on enter and
+/// `--` on exit — the reference count lets nested/overlapping regions
+/// stack cleanly. On mobile / non-web the notifier still exists but
+/// isn't read.
 class SiteCursor extends StatefulWidget {
   final Widget child;
   const SiteCursor({super.key, required this.child});
+
+  /// Reference-counted hot flag. `> 0` means the pointer is over at
+  /// least one interactive widget; the ring grows and takes on the
+  /// primary color while non-zero.
+  static final ValueNotifier<int> hot = ValueNotifier<int>(0);
 
   @override
   State<SiteCursor> createState() => _SiteCursorState();
@@ -42,38 +56,53 @@ class _SiteCursorState extends State<SiteCursor> {
           widget.child,
           if (_inside)
             IgnorePointer(
-              child: Stack(
-                children: [
-                  AnimatedPositioned(
-                    duration: AppMotion.xs,
-                    curve: Curves.easeOut,
-                    left: _pos.dx - 14,
-                    top: _pos.dy - 14,
-                    child: Container(
-                      width: 28,
-                      height: 28,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: scheme.onSurface.withValues(alpha: 0.45),
-                          width: 1.4,
+              child: ValueListenableBuilder<int>(
+                valueListenable: SiteCursor.hot,
+                builder: (context, hotCount, _) {
+                  final hot = hotCount > 0;
+                  final ringSize = hot ? 44.0 : 28.0;
+                  return Stack(
+                    children: [
+                      AnimatedPositioned(
+                        duration: AppMotion.sm,
+                        curve: Curves.easeOutCubic,
+                        left: _pos.dx - ringSize / 2,
+                        top: _pos.dy - ringSize / 2,
+                        child: AnimatedContainer(
+                          duration: AppMotion.sm,
+                          curve: Curves.easeOutCubic,
+                          width: ringSize,
+                          height: ringSize,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: hot
+                                ? scheme.primary.withValues(alpha: 0.12)
+                                : Colors.transparent,
+                            border: Border.all(
+                              color: hot
+                                  ? scheme.primary
+                                  : scheme.onSurface
+                                      .withValues(alpha: 0.45),
+                              width: 1.4,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    left: _pos.dx - 2,
-                    top: _pos.dy - 2,
-                    child: Container(
-                      width: 4,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: scheme.primary,
-                        shape: BoxShape.circle,
+                      Positioned(
+                        left: _pos.dx - 2,
+                        top: _pos.dy - 2,
+                        child: Container(
+                          width: 4,
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: scheme.primary,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               ),
             ),
         ],

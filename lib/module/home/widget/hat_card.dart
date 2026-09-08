@@ -6,6 +6,7 @@ import 'app_card.dart';
 import 'details_widget.dart';
 import 'network_hat_image.dart';
 import 'primary_button.dart';
+import 'site_cursor.dart';
 
 /// Category tile for a single "hat" (role/interest). Lifts + shadows on
 /// desktop hover to match ProjectCard's hover language; skipped when
@@ -23,14 +24,26 @@ class _HatCardState extends State<HatCard> {
   bool _hover = false;
 
   @override
+  void dispose() {
+    if (_hover) SiteCursor.hot.value--;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final hat = widget.hat;
     final reduce = MediaQuery.of(context).disableAnimations;
     final hovered = _hover && !reduce;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _hover = true),
-      onExit: (_) => setState(() => _hover = false),
+      onEnter: (_) {
+        setState(() => _hover = true);
+        SiteCursor.hot.value++;
+      },
+      onExit: (_) {
+        setState(() => _hover = false);
+        SiteCursor.hot.value--;
+      },
       child: AnimatedContainer(
         duration: AppMotion.sm,
         curve: Curves.easeOut,

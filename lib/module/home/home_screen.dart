@@ -883,7 +883,10 @@ class _HatsGridPage extends StatelessWidget {
                 crossAxisSpacing: spacing,
                 childAspectRatio: aspect,
               ),
-              itemBuilder: (context, i) => HatCard(hat: kHats[i]),
+              itemBuilder: (context, i) => Stagger(
+                delay: Duration(milliseconds: 70 * i),
+                child: HatCard(hat: kHats[i]),
+              ),
             );
           },
         ),
