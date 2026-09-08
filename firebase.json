@@ -16,9 +16,15 @@
         ]
       },
       {
-        "source": "assets/**",
+        "source": "assets/**/*.@(png|jpg|jpeg|webp|svg|ico|woff2|otf|ttf|bin)",
         "headers": [
           { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        ]
+      },
+      {
+        "source": "assets/**/*.json",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
         ]
       },
       {
