@@ -22,6 +22,7 @@ import 'widget/project_card.dart';
 import 'widget/section_heading.dart';
 import 'widget/site_cursor.dart';
 import 'widget/skill_tile.dart';
+import 'widget/stagger.dart';
 
 /// Vertical space (px) reserved at the top of content pages so the floating
 /// TopNav pill doesn't overlap section headings. Applied only on viewports
@@ -536,20 +537,40 @@ class _IntroPageState extends State<_IntroPage>
                   SizedBox(height: isWide ? AppSpacing.xxl - 8 : AppSpacing.lg),
                   Semantics(
                     header: true,
-                    child: Text(
-                      '${'intro.hello_line1'.tr()}\n${'intro.hello_line2'.tr()}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: titleSize,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      height: 1.1,
-                      shadows: const [
-                        Shadow(color: Colors.black87, blurRadius: 12),
-                      ],
+                    label:
+                        '${'intro.hello_line1'.tr()} ${'intro.hello_line2'.tr()}',
+                    child: ExcludeSemantics(
+                      child: DefaultTextStyle(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: titleSize,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                          height: 1.1,
+                          shadows: const [
+                            Shadow(color: Colors.black87, blurRadius: 12),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Stagger(
+                              delay: const Duration(milliseconds: 120),
+                              duration: const Duration(milliseconds: 700),
+                              offsetY: 24,
+                              child: Text('intro.hello_line1'.tr()),
+                            ),
+                            Stagger(
+                              delay: const Duration(milliseconds: 320),
+                              duration: const Duration(milliseconds: 700),
+                              offsetY: 24,
+                              child: Text('intro.hello_line2'.tr()),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(height: AppSpacing.lg),
                 _AnimatedPortrait(
                   radius: avatarRadius,
@@ -1003,8 +1024,10 @@ class _ProjectsPageState extends State<_ProjectsPage> {
                           crossAxisSpacing: spacing,
                           mainAxisExtent: cellH,
                         ),
-                        itemBuilder: (_, i) =>
-                            ProjectCard(project: kProjects[i]),
+                        itemBuilder: (_, i) => Stagger(
+                          delay: Duration(milliseconds: 90 * i),
+                          child: ProjectCard(project: kProjects[i]),
+                        ),
                       );
                     }
                     return Column(
@@ -1112,10 +1135,13 @@ class _ExperiencePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         for (var i = 0; i < kExperience.length; i++)
-          ExperienceTile(
-            exp: kExperience[i],
-            isFirst: i == 0,
-            isLast: i == kExperience.length - 1,
+          Stagger(
+            delay: Duration(milliseconds: 80 * i),
+            child: ExperienceTile(
+              exp: kExperience[i],
+              isFirst: i == 0,
+              isLast: i == kExperience.length - 1,
+            ),
           ),
       ],
     );
