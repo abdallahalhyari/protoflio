@@ -502,11 +502,15 @@ class _IntroPageState extends State<_IntroPage>
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final isWide = size.width >= 800;
+    final isShort = size.height < 560;
     // Cap avatar by BOTH height and shortestSide so it doesn't crowd the
-    // title/CTA on short viewports (900px height was overlapping the title).
-    final maxAvatar = (size.height * 0.28).clamp(80.0, 180.0);
+    // title/CTA on short viewports; on landscape phones (< 560 tall) we
+    // clamp even smaller so the whole hero fits without inner scroll.
+    final maxAvatar = isShort
+        ? (size.height * 0.24).clamp(48.0, 88.0)
+        : (size.height * 0.28).clamp(80.0, 180.0);
     final avatarRadius =
-        (size.shortestSide * 0.22).clamp(80.0, maxAvatar).toDouble();
+        (size.shortestSide * 0.22).clamp(48.0, maxAvatar).toDouble();
     final titleSize =
         (size.width * 0.06).clamp(AppTypography.heading, AppTypography.heroLg);
     final subtitleSize =
@@ -584,9 +588,12 @@ class _IntroPageState extends State<_IntroPage>
                 PrimaryButton(
                     label: 'intro.scroll_down'.tr(),
                     onPressed: widget.onScrollDown),
-                const SizedBox(height: AppSpacing.md),
-                ExcludeSemantics(
-                    child: Lottie.asset('assets/arrow_white.json', height: 80)),
+                if (!isShort) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  ExcludeSemantics(
+                      child: Lottie.asset('assets/arrow_white.json',
+                          height: 80)),
+                ],
                 const SizedBox(height: AppSpacing.md),
               ],
             ),
@@ -762,7 +769,9 @@ class _HatsIntroPage extends StatelessWidget {
       child: Center(
         child: Container(
           constraints: BoxConstraints(
-            maxWidth: size.width / 1.3,
+            // Cap so ultra-wide viewports don't stretch the hero text
+            // across the full canvas; still shrinks on narrow screens.
+            maxWidth: (size.width / 1.3).clamp(280.0, 900.0),
             maxHeight: size.height * 0.85,
           ),
           decoration: const BoxDecoration(
@@ -798,9 +807,12 @@ class _HatsIntroPage extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xl),
                 PrimaryButton(
                     label: 'hats_intro.cta'.tr(), onPressed: onExplain),
-                const SizedBox(height: AppSpacing.md),
-                ExcludeSemantics(
-                    child: Lottie.asset('assets/arrow.json', height: 140)),
+                if (size.height >= 560) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  ExcludeSemantics(
+                      child:
+                          Lottie.asset('assets/arrow.json', height: 140)),
+                ],
               ],
             ),
           ),
@@ -864,7 +876,14 @@ class _SkillsPage extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     final headingSize =
         (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
-    final cross = size.width >= 900 ? 3 : size.width >= 600 ? 2 : 1;
+    // Tuned so cards never grow wider than ~360px on ultra-wide displays.
+    final cross = size.width >= 1400
+        ? 4
+        : size.width >= 900
+            ? 3
+            : size.width >= 600
+                ? 2
+                : 1;
 
     final theme = Theme.of(context);
     final textColor = theme.colorScheme.onSurface;
@@ -938,7 +957,9 @@ class _ProjectsPageState extends State<_ProjectsPage> {
     final size = MediaQuery.sizeOf(context);
     final headingSize =
         (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
-    final wide = size.width >= 1100;
+    // Lowered from 1100 so tablet portrait (768) and iPad landscape (1024)
+    // both get the 2x2 grid instead of the horizontal-swipe fallback.
+    final wide = size.width >= 900;
 
     return Container(
       color: theme.scaffoldBackgroundColor,
@@ -1270,7 +1291,7 @@ class _ContactPage extends StatelessWidget {
       child: Center(
         child: Container(
           constraints: BoxConstraints(
-            maxWidth: size.width / 1.15,
+            maxWidth: (size.width / 1.15).clamp(280.0, 720.0),
             maxHeight: size.height * 0.9,
           ),
           decoration: const BoxDecoration(
