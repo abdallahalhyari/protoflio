@@ -477,8 +477,20 @@ class _IntroPageState extends State<_IntroPage>
   late final AnimationController _spin = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 18),
-  )..repeat();
+  );
   Offset _parallax = Offset.zero;
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Respect the OS-level "reduce motion" toggle: skip the long-running
+    // halo spin so we don't drain battery or trigger vestibular issues.
+    if (!_started && !MediaQuery.of(context).disableAnimations) {
+      _spin.repeat();
+      _started = true;
+    }
+  }
 
   @override
   void dispose() {
@@ -608,6 +620,7 @@ class _AnimatedPortrait extends StatelessWidget {
       image: true,
       child: MouseRegion(
         onHover: (e) {
+          if (MediaQuery.of(context).disableAnimations) return;
           // Translate relative pointer offset from widget center into a small
           // parallax vector (max ~12px each axis). Non-desktop hover events
           // just don't fire, so this is a no-op on touch.

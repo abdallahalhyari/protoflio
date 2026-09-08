@@ -29,6 +29,8 @@ class _ProjectCardState extends State<ProjectCard> {
     final scheme = Theme.of(context).colorScheme;
     final onSurface = scheme.onSurface;
     final canOpen = project.url != null;
+    final reduce = MediaQuery.of(context).disableAnimations;
+    final hovered = _hover && !reduce;
 
     return MouseRegion(
       cursor: canOpen ? SystemMouseCursors.click : MouseCursor.defer,
@@ -37,10 +39,10 @@ class _ProjectCardState extends State<ProjectCard> {
       child: AnimatedContainer(
         duration: AppMotion.sm,
         curve: Curves.easeOut,
-        transform: Matrix4.translationValues(0, _hover ? -6 : 0, 0),
+        transform: Matrix4.translationValues(0, hovered ? -6 : 0, 0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppRadius.md),
-          boxShadow: _hover
+          boxShadow: hovered
               ? [
                   BoxShadow(
                     color: scheme.primary.withValues(alpha: 0.25),
