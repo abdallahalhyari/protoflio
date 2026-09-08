@@ -61,6 +61,7 @@
     "download_cv": "تحميل السيرة الذاتية (PDF)",
     "download_cv_semantic": "تحميل السيرة الذاتية، PDF، 54 كيلوبايت، يفتح في تبويب جديد",
     "copied": "تم النسخ: {value}",
+    "copied_chip": "نُسخ",
     "open_failed": "تعذّر فتح {url}"
   },
   "details": {

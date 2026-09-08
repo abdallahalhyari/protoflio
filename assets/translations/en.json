@@ -61,6 +61,7 @@
     "download_cv": "Download CV (PDF)",
     "download_cv_semantic": "Download CV, PDF, 54 kilobytes, opens in new tab",
     "copied": "Copied: {value}",
+    "copied_chip": "COPIED",
     "open_failed": "Could not open {url}"
   },
   "details": {
