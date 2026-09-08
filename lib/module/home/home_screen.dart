@@ -19,6 +19,14 @@ import 'widget/primary_button.dart';
 import 'widget/project_card.dart';
 import 'widget/skill_tile.dart';
 
+/// Vertical space (px) reserved at the top of content pages so the floating
+/// TopNav pill doesn't overlap section headings. Applied only on viewports
+/// wide enough for the nav to render (>= 900px).
+const double kTopNavReserve = 72;
+
+double topNavPad(BuildContext context) =>
+    MediaQuery.sizeOf(context).width >= 900 ? kTopNavReserve : 0;
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -388,16 +396,20 @@ class _IntroPage extends StatelessWidget {
       overlay: AppColors.scrimMedium,
       child: SafeArea(
         child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: size.height),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: isWide ? AppSpacing.xxl - 8 : AppSpacing.lg),
-                Semantics(
-                  header: true,
-                  child: Text(
-                    '${'intro.hello_line1'.tr()}\n${'intro.hello_line2'.tr()}',
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: size.height,
+                maxWidth: 900,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: isWide ? AppSpacing.xxl - 8 : AppSpacing.lg),
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      '${'intro.hello_line1'.tr()}\n${'intro.hello_line2'.tr()}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: titleSize,
@@ -465,6 +477,7 @@ class _IntroPage extends StatelessWidget {
               ],
             ),
           ),
+        ),
         ),
       ),
     );
@@ -544,7 +557,12 @@ class _HatsGridPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      padding: const EdgeInsets.all(AppSpacing.sm),
+      padding: EdgeInsets.only(
+        left: AppSpacing.sm,
+        right: AppSpacing.sm,
+        bottom: AppSpacing.sm,
+        top: AppSpacing.sm + topNavPad(context),
+      ),
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -586,8 +604,12 @@ class _SkillsPage extends StatelessWidget {
       color: theme.scaffoldBackgroundColor,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg, vertical: AppSpacing.xl),
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.xl + topNavPad(context),
+            AppSpacing.lg,
+            AppSpacing.xl,
+          ),
           child: Column(
             children: [
               Text(
@@ -640,8 +662,12 @@ class _ProjectsPage extends StatelessWidget {
       color: theme.scaffoldBackgroundColor,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg, AppSpacing.lg + 4, AppSpacing.lg, AppSpacing.md),
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.lg + 4 + topNavPad(context),
+            AppSpacing.lg,
+            AppSpacing.md,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -799,8 +825,12 @@ class _ExperiencePage extends StatelessWidget {
       color: theme.scaffoldBackgroundColor,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg, AppSpacing.lg + 4, AppSpacing.lg, AppSpacing.md),
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.lg + 4 + topNavPad(context),
+            AppSpacing.lg,
+            AppSpacing.md,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

@@ -45,7 +45,8 @@ class _SkillTileState extends State<SkillTile>
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final onSurface = scheme.onSurface;
-    return AppCard.outlined(
+    final isTop = widget.skill.level >= 0.9;
+    final card = AppCard.outlined(
       padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.md, vertical: AppSpacing.smd),
       child: Row(
@@ -105,6 +106,23 @@ class _SkillTileState extends State<SkillTile>
           ),
         ],
       ),
+    );
+
+    if (!isTop) return card;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        boxShadow: [
+          BoxShadow(
+            color: scheme.primary.withValues(alpha: 0.35),
+            blurRadius: 12,
+            spreadRadius: -2,
+          ),
+        ],
+        border: Border.all(
+            color: scheme.primary.withValues(alpha: 0.55), width: 1.5),
+      ),
+      child: card,
     );
   }
 }
