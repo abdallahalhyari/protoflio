@@ -26,6 +26,7 @@ class _SkillTileState extends State<SkillTile>
   );
   late final Animation<double> _a =
       CurvedAnimation(parent: _c, curve: Curves.easeOutCubic);
+  bool _hover = false;
 
   @override
   void initState() {
@@ -52,7 +53,7 @@ class _SkillTileState extends State<SkillTile>
       child: Row(
         children: [
           Icon(widget.skill.icon, color: onSurface, size: 28),
-          const SizedBox(width: AppSpacing.md - 2),
+          const SizedBox(width: AppSpacing.mdx),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,21 +109,35 @@ class _SkillTileState extends State<SkillTile>
       ),
     );
 
-    if (!isTop) return card;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        boxShadow: [
-          BoxShadow(
-            color: scheme.primary.withValues(alpha: 0.35),
-            blurRadius: 12,
-            spreadRadius: -2,
-          ),
-        ],
-        border: Border.all(
-            color: scheme.primary.withValues(alpha: 0.55), width: 1.5),
+    final reduce = MediaQuery.of(context).disableAnimations;
+    final hovered = _hover && !reduce;
+    final glowed = isTop
+        ? DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              boxShadow: [
+                BoxShadow(
+                  color: scheme.primary.withValues(alpha: 0.35),
+                  blurRadius: 12,
+                  spreadRadius: -2,
+                ),
+              ],
+              border: Border.all(
+                  color: scheme.primary.withValues(alpha: 0.55), width: 1.5),
+            ),
+            child: card,
+          )
+        : card;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: AppMotion.sm,
+        curve: Curves.easeOut,
+        transform: Matrix4.translationValues(0, hovered ? -3 : 0, 0),
+        child: glowed,
       ),
-      child: card,
     );
   }
 }

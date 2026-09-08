@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final dy = event.scrollDelta.dy;
     if (dy.abs() < 4) return;
     final now = DateTime.now();
-    if (now.difference(_lastWheel) < const Duration(milliseconds: 450)) return;
+    if (now.difference(_lastWheel) < AppMotion.wheelCooldown) return;
     _lastWheel = now;
     if (dy > 0) {
       _next();
@@ -225,7 +225,7 @@ class _ThemeToggle extends StatelessWidget {
           toggled: dark,
           label: 'theme.label'.tr(),
           child: Material(
-            color: Colors.black45,
+            color: AppColors.scrimSurface,
             shape: const CircleBorder(),
             child: IconButton(
               tooltip:
@@ -252,7 +252,7 @@ class _LanguageToggle extends StatelessWidget {
     return Semantics(
       label: 'language.label'.tr(),
       child: Material(
-        color: Colors.black45,
+        color: AppColors.scrimSurface,
         shape: const CircleBorder(),
         child: IconButton(
           tooltip: 'language.toggle_tooltip'.tr(),
@@ -303,7 +303,7 @@ class _TopNav extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.45),
+              color: AppColors.scrimSurface,
               borderRadius: BorderRadius.circular(AppRadius.pill),
               border: Border.all(color: Colors.white24, width: 1),
             ),
@@ -1135,7 +1135,7 @@ class _ExperiencePage extends StatelessWidget {
         const SizedBox(height: AppSpacing.smd),
         ...kEducation.map(
           (e) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.md - 2),
+            padding: const EdgeInsets.only(bottom: AppSpacing.mdx),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1180,12 +1180,12 @@ class _ExperiencePage extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm + 2),
         ...kCertifications.map(
           (c) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.sm - 2),
+            padding: const EdgeInsets.only(bottom: AppSpacing.smx),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.sm - 2),
+                  padding: const EdgeInsets.only(top: AppSpacing.smx),
                   child: Icon(Icons.verified,
                       size: 14, color: scheme.primary),
                 ),
@@ -1268,7 +1268,7 @@ class _ContactPage extends StatelessWidget {
     // ignore: deprecated_member_use
     SemanticsService.announce(msg, ui.TextDirection.ltr);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg), duration: const Duration(seconds: 2)),
+      SnackBar(content: Text(msg), duration: AppMotion.snack),
     );
   }
 
@@ -1399,7 +1399,7 @@ class _ContactRowState extends State<_ContactRow>
     with SingleTickerProviderStateMixin {
   late final AnimationController _pulse = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 550),
+    duration: AppMotion.chip,
   );
   bool _showCopied = false;
 
@@ -1413,7 +1413,7 @@ class _ContactRowState extends State<_ContactRow>
     _pulse.forward(from: 0);
     if (asCopy) {
       setState(() => _showCopied = true);
-      Future.delayed(const Duration(milliseconds: 1200), () {
+      Future.delayed(AppMotion.toast, () {
         if (mounted) setState(() => _showCopied = false);
       });
     }

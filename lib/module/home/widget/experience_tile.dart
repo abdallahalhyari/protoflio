@@ -28,7 +28,7 @@ class ExperienceTile extends StatelessWidget {
               isLast: isLast,
             ),
           ),
-          const SizedBox(width: AppSpacing.md - 2),
+          const SizedBox(width: AppSpacing.mdx),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.lg - 4),
@@ -74,7 +74,7 @@ class ExperienceTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: AppSpacing.sm - 2),
+                            padding: const EdgeInsets.only(top: AppSpacing.smx),
                             child: Icon(
                               Icons.circle,
                               size: 5,
