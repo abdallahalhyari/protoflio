@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final PageController _controller = PageController();
   final FocusNode _focusNode = FocusNode();
   int _pageIndex = 0;
+  DateTime _lastWheel = DateTime.fromMillisecondsSinceEpoch(0);
 
   @override
   void initState() {
@@ -81,7 +83,35 @@ class _HomeScreenState extends State<HomeScreen> {
       _goTo(_pageCount - 1);
       return KeyEventResult.handled;
     }
+    final digit = _digitKeyToIndex(k);
+    if (digit != null) {
+      _goTo(digit);
+      return KeyEventResult.handled;
+    }
     return KeyEventResult.ignored;
+  }
+
+  int? _digitKeyToIndex(LogicalKeyboardKey k) {
+    final id = k.keyId;
+    final digitBase = LogicalKeyboardKey.digit1.keyId;
+    if (id >= digitBase && id < digitBase + _pageCount) return id - digitBase;
+    final numBase = LogicalKeyboardKey.numpad1.keyId;
+    if (id >= numBase && id < numBase + _pageCount) return id - numBase;
+    return null;
+  }
+
+  void _onPointerSignal(PointerSignalEvent event) {
+    if (event is! PointerScrollEvent) return;
+    final dy = event.scrollDelta.dy;
+    if (dy.abs() < 4) return;
+    final now = DateTime.now();
+    if (now.difference(_lastWheel) < const Duration(milliseconds: 450)) return;
+    _lastWheel = now;
+    if (dy > 0) {
+      _next();
+    } else {
+      _prev();
+    }
   }
 
   @override
@@ -93,18 +123,21 @@ class _HomeScreenState extends State<HomeScreen> {
         onKeyEvent: _handleKey,
         child: Stack(
           children: [
-            PageView(
-              controller: _controller,
-              scrollDirection: Axis.vertical,
-              children: [
-                _IntroPage(onScrollDown: _next),
-                _HatsIntroPage(onExplain: _next),
-                const _HatsGridPage(),
-                const _SkillsPage(),
-                const _ProjectsPage(),
-                const _ExperiencePage(),
-                const _ContactPage(),
-              ],
+            Listener(
+              onPointerSignal: _onPointerSignal,
+              child: PageView(
+                controller: _controller,
+                scrollDirection: Axis.vertical,
+                children: [
+                  _IntroPage(onScrollDown: _next),
+                  _HatsIntroPage(onExplain: _next),
+                  const _HatsGridPage(),
+                  const _SkillsPage(),
+                  const _ProjectsPage(),
+                  const _ExperiencePage(),
+                  const _ContactPage(),
+                ],
+              ),
             ),
             Positioned(
               right: 12,
