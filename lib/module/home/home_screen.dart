@@ -756,8 +756,22 @@ class _SkillsPage extends StatelessWidget {
   }
 }
 
-class _ProjectsPage extends StatelessWidget {
+class _ProjectsPage extends StatefulWidget {
   const _ProjectsPage();
+
+  @override
+  State<_ProjectsPage> createState() => _ProjectsPageState();
+}
+
+class _ProjectsPageState extends State<_ProjectsPage> {
+  final PageController _horizontal = PageController();
+  int _current = 0;
+
+  @override
+  void dispose() {
+    _horizontal.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -766,7 +780,7 @@ class _ProjectsPage extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     final headingSize =
         (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
-    final cross = size.width >= 1100 ? 2 : 1;
+    final wide = size.width >= 1100;
 
     return Container(
       color: theme.scaffoldBackgroundColor,
@@ -793,30 +807,114 @@ class _ProjectsPage extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.lg),
               Expanded(
-                child: cross == 1
-                    ? ListView.separated(
-                        itemCount: kProjects.length,
-                        separatorBuilder: (_, __) =>
-                            const SizedBox(height: AppSpacing.smd),
-                        itemBuilder: (_, i) => ProjectCard(project: kProjects[i]),
-                      )
-                    : GridView.builder(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    // Fit projects in the viewport so the inner scrollable
+                    // doesn't fight the outer vertical PageView.
+                    if (wide) {
+                      const spacing = AppSpacing.smd;
+                      const rows = 2;
+                      final cellH =
+                          (constraints.maxHeight - (rows - 1) * spacing) / rows;
+                      return GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: kProjects.length,
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                            SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          mainAxisSpacing: AppSpacing.smd,
-                          crossAxisSpacing: AppSpacing.smd,
-                          mainAxisExtent: 380,
+                          mainAxisSpacing: spacing,
+                          crossAxisSpacing: spacing,
+                          mainAxisExtent: cellH,
                         ),
                         itemBuilder: (_, i) =>
                             ProjectCard(project: kProjects[i]),
-                      ),
+                      );
+                    }
+                    return Column(
+                      children: [
+                        Expanded(
+                          child: PageView.builder(
+                            controller: _horizontal,
+                            scrollDirection: Axis.horizontal,
+                            onPageChanged: (i) =>
+                                setState(() => _current = i),
+                            itemCount: kProjects.length,
+                            itemBuilder: (_, i) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.xs),
+                              child:
+                                  ProjectCard(project: kProjects[i]),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        _HorizontalDots(
+                          count: kProjects.length,
+                          current: _current,
+                          onTap: (i) => _horizontal.animateToPage(
+                            i,
+                            duration: AppMotion.md,
+                            curve: Curves.easeInOut,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _HorizontalDots extends StatelessWidget {
+  final int count;
+  final int current;
+  final ValueChanged<int> onTap;
+
+  const _HorizontalDots({
+    required this.count,
+    required this.current,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(count, (i) {
+        final active = i == current;
+        return Semantics(
+          button: true,
+          selected: active,
+          label: 'Go to project ${i + 1} of $count',
+          child: SizedBox(
+            width: 32,
+            height: 32,
+            child: InkResponse(
+              onTap: () => onTap(i),
+              radius: 16,
+              child: Center(
+                child: AnimatedContainer(
+                  duration: AppMotion.sm,
+                  width: active ? 20 : 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: active
+                        ? scheme.primary
+                        : scheme.onSurface.withValues(alpha: 0.35),
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }
