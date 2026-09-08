@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'tokens.dart';
 
 /// App-wide light + dark ThemeData composed from tokens in [tokens.dart].
@@ -21,17 +22,19 @@ class AppTheme {
       colorScheme: scheme,
       scaffoldBackgroundColor:
           isDark ? AppColors.darkSurface : AppColors.lightSurface,
-      textTheme: TextTheme(
-        bodyMedium: TextStyle(
+      textTheme: GoogleFonts.interTextTheme(
+        ThemeData(brightness: brightness).textTheme,
+      ).copyWith(
+        bodyMedium: GoogleFonts.inter(
           color: scheme.onSurface,
           fontSize: AppTypography.body,
         ),
-        titleMedium: TextStyle(
+        titleMedium: GoogleFonts.inter(
           color: scheme.onSurface,
           fontSize: AppTypography.title,
           fontWeight: FontWeight.w700,
         ),
-        headlineMedium: TextStyle(
+        headlineMedium: GoogleFonts.inter(
           color: scheme.onSurface,
           fontSize: AppTypography.heading,
           fontWeight: FontWeight.w900,

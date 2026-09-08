@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "309464982219",
+    "firebase_url": "https://testfirestore-9b0b0-default-rtdb.firebaseio.com",
+    "project_id": "testfirestore-9b0b0",
+    "storage_bucket": "testfirestore-9b0b0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309464982219:android:119cbd450170176be5b14e",
+        "android_client_info": {
+          "package_name": "com.example.profile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309464982219-rtt90npuqthikc9k3hrh6a56ed9vhck7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwqerBFkr_2S8ceHH233S8WqYC_hCIf7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309464982219-rtt90npuqthikc9k3hrh6a56ed9vhck7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "309464982219-2pc8vofaij7cnn8qr0001fmq8c2csu8r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kuldiiproject.chatapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309464982219:android:b13dd68447e88705e5b14e",
+        "android_client_info": {
+          "package_name": "com.kuldiiproject.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309464982219-r5h31el51v57ss9hgo1vrs5uukbbgrtq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kuldiiproject.chatapp",
+            "certificate_hash": "37e59ec6cfbca9b6e72dfd0b8cfa02995c973323"
+          }
+        },
+        {
+          "client_id": "309464982219-rtt90npuqthikc9k3hrh6a56ed9vhck7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwqerBFkr_2S8ceHH233S8WqYC_hCIf7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309464982219-rtt90npuqthikc9k3hrh6a56ed9vhck7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "309464982219-2pc8vofaij7cnn8qr0001fmq8c2csu8r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kuldiiproject.chatapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

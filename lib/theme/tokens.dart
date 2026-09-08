@@ -13,6 +13,14 @@ class AppSpacing {
   static const double huge = 80;
 }
 
+/// Breakpoints for Responsive Layouts
+class AppBreakpoints {
+  AppBreakpoints._();
+  static const double mobile = 600;
+  static const double tablet = 900;
+  static const double desktop = 1200;
+}
+
 /// Border-radius scale.
 class AppRadius {
   AppRadius._();
@@ -45,8 +53,8 @@ class AppColors {
   static const Color seed = Colors.blue;
 
   // Dark surface tones (used by scaffolds/pages)
-  static const Color darkSurface = Color(0xFF0E0E10);
-  static const Color lightSurface = Color(0xFFF5F5F7);
+  static const Color darkSurface = Color(0xFF0F172A); // Slate 900
+  static const Color lightSurface = Color(0xFFF8FAFC); // Slate 50
 
   // Contact link
   static const Color linkOnScrim = Colors.lightBlueAccent;

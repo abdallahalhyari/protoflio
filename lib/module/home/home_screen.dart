@@ -1,21 +1,22 @@
+import 'dart:ui';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/locale_controller.dart';
 
 import '../../theme/tokens.dart';
 import '../../theme_controller.dart';
-import 'data/experience_data.dart';
-import 'data/hats_data.dart';
-import 'data/projects_data.dart';
-import 'data/skills_data.dart';
-import 'widget/experience_tile.dart';
-import 'widget/hat_card.dart';
-import 'widget/page_background.dart';
-import 'widget/primary_button.dart';
-import 'widget/project_card.dart';
-import 'widget/skill_tile.dart';
+import 'page/intro_page.dart';
+import 'page/hats_intro_page.dart';
+import 'page/hats_grid_page.dart';
+import 'page/skills_page.dart';
+import 'page/projects_page.dart';
+import 'page/experience_page.dart';
+import 'page/contact_page.dart';
+
+import 'widget/custom_cursor.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final PageController _controller = PageController();
   final FocusNode _focusNode = FocusNode();
   int _pageIndex = 0;
+  bool _isScrolling = false;
 
   @override
   void initState() {
@@ -38,7 +40,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onScroll() {
     final page = _controller.page?.round() ?? 0;
-    if (page != _pageIndex) setState(() => _pageIndex = page);
+    if (page != _pageIndex) {
+      setState(() => _pageIndex = page);
+      final labels = _TopNav.getLabels(context);
+      if (page >= 0 && page < labels.length) {
+        FirebaseAnalytics.instance.logScreenView(
+          screenName: labels[page],
+          screenClass: 'HomeScreen',
+        );
+      }
+    }
   }
 
   @override
@@ -59,6 +70,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _next() => _goTo(_pageIndex + 1);
   void _prev() => _goTo(_pageIndex - 1);
+
+  void _onPointerSignal(PointerSignalEvent event) {
+    if (event is PointerScrollEvent) {
+      if (_isScrolling) return;
+
+      if (event.scrollDelta.dy > 0) {
+        _next();
+      } else if (event.scrollDelta.dy < 0) {
+        _prev();
+      }
+
+      _isScrolling = true;
+      Future.delayed(AppMotion.sm).then((_) {
+        if (mounted) {
+          _isScrolling = false;
+        }
+      });
+    }
+  }
 
   KeyEventResult _handleKey(FocusNode _, KeyEvent event) {
     if (event is! KeyDownEvent) return KeyEventResult.ignored;
@@ -86,26 +116,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Focus(
+    return CustomCursor(
+      child: Scaffold(
+        body: Focus(
         focusNode: _focusNode,
         autofocus: true,
         onKeyEvent: _handleKey,
         child: Stack(
           children: [
-            PageView(
-              controller: _controller,
-              scrollDirection: Axis.vertical,
-              children: [
-                _IntroPage(onScrollDown: _next),
-                _HatsIntroPage(onExplain: _next),
-                const _HatsGridPage(),
-                const _SkillsPage(),
-                const _ProjectsPage(),
-                const _ExperiencePage(),
-                const _ContactPage(),
+            Listener(
+              onPointerSignal: _onPointerSignal,
+              child: PageView(
+                controller: _controller,
+                scrollDirection: Axis.vertical,
+                children: [
+                IntroPage(
+                  onScrollDown: _next,
+                  controller: _controller,
+                  pageIndex: 0,
+                ),
+                HatsIntroPage(
+                  onExplain: _next,
+                  controller: _controller,
+                  pageIndex: 1,
+                ),
+                const HatsGridPage(),
+                const SkillsPage(),
+                const ProjectsPage(),
+                const ExperiencePage(),
+                ContactPage(
+                  controller: _controller,
+                  pageIndex: 6,
+                ),
               ],
             ),
+          ),
             Positioned(
               right: 12,
               top: 0,
@@ -129,6 +174,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: _goTo,
                   ),
                 ),
+              )
+            else
+              Positioned(
+                bottom: 16,
+                left: 0,
+                right: 0,
+                child: SafeArea(
+                  child: _MobileNav(
+                    current: _pageIndex,
+                    onTap: _goTo,
+                  ),
+                ),
               ),
             Positioned(
               top: 12,
@@ -138,28 +195,90 @@ class _HomeScreenState extends State<HomeScreen> {
                   valueListenable: ThemeController.mode,
                   builder: (_, mode, __) {
                     final dark = mode == ThemeMode.dark;
-                    return Semantics(
-                      toggled: dark,
-                      label: 'Dark mode',
-                      child: Material(
-                        color: Colors.black45,
-                        shape: const CircleBorder(),
-                        child: IconButton(
-                          tooltip: dark ? 'Switch to light' : 'Switch to dark',
-                          icon: Icon(
-                            dark ? Icons.light_mode : Icons.dark_mode,
-                            color: Colors.white,
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Material(
+                          color: Colors.black45,
+                          shape: const CircleBorder(),
+                          child: ValueListenableBuilder<Locale>(
+                            valueListenable: LocaleController.locale,
+                            builder: (context, locale, _) {
+                              return PopupMenuButton<String>(
+                                tooltip: 'Change Language',
+                                icon: const Icon(Icons.language, color: Colors.white),
+                                onSelected: (val) {
+                                  HapticFeedback.lightImpact();
+                                  LocaleController.changeLocale(val);
+                                },
+                                itemBuilder: (context) => const [
+                                  PopupMenuItem(value: 'en', child: Text('English')),
+                                  PopupMenuItem(value: 'ar', child: Text('العربية')),
+                                  PopupMenuItem(value: 'cs', child: Text('Čeština')),
+                                ],
+                              );
+                            }
                           ),
-                          onPressed: ThemeController.toggle,
                         ),
-                      ),
+                        const SizedBox(width: AppSpacing.sm),
+                        Semantics(
+                          toggled: dark,
+                          label: 'Dark mode',
+                          child: Material(
+                            color: Colors.black45,
+                            shape: const CircleBorder(),
+                            child: IconButton(
+                              tooltip: dark ? 'Switch to light' : 'Switch to dark',
+                              icon: Icon(
+                                dark ? Icons.light_mode : Icons.dark_mode,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                HapticFeedback.lightImpact();
+                                ThemeController.toggle();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     );
                   },
                 ),
               ),
             ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, _) {
+                  double progress = 0.0;
+                  if (_controller.hasClients && _controller.position.haveDimensions) {
+                    progress = (_controller.page ?? 0) / (_pageCount - 1);
+                  }
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      height: 3,
+                      width: MediaQuery.sizeOf(context).width * progress,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+                            blurRadius: 4,
+                          )
+                        ]
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -169,15 +288,18 @@ class _TopNav extends StatelessWidget {
   final int current;
   final ValueChanged<int> onTap;
 
-  static const List<String> _labels = [
-    'About',
-    'Why',
-    'Hats',
-    'Skills',
-    'Projects',
-    'Roles',
-    'Contact',
-  ];
+  static List<String> getLabels(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return [
+      l.navAbout,
+      l.navWhy,
+      l.navHats,
+      l.navSkills,
+      l.navProjects,
+      l.navExperience,
+      l.navContact,
+    ];
+  }
 
   const _TopNav({required this.current, required this.onTap});
 
@@ -192,32 +314,102 @@ class _TopNav extends StatelessWidget {
           constraints: BoxConstraints(
             maxWidth: MediaQuery.sizeOf(context).width - AppSpacing.xl,
           ),
-          child: Container(
-            margin: const EdgeInsets.only(top: AppSpacing.smd),
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
-            decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.45),
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: Border.all(color: Colors.white24, width: 1),
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (var i = 0; i < _labels.length; i++)
-                    _NavItem(
-                      label: _labels[i],
-                      active: current == i,
-                      onTap: () => onTap(i),
-                    ),
-                ],
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+              child: Container(
+                margin: const EdgeInsets.only(top: AppSpacing.smd),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.25),
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  border: Border.all(color: Colors.white24, width: 1),
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                  for (var i = 0; i < getLabels(context).length; i++)
+                      _NavItem(
+                        label: getLabels(context)[i],
+                        active: current == i,
+                        onTap: () {
+                          HapticFeedback.selectionClick();
+                          onTap(i);
+                        },
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
+      ),
+    );
+  }
+}
+
+class _MobileNav extends StatelessWidget {
+  final int current;
+  final ValueChanged<int> onTap;
+
+  const _MobileNav({required this.current, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width - AppSpacing.lg),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.sm),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.8),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            border: Border.all(color: Colors.white24, width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.5),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              )
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _iconBtn(0, Icons.person, _TopNav.getLabels(context)[0], onTap, current, context),
+                    _iconBtn(1, Icons.lightbulb, _TopNav.getLabels(context)[1], onTap, current, context),
+                    _iconBtn(2, Icons.style, _TopNav.getLabels(context)[2], onTap, current, context),
+                    _iconBtn(3, Icons.code, _TopNav.getLabels(context)[3], onTap, current, context),
+                    _iconBtn(4, Icons.work, _TopNav.getLabels(context)[4], onTap, current, context),
+                    _iconBtn(5, Icons.timeline, _TopNav.getLabels(context)[5], onTap, current, context),
+                    _iconBtn(6, Icons.mail, _TopNav.getLabels(context)[6], onTap, current, context),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _iconBtn(int idx, IconData icon, String tooltip, ValueChanged<int> onTap, int current, BuildContext context) {
+    final active = current == idx;
+    return IconButton(
+      icon: Icon(icon, color: active ? Theme.of(context).colorScheme.primary : Colors.white70),
+      onPressed: () { HapticFeedback.selectionClick(); onTap(idx); },
+      tooltip: tooltip,
     );
   }
 }
@@ -280,19 +472,27 @@ class _PageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final labels = _TopNav.getLabels(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(count, (i) {
         final active = i == current;
-        return Semantics(
-          button: true,
-          selected: active,
-          label: 'Go to page ${i + 1} of $count',
+        final label = i < labels.length ? labels[i] : 'Page ${i + 1}';
+        return Tooltip(
+          message: label,
+          preferBelow: false,
+          child: Semantics(
+            button: true,
+            selected: active,
+            label: 'Go to $label',
           child: SizedBox(
             width: 44,
             height: 44,
             child: InkResponse(
-              onTap: () => onTap(i),
+              onTap: () {
+                HapticFeedback.selectionClick();
+                onTap(i);
+              },
               radius: 22,
               child: Center(
                 child: AnimatedContainer(
@@ -308,669 +508,9 @@ class _PageIndicator extends StatelessWidget {
               ),
             ),
           ),
+          ),
         );
       }),
-    );
-  }
-}
-
-class _IntroPage extends StatelessWidget {
-  final VoidCallback onScrollDown;
-  const _IntroPage({required this.onScrollDown});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final isWide = size.width >= 800;
-    final avatarRadius = (size.shortestSide * 0.22).clamp(80.0, 180.0);
-    final titleSize =
-        (size.width * 0.06).clamp(AppTypography.heading, AppTypography.heroLg);
-    final subtitleSize =
-        (size.width * 0.035).clamp(AppTypography.title, AppTypography.display);
-
-    return PageBackground(
-      asset: 'assets/background.webp',
-      overlay: AppColors.scrimMedium,
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: size.height),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: isWide ? AppSpacing.xxl - 8 : AppSpacing.lg),
-                Semantics(
-                  header: true,
-                  child: Text(
-                    'HELLO THERE!\nI\'M ABDALLAH',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: titleSize,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      height: 1.1,
-                      shadows: const [
-                        Shadow(color: Colors.black87, blurRadius: 12),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                Semantics(
-                  label: 'Portrait of Abdallah Alhyari',
-                  image: true,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    padding: const EdgeInsets.all(AppSpacing.xs - 1),
-                    child: CircleAvatar(
-                      radius: avatarRadius,
-                      backgroundColor: Colors.brown.shade300,
-                      backgroundImage: const AssetImage('assets/my_image.png'),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  'Senior Mobile Engineer  ·  Flutter / Android',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: subtitleSize,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    shadows: const [
-                      Shadow(color: Colors.black87, blurRadius: 10),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  'Amman, Jordan  →  Brno, Czech Republic · 2027',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: (subtitleSize * 0.55)
-                        .clamp(AppTypography.body, AppTypography.title),
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white.withValues(alpha: 0.85),
-                    letterSpacing: 0.5,
-                    shadows: const [
-                      Shadow(color: Colors.black87, blurRadius: 8),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                PrimaryButton(label: 'Scroll Down', onPressed: onScrollDown),
-                const SizedBox(height: AppSpacing.md),
-                ExcludeSemantics(
-                    child: Lottie.asset('assets/arrow_white.json', height: 80)),
-                const SizedBox(height: AppSpacing.md),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _HatsIntroPage extends StatelessWidget {
-  final VoidCallback onExplain;
-  const _HatsIntroPage({required this.onExplain});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final headingSize =
-        (size.width * 0.055).clamp(AppTypography.heading + 2, AppTypography.hero);
-    final overlineSize = (size.width * 0.028)
-        .clamp(AppTypography.titleSm, AppTypography.heading + 2);
-
-    return PageBackground(
-      asset: 'assets/hats_background.webp',
-      overlay: AppColors.scrimLight,
-      child: Center(
-        child: Container(
-          constraints: BoxConstraints(
-            maxWidth: size.width / 1.3,
-            maxHeight: size.height * 0.85,
-          ),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.black54, Colors.black38, Colors.black26],
-            ),
-          ),
-          padding: const EdgeInsets.all(AppSpacing.md + 2),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'BECAUSE...',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: overlineSize,
-                    fontWeight: FontWeight.w100,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xs + 1),
-                Text(
-                  'I WEAR MANY HATS',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: headingSize,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                PrimaryButton(
-                    label: 'Allow Me to Explain', onPressed: onExplain),
-                const SizedBox(height: AppSpacing.md),
-                ExcludeSemantics(
-                    child: Lottie.asset('assets/arrow.json', height: 140)),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _HatsGridPage extends StatelessWidget {
-  const _HatsGridPage();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      child: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final crossAxisCount = constraints.maxWidth >= 900
-                ? 3
-                : constraints.maxWidth >= 600
-                    ? 2
-                    : 1;
-            return GridView.builder(
-              itemCount: kHats.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: 1.05,
-              ),
-              itemBuilder: (context, i) => HatCard(hat: kHats[i]),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class _SkillsPage extends StatelessWidget {
-  const _SkillsPage();
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final headingSize =
-        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
-    final cross = size.width >= 900 ? 3 : size.width >= 600 ? 2 : 1;
-
-    final theme = Theme.of(context);
-    final textColor = theme.colorScheme.onSurface;
-    return Container(
-      color: theme.scaffoldBackgroundColor,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg, vertical: AppSpacing.xl),
-          child: Column(
-            children: [
-              Text(
-                'SKILLS',
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: headingSize,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: kSkills.length,
-                  gridDelegate:
-                      SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: cross,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    mainAxisExtent: 84,
-                  ),
-                  itemBuilder: (_, i) => SkillTile(
-                    skill: kSkills[i],
-                    delay: Duration(milliseconds: 80 * i), // staggered — keep raw
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ProjectsPage extends StatelessWidget {
-  const _ProjectsPage();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final size = MediaQuery.sizeOf(context);
-    final headingSize =
-        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
-    final cross = size.width >= 1100 ? 2 : 1;
-
-    return Container(
-      color: theme.scaffoldBackgroundColor,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg, AppSpacing.lg + 4, AppSpacing.lg, AppSpacing.md),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'PROJECTS',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: headingSize,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Expanded(
-                child: cross == 1
-                    ? ListView.separated(
-                        itemCount: kProjects.length,
-                        separatorBuilder: (_, __) =>
-                            const SizedBox(height: AppSpacing.smd),
-                        itemBuilder: (_, i) => ProjectCard(project: kProjects[i]),
-                      )
-                    : GridView.builder(
-                        itemCount: kProjects.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: AppSpacing.smd,
-                          crossAxisSpacing: AppSpacing.smd,
-                          mainAxisExtent: 380,
-                        ),
-                        itemBuilder: (_, i) =>
-                            ProjectCard(project: kProjects[i]),
-                      ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ExperiencePage extends StatelessWidget {
-  const _ExperiencePage();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final size = MediaQuery.sizeOf(context);
-    final headingSize =
-        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
-    final isWide = size.width >= 900;
-
-    final expList = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (var i = 0; i < kExperience.length; i++)
-          ExperienceTile(
-            exp: kExperience[i],
-            isFirst: i == 0,
-            isLast: i == kExperience.length - 1,
-          ),
-      ],
-    );
-
-    final eduSection = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'EDUCATION',
-          style: TextStyle(
-            color: scheme.onSurface,
-            fontSize: AppTypography.title,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1.5,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.smd),
-        ...kEducation.map(
-          (e) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.md - 2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  e.degree,
-                  style: TextStyle(
-                    fontSize: AppTypography.bodyMd,
-                    fontWeight: FontWeight.w700,
-                    color: scheme.onSurface,
-                  ),
-                ),
-                Text(
-                  '${e.institution} · ${e.period}',
-                  style: TextStyle(
-                    fontSize: AppTypography.small,
-                    color: scheme.primary,
-                  ),
-                ),
-                if (e.note != null)
-                  Text(
-                    e.note!,
-                    style: TextStyle(
-                      fontSize: AppTypography.caption,
-                      color: scheme.onSurface.withValues(alpha: 0.7),
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: AppSpacing.lg - 4),
-        Text(
-          'CERTIFICATIONS',
-          style: TextStyle(
-            color: scheme.onSurface,
-            fontSize: AppTypography.title,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1.5,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm + 2),
-        ...kCertifications.map(
-          (c) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.sm - 2),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: AppSpacing.sm - 2),
-                  child: Icon(Icons.verified,
-                      size: 14, color: scheme.primary),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Text(
-                    c,
-                    style: TextStyle(
-                      fontSize: AppTypography.small,
-                      color: scheme.onSurface.withValues(alpha: 0.85),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-
-    return Container(
-      color: theme.scaffoldBackgroundColor,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg, AppSpacing.lg + 4, AppSpacing.lg, AppSpacing.md),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'EXPERIENCE',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: headingSize,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg - 4),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: isWide
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(flex: 3, child: expList),
-                            const SizedBox(width: AppSpacing.xl + 8),
-                            Expanded(flex: 2, child: eduSection),
-                          ],
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            expList,
-                            const SizedBox(height: AppSpacing.lg - 4),
-                            eduSection,
-                          ],
-                        ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ContactPage extends StatelessWidget {
-  const _ContactPage();
-
-  Future<void> _open(BuildContext context, String url) async {
-    final uri = Uri.parse(url);
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!ok && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not open $url')),
-      );
-    }
-  }
-
-  Future<void> _copy(BuildContext context, String value) async {
-    await Clipboard.setData(ClipboardData(text: value));
-    if (!context.mounted) return;
-    final msg = 'Copied: $value';
-    // ignore: deprecated_member_use
-    SemanticsService.announce(msg, TextDirection.ltr);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg), duration: const Duration(seconds: 2)),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final headingSize =
-        (size.width * 0.055).clamp(AppTypography.heading, AppTypography.hero);
-    final rowSize =
-        (size.width * 0.035).clamp(AppTypography.bodyLg, AppTypography.head + 6);
-
-    return PageBackground(
-      asset: 'assets/hats_background.webp',
-      overlay: AppColors.scrimHeavy,
-      child: Center(
-        child: Container(
-          constraints: BoxConstraints(
-            maxWidth: size.width / 1.15,
-            maxHeight: size.height * 0.9,
-          ),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.black26, Colors.black38, Colors.black54],
-            ),
-          ),
-          padding: const EdgeInsets.all(AppSpacing.md + 2),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'CONTACT',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: headingSize,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  'Tap to open · long-press to copy',
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize:
-                        (rowSize * 0.55).clamp(AppTypography.micro, AppTypography.bodyLg),
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                _ContactRow(
-                  label: 'EMAIL',
-                  value: 'alhyariabdallh@gmail.com',
-                  onTap: () =>
-                      _open(context, 'mailto:alhyariabdallh@gmail.com'),
-                  onLongPress: () =>
-                      _copy(context, 'alhyariabdallh@gmail.com'),
-                  fontSize: rowSize,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _ContactRow(
-                  label: 'PHONE',
-                  value: '+962-787032264',
-                  onTap: () => _open(context, 'tel:+962787032264'),
-                  onLongPress: () => _copy(context, '+962787032264'),
-                  fontSize: rowSize,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _ContactRow(
-                  label: 'LINKEDIN',
-                  value: 'abdallah-alhyari',
-                  onTap: () => _open(context,
-                      'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
-                  onLongPress: () => _copy(
-                      context,
-                      'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
-                  fontSize: rowSize,
-                  linkStyle: true,
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                Semantics(
-                  label: 'Download CV, PDF, 54 kilobytes, opens in new tab',
-                  button: true,
-                  child: PrimaryButton(
-                    label: 'Download CV (PDF)',
-                    onPressed: () => _open(context, 'cv.pdf'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ContactRow extends StatelessWidget {
-  final String label;
-  final String value;
-  final VoidCallback onTap;
-  final VoidCallback? onLongPress;
-  final double fontSize;
-  final bool linkStyle;
-
-  const _ContactRow({
-    required this.label,
-    required this.value,
-    required this.onTap,
-    required this.fontSize,
-    this.onLongPress,
-    this.linkStyle = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: '$label $value',
-      button: true,
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Text(
-            '$label : ',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          InkWell(
-            onTap: onTap,
-            onLongPress: onLongPress,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 44),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm - 2, vertical: AppSpacing.sm + 2),
-                child: Text(
-                  value,
-                  style: TextStyle(
-                    color: linkStyle ? Colors.lightBlueAccent : Colors.white,
-                    decoration: linkStyle
-                        ? TextDecoration.underline
-                        : TextDecoration.none,
-                    decorationColor: Colors.white,
-                    fontSize: fontSize,
-                    fontWeight: FontWeight.bold,
-                    shadows: const [
-                      Shadow(color: Colors.black87, blurRadius: 6),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
