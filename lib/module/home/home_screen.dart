@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -111,7 +112,21 @@ class _HomeScreenState extends State<HomeScreen> {
       _goTo(_pageCount - 1);
       return KeyEventResult.handled;
     }
+    final digit = _digitKeyToIndex(k);
+    if (digit != null) {
+      _goTo(digit);
+      return KeyEventResult.handled;
+    }
     return KeyEventResult.ignored;
+  }
+
+  int? _digitKeyToIndex(LogicalKeyboardKey k) {
+    final id = k.keyId;
+    final digitBase = LogicalKeyboardKey.digit1.keyId;
+    if (id >= digitBase && id < digitBase + _pageCount) return id - digitBase;
+    final numBase = LogicalKeyboardKey.numpad1.keyId;
+    if (id >= numBase && id < numBase + _pageCount) return id - numBase;
+    return null;
   }
 
   @override
@@ -130,27 +145,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: _controller,
                 scrollDirection: Axis.vertical,
                 children: [
-                IntroPage(
-                  onScrollDown: _next,
-                  controller: _controller,
-                  pageIndex: 0,
-                ),
-                HatsIntroPage(
-                  onExplain: _next,
-                  controller: _controller,
-                  pageIndex: 1,
-                ),
-                const HatsGridPage(),
-                const SkillsPage(),
-                const ProjectsPage(),
-                const ExperiencePage(),
-                ContactPage(
-                  controller: _controller,
-                  pageIndex: 6,
-                ),
-              ],
+                  IntroPage(
+                    onScrollDown: _next,
+                    controller: _controller,
+                    pageIndex: 0,
+                  ),
+                  HatsIntroPage(
+                    onExplain: _next,
+                    controller: _controller,
+                    pageIndex: 1,
+                  ),
+                  const HatsGridPage(),
+                  const SkillsPage(),
+                  const ProjectsPage(),
+                  const ExperiencePage(),
+                  ContactPage(
+                    controller: _controller,
+                    pageIndex: 6,
+                  ),
+                ],
+              ),
             ),
-          ),
             Positioned(
               right: 12,
               top: 0,
