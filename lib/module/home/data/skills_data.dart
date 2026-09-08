@@ -4,6 +4,7 @@ import '../model/skill.dart';
 const List<Skill> kSkills = [
   Skill(name: 'Flutter / Dart', icon: Icons.flutter_dash, level: 0.95),
   Skill(name: 'Android (Kotlin)', icon: Icons.android, level: 0.85),
+  Skill(name: 'iOS (Swift)', icon: Icons.phone_iphone, level: 0.75),
   Skill(name: 'NFC / Smart Cards', icon: Icons.contactless, level: 0.9),
   Skill(name: 'JWT & Secure Auth', icon: Icons.lock, level: 0.9),
   Skill(name: 'MVVM / Clean Arch', icon: Icons.architecture, level: 0.9),
