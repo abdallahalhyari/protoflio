@@ -668,18 +668,26 @@ class _HatsGridPage extends StatelessWidget {
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final crossAxisCount = constraints.maxWidth >= 900
-                ? 3
-                : constraints.maxWidth >= 600
-                    ? 2
-                    : 1;
+            // Fit all hats without inner scroll so the outer vertical
+            // PageView doesn't have to fight a nested Scrollable for
+            // wheel + touch drags.
+            final crossAxisCount = constraints.maxWidth >= 900 ? 3 : 2;
+            final rows = (kHats.length / crossAxisCount).ceil();
+            const spacing = 8.0;
+            final availW =
+                constraints.maxWidth - (crossAxisCount - 1) * spacing;
+            final availH = constraints.maxHeight - (rows - 1) * spacing;
+            final cellW = availW / crossAxisCount;
+            final cellH = availH / rows;
+            final aspect = (cellW / cellH).clamp(0.55, 1.4);
             return GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: kHats.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: 1.05,
+                mainAxisSpacing: spacing,
+                crossAxisSpacing: spacing,
+                childAspectRatio: aspect,
               ),
               itemBuilder: (context, i) => HatCard(hat: kHats[i]),
             );
