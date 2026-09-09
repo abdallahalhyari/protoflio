@@ -1456,37 +1456,46 @@ class _ContactPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                _ContactRow(
-                  icon: Icons.mail_outline,
-                  label: 'contact.email'.tr(),
-                  value: 'alhyariabdallh@gmail.com',
-                  onTap: () =>
-                      _open(context, 'mailto:alhyariabdallh@gmail.com'),
-                  onLongPress: () =>
-                      _copy(context, 'alhyariabdallh@gmail.com'),
-                  fontSize: rowSize,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _ContactRow(
-                  icon: Icons.phone_outlined,
-                  label: 'contact.phone'.tr(),
-                  value: '+962-787032264',
-                  onTap: () => _open(context, 'tel:+962787032264'),
-                  onLongPress: () => _copy(context, '+962787032264'),
-                  fontSize: rowSize,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _ContactRow(
-                  icon: Icons.link,
-                  label: 'contact.linkedin'.tr(),
-                  value: 'abdallah-alhyari',
-                  onTap: () => _open(context,
-                      'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
-                  onLongPress: () => _copy(
-                      context,
-                      'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
-                  fontSize: rowSize,
-                  linkStyle: true,
+                // Group the rows in a left-aligned column so all three
+                // icons line up on a shared left edge (the block itself is
+                // still centered by the outer column).
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _ContactRow(
+                      icon: Icons.mail_outline,
+                      label: 'contact.email'.tr(),
+                      value: 'alhyariabdallh@gmail.com',
+                      onTap: () =>
+                          _open(context, 'mailto:alhyariabdallh@gmail.com'),
+                      onLongPress: () =>
+                          _copy(context, 'alhyariabdallh@gmail.com'),
+                      fontSize: rowSize,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _ContactRow(
+                      icon: Icons.phone_outlined,
+                      label: 'contact.phone'.tr(),
+                      value: '+962-787032264',
+                      onTap: () => _open(context, 'tel:+962787032264'),
+                      onLongPress: () => _copy(context, '+962787032264'),
+                      fontSize: rowSize,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _ContactRow(
+                      icon: Icons.link,
+                      label: 'contact.linkedin'.tr(),
+                      value: 'abdallah-alhyari',
+                      onTap: () => _open(context,
+                          'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
+                      onLongPress: () => _copy(
+                          context,
+                          'https://www.linkedin.com/in/abdallah-alhyari-95b915201/'),
+                      fontSize: rowSize,
+                      linkStyle: true,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 Semantics(
