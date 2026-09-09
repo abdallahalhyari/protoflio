@@ -1116,7 +1116,8 @@ class _ProjectsPageState extends State<_ProjectsPage> {
                     // doesn't fight the outer vertical PageView.
                     if (wide) {
                       const spacing = AppSpacing.smd;
-                      const rows = 2;
+                      const cols = 2;
+                      final rows = (kProjects.length / cols).ceil();
                       final cellH =
                           (constraints.maxHeight - (rows - 1) * spacing) / rows;
                       return GridView.builder(

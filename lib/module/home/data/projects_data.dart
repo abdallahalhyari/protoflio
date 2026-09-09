@@ -55,6 +55,19 @@ const List<Project> kProjects = [
     stack: ['Flutter', 'REST', 'AWS', 'SQL Server'],
   ),
   Project(
+    name: 'Business Courses (Student + Teacher Apps)',
+    company: 'Solutions Now IT',
+    tagline:
+        'Dual-role learning platform: paired Student and Teacher Flutter apps sharing one backend.',
+    highlights: [
+      'Student app: browse courses, enroll, consume video / text lessons, take assessments, track progress.',
+      'Teacher app: author courses and lessons, publish, manage cohorts, review student submissions and grades.',
+      'Shared authentication + role-based session so one account tree drives both apps.',
+      'Common REST API + typed data models reused across both clients to keep parity.',
+    ],
+    stack: ['Flutter', 'Dart', 'REST', 'MVVM'],
+  ),
+  Project(
     name: 'M-Commerce + Fitness Apps',
     company: 'Future Advanced Internet Solutions',
     tagline: 'Backend-frontend integration for e-commerce & media-streaming.',
