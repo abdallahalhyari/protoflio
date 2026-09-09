@@ -4,11 +4,16 @@ import '../../../theme/tokens.dart';
 /// Portfolio primary CTA. Black surface, white text; focus ring, hover /
 /// press overlay, and — when `onPressed` is null — a visibly dimmed
 /// disabled state so tap-dead buttons never look tappable.
-class PrimaryButton extends StatelessWidget {
+///
+/// Set `pulse: true` on hero CTAs (Download CV, etc.) for an ambient
+/// scale-breathing loop that draws the eye. Skipped when
+/// `MediaQueryData.disableAnimations` is on.
+class PrimaryButton extends StatefulWidget {
   final String label;
   final VoidCallback? onPressed;
   final double fontSize;
   final double horizontalPadding;
+  final bool pulse;
 
   const PrimaryButton({
     super.key,
@@ -16,12 +21,45 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.fontSize = AppTypography.bodyLg + 2,
     this.horizontalPadding = 28,
+    this.pulse = false,
   });
 
   @override
+  State<PrimaryButton> createState() => _PrimaryButtonState();
+}
+
+class _PrimaryButtonState extends State<PrimaryButton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1800),
+  );
+  late final Animation<double> _t = CurvedAnimation(
+    parent: _c,
+    curve: Curves.easeInOut,
+  );
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final want = widget.pulse && !MediaQuery.of(context).disableAnimations;
+    if (want && !_started) {
+      _started = true;
+      _c.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
+    final button = ElevatedButton(
+      onPressed: widget.onPressed,
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.disabled)) {
@@ -63,11 +101,38 @@ class PrimaryButton extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: horizontalPadding,
+          horizontal: widget.horizontalPadding,
           vertical: AppSpacing.sm,
         ),
-        child: Text(label, style: TextStyle(fontSize: fontSize)),
+        child: Text(widget.label, style: TextStyle(fontSize: widget.fontSize)),
       ),
+    );
+
+    if (!_started) return button;
+    return AnimatedBuilder(
+      animation: _t,
+      builder: (_, child) {
+        // Ambient breathing loop: 1.0 -> 1.04 -> 1.0, with a matching
+        // subtle white halo shadow.
+        final scale = 1 + 0.04 * _t.value;
+        return Transform.scale(
+          scale: scale,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.white.withValues(alpha: 0.15 * _t.value),
+                  blurRadius: 24,
+                  spreadRadius: 2 * _t.value,
+                ),
+              ],
+            ),
+            child: child,
+          ),
+        );
+      },
+      child: button,
     );
   }
 }
