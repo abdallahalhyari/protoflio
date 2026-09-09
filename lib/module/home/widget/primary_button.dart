@@ -56,11 +56,12 @@ class _PrimaryButtonState extends State<PrimaryButton> {
           duration: AppMotion.xs,
           curve: Curves.easeOut,
           transform: Matrix4.identity()
-            ..translate(_mousePos.dx, _mousePos.dy, 0.0)
-            ..scale(
+            ..translateByDouble(_mousePos.dx, _mousePos.dy, 0.0, 1.0)
+            ..scaleByDouble(
               _isHovered ? 1.05 : 1.0, 
               _isHovered ? 1.05 : 1.0, 
-              1.0
+              1.0,
+              1.0,
             ),
           transformAlignment: Alignment.center,
           decoration: BoxDecoration(
@@ -83,8 +84,8 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                       scheme.primary.withValues(alpha: 0.7),
                     ]
                   : [
-                      Colors.black87,
-                      Colors.black,
+                      scheme.primary.withValues(alpha: 0.85),
+                      scheme.primary,
                     ],
             ),
             border: Border.all(

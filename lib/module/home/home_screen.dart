@@ -9,6 +9,7 @@ import 'package:profile/locale_controller.dart';
 
 import '../../theme/tokens.dart';
 import '../../theme_controller.dart';
+import '../../service/sound_service.dart';
 import 'page/intro_page.dart';
 import 'page/hats_intro_page.dart';
 import 'page/hats_grid_page.dart';
@@ -18,6 +19,7 @@ import 'page/experience_page.dart';
 import 'page/contact_page.dart';
 
 import 'widget/custom_cursor.dart';
+import 'widget/magazine_page_transformer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final page = _controller.page?.round() ?? 0;
     if (page != _pageIndex) {
       setState(() => _pageIndex = page);
+      SoundService.instance.playPageTurn();
       final labels = _TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {
         FirebaseAnalytics.instance.logScreenView(
@@ -141,29 +144,38 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Listener(
               onPointerSignal: _onPointerSignal,
-              child: PageView(
+              child: PageView.builder(
                 controller: _controller,
                 scrollDirection: Axis.vertical,
-                children: [
-                  IntroPage(
-                    onScrollDown: _next,
+                itemCount: 7,
+                itemBuilder: (context, index) {
+                  final pages = [
+                    IntroPage(
+                      onScrollDown: _next,
+                      controller: _controller,
+                      pageIndex: 0,
+                    ),
+                    HatsIntroPage(
+                      onExplain: _next,
+                      controller: _controller,
+                      pageIndex: 1,
+                    ),
+                    const HatsGridPage(),
+                    SkillsPage(controller: _controller, pageIndex: 3),
+                    ProjectsPage(controller: _controller, pageIndex: 4),
+                    ExperiencePage(controller: _controller, pageIndex: 5),
+                    ContactPage(
+                      controller: _controller,
+                      pageIndex: 6,
+                    ),
+                  ];
+                  
+                  return MagazinePageTransformer(
                     controller: _controller,
-                    pageIndex: 0,
-                  ),
-                  HatsIntroPage(
-                    onExplain: _next,
-                    controller: _controller,
-                    pageIndex: 1,
-                  ),
-                  const HatsGridPage(),
-                  const SkillsPage(),
-                  const ProjectsPage(),
-                  const ExperiencePage(),
-                  ContactPage(
-                    controller: _controller,
-                    pageIndex: 6,
-                  ),
-                ],
+                    index: index,
+                    child: pages[index],
+                  );
+                },
               ),
             ),
             Positioned(
@@ -235,27 +247,104 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Semantics(
-                          toggled: dark,
-                          label: 'Dark mode',
-                          child: Material(
-                            color: Colors.black45,
-                            shape: const CircleBorder(),
-                            child: IconButton(
-                              tooltip: dark ? 'Switch to light' : 'Switch to dark',
-                              icon: Icon(
-                                dark ? Icons.light_mode : Icons.dark_mode,
-                                color: Colors.white,
+                          const SizedBox(width: AppSpacing.sm),
+                          Semantics(
+                            toggled: dark,
+                            label: 'Dark mode',
+                            child: Material(
+                              color: Colors.black45,
+                              shape: const CircleBorder(),
+                              child: IconButton(
+                                tooltip: dark ? 'Switch to light' : 'Switch to dark',
+                                icon: Icon(
+                                  dark ? Icons.light_mode : Icons.dark_mode,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  HapticFeedback.lightImpact();
+                                  SoundService.instance.playClick();
+                                  ThemeController.toggle();
+                                },
                               ),
-                              onPressed: () {
-                                HapticFeedback.lightImpact();
-                                ThemeController.toggle();
-                              },
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: AppSpacing.sm),
+                          ValueListenableBuilder<bool>(
+                            valueListenable: SoundService.instance.isEnabled,
+                            builder: (context, enabled, _) {
+                              return Material(
+                                color: Colors.black45,
+                                shape: const CircleBorder(),
+                                child: IconButton(
+                                  tooltip: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
+                                  icon: Icon(
+                                    enabled ? Icons.volume_up : Icons.volume_off,
+                                    color: enabled ? Colors.white : Colors.white54,
+                                    size: 18,
+                                  ),
+                                  onPressed: () {
+                                    SoundService.instance.toggle();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            Positioned(
+              top: MediaQuery.sizeOf(context).width >= 900 ? null : 12,
+              bottom: MediaQuery.sizeOf(context).width >= 900 ? 12 : null,
+              left: MediaQuery.sizeOf(context).width >= 900 ? 16 : 12,
+              child: SafeArea(
+                child: AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, _) {
+                    final screenW = MediaQuery.sizeOf(context).width;
+                    final isDesktop = screenW >= 900;
+                    final isNarrow = screenW < 440;
+                    final labels = _TopNav.getLabels(context);
+                    final currentLabel = (_pageIndex >= 0 && _pageIndex < labels.length)
+                        ? labels[_pageIndex].toUpperCase()
+                        : '';
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.6),
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: Colors.white12),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'FOLIO 0${_pageIndex + 1} / 07',
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 1.5,
+                            ),
+                          ),
+                          if (!isNarrow || isDesktop) ...[
+                            const SizedBox(width: 8),
+                            Container(width: 1, height: 10, color: Colors.white24),
+                            const SizedBox(width: 8),
+                            Text(
+                              currentLabel,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 2,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
                     );
                   },
                 ),

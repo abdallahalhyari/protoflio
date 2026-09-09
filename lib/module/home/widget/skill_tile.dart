@@ -8,12 +8,14 @@ class SkillTile extends StatefulWidget {
   final Skill skill;
   final Duration delay;
   final int index;
+  final bool isVisible;
 
   const SkillTile({
     super.key,
     required this.skill,
     this.delay = Duration.zero,
     this.index = 0,
+    this.isVisible = true,
   });
 
   @override
@@ -32,9 +34,25 @@ class _SkillTileState extends State<SkillTile>
   @override
   void initState() {
     super.initState();
-    Future.delayed(widget.delay, () {
-      if (mounted) _c.forward();
-    });
+    if (widget.isVisible) {
+      Future.delayed(widget.delay, () {
+        if (mounted) _c.forward();
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(SkillTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isVisible != oldWidget.isVisible) {
+      if (widget.isVisible) {
+        Future.delayed(widget.delay, () {
+          if (mounted) _c.forward(from: 0.0);
+        });
+      } else {
+        _c.reset();
+      }
+    }
   }
 
   @override
@@ -49,6 +67,7 @@ class _SkillTileState extends State<SkillTile>
     final onSurface = scheme.onSurface;
     
     return FadeInLeft(
+      animate: widget.isVisible,
       delay: Duration(milliseconds: 100 * widget.index),
       duration: const Duration(milliseconds: 600),
       child: AppCard.outlined(

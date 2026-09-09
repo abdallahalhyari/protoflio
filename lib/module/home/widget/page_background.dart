@@ -50,9 +50,11 @@ class _PageBackgroundState extends State<PageBackground> {
         return AnimatedContainer(
           duration: const Duration(milliseconds: 150),
           transform: Matrix4.identity()
-            ..translate(
+            ..translateByDouble(
               _mouseOffset.dx * -0.05, // subtle opposite direction
               (pageOffset * size.height * 0.4) + (_mouseOffset.dy * -0.05),
+              0.0,
+              1.0,
             ),
           child: baseImage,
         );

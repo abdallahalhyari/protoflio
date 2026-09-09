@@ -50,7 +50,7 @@ class AppMotion {
 class AppColors {
   AppColors._();
 
-  static const Color seed = Colors.blue;
+  static const Color seed = Color(0xFF6366F1); // Indigo
 
   // Dark surface tones (used by scaffolds/pages)
   static const Color darkSurface = Color(0xFF0F172A); // Slate 900

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HatImage extends StatelessWidget {
+class HatImage extends StatefulWidget {
   final String path;
   final double height;
   final String? semanticLabel;
@@ -12,27 +12,47 @@ class HatImage extends StatelessWidget {
     this.semanticLabel,
   });
 
-  bool get _isNetwork => path.startsWith('http');
+  @override
+  State<HatImage> createState() => _HatImageState();
+}
+
+class _HatImageState extends State<HatImage> with SingleTickerProviderStateMixin {
+  late final AnimationController _c;
+  late final Animation<double> _anim;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _c = AnimationController(vsync: this, duration: const Duration(seconds: 3))..repeat(reverse: true);
+    _anim = Tween<double>(begin: -0.02, end: 0.02).animate(CurvedAnimation(parent: _c, curve: Curves.easeInOutSine));
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  bool get _isNetwork => widget.path.startsWith('http');
+
+  Widget _buildImage() {
     if (!_isNetwork) {
       return Image.asset(
-        path,
-        height: height,
+        widget.path,
+        height: widget.height,
         fit: BoxFit.contain,
-        semanticLabel: semanticLabel,
+        semanticLabel: widget.semanticLabel,
       );
     }
     return Image.network(
-      path,
-      height: height,
+      widget.path,
+      height: widget.height,
       fit: BoxFit.contain,
-      semanticLabel: semanticLabel,
+      semanticLabel: widget.semanticLabel,
       loadingBuilder: (context, child, progress) {
         if (progress == null) return child;
         return SizedBox(
-          height: height,
+          height: widget.height,
           child: const Center(
             child: SizedBox(
               width: 28,
@@ -46,12 +66,25 @@ class HatImage extends StatelessWidget {
         );
       },
       errorBuilder: (context, error, stack) => SizedBox(
-        height: height,
+        height: widget.height,
         child: const Center(
-          child: Icon(Icons.broken_image_outlined,
-              color: Colors.white70, size: 40),
+          child: Icon(Icons.broken_image_outlined, color: Colors.white70, size: 40),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _anim,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, _anim.value * widget.height),
+          child: child,
+        );
+      },
+      child: _buildImage(),
     );
   }
 }

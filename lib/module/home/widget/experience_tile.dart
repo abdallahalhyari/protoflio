@@ -9,6 +9,7 @@ class ExperienceTile extends StatefulWidget {
   final bool isFirst;
   final bool isLast;
   final int index;
+  final bool isVisible;
 
   const ExperienceTile({
     super.key,
@@ -16,6 +17,7 @@ class ExperienceTile extends StatefulWidget {
     this.isFirst = false,
     this.isLast = false,
     this.index = 0,
+    this.isVisible = true,
   });
 
   @override
@@ -30,6 +32,7 @@ class _ExperienceTileState extends State<ExperienceTile> {
     final scheme = Theme.of(context).colorScheme;
     
     return FadeInUp(
+      animate: widget.isVisible,
       delay: Duration(milliseconds: 100 * widget.index),
       duration: const Duration(milliseconds: 600),
       child: IntrinsicHeight(
@@ -63,12 +66,14 @@ class _ExperienceTileState extends State<ExperienceTile> {
                           decoration: BoxDecoration(
                             color: _isHovered 
                                 ? scheme.onSurface.withValues(alpha: 0.1) 
-                                : Colors.black.withValues(alpha: 0.25),
+                                : (Theme.of(context).brightness == Brightness.dark 
+                                    ? Colors.black.withValues(alpha: 0.25)
+                                    : Colors.white.withValues(alpha: 0.5)),
                             borderRadius: BorderRadius.circular(AppRadius.md),
                             border: Border.all(
                               color: _isHovered 
                                   ? scheme.primary.withValues(alpha: 0.5) 
-                                  : Colors.white24,
+                                  : (Theme.of(context).brightness == Brightness.dark ? Colors.white24 : Colors.black12),
                               width: 1,
                             ),
                             boxShadow: [

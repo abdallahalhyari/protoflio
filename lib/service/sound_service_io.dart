@@ -1,0 +1,2 @@
+void playWebClick() {}
+void playWebPageTurn() {}

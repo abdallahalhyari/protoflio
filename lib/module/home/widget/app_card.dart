@@ -55,10 +55,11 @@ class _AppCardState extends State<AppCard> {
       child: AnimatedContainer(
         duration: AppMotion.sm,
         curve: Curves.easeOut,
-        transform: Matrix4.identity()..scale(
+        transform: Matrix4.identity()..scaleByDouble(
           _isHovered ? 1.02 : 1.0,
           _isHovered ? 1.02 : 1.0,
-          1.0
+          1.0,
+          1.0,
         ),
         transformAlignment: Alignment.center,
         decoration: BoxDecoration(
