@@ -2,21 +2,50 @@ import 'package:flutter/material.dart';
 
 /// Spacing scale (2pt/4pt base). Use these instead of magic numbers.
 ///
-/// The odd-stop values (`smx = 6`, `mdx = 14`) exist to eliminate the
-/// `AppSpacing.sm - 2` / `AppSpacing.md + 2` arithmetic that used to
-/// litter widgets whenever we needed something between two stops.
+/// The odd-stop values (`smx`, `smy`, `mdx`, `mdy`, `lgx`, `lgy`) exist
+/// to eliminate arithmetic like `AppSpacing.sm - 2` / `AppSpacing.md + 2`
+/// that used to litter widgets whenever we needed a value between two
+/// stops. If you find yourself writing `AppSpacing.X ± N`, add the stop
+/// here instead.
 class AppSpacing {
   AppSpacing._();
   static const double xs = 4;
   static const double smx = 6;
   static const double sm = 8;
+  static const double smy = 10;
   static const double smd = 12;
   static const double mdx = 14;
   static const double md = 16;
+  static const double mdy = 18;
+  static const double lgx = 20;
   static const double lg = 24;
+  static const double lgy = 28;
   static const double xl = 32;
+  static const double xxly = 40;
   static const double xxl = 48;
   static const double huge = 80;
+}
+
+/// Named breakpoints — replaces scattered `size.width >= 900` calls with
+/// a shared vocabulary so all sections agree on what "wide" means.
+///
+/// | Name       | Min width | Typical use case               |
+/// | ---------- | --------- | ------------------------------ |
+/// | compact    | 0         | mobile portrait                |
+/// | medium     | 600       | mobile landscape / small tablet |
+/// | expanded   | 900       | tablet portrait / small laptop |
+/// | large      | 1100      | laptop / small desktop         |
+/// | xlarge     | 1400      | desktop / ultra-wide           |
+class AppBreakpoints {
+  AppBreakpoints._();
+  static const double medium = 600;
+  static const double expanded = 900;
+  static const double large = 1100;
+  static const double xlarge = 1400;
+
+  /// Cap content width so ultra-wide viewports don't stretch text lines
+  /// past a readable measure. Meant for section content columns.
+  static const double contentMaxWidth = 1200;
 }
 
 /// Border-radius scale.

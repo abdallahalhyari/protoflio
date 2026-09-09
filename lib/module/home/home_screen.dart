@@ -31,7 +31,7 @@ import 'widget/stagger.dart';
 const double kTopNavReserve = 72;
 
 double topNavPad(BuildContext context) =>
-    MediaQuery.sizeOf(context).width >= 900 ? kTopNavReserve : 0;
+    MediaQuery.sizeOf(context).width >= AppBreakpoints.expanded ? kTopNavReserve : 0;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -200,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 count: _pageCount,
               ),
             ),
-            if (MediaQuery.sizeOf(context).width >= 900)
+            if (MediaQuery.sizeOf(context).width >= AppBreakpoints.expanded)
               Positioned(
                 top: 0,
                 left: 0,
@@ -607,7 +607,7 @@ class _IntroPageState extends State<_IntroPage>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final isWide = size.width >= 800;
+    final isWide = size.width >= AppBreakpoints.medium + 200;
     final isShort = size.height < 560;
     // Cap avatar by BOTH height and shortestSide so it doesn't crowd the
     // title/CTA on short viewports; on landscape phones (< 560 tall) we
@@ -636,7 +636,7 @@ class _IntroPageState extends State<_IntroPage>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: isWide ? AppSpacing.xxl - 8 : AppSpacing.lg),
+                  SizedBox(height: isWide ? AppSpacing.xxly : AppSpacing.lg),
                   Semantics(
                     header: true,
                     label:
@@ -907,7 +907,7 @@ class _HatsIntroPage extends StatelessWidget {
               colors: [Colors.black54, Colors.black38, Colors.black26],
             ),
           ),
-          padding: const EdgeInsets.all(AppSpacing.md + 2),
+          padding: const EdgeInsets.all(AppSpacing.mdy),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -967,7 +967,7 @@ class _HatsGridPage extends StatelessWidget {
             // Fit all hats without inner scroll so the outer vertical
             // PageView doesn't have to fight a nested Scrollable for
             // wheel + touch drags.
-            final crossAxisCount = constraints.maxWidth >= 900 ? 3 : 2;
+            final crossAxisCount = constraints.maxWidth >= AppBreakpoints.expanded ? 3 : 2;
             final rows = (kHats.length / crossAxisCount).ceil();
             const spacing = 8.0;
             final availW =
@@ -1006,11 +1006,11 @@ class _SkillsPage extends StatelessWidget {
     final headingSize =
         (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
     // Tuned so cards never grow wider than ~360px on ultra-wide displays.
-    final cross = size.width >= 1400
+    final cross = size.width >= AppBreakpoints.xlarge
         ? 4
-        : size.width >= 900
+        : size.width >= AppBreakpoints.expanded
             ? 3
-            : size.width >= 600
+            : size.width >= AppBreakpoints.medium
                 ? 2
                 : 1;
 
@@ -1026,33 +1026,39 @@ class _SkillsPage extends StatelessWidget {
             AppSpacing.lg,
             AppSpacing.xl,
           ),
-          child: Column(
-            children: [
-              SectionHeading(
-                index: 3,
-                total: 7,
-                title: 'skills.heading'.tr(),
-                titleSize: headingSize,
-                color: textColor,
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: kSkills.length,
-                  gridDelegate:
-                      SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: cross,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    mainAxisExtent: 84,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                  maxWidth: AppBreakpoints.contentMaxWidth),
+              child: Column(
+                children: [
+                  SectionHeading(
+                    index: 3,
+                    total: 7,
+                    title: 'skills.heading'.tr(),
+                    titleSize: headingSize,
+                    color: textColor,
                   ),
-                  itemBuilder: (_, i) => SkillTile(
-                    skill: kSkills[i],
-                    delay: Duration(milliseconds: 80 * i), // staggered — keep raw
+                  const SizedBox(height: AppSpacing.lg),
+                  Expanded(
+                    child: GridView.builder(
+                      itemCount: kSkills.length,
+                      gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: cross,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        mainAxisExtent: 84,
+                      ),
+                      itemBuilder: (_, i) => SkillTile(
+                        skill: kSkills[i],
+                        delay: Duration(milliseconds: 80 * i),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -1086,7 +1092,7 @@ class _ProjectsPageState extends State<_ProjectsPage> {
         (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
     // Lowered from 1100 so tablet portrait (768) and iPad landscape (1024)
     // both get the 2x2 grid instead of the horizontal-swipe fallback.
-    final wide = size.width >= 900;
+    final wide = size.width >= AppBreakpoints.expanded;
 
     return Container(
       color: theme.scaffoldBackgroundColor,
@@ -1094,20 +1100,24 @@ class _ProjectsPageState extends State<_ProjectsPage> {
         child: Padding(
           padding: EdgeInsets.fromLTRB(
             AppSpacing.lg,
-            AppSpacing.lg + 4 + topNavPad(context),
+            AppSpacing.lgy + topNavPad(context),
             AppSpacing.lg,
             AppSpacing.md,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SectionHeading(
-                index: 4,
-                total: 7,
-                title: 'projects.heading'.tr(),
-                titleSize: headingSize,
-                color: scheme.onSurface,
-              ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                  maxWidth: AppBreakpoints.contentMaxWidth),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SectionHeading(
+                    index: 4,
+                    total: 7,
+                    title: 'projects.heading'.tr(),
+                    titleSize: headingSize,
+                    color: scheme.onSurface,
+                  ),
               const SizedBox(height: AppSpacing.lg),
               Expanded(
                 child: LayoutBuilder(
@@ -1169,6 +1179,8 @@ class _ProjectsPageState extends State<_ProjectsPage> {
                 ),
               ),
             ],
+              ),
+            ),
           ),
         ),
       ),
@@ -1235,7 +1247,7 @@ class _ExperiencePage extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     final headingSize =
         (size.width * 0.055).clamp(AppTypography.heading, AppTypography.displayLg);
-    final isWide = size.width >= 900;
+    final isWide = size.width >= AppBreakpoints.expanded;
 
     final expList = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1299,7 +1311,7 @@ class _ExperiencePage extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.lg - 4),
+        const SizedBox(height: AppSpacing.lgx),
         Text(
           'experience.certifications'.tr(),
           style: TextStyle(
@@ -1309,7 +1321,7 @@ class _ExperiencePage extends StatelessWidget {
             letterSpacing: 1.5,
           ),
         ),
-        const SizedBox(height: AppSpacing.sm + 2),
+        const SizedBox(height: AppSpacing.smy),
         ...kCertifications.map(
           (c) => Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.smx),
@@ -1344,21 +1356,25 @@ class _ExperiencePage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.fromLTRB(
             AppSpacing.lg,
-            AppSpacing.lg + 4 + topNavPad(context),
+            AppSpacing.lgy + topNavPad(context),
             AppSpacing.lg,
             AppSpacing.md,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SectionHeading(
-                index: 5,
-                total: 7,
-                title: 'experience.heading'.tr(),
-                titleSize: headingSize,
-                color: scheme.onSurface,
-              ),
-              const SizedBox(height: AppSpacing.lg - 4),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                  maxWidth: AppBreakpoints.contentMaxWidth),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SectionHeading(
+                    index: 5,
+                    total: 7,
+                    title: 'experience.heading'.tr(),
+                    titleSize: headingSize,
+                    color: scheme.onSurface,
+                  ),
+              const SizedBox(height: AppSpacing.lgx),
               Expanded(
                 child: SingleChildScrollView(
                   child: isWide
@@ -1366,7 +1382,7 @@ class _ExperiencePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(flex: 3, child: expList),
-                            const SizedBox(width: AppSpacing.xl + 8),
+                            const SizedBox(width: AppSpacing.xl + AppSpacing.sm),
                             Expanded(flex: 2, child: eduSection),
                           ],
                         )
@@ -1374,13 +1390,15 @@ class _ExperiencePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             expList,
-                            const SizedBox(height: AppSpacing.lg - 4),
+                            const SizedBox(height: AppSpacing.lgx),
                             eduSection,
                           ],
                         ),
                 ),
               ),
             ],
+              ),
+            ),
           ),
         ),
       ),
@@ -1428,7 +1446,7 @@ class _ContactPage extends StatelessWidget {
               colors: [Colors.black26, Colors.black38, Colors.black54],
             ),
           ),
-          padding: const EdgeInsets.all(AppSpacing.md + 2),
+          padding: const EdgeInsets.all(AppSpacing.mdy),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

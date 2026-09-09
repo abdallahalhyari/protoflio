@@ -96,7 +96,7 @@ class _ExperienceTileState extends State<ExperienceTile>
               const SizedBox(width: AppSpacing.mdx),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.lg - 4),
+                  padding: const EdgeInsets.only(bottom: AppSpacing.lgx),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
