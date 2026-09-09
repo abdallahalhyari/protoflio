@@ -34,7 +34,11 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: flutter build web --release
+      # --no-tree-shake-icons: Icons stored in const model instances
+      # (Skill.icon, etc.) aren't traceable by the icon tree-shaker, so
+      # a plain release build silently strips them and every skill /
+      # contact / project icon renders as a hollow box on prod.
+      - run: flutter build web --release --no-tree-shake-icons
       - id: upload
         uses: actions/upload-artifact@v4
         with:
