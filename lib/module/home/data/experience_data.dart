@@ -29,6 +29,7 @@ const List<Experience> kExperience = [
     company: 'Solutions Now IT',
     period: '11/2021 – 11/2022',
     highlights: [
+      'Built a dual-role business-courses platform: separate Student and Teacher apps sharing a common backend for enrollment, content delivery, assessments, and progress tracking.',
       'Established reusable Flutter design principles and template libraries.',
       'Documented design patterns for reuse across iterations.',
       'Integrated RESTful web services; designed data structures for dynamic datasets.',
