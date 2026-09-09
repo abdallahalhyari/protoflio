@@ -254,9 +254,26 @@ class _ThemeToggle extends StatelessWidget {
                   (dark ? 'theme.switch_to_light' : 'theme.switch_to_dark').tr(),
               focusColor: Colors.white.withValues(alpha: 0.30),
               hoverColor: Colors.white.withValues(alpha: 0.10),
-              icon: Icon(
-                dark ? Icons.light_mode : Icons.dark_mode,
-                color: Colors.white,
+              icon: AnimatedSwitcher(
+                duration: AppMotion.md,
+                switchInCurve: Curves.easeOutBack,
+                switchOutCurve: Curves.easeIn,
+                transitionBuilder: (child, anim) {
+                  // Rotate + fade so the sun/moon appear to spin into place
+                  // instead of a hard swap.
+                  return FadeTransition(
+                    opacity: anim,
+                    child: RotationTransition(
+                      turns: Tween<double>(begin: 0.5, end: 1).animate(anim),
+                      child: child,
+                    ),
+                  );
+                },
+                child: Icon(
+                  dark ? Icons.light_mode : Icons.dark_mode,
+                  key: ValueKey<bool>(dark),
+                  color: Colors.white,
+                ),
               ),
               onPressed: () => ThemeController.toggle(),
             ),
@@ -309,8 +326,33 @@ class _TopNav extends StatelessWidget {
     required this.onTap,
   });
 
+  static const double _itemPadH = AppSpacing.smd;
+  static const double _itemPadV = AppSpacing.sm;
+  static const double _labelSize = AppTypography.small;
+
   @override
   Widget build(BuildContext context) {
+    // Measure each label's rendered width once per build so we can lay a
+    // single sliding pill behind the active item instead of animating
+    // per-item backgrounds. Measurement uses the same TextStyle as the
+    // rendered label so the pill fits exactly.
+    final labels = labelKeys.map((k) => k.tr()).toList();
+    final widths = labels
+        .map((l) => _measure(l, context, active: false) + _itemPadH * 2)
+        .toList();
+    final activeWidths = labels
+        .map((l) => _measure(l, context, active: true) + _itemPadH * 2)
+        .toList();
+    final maxWidths = [
+      for (var i = 0; i < labels.length; i++)
+        widths[i] > activeWidths[i] ? widths[i] : activeWidths[i],
+    ];
+    final offsets = <double>[0];
+    for (var i = 0; i < maxWidths.length - 1; i++) {
+      offsets.add(offsets[i] + maxWidths[i]);
+    }
+    final totalWidth = offsets.last + maxWidths.last;
+
     return Semantics(
       container: true,
       explicitChildNodes: true,
@@ -331,22 +373,68 @@ class _TopNav extends StatelessWidget {
             ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (var i = 0; i < labelKeys.length; i++)
-                    _NavItem(
-                      label: labelKeys[i].tr(),
-                      active: current == i,
-                      onTap: () => onTap(i),
+              child: SizedBox(
+                width: totalWidth,
+                child: Stack(
+                  children: [
+                    // Sliding active pill: single background that glides
+                    // between item slots instead of hard-swapping tint.
+                    AnimatedPositioned(
+                      duration: AppMotion.md,
+                      curve: Curves.easeOutCubic,
+                      left: offsets[current],
+                      width: maxWidths[current],
+                      top: 0,
+                      bottom: 0,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.25),
+                          borderRadius:
+                              BorderRadius.circular(AppRadius.pill),
+                          border: Border.all(
+                              color: Colors.white70, width: 1),
+                        ),
+                      ),
                     ),
-                ],
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        for (var i = 0; i < labels.length; i++)
+                          SizedBox(
+                            width: maxWidths[i],
+                            child: _NavItem(
+                              label: labels[i],
+                              active: current == i,
+                              onTap: () => onTap(i),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  static double _measure(String label, BuildContext context,
+      {required bool active}) {
+    final tp = TextPainter(
+      text: TextSpan(
+        text: label,
+        style: TextStyle(
+          fontSize: _labelSize,
+          fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+          letterSpacing: 0.3,
+        ),
+      ),
+      textDirection: Directionality.of(context),
+      maxLines: 1,
+    )..layout();
+    return tp.width;
   }
 }
 
@@ -372,26 +460,19 @@ class _NavItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.pill),
         focusColor: Colors.white.withValues(alpha: 0.30),
         hoverColor: Colors.white.withValues(alpha: 0.10),
-        child: AnimatedContainer(
-          duration: AppMotion.sm,
+        child: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.smd, vertical: AppSpacing.sm),
-          decoration: BoxDecoration(
-            color: active
-                ? Colors.white.withValues(alpha: 0.25)
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            border: active
-                ? Border.all(color: Colors.white70, width: 1)
-                : null,
-          ),
-          child: Text(
-            label,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: AppTypography.small,
-              fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-              letterSpacing: 0.3,
+              horizontal: _TopNav._itemPadH, vertical: _TopNav._itemPadV),
+          child: Center(
+            child: AnimatedDefaultTextStyle(
+              duration: AppMotion.sm,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: AppTypography.small,
+                fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+                letterSpacing: 0.3,
+              ),
+              child: Text(label),
             ),
           ),
         ),
@@ -1413,6 +1494,7 @@ class _ContactPage extends StatelessWidget {
                   child: PrimaryButton(
                     label: 'contact.download_cv'.tr(),
                     onPressed: () => _open(context, 'cv.pdf'),
+                    pulse: true,
                   ),
                 ),
               ],
@@ -1454,6 +1536,7 @@ class _ContactRowState extends State<_ContactRow>
     duration: AppMotion.chip,
   );
   bool _showCopied = false;
+  bool _hover = false;
 
   @override
   void dispose() {
@@ -1479,6 +1562,9 @@ class _ContactRowState extends State<_ContactRow>
     return Semantics(
       label: '${widget.label} ${widget.value}',
       button: true,
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _hover = true),
+        onExit: (_) => setState(() => _hover = false),
       child: InkWell(
         onTap: () {
           widget.onTap();
@@ -1516,8 +1602,14 @@ class _ContactRowState extends State<_ContactRow>
               mainAxisSize: MainAxisSize.min,
               children: [
                 ExcludeSemantics(
-                  child: Icon(widget.icon,
-                      color: Colors.white, size: widget.fontSize * 1.1),
+                  child: AnimatedScale(
+                    scale: _hover ? 1.18 : 1.0,
+                    duration: AppMotion.sm,
+                    curve: Curves.easeOutBack,
+                    child: Icon(widget.icon,
+                        color: Colors.white,
+                        size: widget.fontSize * 1.1),
+                  ),
                 ),
                 const SizedBox(width: AppSpacing.md),
                 Flexible(
@@ -1598,6 +1690,7 @@ class _ContactRowState extends State<_ContactRow>
           ),
           ),
         ),
+      ),
       ),
     );
   }
