@@ -1132,7 +1132,7 @@ class _ProjectsPageState extends State<_ProjectsPage> {
                         ),
                         itemBuilder: (_, i) => Stagger(
                           delay: Duration(milliseconds: 90 * i),
-                          child: ProjectCard(project: kProjects[i]),
+                          child: ProjectCard(project: kProjects[i], index: i),
                         ),
                       );
                     }
@@ -1149,7 +1149,7 @@ class _ProjectsPageState extends State<_ProjectsPage> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: AppSpacing.xs),
                               child:
-                                  ProjectCard(project: kProjects[i]),
+                                  ProjectCard(project: kProjects[i], index: i),
                             ),
                           ),
                         ),
