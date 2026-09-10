@@ -5,20 +5,26 @@ import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 import '../data/skills_data.dart';
 import '../model/skill.dart';
+import '../widget/screen_shell.dart';
+import '../widget/swipe_affordance.dart';
 
 class SkillsPage extends StatefulWidget {
   final PageController? controller;
   final int? pageIndex;
+  final bool isContinuousMobile;
 
-  const SkillsPage({super.key, this.controller, this.pageIndex});
+  const SkillsPage({
+    super.key,
+    this.controller,
+    this.pageIndex,
+    this.isContinuousMobile = false,
+  });
 
   @override
   State<SkillsPage> createState() => _SkillsPageState();
 }
 
 class _SkillsPageState extends State<SkillsPage> {
-  Offset _mousePos = Offset.zero;
-  late Skill _hoveredSkill;
   String _selectedCategory = 'ALL';
 
   final List<String> _categories = [
@@ -29,33 +35,16 @@ class _SkillsPageState extends State<SkillsPage> {
     'Cloud & Infrastructure',
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _hoveredSkill = kSkills.first; // Default to Flutter / Dart
-    widget.controller?.addListener(_onScroll);
-  }
-
-  @override
-  void dispose() {
-    widget.controller?.removeListener(_onScroll);
-    super.dispose();
-  }
-
-  void _onScroll() {
-    if (mounted) setState(() {});
-  }
-
   List<Color> _getCategoryGradient(String category) {
     switch (category) {
       case 'Mobile Systems':
-        return const [Color(0xFF38BDF8), Color(0xFF818CF8)]; // Sky to Indigo
+        return const [Color(0xFF38BDF8), Color(0xFF818CF8)];
       case 'Security & Protocols':
-        return const [Color(0xFFFBBF24), Color(0xFFF59E0B)]; // Amber to Gold
+        return const [Color(0xFFFBBF24), Color(0xFFF59E0B)];
       case 'Architecture & State':
-        return const [Color(0xFF34D399), Color(0xFF10B981)]; // Emerald to Mint
+        return const [Color(0xFF34D399), Color(0xFF10B981)];
       case 'Cloud & Infrastructure':
-        return const [Color(0xFFA78BFA), Color(0xFFEC4899)]; // Violet to Rose
+        return const [Color(0xFFA78BFA), Color(0xFFEC4899)];
       default:
         return const [Color(0xFF818CF8), Color(0xFFC084FC)];
     }
@@ -82,662 +71,494 @@ class _SkillsPageState extends State<SkillsPage> {
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
     final loc = AppLocalizations.of(context)!;
-    final isDesktop = size.width >= 960;
-
-    double scrollProgress = 0.0;
-    if (widget.controller != null &&
-        widget.controller!.hasClients &&
-        widget.controller!.position.haveDimensions &&
-        widget.pageIndex != null) {
-      scrollProgress = ((widget.controller!.page ?? 0.0) - widget.pageIndex!).clamp(-1.0, 1.0);
-    }
+    final isDesktop = size.width >= AppBreakpoints.tablet;
 
     final displayedSkills = _selectedCategory == 'ALL'
         ? kSkills
         : kSkills.where((s) => s.category == _selectedCategory).toList();
 
-    return Container(
-      color: theme.scaffoldBackgroundColor,
-      child: Stack(
-        children: [
-          // Blueprint Drafting Grid Background
-          Positioned.fill(
-            child: CustomPaint(
-              painter: _DraftingGridPainter(color: scheme.primary),
-            ),
+    final grid = displayedSkills.isEmpty 
+      ? const Center(child: Text("No skills found in this category."))
+      : GridView.builder(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.only(right: 20),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: isDesktop ? 2 : 1, // Number of rows
+            childAspectRatio: isDesktop ? 1.1 : 1.28, // Height / Width
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
           ),
-
-          SafeArea(
-            child: MouseRegion(
-              onHover: (e) {
-                final center = Offset(size.width / 2, size.height / 2);
-                setState(() {
-                  _mousePos = Offset(
-                    ((e.position.dx - center.dx) / (size.width / 2)).clamp(-1.0, 1.0),
-                    ((e.position.dy - center.dy) / (size.height / 2)).clamp(-1.0, 1.0),
-                  );
-                });
-              },
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  isDesktop ? AppSpacing.xxl : AppSpacing.md,
-                  AppSpacing.sm,
-                  isDesktop ? AppSpacing.xxl : AppSpacing.md,
-                  AppSpacing.xs,
-                ),
-                child: isDesktop
-                    // DESKTOP: Split 2-Column (Zero nested vertical scroll!)
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          // Left Column: Header, Category Filter & Typographic Cloud
-                          Expanded(
-                            flex: 6,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                _buildHeader(scheme, loc, size, isDesktop),
-                                const SizedBox(height: 10),
-                                _buildCategoryFilters(scheme, isDesktop),
-                                const SizedBox(height: 10),
-                                Container(height: 1, color: scheme.onSurface.withValues(alpha: 0.12)),
-                                const SizedBox(height: 10),
-
-                                // Kinetic Typographic Cloud (Fits on screen without nested scroll)
-                                Expanded(
-                                  child: Center(
-                                    child: Wrap(
-                                      alignment: WrapAlignment.center,
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 20.0,
-                                      runSpacing: 16.0,
-                                      children: [
-                                        for (int i = 0; i < displayedSkills.length; i++)
-                                          _buildKineticWord(
-                                            skill: displayedSkills[i],
-                                            index: i,
-                                            size: size,
-                                            scrollProgress: scrollProgress,
-                                            scheme: scheme,
-                                            isDesktop: isDesktop,
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                const SizedBox(height: 8),
-                                _buildFootnote(scheme),
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(width: AppSpacing.xl),
-
-                          // Right Column: Architectural Dossier Blueprint Card
-                          Expanded(
-                            flex: 5,
-                            child: Center(
-                              child: _buildArchitecturalDossier(scheme, size, isDesktop),
-                            ),
-                          ),
-                        ],
-                      )
-                    // MOBILE: Unified single-viewport layout (Zero nested scroll!)
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _buildHeader(scheme, loc, size, isDesktop),
-                          const SizedBox(height: 6),
-                          _buildCategoryFilters(scheme, isDesktop),
-                          const SizedBox(height: 6),
-                          Container(height: 1, color: scheme.onSurface.withValues(alpha: 0.12)),
-                          const SizedBox(height: 6),
-
-                          // Mobile Kinetic Words (Responsive scale to prevent any inner scrollbar)
-                          Expanded(
-                            child: Center(
-                              child: Wrap(
-                                alignment: WrapAlignment.center,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                spacing: 8.0,
-                                runSpacing: 8.0,
-                                children: [
-                                  for (int i = 0; i < displayedSkills.length; i++)
-                                    _buildKineticWord(
-                                      skill: displayedSkills[i],
-                                      index: i,
-                                      size: size,
-                                      scrollProgress: scrollProgress,
-                                      scheme: scheme,
-                                      isDesktop: isDesktop,
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 6),
-                          _buildArchitecturalDossier(scheme, size, isDesktop),
-                          const SizedBox(height: 4),
-                          _buildFootnote(scheme),
-                        ],
-                      ),
+          itemCount: displayedSkills.length,
+          itemBuilder: (context, index) {
+            final skill = displayedSkills[index];
+            return RepaintBoundary(
+              child: _BentoSkillTile(
+                skill: skill,
+                categoryColor: _getCategoryColor(skill.category),
+                categoryGradient: _getCategoryGradient(skill.category),
+                isDesktop: isDesktop,
               ),
+            );
+          },
+      );
+
+    return AppScreenShell(
+      maxWidth: 1400,
+      verticalPadding: widget.isContinuousMobile ? AppSpacing.md : AppSpacing.md,
+      reserveBottomNav: !widget.isContinuousMobile,
+      reserveMobileTop: !widget.isContinuousMobile,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildHeader(scheme, loc, size, isDesktop),
+          const SizedBox(height: 12),
+          _buildCategoryFilters(scheme, isDesktop),
+          const SizedBox(height: 12),
+          Container(height: 1, color: scheme.onSurface.withValues(alpha: 0.12)),
+          const SizedBox(height: 16),
+          if (widget.isContinuousMobile) ...[
+            SizedBox(
+              height: 300,
+              child: grid,
             ),
-          ),
+            const SizedBox(height: 8),
+            _buildMobileSwipeHint(scheme, displayedSkills.length),
+          ] else
+            Expanded(child: grid),
         ],
+      ),
+    );
+  }
+
+  Widget _buildMobileSwipeHint(ColorScheme scheme, int count) {
+    return Center(
+      child: SwipeAffordance(
+        icon: Icons.touch_app_outlined,
+        label: 'SWIPE TO BROWSE $count SKILLS · TAP CARDS TO FLIP',
       ),
     );
   }
 
   Widget _buildHeader(ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        Container(height: 2, color: scheme.primary.withValues(alpha: 0.9)),
+        const SizedBox(height: 6),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(width: 18, height: 2, color: scheme.primary),
-                  const SizedBox(width: 8),
-                  Flexible(
+                  Text(
+                    isDesktop ? 'FEATURE 05 · ARCHITECTURAL MASTERY' : 'FEATURE 05 · CORE SKILLS',
+                    style: TextStyle(
+                      color: scheme.primary,
+                      fontSize: isDesktop ? 11 : 10,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 3,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
                     child: Text(
-                      isDesktop ? 'INDEX // ARCHITECTURAL MASTERY' : 'INDEX // SKILLS',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      loc.navSkills.toUpperCase(),
                       style: TextStyle(
-                        fontFamily: 'Courier',
-                        color: scheme.primary,
-                        fontSize: isDesktop ? 10.5 : 9.5,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: isDesktop ? 2 : 1,
+                        fontFamily: 'Tenada',
+                        color: scheme.onSurface,
+                        fontSize: (size.width * 0.05).clamp(24.0, 48.0),
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 4,
+                        height: 1,
                       ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Disciplines and stack the work is built on · Tap any card to flip',
+                    style: TextStyle(
+                      color: scheme.onSurface.withValues(alpha: 0.75),
+                      fontSize: isDesktop ? 12.5 : 11.5,
+                      fontStyle: FontStyle.italic,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 3),
-              Text(
-                loc.navSkills.toUpperCase(),
-                style: TextStyle(
-                  fontFamily: 'Tenada',
-                  color: scheme.onSurface,
-                  fontSize: (size.width * 0.038).clamp(20.0, 36.0),
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 3,
-                  height: 1.0,
+            ),
+            if (isDesktop)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: scheme.primary.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  border: Border.all(color: scheme.primary.withValues(alpha: 0.4)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('✦', style: TextStyle(color: AppColors.accentAmber, fontSize: 11)),
+                    const SizedBox(width: 6),
+                    Text(
+                      '12 CORE DISCIPLINES',
+                      style: TextStyle(
+                        color: scheme.primary,
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.4,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+          ],
         ),
-        if (isDesktop)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: scheme.primary.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: scheme.primary.withValues(alpha: 0.3)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text('✦', style: TextStyle(color: Color(0xFFFBBF24), fontSize: 11)),
-                const SizedBox(width: 6),
-                Text(
-                  '12 CORE DISCIPLINES',
-                  style: TextStyle(
-                    fontFamily: 'Courier',
-                    color: scheme.primary,
-                    fontSize: 10.5,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ],
-            ),
-          ),
+        const SizedBox(height: 6),
+        Container(height: 0.75, color: scheme.primary.withValues(alpha: 0.5)),
       ],
     );
   }
 
   Widget _buildCategoryFilters(ColorScheme scheme, bool isDesktop) {
+    if (!isDesktop) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            for (int i = 0; i < _categories.length; i++) ...[
+              _buildFilterChip(_categories[i], scheme, false),
+              if (i < _categories.length - 1) const SizedBox(width: 8),
+            ],
+          ],
+        ),
+      );
+    }
     return Wrap(
-      spacing: 5,
-      runSpacing: 4,
+      spacing: 8,
+      runSpacing: 8,
       children: [
-        for (final cat in _categories)
-          _buildFilterChip(cat, scheme, isDesktop),
+        for (final cat in _categories) _buildFilterChip(cat, scheme, isDesktop),
       ],
     );
   }
 
   Widget _buildFilterChip(String cat, ColorScheme scheme, bool isDesktop) {
+    final isDark = scheme.brightness == Brightness.dark;
     final isSelected = _selectedCategory == cat;
     final color = cat == 'ALL' ? scheme.primary : _getCategoryColor(cat);
-    final count = cat == 'ALL'
-        ? kSkills.length
-        : kSkills.where((s) => s.category == cat).length;
+    final count = cat == 'ALL' ? kSkills.length : kSkills.where((s) => s.category == cat).length;
 
-    return InkWell(
-      onTap: () {
-        SoundService.instance.playClick();
-        setState(() => _selectedCategory = cat);
-      },
-      borderRadius: BorderRadius.circular(6),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding: EdgeInsets.symmetric(
-          horizontal: isDesktop ? 10 : 8,
-          vertical: isDesktop ? 5 : 4,
-        ),
-        decoration: BoxDecoration(
-          color: isSelected ? color.withValues(alpha: 0.18) : Colors.transparent,
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(
-            color: isSelected ? color : scheme.onSurface.withValues(alpha: 0.15),
-            width: isSelected ? 1.5 : 1.0,
+    return Semantics(
+      button: true,
+      selected: isSelected,
+      label: '$cat category, $count skills',
+      child: InkWell(
+        onTap: () {
+          SoundService.instance.playClick();
+          setState(() => _selectedCategory = cat);
+        },
+        borderRadius: BorderRadius.circular(8),
+        focusColor: color.withValues(alpha: 0.25),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: EdgeInsets.symmetric(
+            horizontal: isDesktop ? 16 : 10,
+            vertical: isDesktop ? 10 : 7,
+          ),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? color.withValues(alpha: isDark ? 0.18 : 0.12)
+                : (isDark ? Colors.transparent : Colors.white.withValues(alpha: 0.8)),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: isSelected
+                  ? color
+                  : (isDark ? scheme.onSurface.withValues(alpha: 0.15) : const Color(0xFFCBD5E1)),
+              width: isSelected ? 1.5 : 1.0,
+            ),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: color.withValues(alpha: isDark ? 0.25 : 0.15),
+                      blurRadius: 12,
+                    ),
+                  ]
+                : (isDark
+                    ? []
+                    : [
+                        BoxShadow(
+                          color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                          blurRadius: 6,
+                          offset: const Offset(0, 1),
+                        ),
+                      ]),
+          ),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (isSelected) ...[
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                  ),
+                  const SizedBox(width: 6),
+                ],
+                Text(
+                  cat.toUpperCase(),
+                  style: TextStyle(
+                    fontFamily: 'Courier',
+                    color: isSelected
+                        ? (isDark ? color : (cat == 'ALL' ? scheme.primary : color))
+                        : (isDark ? scheme.onSurface.withValues(alpha: 0.7) : const Color(0xFF475569)),
+                    fontSize: isDesktop ? 11 : 9.5,
+                    fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                    letterSpacing: 0.8,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  '($count)',
+                  style: TextStyle(
+                    fontFamily: 'Courier',
+                    color: isSelected
+                        ? color.withValues(alpha: 0.8)
+                        : (isDark ? scheme.onSurface.withValues(alpha: 0.4) : const Color(0xFF94A3B8)),
+                    fontSize: isDesktop ? 10 : 8.5,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isSelected) ...[
-              Container(
-                width: 5,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: color,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 5),
-            ],
-            Text(
-              cat.toUpperCase(),
-              style: TextStyle(
-                fontFamily: 'Courier',
-                color: isSelected ? color : scheme.onSurface.withValues(alpha: 0.7),
-                fontSize: isDesktop ? 10.5 : 9.5,
-                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                letterSpacing: 1.0,
-              ),
-            ),
-            const SizedBox(width: 4),
-            Text(
-              '($count)',
-              style: TextStyle(
-                fontFamily: 'Courier',
-                color: isSelected ? color.withValues(alpha: 0.8) : scheme.onSurface.withValues(alpha: 0.4),
-                fontSize: isDesktop ? 9.5 : 8.5,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
+      ),
+    );
+  }
+}
+
+class _BentoSkillTile extends StatefulWidget {
+  final Skill skill;
+  final Color categoryColor;
+  final List<Color> categoryGradient;
+  final bool isDesktop;
+
+  const _BentoSkillTile({
+    required this.skill,
+    required this.categoryColor,
+    required this.categoryGradient,
+    required this.isDesktop,
+  });
+
+  @override
+  State<_BentoSkillTile> createState() => _BentoSkillTileState();
+}
+
+class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProviderStateMixin {
+  bool _isHovered = false;
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 400),
+  );
+  late final Animation<double> _flipAnim = CurvedAnimation(parent: _c, curve: Curves.easeOutBack);
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  void _onHover(bool isHovered) {
+    if (isHovered == _isHovered) return;
+    setState(() => _isHovered = isHovered);
+    if (isHovered) {
+      _c.forward();
+    } else {
+      _c.reverse();
+    }
+  }
+  
+  String _masteryLabel(double level) {
+    if (level >= 0.9) return 'LEAD';
+    if (level >= 0.75) return 'CORE';
+    if (level >= 0.55) return 'SOLID';
+    return 'GROWING';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => _onHover(true),
+      onExit: (_) => _onHover(false),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          SoundService.instance.playClick();
+          _onHover(!_isHovered);
+        },
+        child: AnimatedBuilder(
+          animation: _flipAnim,
+          builder: (context, child) {
+            final isBack = _flipAnim.value >= 0.5;
+            final angle = _flipAnim.value * math.pi;
+            
+            final transform = Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..rotateY(angle);
+              
+            return Transform(
+              alignment: Alignment.center,
+              transform: transform,
+              child: isBack
+                  ? Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()..rotateY(math.pi),
+                      child: _buildBack(),
+                    )
+                  : _buildFront(),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildKineticWord({
-    required Skill skill,
-    required int index,
-    required Size size,
-    required double scrollProgress,
-    required ColorScheme scheme,
-    required bool isDesktop,
-  }) {
-    final bool isHovered = _hoveredSkill == skill;
-    final bool isSameCategoryAsSelected = _hoveredSkill.category == skill.category;
-
-    final catColor = _getCategoryColor(skill.category);
-    final catGradient = _getCategoryGradient(skill.category);
-
-    // Uniform responsive font sizing
-    final double minClamp = isDesktop ? 18.0 : 14.0;
-    final double maxClamp = isDesktop ? 26.0 : 18.0;
-    double responsiveSize = isDesktop
-        ? (24.0 * (size.width / 1300)).clamp(minClamp, maxClamp)
-        : 16.0;
-
-    // Slight reduction for very long names to fit, but not overly dramatic
-    if (skill.name.length > 15) {
-      responsiveSize = (responsiveSize * 0.85).clamp(14.0, isDesktop ? 22.0 : 16.0);
-    }
-
-    // Gentle kinetic drift
-    final double driftFactor = (1.1 - skill.level) * 16.0 + (index % 3) * 4.0;
-    final double driftX = _mousePos.dx * driftFactor + (scrollProgress * (index % 2 == 0 ? 10 : -10));
-    final double driftY = _mousePos.dy * driftFactor + (math.sin(index) * 2);
-
-    return Transform.translate(
-      offset: Offset(driftX, driftY),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          SoundService.instance.playClick();
-          setState(() {
-            _hoveredSkill = skill;
-          });
-        },
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) {
-            SoundService.instance.playClick();
-            setState(() => _hoveredSkill = skill);
-          },
-          child: AnimatedScale(
-            scale: isHovered ? (isDesktop ? 1.10 : 1.05) : (isSameCategoryAsSelected ? 1.02 : 1.0),
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeOutCubic,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 12 : 8,
-                vertical: isDesktop ? 6 : 4,
-              ),
-              decoration: BoxDecoration(
-                color: isHovered
-                    ? catColor.withValues(alpha: 0.18)
-                    : (isSameCategoryAsSelected
-                        ? catColor.withValues(alpha: 0.08)
-                        : Colors.transparent),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: isHovered
-                      ? catColor.withValues(alpha: 0.85)
-                      : (isSameCategoryAsSelected
-                          ? catColor.withValues(alpha: 0.3)
-                          : Colors.transparent),
-                  width: isHovered ? 1.6 : 1.0,
-                ),
-                boxShadow: isHovered
-                    ? [
-                        BoxShadow(
-                          color: catColor.withValues(alpha: 0.35),
-                          blurRadius: 16,
-                          offset: const Offset(0, 4),
-                        ),
-                      ]
-                    : null,
-              ),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: isDesktop ? 480 : 300),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      skill.icon,
-                      size: (responsiveSize * 0.44).clamp(12.0, 20.0),
-                      color: isHovered ? catColor : scheme.onSurface.withValues(alpha: 0.7),
-                    ),
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: ShaderMask(
-                        blendMode: isHovered ? BlendMode.srcIn : BlendMode.dst,
-                        shaderCallback: (bounds) => LinearGradient(
-                          colors: catGradient,
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ).createShader(bounds),
-                        child: Text(
-                          skill.name.toUpperCase(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'Tenada',
-                            fontSize: responsiveSize,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: isDesktop ? 1.5 : 0.8,
-                            color: isHovered ? catColor : scheme.onSurface,
-                          ),
-                        ),
-                      ),
-                    ),
-                  const SizedBox(width: 6),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
-                    decoration: BoxDecoration(
-                      color: isHovered ? catColor : catColor.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                    child: Text(
-                      '${(skill.level * 100).toInt()}%',
-                      style: TextStyle(
-                        fontFamily: 'Courier',
-                        fontSize: (responsiveSize * 0.32).clamp(9.0, 11.5),
-                        fontWeight: FontWeight.w900,
-                        color: isHovered ? Colors.black : catColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-  Widget _buildArchitecturalDossier(ColorScheme scheme, Size size, bool isDesktop) {
-    final skill = _hoveredSkill;
-    final catColor = _getCategoryColor(skill.category);
-    final catGradient = _getCategoryGradient(skill.category);
-
+  Widget _buildFront() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      constraints: BoxConstraints(maxWidth: isDesktop ? 620 : 960),
       decoration: BoxDecoration(
-        color: const Color(0xFF0D121B),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: catColor.withValues(alpha: 0.45), width: 1.5),
+        color: isDark ? const Color(0xFF0D121B) : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: widget.categoryColor.withValues(alpha: isDark ? 0.3 : 0.4),
+          width: 1.5,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.5),
-            blurRadius: 20,
-            offset: const Offset(0, 6),
-          ),
-          BoxShadow(
-            color: catColor.withValues(alpha: 0.12),
-            blurRadius: 20,
+            color: isDark
+                ? widget.categoryColor.withValues(alpha: 0.1)
+                : const Color(0xFF0F172A).withValues(alpha: 0.05),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(11),
+        borderRadius: BorderRadius.circular(14),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Top console header gradient rule
             Container(
-              height: 3,
+              height: 4,
               decoration: BoxDecoration(
-                gradient: LinearGradient(colors: catGradient),
+                gradient: LinearGradient(colors: widget.categoryGradient),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 18 : 12,
-                vertical: isDesktop ? 14 : 10,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Header line: Icon + Name + Category badge + Proven in badge
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(isDesktop ? 8 : 6),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(widget.isDesktop ? 16.0 : 12.0),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.center,
+                  child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        padding: EdgeInsets.all(widget.isDesktop ? 12 : 6),
                         decoration: BoxDecoration(
-                          color: catColor.withValues(alpha: 0.16),
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: catColor.withValues(alpha: 0.4)),
+                          color: widget.categoryColor.withValues(alpha: 0.15),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: widget.categoryColor.withValues(alpha: 0.3)),
                         ),
-                        child: Icon(skill.icon, color: catColor, size: isDesktop ? 22 : 16),
+                        child: Icon(widget.skill.icon, color: widget.categoryColor, size: widget.isDesktop ? 36 : 20),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
-                                  decoration: BoxDecoration(
-                                    color: catColor.withValues(alpha: 0.2),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                  child: Text(
-                                    skill.category.toUpperCase(),
-                                    style: TextStyle(
-                                      fontFamily: 'Courier',
-                                      color: catColor,
-                                      fontSize: isDesktop ? 9.0 : 8.0,
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: 1.0,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 6),
-                                Expanded(
-                                  child: Text(
-                                    'PROVEN: ${skill.provenIn.toUpperCase()}',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontFamily: 'Courier',
-                                      color: Colors.white.withValues(alpha: 0.6),
-                                      fontSize: isDesktop ? 9.0 : 8.0,
-                                      fontWeight: FontWeight.w700,
-                                      letterSpacing: 0.8,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              skill.name.toUpperCase(),
-                              style: TextStyle(
-                                fontFamily: 'Tenada',
-                                color: Colors.white,
-                                fontSize: isDesktop ? 18 : 15,
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.5,
-                              ),
-                            ),
-                          ],
+                      SizedBox(height: widget.isDesktop ? 16 : 8),
+                      Text(
+                        widget.skill.name.toUpperCase(),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'Tenada',
+                          color: isDark ? Colors.white : const Color(0xFF0F172A),
+                          fontSize: widget.isDesktop ? 22 : 14,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.2,
                         ),
                       ),
-                      // Mastery Badge
+                      SizedBox(height: widget.isDesktop ? 8 : 4),
                       Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: isDesktop ? 8 : 6,
-                          vertical: isDesktop ? 4 : 3,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: catColor,
+                          color: widget.categoryColor.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          '${(skill.level * 100).toInt()}% MASTERY',
+                          _masteryLabel(widget.skill.level),
                           style: TextStyle(
                             fontFamily: 'Courier',
-                            color: Colors.black,
-                            fontSize: isDesktop ? 10 : 8.5,
+                            color: widget.categoryColor,
+                            fontSize: widget.isDesktop ? 11 : 9,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 1,
+                            letterSpacing: 1.2,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Animated Linear Progress Mastery Meter
-                  Stack(
-                    children: [
+                      SizedBox(height: widget.isDesktop ? 10 : 8),
                       Container(
-                        height: 3.5,
+                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                         decoration: BoxDecoration(
-                          color: Colors.white12,
-                          borderRadius: BorderRadius.circular(2),
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.05)
+                              : Colors.black.withValues(alpha: 0.04),
+                          borderRadius: BorderRadius.circular(AppRadius.pill),
+                          border: Border.all(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.12)
+                                : const Color(0xFFCBD5E1),
+                            width: 0.8,
+                          ),
+                        ),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.touch_app_outlined,
+                                size: 11,
+                                color: isDark
+                                    ? Colors.white.withValues(alpha: 0.6)
+                                    : const Color(0xFF64748B),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'TAP TO FLIP ↺',
+                                style: TextStyle(
+                                  fontFamily: 'Courier',
+                                  color: isDark
+                                      ? Colors.white.withValues(alpha: 0.6)
+                                      : const Color(0xFF64748B),
+                                  fontSize: widget.isDesktop ? 9.5 : 10,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.8,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Container(
-                            height: 3.5,
-                            width: constraints.maxWidth * skill.level,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: catGradient),
-                              borderRadius: BorderRadius.circular(2),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: catColor.withValues(alpha: 0.6),
-                                  blurRadius: 4,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Production narrative description
-                  Text(
-                    skill.description,
-                    maxLines: isDesktop ? 4 : 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: isDesktop ? 12.5 : 11.0,
-                      height: 1.45,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-
-                  if (skill.tags.isNotEmpty) ...[
-                    const SizedBox(height: 8),
-                    // Specification Chips
-                    Wrap(
-                      spacing: 5,
-                      runSpacing: 5,
-                      children: [
-                        for (final tag in skill.tags)
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.06),
-                              borderRadius: BorderRadius.circular(3),
-                              border: Border.all(color: Colors.white12),
-                            ),
-                            child: Text(
-                              tag,
-                              style: TextStyle(
-                                fontFamily: 'Courier',
-                                color: catColor.withValues(alpha: 0.9),
-                                fontSize: isDesktop ? 9.5 : 8.5,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 0.8,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
                   ],
-                ],
+                ),
+                ),
               ),
             ),
           ],
@@ -746,51 +567,130 @@ class _SkillsPageState extends State<SkillsPage> {
     );
   }
 
-  Widget _buildFootnote(ColorScheme scheme) {
-    return Text(
-      '✦ SELECT ANY ARCHITECTURAL DISCIPLINE TO LOAD PRODUCTION METRICS ✦',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontFamily: 'Courier',
-        color: scheme.onSurface.withValues(alpha: 0.5),
-        fontSize: 9.5,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1.2,
+  Widget _buildBack() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF131A26) : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: widget.categoryColor, width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: isDark
+                ? widget.categoryColor.withValues(alpha: 0.3)
+                : const Color(0xFF0F172A).withValues(alpha: 0.08),
+            blurRadius: 20,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: 4,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: widget.categoryGradient),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(widget.isDesktop ? 16.0 : 12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(widget.skill.icon, color: widget.categoryColor, size: widget.isDesktop ? 20 : 16),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            widget.skill.name.toUpperCase(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Tenada',
+                              color: isDark ? Colors.white : const Color(0xFF0F172A),
+                              fontSize: widget.isDesktop ? 16 : 13,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: widget.categoryColor.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.flip_to_front_rounded, size: 10, color: widget.categoryColor),
+                              const SizedBox(width: 3),
+                              Text(
+                                'FLIP',
+                                style: TextStyle(
+                                  fontFamily: 'Courier',
+                                  color: widget.categoryColor,
+                                  fontSize: 10.0,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: widget.isDesktop ? 12 : 8),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Text(
+                          widget.skill.description,
+                          style: TextStyle(
+                            color: isDark ? Colors.white.withValues(alpha: 0.85) : const Color(0xFF334155),
+                            fontSize: widget.isDesktop ? 12 : 10.5,
+                            height: 1.4,
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (widget.skill.tags.isNotEmpty) ...[
+                      SizedBox(height: widget.isDesktop ? 12 : 8),
+                      Wrap(
+                        spacing: 4,
+                        runSpacing: 4,
+                        children: [
+                          for (final tag in widget.skill.tags)
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                              decoration: BoxDecoration(
+                                color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF1F5F9),
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(color: isDark ? Colors.white24 : const Color(0xFFE2E8F0)),
+                              ),
+                              child: Text(
+                                tag,
+                                style: TextStyle(
+                                  fontFamily: 'Courier',
+                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : const Color(0xFF4338CA),
+                                  fontSize: widget.isDesktop ? 9.5 : 8.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
-
-class _DraftingGridPainter extends CustomPainter {
-  final Color color;
-
-  _DraftingGridPainter({required this.color});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color.withValues(alpha: 0.04)
-      ..strokeWidth = 1.0;
-
-    const double step = 60.0;
-    const double crossSize = 3.5;
-
-    for (double x = 0; x < size.width; x += step) {
-      for (double y = 0; y < size.height; y += step) {
-        canvas.drawLine(
-          Offset(x - crossSize, y),
-          Offset(x + crossSize, y),
-          paint,
-        );
-        canvas.drawLine(
-          Offset(x, y - crossSize),
-          Offset(x, y + crossSize),
-          paint,
-        );
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _DraftingGridPainter oldDelegate) => oldDelegate.color != color;
 }

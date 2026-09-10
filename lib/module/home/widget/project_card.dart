@@ -82,8 +82,9 @@ class _ProjectCardState extends State<ProjectCard> {
               ],
             ),
             padding: EdgeInsets.all(_isHovered ? 2 : 1), // 2px gradient border on hover, 1px normal
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.lg - 1),
+            child: RepaintBoundary(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppRadius.lg - 1),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                 child: Container(
@@ -262,6 +263,7 @@ class _ProjectCardState extends State<ProjectCard> {
             ),
           ),
         ),
+      ),
         ),
       ),
     );

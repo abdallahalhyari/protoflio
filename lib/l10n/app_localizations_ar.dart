@@ -9,7 +9,28 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get navHome => 'الرئيسية';
+
+  @override
+  String get navWork => 'أعمالي';
+
+  @override
+  String get navEngineering => 'الهندسة';
+
+  @override
+  String get navExperience => 'الخبرات';
+
+  @override
+  String get navStack => 'التقنيات';
+
+  @override
   String get navAbout => 'عني';
+
+  @override
+  String get navContact => 'تواصل';
+
+  @override
+  String get navResume => 'السيرة الذاتية';
 
   @override
   String get navWhy => 'لماذا';
@@ -24,12 +45,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navProjects => 'مشاريع';
 
   @override
-  String get navExperience => 'أدوار';
-
-  @override
-  String get navContact => 'تواصل';
-
-  @override
   String get introHiName => 'أهلاً بك!\nأنا عبدالله';
 
   @override
@@ -39,16 +54,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introName => 'عبدالله الحياري';
 
   @override
-  String get introRole => 'مهندس تطبيقات هواتف أقدم';
+  String get introRole => 'مهندس فلاتر وأندرويد أول';
 
   @override
   String get introLocation => 'عمان، الأردن → برنو، التشيك (2027)';
 
   @override
-  String get contactTitle => 'دعنا نعمل سوياً';
+  String get contactTitle => 'لنبنِ شيئاً عظيماً معاً';
 
   @override
-  String get contactSubtitle => 'لنبني شيئاً مذهلاً معاً.';
+  String get contactSubtitle =>
+      'مستعد للأدوار الهندسية المتقدمة وبناء معماريات الهواتف المحمولة المعقدة والموثوقة.';
 
   @override
   String get contactNameLabel => 'الاسم';

@@ -100,11 +100,53 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// No description provided for @navWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get navWork;
+
+  /// No description provided for @navEngineering.
+  ///
+  /// In en, this message translates to:
+  /// **'Engineering'**
+  String get navEngineering;
+
+  /// No description provided for @navExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get navExperience;
+
+  /// No description provided for @navStack.
+  ///
+  /// In en, this message translates to:
+  /// **'Stack'**
+  String get navStack;
+
   /// No description provided for @navAbout.
   ///
   /// In en, this message translates to:
   /// **'About'**
   String get navAbout;
+
+  /// No description provided for @navContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get navContact;
+
+  /// No description provided for @navResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get navResume;
 
   /// No description provided for @navWhy.
   ///
@@ -130,18 +172,6 @@ abstract class AppLocalizations {
   /// **'Projects'**
   String get navProjects;
 
-  /// No description provided for @navExperience.
-  ///
-  /// In en, this message translates to:
-  /// **'Roles'**
-  String get navExperience;
-
-  /// No description provided for @navContact.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact'**
-  String get navContact;
-
   /// No description provided for @introHiName.
   ///
   /// In en, this message translates to:
@@ -163,7 +193,7 @@ abstract class AppLocalizations {
   /// No description provided for @introRole.
   ///
   /// In en, this message translates to:
-  /// **'Senior Mobile Engineer'**
+  /// **'Senior Flutter & Android Engineer'**
   String get introRole;
 
   /// No description provided for @introLocation.
@@ -175,13 +205,13 @@ abstract class AppLocalizations {
   /// No description provided for @contactTitle.
   ///
   /// In en, this message translates to:
-  /// **'Let\'s work together'**
+  /// **'Let\'s build something great'**
   String get contactTitle;
 
   /// No description provided for @contactSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Let\'s build something amazing together.'**
+  /// **'Open for senior engineering roles, high-impact mobile architectures, and technical leadership.'**
   String get contactSubtitle;
 
   /// No description provided for @contactNameLabel.

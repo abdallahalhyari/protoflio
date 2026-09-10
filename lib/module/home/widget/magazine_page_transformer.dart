@@ -15,11 +15,20 @@ class MagazinePageTransformer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.of(context).disableAnimations ||
+        MediaQuery.of(context).accessibleNavigation;
+
+    if (reduceMotion) {
+      return child;
+    }
+
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
         double position = 0.0;
-        if (controller.hasClients && controller.position.haveDimensions) {
+        if (controller.hasClients &&
+            controller.positions.length == 1 &&
+            controller.position.haveDimensions) {
           position = (controller.page ?? controller.initialPage.toDouble()) - index;
         }
 

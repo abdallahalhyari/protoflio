@@ -9,7 +9,28 @@ class AppLocalizationsCs extends AppLocalizations {
   AppLocalizationsCs([String locale = 'cs']) : super(locale);
 
   @override
+  String get navHome => 'Domů';
+
+  @override
+  String get navWork => 'Projekty';
+
+  @override
+  String get navEngineering => 'Inženýrství';
+
+  @override
+  String get navExperience => 'Zkušenosti';
+
+  @override
+  String get navStack => 'Technologie';
+
+  @override
   String get navAbout => 'O mně';
+
+  @override
+  String get navContact => 'Kontakt';
+
+  @override
+  String get navResume => 'Životopis';
 
   @override
   String get navWhy => 'Proč';
@@ -24,12 +45,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navProjects => 'Projekty';
 
   @override
-  String get navExperience => 'Role';
-
-  @override
-  String get navContact => 'Kontakt';
-
-  @override
   String get introHiName => 'AHOJ!\nJSEM ABDALLAH';
 
   @override
@@ -39,16 +54,17 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introName => 'Abdallah Alhyari';
 
   @override
-  String get introRole => 'Senior Mobile Engineer';
+  String get introRole => 'Senior Flutter & Android Engineer';
 
   @override
   String get introLocation => 'Ammán, Jordánsko → Brno, Česká republika (2027)';
 
   @override
-  String get contactTitle => 'Pojďme spolupracovat';
+  String get contactTitle => 'Pojďme vybudovat něco skvělého';
 
   @override
-  String get contactSubtitle => 'Pojďme společně vybudovat něco úžasného.';
+  String get contactSubtitle =>
+      'Otevřený seniorním inženýrským rolím, komplexním mobilním architekturám a technickému vedení.';
 
   @override
   String get contactNameLabel => 'Jméno';

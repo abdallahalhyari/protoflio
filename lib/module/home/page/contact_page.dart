@@ -1,700 +1,1588 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
-import '../widget/page_background.dart';
 
+import '../widget/screen_shell.dart';
+
+/// Executive-grade editorial contact dossier and consulting portal.
+/// Commands trust with real-time timezone telemetry, consulting engagement matrix,
+/// express one-tap email presets, direct verified communication channels,
+/// and ATS-compliant CV download/preview actions.
 class ContactPage extends StatefulWidget {
   final PageController controller;
   final int pageIndex;
+  final bool isContinuousMobile;
 
   const ContactPage({
     super.key,
     required this.controller,
     required this.pageIndex,
+    this.isContinuousMobile = false,
   });
 
   @override
   State<ContactPage> createState() => _ContactPageState();
 }
 
-class _ContactPageState extends State<ContactPage> with SingleTickerProviderStateMixin {
-  final _formKey = GlobalKey<FormState>();
-  final _nameCtrl = TextEditingController();
-  final _emailCtrl = TextEditingController();
-  final _msgCtrl = TextEditingController();
-  final _cliCmdCtrl = TextEditingController();
-  final List<String> _terminalLog = [];
-  
-  late AnimationController _cursorBlinkController;
-  String _consoleStatus = '[STATUS] Direct transmission channel idle. Ready for input.';
+class _ContactPageState extends State<ContactPage> {
+  Timer? _clockTimer;
+  DateTime _now = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    _cursorBlinkController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    )..repeat(reverse: true);
+    _clockTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      if (mounted) setState(() => _now = DateTime.now());
+    });
   }
 
   @override
   void dispose() {
-    _cursorBlinkController.dispose();
-    _nameCtrl.dispose();
-    _emailCtrl.dispose();
-    _msgCtrl.dispose();
-    _cliCmdCtrl.dispose();
+    _clockTimer?.cancel();
     super.dispose();
   }
 
-  void _executeCommand(String rawInput) {
-    final input = rawInput.trim();
-    if (input.isEmpty) return;
-    _onKeyPress();
-    final cmd = input.toLowerCase();
+  static const _email = 'alhyariabdallh@gmail.com';
+  static const _phone = '+962-787032264';
+  static const _phoneRaw = '+962787032264';
+  static const _whatsAppUrl = 'https://wa.me/962787032264';
+  static const _linkedInUrl =
+      'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/';
+  static const _linkedInHandle = 'abdallah-alhyari';
+  static const _githubUrl = 'https://github.com/abdallahalhyari';
+  static const _githubHandle = 'abdallahalhyari';
 
-    setState(() {
-      _terminalLog.add('guest@terminal:~\$ $input');
-      
-      if (cmd == 'help') {
-        _terminalLog.add(
-          'AVAILABLE COMMANDS:\n'
-          '  skills         - Inspect core architectural competencies & mastery\n'
-          '  projects       - List high-impact production enterprise mobile releases\n'
-          '  cv / resume    - Download Abdallah\'s official Curriculum Vitae (PDF)\n'
-          '  sudo hire      - Unlock executive hiring contract & auto-populate transmission\n'
-          '  clear          - Flush console log buffer',
-        );
-        _consoleStatus = '[STATUS] Help manual printed to terminal stdout.';
-      } else if (cmd == 'skills') {
-        _terminalLog.add(
-          '[ARCHITECTURAL MATRIX]\n'
-          '• FLUTTER / DART      : 96% (Enterprise MVVM, Custom RenderObjects, 60fps)\n'
-          '• ANDROID / KOTLIN    : 92% (Coroutines, Flow, WorkManager, NDK Channels)\n'
-          '• NFC / SMART-CARDS   : 95% (APDU ISO-7816, Contactless Readers, Security)\n'
-          '• JWT / SECURE AUTH   : 94% (Hardware GUID binding, Biometrics, Keychain)\n'
-          '• OFFLINE-FIRST SYNC  : 93% (Background pipelines, SQLite, Conflict resolution)',
-        );
-        _consoleStatus = '[STATUS] Core competencies loaded to stdout.';
-      } else if (cmd == 'projects') {
-        _terminalLog.add(
-          '[ENTERPRISE RELEASES]\n'
-          '1. NATHEALTH          — Smart insurance card, ISO APDU NFC, biometric auth\n'
-          '2. ESKADENIA HEALTH   — Offline-first medical records, JWT auth, enterprise sync\n'
-          '3. ESKADENIA CARE     — Patient health portal & claims management\n'
-          '4. ESKADENIA BROKER   — Multi-tier policy administration & telemetry',
-        );
-        _consoleStatus = '[STATUS] Enterprise projects catalog printed.';
-      } else if (cmd == 'cv' || cmd == 'resume') {
-        _terminalLog.add('[SYSTEM] Initiating transmission of cv.pdf...');
-        _downloadCv();
-      } else if (cmd.contains('hire') || cmd.contains('sudo')) {
-        _terminalLog.add(
-          '[ROOT PRIVILEGES GRANTED]\n'
-          '===========================================================\n'
-          '  ★ MATCH DETECTED: SENIOR MOBILE ARCHITECT / LEAD ★\n'
-          '  READY FOR MISSION-CRITICAL SYSTEMS & ENTERPRISE PRODUCTS\n'
-          '===========================================================\n'
-          '[ACTION] Populating transmission buffer with priority greeting...',
-        );
-        _msgCtrl.text = 'Hello Abdallah, I reviewed your architectural portfolio and would love to discuss a senior engineering role / leadership opportunity with you.';
-        _consoleStatus = '[STATUS] Priority hiring template prepared. Enter name & email to transmit!';
-      } else if (cmd == 'clear') {
-        _terminalLog.clear();
-        _consoleStatus = '[STATUS] Terminal screen buffer cleared.';
-      } else {
-        _terminalLog.add('[ERROR] Command not recognized: "$input". Type "help" for available commands.');
-        _consoleStatus = '[STATUS] Command execution error.';
-      }
-      _cliCmdCtrl.clear();
-    });
-  }
+  // Backed by the shared AppColors palette so future rebrands propagate.
+  static const _accent = AppColors.accentAmber; // amber / gold
+  static const _accentSoft = AppColors.accentAmberSoft;
+  static const _availabilityGreen = AppColors.accentGreen; // emerald
+  static const _sky = AppColors.accentSky; // cyan / sky
+  static const _indigo = AppColors.accentIndigo; // soft indigo
 
-  int _lastAudioClickMs = 0;
-
-  void _onKeyPress() {
-    final now = DateTime.now().millisecondsSinceEpoch;
-    if (now - _lastAudioClickMs > 35) {
-      _lastAudioClickMs = now;
-      SoundService.instance.playClick();
-    }
-  }
-
-  Future<void> _submitTransmission() async {
+  Future<void> _open(String url) async {
     SoundService.instance.playClick();
-    if (_formKey.currentState!.validate()) {
-      final name = _nameCtrl.text;
-      final email = _emailCtrl.text;
-      final msg = _msgCtrl.text;
-
-      setState(() {
-        _consoleStatus = '[DISPATCH] Encrypting packet and launching mail client...';
-      });
-
-      final subject = Uri.encodeComponent('Portfolio Transmission from $name');
-      final body = Uri.encodeComponent('Sender: $name <$email>\n\nMessage:\n$msg');
-      final url = 'mailto:alhyariabdallh@gmail.com?subject=$subject&body=$body';
-
-      final ok = await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-      if (mounted) {
-        setState(() {
-          _consoleStatus = ok
-              ? '[DISPATCH_SUCCESS] Mail client invoked successfully. [OK]'
-              : '[DISPATCH_ERROR] Could not open system mail client. Please copy email directly.';
-        });
-      }
-    }
+    final uri = Uri.parse(url);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
-  Future<void> _copyEmail() async {
+  Future<void> _openMail({required String subject, String? body}) async {
     SoundService.instance.playClick();
-    await Clipboard.setData(const ClipboardData(text: 'alhyariabdallh@gmail.com'));
-    setState(() {
-      _consoleStatus = '[CLIPBOARD] "alhyariabdallh@gmail.com" copied to clipboard! [OK]';
-    });
+    final Uri mailUri = Uri(
+      scheme: 'mailto',
+      path: _email,
+      queryParameters: {
+        'subject': subject,
+        if (body != null && body.isNotEmpty) 'body': body,
+      },
+    );
+    await launchUrl(mailUri, mode: LaunchMode.externalApplication);
   }
 
-  Future<void> _downloadCv() async {
+  Future<void> _copy(BuildContext context, String value, {bool isDark = true}) async {
     SoundService.instance.playClick();
-    setState(() {
-      _consoleStatus = '[DOWNLOAD] Fetching curriculum vitae (cv.pdf)... [OK]';
-    });
-    await launchUrl(Uri.parse('assets/cv.pdf'), mode: LaunchMode.externalApplication);
-  }
+    await Clipboard.setData(ClipboardData(text: value));
+    if (!context.mounted) return;
 
-  Future<void> _openExternal(String url, String label) async {
-    SoundService.instance.playClick();
-    setState(() {
-      _consoleStatus = '[NAVIGATE] Opening external gateway to $label... [OK]';
-    });
-    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    // Announce to screen readers for accessibility
+    // ignore: deprecated_member_use
+    SemanticsService.announce(
+      'Copied $value to clipboard',
+      Directionality.of(context),
+    );
+
+    // Elevated floating glass toast
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        duration: const Duration(milliseconds: 2600),
+        margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
+        content: Center(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF0F172A) : Colors.white,
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(
+                color: _availabilityGreen.withValues(alpha: 0.65),
+                width: 1.2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: isDark ? 0.45 : 0.12),
+                  blurRadius: 24,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.check_circle_rounded,
+                    color: _availabilityGreen, size: 18),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    'Copied: $value',
+                    style: TextStyle(
+                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.3,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= 900;
+    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return PageBackground(
-      asset: 'assets/hats_background.webp',
-      overlay: AppColors.scrimHeavy,
-      controller: widget.controller,
-      pageIndex: widget.pageIndex,
-      child: Center(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: isDesktop ? AppSpacing.xxl : AppSpacing.md,
-            vertical: AppSpacing.lg,
-          ),
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: (size.width * 0.92).clamp(320.0, 960.0),
+    final body = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _issueStrip(isDark),
+        const SizedBox(height: AppSpacing.md),
+        _telemetryBar(isDark),
+        const SizedBox(height: AppSpacing.lg),
+        _headline(size, isDark),
+        const SizedBox(height: AppSpacing.md),
+        _lede(size, isDark),
+        const SizedBox(height: AppSpacing.xl),
+        _engagementMatrix(isDark, isDesktop),
+        const SizedBox(height: AppSpacing.xl),
+        _expressPresets(isDark),
+        const SizedBox(height: AppSpacing.xl),
+        _channelsDossier(context, isDesktop, isDark),
+        const SizedBox(height: AppSpacing.xl),
+        _cvCard(isDark),
+        const SizedBox(height: AppSpacing.xl),
+        _socialAndMastheadFooter(context, isDark),
+      ],
+    );
+
+    return AppScreenShell(
+      maxWidth: 1040,
+      verticalPadding: widget.isContinuousMobile ? AppSpacing.md : AppSpacing.lg,
+      reserveBottomNav: !widget.isContinuousMobile,
+      reserveMobileTop: !widget.isContinuousMobile,
+      child: widget.isContinuousMobile
+          ? body
+          : SingleChildScrollView(
+              primary: false,
+              physics: const ClampingScrollPhysics(),
+              child: body,
             ),
-            decoration: BoxDecoration(
-              color: const Color(0xFF0C1017), // Deep terminal obsidian
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFF38BDF8).withValues(alpha: 0.35), width: 1.5),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.7),
-                  blurRadius: 32,
-                  spreadRadius: 4,
-                ),
-                BoxShadow(
-                  color: const Color(0xFF38BDF8).withValues(alpha: 0.15),
-                  blurRadius: 20,
-                  spreadRadius: 1,
+    );
+  }
+
+  // ===========================================================================
+  // SECTION 1: HEADER & LIVE TELEMETRY
+  // ===========================================================================
+
+  Widget _issueStrip(bool isDark) {
+    Widget rule() => Container(
+          width: 36,
+          height: 1.5,
+          color: _accent.withValues(alpha: 0.75),
+        );
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        rule(),
+        const SizedBox(width: AppSpacing.sm),
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'FEATURE 07 · DIRECT LINE & REACH OUT',
+              style: TextStyle(
+                color: isDark ? _accentSoft : const Color(0xFF4F46E5),
+                fontSize: 11,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 4,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        rule(),
+      ],
+    );
+  }
+
+  Widget _telemetryBar(bool isDark) {
+    // Amman time (UTC+3). _now is refreshed via a 30s Timer so the pill
+    // ticks live instead of freezing at first paint.
+    final ammanTime = _now.toUtc().add(const Duration(hours: 3));
+    final hour = ammanTime.hour;
+    final minute = ammanTime.minute.toString().padLeft(2, '0');
+    final period = hour >= 12 ? 'PM' : 'AM';
+    final displayHour = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
+    final isOfficeHours = hour >= 9 && hour < 19;
+
+    Widget pill({required Widget child, Color? border}) => Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.04)
+                : Colors.white.withValues(alpha: 0.85),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            border: Border.all(
+              color:
+                  border ?? (isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
+              width: 1,
+            ),
+          ),
+          child: child,
+        );
+
+    return Center(
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 8,
+        runSpacing: 8,
+        children: [
+          pill(
+            border: _availabilityGreen.withValues(alpha: 0.45),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _PulsingDot(color: _availabilityGreen),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      isOfficeHours
+                          ? 'ACTIVE WORKING HOURS'
+                          : 'STANDBY · ASYNC',
+                      style: const TextStyle(
+                        color: _availabilityGreen,
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(11),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // TERMINAL WINDOW HEADER
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF161E2A),
-                      border: Border(bottom: BorderSide(color: Color(0xFF243042), width: 1)),
+          ),
+          pill(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.access_time_rounded,
+                  size: 13,
+                  color: isDark ? Colors.white70 : const Color(0xFF64748B),
+                ),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'AMMAN $displayHour:$minute $period (UTC+3)',
+                      style: TextStyle(
+                        color: isDark ? Colors.white : const Color(0xFF0F172A),
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.6,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          pill(
+            border: _accent.withValues(alpha: 0.4),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.flight_takeoff_rounded,
+                  size: 13,
+                  color: isDark ? _accentSoft : const Color(0xFFD97706),
+                ),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'RELOCATING BRNO 2027',
+                      style: TextStyle(
+                        color: isDark ? _accentSoft : const Color(0xFFD97706),
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.6,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _headline(Size size, bool isDark) {
+    final fs = (size.width * 0.055).clamp(32.0, 68.0);
+    return Text(
+      "LET'S BUILD SOMETHING EXTRAORDINARY",
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontFamily: 'Tenada',
+        fontSize: fs,
+        fontWeight: FontWeight.w900,
+        letterSpacing: 2.5,
+        color: isDark ? Colors.white : const Color(0xFF0F172A),
+        height: 1.05,
+        shadows: isDark
+            ? const [Shadow(color: Colors.black, blurRadius: 20)]
+            : const [Shadow(color: Colors.black12, blurRadius: 6)],
+      ),
+    );
+  }
+
+  Widget _lede(Size size, bool isDark) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 720),
+        child: Text(
+          'Principal & Senior Mobile Software Architect with 6+ years delivering resilient '
+          'production Flutter engines, offline-first sync protocols, and native iOS/Android bridges. '
+          'Available for senior full-time leadership, architectural audits, and technical partnerships.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.88)
+                : const Color(0xFF475569),
+            fontSize: (size.width * 0.014).clamp(13.5, 17.0),
+            height: 1.6,
+            letterSpacing: 0.3,
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ===========================================================================
+  // SECTION 2: EXECUTIVE ENGAGEMENT SCOPES (BENTO MATRIX)
+  // ===========================================================================
+
+  Widget _engagementMatrix(bool isDark, bool isDesktop) {
+    final tracks = [
+      _ConsultingTrack(
+        tag: 'SYSTEM AUDIT',
+        title: 'Architecture & Resilience Audit',
+        description:
+            'Clean Architecture restructuring, state-machine resilience, concurrency bottleneck triage, and multi-package decoupling.',
+        icon: Icons.account_tree_outlined,
+        accent: _sky,
+        inquirySubject:
+            '[Architecture Audit Inquiry] Mobile System Audit - Abdallah Alhyari',
+        onInquire: (subject) => _openMail(
+          subject: subject,
+          body:
+              'Hi Abdallah,\n\nI would like to discuss an architectural audit for our mobile codebase...',
+        ),
+      ),
+      _ConsultingTrack(
+        tag: 'PRODUCTION APPS',
+        title: 'Full-Lifecycle App Engineering',
+        description:
+            'Zero-to-one cross-platform app delivery, native iOS Swift & Android Kotlin platform channels, 120 FPS buttery rendering.',
+        icon: Icons.devices_rounded,
+        accent: _accent,
+        inquirySubject:
+            '[Engineering Inquiry] Production Mobile App - Abdallah Alhyari',
+        onInquire: (subject) => _openMail(
+          subject: subject,
+          body:
+              'Hi Abdallah,\n\nWe have an upcoming mobile application project and would love to collaborate...',
+        ),
+      ),
+      _ConsultingTrack(
+        tag: 'TECH LEADERSHIP',
+        title: 'Fractional Lead & Mentorship',
+        description:
+            'Code review governance, automated UI & integration test harnesses, mobile CI/CD pipelines, and upskilling engineering squads.',
+        icon: Icons.military_tech_outlined,
+        accent: _availabilityGreen,
+        inquirySubject:
+            '[Advisory Inquiry] Mobile Leadership & Mentorship - Abdallah Alhyari',
+        onInquire: (subject) => _openMail(
+          subject: subject,
+          body:
+              'Hi Abdallah,\n\nWe are looking for senior mobile leadership / fractional guidance for our engineering team...',
+        ),
+      ),
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 4,
+              height: 18,
+              decoration: BoxDecoration(
+                color: _accent,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '// ENGAGEMENT SCOPES & COLLABORATION MODES',
+                  style: TextStyle(
+                    color: isDark ? Colors.white70 : const Color(0xFF64748B),
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2.2,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final cardWidth = isDesktop
+                ? (constraints.maxWidth - 2 * AppSpacing.md) / 3
+                : constraints.maxWidth;
+
+            return Wrap(
+              spacing: AppSpacing.md,
+              runSpacing: AppSpacing.md,
+              children: [
+                for (final track in tracks)
+                  SizedBox(
+                    width: cardWidth,
+                    child: _BentoTrackCard(track: track, isDark: isDark),
+                  ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  // ===========================================================================
+  // SECTION 3: FAST INQUIRY EXPRESS PRESETS
+  // ===========================================================================
+
+  Widget _expressPresets(bool isDark) {
+    final presets = [
+      (
+        '💼 Senior Role',
+        '[Role Opportunity] Senior Mobile Architect - Abdallah Alhyari',
+        'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Architect / Engineering role at our company...',
+      ),
+      (
+        '📐 Architecture Audit',
+        '[Architecture Review] Mobile Codebase Audit - Abdallah Alhyari',
+        'Hi Abdallah,\n\nWe are looking for a deep architectural review of our existing mobile application...',
+      ),
+      (
+        '⚡ Production App',
+        '[App Project Inquiry] Enterprise Mobile App - Abdallah Alhyari',
+        'Hi Abdallah,\n\nWe are planning to build a high-performance cross-platform application and want your expertise...',
+      ),
+      (
+        '☕ Advisory & Chat',
+        '[Connect] Tech Advisory & Coffee - Abdallah Alhyari',
+        'Hi Abdallah,\n\nI’d love to connect for a 20-minute chat regarding mobile engineering and technology...',
+      ),
+    ];
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.03)
+            : const Color(0xFFF1F5F9),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.08)
+              : const Color(0xFFE2E8F0),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.bolt_rounded,
+                size: 16,
+                color: isDark ? _accentSoft : const Color(0xFFD97706),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'ONE-TAP EXPRESS REACH-OUT PRESETS',
+                    style: TextStyle(
+                      color: isDark ? _accentSoft : const Color(0xFFD97706),
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.8,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final p in presets)
+                InkWell(
+                  onTap: () => _openMail(subject: p.$2, body: p.$3),
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 7),
+                    decoration: BoxDecoration(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.06)
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                      border: Border.all(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.16)
+                            : const Color(0xFFCBD5E1),
+                        width: 1,
+                      ),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        // macOS terminal dots
-                        Row(
-                          children: [
-                            Container(width: 12, height: 12, decoration: const BoxDecoration(color: Color(0xFFFF5F56), shape: BoxShape.circle)),
-                            const SizedBox(width: 8),
-                            Container(width: 12, height: 12, decoration: const BoxDecoration(color: Color(0xFFFFBD2E), shape: BoxShape.circle)),
-                            const SizedBox(width: 8),
-                            Container(width: 12, height: 12, decoration: const BoxDecoration(color: Color(0xFF27C93F), shape: BoxShape.circle)),
-                          ],
-                        ),
-
-                        // Terminal title
-                        Text(
-                          'bash — abdallah@portfolio: ~/direct-dispatch (ssh)',
-                          style: TextStyle(
-                            fontFamily: 'Courier',
-                            color: Colors.white.withValues(alpha: 0.75),
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
+                        Flexible(
+                          child: Text(
+                            p.$1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color:
+                                  isDark ? Colors.white : const Color(0xFF0F172A),
+                              fontSize: 11.5,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
-
-                        // Status dot
-                        Row(
-                          children: [
-                            Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFF10B981), shape: BoxShape.circle)),
-                            const SizedBox(width: 6),
-                            const Text('LIVE', style: TextStyle(color: Color(0xFF10B981), fontSize: 10, fontWeight: FontWeight.w800)),
-                          ],
+                        const SizedBox(width: 4),
+                        Icon(
+                          Icons.arrow_forward_rounded,
+                          size: 12,
+                          color: isDark ? _accentSoft : const Color(0xFF6366F1),
                         ),
                       ],
                     ),
                   ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
-                  // TERMINAL BODY
-                  Padding(
-                    padding: EdgeInsets.all(isDesktop ? 24.0 : 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Terminal boot banner
-                        const Text(
-                          'abdallah@workstation:~\$ ./dispatch.sh --recipient "Abdallah Alhyari"',
-                          style: TextStyle(
-                            fontFamily: 'Courier',
-                            color: Color(0xFF38BDF8),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '[SYS_INIT] Uplink active · Location: Amman, Jordan · GMT+3\n'
-                          '[SYS_INFO] Direct transmission interface initialized.\n'
-                          '[SYS_INFO] Enter parameters below to transmit secure communique:',
-                          style: TextStyle(
-                            fontFamily: 'Courier',
-                            color: Colors.white.withValues(alpha: 0.8),
-                            fontSize: 12.5,
-                            height: 1.5,
-                          ),
-                        ),
-                        const SizedBox(height: 14),
-                        Container(height: 1, color: Colors.white12),
-                        const SizedBox(height: 14),
+  // ===========================================================================
+  // SECTION 4: DIRECT EXECUTIVE COMMUNICATION CHANNELS
+  // ===========================================================================
 
-                        // Interactive CLI Command Shell
-                        _buildInteractiveShell(),
+  Widget _channelsDossier(
+      BuildContext context, bool isDesktop, bool isDark) {
+    final channels = [
+      _ChannelData(
+        badge: '⚡ FASTEST REPLY · WITHIN 24H',
+        badgeColor: _availabilityGreen,
+        label: 'DIRECT OFFICIAL EMAIL',
+        value: _email,
+        icon: Icons.alternate_email_rounded,
+        primaryLabel: 'Send Email',
+        primaryAction: () => _openMail(
+          subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
+        ),
+        secondaryLabel: 'Copy Address',
+        secondaryAction: () => _copy(context, _email, isDark: isDark),
+        accent: _accent,
+      ),
+      _ChannelData(
+        badge: '📱 DIRECT CELL & WHATSAPP',
+        badgeColor: _sky,
+        label: 'TELEPHONE & WHATSAPP LINE',
+        value: _phone,
+        icon: Icons.phone_iphone_rounded,
+        primaryLabel: 'Direct Call',
+        primaryAction: () => _open('tel:$_phoneRaw'),
+        secondaryLabel: 'WhatsApp Chat',
+        secondaryAction: () => _open(_whatsAppUrl),
+        accent: _sky,
+      ),
+      _ChannelData(
+        badge: '🌐 500+ VERIFIED NETWORK & RECS',
+        badgeColor: _indigo,
+        label: 'LINKEDIN EXECUTIVE PROFILE',
+        value: 'in/$_linkedInHandle',
+        icon: Icons.link_rounded,
+        primaryLabel: 'Open Profile',
+        primaryAction: () => _open(_linkedInUrl),
+        secondaryLabel: 'Copy URL',
+        secondaryAction: () => _copy(context, _linkedInUrl, isDark: isDark),
+        accent: _indigo,
+      ),
+      _ChannelData(
+        badge: '💻 REPOSITORIES & OSS ARCHITECTURE',
+        badgeColor: _accent,
+        label: 'GITHUB CODEBASE & ARTIFACTS',
+        value: 'github.com/$_githubHandle',
+        icon: Icons.code_rounded,
+        primaryLabel: 'View GitHub',
+        primaryAction: () => _open(_githubUrl),
+        secondaryLabel: 'Copy URL',
+        secondaryAction: () => _copy(context, _githubUrl, isDark: isDark),
+        accent: _accent,
+      ),
+    ];
 
-                        const SizedBox(height: 8),
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.black.withValues(alpha: 0.55)
+            : Colors.white.withValues(alpha: 0.94),
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.14)
+              : const Color(0xFFE2E8F0),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.35)
+                : Colors.black.withValues(alpha: 0.05),
+            blurRadius: 32,
+            offset: const Offset(0, 14),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          for (var i = 0; i < channels.length; i++) ...[
+            _ChannelCardTile(data: channels[i], isDark: isDark),
+            if (i < channels.length - 1)
+              Container(
+                height: 1,
+                margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.08)
+                    : const Color(0xFFE2E8F0),
+              ),
+          ],
+        ],
+      ),
+    );
+  }
 
-                        // Interactive Form Fields with CLI styling
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildCliField(
-                                prefix: 'NAME>',
-                                hint: 'e.g. John Doe',
-                                controller: _nameCtrl,
-                                validator: (val) => val == null || val.trim().isEmpty ? 'Identity parameter required' : null,
-                              ),
-                              const SizedBox(height: 16),
-                              _buildCliField(
-                                prefix: 'EMAIL>',
-                                hint: 'e.g. name@company.com',
-                                controller: _emailCtrl,
-                                keyboardType: TextInputType.emailAddress,
-                                validator: (val) {
-                                  if (val == null || val.trim().isEmpty) return 'Return address required';
-                                  if (!val.contains('@') || !val.contains('.')) return 'Invalid address format';
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 16),
-                              _buildCliField(
-                                prefix: 'PAYLOAD>',
-                                hint: 'Type your message or project inquiry here...',
-                                controller: _msgCtrl,
-                                maxLines: 3,
-                                validator: (val) => val == null || val.trim().isEmpty ? 'Payload body required' : null,
-                              ),
-                            ],
-                          ),
-                        ),
+  // ===========================================================================
+  // SECTION 5: EXECUTIVE CV & CREDENTIALS
+  // ===========================================================================
 
-                        const SizedBox(height: 18),
+  Widget _cvCard(bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: isDark
+            ? const Color(0xFF0F172A).withValues(alpha: 0.7)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(
+          color: isDark
+              ? _accent.withValues(alpha: 0.4)
+              : const Color(0xFFE2E8F0),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: _accent.withValues(alpha: isDark ? 0.06 : 0.03),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final isNarrow = constraints.maxWidth < 750;
 
-                        // Console Status Bar with Blinking Block Cursor
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF06090D),
-                            borderRadius: BorderRadius.circular(4),
-                            border: Border.all(color: Colors.white24),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  _consoleStatus,
-                                  style: const TextStyle(
-                                    fontFamily: 'Courier',
-                                    color: Color(0xFF10B981),
-                                    fontSize: 12.5,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                              AnimatedBuilder(
-                                animation: _cursorBlinkController,
-                                builder: (context, _) {
-                                  return Opacity(
-                                    opacity: _cursorBlinkController.value > 0.5 ? 1.0 : 0.0,
-                                    child: const Text(
-                                      '█',
-                                      style: TextStyle(color: Color(0xFF10B981), fontSize: 14),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 18),
-
-                        // QUICK COMMANDS & ACTION BAR
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: _submitTransmission,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF38BDF8),
-                                foregroundColor: Colors.black,
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                              ),
-                              icon: const Icon(Icons.send, size: 14),
-                              label: const Text(
-                                '⏎ TRANSMIT (MAILTO)',
-                                style: TextStyle(fontFamily: 'Courier', fontWeight: FontWeight.w900, fontSize: 11.5),
-                              ),
-                            ),
-                            OutlinedButton.icon(
-                              onPressed: _copyEmail,
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                side: const BorderSide(color: Colors.white24),
-                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                              ),
-                              icon: const Icon(Icons.copy, size: 14, color: Color(0xFFFBBF24)),
-                              label: const Text(
-                                '> COPY_EMAIL',
-                                style: TextStyle(fontFamily: 'Courier', fontSize: 11.5, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            OutlinedButton.icon(
-                              onPressed: _downloadCv,
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                side: const BorderSide(color: Colors.white24),
-                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                              ),
-                              icon: const Icon(Icons.description, size: 14, color: Color(0xFF38BDF8)),
-                              label: const Text(
-                                '> GET_CV.PDF',
-                                style: TextStyle(fontFamily: 'Courier', fontSize: 11.5, fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            OutlinedButton.icon(
-                              onPressed: () => _openExternal('https://www.linkedin.com/in/abdallah-alhyari-0294791a0/', 'LinkedIn'),
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.white70,
-                                side: const BorderSide(color: Colors.white12),
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                              ),
-                              icon: const Icon(Icons.link, size: 14),
-                              label: const Text(
-                                '> LINKEDIN',
-                                style: TextStyle(fontFamily: 'Courier', fontSize: 11.5),
-                              ),
-                            ),
-                            OutlinedButton.icon(
-                              onPressed: () => _openExternal('https://github.com/abdallahalhyari', 'GitHub'),
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.white70,
-                                side: const BorderSide(color: Colors.white12),
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                              ),
-                              icon: const Icon(Icons.code, size: 14),
-                              label: const Text(
-                                '> GITHUB',
-                                style: TextStyle(fontFamily: 'Courier', fontSize: 11.5),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 18),
-                        Container(height: 1, color: Colors.white12),
-                        const SizedBox(height: 12),
-
-                        // Letterpress Footnote
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'PRINTED AT CENTRAL DESPATCH · AMMAN, JORDAN',
-                              style: TextStyle(
-                                fontFamily: 'Courier',
-                                color: Colors.white.withValues(alpha: 0.4),
-                                fontSize: 9.5,
-                                letterSpacing: 1.5,
-                              ),
-                            ),
-                            Text(
-                              'ALL RIGHTS RESERVED © 2026',
-                              style: TextStyle(
-                                fontFamily: 'Courier',
-                                color: Colors.white.withValues(alpha: 0.4),
-                                fontSize: 9.5,
-                                letterSpacing: 1.5,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+          final metaBlock = Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 4,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: _accent.withValues(alpha: isDark ? 0.18 : 0.12),
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(
+                        color: _accent.withValues(alpha: 0.4),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      'ATS-VERIFIED · 2026 EDITION',
+                      style: TextStyle(
+                        color: isDark ? _accentSoft : const Color(0xFFD97706),
+                        fontSize: 9.5,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.4,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'PDF · 240 KB',
+                    style: TextStyle(
+                      color: isDark ? Colors.white60 : const Color(0xFF64748B),
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-        ),
+              const SizedBox(height: 8),
+              Text(
+                'Executive Curriculum Vitae & Portfolio Dossier',
+                style: TextStyle(
+                  color: isDark ? Colors.white : const Color(0xFF0F172A),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.3,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Complete chronological track record, enterprise architecture case studies, and engineering competencies.',
+                style: TextStyle(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.7)
+                      : const Color(0xFF64748B),
+                  fontSize: 12.5,
+                  height: 1.4,
+                ),
+              ),
+            ],
+          );
+
+          final actionButtons = Wrap(
+            spacing: 10,
+            runSpacing: 8,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () async {
+                  SoundService.instance.playClick();
+                  await launchUrl(Uri.parse('cv.pdf'),
+                      mode: LaunchMode.externalApplication);
+                },
+                icon: const Icon(Icons.download_rounded, size: 16),
+                label: const Text(
+                  'DOWNLOAD CV · PDF',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.4,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _accent,
+                  foregroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                  ),
+                  elevation: 2,
+                ),
+              ),
+              OutlinedButton.icon(
+                onPressed: () async {
+                  SoundService.instance.playClick();
+                  await launchUrl(Uri.parse('cv.pdf'),
+                      mode: LaunchMode.externalApplication);
+                },
+                icon: const Icon(Icons.open_in_new_rounded, size: 14),
+                label: const Text(
+                  'PREVIEW',
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor:
+                      isDark ? Colors.white : const Color(0xFF0F172A),
+                  side: BorderSide(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.3)
+                        : const Color(0xFFCBD5E1),
+                    width: 1,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                  ),
+                ),
+              ),
+            ],
+          );
+
+          if (isNarrow) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                metaBlock,
+                const SizedBox(height: AppSpacing.md),
+                actionButtons,
+              ],
+            );
+          }
+
+          return Row(
+            children: [
+              Expanded(child: metaBlock),
+              const SizedBox(width: AppSpacing.lg),
+              actionButtons,
+            ],
+          );
+        },
       ),
     );
   }
 
-  Widget _buildCliField({
-    required String prefix,
-    required String hint,
-    required TextEditingController controller,
-    String? Function(String?)? validator,
-    TextInputType? keyboardType,
-    int maxLines = 1,
-  }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 12, right: 12),
-          child: Text(
-            prefix,
-            style: const TextStyle(
-              fontFamily: 'Courier',
-              color: Color(0xFFFBBF24),
-              fontSize: 14.0,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        Expanded(
-          child: TextFormField(
-            controller: controller,
-            maxLines: maxLines,
-            keyboardType: keyboardType,
-            validator: validator,
-            onChanged: (_) => _onKeyPress(),
-            style: const TextStyle(
-              fontFamily: 'Courier',
-              color: Colors.white,
-              fontSize: 14.5,
-              height: 1.5,
-            ),
-            cursorColor: const Color(0xFF10B981),
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: TextStyle(
-                fontFamily: 'Courier',
-                color: Colors.white.withValues(alpha: 0.45),
-                fontSize: 13.5,
-              ),
-              filled: true,
-              fillColor: const Color(0xFF111722),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: Colors.white24),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: Color(0xFF38BDF8), width: 1.5),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: Colors.redAccent),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: Colors.redAccent),
-              ),
-              errorStyle: const TextStyle(fontFamily: 'Courier', fontSize: 11, color: Colors.redAccent),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // ===========================================================================
+  // SECTION 6: SOCIAL MASTHEAD & COLOPHON
+  // ===========================================================================
 
-  Widget _buildInteractiveShell() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Suggestions row
-        Wrap(
-          spacing: 6,
-          runSpacing: 6,
-          crossAxisAlignment: WrapCrossAlignment.center,
+  Widget _socialAndMastheadFooter(BuildContext context, bool isDark) {
+    final isMobile = MediaQuery.sizeOf(context).width < 640;
+    Widget rule() => Expanded(
+          child: Container(
+            height: 1,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.15)
+                : const Color(0xFFCBD5E1),
+          ),
+        );
+
+    Widget block(String label, String value) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'CLI COMMANDS:',
+            Text(
+              label,
               style: TextStyle(
-                fontFamily: 'Courier',
-                color: Colors.white54,
-                fontSize: 10.5,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 1,
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.72)
+                    : const Color(0xFF64748B),
+                fontSize: 9.5,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 2.2,
               ),
             ),
-            _buildCmdChip('help'),
-            _buildCmdChip('skills'),
-            _buildCmdChip('projects'),
-            _buildCmdChip('sudo hire'),
-            if (_terminalLog.isNotEmpty) _buildCmdChip('clear'),
+            const SizedBox(height: 4),
+            Text(
+              value,
+              style: TextStyle(
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.0,
+              ),
+            ),
+          ],
+        );
+
+    final blocks = [
+      block('PRIMARY LOCATION', 'AMMAN · RELOCATING BRNO 2027'),
+      block('RESPONSE SLA', 'GUARANTEED WITHIN 24 HOURS'),
+      block('ENGAGEMENT SCOPE', 'SENIOR ROLES · ADVISORY · CONTRACT'),
+    ];
+
+    return Column(
+      children: [
+        // Social quick-pills
+        Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 12,
+          runSpacing: 8,
+          children: [
+            _SocialChip(
+              label: 'LINKEDIN · $_linkedInHandle',
+              icon: Icons.link_rounded,
+              onTap: () => _open(_linkedInUrl),
+            ),
+            _SocialChip(
+              label: 'GITHUB · $_githubHandle',
+              icon: Icons.code_rounded,
+              onTap: () => _open(_githubUrl),
+            ),
           ],
         ),
-        const SizedBox(height: 10),
-        // Command prompt field
+        const SizedBox(height: AppSpacing.lg),
+        // Trust and identity badge
+        Center(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.04)
+                  : const Color(0xFFF1F5F9),
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : const Color(0xFFE2E8F0),
+                width: 1,
+              ),
+            ),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.center,
+              spacing: 6,
+              runSpacing: 4,
+              children: [
+                const Icon(Icons.shield_outlined,
+                    size: 13, color: _availabilityGreen),
+                Text(
+                  'VERIFIED SENIOR MOBILE ARCHITECT · DIRECT COMMUNICATION',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: isDark ? Colors.white70 : const Color(0xFF475569),
+                    fontSize: 9.5,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        // Masthead Colophon Rule
         Row(
           children: [
-            const Text(
-              'CMD> ',
-              style: TextStyle(
-                fontFamily: 'Courier',
-                color: Color(0xFF10B981),
-                fontSize: 13.5,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            Expanded(
-              child: TextField(
-                controller: _cliCmdCtrl,
-                onChanged: (_) => _onKeyPress(),
-                onSubmitted: _executeCommand,
-                style: const TextStyle(
-                  fontFamily: 'Courier',
-                  color: Color(0xFF10B981),
-                  fontSize: 13.0,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Type "help", "skills", "sudo hire" and press Enter ⏎',
-                  hintStyle: TextStyle(
-                    fontFamily: 'Courier',
-                    color: Colors.white.withValues(alpha: 0.35),
-                    fontSize: 12.0,
-                  ),
-                  isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  filled: true,
-                  fillColor: const Color(0xFF0A0F17),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Colors.white24),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Color(0xFF10B981), width: 1.5),
+            rule(),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    '// COLOPHON & DISPATCH',
+                    style: TextStyle(
+                      color: isDark ? Colors.white.withValues(alpha: 0.60) : const Color(0xFF94A3B8),
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2,
+                    ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 8),
-            IconButton(
-              tooltip: 'Execute command',
-              icon: const Icon(Icons.keyboard_return, color: Color(0xFF10B981), size: 18),
-              onPressed: () => _executeCommand(_cliCmdCtrl.text),
-            ),
+            rule(),
           ],
         ),
-        if (_terminalLog.isNotEmpty) ...[
-          const SizedBox(height: 10),
-          Container(
-            constraints: const BoxConstraints(maxHeight: 180),
-            width: double.infinity,
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: const Color(0xFF080B10),
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: const Color(0xFF10B981).withValues(alpha: 0.4)),
-            ),
-            child: SingleChildScrollView(
-              reverse: true,
-              child: Text(
-                _terminalLog.join('\n'),
-                style: const TextStyle(
-                  fontFamily: 'Courier',
-                  color: Color(0xFF34D399),
-                  fontSize: 11.5,
-                  height: 1.45,
+        const SizedBox(height: AppSpacing.md),
+        if (isMobile)
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 10,
+            runSpacing: 8,
+            children: [
+              for (final b in blocks)
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.04)
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.1)
+                          : const Color(0xFFE2E8F0),
+                    ),
+                  ),
+                  child: b,
                 ),
+            ],
+          )
+        else
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: AppSpacing.lg,
+            runSpacing: AppSpacing.sm,
+            children: [
+              blocks[0],
+              Container(
+                width: 1,
+                height: 28,
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.2)
+                    : const Color(0xFFCBD5E1),
               ),
-            ),
+              blocks[1],
+              Container(
+                width: 1,
+                height: 28,
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.2)
+                    : const Color(0xFFCBD5E1),
+              ),
+              blocks[2],
+            ],
           ),
-        ],
-        const SizedBox(height: 12),
-        Container(height: 1, color: Colors.white12),
       ],
     );
   }
+}
 
-  Widget _buildCmdChip(String cmd) {
-    return InkWell(
-      onTap: () => _executeCommand(cmd),
-      borderRadius: BorderRadius.circular(3),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+// =============================================================================
+// SUB-WIDGETS & DATA MODELS
+// =============================================================================
+
+class _ConsultingTrack {
+  final String tag;
+  final String title;
+  final String description;
+  final IconData icon;
+  final Color accent;
+  final String inquirySubject;
+  final ValueChanged<String> onInquire;
+
+  const _ConsultingTrack({
+    required this.tag,
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.accent,
+    required this.inquirySubject,
+    required this.onInquire,
+  });
+}
+
+class _BentoTrackCard extends StatefulWidget {
+  final _ConsultingTrack track;
+  final bool isDark;
+
+  const _BentoTrackCard({
+    required this.track,
+    required this.isDark,
+  });
+
+  @override
+  State<_BentoTrackCard> createState() => _BentoTrackCardState();
+}
+
+class _BentoTrackCardState extends State<_BentoTrackCard> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = widget.track;
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          color: const Color(0xFF10B981).withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(3),
-          border: Border.all(color: const Color(0xFF10B981).withValues(alpha: 0.4)),
+          color: widget.isDark
+              ? (_hover
+                  ? Colors.white.withValues(alpha: 0.08)
+                  : Colors.white.withValues(alpha: 0.04))
+              : (_hover ? Colors.white : const Color(0xFFF8FAFC)),
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          border: Border.all(
+            color: _hover
+                ? t.accent.withValues(alpha: 0.6)
+                : (widget.isDark
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : const Color(0xFFE2E8F0)),
+            width: 1.2,
+          ),
+          boxShadow: [
+            if (_hover)
+              BoxShadow(
+                color: t.accent.withValues(alpha: widget.isDark ? 0.15 : 0.08),
+                blurRadius: 18,
+                offset: const Offset(0, 6),
+              ),
+          ],
         ),
-        child: Text(
-          '> $cmd',
-          style: const TextStyle(
-            fontFamily: 'Courier',
-            color: Color(0xFF34D399),
-            fontSize: 10.5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 38,
+                  height: 38,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: t.accent.withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                    border: Border.all(
+                      color: t.accent.withValues(alpha: 0.35),
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(t.icon, size: 18, color: t.accent),
+                ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: t.accent.withValues(alpha: 0.10),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        t.tag,
+                        style: TextStyle(
+                          color: t.accent,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              t.title,
+              style: TextStyle(
+                color: widget.isDark ? Colors.white : const Color(0xFF0F172A),
+                fontSize: 14.5,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.3,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              t.description,
+              style: TextStyle(
+                color: widget.isDark
+                    ? Colors.white.withValues(alpha: 0.72)
+                    : const Color(0xFF64748B),
+                fontSize: 11.5,
+                height: 1.45,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            InkWell(
+              onTap: () => t.onInquire(t.inquirySubject),
+              borderRadius: BorderRadius.circular(4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'INQUIRE TRACK',
+                    style: TextStyle(
+                      color: t.accent,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.4,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(Icons.arrow_forward_rounded,
+                      size: 12, color: t.accent),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ChannelData {
+  final String badge;
+  final Color badgeColor;
+  final String label;
+  final String value;
+  final IconData icon;
+  final String primaryLabel;
+  final VoidCallback primaryAction;
+  final String secondaryLabel;
+  final VoidCallback secondaryAction;
+  final Color accent;
+
+  const _ChannelData({
+    required this.badge,
+    required this.badgeColor,
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.primaryLabel,
+    required this.primaryAction,
+    required this.secondaryLabel,
+    required this.secondaryAction,
+    required this.accent,
+  });
+}
+
+class _ChannelCardTile extends StatefulWidget {
+  final _ChannelData data;
+  final bool isDark;
+
+  const _ChannelCardTile({
+    required this.data,
+    required this.isDark,
+  });
+
+  @override
+  State<_ChannelCardTile> createState() => _ChannelCardTileState();
+}
+
+class _ChannelCardTileState extends State<_ChannelCardTile> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final d = widget.data;
+    final width = MediaQuery.sizeOf(context).width;
+    final narrow = width < 640;
+
+    final icon = Container(
+      width: 44,
+      height: 44,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: d.accent.withValues(alpha: _hover ? 0.22 : 0.12),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: Border.all(
+          color: d.accent.withValues(alpha: 0.45),
+          width: 1,
+        ),
+      ),
+      child: Icon(d.icon, size: 20, color: d.accent),
+    );
+
+    final details = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 3,
+          children: [
+            Text(
+              d.label,
+              style: TextStyle(
+                color: d.accent,
+                fontSize: 9.5,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 2.0,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: d.badgeColor.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(3),
+                border: Border.all(
+                  color: d.badgeColor.withValues(alpha: 0.35),
+                  width: 0.8,
+                ),
+              ),
+              child: Text(
+                d.badge,
+                style: TextStyle(
+                  color: d.badgeColor,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 3),
+        Text(
+          d.value,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: TextStyle(
+            color: widget.isDark ? Colors.white : const Color(0xFF0F172A),
+            fontSize: 15,
             fontWeight: FontWeight.w700,
+            letterSpacing: 0.4,
+          ),
+        ),
+      ],
+    );
+
+    final primaryBtn = ElevatedButton(
+      onPressed: d.primaryAction,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: d.accent,
+        foregroundColor: Colors.black,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+        ),
+        elevation: 0,
+      ),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          d.primaryLabel.toUpperCase(),
+          style: const TextStyle(
+            fontSize: 10.5,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.2,
           ),
         ),
       ),
+    );
+
+    final secondaryBtn = OutlinedButton(
+      onPressed: d.secondaryAction,
+      style: OutlinedButton.styleFrom(
+        foregroundColor: widget.isDark ? Colors.white : const Color(0xFF0F172A),
+        side: BorderSide(
+          color: widget.isDark
+              ? Colors.white.withValues(alpha: 0.35)
+              : const Color(0xFFCBD5E1),
+          width: 1,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+        ),
+      ),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          d.secondaryLabel.toUpperCase(),
+          style: const TextStyle(
+            fontSize: 10.5,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.2,
+          ),
+        ),
+      ),
+    );
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        curve: Curves.easeOut,
+        padding: EdgeInsets.symmetric(
+          horizontal: _hover ? AppSpacing.md : AppSpacing.smd,
+          vertical: AppSpacing.md,
+        ),
+        color: _hover
+            ? d.accent.withValues(alpha: 0.04)
+            : Colors.transparent,
+        child: narrow
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      icon,
+                      const SizedBox(width: AppSpacing.md),
+                      Expanded(child: details),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.smd),
+                  Row(
+                    children: [
+                      Expanded(child: primaryBtn),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(child: secondaryBtn),
+                    ],
+                  ),
+                ],
+              )
+            : Row(
+                children: [
+                  icon,
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(child: details),
+                  const SizedBox(width: AppSpacing.md),
+                  primaryBtn,
+                  const SizedBox(width: AppSpacing.sm),
+                  secondaryBtn,
+                ],
+              ),
+      ),
+    );
+  }
+}
+
+class _SocialChip extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _SocialChip({
+    required this.label,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return OutlinedButton.icon(
+      onPressed: onTap,
+      icon: Icon(icon, size: 14),
+      label: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w900,
+          letterSpacing: 1.6,
+        ),
+      ),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: isDark ? Colors.white : const Color(0xFF0F172A),
+        side: BorderSide(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.35)
+              : const Color(0xFFCBD5E1),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+        ),
+      ),
+    );
+  }
+}
+
+class _PulsingDot extends StatefulWidget {
+  final Color color;
+  const _PulsingDot({required this.color});
+  @override
+  State<_PulsingDot> createState() => _PulsingDotState();
+}
+
+class _PulsingDotState extends State<_PulsingDot>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1500),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_c.isAnimating && !MediaQuery.of(context).disableAnimations) {
+      _c.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _c,
+      builder: (_, __) {
+        final t = _c.value;
+        return SizedBox(
+          width: 14,
+          height: 14,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 8 + 6 * t,
+                height: 8 + 6 * t,
+                decoration: BoxDecoration(
+                  color: widget.color.withValues(alpha: 0.35 * (1 - t)),
+                  shape: BoxShape.circle,
+                ),
+              ),
+              Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  color: widget.color,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

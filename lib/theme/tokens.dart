@@ -77,6 +77,19 @@ class AppColors {
   static Color scrimLight = Colors.black.withValues(alpha: 0.3);
   static Color scrimMedium = Colors.black.withValues(alpha: 0.35);
   static Color scrimHeavy = Colors.black.withValues(alpha: 0.4);
+
+  // Editorial accent palette — extracted from the magic hex values that
+  // were littered across intro / contact / experience / hats pages.
+  // Use these instead of writing `Color(0xFFxxxxxx)` inline.
+  static const Color accentIndigo = Color(0xFF818CF8);
+  static const Color accentIndigoSoft = Color(0xFFB6C9FF);
+  static const Color accentIndigoDeep = Color(0xFF6366F1);
+  static const Color accentAmber = Color(0xFFFBBF24);
+  static const Color accentAmberSoft = Color(0xFFFDE68A);
+  static const Color accentCyan = Color(0xFF3EA6D6);
+  static const Color accentBlueprintNavy = Color(0xFF0A1930);
+  static const Color accentGreen = Color(0xFF10B981);
+  static const Color accentSky = Color(0xFF38BDF8);
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site

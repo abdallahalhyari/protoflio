@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/main.dart';
@@ -5,6 +6,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/module/home/page/hats_grid_page.dart';
 import 'package:profile/module/home/page/projects_page.dart';
 import 'package:profile/module/home/page/skills_page.dart';
+import 'package:profile/module/home/page/engineering_page.dart';
 
 Widget createTestApp(Widget child, [Size size = const Size(1200, 900)]) {
   return MaterialApp(
@@ -23,7 +25,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);
-    expect(find.text('EXPLORE PUBLICATION'), findsOneWidget);
+    expect(find.text('VIEW MY WORK'), findsOneWidget);
   });
 
   testWidgets('HatsGridPage renders and role selector updates state (desktop & mobile)', (tester) async {
@@ -32,9 +34,9 @@ void main() {
     await tester.pumpWidget(createTestApp(const HatsGridPage(), const Size(1200, 900)));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('THE HATS SPREAD'), findsOneWidget);
-    expect(find.text('SHUFFLE'), findsOneWidget);
-    expect(find.text('RESET'), findsOneWidget);
+    expect(find.text('ARCHITECTURAL PERSPECTIVES'), findsOneWidget);
+    expect(find.text('SPREAD'), findsOneWidget);
+    expect(find.text('ALIGN'), findsOneWidget);
     expect(find.textContaining('THINKING'), findsWidgets);
 
     // Tap role pill
@@ -85,9 +87,91 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('SKILLS'), findsWidgets);
-    expect(find.text('ALL'), findsOneWidget);
-    expect(find.textContaining('MOBILE SYSTEMS'), findsWidgets);
+    await tester.binding.setSurfaceSize(null);
+  });
+
+  testWidgets('EngineeringPage renders 4 production architectures and tabs work', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(1200, 900));
+    await tester.pumpWidget(createTestApp(const EngineeringPage(), const Size(1200, 900)));
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.text('ENGINEERING EXPERTISE'), findsOneWidget);
+    expect(find.textContaining('CLEAN MOBILE ARCHITECTURE'), findsWidgets);
+    expect(find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'), findsWidgets);
+
+    // Tap second tab (Offline-First)
+    await tester.tap(find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'));
+    await tester.pump(const Duration(milliseconds: 200));
+
+    expect(find.textContaining('WorkManager Pipeline'), findsOneWidget);
 
     await tester.binding.setSurfaceSize(null);
   });
+
+  testWidgets('HomeScreen desktop pointer scroll advances pages when not over inner scrollable', (tester) async {
+    tester.view.physicalSize = const Size(1200, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const PortfolioApp());
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.textContaining('ABDALLAH'), findsWidgets);
+
+    // Send pointer scroll event downwards (dy: 100) to advance from Intro to Projects
+    await tester.sendEventToBinding(
+      const PointerScrollEvent(
+        position: Offset(600, 450),
+        scrollDelta: Offset(0, 100),
+      ),
+    );
+    for (int i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+
+    // Now on Projects page
+    final pageView = tester.widget<PageView>(find.byType(PageView));
+    expect(pageView.controller!.page!.round(), 1);
+  });
+
+  testWidgets('HomeScreen preserves inner scrollable on ProjectsPage and does not advance page', (tester) async {
+    tester.view.physicalSize = const Size(1200, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const PortfolioApp());
+    await tester.pump(const Duration(milliseconds: 300));
+
+    // First advance to Projects page
+    await tester.sendEventToBinding(
+      const PointerScrollEvent(
+        position: Offset(600, 450),
+        scrollDelta: Offset(0, 100),
+      ),
+    );
+    for (int i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    final pageView = tester.widget<PageView>(find.byType(PageView));
+    expect(pageView.controller!.page!.round(), 1);
+
+    // Now send pointer scroll event over the case study article (Offset(800, 500))
+    // The inner article has content to scroll down, so this scroll should be absorbed by the article
+    // and NOT advance to EngineeringPage.
+    await tester.sendEventToBinding(
+      const PointerScrollEvent(
+        position: Offset(800, 500),
+        scrollDelta: Offset(0, 80),
+      ),
+    );
+    for (int i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+
+    // Must still be on Projects page (page index 1.0)!
+    expect(pageView.controller!.page!.round(), 1);
+  });
 }
+

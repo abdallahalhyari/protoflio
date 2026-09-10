@@ -9,7 +9,28 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get navHome => 'Home';
+
+  @override
+  String get navWork => 'Work';
+
+  @override
+  String get navEngineering => 'Engineering';
+
+  @override
+  String get navExperience => 'Experience';
+
+  @override
+  String get navStack => 'Stack';
+
+  @override
   String get navAbout => 'About';
+
+  @override
+  String get navContact => 'Contact';
+
+  @override
+  String get navResume => 'Resume';
 
   @override
   String get navWhy => 'Why';
@@ -24,12 +45,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navProjects => 'Projects';
 
   @override
-  String get navExperience => 'Roles';
-
-  @override
-  String get navContact => 'Contact';
-
-  @override
   String get introHiName => 'HELLO THERE!\nI\'M ABDALLAH';
 
   @override
@@ -39,16 +54,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introName => 'Abdallah Alhyari';
 
   @override
-  String get introRole => 'Senior Mobile Engineer';
+  String get introRole => 'Senior Flutter & Android Engineer';
 
   @override
   String get introLocation => 'Amman, Jordan → Brno, Czech Republic (2027)';
 
   @override
-  String get contactTitle => 'Let\'s work together';
+  String get contactTitle => 'Let\'s build something great';
 
   @override
-  String get contactSubtitle => 'Let\'s build something amazing together.';
+  String get contactSubtitle =>
+      'Open for senior engineering roles, high-impact mobile architectures, and technical leadership.';
 
   @override
   String get contactNameLabel => 'Name';

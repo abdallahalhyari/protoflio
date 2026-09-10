@@ -25,4 +25,12 @@ class LocaleController {
     locale.value = Locale(code);
     _persist(code);
   }
+
+  static void nextLocale() {
+    const supported = ['en', 'ar', 'cs'];
+    final current = locale.value.languageCode;
+    final currentIndex = supported.indexOf(current);
+    final nextIndex = (currentIndex + 1) % supported.length;
+    changeLocale(supported[nextIndex]);
+  }
 }

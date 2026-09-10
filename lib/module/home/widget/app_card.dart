@@ -73,8 +73,9 @@ class _AppCardState extends State<AppCard> {
               )
           ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(widget.radius),
+        child: RepaintBoundary(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(widget.radius),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
             child: AnimatedContainer(
@@ -88,6 +89,7 @@ class _AppCardState extends State<AppCard> {
                 padding: widget.padding,
                 child: widget.child,
               ),
+            ),
             ),
           ),
         ),

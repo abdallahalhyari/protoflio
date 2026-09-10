@@ -36,14 +36,16 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         _mousePos = Offset.zero;
       }),
       onHover: (event) {
-        if (_key.currentContext != null) {
-          final RenderBox box = _key.currentContext!.findRenderObject() as RenderBox;
-          final center = Offset(box.size.width / 2, box.size.height / 2);
-          final delta = event.localPosition - center;
-          setState(() {
-            _mousePos = Offset(delta.dx * 0.15, delta.dy * 0.25);
-          });
-        }
+        if (_key.currentContext == null) return;
+        final RenderBox box =
+            _key.currentContext!.findRenderObject() as RenderBox;
+        final center = Offset(box.size.width / 2, box.size.height / 2);
+        final delta = event.localPosition - center;
+        final next = Offset(delta.dx * 0.15, delta.dy * 0.25);
+        // Skip micro-jitter rebuilds — anything under ~2px shift is
+        // imperceptible visually but still triggers a full paint.
+        if ((next - _mousePos).distanceSquared < 4) return;
+        setState(() => _mousePos = next);
       },
       cursor: SystemMouseCursors.click,
       child: GestureDetector(

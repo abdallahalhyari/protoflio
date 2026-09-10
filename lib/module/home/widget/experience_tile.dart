@@ -56,8 +56,9 @@ class _ExperienceTileState extends State<ExperienceTile> {
                   curve: Curves.easeOut,
                   child: Container(
                     margin: const EdgeInsets.only(bottom: AppSpacing.lg - 4),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(AppRadius.md),
+                    child: RepaintBoundary(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                         child: AnimatedContainer(
@@ -151,6 +152,7 @@ class _ExperienceTileState extends State<ExperienceTile> {
                               ),
                             ],
                           ),
+                        ),
                         ),
                       ),
                     ),

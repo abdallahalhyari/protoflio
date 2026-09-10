@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
-import '../widget/page_background.dart';
+
 import '../widget/primary_button.dart';
+import '../widget/screen_shell.dart';
 
 class HatsIntroPage extends StatelessWidget {
   final VoidCallback onExplain;
@@ -20,23 +21,18 @@ class HatsIntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= 900;
+    final isDesktop = size.width >= AppBreakpoints.tablet;
 
-    return PageBackground(
-      asset: 'assets/hats_background.webp',
-      overlay: AppColors.scrimMedium,
-      controller: controller,
-      pageIndex: pageIndex,
-      child: Center(
+      // AppScreenShell centers content, caps maxWidth, and auto-reserves
+      // top space for the desktop TopNav so this page follows the same
+      // shell contract as every other page.
+      return AppScreenShell(
+        maxWidth: 960,
+        hPad: isDesktop ? AppSpacing.xxl : AppSpacing.md,
+        verticalPadding: AppSpacing.lg,
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: isDesktop ? AppSpacing.xxl : AppSpacing.md,
-            vertical: AppSpacing.lg,
-          ),
+          primary: false,
           child: Container(
-            constraints: BoxConstraints(
-              maxWidth: (size.width * 0.9).clamp(320.0, 960.0),
-            ),
             decoration: BoxDecoration(
               color: Colors.black.withValues(alpha: 0.82),
               borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -89,65 +85,61 @@ class HatsIntroPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Manifesto Header Stamp
+                    // Editorial header: rule + kicker + rule (matches the
+                    // masthead treatment used on the intro cover).
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF6366F1).withValues(alpha: 0.2),
-                            border: Border.all(color: const Color(0xFF818CF8), width: 1.5),
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                          child: const Text(
-                            'SPECIAL ESSAY // OPERATING PHILOSOPHY',
-                            style: TextStyle(
-                              color: Color(0xFF818CF8),
-                              fontSize: 11,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 2,
+                            width: 32,
+                            height: 1,
+                            color: const Color(0xFF818CF8)),
+                        const SizedBox(width: 10),
+                        const Flexible(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'ESSAY 01 · OPERATING PHILOSOPHY',
+                              style: TextStyle(
+                                color: Color(0xFFB6C9FF),
+                                fontSize: 11,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 4,
+                              ),
                             ),
                           ),
                         ),
+                        const SizedBox(width: 10),
+                        Container(
+                            width: 32,
+                            height: 1,
+                            color: const Color(0xFF818CF8)),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.lg),
+                    const SizedBox(height: AppSpacing.xl),
 
-                    // Staggered, angled typographic manifesto headline
-                    Transform.rotate(
-                      angle: -0.02,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF6366F1).withValues(alpha: 0.3),
-                          border: Border.all(color: const Color(0xFF818CF8).withValues(alpha: 0.6)),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          'BECAUSE',
-                          style: TextStyle(
-                            fontFamily: 'Tenada',
-                            fontSize: (size.width * 0.048).clamp(26.0, 52.0),
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 6,
-                            color: Colors.white,
-                          ),
-                        ),
+                    // Typographic manifesto lockup — no more boxed pills.
+                    // "BECAUSE" as a display-weight kicker; "I WEAR"
+                    // subline; "MANY HATS" as the gradient hero.
+                    Text(
+                      'BECAUSE',
+                      style: TextStyle(
+                        fontFamily: 'Tenada',
+                        fontSize: (size.width * 0.032).clamp(22.0, 40.0),
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 8,
+                        color: Colors.white.withValues(alpha: 0.9),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.xs),
+                    const SizedBox(height: 4),
 
-                    Transform.rotate(
-                      angle: 0.015,
-                      child: Text(
-                        'I WEAR',
-                        style: TextStyle(
-                          fontSize: (size.width * 0.038).clamp(22.0, 44.0),
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 10,
-                          color: Colors.white,
-                        ),
+                    Text(
+                      'I WEAR',
+                      style: TextStyle(
+                        fontSize: (size.width * 0.028).clamp(18.0, 36.0),
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 12,
+                        color: Colors.white.withValues(alpha: 0.75),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.xs),
@@ -235,7 +227,6 @@ class HatsIntroPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

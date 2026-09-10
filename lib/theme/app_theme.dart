@@ -17,11 +17,23 @@ class AppTheme {
     );
     final isDark = brightness == Brightness.dark;
 
+    // Focus-visible ring: shows a 2px seed-tinted outline whenever an
+    // interactive element gains keyboard focus. Uses WidgetStateProperty
+    // so the border only appears in the focused state — mouse/touch users
+    // never see it.
+    final focusBorder = WidgetStateProperty.resolveWith<BorderSide?>((states) {
+      if (states.contains(WidgetState.focused)) {
+        return BorderSide(color: scheme.primary, width: 2);
+      }
+      return null;
+    });
+
     return ThemeData(
       useMaterial3: true,
       colorScheme: scheme,
       scaffoldBackgroundColor:
           isDark ? AppColors.darkSurface : AppColors.lightSurface,
+      focusColor: scheme.primary.withValues(alpha: 0.24),
       textTheme: GoogleFonts.interTextTheme(
         ThemeData(brightness: brightness).textTheme,
       ).copyWith(
@@ -46,6 +58,25 @@ class AppTheme {
         contentTextStyle: TextStyle(color: scheme.onInverseSurface),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.sm),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(side: focusBorder),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(side: focusBorder),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(side: focusBorder),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+            if (states.contains(WidgetState.focused)) {
+              return scheme.primary.withValues(alpha: 0.24);
+            }
+            return null;
+          }),
         ),
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
