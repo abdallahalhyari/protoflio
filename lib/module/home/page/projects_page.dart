@@ -170,7 +170,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                   // Selected Project Case Study
                   if (widget.isContinuousMobile)
                     GestureDetector(
-                      behavior: HitTestBehavior.opaque,
+                      behavior: HitTestBehavior.translucent,
                       onHorizontalDragEnd: (details) {
                         if (details.primaryVelocity != null) {
                           if (details.primaryVelocity! < -200) {
@@ -332,7 +332,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
           '${project.company} — ${project.name}${isSelected ? ", selected" : ""}',
       child: InkWell(
         onTap: () => _selectProject(index),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         focusColor: scheme.primary.withValues(alpha: 0.25),
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 44),
@@ -343,7 +343,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 color: isSelected
                     ? scheme.primary.withValues(alpha: isDark ? 0.18 : 0.12)
                     : (isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white.withValues(alpha: 0.85)),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(AppRadius.md),
                 border: Border.all(
                   color: isSelected
                       ? scheme.primary.withValues(alpha: 0.8)
@@ -376,7 +376,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: isSelected ? scheme.primary : (isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
               ),
               child: Text(
                 _ordinal(index),
@@ -443,7 +443,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
             if (i > 0) const SizedBox(width: 8),
             InkWell(
               onTap: () => _selectProject(i),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
               child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -451,7 +451,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       color: _selectedIndex == i
                           ? scheme.primary.withValues(alpha: isDark ? 0.22 : 0.15)
                           : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.white.withValues(alpha: 0.85)),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
                       border: Border.all(
                         color: _selectedIndex == i
                             ? scheme.primary.withValues(alpha: 0.9)
@@ -466,7 +466,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
                             color: _selectedIndex == i ? scheme.primary : (isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(AppRadius.xs),
                           ),
                           child: Text(
                             _ordinal(i),
@@ -528,7 +528,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
             for (int i = 0; i < kProjects.length; i++)
               InkWell(
                 onTap: () => _selectProject(i),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(AppRadius.xs),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 6),
                   child: AnimatedContainer(
@@ -563,14 +563,14 @@ class _ProjectsPageState extends State<ProjectsPage> {
     final isDark = scheme.brightness == Brightness.dark;
     return RepaintBoundary(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
           child: Container(
             constraints: BoxConstraints(maxWidth: isDesktop ? 780 : 960),
             decoration: BoxDecoration(
               color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.white.withValues(alpha: 0.92),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppRadius.md),
               border: Border.all(
                 color: isDark ? scheme.primary.withValues(alpha: 0.5) : const Color(0xFFCBD5E1),
                 width: isDark ? 1.5 : 1.0,
@@ -638,7 +638,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
                                 color: scheme.primary.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(4),
+                                borderRadius: BorderRadius.circular(AppRadius.xs),
                               ),
                               child: Text(
                                 project.company.toUpperCase(),
@@ -672,13 +672,13 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       if (project.url != null)
                         InkWell(
                           onTap: () => _openProjectUrl(project.url!),
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(AppRadius.xs),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
                               color: scheme.primary.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(4),
+                              borderRadius: BorderRadius.circular(AppRadius.xs),
                               border: Border.all(
                                   color:
                                       scheme.primary.withValues(alpha: 0.5)),
@@ -828,7 +828,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
                           decoration: BoxDecoration(
                             color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFF1F5F9),
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(AppRadius.xs),
                             border: Border.all(color: isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
                           ),
                           child: Text(
@@ -876,7 +876,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
       padding: EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
       decoration: BoxDecoration(
         color: isDark ? Colors.black.withValues(alpha: 0.35) : const Color(0xFFF8FAFC),
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(AppRadius.chip),
         border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
       ),
       child: Column(
@@ -956,7 +956,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
             padding: EdgeInsets.all(isDesktop ? 12 : 10),
             decoration: BoxDecoration(
               color: isDark ? accentColor.withValues(alpha: 0.08) : Colors.white.withValues(alpha: 0.90),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(AppRadius.smd),
               border: Border.all(color: accentColor.withValues(alpha: isDark ? 0.28 : 0.4), width: 1.0),
               boxShadow: [
                 BoxShadow(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/main.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/module/home/page/intro_page.dart';
 import 'package:profile/module/home/page/projects_page.dart';
@@ -168,5 +169,80 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
     }
+
+    testWidgets('Theme toggle does not navigate to contact page on various viewports', (tester) async {
+      for (final size in [
+        const Size(1440, 900),
+        const Size(1280, 800),
+        const Size(1100, 800),
+        const Size(1024, 768),
+        const Size(950, 700),
+        const Size(400, 800),
+      ]) {
+        tester.view.devicePixelRatio = 1.0;
+        tester.view.physicalSize = size;
+        await tester.pumpWidget(const PortfolioApp());
+        await tester.pump(const Duration(milliseconds: 300));
+
+        final themeBtnFinder = find.byWidgetPredicate((w) =>
+            w is IconButton &&
+            (w.tooltip == 'Switch to light' ||
+                w.tooltip == 'Switch to dark' ||
+                w.icon is Icon &&
+                    ((w.icon as Icon).icon == Icons.light_mode ||
+                        (w.icon as Icon).icon == Icons.dark_mode ||
+                        (w.icon as Icon).icon == Icons.light_mode_outlined ||
+                        (w.icon as Icon).icon == Icons.dark_mode_outlined)));
+
+        expect(themeBtnFinder, findsOneWidget, reason: 'Theme button must exist for size $size');
+
+        // Tap theme button
+        await tester.tap(themeBtnFinder);
+        await tester.pump(const Duration(milliseconds: 300));
+
+        expect(tester.takeException(), isNull);
+      }
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    testWidgets('Mobile theme toggle preserves scroll position and does not jump to contact', (tester) async {
+      tester.view.devicePixelRatio = 1.0;
+      tester.view.physicalSize = const Size(400, 800);
+
+      await tester.pumpWidget(const PortfolioApp());
+      await tester.pump(const Duration(milliseconds: 300));
+
+      final scrollable = find.byWidgetPredicate((w) =>
+          w is SingleChildScrollView &&
+          w.controller != null &&
+          w.scrollDirection == Axis.vertical);
+      expect(scrollable, findsOneWidget);
+
+      // Scroll down 1200 pixels (towards section 2/3)
+      await tester.drag(scrollable, const Offset(0, -1200));
+      await tester.pump(const Duration(milliseconds: 300));
+
+      final scrollableWidget = tester.widget<SingleChildScrollView>(scrollable);
+      final offsetBefore = scrollableWidget.controller!.offset;
+      expect(offsetBefore, greaterThan(800));
+
+      // Tap theme toggle button
+      final themeBtn = find.byWidgetPredicate((w) =>
+          w is IconButton &&
+          w.icon is Icon &&
+          ((w.icon as Icon).icon == Icons.light_mode_outlined ||
+              (w.icon as Icon).icon == Icons.dark_mode_outlined));
+      expect(themeBtn, findsOneWidget);
+
+      await tester.tap(themeBtn);
+      await tester.pump(const Duration(milliseconds: 300));
+
+      final offsetAfter = scrollableWidget.controller!.offset;
+      expect((offsetAfter - offsetBefore).abs(), lessThan(5.0));
+
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
   });
 }

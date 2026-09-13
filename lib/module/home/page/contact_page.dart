@@ -452,7 +452,7 @@ class _ContactPageState extends State<ContactPage> {
               height: 18,
               decoration: BoxDecoration(
                 color: _accent,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: BorderRadius.circular(AppRadius.xxs),
               ),
             ),
             const SizedBox(width: 8),
@@ -766,7 +766,7 @@ class _ContactPageState extends State<ContactPage> {
                         horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
                       color: _accent.withValues(alpha: isDark ? 0.18 : 0.12),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(AppRadius.xs),
                       border: Border.all(
                         color: _accent.withValues(alpha: 0.4),
                         width: 1,
@@ -1051,7 +1051,7 @@ class _ContactPageState extends State<ContactPage> {
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.04)
                         : Colors.white,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
                     border: Border.all(
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.1)
@@ -1194,7 +1194,7 @@ class _BentoTrackCardState extends State<_BentoTrackCard> {
                         const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                     decoration: BoxDecoration(
                       color: t.accent.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(AppRadius.xs),
                     ),
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
@@ -1236,7 +1236,7 @@ class _BentoTrackCardState extends State<_BentoTrackCard> {
             const SizedBox(height: AppSpacing.md),
             InkWell(
               onTap: () => t.onInquire(t.inquirySubject),
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -1307,8 +1307,6 @@ class _ChannelCardTileState extends State<_ChannelCardTile> {
   @override
   Widget build(BuildContext context) {
     final d = widget.data;
-    final width = MediaQuery.sizeOf(context).width;
-    final narrow = width < 640;
 
     final icon = Container(
       width: 44,
@@ -1432,52 +1430,58 @@ class _ChannelCardTileState extends State<_ChannelCardTile> {
       ),
     );
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hover = true),
-      onExit: (_) => setState(() => _hover = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        curve: Curves.easeOut,
-        padding: EdgeInsets.symmetric(
-          horizontal: _hover ? AppSpacing.md : AppSpacing.smd,
-          vertical: AppSpacing.md,
-        ),
-        color: _hover
-            ? d.accent.withValues(alpha: 0.04)
-            : Colors.transparent,
-        child: narrow
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final narrow = constraints.maxWidth < 460;
+
+        return MouseRegion(
+          onEnter: (_) => setState(() => _hover = true),
+          onExit: (_) => setState(() => _hover = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeOut,
+            padding: EdgeInsets.symmetric(
+              horizontal: _hover ? AppSpacing.md : AppSpacing.smd,
+              vertical: AppSpacing.md,
+            ),
+            color: _hover
+                ? d.accent.withValues(alpha: 0.04)
+                : Colors.transparent,
+            child: narrow
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        children: [
+                          icon,
+                          const SizedBox(width: AppSpacing.md),
+                          Expanded(child: details),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.smd),
+                      Row(
+                        children: [
+                          Expanded(child: primaryBtn),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(child: secondaryBtn),
+                        ],
+                      ),
+                    ],
+                  )
+                : Row(
                     children: [
                       icon,
                       const SizedBox(width: AppSpacing.md),
                       Expanded(child: details),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.smd),
-                  Row(
-                    children: [
-                      Expanded(child: primaryBtn),
+                      const SizedBox(width: AppSpacing.md),
+                      primaryBtn,
                       const SizedBox(width: AppSpacing.sm),
-                      Expanded(child: secondaryBtn),
+                      secondaryBtn,
                     ],
                   ),
-                ],
-              )
-            : Row(
-                children: [
-                  icon,
-                  const SizedBox(width: AppSpacing.md),
-                  Expanded(child: details),
-                  const SizedBox(width: AppSpacing.md),
-                  primaryBtn,
-                  const SizedBox(width: AppSpacing.sm),
-                  secondaryBtn,
-                ],
-              ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

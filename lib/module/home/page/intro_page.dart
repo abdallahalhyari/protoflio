@@ -226,7 +226,7 @@ class _IntroPageState extends State<IntroPage> {
         height: size,
         padding: const EdgeInsets.all(2.5),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadius.card),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -444,7 +444,7 @@ class _IntroPageState extends State<IntroPage> {
             SoundService.instance.playClick();
             onTap();
           },
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           child: child,
         ),
       );
@@ -504,7 +504,7 @@ class _IntroPageState extends State<IntroPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
                     color: isDark ? Colors.white.withValues(alpha: 0.04) : Colors.white,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
                     border: Border.all(
                       color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE2E8F0),
                     ),

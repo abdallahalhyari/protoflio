@@ -125,20 +125,24 @@ class _HomeScreenState extends State<HomeScreen> {
     if ((offset - _lastMobileScrollSample).abs() < 10) return;
     _lastMobileScrollSample = offset;
 
-    int visibleIndex = 0;
+    const focalPoint = 180.0;
+    int? visibleIndex;
     for (int i = 0; i < _sectionKeys.length; i++) {
       final ctx = _sectionKeys[i].currentContext;
-      if (ctx != null) {
+      if (ctx != null && ctx.mounted) {
         final renderBox = ctx.findRenderObject() as RenderBox?;
-        if (renderBox != null && renderBox.hasSize) {
+        if (renderBox != null && renderBox.hasSize && renderBox.attached) {
           final pos = renderBox.localToGlobal(Offset.zero);
-          if (pos.dy <= 200) {
+          final top = pos.dy;
+          final bottom = top + renderBox.size.height;
+          if (top <= focalPoint && bottom > focalPoint) {
             visibleIndex = i;
+            break;
           }
         }
       }
     }
-    if (visibleIndex != _pageIndex) {
+    if (visibleIndex != null && visibleIndex != _pageIndex) {
       _pageIndex = visibleIndex;
       final hash = UrlSyncService.instance.indexToHash(visibleIndex);
       UrlSyncService.instance.updateHash(hash);
@@ -374,6 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Listener(
           onPointerSignal: _onPointerSignal,
           child: PageView.builder(
+            key: const PageStorageKey<String>('desktop_pageview'),
             physics: const NeverScrollableScrollPhysics(),
             controller: _controller,
             scrollDirection: Axis.vertical,
@@ -540,7 +545,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: isDark
                         ? Colors.black.withValues(alpha: 0.6)
                         : Colors.white.withValues(alpha: 0.88),
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(AppRadius.xs),
                     border: Border.all(
                       color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
                     ),
@@ -640,6 +645,7 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         // Layer 1: Continuous scrollable column containing all 7 sections
         SingleChildScrollView(
+          key: const PageStorageKey<String>('mobile_scrollview'),
           controller: _mobileScrollController,
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.only(
@@ -742,7 +748,63 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 18,
             child: _buildScrollToTopButton(),
           ),
+
+        // Layer 4: Vertical progress rail — tap any dot to jump.
+        Positioned(
+          top: 0,
+          bottom: 0,
+          right: 4,
+          child: Center(child: _buildMobileProgressRail(context)),
+        ),
       ],
+    );
+  }
+
+  Widget _buildMobileProgressRail(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final labels = TopNav.getLabels(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.black.withValues(alpha: 0.35)
+            : Colors.white.withValues(alpha: 0.85),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.10)
+              : const Color(0xFFE2E8F0),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (int i = 0; i < _pageCount; i++)
+            Semantics(
+              button: true,
+              selected: i == _pageIndex,
+              label: i < labels.length ? 'Go to ${labels[i]}' : 'Go to page ${i + 1}',
+              child: InkResponse(
+                radius: 14,
+                onTap: () => _scrollToMobileSection(i),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: AnimatedContainer(
+                    duration: AppMotion.sm,
+                    width: i == _pageIndex ? 8 : 5,
+                    height: i == _pageIndex ? 8 : 5,
+                    decoration: BoxDecoration(
+                      color: i == _pageIndex
+                          ? Theme.of(context).colorScheme.primary
+                          : (isDark ? Colors.white38 : const Color(0xFF94A3B8)),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 
@@ -758,7 +820,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: isDark
                   ? Colors.white.withValues(alpha: 0.08)
                   : Colors.white,
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
               border: Border.all(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.15)
@@ -848,7 +910,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   gradient: const LinearGradient(
                     colors: [Color(0xFF38BDF8), Color(0xFF818CF8)],
                   ),
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(AppRadius.chip),
                 ),
                 alignment: Alignment.center,
                 child: const Text(
@@ -971,7 +1033,7 @@ class _HomeScreenState extends State<HomeScreen> {
             curve: Curves.easeOutCubic,
           );
         },
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(AppRadius.xxl),
         child: Container(
           width: 44,
           height: 44,

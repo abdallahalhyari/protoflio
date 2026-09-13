@@ -30,6 +30,15 @@ const List<Skill> kSkills = [
     tags: ['ISO-7816 APDU', 'CONTACTLESS NFC', 'SMART CHIP AUTH', 'HARDWARE READERS'],
   ),
   Skill(
+    name: 'QR & Barcode Systems',
+    icon: Icons.qr_code_scanner,
+    level: 0.92,
+    category: 'Mobile Systems',
+    provenIn: 'Ticketing, Claims, and Identity Verification Flows',
+    description: 'End-to-end QR & 1D/2D barcode pipelines: high-throughput camera scanning with autofocus & torch control, offline decoding, dynamic QR generation with logo overlay, error-correction tuning, colored/branded styling, and secure signed-payload verification.',
+    tags: ['CAMERA SCAN', 'ML KIT DECODE', 'DYNAMIC GENERATION', 'BRANDED STYLING'],
+  ),
+  Skill(
     name: 'JWT & Secure Auth',
     icon: Icons.lock,
     level: 0.94,

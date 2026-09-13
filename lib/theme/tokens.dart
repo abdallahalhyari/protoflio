@@ -24,11 +24,16 @@ class AppBreakpoints {
 /// Border-radius scale.
 class AppRadius {
   AppRadius._();
+  static const double xxs = 2;
   static const double xs = 4;
+  static const double chip = 6; // secondary chips / small pills
   static const double sm = 8;
+  static const double smd = 10;
   static const double md = 12;
+  static const double card = 16;
   static const double lg = 20;
   static const double xl = 22;
+  static const double xxl = 24;
   static const double pill = 999;
 }
 
@@ -90,12 +95,22 @@ class AppColors {
   static const Color accentBlueprintNavy = Color(0xFF0A1930);
   static const Color accentGreen = Color(0xFF10B981);
   static const Color accentSky = Color(0xFF38BDF8);
+  static const Color accentSkySoft = Color(0xFF7DD3FC); // Sky 300 hover / soft state
+  // Casino / poker-fan gold used on the Hats deck felt border + selection ring.
+  static const Color hatGold = Color(0xFFC8A951);
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site
 /// when responsive.
 class AppTypography {
   AppTypography._();
+
+  // Editorial microtext — magazine-style tiny labels, kickers, meta chips.
+  // Use these instead of writing raw `fontSize: 9.x` / `10.x` inline.
+  static const double editorialSm = 9.5; // extra-small kicker (rare, prefer editorial)
+  static const double editorial = 10.5; // default magazine micro-label
+  static const double editorialLg = 11; // eyebrow / section chip
+
   static const double micro = 11;
   static const double caption = 12;
   static const double small = 13;

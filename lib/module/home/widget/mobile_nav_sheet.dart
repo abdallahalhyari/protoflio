@@ -158,7 +158,7 @@ class MobileNavSheet extends StatelessWidget {
                       height: 4,
                       decoration: BoxDecoration(
                         color: isDark ? Colors.white24 : Colors.black26,
-                        borderRadius: BorderRadius.circular(2),
+                        borderRadius: BorderRadius.circular(AppRadius.xxs),
                       ),
                     ),
                   ),
@@ -250,7 +250,7 @@ class MobileNavSheet extends StatelessWidget {
                             Navigator.of(context).pop();
                             onSelectSection(item.index);
                           },
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(AppRadius.md),
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 180),
                             padding: const EdgeInsets.symmetric(
@@ -263,7 +263,7 @@ class MobileNavSheet extends StatelessWidget {
                                   : (isDark
                                       ? Colors.white.withValues(alpha: 0.04)
                                       : const Color(0xFFF8FAFC)),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(AppRadius.md),
                               border: Border.all(
                                 color: isActive
                                     ? item.accentColor.withValues(alpha: isDark ? 0.6 : 0.45)
@@ -285,7 +285,7 @@ class MobileNavSheet extends StatelessWidget {
                                         : (isDark
                                             ? Colors.white.withValues(alpha: 0.08)
                                             : const Color(0xFFE2E8F0)),
-                                    borderRadius: BorderRadius.circular(6),
+                                    borderRadius: BorderRadius.circular(AppRadius.chip),
                                   ),
                                   child: Center(
                                     child: Text(
@@ -464,7 +464,7 @@ class _SocialButton extends StatelessWidget {
           await launchUrl(uri, mode: LaunchMode.externalApplication);
         }
       },
-      borderRadius: BorderRadius.circular(6),
+      borderRadius: BorderRadius.circular(AppRadius.chip),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Row(

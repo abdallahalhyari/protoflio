@@ -93,7 +93,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
       child: IgnorePointer(
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppRadius.card),
             gradient: RadialGradient(
               center: Alignment(_tiltOffset.dx, _tiltOffset.dy),
               radius: 0.9,
@@ -482,7 +482,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                       horizontal: 10, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.04),
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(AppRadius.chip),
                     border: Border(
                       left: BorderSide(color: accent, width: 2.5),
                     ),

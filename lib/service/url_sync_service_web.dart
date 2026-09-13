@@ -8,6 +8,8 @@ UrlSyncService createUrlSyncService() => UrlSyncServiceWeb();
 external JSObject get _window;
 
 class UrlSyncServiceWeb extends UrlSyncService {
+  String? _lastReportedHash;
+
   @override
   String? getInitialHash() {
     try {
@@ -26,6 +28,8 @@ class UrlSyncServiceWeb extends UrlSyncService {
 
   @override
   void updateHash(String hash) {
+    if (hash == _lastReportedHash) return;
+    _lastReportedHash = hash;
     try {
       if (_window.has('history')) {
         final history = _window.getProperty('history'.toJS) as JSObject;

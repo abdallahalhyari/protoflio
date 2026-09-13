@@ -498,7 +498,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                   decoration: BoxDecoration(
                                     color: scheme.primary.withValues(alpha: 0.15),
-                                    borderRadius: BorderRadius.circular(4),
+                                    borderRadius: BorderRadius.circular(AppRadius.xs),
                                   ),
                                   child: Text(
                                     widget.exp.period.toUpperCase(),
@@ -510,7 +510,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                     decoration: BoxDecoration(
                                       color: _kNowAccent.withValues(alpha: 0.15),
-                                      borderRadius: BorderRadius.circular(4),
+                                      borderRadius: BorderRadius.circular(AppRadius.xs),
                                       border: Border.all(color: _kNowAccent.withValues(alpha: 0.5)),
                                     ),
                                     child: const Text(

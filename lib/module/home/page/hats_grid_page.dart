@@ -188,7 +188,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppRadius.lg),
                     border: Border.all(
-                      color: const Color(0xFF38BDF8).withValues(alpha: 0.18),
+                      color: AppColors.accentSky.withValues(alpha: 0.18),
                       width: 1.5,
                     ),
                   ),
@@ -298,7 +298,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                                 children: [
                                   Container(
                                       height: 2,
-                                      color: const Color(0xFF38BDF8)
+                                      color: AppColors.accentSky
                                           .withValues(alpha: 0.9)),
                                   const SizedBox(height: 6),
                                   Text(
@@ -306,7 +306,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                                         ? 'FEATURE 06 · 6 ROLES'
                                         : 'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP',
                                     style: const TextStyle(
-                                      color: Color(0xFF38BDF8),
+                                      color: AppColors.accentSky,
                                       fontSize: 10.5,
                                       fontWeight: FontWeight.w900,
                                       letterSpacing: 3,
@@ -355,10 +355,10 @@ class _HatsGridPageState extends State<HatsGridPage> {
                                     onPressed: () => _shuffleDeck(size),
                                     style: OutlinedButton.styleFrom(
                                       foregroundColor: Theme.of(context).brightness == Brightness.dark
-                                          ? const Color(0xFF7DD3FC)
+                                          ? AppColors.accentSkySoft
                                           : const Color(0xFF0284C7),
                                       side: BorderSide(
-                                          color: const Color(0xFF38BDF8)
+                                          color: AppColors.accentSky
                                               .withValues(alpha: 0.6)),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 12, vertical: 6),
@@ -431,7 +431,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: isDark ? Colors.black.withValues(alpha: 0.45) : Colors.white.withValues(alpha: 0.88),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(AppRadius.smd),
           border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.12) : const Color(0xFFE2E8F0)),
           boxShadow: [
             BoxShadow(
@@ -529,7 +529,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
         for (int i = 0; i < kHats.length; i++)
           InkWell(
             onTap: () => _selectRole(i, size, !isDesktop),
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(AppRadius.chip),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 180),
               padding: EdgeInsets.symmetric(
@@ -538,13 +538,13 @@ class _HatsGridPageState extends State<HatsGridPage> {
               ),
               decoration: BoxDecoration(
                 color: _selectedHatIndex == i
-                    ? const Color(0xFFC8A951).withValues(alpha: 0.28)
+                    ? AppColors.hatGold.withValues(alpha: 0.28)
                     : (isDark ? Colors.black.withValues(alpha: 0.3) : Colors.white.withValues(alpha: 0.85)),
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(AppRadius.chip),
                 border: Border.all(
                   color: _selectedHatIndex == i
                       ? AppColors.accentAmber
-                      : (isDark ? const Color(0xFFC8A951).withValues(alpha: 0.4) : const Color(0xFFCBD5E1)),
+                      : (isDark ? AppColors.hatGold.withValues(alpha: 0.4) : const Color(0xFFCBD5E1)),
                   width: _selectedHatIndex == i ? 1.6 : 1.0,
                 ),
                 boxShadow: _selectedHatIndex == i
@@ -598,7 +598,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
           onPressed: () => _prevRole(size, true),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.accentAmberSoft,
-            side: const BorderSide(color: Color(0xFFC8A951)),
+            side: const BorderSide(color: AppColors.hatGold),
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
             visualDensity: VisualDensity.compact,
             minimumSize: Size.zero,
@@ -622,7 +622,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                 'ROLE 0${_selectedHatIndex + 1} / 0${kHats.length}',
                 style: const TextStyle(
                   fontFamily: 'Courier',
-                  color: Color(0xFFFBBF24),
+                  color: AppColors.accentAmber,
                   fontSize: 10.5,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.0,
@@ -635,7 +635,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
           onPressed: () => _nextRole(size, true),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.accentAmberSoft,
-            side: const BorderSide(color: Color(0xFFC8A951)),
+            side: const BorderSide(color: AppColors.hatGold),
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
             visualDensity: VisualDensity.compact,
             minimumSize: Size.zero,
@@ -666,13 +666,13 @@ class _HatsGridPageState extends State<HatsGridPage> {
         children: [
           Container(
             height: 2,
-            color: const Color(0xFF38BDF8).withValues(alpha: 0.9),
+            color: AppColors.accentSky.withValues(alpha: 0.9),
           ),
           const SizedBox(height: 6),
           const Text(
             'FEATURE 06 · LEADERSHIP ROLES',
             style: TextStyle(
-              color: Color(0xFF7DD3FC),
+              color: AppColors.accentSkySoft,
               fontSize: 10.5,
               fontWeight: FontWeight.w900,
               letterSpacing: 3,
@@ -695,7 +695,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
           _buildBioStrip(true),
           const SizedBox(height: AppSpacing.md),
           GestureDetector(
-            behavior: HitTestBehavior.opaque,
+            behavior: HitTestBehavior.translucent,
             onHorizontalDragEnd: (details) {
               if (details.primaryVelocity != null) {
                 if (details.primaryVelocity! < -200) {
@@ -737,13 +737,13 @@ class _HatsGridPageState extends State<HatsGridPage> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: isDark ? Colors.white.withValues(alpha: 0.04) : Colors.white.withValues(alpha: 0.85),
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(AppRadius.chip),
                 border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE2E8F0)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.touch_app_outlined, size: 12, color: Color(0xFFFBBF24)),
+                  const Icon(Icons.touch_app_outlined, size: 12, color: AppColors.accentAmber),
                   const SizedBox(width: 5),
                   Flexible(
                     child: FittedBox(

@@ -184,7 +184,7 @@ class HatsIntroPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                       decoration: BoxDecoration(
                         color: Colors.black.withValues(alpha: 0.45),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
                         border: Border.all(color: Colors.white12),
                       ),
                       child: Text(

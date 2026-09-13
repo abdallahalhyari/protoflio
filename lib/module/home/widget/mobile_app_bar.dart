@@ -21,7 +21,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final tight = MediaQuery.sizeOf(context).width < 400;
+    final tight = MediaQuery.sizeOf(context).width < 460;
 
     return RepaintBoundary(
       child: ClipRect(
@@ -75,7 +75,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           width: 32,
                           height: 32,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(AppRadius.sm),
                             gradient: const LinearGradient(
                               colors: [Color(0xFF818CF8), Color(0xFFFBBF24)],
                               begin: Alignment.topLeft,
@@ -159,7 +159,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     builder: (_, loc, __) {
                       final code = loc.languageCode.toUpperCase();
                       return InkWell(
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(AppRadius.chip),
                         onTap: () {
                           SoundService.instance.playClick();
                           LocaleController.nextLocale();
@@ -170,7 +170,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                             color: isDark
                                 ? Colors.white.withValues(alpha: 0.08)
                                 : const Color(0xFFF1F5F9),
-                            borderRadius: BorderRadius.circular(6),
+                            borderRadius: BorderRadius.circular(AppRadius.chip),
                             border: Border.all(
                               color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
                             ),

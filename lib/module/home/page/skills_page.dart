@@ -6,7 +6,6 @@ import '../../../service/sound_service.dart';
 import '../data/skills_data.dart';
 import '../model/skill.dart';
 import '../widget/screen_shell.dart';
-import '../widget/swipe_affordance.dart';
 
 class SkillsPage extends StatefulWidget {
   final PageController? controller;
@@ -116,25 +115,40 @@ class _SkillsPageState extends State<SkillsPage> {
           const SizedBox(height: 12),
           Container(height: 1, color: scheme.onSurface.withValues(alpha: 0.12)),
           const SizedBox(height: 16),
-          if (widget.isContinuousMobile) ...[
-            SizedBox(
-              height: 300,
-              child: grid,
-            ),
-            const SizedBox(height: 8),
-            _buildMobileSwipeHint(scheme, displayedSkills.length),
-          ] else
+          if (widget.isContinuousMobile)
+            // Vertical 2-column grid feeds parent scroll — no nested
+            // horizontal-in-vertical scrolling. Fixed tile height keeps
+            // rows uniform without a horizontal viewport.
+            LayoutBuilder(
+              builder: (context, constraints) {
+                const spacing = 12.0;
+                final tileW = (constraints.maxWidth - spacing) / 2;
+                const tileH = 180.0;
+                return Wrap(
+                  spacing: spacing,
+                  runSpacing: spacing,
+                  children: [
+                    for (final skill in displayedSkills)
+                      SizedBox(
+                        width: tileW,
+                        height: tileH,
+                        child: RepaintBoundary(
+                          child: _BentoSkillTile(
+                            skill: skill,
+                            categoryColor: _getCategoryColor(skill.category),
+                            categoryGradient:
+                                _getCategoryGradient(skill.category),
+                            isDesktop: false,
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            )
+          else
             Expanded(child: grid),
         ],
-      ),
-    );
-  }
-
-  Widget _buildMobileSwipeHint(ColorScheme scheme, int count) {
-    return Center(
-      child: SwipeAffordance(
-        icon: Icons.touch_app_outlined,
-        label: 'SWIPE TO BROWSE $count SKILLS · TAP CARDS TO FLIP',
       ),
     );
   }
@@ -262,7 +276,7 @@ class _SkillsPageState extends State<SkillsPage> {
           SoundService.instance.playClick();
           setState(() => _selectedCategory = cat);
         },
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
         focusColor: color.withValues(alpha: 0.25),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
@@ -274,7 +288,7 @@ class _SkillsPageState extends State<SkillsPage> {
             color: isSelected
                 ? color.withValues(alpha: isDark ? 0.18 : 0.12)
                 : (isDark ? Colors.transparent : Colors.white.withValues(alpha: 0.8)),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
             border: Border.all(
               color: isSelected
                   ? color
@@ -435,7 +449,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
     return Container(
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF0D121B) : Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(
           color: widget.categoryColor.withValues(alpha: isDark ? 0.3 : 0.4),
           width: 1.5,
@@ -499,7 +513,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
                           color: widget.categoryColor.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(AppRadius.xs),
                         ),
                         child: Text(
                           _masteryLabel(widget.skill.level),
@@ -572,7 +586,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
     return Container(
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF131A26) : Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(color: widget.categoryColor, width: 2),
         boxShadow: [
           BoxShadow(
@@ -623,7 +637,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
                             color: widget.categoryColor.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(AppRadius.xs),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -668,7 +682,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
                               decoration: BoxDecoration(
                                 color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF1F5F9),
-                                borderRadius: BorderRadius.circular(4),
+                                borderRadius: BorderRadius.circular(AppRadius.xs),
                                 border: Border.all(color: isDark ? Colors.white24 : const Color(0xFFE2E8F0)),
                               ),
                               child: Text(

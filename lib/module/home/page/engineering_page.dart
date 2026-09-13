@@ -286,7 +286,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
             const SizedBox(height: AppSpacing.md),
             if (widget.isContinuousMobile)
               GestureDetector(
-                behavior: HitTestBehavior.opaque,
+                behavior: HitTestBehavior.translucent,
                 onHorizontalDragEnd: (details) {
                   if (details.primaryVelocity != null) {
                     if (details.primaryVelocity! < -200) {
@@ -488,7 +488,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
       label: 'Select ${topic.title}',
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
         child: AnimatedContainer(
           duration: AppMotion.sm,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -496,7 +496,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
             color: isSelected
                 ? scheme.primary.withValues(alpha: isDark ? 0.18 : 0.12)
                 : (isDark ? scheme.surface.withValues(alpha: 0.4) : Colors.white.withValues(alpha: 0.85)),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
             border: Border.all(
               color: isSelected
                   ? scheme.primary
@@ -554,7 +554,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: isDark ? scheme.surface.withValues(alpha: 0.5) : Colors.white.withValues(alpha: 0.90),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(color: isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
         boxShadow: isDark
             ? []
@@ -590,7 +590,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
                   color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF1F5F9),
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
                   border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFE2E8F0)),
                 ),
                 child: Text(
@@ -618,7 +618,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: isDark ? scheme.surface.withValues(alpha: 0.5) : Colors.white.withValues(alpha: 0.90),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(color: isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
         boxShadow: isDark
             ? []
@@ -664,7 +664,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: const Color(0xFF6366F1).withValues(alpha: isDark ? 0.12 : 0.08),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
               border: Border.all(color: const Color(0xFF818CF8).withValues(alpha: isDark ? 0.35 : 0.5)),
             ),
             child: Column(
@@ -792,7 +792,7 @@ class _DiagramList extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: isDesktop ? 14 : 10, vertical: isDesktop ? 10 : 8),
           decoration: BoxDecoration(
             color: isDark ? Colors.black.withValues(alpha: 0.35) : const Color(0xFFF8FAFC),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(AppRadius.smd),
             border: Border.all(color: step.color.withValues(alpha: isDark ? 0.4 : 0.5), width: 1),
             boxShadow: [
               BoxShadow(

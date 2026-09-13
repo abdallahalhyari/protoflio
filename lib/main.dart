@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +28,33 @@ Future<void> main() async {
   runApp(const PortfolioApp());
 }
 
+/// Global scroll behavior:
+/// - Enables drag scrolling from every input device (touch, mouse,
+///   trackpad, stylus, pen) — Flutter's default drops mouse on desktop.
+/// - Uses `BouncingScrollPhysics` universally so momentum & rubber-band
+///   feel identical across desktop / web / mobile.
+class _SmoothScrollBehavior extends MaterialScrollBehavior {
+  const _SmoothScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => const {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+        PointerDeviceKind.stylus,
+        PointerDeviceKind.invertedStylus,
+        PointerDeviceKind.unknown,
+      };
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const BouncingScrollPhysics(
+      decelerationRate: ScrollDecelerationRate.fast,
+      parent: AlwaysScrollableScrollPhysics(),
+    );
+  }
+}
+
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
 
@@ -40,6 +68,7 @@ class PortfolioApp extends StatelessWidget {
           builder: (context, mode, _) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
+              scrollBehavior: const _SmoothScrollBehavior(),
               title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
               themeMode: mode,
               theme: AppTheme.light(),
