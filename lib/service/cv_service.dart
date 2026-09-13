@@ -17,7 +17,7 @@ class CvService {
   /// Absolute production URL. Replace the domain once the live host is
   /// pinned — everything else (mobile fallback + snackbar copy) picks it
   /// up automatically.
-  static const String publicUrl = 'https://portfolio.example.com/cv.pdf';
+  static const String publicUrl = 'https://alhyari.portfolio.com/cv.pdf';
 
   /// Web-local relative path (served from `web/cv.pdf`).
   static const String webRelativePath = 'cv.pdf';
