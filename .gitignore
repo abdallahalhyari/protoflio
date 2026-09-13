@@ -1,6 +1,9 @@
 # Claude Code local state
 .claude/
 
+# Firebase local cache
+.firebase/
+
 # Miscellaneous
 *.class
 *.log
