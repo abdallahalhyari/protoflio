@@ -20,6 +20,7 @@ import 'page/experience_page.dart';
 import 'page/contact_page.dart';
 
 import 'widget/custom_cursor.dart';
+import 'widget/directional_icon.dart';
 import 'widget/magazine_page_transformer.dart';
 import 'widget/portfolio_nav.dart';
 import 'widget/page_background.dart';
@@ -221,7 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // exactly one page per _kWheelThreshold pixels of intent, but only when
   // inner scrollable viewports (e.g. project dossier, contact page) are at their edges.
   static const double _kWheelThreshold = 80;
-  static const Duration _kWheelResetGap = AppMotion.wheelResetGap;
   double _wheelAccum = 0;
   DateTime _lastWheelAt = DateTime.fromMillisecondsSinceEpoch(0);
 
@@ -300,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     final now = DateTime.now();
-    if (now.difference(_lastWheelAt) > _kWheelResetGap) {
+    if (now.difference(_lastWheelAt) > AppMotion.wheelResetGap) {
       _wheelAccum = 0;
     }
     _lastWheelAt = now;
@@ -341,7 +341,113 @@ class _HomeScreenState extends State<HomeScreen> {
       _goTo(digit);
       return KeyEventResult.handled;
     }
+    // "?" (Shift+/) or Slash — open the keyboard shortcut modal so
+    // discoverability isn't limited to the tiny bottom-right hint chip.
+    if (k == LogicalKeyboardKey.question || k == LogicalKeyboardKey.slash) {
+      _showShortcutHelp();
+      return KeyEventResult.handled;
+    }
     return KeyEventResult.ignored;
+  }
+
+  void _showShortcutHelp() {
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
+    final scheme = Theme.of(context).colorScheme;
+    showDialog<void>(
+      context: context,
+      barrierColor: Colors.black.withValues(alpha: 0.55),
+      builder: (ctx) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.card),
+          ),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 380),
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.keyboard_alt_outlined,
+                          size: 22, color: scheme.primary),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: Text(
+                          l10n.keyboardHintTitle,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 0.3,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close_rounded, size: 20),
+                        tooltip: 'Close',
+                        onPressed: () => Navigator.of(ctx).pop(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.smd),
+                  _shortcutRow(scheme, '1–7', l10n.keyboardHintDigits),
+                  _shortcutRow(scheme, '↑ ↓', l10n.keyboardHintArrows),
+                  _shortcutRow(scheme, 'Home', l10n.keyboardHintHome),
+                  _shortcutRow(scheme, 'End', l10n.keyboardHintEnd),
+                  _shortcutRow(scheme, '?', 'Show this help'),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _shortcutRow(ColorScheme scheme, String key, String label) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Row(
+        children: [
+          Container(
+            width: 56,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            decoration: BoxDecoration(
+              color: scheme.primary.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(AppRadius.chip),
+              border: Border.all(
+                color: scheme.primary.withValues(alpha: 0.35),
+              ),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              key,
+              style: TextStyle(
+                fontFamily: 'Courier',
+                color: scheme.primary,
+                fontSize: 12,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: scheme.onSurface.withValues(alpha: 0.85),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   int? _digitKeyToIndex(LogicalKeyboardKey k) {
@@ -627,6 +733,9 @@ class _HomeScreenState extends State<HomeScreen> {
           left: 0,
           right: 0,
           child: MobileAppBar(
+            activeSectionLabel: _dividerLabelFor(_pageIndex),
+            activeSectionIndex: _pageIndex + 1,
+            sectionCount: _pageCount,
             onMenuPressed: () {
               MobileNavSheet.show(
                 context,
@@ -654,7 +763,103 @@ class _HomeScreenState extends State<HomeScreen> {
           right: 4,
           child: Center(child: _buildMobileProgressRail(context)),
         ),
+
+        // Layer 5: Prev / Next floating pager — one-tap section skip
+        // without opening the menu sheet.
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 20 + MediaQuery.paddingOf(context).bottom,
+          child: Center(child: _buildMobilePager(context)),
+        ),
       ],
+    );
+  }
+
+  Widget _buildMobilePager(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final canPrev = _pageIndex > 0;
+    final canNext = _pageIndex < _pageCount - 1;
+
+    Widget iconButton({
+      required IconData icon,
+      required String label,
+      required VoidCallback? onTap,
+    }) {
+      return Semantics(
+        button: true,
+        enabled: onTap != null,
+        label: label,
+        child: Tooltip(
+          message: label,
+          child: InkResponse(
+            radius: 22,
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(6),
+              child: DirIcon(
+                icon,
+                size: 18,
+                color: onTap == null
+                    ? (isDark ? Colors.white24 : AppColors.slate300)
+                    : (isDark ? Colors.white : AppColors.slate700),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        decoration: BoxDecoration(
+          color: isDark
+              ? Colors.black.withValues(alpha: 0.55)
+              : Colors.white.withValues(alpha: 0.92),
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.14)
+                : AppColors.slate200,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            iconButton(
+              icon: Icons.chevron_left_rounded,
+              label: 'Previous section',
+              onTap: canPrev ? () => _scrollToMobileSection(_pageIndex - 1) : null,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '${(_pageIndex + 1).toString().padLeft(2, '0')} / ${_pageCount.toString().padLeft(2, '0')}',
+              style: TextStyle(
+                fontFamily: 'Courier',
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+                color: isDark ? Colors.white70 : AppColors.slate600,
+              ),
+            ),
+            const SizedBox(width: 6),
+            iconButton(
+              icon: Icons.chevron_right_rounded,
+              label: 'Next section',
+              onTap: canNext ? () => _scrollToMobileSection(_pageIndex + 1) : null,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -995,6 +1200,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () {
             SoundService.instance.playClick();
             HapticFeedback.selectionClick();
+            _showShortcutHelp();
           },
           child: Container(
             width: 32,

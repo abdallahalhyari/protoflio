@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../service/cv_service.dart';
 import '../../../service/sound_service.dart';
+import '../../../service/url_sync_service.dart';
 import '../../../theme/tokens.dart';
 import 'conditional_blur.dart';
 
@@ -341,6 +343,35 @@ class MobileNavSheet extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                                // Copy deep-link button. Doesn't dismiss the
+                                // sheet so users can grab the URL and keep
+                                // browsing.
+                                Semantics(
+                                  button: true,
+                                  label: 'Copy link to ${item.title}',
+                                  child: Tooltip(
+                                    message: 'Copy link',
+                                    child: InkResponse(
+                                      radius: 18,
+                                      onTap: () => _copySectionLink(
+                                        context,
+                                        item,
+                                        isDark: isDark,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4),
+                                        child: Icon(
+                                          Icons.link_rounded,
+                                          size: 16,
+                                          color: isDark
+                                              ? Colors.white38
+                                              : AppColors.slate400,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 6),
                                 if (isActive)
                                   Container(
                                     width: 8,
@@ -435,6 +466,43 @@ class MobileNavSheet extends StatelessWidget {
             ),
           ),
         ),
+    );
+  }
+
+  /// Copies a shareable absolute URL for a section (e.g.
+  /// `https://alhyari.web.app/#contact`) to the clipboard so mobile users
+  /// can hand off deep links without leaving the nav sheet.
+  Future<void> _copySectionLink(
+    BuildContext context,
+    NavSectionItem item, {
+    required bool isDark,
+  }) async {
+    SoundService.instance.playClick();
+    final hash = UrlSyncService.instance.indexToHash(item.index);
+    final link = '${CvService.siteRoot}/#$hash';
+    await Clipboard.setData(ClipboardData(text: link));
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: AppMotion.toast,
+        margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
+        content: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.check_circle_rounded,
+                color: AppColors.accentGreen, size: 16),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                'Link copied · $link',
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

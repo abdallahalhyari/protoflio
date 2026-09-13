@@ -14,10 +14,14 @@ import 'sound_service.dart';
 class CvService {
   CvService._();
 
+  /// Public production origin. Reused by [publicUrl] and any deep-link
+  /// share buttons (mobile nav sheet, share dialog).
+  static const String siteRoot = 'https://alhyari.web.app';
+
   /// Absolute production URL. Replace the domain once the live host is
   /// pinned — everything else (mobile fallback + snackbar copy) picks it
   /// up automatically.
-  static const String publicUrl = 'https://alhyari.web.app/cv.pdf';
+  static const String publicUrl = '$siteRoot/cv.pdf';
 
   /// Web-local relative path (served from `web/cv.pdf`).
   static const String webRelativePath = 'cv.pdf';

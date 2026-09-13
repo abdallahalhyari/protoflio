@@ -10,6 +10,22 @@ class Analytics {
 
   static bool _enabled = true;
 
+  // Debug-mode log spam guard — Firebase not being initialized in tests
+  // or during offline dev floods the console with the same error per call.
+  // Only surface the first `_kMaxDebugLogs` failures per session.
+  static const int _kMaxDebugLogs = 3;
+  static int _debugLogCount = 0;
+
+  static void _logIfDebug(String msg) {
+    if (!kDebugMode) return;
+    if (_debugLogCount >= _kMaxDebugLogs) return;
+    _debugLogCount++;
+    debugPrint(msg);
+    if (_debugLogCount == _kMaxDebugLogs) {
+      debugPrint('Analytics: further errors silenced this session.');
+    }
+  }
+
   /// Toggles all analytics calls into no-ops.
   static void setEnabled(bool enabled) => _enabled = enabled;
 
@@ -20,7 +36,7 @@ class Analytics {
       FirebaseAnalytics.instance
           .logScreenView(screenName: name, screenClass: className);
     } catch (e) {
-      if (kDebugMode) debugPrint('Analytics.screen failed: $e');
+      _logIfDebug('Analytics.screen failed: $e');
     }
   }
 
@@ -30,7 +46,7 @@ class Analytics {
     try {
       FirebaseAnalytics.instance.logEvent(name: name, parameters: params);
     } catch (e) {
-      if (kDebugMode) debugPrint('Analytics.event $name failed: $e');
+      _logIfDebug('Analytics.event $name failed: $e');
     }
   }
 

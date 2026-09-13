@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
@@ -60,6 +61,19 @@ class _IntroPageState extends State<IntroPage> {
         _ctaRow(isDark),
         SizedBox(height: isWide ? AppSpacing.xxl : AppSpacing.xl),
         _footerStrip(size, l10n, isDark),
+        // Desktop scroll hint. Skipped on viewports under ~1000h so the
+        // intro column doesn't overflow and steal the outer wheel-scroll
+        // gesture from the PageView (see _canInnerScroll in home_screen).
+        if (isWide && !widget.isContinuousMobile && size.height >= 1000) ...[
+          const SizedBox(height: AppSpacing.md),
+          _ScrollExploreHint(
+            isDark: isDark,
+            onTap: () {
+              SoundService.instance.playClick();
+              widget.onScrollDown();
+            },
+          ),
+        ],
       ],
     );
 
@@ -353,7 +367,38 @@ class _IntroPageState extends State<IntroPage> {
             (widget.onContactMe ?? widget.onScrollDown)();
           },
         ),
+        _ghostButton(
+          label: 'COPY EMAIL',
+          icon: Icons.content_copy_rounded,
+          isDark: isDark,
+          onPressed: () => _copyEmail(context),
+        ),
       ],
+    );
+  }
+
+  static const String _kEmail = 'alhyariabdallh@gmail.com';
+
+  Future<void> _copyEmail(BuildContext context) async {
+    SoundService.instance.playClick();
+    await Clipboard.setData(const ClipboardData(text: _kEmail));
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: AppMotion.toast,
+        margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
+        content: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.check_circle_rounded,
+                color: AppColors.accentGreen, size: 16),
+            const SizedBox(width: 8),
+            Text('Email copied · $_kEmail'),
+          ],
+        ),
+      ),
     );
   }
 
@@ -530,6 +575,95 @@ class _IntroPageState extends State<IntroPage> {
             ],
           ),
       ],
+    );
+  }
+}
+
+/// Bouncing chevron + "SCROLL TO EXPLORE" label. Auto-loops when motion is
+/// allowed; renders static when the user prefers reduced motion.
+class _ScrollExploreHint extends StatefulWidget {
+  const _ScrollExploreHint({required this.isDark, required this.onTap});
+
+  final bool isDark;
+  final VoidCallback onTap;
+
+  @override
+  State<_ScrollExploreHint> createState() => _ScrollExploreHintState();
+}
+
+class _ScrollExploreHintState extends State<_ScrollExploreHint>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1400),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final reduce = MediaQuery.of(context).disableAnimations;
+    if (!reduce && !_ctrl.isAnimating) {
+      _ctrl.repeat(reverse: true);
+    } else if (reduce && _ctrl.isAnimating) {
+      _ctrl.stop();
+      _ctrl.value = 0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tint = widget.isDark
+        ? Colors.white.withValues(alpha: 0.65)
+        : AppColors.slate500;
+    return Semantics(
+      button: true,
+      label: 'Scroll to explore the portfolio',
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: widget.onTap,
+          behavior: HitTestBehavior.opaque,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'SCROLL TO EXPLORE',
+                  style: TextStyle(
+                    color: tint,
+                    fontSize: AppTypography.editorial,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 3,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                RepaintBoundary(
+                  child: AnimatedBuilder(
+                    animation: _ctrl,
+                    builder: (_, __) {
+                      final t = Curves.easeInOut.transform(_ctrl.value);
+                      return Transform.translate(
+                        offset: Offset(0, t * 6),
+                        child: Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 24,
+                          color: tint,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

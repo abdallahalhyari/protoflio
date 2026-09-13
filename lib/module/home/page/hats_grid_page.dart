@@ -408,6 +408,8 @@ class _HatsGridPageState extends State<HatsGridPage>
                         if (!isMobile) ...[
                           _buildBioStrip(isMobile),
                           const SizedBox(height: AppSpacing.smd),
+                          _buildDragHint(),
+                          const SizedBox(height: AppSpacing.sm),
                         ],
                         // Role Selector Pills (Zero inner scroll!)
                         _buildRolePills(size, !isMobile),
@@ -419,6 +421,52 @@ class _HatsGridPageState extends State<HatsGridPage>
             ),
           ],
       ),
+    );
+  }
+
+  /// Small discoverability chip: the felt table cards are draggable +
+  /// tappable but that isn't visually obvious. This puts the affordance
+  /// in writing right under the toolbar on desktop.
+  Widget _buildDragHint() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            color: isDark
+                ? AppColors.accentAmber.withValues(alpha: 0.10)
+                : AppColors.accentAmber.withValues(alpha: 0.14),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            border: Border.all(
+              color: AppColors.accentAmber.withValues(alpha: 0.4),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.back_hand_outlined,
+                  size: 13,
+                  color: isDark
+                      ? AppColors.accentAmberSoft
+                      : AppColors.accentAmber),
+              const SizedBox(width: 6),
+              Text(
+                'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE',
+                style: TextStyle(
+                  fontFamily: 'Courier',
+                  color: isDark
+                      ? AppColors.accentAmberSoft
+                      : AppColors.accentAmber,
+                  fontSize: AppTypography.editorial,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

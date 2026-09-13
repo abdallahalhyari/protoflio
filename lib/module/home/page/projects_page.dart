@@ -8,6 +8,8 @@ import '../../../service/sound_service.dart';
 import '../data/projects_data.dart';
 import '../model/project.dart';
 import '../../../service/analytics_service.dart';
+import '../widget/directional_icon.dart';
+import '../widget/fade_edge.dart';
 import '../widget/screen_shell.dart';
 import '../widget/swipe_affordance.dart';
 
@@ -140,13 +142,17 @@ class _ProjectsPageState extends State<ProjectsPage>
                     // Right Column: Feature Magazine Case Study Spread
                     Expanded(
                       flex: 7,
-                      child: SingleChildScrollView(
+                      child: FadeEdge(
+                        controller: _articleScrollController,
+                        tint: Theme.of(context).scaffoldBackgroundColor,
+                        child: SingleChildScrollView(
                         controller: _articleScrollController,
                         padding: EdgeInsets.zero,
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: _buildMagazineArticle(currentProject, _selectedIndex, scheme, size, isDesktop),
                         ),
+                      ),
                       ),
                     ),
                   ],
@@ -419,7 +425,7 @@ class _ProjectsPageState extends State<ProjectsPage>
                 ],
               ),
             ),
-            Icon(
+            DirIcon(
               isSelected ? Icons.arrow_forward_rounded : Icons.chevron_right_rounded,
               color: isSelected ? scheme.primary : scheme.onSurface.withValues(alpha: 0.3),
               size: 16,
@@ -518,7 +524,7 @@ class _ProjectsPageState extends State<ProjectsPage>
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             minimumSize: const Size(0, 32),
           ),
-          icon: const Icon(Icons.chevron_left, size: 14),
+          icon: const DirIcon(Icons.chevron_left, size: 14),
           label: const Text('PREV', style: TextStyle(fontFamily: 'Courier', fontSize: 9.5, fontWeight: FontWeight.w700)),
         ),
         Row(
@@ -551,7 +557,7 @@ class _ProjectsPageState extends State<ProjectsPage>
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             minimumSize: const Size(0, 32),
           ),
-          icon: const Icon(Icons.chevron_right, size: 14),
+          icon: const DirIcon(Icons.chevron_right, size: 14),
           label: const Text('NEXT', style: TextStyle(fontFamily: 'Courier', fontSize: 9.5, fontWeight: FontWeight.w700)),
         ),
       ],

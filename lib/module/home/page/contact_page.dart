@@ -522,12 +522,12 @@ class _ContactPageState extends State<ContactPage>
         primaryLabel: 'Call',
         primaryAction: () {
           Analytics.ctaPhoneCall();
-          _open('tel:$_phoneRaw');
+          unawaited(_open('tel:$_phoneRaw'));
         },
         secondaryLabel: 'WhatsApp',
         secondaryAction: () {
           Analytics.ctaWhatsapp();
-          _open(_whatsAppUrl);
+          unawaited(_open(_whatsAppUrl));
         },
         accent: _sky,
       ),
@@ -540,7 +540,7 @@ class _ContactPageState extends State<ContactPage>
         primaryLabel: 'Open',
         primaryAction: () {
           Analytics.ctaWhatsapp();
-          _open(_whatsAppUrl);
+          unawaited(_open(_whatsAppUrl));
         },
         secondaryLabel: 'Copy',
         secondaryAction: () => _copy(context, _whatsAppUrl, isDark: isDark),
@@ -555,7 +555,7 @@ class _ContactPageState extends State<ContactPage>
         primaryLabel: 'Profile',
         primaryAction: () {
           Analytics.ctaLinkedIn();
-          _open(_linkedInUrl);
+          unawaited(_open(_linkedInUrl));
         },
         secondaryLabel: 'Copy',
         secondaryAction: () => _copy(context, _linkedInUrl, isDark: isDark),
@@ -570,7 +570,7 @@ class _ContactPageState extends State<ContactPage>
         primaryLabel: 'Visit',
         primaryAction: () {
           Analytics.ctaGithub();
-          _open(_githubUrl);
+          unawaited(_open(_githubUrl));
         },
         secondaryLabel: 'Copy',
         secondaryAction: () => _copy(context, _githubUrl, isDark: isDark),
@@ -1073,12 +1073,12 @@ class _ContactPageState extends State<ContactPage>
             _SocialChip(
               label: 'LINKEDIN · $_linkedInHandle',
               icon: Icons.link_rounded,
-              onTap: () => _open(_linkedInUrl),
+              onTap: () => unawaited(_open(_linkedInUrl)),
             ),
             _SocialChip(
               label: 'GITHUB · $_githubHandle',
               icon: Icons.code_rounded,
-              onTap: () => _open(_githubUrl),
+              onTap: () => unawaited(_open(_githubUrl)),
             ),
           ],
         ),

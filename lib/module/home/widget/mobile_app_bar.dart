@@ -13,10 +13,25 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onMenuPressed;
   final VoidCallback? onLogoPressed;
 
+  /// Currently-visible section label. When provided (and not tight), the
+  /// AVAILABLE dot is replaced with a live section indicator so users
+  /// always know which chapter they're in.
+  final String? activeSectionLabel;
+
+  /// 1-based index of the current section (e.g. 3). Rendered next to the
+  /// label as a subtle "03" prefix.
+  final int? activeSectionIndex;
+
+  /// Total number of sections (denominator for the tiny "03 / 07" chip).
+  final int? sectionCount;
+
   const MobileAppBar({
     super.key,
     required this.onMenuPressed,
     this.onLogoPressed,
+    this.activeSectionLabel,
+    this.activeSectionIndex,
+    this.sectionCount,
   });
 
   @override
@@ -123,31 +138,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ),
                             if (!tight)
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: 6,
-                                    height: 6,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF10B981),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    'AVAILABLE',
-                                    style: TextStyle(
-                                      color: isDark
-                                          ? Colors.white.withValues(alpha: 0.7)
-                                          : AppColors.slate600,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 1.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              _buildSubBadge(isDark),
                           ],
                         ),
                       ],
@@ -293,6 +284,90 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
+    );
+  }
+
+  /// Sub-row under the ABDALLAH monogram. Falls back to the AVAILABLE
+  /// presence dot when no active section is passed; otherwise renders a
+  /// live "03 · Engineering" chip so mobile users always see where they
+  /// are without opening the menu.
+  Widget _buildSubBadge(bool isDark) {
+    final hasSection = activeSectionLabel != null &&
+        activeSectionIndex != null &&
+        activeSectionIndex! > 0;
+
+    if (!hasSection) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6,
+            height: 6,
+            decoration: const BoxDecoration(
+              color: AppColors.accentGreen,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Text(
+            'AVAILABLE',
+            style: TextStyle(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.7)
+                  : AppColors.slate600,
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.0,
+            ),
+          ),
+        ],
+      );
+    }
+
+    final ordinal = activeSectionIndex!.toString().padLeft(2, '0');
+    final denom = sectionCount == null
+        ? ''
+        : ' / ${sectionCount!.toString().padLeft(2, '0')}';
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          '$ordinal$denom',
+          style: TextStyle(
+            fontFamily: 'Courier',
+            color: AppColors.accentIndigo,
+            fontSize: 9.5,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.2,
+          ),
+        ),
+        const SizedBox(width: 6),
+        Container(
+          width: 1,
+          height: 8,
+          color: isDark ? Colors.white24 : AppColors.slate300,
+        ),
+        const SizedBox(width: 6),
+        Flexible(
+          child: AnimatedSwitcher(
+            duration: AppMotion.chipHover,
+            child: Text(
+              activeSectionLabel!.toUpperCase(),
+              key: ValueKey(activeSectionLabel),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.8)
+                    : AppColors.slate600,
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.4,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

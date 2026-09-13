@@ -24,12 +24,35 @@ class _PageBackgroundState extends State<PageBackground> {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.of(context).disableAnimations;
 
+    // Boot placeholder gradient — shown while the hero bitmap is being
+    // decoded. Prevents a flash of pure background color and keeps the
+    // indigo→slate palette visible from first paint.
+    const bootGradient = DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.slate900,
+            AppColors.accentIndigoDeep,
+          ],
+        ),
+      ),
+    );
+
     // RepaintBoundary here isolates the scaled bitmap so parallax
     // transforms don't force the image to repaint every frame.
     Widget baseImage = RepaintBoundary(
       child: Transform.scale(
         scale: 1.35,
-        child: Image.asset(widget.asset, fit: BoxFit.cover),
+        child: Image.asset(
+          widget.asset,
+          fit: BoxFit.cover,
+          frameBuilder: (context, child, frame, wasSyncLoaded) {
+            if (wasSyncLoaded || frame != null) return child;
+            return const SizedBox.expand(child: bootGradient);
+          },
+        ),
       ),
     );
 
