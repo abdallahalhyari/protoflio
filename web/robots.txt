@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://alhyari.portfolio.com/sitemap.xml
+Sitemap: https://alhyari.web.app/sitemap.xml
