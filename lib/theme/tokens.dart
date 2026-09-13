@@ -21,6 +21,19 @@ class AppBreakpoints {
   static const double desktop = 1200;
 }
 
+/// Runtime-adaptive presentation helpers.
+class AppMedia {
+  AppMedia._();
+
+  /// Whether to skip expensive backdrop blur (shader passes are the
+  /// single biggest paint cost on web). Currently gated on the user's
+  /// `Reduce Motion` accessibility flag — a proxy for "prefers cheaper
+  /// visuals". Callers should fall back to a solid tinted surface.
+  static bool reduceBlur(BuildContext context) {
+    return MediaQuery.of(context).disableAnimations;
+  }
+}
+
 /// Border-radius scale.
 class AppRadius {
   AppRadius._();
@@ -40,12 +53,28 @@ class AppRadius {
 /// Motion scale — named durations + easing.
 class AppMotion {
   AppMotion._();
+
+  // Numeric scale — Material-style tiers.
   static const Duration xs = Duration(milliseconds: 150);
   static const Duration sm = Duration(milliseconds: 250);
   static const Duration md = Duration(milliseconds: 350);
   static const Duration lg = Duration(milliseconds: 500);
   static const Duration xl = Duration(milliseconds: 700);
   static const Duration xxl = Duration(milliseconds: 900);
+
+  // Intent-named durations — use these where the numeric scale doesn't
+  // fit an established interaction beat. Values chosen from the ad-hoc
+  // Duration literals that used to live across pages.
+  static const Duration chipHover = Duration(milliseconds: 180); // filter / tab hover
+  static const Duration snap = Duration(milliseconds: 200); // page pill / snap-to
+  static const Duration switcher = Duration(milliseconds: 280); // AnimatedSwitcher content
+  static const Duration cardFlip = Duration(milliseconds: 400); // skill / hat card flip
+  static const Duration sectionScroll = Duration(milliseconds: 600); // mobile section jump
+  static const Duration entry = Duration(milliseconds: 800); // page-entry stagger
+  static const Duration pulse = Duration(milliseconds: 1500); // presence dot breath
+  static const Duration wheelResetGap = Duration(milliseconds: 220); // wheel accumulator reset
+  static const Duration toast = Duration(milliseconds: 2600); // floating snack lifetime
+
   static const Curve enter = Curves.easeOutCubic;
   static const Curve exit = Curves.easeInCubic;
   static const Curve emphasized = Curves.easeOutBack;
@@ -96,8 +125,23 @@ class AppColors {
   static const Color accentGreen = Color(0xFF10B981);
   static const Color accentSky = Color(0xFF38BDF8);
   static const Color accentSkySoft = Color(0xFF7DD3FC); // Sky 300 hover / soft state
+  static const Color accentIndigo600 = Color(0xFF4F46E5); // Indigo 600
+  static const Color accentIndigo700 = Color(0xFF4338CA); // Indigo 700
   // Casino / poker-fan gold used on the Hats deck felt border + selection ring.
   static const Color hatGold = Color(0xFFC8A951);
+
+  // Neutral slate palette — every literal below matches the Tailwind
+  // slate scale so cross-file greys stay identical.
+  static const Color slate50 = Color(0xFFF8FAFC);
+  static const Color slate100 = Color(0xFFF1F5F9);
+  static const Color slate200 = Color(0xFFE2E8F0);
+  static const Color slate300 = Color(0xFFCBD5E1);
+  static const Color slate400 = Color(0xFF94A3B8);
+  static const Color slate500 = Color(0xFF64748B);
+  static const Color slate600 = Color(0xFF475569);
+  static const Color slate700 = Color(0xFF334155);
+  static const Color slate800 = Color(0xFF1E293B);
+  static const Color slate900 = Color(0xFF0F172A);
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site

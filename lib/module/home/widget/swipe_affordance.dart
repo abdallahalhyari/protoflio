@@ -32,7 +32,7 @@ class SwipeAffordance extends StatelessWidget {
         border: Border.all(
           color: isDark
               ? Colors.white.withValues(alpha: 0.06)
-              : const Color(0xFFE2E8F0),
+              : AppColors.slate200,
         ),
       ),
       child: Row(
@@ -48,7 +48,7 @@ class SwipeAffordance extends StatelessWidget {
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.65)
-                      : const Color(0xFF64748B),
+                      : AppColors.slate500,
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.2,

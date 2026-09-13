@@ -95,4 +95,38 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get sectionCertifications => 'CERTIFIKACE';
+
+  @override
+  String get contactHeroEyebrow => 'PŘÍMÝ E-MAIL · NEJRYCHLEJŠÍ ODPOVĚĎ';
+
+  @override
+  String get contactReplyWindow => 'Odpověď do 24 hodin · anglicky / arabsky';
+
+  @override
+  String get contactSendEmailBtn => 'ODESLAT E-MAIL';
+
+  @override
+  String get contactCopyAddressBtn => 'KOPÍROVAT ADRESU';
+
+  @override
+  String get skillsEmptyTitle =>
+      'V této kategorii zatím nejsou žádné dovednosti';
+
+  @override
+  String get skillsEmptyShowAll => 'ZOBRAZIT VŠE';
+
+  @override
+  String get keyboardHintTitle => 'Klávesové zkratky';
+
+  @override
+  String get keyboardHintDigits => '1–7   přejít na sekci';
+
+  @override
+  String get keyboardHintArrows => '↑ ↓   předchozí / další';
+
+  @override
+  String get keyboardHintHome => 'Home  první stránka';
+
+  @override
+  String get keyboardHintEnd => 'End   poslední stránka';
 }

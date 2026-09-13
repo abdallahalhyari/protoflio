@@ -102,7 +102,7 @@ class _IntroPageState extends State<IntroPage> {
             child: Text(
               'ISSUE 01 · PORTFOLIO EDITION · MMXXVI',
               style: TextStyle(
-                color: isDark ? Colors.white.withValues(alpha: 0.85) : const Color(0xFF475569),
+                color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate600,
                 fontSize: fs,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 4,
@@ -160,7 +160,7 @@ class _IntroPageState extends State<IntroPage> {
                   ..strokeWidth = 3
                   ..color = isDark
                       ? Colors.white.withValues(alpha: 0.28)
-                      : const Color(0xFF6366F1).withValues(alpha: 0.25),
+                      : AppColors.accentIndigoDeep.withValues(alpha: 0.25),
               ),
             ),
           ),
@@ -186,7 +186,7 @@ class _IntroPageState extends State<IntroPage> {
               fontSize: letterSize,
               fontWeight: FontWeight.w800,
               letterSpacing: 14,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
+              color: isDark ? Colors.white : AppColors.slate900,
               shadows: isDark
                   ? const [Shadow(color: Colors.black, blurRadius: 12)]
                   : const [Shadow(color: Colors.black12, blurRadius: 4)],
@@ -207,7 +207,7 @@ class _IntroPageState extends State<IntroPage> {
             fontSize: letterSize,
             fontWeight: FontWeight.w800,
             letterSpacing: 10,
-            color: isDark ? Colors.white : const Color(0xFF0F172A),
+            color: isDark ? Colors.white : AppColors.slate900,
             shadows: isDark
                 ? const [Shadow(color: Colors.black, blurRadius: 12)]
                 : const [Shadow(color: Colors.black12, blurRadius: 4)],
@@ -283,7 +283,7 @@ class _IntroPageState extends State<IntroPage> {
                 fontSize: (size.width * 0.018).clamp(16.0, 22.0),
                 fontWeight: FontWeight.w900,
                 letterSpacing: 3,
-                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                color: isDark ? Colors.white : AppColors.slate900,
               ),
             ),
             const SizedBox(height: AppSpacing.xs),
@@ -294,7 +294,7 @@ class _IntroPageState extends State<IntroPage> {
                 fontSize: (size.width * 0.0115).clamp(12.5, 18.0),
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.5,
-                color: isDark ? _accentSoft : const Color(0xFF4F46E5),
+                color: isDark ? _accentSoft : AppColors.accentIndigo600,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -304,7 +304,7 @@ class _IntroPageState extends State<IntroPage> {
               style: TextStyle(
                 fontSize: (size.width * 0.011).clamp(11.5, 13.5),
                 fontWeight: FontWeight.w600,
-                color: isDark ? Colors.white.withValues(alpha: 0.82) : const Color(0xFF475569),
+                color: isDark ? Colors.white.withValues(alpha: 0.82) : AppColors.slate600,
                 height: 1.55,
                 letterSpacing: 0.8,
               ),
@@ -316,7 +316,7 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   Widget _hairlineRow({required Widget child, required bool isDark}) {
-    final ruleColor = isDark ? Colors.white24 : const Color(0xFFCBD5E1);
+    final ruleColor = isDark ? Colors.white24 : AppColors.slate300;
     return Row(
       children: [
         Expanded(child: Container(height: 1, color: ruleColor)),
@@ -369,10 +369,10 @@ class _IntroPageState extends State<IntroPage> {
     required bool isDark,
     Color? color,
   }) {
-    final effectiveColor = color ?? (isDark ? Colors.white70 : const Color(0xFF334155));
+    final effectiveColor = color ?? (isDark ? Colors.white70 : AppColors.slate700);
     final borderColor = isDark
         ? (color ?? Colors.white24)
-        : (color ?? const Color(0xFFCBD5E1));
+        : (color ?? AppColors.slate300);
 
     return OutlinedButton.icon(
       onPressed: onPressed,
@@ -410,7 +410,7 @@ class _IntroPageState extends State<IntroPage> {
               Text(
                 label,
                 style: TextStyle(
-                  color: isDark ? Colors.white.withValues(alpha: 0.72) : const Color(0xFF64748B),
+                  color: isDark ? Colors.white.withValues(alpha: 0.72) : AppColors.slate500,
                   fontSize: 9.5,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 2.5,
@@ -418,7 +418,7 @@ class _IntroPageState extends State<IntroPage> {
               ),
               if (onTap != null) ...[
                 const SizedBox(width: 4),
-                Icon(Icons.arrow_outward, size: 9, color: valueColor ?? (isDark ? Colors.white70 : const Color(0xFF64748B))),
+                Icon(Icons.arrow_outward, size: 9, color: valueColor ?? (isDark ? Colors.white70 : AppColors.slate500)),
               ],
             ],
           ),
@@ -426,7 +426,7 @@ class _IntroPageState extends State<IntroPage> {
           Text(
             value,
             style: TextStyle(
-              color: valueColor ?? (isDark ? Colors.white : const Color(0xFF0F172A)),
+              color: valueColor ?? (isDark ? Colors.white : AppColors.slate900),
               fontSize: 11.5,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.4,
@@ -454,7 +454,7 @@ class _IntroPageState extends State<IntroPage> {
           width: 1,
           height: 32,
           margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-          color: isDark ? Colors.white.withValues(alpha: 0.2) : const Color(0xFFCBD5E1),
+          color: isDark ? Colors.white.withValues(alpha: 0.2) : AppColors.slate300,
         );
 
     final blocks = [
@@ -462,7 +462,7 @@ class _IntroPageState extends State<IntroPage> {
       block(
         'STATUS',
         'OPEN FOR SENIOR ROLES',
-        valueColor: isDark ? _accentSoft : const Color(0xFF4F46E5),
+        valueColor: isDark ? _accentSoft : AppColors.accentIndigo600,
         onTap: widget.onContactMe,
         tooltip: 'Jump to Contact',
       ),
@@ -477,20 +477,20 @@ class _IntroPageState extends State<IntroPage> {
     return Column(
       children: [
         Row(children: [
-          Expanded(child: Container(height: 1, color: isDark ? Colors.white24 : const Color(0xFFCBD5E1))),
+          Expanded(child: Container(height: 1, color: isDark ? Colors.white24 : AppColors.slate300)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
               '// MASTHEAD',
               style: TextStyle(
-                color: isDark ? Colors.white.withValues(alpha: 0.7) : const Color(0xFF64748B),
+                color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate500,
                 fontSize: 10,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 3,
               ),
             ),
           ),
-          Expanded(child: Container(height: 1, color: isDark ? Colors.white24 : const Color(0xFFCBD5E1))),
+          Expanded(child: Container(height: 1, color: isDark ? Colors.white24 : AppColors.slate300)),
         ]),
         const SizedBox(height: AppSpacing.md),
         if (isMobile)
@@ -506,7 +506,7 @@ class _IntroPageState extends State<IntroPage> {
                     color: isDark ? Colors.white.withValues(alpha: 0.04) : Colors.white,
                     borderRadius: BorderRadius.circular(AppRadius.sm),
                     border: Border.all(
-                      color: isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFE2E8F0),
+                      color: isDark ? Colors.white.withValues(alpha: 0.1) : AppColors.slate200,
                     ),
                     boxShadow: isDark
                         ? null

@@ -24,7 +24,11 @@ class ExperiencePage extends StatefulWidget {
   State<ExperiencePage> createState() => _ExperiencePageState();
 }
 
-class _ExperiencePageState extends State<ExperiencePage> {
+class _ExperiencePageState extends State<ExperiencePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   // Stagger animation state
   bool _isVisible = false;
 
@@ -68,6 +72,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
     final theme = Theme.of(context);
@@ -270,11 +275,11 @@ class _ExperiencePageState extends State<ExperiencePage> {
 
   Widget _buildExperienceNode(Experience exp, int index, ColorScheme scheme, bool isDesktop) {
     return AnimatedOpacity(
-      duration: const Duration(milliseconds: 600),
+      duration: AppMotion.sectionScroll,
       curve: Curves.easeOutCubic,
       opacity: _isVisible ? 1.0 : 0.0,
       child: AnimatedSlide(
-        duration: const Duration(milliseconds: 600),
+        duration: AppMotion.sectionScroll,
         curve: Curves.easeOutCubic,
         offset: _isVisible ? Offset.zero : (isDesktop ? const Offset(0.2, 0) : const Offset(0, 0.2)),
         child: Padding(
@@ -290,11 +295,11 @@ class _ExperiencePageState extends State<ExperiencePage> {
   Widget _buildCredentialsBento(ColorScheme scheme, bool isDesktop) {
     final isDark = scheme.brightness == Brightness.dark;
     return AnimatedOpacity(
-      duration: const Duration(milliseconds: 800),
+      duration: AppMotion.entry,
       curve: Curves.easeOutCubic,
       opacity: _isVisible ? 1.0 : 0.0,
       child: AnimatedSlide(
-        duration: const Duration(milliseconds: 800),
+        duration: AppMotion.entry,
         curve: Curves.easeOutCubic,
         offset: _isVisible ? Offset.zero : (isDesktop ? const Offset(0.2, 0) : const Offset(0, 0.2)),
         child: Container(
@@ -303,7 +308,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.lg),
             border: Border.all(
-              color: isDark ? scheme.primary.withValues(alpha: 0.3) : const Color(0xFFCBD5E1),
+              color: isDark ? scheme.primary.withValues(alpha: 0.3) : AppColors.slate300,
               width: isDark ? 1.5 : 1.0,
             ),
             color: isDark ? scheme.surface.withValues(alpha: 0.3) : Colors.white.withValues(alpha: 0.90),
@@ -311,7 +316,7 @@ class _ExperiencePageState extends State<ExperiencePage> {
                 ? []
                 : [
                     BoxShadow(
-                      color: const Color(0xFF0F172A).withValues(alpha: 0.05),
+                      color: AppColors.slate900.withValues(alpha: 0.05),
                       blurRadius: 16,
                       offset: const Offset(0, 4),
                     ),
@@ -438,16 +443,16 @@ class _ExperienceCardState extends State<_ExperienceCard> {
             border: Border.all(
               color: hovered
                   ? scheme.primary.withValues(alpha: isDark ? 0.6 : 0.8)
-                  : (isDark ? _kGlassBorder : const Color(0xFFE2E8F0)),
+                  : (isDark ? _kGlassBorder : AppColors.slate200),
               width: hovered ? 1.5 : 1.0,
             ),
             boxShadow: hovered
                 ? [
                     BoxShadow(color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.12), blurRadius: 20, spreadRadius: 2),
-                    BoxShadow(color: isDark ? Colors.black.withValues(alpha: 0.4) : const Color(0xFF0F172A).withValues(alpha: 0.08), blurRadius: 10, offset: const Offset(0, 8)),
+                    BoxShadow(color: isDark ? Colors.black.withValues(alpha: 0.4) : AppColors.slate900.withValues(alpha: 0.08), blurRadius: 10, offset: const Offset(0, 8)),
                   ]
                 : [
-                    BoxShadow(color: isDark ? Colors.black.withValues(alpha: 0.2) : const Color(0xFF0F172A).withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4)),
+                    BoxShadow(color: isDark ? Colors.black.withValues(alpha: 0.2) : AppColors.slate900.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4)),
                   ],
           ),
           child: RepaintBoundary(
@@ -601,7 +606,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                           text: prefix,
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
-                            color: isDark ? scheme.onSurface : const Color(0xFF0F172A),
+                            color: isDark ? scheme.onSurface : AppColors.slate900,
                             fontSize: 13.5,
                             height: 1.5,
                           ),
@@ -610,7 +615,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                           text: rest,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            color: isDark ? scheme.onSurface.withValues(alpha: 0.85) : const Color(0xFF334155),
+                            color: isDark ? scheme.onSurface.withValues(alpha: 0.85) : AppColors.slate700,
                             fontSize: 13.5,
                             height: 1.5,
                           ),
@@ -621,7 +626,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                 : Text(
                     highlight,
                     style: TextStyle(
-                      color: isDark ? scheme.onSurface.withValues(alpha: 0.85) : const Color(0xFF334155),
+                      color: isDark ? scheme.onSurface.withValues(alpha: 0.85) : AppColors.slate700,
                       fontSize: 13.5,
                       height: 1.5,
                     ),

@@ -1,11 +1,15 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:profile/locale_controller.dart';
 import '../../../service/sound_service.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme_controller.dart';
+import 'conditional_blur.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
+  /// Public constant so callers (mobile scroll snap, section anchors)
+  /// can offset by the app bar's fixed height without magic numbers.
+  static const double kBarHeight = 60;
+
   final VoidCallback onMenuPressed;
   final VoidCallback? onLogoPressed;
 
@@ -16,7 +20,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
-  Size get preferredSize => const Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(kBarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +28,9 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
     final tight = MediaQuery.sizeOf(context).width < 460;
 
     return RepaintBoundary(
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-          child: Container(
+      child: ConditionalBlur(
+        sigma: 18,
+        child: Container(
             height: 60 + MediaQuery.paddingOf(context).top,
             padding: EdgeInsets.only(
               top: MediaQuery.paddingOf(context).top,
@@ -59,7 +62,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               children: [
                 // Brand signature
-                InkWell(
+                Semantics(
+                  button: true,
+                  label: 'Abdallah Alhyari — return to top',
+                  child: InkWell(
                   onTap: () {
                     SoundService.instance.playClick();
                     onLogoPressed?.call();
@@ -77,13 +83,13 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                             gradient: const LinearGradient(
-                              colors: [Color(0xFF818CF8), Color(0xFFFBBF24)],
+                              colors: [AppColors.accentIndigo, Color(0xFFFBBF24)],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF818CF8).withValues(alpha: 0.3),
+                                color: AppColors.accentIndigo.withValues(alpha: 0.3),
                                 blurRadius: 8,
                               ),
                             ],
@@ -109,7 +115,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                               'ABDALLAH',
                               style: TextStyle(
                                 fontFamily: 'Tenada',
-                                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                                color: isDark ? Colors.white : AppColors.slate900,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.4,
@@ -134,7 +140,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     style: TextStyle(
                                       color: isDark
                                           ? Colors.white.withValues(alpha: 0.7)
-                                          : const Color(0xFF475569),
+                                          : AppColors.slate600,
                                       fontSize: 10,
                                       fontWeight: FontWeight.w800,
                                       letterSpacing: 1.0,
@@ -147,6 +153,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ],
                     ),
                   ),
+                ),
                 ),
 
                 const Spacer(),
@@ -169,16 +176,16 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           decoration: BoxDecoration(
                             color: isDark
                                 ? Colors.white.withValues(alpha: 0.08)
-                                : const Color(0xFFF1F5F9),
+                                : AppColors.slate100,
                             borderRadius: BorderRadius.circular(AppRadius.chip),
                             border: Border.all(
-                              color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+                              color: isDark ? Colors.white12 : AppColors.slate200,
                             ),
                           ),
                           child: Text(
                             code,
                             style: TextStyle(
-                              color: isDark ? Colors.white : const Color(0xFF0F172A),
+                              color: isDark ? Colors.white : AppColors.slate900,
                               fontSize: 10.5,
                               fontWeight: FontWeight.w800,
                               letterSpacing: 0.8,
@@ -202,7 +209,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                       constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                       icon: Icon(
                         dark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
-                        color: isDark ? Colors.white70 : const Color(0xFF475569),
+                        color: isDark ? Colors.white70 : AppColors.slate600,
                       ),
                       onPressed: () {
                         SoundService.instance.playClick();
@@ -226,7 +233,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                         enabled ? Icons.volume_up_outlined : Icons.volume_off_outlined,
                         color: enabled
                             ? const Color(0xFFFBBF24)
-                            : (isDark ? Colors.white38 : const Color(0xFF94A3B8)),
+                            : (isDark ? Colors.white38 : AppColors.slate400),
                       ),
                       onPressed: () {
                         SoundService.instance.toggle();
@@ -238,7 +245,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                 const SizedBox(width: 6),
 
                 // Menu Pill
-                InkWell(
+                Semantics(
+                  button: true,
+                  label: 'Open navigation menu',
+                  child: InkWell(
                   onTap: () {
                     SoundService.instance.playClick();
                     onMenuPressed();
@@ -247,15 +257,15 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF818CF8).withValues(alpha: isDark ? 0.22 : 0.15),
+                      color: AppColors.accentIndigo.withValues(alpha: isDark ? 0.22 : 0.15),
                       borderRadius: BorderRadius.circular(AppRadius.pill),
                       border: Border.all(
-                        color: const Color(0xFF818CF8).withValues(alpha: 0.6),
+                        color: AppColors.accentIndigo.withValues(alpha: 0.6),
                         width: 1.2,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF818CF8).withValues(alpha: 0.2),
+                          color: AppColors.accentIndigo.withValues(alpha: 0.2),
                           blurRadius: 8,
                         ),
                       ],
@@ -263,12 +273,12 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.menu_rounded, size: 14, color: Color(0xFF818CF8)),
+                        const Icon(Icons.menu_rounded, size: 14, color: AppColors.accentIndigo),
                         const SizedBox(width: 4),
                         Text(
                           'MENU',
                           style: TextStyle(
-                            color: isDark ? Colors.white : const Color(0xFF4F46E5),
+                            color: isDark ? Colors.white : AppColors.accentIndigo600,
                             fontSize: 10.5,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.2,
@@ -278,11 +288,11 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                 ),
+                ),
               ],
             ),
           ),
         ),
-      ),
     );
   }
 }

@@ -95,4 +95,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sectionCertifications => 'الشهادات';
+
+  @override
+  String get contactHeroEyebrow => 'البريد المباشر · الرد الأسرع';
+
+  @override
+  String get contactReplyWindow => 'الرد خلال 24 ساعة · إنجليزي / عربي';
+
+  @override
+  String get contactSendEmailBtn => 'أرسل بريدًا';
+
+  @override
+  String get contactCopyAddressBtn => 'نسخ العنوان';
+
+  @override
+  String get skillsEmptyTitle => 'لا توجد مهارات في هذه الفئة بعد';
+
+  @override
+  String get skillsEmptyShowAll => 'عرض الكل';
+
+  @override
+  String get keyboardHintTitle => 'اختصارات لوحة المفاتيح';
+
+  @override
+  String get keyboardHintDigits => '1–7   الانتقال إلى قسم';
+
+  @override
+  String get keyboardHintArrows => '↑ ↓   السابق / التالي';
+
+  @override
+  String get keyboardHintHome => 'Home  الصفحة الأولى';
+
+  @override
+  String get keyboardHintEnd => 'End   الصفحة الأخيرة';
 }

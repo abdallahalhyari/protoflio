@@ -31,7 +31,11 @@ const double _kFanArcHeight = 30;
 const double _kShuffleSpread = 260; // horizontal jitter range
 const double _kShuffleDrop = 100; // vertical jitter range
 
-class _HatsGridPageState extends State<HatsGridPage> {
+class _HatsGridPageState extends State<HatsGridPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   late List<Offset> _cardPositions;
   late List<double> _cardRotations;
   late List<int> _renderOrder;
@@ -43,15 +47,20 @@ class _HatsGridPageState extends State<HatsGridPage> {
   void initState() {
     super.initState();
     _cardPositions = List.filled(kHats.length, Offset.zero);
-    _cardRotations = [
-      -0.12,
-      -0.06,
-      -0.02,
-      0.03,
-      0.08,
-      0.14,
-    ];
+    _cardRotations = _fanRotations(kHats.length);
     _renderOrder = List.generate(kHats.length, (i) => i);
+  }
+
+  /// Even spread from -0.14 to 0.14 radians so the fan stays symmetric
+  /// regardless of how many hats exist. Was previously a fixed 6-element
+  /// literal that would go out-of-range the moment another hat was added.
+  static List<double> _fanRotations(int count) {
+    if (count <= 1) return const [0.0];
+    const double spread = 0.28; // ~16° total fan
+    return List<double>.generate(count, (i) {
+      final t = i / (count - 1);
+      return -spread / 2 + spread * t;
+    });
   }
 
   void _bringToFront(int index) {
@@ -140,19 +149,13 @@ class _HatsGridPageState extends State<HatsGridPage> {
       _isInitialized = false;
       _renderOrder = List.generate(kHats.length, (i) => i);
       _layoutCards(size);
-      _cardRotations = [
-        -0.12,
-        -0.06,
-        -0.02,
-        0.03,
-        0.08,
-        0.14,
-      ];
+      _cardRotations = _fanRotations(kHats.length);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
     final isMobile = size.width < AppBreakpoints.tablet;
 
@@ -233,7 +236,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                           style: TextStyle(
                             color: Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white.withValues(alpha: 0.72)
-                                : const Color(0xFF64748B),
+                                : AppColors.slate500,
                             fontSize: 10,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 2,
@@ -319,7 +322,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                                       fontFamily: 'Tenada',
                                       color: Theme.of(context).brightness == Brightness.dark
                                           ? Colors.white
-                                          : const Color(0xFF0F172A),
+                                          : AppColors.slate900,
                                       fontSize: isMobile ? 24 : 40,
                                       fontWeight: FontWeight.w900,
                                       letterSpacing: 4,
@@ -332,7 +335,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                                     style: TextStyle(
                                       color: Theme.of(context).brightness == Brightness.dark
                                           ? Colors.white.withValues(alpha: 0.75)
-                                          : const Color(0xFF475569),
+                                          : AppColors.slate600,
                                       fontSize: isMobile ? 11 : 12.5,
                                       fontStyle: FontStyle.italic,
                                       letterSpacing: 0.5,
@@ -377,11 +380,11 @@ class _HatsGridPageState extends State<HatsGridPage> {
                                     style: OutlinedButton.styleFrom(
                                       foregroundColor: Theme.of(context).brightness == Brightness.dark
                                           ? Colors.white70
-                                          : const Color(0xFF475569),
+                                          : AppColors.slate600,
                                       side: BorderSide(
                                           color: Theme.of(context).brightness == Brightness.dark
                                               ? Colors.white24
-                                              : const Color(0xFFCBD5E1)),
+                                              : AppColors.slate300),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 12, vertical: 6),
                                     ),
@@ -432,7 +435,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
         decoration: BoxDecoration(
           color: isDark ? Colors.black.withValues(alpha: 0.45) : Colors.white.withValues(alpha: 0.88),
           borderRadius: BorderRadius.circular(AppRadius.smd),
-          border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.12) : const Color(0xFFE2E8F0)),
+          border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
@@ -445,7 +448,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            color: isDark ? Colors.white.withValues(alpha: 0.9) : const Color(0xFF334155),
+            color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate700,
             fontSize: 11.5,
             height: 1.45,
             letterSpacing: 0.2,
@@ -471,7 +474,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
             child: Text(
               bio,
               style: TextStyle(
-                color: isDark ? Colors.white.withValues(alpha: 0.92) : const Color(0xFF1E293B),
+                color: isDark ? Colors.white.withValues(alpha: 0.92) : AppColors.slate800,
                 fontSize: 13.5,
                 height: 1.6,
                 letterSpacing: 0.2,
@@ -503,7 +506,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
       children: [
         Text(label,
             style: TextStyle(
-              color: isDark ? Colors.white.withValues(alpha: 0.7) : const Color(0xFF64748B),
+              color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate500,
               fontSize: 9.5,
               fontWeight: FontWeight.w900,
               letterSpacing: 2.4,
@@ -511,7 +514,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
         const SizedBox(height: 2),
         Text(value,
             style: TextStyle(
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
+              color: isDark ? Colors.white : AppColors.slate900,
               fontSize: 11.5,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.2,
@@ -531,7 +534,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
             onTap: () => _selectRole(i, size, !isDesktop),
             borderRadius: BorderRadius.circular(AppRadius.chip),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
+              duration: AppMotion.chipHover,
               padding: EdgeInsets.symmetric(
                 horizontal: isDesktop ? 9 : 7,
                 vertical: isDesktop ? 4 : 3,
@@ -544,7 +547,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                 border: Border.all(
                   color: _selectedHatIndex == i
                       ? AppColors.accentAmber
-                      : (isDark ? AppColors.hatGold.withValues(alpha: 0.4) : const Color(0xFFCBD5E1)),
+                      : (isDark ? AppColors.hatGold.withValues(alpha: 0.4) : AppColors.slate300),
                   width: _selectedHatIndex == i ? 1.6 : 1.0,
                 ),
                 boxShadow: _selectedHatIndex == i
@@ -574,7 +577,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                       fontFamily: 'Courier',
                       color: _selectedHatIndex == i
                           ? AppColors.accentAmberSoft
-                          : (isDark ? Colors.white70 : const Color(0xFF334155)),
+                          : (isDark ? Colors.white70 : AppColors.slate700),
                       fontSize: isDesktop ? 10.0 : 8.5,
                       fontWeight: _selectedHatIndex == i
                           ? FontWeight.w900
@@ -683,7 +686,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
             'ARCHITECTURAL PERSPECTIVES',
             style: TextStyle(
               fontFamily: 'Tenada',
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
+              color: isDark ? Colors.white : AppColors.slate900,
               fontSize: 22,
               fontWeight: FontWeight.w900,
               letterSpacing: 3,
@@ -709,7 +712,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
               height: 380,
               child: Center(
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 280),
+                  duration: AppMotion.switcher,
                   transitionBuilder: (child, animation) => FadeTransition(
                     opacity: animation,
                     child: ScaleTransition(
@@ -738,7 +741,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
               decoration: BoxDecoration(
                 color: isDark ? Colors.white.withValues(alpha: 0.04) : Colors.white.withValues(alpha: 0.85),
                 borderRadius: BorderRadius.circular(AppRadius.chip),
-                border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE2E8F0)),
+                border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate200),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -751,7 +754,7 @@ class _HatsGridPageState extends State<HatsGridPage> {
                       child: Text(
                         'TAP CARD TO FLIP · SWIPE TO CHANGE ROLE',
                         style: TextStyle(
-                          color: isDark ? Colors.white.withValues(alpha: 0.72) : const Color(0xFF64748B),
+                          color: isDark ? Colors.white.withValues(alpha: 0.72) : AppColors.slate500,
                           fontSize: 9.5,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,

@@ -63,7 +63,7 @@ const List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Use Cases & Business Entities',
         details: 'Pure Dart entities, business rules, repository contracts. Zero external framework dependencies.',
         icon: Icons.account_tree_outlined,
-        color: Color(0xFF818CF8),
+        color: AppColors.accentIndigo,
       ),
       DiagramStep(
         layer: 'DATA LAYER',
@@ -151,7 +151,7 @@ const List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Kotlin MethodChannel Bridge',
         details: 'High-speed binary transport bridging Flutter runtime to native Android IsoDep transceive buffer.',
         icon: Icons.cable_outlined,
-        color: Color(0xFF818CF8),
+        color: AppColors.accentIndigo,
       ),
       DiagramStep(
         layer: 'COMMAND CHAIN',
@@ -202,7 +202,7 @@ const List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Two-Tier JWT Token Protocol',
         details: 'Short-lived access token (15 min) + hardware GUID-bound refresh token stored securely.',
         icon: Icons.vpn_key_outlined,
-        color: Color(0xFF818CF8),
+        color: AppColors.accentIndigo,
       ),
       DiagramStep(
         layer: 'ROTATION',
@@ -236,8 +236,12 @@ class EngineeringPage extends StatefulWidget {
   State<EngineeringPage> createState() => _EngineeringPageState();
 }
 
-class _EngineeringPageState extends State<EngineeringPage> {
+class _EngineeringPageState extends State<EngineeringPage>
+    with AutomaticKeepAliveClientMixin {
   int _selectedTopicIndex = 0;
+
+  @override
+  bool get wantKeepAlive => true;
 
   void _selectTopic(int index) {
     if (_selectedTopicIndex == index) return;
@@ -265,6 +269,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // AutomaticKeepAliveClientMixin requirement
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
@@ -297,7 +302,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
                   }
                 },
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 280),
+                  duration: AppMotion.switcher,
                   switchInCurve: Curves.easeOutCubic,
                   switchOutCurve: Curves.easeInCubic,
                   transitionBuilder: (child, animation) => FadeTransition(
@@ -500,7 +505,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
             border: Border.all(
               color: isSelected
                   ? scheme.primary
-                  : (isDark ? scheme.onSurface.withValues(alpha: 0.15) : const Color(0xFFCBD5E1)),
+                  : (isDark ? scheme.onSurface.withValues(alpha: 0.15) : AppColors.slate300),
               width: isSelected ? 1.5 : 1.0,
             ),
             boxShadow: isSelected
@@ -514,7 +519,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
                     ? []
                     : [
                         BoxShadow(
-                          color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                          color: AppColors.slate900.withValues(alpha: 0.04),
                           blurRadius: 6,
                           offset: const Offset(0, 1),
                         ),
@@ -528,14 +533,14 @@ class _EngineeringPageState extends State<EngineeringPage> {
                 height: 6,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isSelected ? scheme.primary : (isDark ? Colors.white38 : const Color(0xFF94A3B8)),
+                  color: isSelected ? scheme.primary : (isDark ? Colors.white38 : AppColors.slate400),
                 ),
               ),
               const SizedBox(width: 8),
               Text(
                 topic.title.toUpperCase(),
                 style: TextStyle(
-                  color: isSelected ? (isDark ? Colors.white : scheme.primary) : (isDark ? Colors.white70 : const Color(0xFF475569)),
+                  color: isSelected ? (isDark ? Colors.white : scheme.primary) : (isDark ? Colors.white70 : AppColors.slate600),
                   fontSize: 11.5,
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                   letterSpacing: 0.8,
@@ -555,12 +560,12 @@ class _EngineeringPageState extends State<EngineeringPage> {
       decoration: BoxDecoration(
         color: isDark ? scheme.surface.withValues(alpha: 0.5) : Colors.white.withValues(alpha: 0.90),
         borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
+        border: Border.all(color: isDark ? Colors.white12 : AppColors.slate200),
         boxShadow: isDark
             ? []
             : [
                 BoxShadow(
-                  color: const Color(0xFF0F172A).withValues(alpha: 0.05),
+                  color: AppColors.slate900.withValues(alpha: 0.05),
                   blurRadius: 16,
                   offset: const Offset(0, 4),
                 ),
@@ -589,15 +594,15 @@ class _EngineeringPageState extends State<EngineeringPage> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF1F5F9),
+                  color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate100,
                   borderRadius: BorderRadius.circular(AppRadius.xs),
-                  border: Border.all(color: isDark ? Colors.transparent : const Color(0xFFE2E8F0)),
+                  border: Border.all(color: isDark ? Colors.transparent : AppColors.slate200),
                 ),
                 child: Text(
                   '${topic.diagramSteps.length} TIERS',
                   style: TextStyle(
                     fontFamily: 'Courier',
-                    color: isDark ? Colors.white70 : const Color(0xFF475569),
+                    color: isDark ? Colors.white70 : AppColors.slate600,
                     fontSize: 9.5,
                     fontWeight: FontWeight.w700,
                   ),
@@ -619,12 +624,12 @@ class _EngineeringPageState extends State<EngineeringPage> {
       decoration: BoxDecoration(
         color: isDark ? scheme.surface.withValues(alpha: 0.5) : Colors.white.withValues(alpha: 0.90),
         borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
+        border: Border.all(color: isDark ? Colors.white12 : AppColors.slate200),
         boxShadow: isDark
             ? []
             : [
                 BoxShadow(
-                  color: const Color(0xFF0F172A).withValues(alpha: 0.05),
+                  color: AppColors.slate900.withValues(alpha: 0.05),
                   blurRadius: 16,
                   offset: const Offset(0, 4),
                 ),
@@ -644,7 +649,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
+              color: isDark ? Colors.white : AppColors.slate900,
               letterSpacing: 0.5,
             ),
           ),
@@ -653,7 +658,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
             topic.summary,
             style: TextStyle(
               fontSize: 13,
-              color: isDark ? Colors.white.withValues(alpha: 0.85) : const Color(0xFF334155),
+              color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700,
               height: 1.45,
             ),
           ),
@@ -663,23 +668,23 @@ class _EngineeringPageState extends State<EngineeringPage> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF6366F1).withValues(alpha: isDark ? 0.12 : 0.08),
+              color: AppColors.accentIndigoDeep.withValues(alpha: isDark ? 0.12 : 0.08),
               borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(color: const Color(0xFF818CF8).withValues(alpha: isDark ? 0.35 : 0.5)),
+              border: Border.all(color: AppColors.accentIndigo.withValues(alpha: isDark ? 0.35 : 0.5)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.psychology_outlined, color: Color(0xFF818CF8), size: 16),
+                    const Icon(Icons.psychology_outlined, color: AppColors.accentIndigo, size: 16),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
                         'ARCHITECTURAL RATIONALE (WHY THIS CHOICE)',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: isDark ? const Color(0xFF818CF8) : const Color(0xFF4F46E5),
+                          color: isDark ? AppColors.accentIndigo : AppColors.accentIndigo600,
                           fontSize: 10,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1.0,
@@ -692,7 +697,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
                 Text(
                   topic.whyChosen,
                   style: TextStyle(
-                    color: isDark ? Colors.white : const Color(0xFF1E293B),
+                    color: isDark ? Colors.white : AppColors.slate800,
                     fontSize: 12,
                     height: 1.45,
                     fontWeight: FontWeight.w500,
@@ -729,7 +734,7 @@ class _EngineeringPageState extends State<EngineeringPage> {
                     child: Text(
                       item,
                       style: TextStyle(
-                        color: isDark ? Colors.white.withValues(alpha: 0.8) : const Color(0xFF334155),
+                        color: isDark ? Colors.white.withValues(alpha: 0.8) : AppColors.slate700,
                         fontSize: 11.5,
                         height: 1.35,
                       ),
@@ -791,7 +796,7 @@ class _DiagramList extends StatelessWidget {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: isDesktop ? 14 : 10, vertical: isDesktop ? 10 : 8),
           decoration: BoxDecoration(
-            color: isDark ? Colors.black.withValues(alpha: 0.35) : const Color(0xFFF8FAFC),
+            color: isDark ? Colors.black.withValues(alpha: 0.35) : AppColors.slate50,
             borderRadius: BorderRadius.circular(AppRadius.smd),
             border: Border.all(color: step.color.withValues(alpha: isDark ? 0.4 : 0.5), width: 1),
             boxShadow: [
@@ -830,7 +835,7 @@ class _DiagramList extends StatelessWidget {
                     Text(
                       step.title,
                       style: TextStyle(
-                        color: isDark ? Colors.white : const Color(0xFF0F172A),
+                        color: isDark ? Colors.white : AppColors.slate900,
                         fontSize: isDesktop ? 13 : 11.5,
                         fontWeight: FontWeight.w700,
                       ),
@@ -839,7 +844,7 @@ class _DiagramList extends StatelessWidget {
                     Text(
                       step.details,
                       style: TextStyle(
-                        color: isDark ? Colors.white.withValues(alpha: 0.7) : const Color(0xFF475569),
+                        color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate600,
                         fontSize: isDesktop ? 11 : 9.5,
                         height: 1.3,
                       ),

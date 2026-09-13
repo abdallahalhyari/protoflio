@@ -28,5 +28,16 @@
   "hatsIntroTitle": "I WEAR MANY HATS",
   "hatsIntroBtn": "Allow Me to Explain",
   "sectionEducation": "EDUCATION",
-  "sectionCertifications": "CERTIFICATIONS"
+  "sectionCertifications": "CERTIFICATIONS",
+  "contactHeroEyebrow": "DIRECT EMAIL · FASTEST REPLY",
+  "contactReplyWindow": "Replies within 24 hours · English / Arabic",
+  "contactSendEmailBtn": "SEND EMAIL",
+  "contactCopyAddressBtn": "COPY ADDRESS",
+  "skillsEmptyTitle": "No skills in this category yet",
+  "skillsEmptyShowAll": "SHOW ALL",
+  "keyboardHintTitle": "Keyboard shortcuts",
+  "keyboardHintDigits": "1–7   jump to section",
+  "keyboardHintArrows": "↑ ↓   prev / next page",
+  "keyboardHintHome": "Home  first page",
+  "keyboardHintEnd": "End   last page"
 }

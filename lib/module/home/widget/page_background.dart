@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/tokens.dart';
 
 class PageBackground extends StatefulWidget {
   final String asset;
@@ -27,14 +28,18 @@ class _PageBackgroundState extends State<PageBackground> {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.of(context).disableAnimations;
 
-    Widget baseImage = Transform.scale(
-      scale: 1.35,
-      child: Image.asset(widget.asset, fit: BoxFit.cover),
+    // RepaintBoundary here isolates the scaled bitmap so parallax
+    // transforms don't force the image to repaint every frame.
+    Widget baseImage = RepaintBoundary(
+      child: Transform.scale(
+        scale: 1.35,
+        child: Image.asset(widget.asset, fit: BoxFit.cover),
+      ),
     );
 
     if (widget.controller == null || widget.pageIndex == null) {
       return AnimatedSlide(
-        duration: reduceMotion ? Duration.zero : const Duration(milliseconds: 150),
+        duration: reduceMotion ? Duration.zero : AppMotion.xs,
         offset: Offset(
           _mouseOffset.dx / size.width * 0.04,
           _mouseOffset.dy / size.height * 0.04,
@@ -94,8 +99,8 @@ class _PageBackgroundState extends State<PageBackground> {
                 end: Alignment.bottomRight,
                 colors: const [
                   Color(0xFFFAFBFC),
-                  Color(0xFFF1F5F9),
-                  Color(0xFFE2E8F0),
+                  AppColors.slate100,
+                  AppColors.slate200,
                 ],
                 stops: const [0.0, 0.55, 1.0],
               ),
@@ -119,8 +124,8 @@ class _PageBackgroundState extends State<PageBackground> {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFF6366F1).withValues(alpha: 0.12),
-                        const Color(0xFF6366F1).withValues(alpha: 0.0),
+                        AppColors.accentIndigoDeep.withValues(alpha: 0.12),
+                        AppColors.accentIndigoDeep.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -234,7 +239,7 @@ class _LightGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final dotPaint = Paint()
-      ..color = const Color(0xFF94A3B8).withValues(alpha: 0.24)
+      ..color = AppColors.slate400.withValues(alpha: 0.24)
       ..style = PaintingStyle.fill;
 
     const step = 28.0;

@@ -28,5 +28,16 @@
   "hatsIntroTitle": "NOSÍM MNOHO KLOBOUKŮ",
   "hatsIntroBtn": "Dovolte mi to vysvětlit",
   "sectionEducation": "VZDĚLÁNÍ",
-  "sectionCertifications": "CERTIFIKACE"
+  "sectionCertifications": "CERTIFIKACE",
+  "contactHeroEyebrow": "PŘÍMÝ E-MAIL · NEJRYCHLEJŠÍ ODPOVĚĎ",
+  "contactReplyWindow": "Odpověď do 24 hodin · anglicky / arabsky",
+  "contactSendEmailBtn": "ODESLAT E-MAIL",
+  "contactCopyAddressBtn": "KOPÍROVAT ADRESU",
+  "skillsEmptyTitle": "V této kategorii zatím nejsou žádné dovednosti",
+  "skillsEmptyShowAll": "ZOBRAZIT VŠE",
+  "keyboardHintTitle": "Klávesové zkratky",
+  "keyboardHintDigits": "1–7   přejít na sekci",
+  "keyboardHintArrows": "↑ ↓   předchozí / další",
+  "keyboardHintHome": "Home  první stránka",
+  "keyboardHintEnd": "End   poslední stránka"
 }

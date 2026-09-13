@@ -273,6 +273,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CERTIFICATIONS'**
   String get sectionCertifications;
+
+  /// No description provided for @contactHeroEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'DIRECT EMAIL · FASTEST REPLY'**
+  String get contactHeroEyebrow;
+
+  /// No description provided for @contactReplyWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Replies within 24 hours · English / Arabic'**
+  String get contactReplyWindow;
+
+  /// No description provided for @contactSendEmailBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'SEND EMAIL'**
+  String get contactSendEmailBtn;
+
+  /// No description provided for @contactCopyAddressBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'COPY ADDRESS'**
+  String get contactCopyAddressBtn;
+
+  /// No description provided for @skillsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No skills in this category yet'**
+  String get skillsEmptyTitle;
+
+  /// No description provided for @skillsEmptyShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'SHOW ALL'**
+  String get skillsEmptyShowAll;
+
+  /// No description provided for @keyboardHintTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard shortcuts'**
+  String get keyboardHintTitle;
+
+  /// No description provided for @keyboardHintDigits.
+  ///
+  /// In en, this message translates to:
+  /// **'1–7   jump to section'**
+  String get keyboardHintDigits;
+
+  /// No description provided for @keyboardHintArrows.
+  ///
+  /// In en, this message translates to:
+  /// **'↑ ↓   prev / next page'**
+  String get keyboardHintArrows;
+
+  /// No description provided for @keyboardHintHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home  first page'**
+  String get keyboardHintHome;
+
+  /// No description provided for @keyboardHintEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End   last page'**
+  String get keyboardHintEnd;
 }
 
 class _AppLocalizationsDelegate

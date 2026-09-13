@@ -23,8 +23,12 @@ class SkillsPage extends StatefulWidget {
   State<SkillsPage> createState() => _SkillsPageState();
 }
 
-class _SkillsPageState extends State<SkillsPage> {
+class _SkillsPageState extends State<SkillsPage>
+    with AutomaticKeepAliveClientMixin {
   String _selectedCategory = 'ALL';
+
+  @override
+  bool get wantKeepAlive => true;
 
   final List<String> _categories = [
     'ALL',
@@ -37,7 +41,7 @@ class _SkillsPageState extends State<SkillsPage> {
   List<Color> _getCategoryGradient(String category) {
     switch (category) {
       case 'Mobile Systems':
-        return const [Color(0xFF38BDF8), Color(0xFF818CF8)];
+        return const [Color(0xFF38BDF8), AppColors.accentIndigo];
       case 'Security & Protocols':
         return const [Color(0xFFFBBF24), Color(0xFFF59E0B)];
       case 'Architecture & State':
@@ -45,7 +49,7 @@ class _SkillsPageState extends State<SkillsPage> {
       case 'Cloud & Infrastructure':
         return const [Color(0xFFA78BFA), Color(0xFFEC4899)];
       default:
-        return const [Color(0xFF818CF8), Color(0xFFC084FC)];
+        return const [AppColors.accentIndigo, Color(0xFFC084FC)];
     }
   }
 
@@ -60,12 +64,13 @@ class _SkillsPageState extends State<SkillsPage> {
       case 'Cloud & Infrastructure':
         return const Color(0xFFA78BFA);
       default:
-        return const Color(0xFF818CF8);
+        return AppColors.accentIndigo;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // AutomaticKeepAliveClientMixin requirement
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
@@ -76,8 +81,8 @@ class _SkillsPageState extends State<SkillsPage> {
         ? kSkills
         : kSkills.where((s) => s.category == _selectedCategory).toList();
 
-    final grid = displayedSkills.isEmpty 
-      ? const Center(child: Text("No skills found in this category."))
+    final grid = displayedSkills.isEmpty
+      ? _buildEmptyState(scheme)
       : GridView.builder(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.only(right: 20),
@@ -238,6 +243,57 @@ class _SkillsPageState extends State<SkillsPage> {
     );
   }
 
+  Widget _buildEmptyState(ColorScheme scheme) {
+    final isDark = scheme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+        decoration: BoxDecoration(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.03)
+              : AppColors.slate50,
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.08)
+                : AppColors.slate200,
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.filter_alt_off_outlined,
+              size: 28,
+              color: scheme.onSurface.withValues(alpha: 0.4),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              l10n.skillsEmptyTitle,
+              style: TextStyle(
+                color: isDark ? Colors.white : AppColors.slate900,
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 4),
+            TextButton(
+              onPressed: () => setState(() => _selectedCategory = 'ALL'),
+              child: Text(l10n.skillsEmptyShowAll,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.4,
+                  )),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildCategoryFilters(ColorScheme scheme, bool isDesktop) {
     if (!isDesktop) {
       return SingleChildScrollView(
@@ -279,7 +335,7 @@ class _SkillsPageState extends State<SkillsPage> {
         borderRadius: BorderRadius.circular(AppRadius.sm),
         focusColor: color.withValues(alpha: 0.25),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
+          duration: AppMotion.chipHover,
           padding: EdgeInsets.symmetric(
             horizontal: isDesktop ? 16 : 10,
             vertical: isDesktop ? 10 : 7,
@@ -292,7 +348,7 @@ class _SkillsPageState extends State<SkillsPage> {
             border: Border.all(
               color: isSelected
                   ? color
-                  : (isDark ? scheme.onSurface.withValues(alpha: 0.15) : const Color(0xFFCBD5E1)),
+                  : (isDark ? scheme.onSurface.withValues(alpha: 0.15) : AppColors.slate300),
               width: isSelected ? 1.5 : 1.0,
             ),
             boxShadow: isSelected
@@ -306,7 +362,7 @@ class _SkillsPageState extends State<SkillsPage> {
                     ? []
                     : [
                         BoxShadow(
-                          color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                          color: AppColors.slate900.withValues(alpha: 0.03),
                           blurRadius: 6,
                           offset: const Offset(0, 1),
                         ),
@@ -331,7 +387,7 @@ class _SkillsPageState extends State<SkillsPage> {
                     fontFamily: 'Courier',
                     color: isSelected
                         ? (isDark ? color : (cat == 'ALL' ? scheme.primary : color))
-                        : (isDark ? scheme.onSurface.withValues(alpha: 0.7) : const Color(0xFF475569)),
+                        : (isDark ? scheme.onSurface.withValues(alpha: 0.7) : AppColors.slate600),
                     fontSize: isDesktop ? 11 : 9.5,
                     fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                     letterSpacing: 0.8,
@@ -344,7 +400,7 @@ class _SkillsPageState extends State<SkillsPage> {
                     fontFamily: 'Courier',
                     color: isSelected
                         ? color.withValues(alpha: 0.8)
-                        : (isDark ? scheme.onSurface.withValues(alpha: 0.4) : const Color(0xFF94A3B8)),
+                        : (isDark ? scheme.onSurface.withValues(alpha: 0.4) : AppColors.slate400),
                     fontSize: isDesktop ? 10 : 8.5,
                     fontWeight: FontWeight.w700,
                   ),
@@ -379,7 +435,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
   bool _isHovered = false;
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 400),
+    duration: AppMotion.cardFlip,
   );
   late final Animation<double> _flipAnim = CurvedAnimation(parent: _c, curve: Curves.easeOutBack);
 
@@ -458,7 +514,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
           BoxShadow(
             color: isDark
                 ? widget.categoryColor.withValues(alpha: 0.1)
-                : const Color(0xFF0F172A).withValues(alpha: 0.05),
+                : AppColors.slate900.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -502,7 +558,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontFamily: 'Tenada',
-                          color: isDark ? Colors.white : const Color(0xFF0F172A),
+                          color: isDark ? Colors.white : AppColors.slate900,
                           fontSize: widget.isDesktop ? 22 : 14,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.2,
@@ -537,7 +593,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                           border: Border.all(
                             color: isDark
                                 ? Colors.white.withValues(alpha: 0.12)
-                                : const Color(0xFFCBD5E1),
+                                : AppColors.slate300,
                             width: 0.8,
                           ),
                         ),
@@ -551,7 +607,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                                 size: 11,
                                 color: isDark
                                     ? Colors.white.withValues(alpha: 0.6)
-                                    : const Color(0xFF64748B),
+                                    : AppColors.slate500,
                               ),
                               const SizedBox(width: 4),
                               Text(
@@ -560,7 +616,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                                   fontFamily: 'Courier',
                                   color: isDark
                                       ? Colors.white.withValues(alpha: 0.6)
-                                      : const Color(0xFF64748B),
+                                      : AppColors.slate500,
                                   fontSize: widget.isDesktop ? 9.5 : 10,
                                   fontWeight: FontWeight.w800,
                                   letterSpacing: 0.8,
@@ -592,7 +648,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
           BoxShadow(
             color: isDark
                 ? widget.categoryColor.withValues(alpha: 0.3)
-                : const Color(0xFF0F172A).withValues(alpha: 0.08),
+                : AppColors.slate900.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 6),
           ),
@@ -626,7 +682,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontFamily: 'Tenada',
-                              color: isDark ? Colors.white : const Color(0xFF0F172A),
+                              color: isDark ? Colors.white : AppColors.slate900,
                               fontSize: widget.isDesktop ? 16 : 13,
                               fontWeight: FontWeight.w900,
                             ),
@@ -664,7 +720,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                         child: Text(
                           widget.skill.description,
                           style: TextStyle(
-                            color: isDark ? Colors.white.withValues(alpha: 0.85) : const Color(0xFF334155),
+                            color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700,
                             fontSize: widget.isDesktop ? 12 : 10.5,
                             height: 1.4,
                           ),
@@ -681,15 +737,15 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
                               decoration: BoxDecoration(
-                                color: isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFF1F5F9),
+                                color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate100,
                                 borderRadius: BorderRadius.circular(AppRadius.xs),
-                                border: Border.all(color: isDark ? Colors.white24 : const Color(0xFFE2E8F0)),
+                                border: Border.all(color: isDark ? Colors.white24 : AppColors.slate200),
                               ),
                               child: Text(
                                 tag,
                                 style: TextStyle(
                                   fontFamily: 'Courier',
-                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : const Color(0xFF4338CA),
+                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : AppColors.accentIndigo700,
                                   fontSize: widget.isDesktop ? 9.5 : 8.0,
                                   fontWeight: FontWeight.w700,
                                 ),

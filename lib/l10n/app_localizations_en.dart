@@ -95,4 +95,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionCertifications => 'CERTIFICATIONS';
+
+  @override
+  String get contactHeroEyebrow => 'DIRECT EMAIL · FASTEST REPLY';
+
+  @override
+  String get contactReplyWindow => 'Replies within 24 hours · English / Arabic';
+
+  @override
+  String get contactSendEmailBtn => 'SEND EMAIL';
+
+  @override
+  String get contactCopyAddressBtn => 'COPY ADDRESS';
+
+  @override
+  String get skillsEmptyTitle => 'No skills in this category yet';
+
+  @override
+  String get skillsEmptyShowAll => 'SHOW ALL';
+
+  @override
+  String get keyboardHintTitle => 'Keyboard shortcuts';
+
+  @override
+  String get keyboardHintDigits => '1–7   jump to section';
+
+  @override
+  String get keyboardHintArrows => '↑ ↓   prev / next page';
+
+  @override
+  String get keyboardHintHome => 'Home  first page';
+
+  @override
+  String get keyboardHintEnd => 'End   last page';
 }

@@ -1,9 +1,9 @@
 import 'dart:math' as math;
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
+import 'conditional_blur.dart';
 
 class TopNav extends StatelessWidget {
   final int current;
@@ -44,10 +44,9 @@ class TopNav extends StatelessWidget {
             maxWidth: math.max(0.0, MediaQuery.sizeOf(context).width - AppSpacing.xl),
           ),
           child: RepaintBoundary(
-            child: ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+            child: ConditionalBlur(
+              sigma: 12,
+              borderRadius: BorderRadius.circular(AppRadius.pill),
               child: Container(
                 margin: const EdgeInsets.only(top: AppSpacing.smd),
                 padding: const EdgeInsets.symmetric(
@@ -109,9 +108,9 @@ class TopNav extends StatelessWidget {
                             ),
                           ),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: isDark ? const Color(0xFFFDE68A) : const Color(0xFF6366F1),
+                            foregroundColor: isDark ? const Color(0xFFFDE68A) : AppColors.accentIndigoDeep,
                             side: BorderSide(
-                              color: isDark ? const Color(0xFFFBBF24) : const Color(0xFF6366F1),
+                              color: isDark ? const Color(0xFFFBBF24) : AppColors.accentIndigoDeep,
                               width: 1.2,
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -126,7 +125,6 @@ class TopNav extends StatelessWidget {
                 ),
               ),
             ),
-          ),
           ),
         ),
       ),
@@ -156,11 +154,10 @@ class MobileNav extends StatelessWidget {
           maxWidth: math.max(0.0, MediaQuery.sizeOf(context).width - AppSpacing.lg),
         ),
         child: RepaintBoundary(
-          child: ClipRRect(
+          child: ConditionalBlur(
+            sigma: 16,
             borderRadius: BorderRadius.circular(AppRadius.pill),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
-              child: Container(
+            child: Container(
                 padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.sm, vertical: 6),
                 decoration: BoxDecoration(
@@ -210,7 +207,7 @@ class MobileNav extends StatelessWidget {
                         icon: Icon(
                           Icons.download_rounded,
                           size: 16,
-                          color: isDark ? const Color(0xFFFDE68A) : const Color(0xFF6366F1),
+                          color: isDark ? const Color(0xFFFDE68A) : AppColors.accentIndigoDeep,
                         ),
                         onPressed: () {
                           HapticFeedback.lightImpact();
@@ -224,7 +221,6 @@ class MobileNav extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
@@ -265,8 +261,8 @@ class _MobileNavItem extends StatelessWidget {
           label,
           style: TextStyle(
             color: active
-                ? (isDark ? const Color(0xFFE9D5FF) : const Color(0xFF6366F1))
-                : (isDark ? Colors.white70 : const Color(0xFF475569)),
+                ? (isDark ? const Color(0xFFE9D5FF) : AppColors.accentIndigoDeep)
+                : (isDark ? Colors.white70 : AppColors.slate600),
             fontSize: 11.5,
             fontWeight: active ? FontWeight.w800 : FontWeight.w600,
             letterSpacing: 0.2,
@@ -319,8 +315,8 @@ class NavItem extends StatelessWidget {
             label,
             style: TextStyle(
               color: active
-                  ? (isDark ? const Color(0xFFE9D5FF) : const Color(0xFF6366F1))
-                  : (isDark ? Colors.white : const Color(0xFF475569)),
+                  ? (isDark ? const Color(0xFFE9D5FF) : AppColors.accentIndigoDeep)
+                  : (isDark ? Colors.white : AppColors.slate600),
               fontSize: AppTypography.small,
               fontWeight: active ? FontWeight.w800 : FontWeight.w600,
               letterSpacing: 0.3,
@@ -463,8 +459,8 @@ class PageIndicator extends StatelessWidget {
                     height: active ? 12 : 8,
                     decoration: BoxDecoration(
                       color: active
-                          ? (isDark ? Colors.white : const Color(0xFF6366F1))
-                          : (isDark ? Colors.white70 : const Color(0xFF94A3B8)),
+                          ? (isDark ? Colors.white : AppColors.accentIndigoDeep)
+                          : (isDark ? Colors.white70 : AppColors.slate400),
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isDark ? Colors.black45 : Colors.white,

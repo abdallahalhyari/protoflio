@@ -50,7 +50,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
     _currentOffset = widget.position;
     _flipController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: AppMotion.lg,
     );
     _flipAnimation = Tween<double>(begin: 0.0, end: math.pi).animate(
       CurvedAnimation(parent: _flipController, curve: Curves.easeInOutBack),

@@ -2,18 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../theme/tokens.dart';
 
+/// Compact size preset for `PrimaryButton`.
+enum PrimaryButtonSize { sm, md, lg }
+
+/// Semantic color intent.
+enum PrimaryButtonVariant { primary, destructive }
+
+/// Portfolio hero CTA — gradient fill, hover parallax, and press haptics.
+/// Supports size / variant tokens, a `loading` spinner, and a disabled
+/// state (pass `onPressed: null`).
 class PrimaryButton extends StatefulWidget {
   final String label;
-  final VoidCallback onPressed;
-  final double fontSize;
-  final double horizontalPadding;
+  final VoidCallback? onPressed;
+  final PrimaryButtonSize size;
+  final PrimaryButtonVariant variant;
+  final bool loading;
+  final IconData? icon;
 
   const PrimaryButton({
     super.key,
     required this.label,
     required this.onPressed,
-    this.fontSize = AppTypography.bodyLg + 2,
-    this.horizontalPadding = 28,
+    this.size = PrimaryButtonSize.md,
+    this.variant = PrimaryButtonVariant.primary,
+    this.loading = false,
+    this.icon,
   });
 
   @override
@@ -25,88 +38,155 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   Offset _mousePos = Offset.zero;
   final GlobalKey _key = GlobalKey();
 
+  bool get _enabled => widget.onPressed != null && !widget.loading;
+
+  ({double fontSize, double hPad, double vPad, double iconSize}) get _dims {
+    switch (widget.size) {
+      case PrimaryButtonSize.sm:
+        return (fontSize: 13, hPad: 18, vPad: 6, iconSize: 14);
+      case PrimaryButtonSize.md:
+        return (fontSize: 16, hPad: 28, vPad: 8, iconSize: 16);
+      case PrimaryButtonSize.lg:
+        return (fontSize: 18, hPad: 36, vPad: 12, iconSize: 20);
+    }
+  }
+
+  Color _baseColor(ColorScheme scheme) {
+    switch (widget.variant) {
+      case PrimaryButtonVariant.primary:
+        return scheme.primary;
+      case PrimaryButtonVariant.destructive:
+        return scheme.error;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final base = _baseColor(scheme);
+    final dims = _dims;
+    final hover = _isHovered && _enabled;
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() {
-        _isHovered = false;
-        _mousePos = Offset.zero;
-      }),
-      onHover: (event) {
-        if (_key.currentContext == null) return;
-        final RenderBox box =
-            _key.currentContext!.findRenderObject() as RenderBox;
-        final center = Offset(box.size.width / 2, box.size.height / 2);
-        final delta = event.localPosition - center;
-        final next = Offset(delta.dx * 0.15, delta.dy * 0.25);
-        // Skip micro-jitter rebuilds — anything under ~2px shift is
-        // imperceptible visually but still triggers a full paint.
-        if ((next - _mousePos).distanceSquared < 4) return;
-        setState(() => _mousePos = next);
-      },
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          HapticFeedback.lightImpact();
-          widget.onPressed();
-        },
-        child: AnimatedContainer(
-          key: _key,
-          duration: AppMotion.xs,
-          curve: Curves.easeOut,
-          transform: Matrix4.identity()
-            ..translateByDouble(_mousePos.dx, _mousePos.dy, 0.0, 1.0)
-            ..scaleByDouble(
-              _isHovered ? 1.05 : 1.0, 
-              _isHovered ? 1.05 : 1.0, 
-              1.0,
-              1.0,
-            ),
-          transformAlignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-            boxShadow: [
-              if (_isHovered)
-                BoxShadow(
-                  color: scheme.primary.withValues(alpha: 0.5),
-                  blurRadius: 12,
-                  spreadRadius: 2,
-                  offset: const Offset(0, 4),
-                ),
-            ],
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: _isHovered
-                  ? [
-                      scheme.primary,
-                      scheme.primary.withValues(alpha: 0.7),
-                    ]
-                  : [
-                      scheme.primary.withValues(alpha: 0.85),
-                      scheme.primary,
-                    ],
-            ),
-            border: Border.all(
-              color: _isHovered ? scheme.primary : Colors.white24,
-              width: _isHovered ? 2 : 1,
+    Widget content = Text(
+      widget.label,
+      style: TextStyle(
+        fontSize: dims.fontSize,
+        color: _enabled ? Colors.white : Colors.white70,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+
+    if (widget.icon != null) {
+      content = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(widget.icon,
+              size: dims.iconSize,
+              color: _enabled ? Colors.white : Colors.white70),
+          const SizedBox(width: 8),
+          content,
+        ],
+      );
+    }
+
+    if (widget.loading) {
+      content = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: dims.iconSize,
+            height: dims.iconSize,
+            child: const CircularProgressIndicator(
+              strokeWidth: 2,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: widget.horizontalPadding,
-              vertical: AppSpacing.sm,
-            ),
-            child: Text(
-              widget.label,
-              style: TextStyle(
-                fontSize: widget.fontSize,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          const SizedBox(width: 10),
+          content,
+        ],
+      );
+    }
+
+    return Semantics(
+      button: true,
+      enabled: _enabled,
+      label: widget.label,
+      child: MouseRegion(
+        onEnter: (_) {
+          if (!_enabled) return;
+          setState(() => _isHovered = true);
+        },
+        onExit: (_) => setState(() {
+          _isHovered = false;
+          _mousePos = Offset.zero;
+        }),
+        onHover: (event) {
+          if (!_enabled || _key.currentContext == null) return;
+          final RenderBox box =
+              _key.currentContext!.findRenderObject() as RenderBox;
+          final center = Offset(box.size.width / 2, box.size.height / 2);
+          final delta = event.localPosition - center;
+          final next = Offset(delta.dx * 0.15, delta.dy * 0.25);
+          if ((next - _mousePos).distanceSquared < 4) return;
+          setState(() => _mousePos = next);
+        },
+        cursor: _enabled
+            ? SystemMouseCursors.click
+            : SystemMouseCursors.forbidden,
+        child: GestureDetector(
+          onTap: _enabled
+              ? () {
+                  HapticFeedback.lightImpact();
+                  widget.onPressed!();
+                }
+              : null,
+          child: AnimatedContainer(
+            key: _key,
+            duration: AppMotion.xs,
+            curve: Curves.easeOut,
+            transform: Matrix4.identity()
+              ..translateByDouble(_mousePos.dx, _mousePos.dy, 0.0, 1.0)
+              ..scaleByDouble(
+                hover ? 1.05 : 1.0,
+                hover ? 1.05 : 1.0,
+                1.0,
+                1.0,
               ),
+            transformAlignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+              boxShadow: [
+                if (hover)
+                  BoxShadow(
+                    color: base.withValues(alpha: 0.5),
+                    blurRadius: 12,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 4),
+                  ),
+              ],
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: !_enabled
+                    ? [
+                        base.withValues(alpha: 0.35),
+                        base.withValues(alpha: 0.28),
+                      ]
+                    : hover
+                        ? [base, base.withValues(alpha: 0.7)]
+                        : [base.withValues(alpha: 0.85), base],
+              ),
+              border: Border.all(
+                color: hover ? base : Colors.white24,
+                width: hover ? 2 : 1,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: dims.hPad,
+                vertical: dims.vPad,
+              ),
+              child: content,
             ),
           ),
         ),

@@ -7,6 +7,7 @@ import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 import '../data/projects_data.dart';
 import '../model/project.dart';
+import '../../../service/analytics_service.dart';
 import '../widget/screen_shell.dart';
 import '../widget/swipe_affordance.dart';
 
@@ -26,14 +27,14 @@ class ProjectsPage extends StatefulWidget {
   State<ProjectsPage> createState() => _ProjectsPageState();
 }
 
-class _ProjectsPageState extends State<ProjectsPage> {
+class _ProjectsPageState extends State<ProjectsPage>
+    with AutomaticKeepAliveClientMixin {
   int _selectedIndex = 0;
   final ScrollController _articleScrollController = ScrollController();
 
   @override
-  void initState() {
-    super.initState();
-  }
+  bool get wantKeepAlive => true;
+
 
   @override
   void dispose() {
@@ -62,6 +63,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   Future<void> _openProjectUrl(String url) async {
     SoundService.instance.playClick();
+    Analytics.ctaProject(kProjects[_selectedIndex].company);
     final uri = Uri.parse(url);
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok && mounted) {
@@ -81,6 +83,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // AutomaticKeepAliveClientMixin requirement
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
@@ -181,7 +184,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         }
                       },
                       child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 280),
+                        duration: AppMotion.switcher,
                         switchInCurve: Curves.easeOutCubic,
                         switchOutCurve: Curves.easeInCubic,
                         transitionBuilder: (child, animation) {
@@ -337,7 +340,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 44),
           child: AnimatedContainer(
-              duration: const Duration(milliseconds: 250),
+              duration: AppMotion.sm,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               decoration: BoxDecoration(
                 color: isSelected
@@ -347,7 +350,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 border: Border.all(
                   color: isSelected
                       ? scheme.primary.withValues(alpha: 0.8)
-                      : (isDark ? Colors.white.withValues(alpha: 0.08) : const Color(0xFFE2E8F0)),
+                      : (isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate200),
                   width: isSelected ? 1.5 : 1.0,
                 ),
                 boxShadow: isSelected
@@ -362,7 +365,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         ? []
                         : [
                             BoxShadow(
-                              color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                              color: AppColors.slate900.withValues(alpha: 0.04),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -375,14 +378,14 @@ class _ProjectsPageState extends State<ProjectsPage> {
               height: 30,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: isSelected ? scheme.primary : (isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
+                color: isSelected ? scheme.primary : (isDark ? Colors.white12 : AppColors.slate200),
                 borderRadius: BorderRadius.circular(AppRadius.sm),
               ),
               child: Text(
                 _ordinal(index),
                 style: TextStyle(
                   fontFamily: 'Courier',
-                  color: isSelected ? (isDark ? Colors.black : Colors.white) : (isDark ? Colors.white70 : const Color(0xFF475569)),
+                  color: isSelected ? (isDark ? Colors.black : Colors.white) : (isDark ? Colors.white70 : AppColors.slate600),
                   fontSize: 10.5,
                   fontWeight: FontWeight.w900,
                 ),
@@ -445,7 +448,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
               onTap: () => _selectProject(i),
               borderRadius: BorderRadius.circular(AppRadius.sm),
               child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
+                    duration: AppMotion.snap,
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                       color: _selectedIndex == i
@@ -455,7 +458,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       border: Border.all(
                         color: _selectedIndex == i
                             ? scheme.primary.withValues(alpha: 0.9)
-                            : (isDark ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFCBD5E1)),
+                            : (isDark ? Colors.white.withValues(alpha: 0.1) : AppColors.slate300),
                         width: _selectedIndex == i ? 1.4 : 0.8,
                       ),
                     ),
@@ -465,14 +468,14 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
-                            color: _selectedIndex == i ? scheme.primary : (isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
+                            color: _selectedIndex == i ? scheme.primary : (isDark ? Colors.white12 : AppColors.slate200),
                             borderRadius: BorderRadius.circular(AppRadius.xs),
                           ),
                           child: Text(
                             _ordinal(i),
                             style: TextStyle(
                               fontFamily: 'Courier',
-                              color: _selectedIndex == i ? (isDark ? Colors.black : Colors.white) : (isDark ? Colors.white70 : const Color(0xFF475569)),
+                              color: _selectedIndex == i ? (isDark ? Colors.black : Colors.white) : (isDark ? Colors.white70 : AppColors.slate600),
                               fontSize: 9.0,
                               fontWeight: FontWeight.w900,
                             ),
@@ -514,8 +517,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
         OutlinedButton.icon(
           onPressed: _prevProject,
           style: OutlinedButton.styleFrom(
-            foregroundColor: isDark ? Colors.white70 : const Color(0xFF334155),
-            side: BorderSide(color: isDark ? Colors.white24 : const Color(0xFFCBD5E1)),
+            foregroundColor: isDark ? Colors.white70 : AppColors.slate700,
+            side: BorderSide(color: isDark ? Colors.white24 : AppColors.slate300),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             minimumSize: const Size(0, 32),
           ),
@@ -532,11 +535,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 6),
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
+                    duration: AppMotion.snap,
                     width: _selectedIndex == i ? 18 : 6,
                     height: 5,
                     decoration: BoxDecoration(
-                      color: _selectedIndex == i ? scheme.primary : (isDark ? Colors.white24 : const Color(0xFFCBD5E1)),
+                      color: _selectedIndex == i ? scheme.primary : (isDark ? Colors.white24 : AppColors.slate300),
                       borderRadius: BorderRadius.circular(3),
                     ),
                   ),
@@ -547,8 +550,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
         OutlinedButton.icon(
           onPressed: _nextProject,
           style: OutlinedButton.styleFrom(
-            foregroundColor: isDark ? Colors.white70 : const Color(0xFF334155),
-            side: BorderSide(color: isDark ? Colors.white24 : const Color(0xFFCBD5E1)),
+            foregroundColor: isDark ? Colors.white70 : AppColors.slate700,
+            side: BorderSide(color: isDark ? Colors.white24 : AppColors.slate300),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             minimumSize: const Size(0, 32),
           ),
@@ -572,12 +575,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
               color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.white.withValues(alpha: 0.92),
               borderRadius: BorderRadius.circular(AppRadius.md),
               border: Border.all(
-                color: isDark ? scheme.primary.withValues(alpha: 0.5) : const Color(0xFFCBD5E1),
+                color: isDark ? scheme.primary.withValues(alpha: 0.5) : AppColors.slate300,
                 width: isDark ? 1.5 : 1.0,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: isDark ? Colors.black.withValues(alpha: 0.5) : const Color(0xFF0F172A).withValues(alpha: 0.06),
+                  color: isDark ? Colors.black.withValues(alpha: 0.5) : AppColors.slate900.withValues(alpha: 0.06),
                   blurRadius: 22,
                   offset: const Offset(0, 6),
                 ),
@@ -588,7 +591,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
               ],
             ),
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 350),
+              duration: AppMotion.md,
               switchInCurve: Curves.easeOutCubic,
               switchOutCurve: Curves.easeInCubic,
               transitionBuilder: (Widget child, Animation<double> animation) {
@@ -659,7 +662,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontFamily: 'Courier',
-                                  color: isDark ? Colors.white.withValues(alpha: 0.6) : const Color(0xFF64748B),
+                                  color: isDark ? Colors.white.withValues(alpha: 0.6) : AppColors.slate500,
                                   fontSize: 9.5,
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 1.0,
@@ -716,7 +719,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       project.name.toUpperCase(),
                       style: TextStyle(
                         fontFamily: 'Tenada',
-                        color: isDark ? Colors.white : const Color(0xFF0F172A),
+                        color: isDark ? Colors.white : AppColors.slate900,
                         fontSize: isDesktop ? 38 : 28,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 2.5,
@@ -733,7 +736,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: isDark ? Colors.white.withValues(alpha: 0.85) : const Color(0xFF334155),
+                      color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700,
                       fontSize: isDesktop ? 13 : 11.5,
                       height: 1.4,
                       fontWeight: FontWeight.w500,
@@ -747,7 +750,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     Text(
                       project.context!,
                       style: TextStyle(
-                        color: isDark ? Colors.white.withValues(alpha: 0.8) : const Color(0xFF334155),
+                        color: isDark ? Colors.white.withValues(alpha: 0.8) : AppColors.slate700,
                         fontSize: isDesktop ? 12.0 : 11.0,
                         height: 1.45,
                       ),
@@ -769,7 +772,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     _buildDossierRow('LESSON LEARNED', project.lessonsLearned!, const Color(0xFFFBBF24), isDesktop, isDark),
 
                   const SizedBox(height: 8),
-                  Container(height: 1, color: isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
+                  Container(height: 1, color: isDark ? Colors.white12 : AppColors.slate200),
                   const SizedBox(height: 16),
 
                   // 3. Key Highlights & Measurable Results
@@ -802,7 +805,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                 TextSpan(
                                   text: project.results!.first,
                                   style: TextStyle(
-                                    color: isDark ? Colors.white.withValues(alpha: 0.9) : const Color(0xFF1E293B),
+                                    color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate800,
                                     fontSize: isDesktop ? 11 : 9.5,
                                   ),
                                 ),
@@ -827,15 +830,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
                           decoration: BoxDecoration(
-                            color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFF1F5F9),
+                            color: isDark ? Colors.white.withValues(alpha: 0.06) : AppColors.slate100,
                             borderRadius: BorderRadius.circular(AppRadius.xs),
-                            border: Border.all(color: isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
+                            border: Border.all(color: isDark ? Colors.white12 : AppColors.slate200),
                           ),
                           child: Text(
                             tech.toUpperCase(),
                             style: TextStyle(
                               fontFamily: 'Courier',
-                              color: isDark ? scheme.primary : const Color(0xFF4338CA),
+                              color: isDark ? scheme.primary : AppColors.accentIndigo700,
                               fontSize: isDesktop ? 9.5 : 8.5,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 0.8,
@@ -875,7 +878,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
       margin: const EdgeInsets.only(bottom: 8),
       padding: EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
       decoration: BoxDecoration(
-        color: isDark ? Colors.black.withValues(alpha: 0.35) : const Color(0xFFF8FAFC),
+        color: isDark ? Colors.black.withValues(alpha: 0.35) : AppColors.slate50,
         borderRadius: BorderRadius.circular(AppRadius.chip),
         border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
       ),
@@ -925,7 +928,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       pipeline[i].toUpperCase(),
                       style: TextStyle(
                         fontFamily: 'Courier',
-                        color: isDark ? Colors.white.withValues(alpha: 0.95) : const Color(0xFF0F172A),
+                        color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate900,
                         fontSize: isDesktop ? 9.5 : 8.5,
                         fontWeight: FontWeight.w700,
                       ),
@@ -988,7 +991,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 Text(
                   value,
                   style: TextStyle(
-                    color: isDark ? Colors.white.withValues(alpha: 0.95) : const Color(0xFF1E293B),
+                    color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate800,
                     fontSize: isDesktop ? 12.5 : 11.0,
                     height: 1.45,
                   ),
@@ -1036,7 +1039,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                   TextSpan(
                     text: rest.trim(),
                     style: TextStyle(
-                      color: isDark ? Colors.white.withValues(alpha: 0.9) : const Color(0xFF334155),
+                      color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate700,
                       fontSize: isDesktop ? 12.0 : 10.5,
                       height: 1.35,
                     ),

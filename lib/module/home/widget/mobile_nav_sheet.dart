@@ -1,9 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../service/sound_service.dart';
 import '../../../theme/tokens.dart';
+import 'conditional_blur.dart';
 
 class NavSectionItem {
   final int index;
@@ -42,7 +42,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'COVER & PROFILE',
       subtitle: 'Senior Flutter & Android Architect',
       icon: Icons.home_rounded,
-      accentColor: Color(0xFF818CF8),
+      accentColor: AppColors.accentIndigo,
     ),
     NavSectionItem(
       index: 1,
@@ -122,7 +122,7 @@ class MobileNavSheet extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: isDark
-              ? const Color(0xFF0F172A).withValues(alpha: 0.95)
+              ? AppColors.slate900.withValues(alpha: 0.95)
               : Colors.white.withValues(alpha: 0.96),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           border: Border.all(
@@ -141,11 +141,10 @@ class MobileNavSheet extends StatelessWidget {
             ),
           ],
         ),
-        child: ClipRRect(
+        child: ConditionalBlur(
+          sigma: 20,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: SafeArea(
+          child: SafeArea(
               top: false,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -176,7 +175,7 @@ class MobileNavSheet extends StatelessWidget {
                             Text(
                               '// DIRECTORY',
                               style: TextStyle(
-                                color: const Color(0xFF818CF8),
+                                color: AppColors.accentIndigo,
                                 fontSize: 11,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 2.0,
@@ -187,7 +186,7 @@ class MobileNavSheet extends StatelessWidget {
                               'PORTFOLIO SECTIONS',
                               style: TextStyle(
                                 fontFamily: 'Tenada',
-                                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                                color: isDark ? Colors.white : AppColors.slate900,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.5,
@@ -206,13 +205,13 @@ class MobileNavSheet extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: isDark
                                   ? Colors.white.withValues(alpha: 0.08)
-                                  : const Color(0xFFF1F5F9),
+                                  : AppColors.slate100,
                               borderRadius: BorderRadius.circular(AppRadius.sm),
                             ),
                             child: Icon(
                               Icons.close_rounded,
                               size: 18,
-                              color: isDark ? Colors.white70 : const Color(0xFF0F172A),
+                              color: isDark ? Colors.white70 : AppColors.slate900,
                             ),
                           ),
                         ),
@@ -223,7 +222,7 @@ class MobileNavSheet extends StatelessWidget {
                   const SizedBox(height: 14),
                   Container(
                     height: 1,
-                    color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+                    color: isDark ? Colors.white12 : AppColors.slate200,
                   ),
 
                   // Section items
@@ -252,7 +251,7 @@ class MobileNavSheet extends StatelessWidget {
                           },
                           borderRadius: BorderRadius.circular(AppRadius.md),
                           child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 180),
+                            duration: AppMotion.chipHover,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 14,
                               vertical: 10,
@@ -262,14 +261,14 @@ class MobileNavSheet extends StatelessWidget {
                                   ? item.accentColor.withValues(alpha: isDark ? 0.18 : 0.12)
                                   : (isDark
                                       ? Colors.white.withValues(alpha: 0.04)
-                                      : const Color(0xFFF8FAFC)),
+                                      : AppColors.slate50),
                               borderRadius: BorderRadius.circular(AppRadius.md),
                               border: Border.all(
                                 color: isActive
                                     ? item.accentColor.withValues(alpha: isDark ? 0.6 : 0.45)
                                     : (isDark
                                         ? Colors.white.withValues(alpha: 0.07)
-                                        : const Color(0xFFE2E8F0)),
+                                        : AppColors.slate200),
                                 width: isActive ? 1.5 : 1.0,
                               ),
                             ),
@@ -284,7 +283,7 @@ class MobileNavSheet extends StatelessWidget {
                                         ? item.accentColor
                                         : (isDark
                                             ? Colors.white.withValues(alpha: 0.08)
-                                            : const Color(0xFFE2E8F0)),
+                                            : AppColors.slate200),
                                     borderRadius: BorderRadius.circular(AppRadius.chip),
                                   ),
                                   child: Center(
@@ -293,7 +292,7 @@ class MobileNavSheet extends StatelessWidget {
                                       style: TextStyle(
                                         color: isActive
                                             ? Colors.black
-                                            : (isDark ? Colors.white70 : const Color(0xFF475569)),
+                                            : (isDark ? Colors.white70 : AppColors.slate600),
                                         fontSize: 11,
                                         fontWeight: FontWeight.w900,
                                         fontFamily: 'Courier',
@@ -307,7 +306,7 @@ class MobileNavSheet extends StatelessWidget {
                                   size: 18,
                                   color: isActive
                                       ? item.accentColor
-                                      : (isDark ? Colors.white60 : const Color(0xFF64748B)),
+                                      : (isDark ? Colors.white60 : AppColors.slate500),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
@@ -319,10 +318,10 @@ class MobileNavSheet extends StatelessWidget {
                                         item.title,
                                         style: TextStyle(
                                           color: isActive
-                                              ? (isDark ? Colors.white : const Color(0xFF0F172A))
+                                              ? (isDark ? Colors.white : AppColors.slate900)
                                               : (isDark
                                                   ? Colors.white.withValues(alpha: 0.85)
-                                                  : const Color(0xFF1E293B)),
+                                                  : AppColors.slate800),
                                           fontSize: 13,
                                           fontWeight: FontWeight.w800,
                                           letterSpacing: 1.0,
@@ -334,7 +333,7 @@ class MobileNavSheet extends StatelessWidget {
                                         style: TextStyle(
                                           color: isActive
                                               ? item.accentColor.withValues(alpha: 0.9)
-                                              : (isDark ? Colors.white38 : const Color(0xFF64748B)),
+                                              : (isDark ? Colors.white38 : AppColors.slate500),
                                           fontSize: 10.5,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -361,7 +360,7 @@ class MobileNavSheet extends StatelessWidget {
                                   Icon(
                                     Icons.chevron_right,
                                     size: 16,
-                                    color: isDark ? Colors.white24 : const Color(0xFF94A3B8),
+                                    color: isDark ? Colors.white24 : AppColors.slate400,
                                   ),
                               ],
                             ),
@@ -373,7 +372,7 @@ class MobileNavSheet extends StatelessWidget {
 
                   Container(
                     height: 1,
-                    color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
+                    color: isDark ? Colors.white12 : AppColors.slate200,
                   ),
                   const SizedBox(height: 12),
 
@@ -436,7 +435,6 @@ class MobileNavSheet extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
@@ -473,13 +471,13 @@ class _SocialButton extends StatelessWidget {
             Icon(
               icon,
               size: 14,
-              color: isDark ? Colors.white60 : const Color(0xFF64748B),
+              color: isDark ? Colors.white60 : AppColors.slate500,
             ),
             const SizedBox(width: 4),
             Text(
               label,
               style: TextStyle(
-                color: isDark ? Colors.white70 : const Color(0xFF475569),
+                color: isDark ? Colors.white70 : AppColors.slate600,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
               ),

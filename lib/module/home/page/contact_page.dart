@@ -5,8 +5,13 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
+
+import '../../../service/analytics_service.dart';
+import '../../../service/cv_service.dart';
 import '../../../service/sound_service.dart';
 
+import '../widget/editorial_chip.dart';
 import '../widget/screen_shell.dart';
 
 /// Executive-grade editorial contact dossier and consulting portal.
@@ -29,7 +34,11 @@ class ContactPage extends StatefulWidget {
   State<ContactPage> createState() => _ContactPageState();
 }
 
-class _ContactPageState extends State<ContactPage> {
+class _ContactPageState extends State<ContactPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   Timer? _clockTimer;
   DateTime _now = DateTime.now();
 
@@ -72,6 +81,7 @@ class _ContactPageState extends State<ContactPage> {
 
   Future<void> _openMail({required String subject, String? body}) async {
     SoundService.instance.playClick();
+    Analytics.ctaEmail();
     final Uri mailUri = Uri(
       scheme: 'mailto',
       path: _email,
@@ -102,13 +112,13 @@ class _ContactPageState extends State<ContactPage> {
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        duration: const Duration(milliseconds: 2600),
+        duration: AppMotion.toast,
         margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
         content: Center(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF0F172A) : Colors.white,
+              color: isDark ? AppColors.slate900 : Colors.white,
               borderRadius: BorderRadius.circular(AppRadius.pill),
               border: Border.all(
                 color: _availabilityGreen.withValues(alpha: 0.65),
@@ -132,7 +142,7 @@ class _ContactPageState extends State<ContactPage> {
                   child: Text(
                     'Copied: $value',
                     style: TextStyle(
-                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      color: isDark ? Colors.white : AppColors.slate900,
                       fontSize: 12.5,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.3,
@@ -151,10 +161,14 @@ class _ContactPageState extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    // Redesigned flow — hero above the fold, recruiter-friendly path
+    // (email + CV) prioritized, dense sections regrouped into a
+    // scannable rhythm.
     final body = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -162,18 +176,25 @@ class _ContactPageState extends State<ContactPage> {
         _issueStrip(isDark),
         const SizedBox(height: AppSpacing.md),
         _telemetryBar(isDark),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: AppSpacing.xl),
         _headline(size, isDark),
         const SizedBox(height: AppSpacing.md),
         _lede(size, isDark),
         const SizedBox(height: AppSpacing.xl),
-        _engagementMatrix(isDark, isDesktop),
-        const SizedBox(height: AppSpacing.xl),
+        // 1. Primary CTA — send email, right up front.
+        _heroEmailCard(context, isDark, isDesktop),
+        const SizedBox(height: AppSpacing.lg),
+        // 2. Fast pre-filled subject lines beneath the primary CTA.
         _expressPresets(isDark),
         const SizedBox(height: AppSpacing.xl),
-        _channelsDossier(context, isDesktop, isDark),
+        // 3. Compact 2×2 channel grid (phone / whatsapp / linkedin / github).
+        _channelsGrid(context, isDesktop, isDark),
         const SizedBox(height: AppSpacing.xl),
+        // 4. Recruiter-priority CV download.
         _cvCard(isDark),
+        const SizedBox(height: AppSpacing.xl),
+        // 5. Deep dive — engagement scopes for hiring managers who want more.
+        _engagementMatrix(isDark, isDesktop),
         const SizedBox(height: AppSpacing.xl),
         _socialAndMastheadFooter(context, isDark),
       ],
@@ -215,7 +236,7 @@ class _ContactPageState extends State<ContactPage> {
             child: Text(
               'FEATURE 07 · DIRECT LINE & REACH OUT',
               style: TextStyle(
-                color: isDark ? _accentSoft : const Color(0xFF4F46E5),
+                color: isDark ? _accentSoft : AppColors.accentIndigo600,
                 fontSize: 11,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 4,
@@ -248,7 +269,7 @@ class _ContactPageState extends State<ContactPage> {
             borderRadius: BorderRadius.circular(AppRadius.pill),
             border: Border.all(
               color:
-                  border ?? (isDark ? Colors.white12 : const Color(0xFFE2E8F0)),
+                  border ?? (isDark ? Colors.white12 : AppColors.slate200),
               width: 1,
             ),
           ),
@@ -288,60 +309,16 @@ class _ContactPageState extends State<ContactPage> {
               ],
             ),
           ),
-          pill(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.access_time_rounded,
-                  size: 13,
-                  color: isDark ? Colors.white70 : const Color(0xFF64748B),
-                ),
-                const SizedBox(width: 6),
-                Flexible(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'AMMAN $displayHour:$minute $period (UTC+3)',
-                      style: TextStyle(
-                        color: isDark ? Colors.white : const Color(0xFF0F172A),
-                        fontSize: 10.5,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.6,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          EditorialChip(
+            label: 'AMMAN $displayHour:$minute $period (UTC+3)',
+            icon: Icons.access_time_rounded,
+            variant: ChipVariant.glass,
           ),
-          pill(
-            border: _accent.withValues(alpha: 0.4),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.flight_takeoff_rounded,
-                  size: 13,
-                  color: isDark ? _accentSoft : const Color(0xFFD97706),
-                ),
-                const SizedBox(width: 6),
-                Flexible(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'RELOCATING BRNO 2027',
-                      style: TextStyle(
-                        color: isDark ? _accentSoft : const Color(0xFFD97706),
-                        fontSize: 10.5,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.6,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          EditorialChip(
+            label: 'RELOCATING BRNO 2027',
+            icon: Icons.flight_takeoff_rounded,
+            variant: ChipVariant.filled,
+            tone: ChipTone.amber,
           ),
         ],
       ),
@@ -358,7 +335,7 @@ class _ContactPageState extends State<ContactPage> {
         fontSize: fs,
         fontWeight: FontWeight.w900,
         letterSpacing: 2.5,
-        color: isDark ? Colors.white : const Color(0xFF0F172A),
+        color: isDark ? Colors.white : AppColors.slate900,
         height: 1.05,
         shadows: isDark
             ? const [Shadow(color: Colors.black, blurRadius: 20)]
@@ -379,13 +356,283 @@ class _ContactPageState extends State<ContactPage> {
           style: TextStyle(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.88)
-                : const Color(0xFF475569),
+                : AppColors.slate600,
             fontSize: (size.width * 0.014).clamp(13.5, 17.0),
             height: 1.6,
             letterSpacing: 0.3,
           ),
         ),
       ),
+    );
+  }
+
+  // ===========================================================================
+  // HERO EMAIL CARD — primary CTA sitting right under the lede.
+  // ===========================================================================
+
+  Widget _heroEmailCard(BuildContext context, bool isDark, bool isDesktop) {
+    final l10n = AppLocalizations.of(context)!;
+    final ctaSend = FilledButton.icon(
+      onPressed: () => _openMail(
+        subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
+      ),
+      icon: const Icon(Icons.send_rounded, size: 16),
+      label: Text(l10n.contactSendEmailBtn),
+      style: FilledButton.styleFrom(
+        backgroundColor: _accent,
+        foregroundColor: Colors.black,
+        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+        textStyle: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w900,
+          letterSpacing: 1.4,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+        ),
+      ),
+    );
+
+    final ctaCopy = OutlinedButton.icon(
+      onPressed: () => _copy(context, _email, isDark: isDark),
+      icon: const Icon(Icons.content_copy_rounded, size: 14),
+      label: Text(l10n.contactCopyAddressBtn),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: isDark ? Colors.white : AppColors.slate900,
+        side: BorderSide(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.35)
+              : AppColors.slate300,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+        textStyle: const TextStyle(
+          fontSize: 11.5,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 1.2,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+        ),
+      ),
+    );
+
+    final actionRow = Wrap(spacing: 10, runSpacing: 8, children: [ctaSend, ctaCopy]);
+
+    final emailBlock = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          l10n.contactHeroEyebrow,
+          style: TextStyle(
+            color: isDark ? _accentSoft : AppColors.accentIndigo600,
+            fontSize: AppTypography.editorial,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 2,
+          ),
+        ),
+        const SizedBox(height: 8),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: SelectableText(
+            _email,
+            style: TextStyle(
+              color: isDark ? Colors.white : AppColors.slate900,
+              fontSize: isDesktop ? 22 : 16,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.3,
+            ),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.check_circle_rounded,
+                color: _availabilityGreen, size: 14),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                l10n.contactReplyWindow,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.7)
+                      : AppColors.slate500,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+
+    final card = Container(
+      padding: EdgeInsets.all(isDesktop ? AppSpacing.lg : AppSpacing.md),
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.black.withValues(alpha: 0.5)
+            : Colors.white.withValues(alpha: 0.95),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(
+          color: _accent.withValues(alpha: isDark ? 0.45 : 0.35),
+          width: 1.4,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: _accent.withValues(alpha: isDark ? 0.10 : 0.06),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: isDesktop
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(child: emailBlock),
+                const SizedBox(width: AppSpacing.lg),
+                actionRow,
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                emailBlock,
+                const SizedBox(height: AppSpacing.md),
+                actionRow,
+              ],
+            ),
+    );
+
+    return card;
+  }
+
+  // ===========================================================================
+  // COMPACT CHANNEL GRID — phone / whatsapp / linkedin / github as 2x2 tiles.
+  // ===========================================================================
+
+  Widget _channelsGrid(BuildContext context, bool isDesktop, bool isDark) {
+    final channels = [
+      _ChannelData(
+        badge: '📱 DIRECT LINE',
+        badgeColor: _sky,
+        label: 'PHONE',
+        value: _phone,
+        icon: Icons.phone_iphone_rounded,
+        primaryLabel: 'Call',
+        primaryAction: () {
+          Analytics.ctaPhoneCall();
+          _open('tel:$_phoneRaw');
+        },
+        secondaryLabel: 'WhatsApp',
+        secondaryAction: () {
+          Analytics.ctaWhatsapp();
+          _open(_whatsAppUrl);
+        },
+        accent: _sky,
+      ),
+      _ChannelData(
+        badge: '💬 QUICK CHAT',
+        badgeColor: _availabilityGreen,
+        label: 'WHATSAPP',
+        value: 'wa.me/962787032264',
+        icon: Icons.chat_bubble_rounded,
+        primaryLabel: 'Open',
+        primaryAction: () {
+          Analytics.ctaWhatsapp();
+          _open(_whatsAppUrl);
+        },
+        secondaryLabel: 'Copy',
+        secondaryAction: () => _copy(context, _whatsAppUrl, isDark: isDark),
+        accent: _availabilityGreen,
+      ),
+      _ChannelData(
+        badge: '🌐 500+ NETWORK',
+        badgeColor: _indigo,
+        label: 'LINKEDIN',
+        value: 'in/$_linkedInHandle',
+        icon: Icons.link_rounded,
+        primaryLabel: 'Profile',
+        primaryAction: () {
+          Analytics.ctaLinkedIn();
+          _open(_linkedInUrl);
+        },
+        secondaryLabel: 'Copy',
+        secondaryAction: () => _copy(context, _linkedInUrl, isDark: isDark),
+        accent: _indigo,
+      ),
+      _ChannelData(
+        badge: '💻 REPOSITORIES',
+        badgeColor: _accent,
+        label: 'GITHUB',
+        value: '@$_githubHandle',
+        icon: Icons.code_rounded,
+        primaryLabel: 'Visit',
+        primaryAction: () {
+          Analytics.ctaGithub();
+          _open(_githubUrl);
+        },
+        secondaryLabel: 'Copy',
+        secondaryAction: () => _copy(context, _githubUrl, isDark: isDark),
+        accent: _accent,
+      ),
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 4,
+              height: 18,
+              decoration: BoxDecoration(
+                color: _sky,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '// DIRECT COMMUNICATION CHANNELS',
+                  style: TextStyle(
+                    color: isDark ? Colors.white70 : AppColors.slate500,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2.2,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final tileW = isDesktop
+                ? (constraints.maxWidth - AppSpacing.md) / 2
+                : constraints.maxWidth;
+            return Wrap(
+              spacing: AppSpacing.md,
+              runSpacing: AppSpacing.md,
+              children: [
+                for (final c in channels)
+                  SizedBox(
+                    width: tileW,
+                    child: _ChannelTile(data: c, isDark: isDark),
+                  ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -463,7 +710,7 @@ class _ContactPageState extends State<ContactPage> {
                 child: Text(
                   '// ENGAGEMENT SCOPES & COLLABORATION MODES',
                   style: TextStyle(
-                    color: isDark ? Colors.white70 : const Color(0xFF64748B),
+                    color: isDark ? Colors.white70 : AppColors.slate500,
                     fontSize: 11,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 2.2,
@@ -530,12 +777,12 @@ class _ContactPageState extends State<ContactPage> {
       decoration: BoxDecoration(
         color: isDark
             ? Colors.white.withValues(alpha: 0.03)
-            : const Color(0xFFF1F5F9),
+            : AppColors.slate100,
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(
           color: isDark
               ? Colors.white.withValues(alpha: 0.08)
-              : const Color(0xFFE2E8F0),
+              : AppColors.slate200,
           width: 1,
         ),
       ),
@@ -573,150 +820,19 @@ class _ContactPageState extends State<ContactPage> {
             runSpacing: 8,
             children: [
               for (final p in presets)
-                InkWell(
-                  onTap: () => _openMail(subject: p.$2, body: p.$3),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 7),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.06)
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(AppRadius.pill),
-                      border: Border.all(
-                        color: isDark
-                            ? Colors.white.withValues(alpha: 0.16)
-                            : const Color(0xFFCBD5E1),
-                        width: 1,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            p.$1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color:
-                                  isDark ? Colors.white : const Color(0xFF0F172A),
-                              fontSize: 11.5,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        Icon(
-                          Icons.arrow_forward_rounded,
-                          size: 12,
-                          color: isDark ? _accentSoft : const Color(0xFF6366F1),
-                        ),
-                      ],
-                    ),
+                EditorialChip(
+                  label: p.$1,
+                  variant: ChipVariant.glass,
+                  tone: ChipTone.primary,
+                  trailing: Icon(
+                    Icons.arrow_forward_rounded,
+                    size: 12,
+                    color: isDark ? _accentSoft : AppColors.accentIndigoDeep,
                   ),
+                  onTap: () => _openMail(subject: p.$2, body: p.$3),
                 ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  // ===========================================================================
-  // SECTION 4: DIRECT EXECUTIVE COMMUNICATION CHANNELS
-  // ===========================================================================
-
-  Widget _channelsDossier(
-      BuildContext context, bool isDesktop, bool isDark) {
-    final channels = [
-      _ChannelData(
-        badge: '⚡ FASTEST REPLY · WITHIN 24H',
-        badgeColor: _availabilityGreen,
-        label: 'DIRECT OFFICIAL EMAIL',
-        value: _email,
-        icon: Icons.alternate_email_rounded,
-        primaryLabel: 'Send Email',
-        primaryAction: () => _openMail(
-          subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
-        ),
-        secondaryLabel: 'Copy Address',
-        secondaryAction: () => _copy(context, _email, isDark: isDark),
-        accent: _accent,
-      ),
-      _ChannelData(
-        badge: '📱 DIRECT CELL & WHATSAPP',
-        badgeColor: _sky,
-        label: 'TELEPHONE & WHATSAPP LINE',
-        value: _phone,
-        icon: Icons.phone_iphone_rounded,
-        primaryLabel: 'Direct Call',
-        primaryAction: () => _open('tel:$_phoneRaw'),
-        secondaryLabel: 'WhatsApp Chat',
-        secondaryAction: () => _open(_whatsAppUrl),
-        accent: _sky,
-      ),
-      _ChannelData(
-        badge: '🌐 500+ VERIFIED NETWORK & RECS',
-        badgeColor: _indigo,
-        label: 'LINKEDIN EXECUTIVE PROFILE',
-        value: 'in/$_linkedInHandle',
-        icon: Icons.link_rounded,
-        primaryLabel: 'Open Profile',
-        primaryAction: () => _open(_linkedInUrl),
-        secondaryLabel: 'Copy URL',
-        secondaryAction: () => _copy(context, _linkedInUrl, isDark: isDark),
-        accent: _indigo,
-      ),
-      _ChannelData(
-        badge: '💻 REPOSITORIES & OSS ARCHITECTURE',
-        badgeColor: _accent,
-        label: 'GITHUB CODEBASE & ARTIFACTS',
-        value: 'github.com/$_githubHandle',
-        icon: Icons.code_rounded,
-        primaryLabel: 'View GitHub',
-        primaryAction: () => _open(_githubUrl),
-        secondaryLabel: 'Copy URL',
-        secondaryAction: () => _copy(context, _githubUrl, isDark: isDark),
-        accent: _accent,
-      ),
-    ];
-
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.black.withValues(alpha: 0.55)
-            : Colors.white.withValues(alpha: 0.94),
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.14)
-              : const Color(0xFFE2E8F0),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-                ? Colors.black.withValues(alpha: 0.35)
-                : Colors.black.withValues(alpha: 0.05),
-            blurRadius: 32,
-            offset: const Offset(0, 14),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          for (var i = 0; i < channels.length; i++) ...[
-            _ChannelCardTile(data: channels[i], isDark: isDark),
-            if (i < channels.length - 1)
-              Container(
-                height: 1,
-                margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.08)
-                    : const Color(0xFFE2E8F0),
-              ),
-          ],
         ],
       ),
     );
@@ -731,13 +847,13 @@ class _ContactPageState extends State<ContactPage> {
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: isDark
-            ? const Color(0xFF0F172A).withValues(alpha: 0.7)
+            ? AppColors.slate900.withValues(alpha: 0.7)
             : Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(
           color: isDark
               ? _accent.withValues(alpha: 0.4)
-              : const Color(0xFFE2E8F0),
+              : AppColors.slate200,
           width: 1.5,
         ),
         boxShadow: [
@@ -785,7 +901,7 @@ class _ContactPageState extends State<ContactPage> {
                   Text(
                     'PDF · 240 KB',
                     style: TextStyle(
-                      color: isDark ? Colors.white60 : const Color(0xFF64748B),
+                      color: isDark ? Colors.white60 : AppColors.slate500,
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                     ),
@@ -796,7 +912,7 @@ class _ContactPageState extends State<ContactPage> {
               Text(
                 'Executive Curriculum Vitae & Portfolio Dossier',
                 style: TextStyle(
-                  color: isDark ? Colors.white : const Color(0xFF0F172A),
+                  color: isDark ? Colors.white : AppColors.slate900,
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.3,
@@ -808,7 +924,7 @@ class _ContactPageState extends State<ContactPage> {
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)
-                      : const Color(0xFF64748B),
+                      : AppColors.slate500,
                   fontSize: 12.5,
                   height: 1.4,
                 ),
@@ -822,9 +938,8 @@ class _ContactPageState extends State<ContactPage> {
             children: [
               ElevatedButton.icon(
                 onPressed: () async {
-                  SoundService.instance.playClick();
-                  await launchUrl(Uri.parse('cv.pdf'),
-                      mode: LaunchMode.externalApplication);
+                  Analytics.ctaCvDownload();
+                  await CvService.open(context);
                 },
                 icon: const Icon(Icons.download_rounded, size: 16),
                 label: const Text(
@@ -848,9 +963,8 @@ class _ContactPageState extends State<ContactPage> {
               ),
               OutlinedButton.icon(
                 onPressed: () async {
-                  SoundService.instance.playClick();
-                  await launchUrl(Uri.parse('cv.pdf'),
-                      mode: LaunchMode.externalApplication);
+                  Analytics.ctaCvDownload();
+                  await CvService.open(context);
                 },
                 icon: const Icon(Icons.open_in_new_rounded, size: 14),
                 label: const Text(
@@ -863,11 +977,11 @@ class _ContactPageState extends State<ContactPage> {
                 ),
                 style: OutlinedButton.styleFrom(
                   foregroundColor:
-                      isDark ? Colors.white : const Color(0xFF0F172A),
+                      isDark ? Colors.white : AppColors.slate900,
                   side: BorderSide(
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.3)
-                        : const Color(0xFFCBD5E1),
+                        : AppColors.slate300,
                     width: 1,
                   ),
                   padding: const EdgeInsets.symmetric(
@@ -914,7 +1028,7 @@ class _ContactPageState extends State<ContactPage> {
             height: 1,
             color: isDark
                 ? Colors.white.withValues(alpha: 0.15)
-                : const Color(0xFFCBD5E1),
+                : AppColors.slate300,
           ),
         );
 
@@ -927,7 +1041,7 @@ class _ContactPageState extends State<ContactPage> {
               style: TextStyle(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.72)
-                    : const Color(0xFF64748B),
+                    : AppColors.slate500,
                 fontSize: 9.5,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 2.2,
@@ -937,7 +1051,7 @@ class _ContactPageState extends State<ContactPage> {
             Text(
               value,
               style: TextStyle(
-                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                color: isDark ? Colors.white : AppColors.slate900,
                 fontSize: 11.5,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.0,
@@ -980,12 +1094,12 @@ class _ContactPageState extends State<ContactPage> {
             decoration: BoxDecoration(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.04)
-                  : const Color(0xFFF1F5F9),
+                  : AppColors.slate100,
               borderRadius: BorderRadius.circular(AppRadius.pill),
               border: Border.all(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.1)
-                    : const Color(0xFFE2E8F0),
+                    : AppColors.slate200,
                 width: 1,
               ),
             ),
@@ -1001,7 +1115,7 @@ class _ContactPageState extends State<ContactPage> {
                   'VERIFIED SENIOR MOBILE ARCHITECT · DIRECT COMMUNICATION',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: isDark ? Colors.white70 : const Color(0xFF475569),
+                    color: isDark ? Colors.white70 : AppColors.slate600,
                     fontSize: 9.5,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
@@ -1024,7 +1138,7 @@ class _ContactPageState extends State<ContactPage> {
                   child: Text(
                     '// COLOPHON & DISPATCH',
                     style: TextStyle(
-                      color: isDark ? Colors.white.withValues(alpha: 0.60) : const Color(0xFF94A3B8),
+                      color: isDark ? Colors.white.withValues(alpha: 0.60) : AppColors.slate400,
                       fontSize: 10,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2,
@@ -1055,7 +1169,7 @@ class _ContactPageState extends State<ContactPage> {
                     border: Border.all(
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.1)
-                          : const Color(0xFFE2E8F0),
+                          : AppColors.slate200,
                     ),
                   ),
                   child: b,
@@ -1075,7 +1189,7 @@ class _ContactPageState extends State<ContactPage> {
                 height: 28,
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.2)
-                    : const Color(0xFFCBD5E1),
+                    : AppColors.slate300,
               ),
               blocks[1],
               Container(
@@ -1083,7 +1197,7 @@ class _ContactPageState extends State<ContactPage> {
                 height: 28,
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.2)
-                    : const Color(0xFFCBD5E1),
+                    : AppColors.slate300,
               ),
               blocks[2],
             ],
@@ -1140,7 +1254,7 @@ class _BentoTrackCardState extends State<_BentoTrackCard> {
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: AppMotion.snap,
         curve: Curves.easeOut,
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
@@ -1148,14 +1262,14 @@ class _BentoTrackCardState extends State<_BentoTrackCard> {
               ? (_hover
                   ? Colors.white.withValues(alpha: 0.08)
                   : Colors.white.withValues(alpha: 0.04))
-              : (_hover ? Colors.white : const Color(0xFFF8FAFC)),
+              : (_hover ? Colors.white : AppColors.slate50),
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
             color: _hover
                 ? t.accent.withValues(alpha: 0.6)
                 : (widget.isDark
                     ? Colors.white.withValues(alpha: 0.1)
-                    : const Color(0xFFE2E8F0)),
+                    : AppColors.slate200),
             width: 1.2,
           ),
           boxShadow: [
@@ -1216,7 +1330,7 @@ class _BentoTrackCardState extends State<_BentoTrackCard> {
             Text(
               t.title,
               style: TextStyle(
-                color: widget.isDark ? Colors.white : const Color(0xFF0F172A),
+                color: widget.isDark ? Colors.white : AppColors.slate900,
                 fontSize: 14.5,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 0.3,
@@ -1228,7 +1342,7 @@ class _BentoTrackCardState extends State<_BentoTrackCard> {
               style: TextStyle(
                 color: widget.isDark
                     ? Colors.white.withValues(alpha: 0.72)
-                    : const Color(0xFF64748B),
+                    : AppColors.slate500,
                 fontSize: 11.5,
                 height: 1.45,
               ),
@@ -1288,200 +1402,163 @@ class _ChannelData {
   });
 }
 
-class _ChannelCardTile extends StatefulWidget {
+
+/// Compact tile shown in the 2x2 `_channelsGrid`. Combines an accent
+/// icon puck, label + value, and two inline actions (primary / secondary).
+class _ChannelTile extends StatefulWidget {
   final _ChannelData data;
   final bool isDark;
 
-  const _ChannelCardTile({
-    required this.data,
-    required this.isDark,
-  });
+  const _ChannelTile({required this.data, required this.isDark});
 
   @override
-  State<_ChannelCardTile> createState() => _ChannelCardTileState();
+  State<_ChannelTile> createState() => _ChannelTileState();
 }
 
-class _ChannelCardTileState extends State<_ChannelCardTile> {
+class _ChannelTileState extends State<_ChannelTile> {
   bool _hover = false;
 
   @override
   Widget build(BuildContext context) {
     final d = widget.data;
+    final isDark = widget.isDark;
 
-    final icon = Container(
-      width: 44,
-      height: 44,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: d.accent.withValues(alpha: _hover ? 0.22 : 0.12),
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(
-          color: d.accent.withValues(alpha: 0.45),
-          width: 1,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: AppMotion.chipHover,
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: isDark
+              ? (_hover
+                  ? Colors.white.withValues(alpha: 0.06)
+                  : Colors.white.withValues(alpha: 0.03))
+              : (_hover ? Colors.white : AppColors.slate50),
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          border: Border.all(
+            color: _hover
+                ? d.accent.withValues(alpha: 0.55)
+                : (isDark
+                    ? Colors.white.withValues(alpha: 0.10)
+                    : AppColors.slate200),
+            width: _hover ? 1.4 : 1,
+          ),
+          boxShadow: [
+            if (_hover)
+              BoxShadow(
+                color: d.accent.withValues(alpha: isDark ? 0.18 : 0.10),
+                blurRadius: 18,
+                offset: const Offset(0, 6),
+              ),
+          ],
         ),
-      ),
-      child: Icon(d.icon, size: 20, color: d.accent),
-    );
-
-    final details = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
-          runSpacing: 3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              d.label,
-              style: TextStyle(
-                color: d.accent,
-                fontSize: 9.5,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 2.0,
-              ),
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: d.accent.withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(AppRadius.smd),
+                    border: Border.all(
+                      color: d.accent.withValues(alpha: 0.45),
+                    ),
+                  ),
+                  child: Icon(d.icon, size: 20, color: d.accent),
+                ),
+                const SizedBox(width: AppSpacing.smd),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        d.label,
+                        style: TextStyle(
+                          color: d.accent,
+                          fontSize: AppTypography.editorialSm,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        d.value,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: isDark ? Colors.white : AppColors.slate900,
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(
-                color: d.badgeColor.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(3),
-                border: Border.all(
-                  color: d.badgeColor.withValues(alpha: 0.35),
-                  width: 0.8,
+            const SizedBox(height: AppSpacing.smd),
+            Row(
+              children: [
+                Expanded(
+                  child: FilledButton(
+                    onPressed: d.primaryAction,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: d.accent,
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                      ),
+                    ),
+                    child: Text(
+                      d.primaryLabel.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              child: Text(
-                d.badge,
-                style: TextStyle(
-                  color: d.badgeColor,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.8,
+                const SizedBox(width: AppSpacing.sm),
+                OutlinedButton(
+                  onPressed: d.secondaryAction,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor:
+                        isDark ? Colors.white : AppColors.slate900,
+                    side: BorderSide(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.28)
+                          : AppColors.slate300,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                    ),
+                  ),
+                  child: Text(
+                    d.secondaryLabel.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         ),
-        const SizedBox(height: 3),
-        Text(
-          d.value,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-          style: TextStyle(
-            color: widget.isDark ? Colors.white : const Color(0xFF0F172A),
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 0.4,
-          ),
-        ),
-      ],
-    );
-
-    final primaryBtn = ElevatedButton(
-      onPressed: d.primaryAction,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: d.accent,
-        foregroundColor: Colors.black,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        elevation: 0,
       ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(
-          d.primaryLabel.toUpperCase(),
-          style: const TextStyle(
-            fontSize: 10.5,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1.2,
-          ),
-        ),
-      ),
-    );
-
-    final secondaryBtn = OutlinedButton(
-      onPressed: d.secondaryAction,
-      style: OutlinedButton.styleFrom(
-        foregroundColor: widget.isDark ? Colors.white : const Color(0xFF0F172A),
-        side: BorderSide(
-          color: widget.isDark
-              ? Colors.white.withValues(alpha: 0.35)
-              : const Color(0xFFCBD5E1),
-          width: 1,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-      ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(
-          d.secondaryLabel.toUpperCase(),
-          style: const TextStyle(
-            fontSize: 10.5,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1.2,
-          ),
-        ),
-      ),
-    );
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final narrow = constraints.maxWidth < 460;
-
-        return MouseRegion(
-          onEnter: (_) => setState(() => _hover = true),
-          onExit: (_) => setState(() => _hover = false),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            curve: Curves.easeOut,
-            padding: EdgeInsets.symmetric(
-              horizontal: _hover ? AppSpacing.md : AppSpacing.smd,
-              vertical: AppSpacing.md,
-            ),
-            color: _hover
-                ? d.accent.withValues(alpha: 0.04)
-                : Colors.transparent,
-            child: narrow
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        children: [
-                          icon,
-                          const SizedBox(width: AppSpacing.md),
-                          Expanded(child: details),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.smd),
-                      Row(
-                        children: [
-                          Expanded(child: primaryBtn),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: secondaryBtn),
-                        ],
-                      ),
-                    ],
-                  )
-                : Row(
-                    children: [
-                      icon,
-                      const SizedBox(width: AppSpacing.md),
-                      Expanded(child: details),
-                      const SizedBox(width: AppSpacing.md),
-                      primaryBtn,
-                      const SizedBox(width: AppSpacing.sm),
-                      secondaryBtn,
-                    ],
-                  ),
-          ),
-        );
-      },
     );
   }
 }
@@ -1512,11 +1589,11 @@ class _SocialChip extends StatelessWidget {
         ),
       ),
       style: OutlinedButton.styleFrom(
-        foregroundColor: isDark ? Colors.white : const Color(0xFF0F172A),
+        foregroundColor: isDark ? Colors.white : AppColors.slate900,
         side: BorderSide(
           color: isDark
               ? Colors.white.withValues(alpha: 0.35)
-              : const Color(0xFFCBD5E1),
+              : AppColors.slate300,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         shape: RoundedRectangleBorder(
@@ -1538,7 +1615,7 @@ class _PulsingDotState extends State<_PulsingDot>
     with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1500),
+    duration: AppMotion.pulse,
   );
 
   @override
@@ -1557,36 +1634,46 @@ class _PulsingDotState extends State<_PulsingDot>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _c,
-      builder: (_, __) {
-        final t = _c.value;
-        return SizedBox(
-          width: 14,
-          height: 14,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                width: 8 + 6 * t,
-                height: 8 + 6 * t,
-                decoration: BoxDecoration(
-                  color: widget.color.withValues(alpha: 0.35 * (1 - t)),
-                  shape: BoxShape.circle,
+    // Static inner dot is cached via the AnimatedBuilder `child:` param so
+    // it doesn't re-decorate every frame — only the growing halo does.
+    // RepaintBoundary isolates this from ancestor repaints on scroll.
+    final staticDot = Container(
+      width: 6,
+      height: 6,
+      decoration: BoxDecoration(
+        color: widget.color,
+        shape: BoxShape.circle,
+      ),
+    );
+
+    return ExcludeSemantics(
+      child: RepaintBoundary(
+      child: SizedBox(
+        width: 14,
+        height: 14,
+        child: AnimatedBuilder(
+          animation: _c,
+          child: staticDot,
+          builder: (_, child) {
+            final t = _c.value;
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 8 + 6 * t,
+                  height: 8 + 6 * t,
+                  decoration: BoxDecoration(
+                    color: widget.color.withValues(alpha: 0.35 * (1 - t)),
+                    shape: BoxShape.circle,
+                  ),
                 ),
-              ),
-              Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  color: widget.color,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+                child!,
+              ],
+            );
+          },
+        ),
+      ),
+      ),
     );
   }
 }

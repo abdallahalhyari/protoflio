@@ -2,12 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/locale_controller.dart';
 
 import '../../theme/tokens.dart';
 import '../../theme_controller.dart';
+import '../../service/analytics_service.dart';
+import '../../service/cv_service.dart';
 import '../../service/sound_service.dart';
 import '../../service/url_sync_service.dart';
 import 'page/intro_page.dart';
@@ -75,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.didChangeDependencies();
     precacheImage(const AssetImage('assets/background.webp'), context);
     precacheImage(const AssetImage('assets/my_image.png'), context);
+    precacheImage(const AssetImage('assets/hat.png'), context);
   }
 
   void _onScroll() {
@@ -87,14 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
       UrlSyncService.instance.updateHash(hash);
       final labels = TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {
-        try {
-          FirebaseAnalytics.instance.logScreenView(
-            screenName: labels[page],
-            screenClass: 'HomeScreen',
-          );
-        } catch (_) {
-          // Firebase might not be initialized in tests
-        }
+        Analytics.screen(labels[page], className: 'HomeScreen');
       }
     }
   }
@@ -159,20 +154,39 @@ class _HomeScreenState extends State<HomeScreen> {
     if (target == 0 && _mobileScrollController.hasClients) {
       _mobileScrollController.animateTo(
         0,
-        duration: const Duration(milliseconds: 600),
+        duration: AppMotion.sectionScroll,
         curve: Curves.easeInOutCubic,
       );
       return;
     }
+    _animateSectionIntoView(target);
+  }
+
+  /// Scrolls the target section top to sit *below* the sticky MobileAppBar
+  /// (~60px) — plain `ensureVisible` would tuck the section title under it.
+  void _animateSectionIntoView(int target) {
     final keyContext = _sectionKeys[target].currentContext;
-    if (keyContext != null) {
-      Scrollable.ensureVisible(
-        keyContext,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeInOutCubic,
-        alignment: 0.0,
-      );
-    }
+    if (keyContext == null || !_mobileScrollController.hasClients) return;
+    final box = keyContext.findRenderObject() as RenderBox?;
+    if (box == null || !box.hasSize || !box.attached) return;
+
+    final currentOffset = _mobileScrollController.offset;
+    // Section top in viewport coordinates.
+    final topInViewport = box.localToGlobal(Offset.zero).dy;
+    // Bar clearance = app bar (60) + top safe-area inset.
+    final barClearance = MobileAppBar.kBarHeight +
+        MediaQuery.paddingOf(context).top;
+    final delta = topInViewport - barClearance;
+    final targetOffset = (currentOffset + delta).clamp(
+      _mobileScrollController.position.minScrollExtent,
+      _mobileScrollController.position.maxScrollExtent,
+    );
+
+    _mobileScrollController.animateTo(
+      targetOffset,
+      duration: AppMotion.sectionScroll,
+      curve: Curves.easeInOutCubic,
+    );
   }
 
   void _goTo(int page, {bool syncUrl = true}) {
@@ -211,15 +225,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _downloadResume() async {
-    SoundService.instance.playClick();
-    await launchUrl(Uri.parse('cv.pdf'), mode: LaunchMode.externalApplication);
+    if (!mounted) return;
+    await CvService.open(context);
   }
 
   // Wheel scroll — accumulate delta so a smooth trackpad flick advances
   // exactly one page per _kWheelThreshold pixels of intent, but only when
   // inner scrollable viewports (e.g. project dossier, contact page) are at their edges.
   static const double _kWheelThreshold = 80;
-  static const Duration _kWheelResetGap = Duration(milliseconds: 220);
+  static const Duration _kWheelResetGap = AppMotion.wheelResetGap;
   double _wheelAccum = 0;
   DateTime _lastWheelAt = DateTime.fromMillisecondsSinceEpoch(0);
 
@@ -459,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, locale, _) {
                           return PopupMenuButton<String>(
                             tooltip: 'Change Language',
-                            icon: Icon(Icons.language, color: dark ? Colors.white : const Color(0xFF0F172A)),
+                            icon: Icon(Icons.language, color: dark ? Colors.white : AppColors.slate900),
                             onSelected: (val) {
                               HapticFeedback.lightImpact();
                               LocaleController.changeLocale(val);
@@ -486,7 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           tooltip: dark ? 'Switch to light' : 'Switch to dark',
                           icon: Icon(
                             dark ? Icons.light_mode : Icons.dark_mode,
-                            color: dark ? Colors.white : const Color(0xFF0F172A),
+                            color: dark ? Colors.white : AppColors.slate900,
                           ),
                           onPressed: () {
                             HapticFeedback.lightImpact();
@@ -510,8 +524,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: Icon(
                               enabled ? Icons.volume_up : Icons.volume_off,
                               color: enabled
-                                  ? (dark ? Colors.white : const Color(0xFF0F172A))
-                                  : (dark ? Colors.white.withValues(alpha: 0.60) : const Color(0xFF94A3B8)),
+                                  ? (dark ? Colors.white : AppColors.slate900)
+                                  : (dark ? Colors.white.withValues(alpha: 0.60) : AppColors.slate400),
                               size: 18,
                             ),
                             onPressed: () {
@@ -527,72 +541,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        // FOLIO folio bar — only shows the discrete page number, so it
+        // rebuilds from the enclosing setState(_pageIndex) rather than
+        // subscribing to _controller and thrashing on every scroll frame.
         Positioned(
           bottom: 12,
           left: 16,
-          child: SafeArea(
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (context, _) {
-                final labels = TopNav.getLabels(context);
-                final currentLabel = (_pageIndex >= 0 && _pageIndex < labels.length)
-                    ? labels[_pageIndex].toUpperCase()
-                    : '';
-                final isDark = Theme.of(context).brightness == Brightness.dark;
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.black.withValues(alpha: 0.6)
-                        : Colors.white.withValues(alpha: 0.88),
-                    borderRadius: BorderRadius.circular(AppRadius.xs),
-                    border: Border.all(
-                      color: isDark ? Colors.white12 : const Color(0xFFE2E8F0),
-                    ),
-                    boxShadow: isDark
-                        ? null
-                        : [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.05),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'FOLIO ${(_pageIndex + 1).toString().padLeft(2, '0')} / ${_pageCount.toString().padLeft(2, '0')}',
-                        style: TextStyle(
-                          color: isDark ? Colors.white70 : const Color(0xFF64748B),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Container(
-                        width: 1,
-                        height: 10,
-                        color: isDark ? Colors.white24 : const Color(0xFFCBD5E1),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        currentLabel,
-                        style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF0F172A),
-                          fontSize: 10,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
+          child: SafeArea(child: RepaintBoundary(child: _buildFolioBar(context))),
         ),
         Positioned(
           bottom: 12,
@@ -603,38 +558,7 @@ class _HomeScreenState extends State<HomeScreen> {
           top: 0,
           left: 0,
           right: 0,
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              double progress = 0.0;
-              if (_controller.hasClients &&
-                  _controller.positions.length == 1 &&
-                  _controller.position.haveDimensions) {
-                progress = (_controller.page ?? 0) / (_pageCount - 1);
-              }
-              return Semantics(
-                label: 'Portfolio progress',
-                value:
-                    'Page ${_pageIndex + 1} of $_pageCount, ${(progress * 100).round()} percent',
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    height: 3,
-                    width: MediaQuery.sizeOf(context).width * progress,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
-                          blurRadius: 4,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
+          child: RepaintBoundary(child: _buildProgressBar(context)),
         ),
       ],
     );
@@ -667,7 +591,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   isContinuousMobile: true,
                 ),
               ),
-              _buildMobileSectionDivider('02', 'SELECTED WORK'),
+              _buildMobileSectionDivider('02', _dividerLabelFor(1)),
               KeyedSubtree(
                 key: _sectionKeys[1],
                 child: ProjectsPage(
@@ -676,7 +600,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   isContinuousMobile: true,
                 ),
               ),
-              _buildMobileSectionDivider('03', 'ARCHITECTURE'),
+              _buildMobileSectionDivider('03', _dividerLabelFor(2)),
               KeyedSubtree(
                 key: _sectionKeys[2],
                 child: EngineeringPage(
@@ -685,7 +609,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   isContinuousMobile: true,
                 ),
               ),
-              _buildMobileSectionDivider('04', 'CAREER TRAJECTORY'),
+              _buildMobileSectionDivider('04', _dividerLabelFor(3)),
               KeyedSubtree(
                 key: _sectionKeys[3],
                 child: ExperiencePage(
@@ -694,7 +618,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   isContinuousMobile: true,
                 ),
               ),
-              _buildMobileSectionDivider('05', 'SKILLS & STACK'),
+              _buildMobileSectionDivider('05', _dividerLabelFor(4)),
               KeyedSubtree(
                 key: _sectionKeys[4],
                 child: SkillsPage(
@@ -703,12 +627,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   isContinuousMobile: true,
                 ),
               ),
-              _buildMobileSectionDivider('06', 'ROLES & ADVISORY'),
+              _buildMobileSectionDivider('06', _dividerLabelFor(5)),
               KeyedSubtree(
                 key: _sectionKeys[5],
                 child: const HatsGridPage(isContinuousMobile: true),
               ),
-              _buildMobileSectionDivider('07', 'GET IN TOUCH'),
+              _buildMobileSectionDivider('07', _dividerLabelFor(6)),
               KeyedSubtree(
                 key: _sectionKeys[6],
                 child: ContactPage(
@@ -773,7 +697,7 @@ class _HomeScreenState extends State<HomeScreen> {
         border: Border.all(
           color: isDark
               ? Colors.white.withValues(alpha: 0.10)
-              : const Color(0xFFE2E8F0),
+              : AppColors.slate200,
         ),
       ),
       child: Column(
@@ -796,7 +720,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(
                       color: i == _pageIndex
                           ? Theme.of(context).colorScheme.primary
-                          : (isDark ? Colors.white38 : const Color(0xFF94A3B8)),
+                          : (isDark ? Colors.white38 : AppColors.slate400),
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -806,6 +730,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  /// Returns the localized nav label for `index` uppercased, used as the
+  /// mobile continuous-scroll section divider title so those labels are
+  /// automatically translated (en / ar / cs) with the rest of the nav.
+  String _dividerLabelFor(int index) {
+    final labels = TopNav.getLabels(context);
+    if (index < 0 || index >= labels.length) return '';
+    return labels[index].toUpperCase();
   }
 
   Widget _buildMobileSectionDivider(String number, String title) {
@@ -824,7 +757,7 @@ class _HomeScreenState extends State<HomeScreen> {
               border: Border.all(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.15)
-                    : const Color(0xFFE2E8F0),
+                    : AppColors.slate200,
               ),
               boxShadow: isDark
                   ? null
@@ -839,7 +772,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text(
               number,
               style: const TextStyle(
-                color: Color(0xFF818CF8),
+                color: AppColors.accentIndigo,
                 fontSize: 10,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 2,
@@ -852,7 +785,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.55)
-                  : const Color(0xFF475569),
+                  : AppColors.slate600,
               fontSize: 10,
               fontWeight: FontWeight.w800,
               letterSpacing: 2,
@@ -870,8 +803,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           Colors.white.withValues(alpha: 0.02),
                         ]
                       : [
-                          const Color(0xFFCBD5E1),
-                          const Color(0xFFE2E8F0).withValues(alpha: 0.0),
+                          AppColors.slate300,
+                          AppColors.slate200.withValues(alpha: 0.0),
                         ],
                 ),
               ),
@@ -891,7 +824,7 @@ class _HomeScreenState extends State<HomeScreen> {
           top: BorderSide(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.08)
-                : const Color(0xFFE2E8F0),
+                : AppColors.slate200,
           ),
         ),
         color: isDark
@@ -908,7 +841,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 28,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF38BDF8), Color(0xFF818CF8)],
+                    colors: [Color(0xFF38BDF8), AppColors.accentIndigo],
                   ),
                   borderRadius: BorderRadius.circular(AppRadius.chip),
                 ),
@@ -927,7 +860,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 'ABDALLAH AL-HYARI',
                 style: TextStyle(
-                  color: isDark ? Colors.white : const Color(0xFF0F172A),
+                  color: isDark ? Colors.white : AppColors.slate900,
                   fontWeight: FontWeight.w900,
                   fontSize: 12,
                   letterSpacing: 2,
@@ -941,7 +874,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.6)
-                  : const Color(0xFF475569),
+                  : AppColors.slate600,
               fontSize: 9.5,
               fontWeight: FontWeight.w700,
               letterSpacing: 2,
@@ -953,7 +886,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.35)
-                  : const Color(0xFF94A3B8),
+                  : AppColors.slate400,
               fontSize: 9,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.5,
@@ -964,18 +897,121 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildFolioBar(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final labels = TopNav.getLabels(context);
+    final currentLabel = (_pageIndex >= 0 && _pageIndex < labels.length)
+        ? labels[_pageIndex].toUpperCase()
+        : '';
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.black.withValues(alpha: 0.6)
+            : Colors.white.withValues(alpha: 0.88),
+        borderRadius: BorderRadius.circular(AppRadius.xs),
+        border: Border.all(
+          color: isDark ? Colors.white12 : AppColors.slate200,
+        ),
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'FOLIO ${(_pageIndex + 1).toString().padLeft(2, '0')} / ${_pageCount.toString().padLeft(2, '0')}',
+            style: TextStyle(
+              color: isDark ? Colors.white70 : AppColors.slate500,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.5,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            width: 1,
+            height: 10,
+            color: isDark ? Colors.white24 : AppColors.slate300,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            currentLabel,
+            style: TextStyle(
+              color: isDark ? Colors.white : AppColors.slate900,
+              fontSize: 10,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Top-edge progress bar. Only the width animates every scroll frame,
+  /// so `Align` + decorated `Container` are cached via the AnimatedBuilder
+  /// `child:` parameter and wrapped in a RepaintBoundary by the caller.
+  Widget _buildProgressBar(BuildContext context) {
+    final primary = Theme.of(context).colorScheme.primary;
+    final decoratedBar = Container(
+      height: 3,
+      decoration: BoxDecoration(
+        color: primary,
+        boxShadow: [
+          BoxShadow(
+            color: primary.withValues(alpha: 0.5),
+            blurRadius: 4,
+          ),
+        ],
+      ),
+    );
+    final viewportWidth = MediaQuery.sizeOf(context).width;
+
+    return Semantics(
+      label: 'Portfolio progress',
+      value: 'Page ${_pageIndex + 1} of $_pageCount',
+      child: AnimatedBuilder(
+        animation: _controller,
+        child: decoratedBar,
+        builder: (context, child) {
+          double progress = 0.0;
+          if (_controller.hasClients &&
+              _controller.positions.length == 1 &&
+              _controller.position.haveDimensions) {
+            progress = (_controller.page ?? 0) / (_pageCount - 1);
+          }
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: SizedBox(width: viewportWidth * progress, child: child),
+          );
+        },
+      ),
+    );
+  }
+
   Widget _buildKeyboardHintChip(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     return Tooltip(
       preferBelow: false,
       richMessage: TextSpan(
         style: const TextStyle(fontSize: 12, height: 1.5, color: Colors.white),
-        children: const [
-          TextSpan(text: 'Keyboard shortcuts\n', style: TextStyle(fontWeight: FontWeight.w900)),
-          TextSpan(text: '1–7   jump to section\n'),
-          TextSpan(text: '↑ ↓   prev / next page\n'),
-          TextSpan(text: 'Home  first page\n'),
-          TextSpan(text: 'End   last page'),
+        children: [
+          TextSpan(
+              text: '${l10n.keyboardHintTitle}\n',
+              style: const TextStyle(fontWeight: FontWeight.w900)),
+          TextSpan(text: '${l10n.keyboardHintDigits}\n'),
+          TextSpan(text: '${l10n.keyboardHintArrows}\n'),
+          TextSpan(text: '${l10n.keyboardHintHome}\n'),
+          TextSpan(text: l10n.keyboardHintEnd),
         ],
       ),
       child: Material(
@@ -996,7 +1032,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Colors.black.withValues(alpha: 0.55)
                   : Colors.white.withValues(alpha: 0.92),
               border: Border.all(
-                color: isDark ? Colors.white24 : const Color(0xFFCBD5E1),
+                color: isDark ? Colors.white24 : AppColors.slate300,
                 width: 1,
               ),
               boxShadow: isDark
@@ -1012,7 +1048,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Icon(
               Icons.keyboard_alt_outlined,
               size: 16,
-              color: isDark ? Colors.white70 : const Color(0xFF475569),
+              color: isDark ? Colors.white70 : AppColors.slate600,
             ),
           ),
         ),
@@ -1022,14 +1058,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildScrollToTopButton() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Material(
+    return Semantics(
+      button: true,
+      label: 'Scroll to top',
+      child: Tooltip(
+        message: 'Scroll to top',
+        child: Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
           SoundService.instance.playClick();
           _mobileScrollController.animateTo(
             0,
-            duration: const Duration(milliseconds: 600),
+            duration: AppMotion.sectionScroll,
             curve: Curves.easeOutCubic,
           );
         },
@@ -1039,11 +1080,11 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 44,
           decoration: BoxDecoration(
             color: isDark
-                ? const Color(0xFF1E293B).withValues(alpha: 0.9)
+                ? AppColors.slate800.withValues(alpha: 0.9)
                 : Colors.white.withValues(alpha: 0.9),
             borderRadius: BorderRadius.circular(22),
             border: Border.all(
-              color: const Color(0xFF818CF8).withValues(alpha: isDark ? 0.5 : 0.4),
+              color: AppColors.accentIndigo.withValues(alpha: isDark ? 0.5 : 0.4),
               width: 1.2,
             ),
             boxShadow: [
@@ -1058,11 +1099,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: Icon(
             Icons.keyboard_arrow_up_rounded,
-            color: isDark ? Colors.white : const Color(0xFF4F46E5),
+            color: isDark ? Colors.white : AppColors.accentIndigo600,
             size: 24,
           ),
         ),
       ),
+    ),
+    ),
     );
   }
 }
