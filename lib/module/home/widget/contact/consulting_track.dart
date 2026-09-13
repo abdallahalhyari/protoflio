@@ -1,0 +1,169 @@
+import 'package:flutter/material.dart';
+
+import '../../../../theme/tokens.dart';
+
+class ConsultingTrack {
+  final String tag;
+  final String title;
+  final String description;
+  final IconData icon;
+  final Color accent;
+  final String inquirySubject;
+  final ValueChanged<String> onInquire;
+
+  const ConsultingTrack({
+    required this.tag,
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.accent,
+    required this.inquirySubject,
+    required this.onInquire,
+  });
+}
+
+class BentoTrackCard extends StatefulWidget {
+  final ConsultingTrack track;
+  final bool isDark;
+
+  const BentoTrackCard({
+    super.key,
+    required this.track,
+    required this.isDark,
+  });
+
+  @override
+  State<BentoTrackCard> createState() => _BentoTrackCardState();
+}
+
+class _BentoTrackCardState extends State<BentoTrackCard> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = widget.track;
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: AppMotion.snap,
+        curve: Curves.easeOut,
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: widget.isDark
+              ? (_hover
+                  ? Colors.white.withValues(alpha: 0.08)
+                  : Colors.white.withValues(alpha: 0.04))
+              : (_hover ? Colors.white : AppColors.slate50),
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          border: Border.all(
+            color: _hover
+                ? t.accent.withValues(alpha: 0.6)
+                : (widget.isDark
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : AppColors.slate200),
+            width: 1.2,
+          ),
+          boxShadow: [
+            if (_hover)
+              BoxShadow(
+                color: t.accent.withValues(alpha: widget.isDark ? 0.15 : 0.08),
+                blurRadius: 18,
+                offset: const Offset(0, 6),
+              ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 38,
+                  height: 38,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: t.accent.withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                    border: Border.all(
+                      color: t.accent.withValues(alpha: 0.35),
+                      width: 1,
+                    ),
+                  ),
+                  child: Icon(t.icon, size: 18, color: t.accent),
+                ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: t.accent.withValues(alpha: 0.10),
+                      borderRadius: BorderRadius.circular(AppRadius.xs),
+                    ),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        t.tag,
+                        style: TextStyle(
+                          color: t.accent,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              t.title,
+              style: TextStyle(
+                color: widget.isDark ? Colors.white : AppColors.slate900,
+                fontSize: 14.5,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.3,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              t.description,
+              style: TextStyle(
+                color: widget.isDark
+                    ? Colors.white.withValues(alpha: 0.72)
+                    : AppColors.slate500,
+                fontSize: 11.5,
+                height: 1.45,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            InkWell(
+              onTap: () => t.onInquire(t.inquirySubject),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'INQUIRE TRACK',
+                    style: TextStyle(
+                      color: t.accent,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.4,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(Icons.arrow_forward_rounded,
+                      size: 12, color: t.accent),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

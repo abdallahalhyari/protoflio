@@ -11,7 +11,11 @@ import '../../../service/analytics_service.dart';
 import '../../../service/cv_service.dart';
 import '../../../service/sound_service.dart';
 
+import '../widget/contact/channel_tile.dart';
+import '../widget/contact/consulting_track.dart';
+import '../widget/contact/social_chip.dart';
 import '../widget/editorial_chip.dart';
+import '../widget/pulsing_dot.dart';
 import '../widget/screen_shell.dart';
 
 /// Executive-grade editorial contact dossier and consulting portal.
@@ -284,7 +288,7 @@ class _ContactPageState extends State<ContactPage>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _PulsingDot(color: _availabilityGreen),
+                PulsingDot(color: _availabilityGreen),
                 const SizedBox(width: 6),
                 Flexible(
                   child: FittedBox(
@@ -513,7 +517,7 @@ class _ContactPageState extends State<ContactPage>
 
   Widget _channelsGrid(BuildContext context, bool isDesktop, bool isDark) {
     final channels = [
-      _ChannelData(
+      ChannelData(
         badge: '📱 DIRECT LINE',
         badgeColor: _sky,
         label: 'PHONE',
@@ -531,7 +535,7 @@ class _ContactPageState extends State<ContactPage>
         },
         accent: _sky,
       ),
-      _ChannelData(
+      ChannelData(
         badge: '💬 QUICK CHAT',
         badgeColor: _availabilityGreen,
         label: 'WHATSAPP',
@@ -546,7 +550,7 @@ class _ContactPageState extends State<ContactPage>
         secondaryAction: () => _copy(context, _whatsAppUrl, isDark: isDark),
         accent: _availabilityGreen,
       ),
-      _ChannelData(
+      ChannelData(
         badge: '🌐 500+ NETWORK',
         badgeColor: _indigo,
         label: 'LINKEDIN',
@@ -561,7 +565,7 @@ class _ContactPageState extends State<ContactPage>
         secondaryAction: () => _copy(context, _linkedInUrl, isDark: isDark),
         accent: _indigo,
       ),
-      _ChannelData(
+      ChannelData(
         badge: '💻 REPOSITORIES',
         badgeColor: _accent,
         label: 'GITHUB',
@@ -622,7 +626,7 @@ class _ContactPageState extends State<ContactPage>
                 for (final c in channels)
                   SizedBox(
                     width: tileW,
-                    child: _ChannelTile(data: c, isDark: isDark),
+                    child: ChannelTile(data: c, isDark: isDark),
                   ),
               ],
             );
@@ -638,7 +642,7 @@ class _ContactPageState extends State<ContactPage>
 
   Widget _engagementMatrix(bool isDark, bool isDesktop) {
     final tracks = [
-      _ConsultingTrack(
+      ConsultingTrack(
         tag: 'SYSTEM AUDIT',
         title: 'Architecture & Resilience Audit',
         description:
@@ -653,7 +657,7 @@ class _ContactPageState extends State<ContactPage>
               'Hi Abdallah,\n\nI would like to discuss an architectural audit for our mobile codebase...',
         ),
       ),
-      _ConsultingTrack(
+      ConsultingTrack(
         tag: 'PRODUCTION APPS',
         title: 'Full-Lifecycle App Engineering',
         description:
@@ -668,7 +672,7 @@ class _ContactPageState extends State<ContactPage>
               'Hi Abdallah,\n\nWe have an upcoming mobile application project and would love to collaborate...',
         ),
       ),
-      _ConsultingTrack(
+      ConsultingTrack(
         tag: 'TECH LEADERSHIP',
         title: 'Fractional Lead & Mentorship',
         description:
@@ -730,7 +734,7 @@ class _ContactPageState extends State<ContactPage>
                 for (final track in tracks)
                   SizedBox(
                     width: cardWidth,
-                    child: _BentoTrackCard(track: track, isDark: isDark),
+                    child: BentoTrackCard(track: track, isDark: isDark),
                   ),
               ],
             );
@@ -1070,12 +1074,12 @@ class _ContactPageState extends State<ContactPage>
           spacing: 12,
           runSpacing: 8,
           children: [
-            _SocialChip(
+            SocialChip(
               label: 'LINKEDIN · $_linkedInHandle',
               icon: Icons.link_rounded,
               onTap: () => unawaited(_open(_linkedInUrl)),
             ),
-            _SocialChip(
+            SocialChip(
               label: 'GITHUB · $_githubHandle',
               icon: Icons.code_rounded,
               onTap: () => unawaited(_open(_githubUrl)),
@@ -1199,477 +1203,6 @@ class _ContactPageState extends State<ContactPage>
             ],
           ),
       ],
-    );
-  }
-}
-
-// =============================================================================
-// SUB-WIDGETS & DATA MODELS
-// =============================================================================
-
-class _ConsultingTrack {
-  final String tag;
-  final String title;
-  final String description;
-  final IconData icon;
-  final Color accent;
-  final String inquirySubject;
-  final ValueChanged<String> onInquire;
-
-  const _ConsultingTrack({
-    required this.tag,
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.accent,
-    required this.inquirySubject,
-    required this.onInquire,
-  });
-}
-
-class _BentoTrackCard extends StatefulWidget {
-  final _ConsultingTrack track;
-  final bool isDark;
-
-  const _BentoTrackCard({
-    required this.track,
-    required this.isDark,
-  });
-
-  @override
-  State<_BentoTrackCard> createState() => _BentoTrackCardState();
-}
-
-class _BentoTrackCardState extends State<_BentoTrackCard> {
-  bool _hover = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = widget.track;
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hover = true),
-      onExit: (_) => setState(() => _hover = false),
-      child: AnimatedContainer(
-        duration: AppMotion.snap,
-        curve: Curves.easeOut,
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: widget.isDark
-              ? (_hover
-                  ? Colors.white.withValues(alpha: 0.08)
-                  : Colors.white.withValues(alpha: 0.04))
-              : (_hover ? Colors.white : AppColors.slate50),
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          border: Border.all(
-            color: _hover
-                ? t.accent.withValues(alpha: 0.6)
-                : (widget.isDark
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : AppColors.slate200),
-            width: 1.2,
-          ),
-          boxShadow: [
-            if (_hover)
-              BoxShadow(
-                color: t.accent.withValues(alpha: widget.isDark ? 0.15 : 0.08),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 38,
-                  height: 38,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: t.accent.withValues(alpha: 0.14),
-                    borderRadius: BorderRadius.circular(AppRadius.sm),
-                    border: Border.all(
-                      color: t.accent.withValues(alpha: 0.35),
-                      width: 1,
-                    ),
-                  ),
-                  child: Icon(t.icon, size: 18, color: t.accent),
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: t.accent.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(AppRadius.xs),
-                    ),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        t.tag,
-                        style: TextStyle(
-                          color: t.accent,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              t.title,
-              style: TextStyle(
-                color: widget.isDark ? Colors.white : AppColors.slate900,
-                fontSize: 14.5,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.3,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              t.description,
-              style: TextStyle(
-                color: widget.isDark
-                    ? Colors.white.withValues(alpha: 0.72)
-                    : AppColors.slate500,
-                fontSize: 11.5,
-                height: 1.45,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            InkWell(
-              onTap: () => t.onInquire(t.inquirySubject),
-              borderRadius: BorderRadius.circular(AppRadius.xs),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'INQUIRE TRACK',
-                    style: TextStyle(
-                      color: t.accent,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.4,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_rounded,
-                      size: 12, color: t.accent),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ChannelData {
-  final String badge;
-  final Color badgeColor;
-  final String label;
-  final String value;
-  final IconData icon;
-  final String primaryLabel;
-  final VoidCallback primaryAction;
-  final String secondaryLabel;
-  final VoidCallback secondaryAction;
-  final Color accent;
-
-  const _ChannelData({
-    required this.badge,
-    required this.badgeColor,
-    required this.label,
-    required this.value,
-    required this.icon,
-    required this.primaryLabel,
-    required this.primaryAction,
-    required this.secondaryLabel,
-    required this.secondaryAction,
-    required this.accent,
-  });
-}
-
-
-/// Compact tile shown in the 2x2 `_channelsGrid`. Combines an accent
-/// icon puck, label + value, and two inline actions (primary / secondary).
-class _ChannelTile extends StatefulWidget {
-  final _ChannelData data;
-  final bool isDark;
-
-  const _ChannelTile({required this.data, required this.isDark});
-
-  @override
-  State<_ChannelTile> createState() => _ChannelTileState();
-}
-
-class _ChannelTileState extends State<_ChannelTile> {
-  bool _hover = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final d = widget.data;
-    final isDark = widget.isDark;
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hover = true),
-      onExit: (_) => setState(() => _hover = false),
-      child: AnimatedContainer(
-        duration: AppMotion.chipHover,
-        curve: Curves.easeOut,
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: isDark
-              ? (_hover
-                  ? Colors.white.withValues(alpha: 0.06)
-                  : Colors.white.withValues(alpha: 0.03))
-              : (_hover ? Colors.white : AppColors.slate50),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(
-            color: _hover
-                ? d.accent.withValues(alpha: 0.55)
-                : (isDark
-                    ? Colors.white.withValues(alpha: 0.10)
-                    : AppColors.slate200),
-            width: _hover ? 1.4 : 1,
-          ),
-          boxShadow: [
-            if (_hover)
-              BoxShadow(
-                color: d.accent.withValues(alpha: isDark ? 0.18 : 0.10),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: d.accent.withValues(alpha: 0.14),
-                    borderRadius: BorderRadius.circular(AppRadius.smd),
-                    border: Border.all(
-                      color: d.accent.withValues(alpha: 0.45),
-                    ),
-                  ),
-                  child: Icon(d.icon, size: 20, color: d.accent),
-                ),
-                const SizedBox(width: AppSpacing.smd),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        d.label,
-                        style: TextStyle(
-                          color: d.accent,
-                          fontSize: AppTypography.editorialSm,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        d.value,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: isDark ? Colors.white : AppColors.slate900,
-                          fontSize: 13.5,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.smd),
-            Row(
-              children: [
-                Expanded(
-                  child: FilledButton(
-                    onPressed: d.primaryAction,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: d.accent,
-                      foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                      ),
-                    ),
-                    child: Text(
-                      d.primaryLabel.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                OutlinedButton(
-                  onPressed: d.secondaryAction,
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor:
-                        isDark ? Colors.white : AppColors.slate900,
-                    side: BorderSide(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.28)
-                          : AppColors.slate300,
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadius.pill),
-                    ),
-                  ),
-                  child: Text(
-                    d.secondaryLabel.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SocialChip extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const _SocialChip({
-    required this.label,
-    required this.icon,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return OutlinedButton.icon(
-      onPressed: onTap,
-      icon: Icon(icon, size: 14),
-      label: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w900,
-          letterSpacing: 1.6,
-        ),
-      ),
-      style: OutlinedButton.styleFrom(
-        foregroundColor: isDark ? Colors.white : AppColors.slate900,
-        side: BorderSide(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.35)
-              : AppColors.slate300,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-      ),
-    );
-  }
-}
-
-class _PulsingDot extends StatefulWidget {
-  final Color color;
-  const _PulsingDot({required this.color});
-  @override
-  State<_PulsingDot> createState() => _PulsingDotState();
-}
-
-class _PulsingDotState extends State<_PulsingDot>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(
-    vsync: this,
-    duration: AppMotion.pulse,
-  );
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_c.isAnimating && !MediaQuery.of(context).disableAnimations) {
-      _c.repeat(reverse: true);
-    }
-  }
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // Static inner dot is cached via the AnimatedBuilder `child:` param so
-    // it doesn't re-decorate every frame — only the growing halo does.
-    // RepaintBoundary isolates this from ancestor repaints on scroll.
-    final staticDot = Container(
-      width: 6,
-      height: 6,
-      decoration: BoxDecoration(
-        color: widget.color,
-        shape: BoxShape.circle,
-      ),
-    );
-
-    return ExcludeSemantics(
-      child: RepaintBoundary(
-      child: SizedBox(
-        width: 14,
-        height: 14,
-        child: AnimatedBuilder(
-          animation: _c,
-          child: staticDot,
-          builder: (_, child) {
-            final t = _c.value;
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: 8 + 6 * t,
-                  height: 8 + 6 * t,
-                  decoration: BoxDecoration(
-                    color: widget.color.withValues(alpha: 0.35 * (1 - t)),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                child!,
-              ],
-            );
-          },
-        ),
-      ),
-      ),
     );
   }
 }
