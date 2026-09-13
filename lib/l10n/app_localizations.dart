@@ -148,18 +148,6 @@ abstract class AppLocalizations {
   /// **'Resume'**
   String get navResume;
 
-  /// No description provided for @navWhy.
-  ///
-  /// In en, this message translates to:
-  /// **'Why'**
-  String get navWhy;
-
-  /// No description provided for @navHats.
-  ///
-  /// In en, this message translates to:
-  /// **'Hats'**
-  String get navHats;
-
   /// No description provided for @navSkills.
   ///
   /// In en, this message translates to:
@@ -172,95 +160,11 @@ abstract class AppLocalizations {
   /// **'Projects'**
   String get navProjects;
 
-  /// No description provided for @introHiName.
-  ///
-  /// In en, this message translates to:
-  /// **'HELLO THERE!\nI\'M ABDALLAH'**
-  String get introHiName;
-
-  /// No description provided for @introHi.
-  ///
-  /// In en, this message translates to:
-  /// **'Hi, I\'m'**
-  String get introHi;
-
-  /// No description provided for @introName.
-  ///
-  /// In en, this message translates to:
-  /// **'Abdallah Alhyari'**
-  String get introName;
-
-  /// No description provided for @introRole.
-  ///
-  /// In en, this message translates to:
-  /// **'Senior Flutter & Android Engineer'**
-  String get introRole;
-
   /// No description provided for @introLocation.
   ///
   /// In en, this message translates to:
   /// **'Amman, Jordan → Brno, Czech Republic (2027)'**
   String get introLocation;
-
-  /// No description provided for @contactTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Let\'s build something great'**
-  String get contactTitle;
-
-  /// No description provided for @contactSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Open for senior engineering roles, high-impact mobile architectures, and technical leadership.'**
-  String get contactSubtitle;
-
-  /// No description provided for @contactNameLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Name'**
-  String get contactNameLabel;
-
-  /// No description provided for @contactEmailLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get contactEmailLabel;
-
-  /// No description provided for @contactMessageLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Message'**
-  String get contactMessageLabel;
-
-  /// No description provided for @contactSendBtn.
-  ///
-  /// In en, this message translates to:
-  /// **'Send Message'**
-  String get contactSendBtn;
-
-  /// No description provided for @contactDownloadCvBtn.
-  ///
-  /// In en, this message translates to:
-  /// **'Download Resume (PDF)'**
-  String get contactDownloadCvBtn;
-
-  /// No description provided for @hatsIntroSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'BECAUSE...'**
-  String get hatsIntroSubtitle;
-
-  /// No description provided for @hatsIntroTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'I WEAR MANY HATS'**
-  String get hatsIntroTitle;
-
-  /// No description provided for @hatsIntroBtn.
-  ///
-  /// In en, this message translates to:
-  /// **'Allow Me to Explain'**
-  String get hatsIntroBtn;
 
   /// No description provided for @sectionEducation.
   ///

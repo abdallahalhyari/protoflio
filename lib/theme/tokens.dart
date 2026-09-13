@@ -42,7 +42,6 @@ class AppRadius {
   static const double md = 12;
   static const double card = 16;
   static const double lg = 20;
-  static const double xxl = 24;
   static const double pill = 999;
 }
 
@@ -128,24 +127,12 @@ class AppTypography {
   AppTypography._();
 
   // Editorial microtext — magazine-style tiny labels, kickers, meta chips.
-  // Use these instead of writing raw `fontSize: 9.x` / `10.x` inline.
-  static const double editorialSm = 9.5; // extra-small kicker (rare, prefer editorial)
-  static const double editorial = 10.5; // default magazine micro-label
-  static const double editorialLg = 11; // eyebrow / section chip
+  static const double editorialSm = 9.5;
+  static const double editorial = 10.5;
 
-  static const double micro = 11;
-  static const double caption = 12;
+  // Standard typographic steps.
   static const double small = 13;
   static const double body = 14;
-  static const double bodyMd = 15;
-  static const double bodyLg = 16;
-  static const double titleSm = 18;
   static const double title = 20;
-  static const double subhead = 24;
-  static const double head = 26;
   static const double heading = 28;
-  static const double display = 40;
-  static const double displayLg = 56;
-  static const double hero = 60;
-  static const double heroLg = 65;
 }
