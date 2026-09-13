@@ -311,7 +311,7 @@ class _IntroPageState extends State<IntroPage> {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Flutter · Android · Architecture · Offline-first · NFC · Security · Real-time systems',
+              'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: (size.width * 0.011).clamp(11.5, 13.5),
