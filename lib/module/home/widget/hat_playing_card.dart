@@ -37,12 +37,12 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
   late Animation<double> _flipAnimation;
   bool _isFlipped = false;
   bool _isHovered = false;
-  Offset _tiltOffset = Offset.zero;
+  final ValueNotifier<Offset> _tiltOffset = ValueNotifier(Offset.zero);
   late Offset _currentOffset;
   // Additive rotation applied on top of `widget.rotation` when the user
   // drags the card. Drag now rotates in place instead of translating,
   // so `_currentOffset` never changes during a pan.
-  double _rotationDelta = 0.0;
+  final ValueNotifier<double> _rotationDelta = ValueNotifier(0.0);
 
   @override
   void initState() {
@@ -66,13 +66,15 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
     // External rotation change (parent shuffle / reset) — clear the
     // local drag delta so the card lands exactly where the parent asked.
     if (oldWidget.rotation != widget.rotation) {
-      _rotationDelta = 0.0;
+      _rotationDelta.value = 0.0;
     }
   }
 
   @override
   void dispose() {
     _flipController.dispose();
+    _tiltOffset.dispose();
+    _rotationDelta.dispose();
     super.dispose();
   }
 
@@ -91,20 +93,25 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
     if (!_isHovered) return const SizedBox.shrink();
     return Positioned.fill(
       child: IgnorePointer(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            gradient: RadialGradient(
-              center: Alignment(_tiltOffset.dx, _tiltOffset.dy),
-              radius: 0.9,
-              colors: [
-                const Color(0xFFFBBF24).withValues(alpha: 0.2),
-                Colors.white.withValues(alpha: 0.06),
-                Colors.transparent,
-              ],
-              stops: const [0.0, 0.45, 1.0],
-            ),
-          ),
+        child: ValueListenableBuilder<Offset>(
+          valueListenable: _tiltOffset,
+          builder: (context, tilt, _) {
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                gradient: RadialGradient(
+                  center: Alignment(tilt.dx, tilt.dy),
+                  radius: 0.9,
+                  colors: [
+                    const Color(0xFFFBBF24).withValues(alpha: 0.2),
+                    Colors.white.withValues(alpha: 0.06),
+                    Colors.transparent,
+                  ],
+                  stops: const [0.0, 0.45, 1.0],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -121,9 +128,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
               // Rotate in place: horizontal drag = spin around the card
               // center. Position (`_currentOffset`) is intentionally left
               // untouched so the card doesn't slide across the felt.
-              setState(() {
-                _rotationDelta += details.delta.dx * 0.006;
-              });
+              _rotationDelta.value += details.delta.dx * 0.006;
             },
       // Position never changes during drag, so we still report the
       // original offset to the parent — it just persists whatever
@@ -141,50 +146,55 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
             final nx = ((local.dx / 255.0) * 2 - 1).clamp(-1.0, 1.0);
             final ny = ((local.dy / 370.0) * 2 - 1).clamp(-1.0, 1.0);
             final next = Offset(nx, ny);
-            if ((next - _tiltOffset).distanceSquared < 0.005) return;
-            setState(() {
-              _tiltOffset = next;
-            });
+            if ((next - _tiltOffset.value).distanceSquared < 0.005) return;
+            _tiltOffset.value = next;
           }
         },
-        onExit: (_) => setState(() {
-          _isHovered = false;
-          _tiltOffset = Offset.zero;
-        }),
-        child: AnimatedBuilder(
-          animation: _flipAnimation,
-          builder: (context, child) {
-            final angle = _flipAnimation.value;
-            final isUnder = angle > math.pi / 2;
-            // reduce-motion strips the hover lift + parallax tilt so the
-            // card sits flat when the user requests less motion.
-            final double hoverLift = (_isHovered && !reduce) ? -10.0 : 0.0;
-            final double tiltX =
-                (_isHovered && !reduce) ? -_tiltOffset.dy * 0.16 : 0.0;
-            final double tiltY =
-                (_isHovered && !reduce) ? _tiltOffset.dx * 0.20 : 0.0;
+        onExit: (_) {
+          setState(() {
+            _isHovered = false;
+          });
+          _tiltOffset.value = Offset.zero;
+        },
+        child: Builder(
+          builder: (context) {
+            // Pre-build the complex front and back card layouts outside the AnimatedBuilder
+            // so they are cached and only rebuilt when hover state changes (setState on enter/exit),
+            // not on every single mouse movement or flip frame.
+            final Widget frontCard = _buildCardFront(context);
+            final Widget backCard = Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()..rotateY(math.pi),
+              child: _buildCardBack(context),
+            );
 
-            return RepaintBoundary(
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
-                  ..rotateZ(widget.isStandalone
-                      ? 0.0
-                      : widget.rotation + _rotationDelta)
-                  ..setEntry(3, 2, 0.0015)
-                  ..rotateX(tiltX)
-                  ..rotateY(angle + tiltY),
-                child: isUnder
-                    // Card Back (Description side)
-                    ? Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()..rotateY(math.pi),
-                        child: _buildCardBack(context),
-                      )
-                    // Card Front (Hat Illustration side)
-                    : _buildCardFront(context),
-              ),
+            return AnimatedBuilder(
+              animation: Listenable.merge([_flipAnimation, _tiltOffset, _rotationDelta]),
+              builder: (context, _) {
+                final angle = _flipAnimation.value;
+                final isUnder = angle > math.pi / 2;
+                // reduce-motion strips the hover lift + parallax tilt so the
+                // card sits flat when the user requests less motion.
+                final double hoverLift = (_isHovered && !reduce) ? -10.0 : 0.0;
+                final tilt = _tiltOffset.value;
+                final double tiltX = (_isHovered && !reduce) ? -tilt.dy * 0.16 : 0.0;
+                final double tiltY = (_isHovered && !reduce) ? tilt.dx * 0.20 : 0.0;
+
+                return RepaintBoundary(
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.identity()
+                      ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
+                      ..rotateZ(widget.isStandalone
+                          ? 0.0
+                          : widget.rotation + _rotationDelta.value)
+                      ..setEntry(3, 2, 0.0015)
+                      ..rotateX(tiltX)
+                      ..rotateY(angle + tiltY),
+                    child: isUnder ? backCard : frontCard,
+                  ),
+                );
+              },
             );
           },
         ),
