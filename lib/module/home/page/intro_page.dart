@@ -261,6 +261,8 @@ class _IntroPageState extends State<IntroPage> {
             child: Image.asset(
               'assets/my_image.png',
               fit: BoxFit.cover,
+              cacheWidth: 280,
+              cacheHeight: 280,
               filterQuality: FilterQuality.high,
               semanticLabel: 'Portrait of Abdallah Alhyari',
             ),

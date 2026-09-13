@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final PageController _controller;
   late final ScrollController _mobileScrollController;
   final List<GlobalKey> _sectionKeys = List.generate(7, (_) => GlobalKey());
-  bool _showScrollToTop = false;
+  final ValueNotifier<bool> _showScrollToTop = ValueNotifier<bool>(false);
   final FocusNode _focusNode = FocusNode();
   int _pageIndex = 0;
 
@@ -101,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _controller.dispose();
     _mobileScrollController.removeListener(_onMobileScroll);
     _mobileScrollController.dispose();
+    _showScrollToTop.dispose();
     _focusNode.dispose();
     super.dispose();
   }
@@ -111,8 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!_mobileScrollController.hasClients) return;
     final offset = _mobileScrollController.offset;
     final showTop = offset > 400;
-    if (showTop != _showScrollToTop) {
-      setState(() => _showScrollToTop = showTop);
+    if (showTop != _showScrollToTop.value) {
+      _showScrollToTop.value = showTop;
     }
 
     // Section-sweep is O(N) findRenderObject + localToGlobal per call.
@@ -749,12 +750,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
         // Layer 3: Floating Scroll-To-Top button
-        if (_showScrollToTop)
-          Positioned(
-            bottom: 24,
-            right: 18,
-            child: _buildScrollToTopButton(),
+        Positioned(
+          bottom: 24,
+          right: 18,
+          child: ValueListenableBuilder<bool>(
+            valueListenable: _showScrollToTop,
+            builder: (context, show, child) {
+              if (!show) return const SizedBox.shrink();
+              return _buildScrollToTopButton();
+            },
           ),
+        ),
 
         // Layer 4: Vertical progress rail — tap any dot to jump.
         Positioned(

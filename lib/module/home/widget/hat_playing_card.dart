@@ -140,8 +140,10 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
             final local = box.globalToLocal(event.position);
             final nx = ((local.dx / 255.0) * 2 - 1).clamp(-1.0, 1.0);
             final ny = ((local.dy / 370.0) * 2 - 1).clamp(-1.0, 1.0);
+            final next = Offset(nx, ny);
+            if ((next - _tiltOffset).distanceSquared < 0.005) return;
             setState(() {
-              _tiltOffset = Offset(nx, ny);
+              _tiltOffset = next;
             });
           }
         },
@@ -162,25 +164,27 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
             final double tiltY =
                 (_isHovered && !reduce) ? _tiltOffset.dx * 0.20 : 0.0;
 
-            return Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()
-                ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
-                ..rotateZ(widget.isStandalone
-                    ? 0.0
-                    : widget.rotation + _rotationDelta)
-                ..setEntry(3, 2, 0.0015)
-                ..rotateX(tiltX)
-                ..rotateY(angle + tiltY),
-              child: isUnder
-                  // Card Back (Description side)
-                  ? Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.identity()..rotateY(math.pi),
-                      child: _buildCardBack(context),
-                    )
-                  // Card Front (Hat Illustration side)
-                  : _buildCardFront(context),
+            return RepaintBoundary(
+              child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
+                  ..rotateZ(widget.isStandalone
+                      ? 0.0
+                      : widget.rotation + _rotationDelta)
+                  ..setEntry(3, 2, 0.0015)
+                  ..rotateX(tiltX)
+                  ..rotateY(angle + tiltY),
+                child: isUnder
+                    // Card Back (Description side)
+                    ? Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()..rotateY(math.pi),
+                        child: _buildCardBack(context),
+                      )
+                    // Card Front (Hat Illustration side)
+                    : _buildCardFront(context),
+              ),
             );
           },
         ),

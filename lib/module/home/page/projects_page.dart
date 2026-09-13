@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'dart:ui' show ImageFilter;
+import '../widget/conditional_blur.dart';
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -567,11 +567,10 @@ class _ProjectsPageState extends State<ProjectsPage>
   Widget _buildMagazineArticle(Project project, int index, ColorScheme scheme, Size size, bool isDesktop) {
     final isDark = scheme.brightness == Brightness.dark;
     return RepaintBoundary(
-      child: ClipRRect(
+      child: ConditionalBlur(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
-          child: Container(
+        sigma: 16,
+        child: Container(
             constraints: BoxConstraints(maxWidth: isDesktop ? 780 : 960),
             decoration: BoxDecoration(
               color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.white.withValues(alpha: 0.92),
@@ -857,7 +856,6 @@ class _ProjectsPageState extends State<ProjectsPage>
       ),
     ),
   ),
-),
 );
   }
 

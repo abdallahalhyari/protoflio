@@ -18,9 +18,15 @@ class PageBackground extends StatefulWidget {
 }
 
 class _PageBackgroundState extends State<PageBackground> {
-  Offset _mouseOffset = Offset.zero;
+  final ValueNotifier<Offset> _mouseOffset = ValueNotifier(Offset.zero);
 
-  Widget _buildDarkBackground(BuildContext context) {
+  @override
+  void dispose() {
+    _mouseOffset.dispose();
+    super.dispose();
+  }
+
+  Widget _buildDarkBackground(BuildContext context, Offset mouseOffset) {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.of(context).disableAnimations;
 
@@ -59,19 +65,19 @@ class _PageBackgroundState extends State<PageBackground> {
     return AnimatedSlide(
       duration: reduceMotion ? Duration.zero : AppMotion.xs,
       offset: Offset(
-        _mouseOffset.dx / size.width * 0.04,
-        _mouseOffset.dy / size.height * 0.04,
+        mouseOffset.dx / size.width * 0.04,
+        mouseOffset.dy / size.height * 0.04,
       ),
       child: baseImage,
     );
   }
 
-  Widget _buildLightBackground(BuildContext context) {
+  Widget _buildLightBackground(BuildContext context, Offset mouseOffset) {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.of(context).disableAnimations;
 
-    final shiftX = reduceMotion ? 0.0 : (_mouseOffset.dx / size.width * 20.0);
-    final shiftY = reduceMotion ? 0.0 : (_mouseOffset.dy / size.height * 20.0);
+    final shiftX = reduceMotion ? 0.0 : (mouseOffset.dx / size.width * 20.0);
+    final shiftY = reduceMotion ? 0.0 : (mouseOffset.dy / size.height * 20.0);
 
     return Stack(
       children: [
@@ -180,21 +186,26 @@ class _PageBackgroundState extends State<PageBackground> {
         final next = event.localPosition - center;
         // Skip micro-jitter rebuilds: only repaint when the delta is
         // large enough to actually shift the parallax visibly.
-        if ((next - _mouseOffset).distanceSquared < 36) return;
-        setState(() {
-          _mouseOffset = next;
-        });
+        if ((next - _mouseOffset.value).distanceSquared < 36) return;
+        _mouseOffset.value = next;
       },
       onExit: (_) {
-        if (_mouseOffset == Offset.zero) return;
-        setState(() {
-          _mouseOffset = Offset.zero;
-        });
+        if (_mouseOffset.value == Offset.zero) return;
+        _mouseOffset.value = Offset.zero;
       },
       child: Stack(
         children: [
           Positioned.fill(
-            child: isDark ? _buildDarkBackground(context) : _buildLightBackground(context),
+            child: RepaintBoundary(
+              child: ValueListenableBuilder<Offset>(
+                valueListenable: _mouseOffset,
+                builder: (context, mouseOffset, _) {
+                  return isDark
+                      ? _buildDarkBackground(context, mouseOffset)
+                      : _buildLightBackground(context, mouseOffset);
+                },
+              ),
+            ),
           ),
           if (isDark && widget.overlay != null)
             Positioned.fill(
@@ -211,7 +222,11 @@ class _PageBackgroundState extends State<PageBackground> {
                 ),
               ),
             ),
-          Positioned.fill(child: widget.child),
+          Positioned.fill(
+            child: RepaintBoundary(
+              child: widget.child,
+            ),
+          ),
         ],
       ),
     );

@@ -38,45 +38,52 @@ class _CustomCursorState extends State<CustomCursor> {
       },
       child: Stack(
         children: [
-          widget.child,
-          ValueListenableBuilder<Offset>(
-            valueListenable: _mousePos,
-            builder: (context, pos, _) {
-              return Positioned(
-                left: pos.dx - 15,
-                top: pos.dy - 15,
-                child: IgnorePointer(
-                  child: Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: scheme.primary.withValues(alpha: 0.8),
-                        width: 2,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: scheme.primary.withValues(alpha: 0.2),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                        )
-                      ],
-                    ),
-                    child: Center(
+          RepaintBoundary(
+            child: widget.child,
+          ),
+          Positioned(
+            left: 0,
+            top: 0,
+            child: IgnorePointer(
+              child: RepaintBoundary(
+                child: ValueListenableBuilder<Offset>(
+                  valueListenable: _mousePos,
+                  builder: (context, pos, _) {
+                    return Transform.translate(
+                      offset: Offset(pos.dx - 15, pos.dy - 15),
                       child: Container(
-                        width: 4,
-                        height: 4,
+                        width: 30,
+                        height: 30,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: scheme.primary,
+                          border: Border.all(
+                            color: scheme.primary.withValues(alpha: 0.8),
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: scheme.primary.withValues(alpha: 0.2),
+                              blurRadius: 10,
+                              spreadRadius: 2,
+                            )
+                          ],
+                        ),
+                        child: Center(
+                          child: Container(
+                            width: 4,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: scheme.primary,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ),
           ),
         ],
       ),
