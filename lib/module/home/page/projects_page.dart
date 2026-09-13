@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'dart:math' as math;
+import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,14 +12,10 @@ import '../widget/screen_shell.dart';
 import '../widget/swipe_affordance.dart';
 
 class ProjectsPage extends StatefulWidget {
-  final PageController? controller;
-  final int? pageIndex;
   final bool isContinuousMobile;
 
   const ProjectsPage({
     super.key,
-    this.controller,
-    this.pageIndex,
     this.isContinuousMobile = false,
   });
 

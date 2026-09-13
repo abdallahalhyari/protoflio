@@ -10,6 +10,7 @@ import 'package:profile/module/home/page/skills_page.dart';
 import 'package:profile/module/home/page/hats_grid_page.dart';
 import 'package:profile/module/home/page/contact_page.dart';
 import 'package:profile/module/home/widget/portfolio_nav.dart';
+import 'package:profile/module/home/widget/mobile_app_bar.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget createThemedTestApp({
@@ -39,12 +40,9 @@ void main() {
 
       testWidgets('$modeName - IntroPage renders cleanly', (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
-        final controller = PageController();
         await tester.pumpWidget(createThemedTestApp(
           child: IntroPage(
             onScrollDown: () {},
-            controller: controller,
-            pageIndex: 0,
           ),
           brightness: brightness,
         ));
@@ -138,9 +136,8 @@ void main() {
 
       testWidgets('$modeName - ContactPage renders availability and communication channels', (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
-        final controller = PageController();
         await tester.pumpWidget(createThemedTestApp(
-          child: ContactPage(controller: controller, pageIndex: 6),
+          child: const ContactPage(),
           brightness: brightness,
         ));
         await tester.pump(const Duration(milliseconds: 300));
@@ -150,13 +147,13 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets('$modeName - PortfolioNav TopNav and MobileNav adapt to theme', (tester) async {
+      testWidgets('$modeName - PortfolioNav TopNav and MobileAppBar adapt to theme', (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
         await tester.pumpWidget(createThemedTestApp(
           child: Column(
             children: [
               TopNav(current: 0, onTap: (_) {}, onResume: () {}),
-              MobileNav(current: 0, onTap: (_) {}, onResume: () {}),
+              MobileAppBar(onMenuPressed: () {}),
             ],
           ),
           brightness: brightness,
@@ -164,7 +161,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 200));
 
         expect(find.byType(TopNav), findsOneWidget);
-        expect(find.byType(MobileNav), findsOneWidget);
+        expect(find.byType(MobileAppBar), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });

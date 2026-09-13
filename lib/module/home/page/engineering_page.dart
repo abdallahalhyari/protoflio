@@ -221,14 +221,10 @@ const List<ArchitectureTopic> kArchitectureTopics = [
 ];
 
 class EngineeringPage extends StatefulWidget {
-  final PageController? controller;
-  final int? pageIndex;
   final bool isContinuousMobile;
 
   const EngineeringPage({
     super.key,
-    this.controller,
-    this.pageIndex,
     this.isContinuousMobile = false,
   });
 

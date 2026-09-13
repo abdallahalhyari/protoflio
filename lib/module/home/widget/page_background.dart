@@ -5,16 +5,12 @@ class PageBackground extends StatefulWidget {
   final String asset;
   final Widget child;
   final Color? overlay;
-  final PageController? controller;
-  final int? pageIndex;
 
   const PageBackground({
     super.key,
     required this.asset,
     required this.child,
     this.overlay,
-    this.controller,
-    this.pageIndex,
   });
 
   @override
@@ -37,39 +33,12 @@ class _PageBackgroundState extends State<PageBackground> {
       ),
     );
 
-    if (widget.controller == null || widget.pageIndex == null) {
-      return AnimatedSlide(
-        duration: reduceMotion ? Duration.zero : AppMotion.xs,
-        offset: Offset(
-          _mouseOffset.dx / size.width * 0.04,
-          _mouseOffset.dy / size.height * 0.04,
-        ),
-        child: baseImage,
-      );
-    }
-
-    return AnimatedBuilder(
-      animation: widget.controller!,
-      builder: (context, child) {
-        double pageOffset = 0.0;
-        if (widget.controller!.position.haveDimensions) {
-          pageOffset = widget.controller!.page! - widget.pageIndex!;
-        }
-
-        // Use a plain Transform inside the AnimatedBuilder — nesting an
-        // AnimatedContainer here would re-trigger its implicit tween on
-        // every scroll frame and defeat the parallax.
-        return Transform(
-          transform: Matrix4.identity()
-            ..translateByDouble(
-              _mouseOffset.dx * -0.05,
-              (pageOffset * size.height * 0.28) + (_mouseOffset.dy * -0.05),
-              0.0,
-              1.0,
-            ),
-          child: child,
-        );
-      },
+    return AnimatedSlide(
+      duration: reduceMotion ? Duration.zero : AppMotion.xs,
+      offset: Offset(
+        _mouseOffset.dx / size.width * 0.04,
+        _mouseOffset.dy / size.height * 0.04,
+      ),
       child: baseImage,
     );
   }
@@ -78,15 +47,8 @@ class _PageBackgroundState extends State<PageBackground> {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.of(context).disableAnimations;
 
-    double pageOffset = 0.0;
-    if (widget.controller != null &&
-        widget.pageIndex != null &&
-        widget.controller!.position.haveDimensions) {
-      pageOffset = widget.controller!.page! - widget.pageIndex!;
-    }
-
     final shiftX = reduceMotion ? 0.0 : (_mouseOffset.dx / size.width * 20.0);
-    final shiftY = reduceMotion ? 0.0 : (pageOffset * 40.0 + _mouseOffset.dy / size.height * 20.0);
+    final shiftY = reduceMotion ? 0.0 : (_mouseOffset.dy / size.height * 20.0);
 
     return Stack(
       children: [

@@ -8,14 +8,10 @@ import '../model/skill.dart';
 import '../widget/screen_shell.dart';
 
 class SkillsPage extends StatefulWidget {
-  final PageController? controller;
-  final int? pageIndex;
   final bool isContinuousMobile;
 
   const SkillsPage({
     super.key,
-    this.controller,
-    this.pageIndex,
     this.isContinuousMobile = false,
   });
 

@@ -64,14 +64,15 @@ class AppScreenShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final wide = width >= AppBreakpoints.tablet;
-    final topExtra = wide ? (reserveTopNav ? kTopNavReserve : 0.0) : kMobileTopReserve;
-    final mobileTopExtra = (!wide && reserveMobileTop) ? kMobileTopReserve : 0.0;
+    final topExtra = wide
+        ? (reserveTopNav ? kTopNavReserve : 0.0)
+        : (reserveMobileTop ? kMobileTopReserve : 0.0);
     final mobileBottomExtra = (!wide && reserveBottomNav) ? kBottomNavReserve : 0.0;
 
     final shellPadding = padding ??
         EdgeInsets.fromLTRB(
           hPad ?? horizontalPadding(context),
-          verticalPadding + topExtra + mobileTopExtra,
+          verticalPadding + topExtra,
           hPad ?? horizontalPadding(context),
           verticalPadding + mobileBottomExtra,
         );

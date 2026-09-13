@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/tokens.dart';
 
 class CustomCursor extends StatefulWidget {
   final Widget child;
@@ -23,7 +24,7 @@ class _CustomCursorState extends State<CustomCursor> {
     final platform = Theme.of(context).platform;
     final isTouch = platform == TargetPlatform.iOS || platform == TargetPlatform.android;
     
-    if (MediaQuery.sizeOf(context).width < 900 || isTouch) {
+    if (MediaQuery.sizeOf(context).width < AppBreakpoints.tablet || isTouch) {
       // Don't show custom cursor on mobile/tablet screens
       return widget.child;
     }

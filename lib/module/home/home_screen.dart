@@ -208,21 +208,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _next() {
-    if (mounted && MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
-      _scrollToMobileSection(_pageIndex + 1);
-    } else {
-      _goTo(_pageIndex + 1);
-    }
-  }
+  void _next() => _goTo(_pageIndex + 1);
 
-  void _prev() {
-    if (mounted && MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
-      _scrollToMobileSection(_pageIndex - 1);
-    } else {
-      _goTo(_pageIndex - 1);
-    }
-  }
+  void _prev() => _goTo(_pageIndex - 1);
 
   Future<void> _downloadResume() async {
     if (!mounted) return;
@@ -386,6 +374,35 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildDesktopPage(int index) {
+    switch (index) {
+      case 0:
+        return IntroPage(
+          onScrollDown: _next,
+          onViewWork: () => _goTo(1),
+          onDownloadResume: _downloadResume,
+          onContactMe: () => _goTo(6),
+        );
+      case 1:
+        return const ProjectsPage();
+      case 2:
+        return const EngineeringPage();
+      case 3:
+        return ExperiencePage(
+          controller: _controller,
+          pageIndex: 3,
+        );
+      case 4:
+        return const SkillsPage();
+      case 5:
+        return const HatsGridPage();
+      case 6:
+        return const ContactPage();
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
   Widget _buildDesktopLayout(BuildContext context) {
     return Stack(
       children: [
@@ -396,38 +413,17 @@ class _HomeScreenState extends State<HomeScreen> {
             physics: const NeverScrollableScrollPhysics(),
             controller: _controller,
             scrollDirection: Axis.vertical,
-            itemCount: 7,
+            itemCount: _pageCount,
             itemBuilder: (context, index) {
-              final pages = [
-                IntroPage(
-                  onScrollDown: _next,
-                  controller: _controller,
-                  pageIndex: 0,
-                  onViewWork: () => _goTo(1),
-                  onDownloadResume: _downloadResume,
-                  onContactMe: () => _goTo(6),
-                ),
-                ProjectsPage(controller: _controller, pageIndex: 1),
-                EngineeringPage(controller: _controller, pageIndex: 2),
-                ExperiencePage(controller: _controller, pageIndex: 3),
-                SkillsPage(controller: _controller, pageIndex: 4),
-                const HatsGridPage(),
-                ContactPage(
-                  controller: _controller,
-                  pageIndex: 6,
-                ),
-              ];
-
               return MagazinePageTransformer(
                 controller: _controller,
                 index: index,
-                child: pages[index],
+                child: _buildDesktopPage(index),
               );
             },
           ),
         ),
-        if (MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet &&
-            MediaQuery.sizeOf(context).height >= 340)
+        if (MediaQuery.sizeOf(context).height >= 340)
           Positioned(
             right: 12,
             top: 0,
@@ -583,8 +579,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 key: _sectionKeys[0],
                 child: IntroPage(
                   onScrollDown: () => _scrollToMobileSection(1),
-                  controller: _controller,
-                  pageIndex: 0,
                   onViewWork: () => _scrollToMobileSection(1),
                   onDownloadResume: _downloadResume,
                   onContactMe: () => _scrollToMobileSection(6),
@@ -594,38 +588,22 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildMobileSectionDivider('02', _dividerLabelFor(1)),
               KeyedSubtree(
                 key: _sectionKeys[1],
-                child: ProjectsPage(
-                  controller: _controller,
-                  pageIndex: 1,
-                  isContinuousMobile: true,
-                ),
+                child: const ProjectsPage(isContinuousMobile: true),
               ),
               _buildMobileSectionDivider('03', _dividerLabelFor(2)),
               KeyedSubtree(
                 key: _sectionKeys[2],
-                child: EngineeringPage(
-                  controller: _controller,
-                  pageIndex: 2,
-                  isContinuousMobile: true,
-                ),
+                child: const EngineeringPage(isContinuousMobile: true),
               ),
               _buildMobileSectionDivider('04', _dividerLabelFor(3)),
               KeyedSubtree(
                 key: _sectionKeys[3],
-                child: ExperiencePage(
-                  controller: _controller,
-                  pageIndex: 3,
-                  isContinuousMobile: true,
-                ),
+                child: const ExperiencePage(isContinuousMobile: true),
               ),
               _buildMobileSectionDivider('05', _dividerLabelFor(4)),
               KeyedSubtree(
                 key: _sectionKeys[4],
-                child: SkillsPage(
-                  controller: _controller,
-                  pageIndex: 4,
-                  isContinuousMobile: true,
-                ),
+                child: const SkillsPage(isContinuousMobile: true),
               ),
               _buildMobileSectionDivider('06', _dividerLabelFor(5)),
               KeyedSubtree(
@@ -635,11 +613,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildMobileSectionDivider('07', _dividerLabelFor(6)),
               KeyedSubtree(
                 key: _sectionKeys[6],
-                child: ContactPage(
-                  controller: _controller,
-                  pageIndex: 6,
-                  isContinuousMobile: true,
-                ),
+                child: const ContactPage(isContinuousMobile: true),
               ),
               const SizedBox(height: 48),
               _buildMobileFooter(),
@@ -1074,7 +1048,7 @@ class _HomeScreenState extends State<HomeScreen> {
             curve: Curves.easeOutCubic,
           );
         },
-        borderRadius: BorderRadius.circular(AppRadius.xxl),
+        borderRadius: BorderRadius.circular(22),
         child: Container(
           width: 44,
           height: 44,

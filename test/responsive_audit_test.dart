@@ -34,9 +34,8 @@ void main() {
     group('Viewport ${size.width.toInt()}x${size.height.toInt()}', () {
       testWidgets('IntroPage audit', (tester) async {
         await tester.binding.setSurfaceSize(size);
-        final ctrl = PageController();
         await tester.pumpWidget(createTestPage(
-          IntroPage(onScrollDown: () {}, controller: ctrl, pageIndex: 0),
+          IntroPage(onScrollDown: () {}),
           size,
         ));
         await tester.pump(const Duration(milliseconds: 300));
@@ -46,9 +45,8 @@ void main() {
 
       testWidgets('ProjectsPage audit', (tester) async {
         await tester.binding.setSurfaceSize(size);
-        final ctrl = PageController();
         await tester.pumpWidget(createTestPage(
-          ProjectsPage(controller: ctrl, pageIndex: 1),
+          const ProjectsPage(),
           size,
         ));
         await tester.pump(const Duration(milliseconds: 300));
@@ -58,9 +56,8 @@ void main() {
 
       testWidgets('EngineeringPage audit', (tester) async {
         await tester.binding.setSurfaceSize(size);
-        final ctrl = PageController();
         await tester.pumpWidget(createTestPage(
-          EngineeringPage(controller: ctrl, pageIndex: 2),
+          const EngineeringPage(),
           size,
         ));
         await tester.pump(const Duration(milliseconds: 300));
@@ -82,9 +79,8 @@ void main() {
 
       testWidgets('SkillsPage audit', (tester) async {
         await tester.binding.setSurfaceSize(size);
-        final ctrl = PageController();
         await tester.pumpWidget(createTestPage(
-          SkillsPage(controller: ctrl, pageIndex: 4),
+          const SkillsPage(),
           size,
         ));
         await tester.pump(const Duration(milliseconds: 300));
@@ -105,9 +101,8 @@ void main() {
 
       testWidgets('ContactPage audit', (tester) async {
         await tester.binding.setSurfaceSize(size);
-        final ctrl = PageController();
         await tester.pumpWidget(createTestPage(
-          ContactPage(controller: ctrl, pageIndex: 6),
+          const ContactPage(),
           size,
         ));
         await tester.pump(const Duration(milliseconds: 300));

@@ -14,24 +14,19 @@ import '../widget/screen_shell.dart';
 ///   [footer strip]     BASE — 3-column masthead footer: location · status · disciplines
 class IntroPage extends StatefulWidget {
   final VoidCallback onScrollDown;
-  final PageController controller;
-  final int pageIndex;
   final VoidCallback? onViewWork;
   final VoidCallback? onDownloadResume;
   final VoidCallback? onContactMe;
+  final bool isContinuousMobile;
 
   const IntroPage({
     super.key,
     required this.onScrollDown,
-    required this.controller,
-    required this.pageIndex,
     this.onViewWork,
     this.onDownloadResume,
     this.onContactMe,
     this.isContinuousMobile = false,
   });
-
-  final bool isContinuousMobile;
 
   @override
   State<IntroPage> createState() => _IntroPageState();

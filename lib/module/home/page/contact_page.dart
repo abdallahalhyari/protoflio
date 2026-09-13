@@ -19,14 +19,10 @@ import '../widget/screen_shell.dart';
 /// express one-tap email presets, direct verified communication channels,
 /// and ATS-compliant CV download/preview actions.
 class ContactPage extends StatefulWidget {
-  final PageController controller;
-  final int pageIndex;
   final bool isContinuousMobile;
 
   const ContactPage({
     super.key,
-    required this.controller,
-    required this.pageIndex,
     this.isContinuousMobile = false,
   });
 
