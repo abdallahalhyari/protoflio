@@ -409,7 +409,7 @@ class _ContactPageState extends State<ContactPage>
             ),
     );
 
-    return card;
+    return RepaintBoundary(child: card);
   }
 
   // ===========================================================================
@@ -590,58 +590,60 @@ class _ContactPageState extends State<ContactPage>
       ),
     ];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Container(
-              width: 4,
-              height: 18,
-              decoration: BoxDecoration(
-                color: _accent,
-                borderRadius: BorderRadius.circular(AppRadius.xxs),
+    return RepaintBoundary(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 4,
+                height: 18,
+                decoration: BoxDecoration(
+                  color: _accent,
+                  borderRadius: BorderRadius.circular(AppRadius.xxs),
+                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '// ENGAGEMENT SCOPES & COLLABORATION MODES',
-                  style: TextStyle(
-                    color: isDark ? Colors.white70 : AppColors.slate500,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2.2,
+              const SizedBox(width: 8),
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '// ENGAGEMENT SCOPES & COLLABORATION MODES',
+                    style: TextStyle(
+                      color: isDark ? Colors.white70 : AppColors.slate500,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2.2,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            final cardWidth = isDesktop
-                ? (constraints.maxWidth - 2 * AppSpacing.md) / 3
-                : constraints.maxWidth;
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final cardWidth = isDesktop
+                  ? (constraints.maxWidth - 2 * AppSpacing.md) / 3
+                  : constraints.maxWidth;
 
-            return Wrap(
-              spacing: AppSpacing.md,
-              runSpacing: AppSpacing.md,
-              children: [
-                for (final track in tracks)
-                  SizedBox(
-                    width: cardWidth,
-                    child: BentoTrackCard(track: track, isDark: isDark),
-                  ),
-              ],
-            );
-          },
-        ),
-      ],
+              return Wrap(
+                spacing: AppSpacing.md,
+                runSpacing: AppSpacing.md,
+                children: [
+                  for (final track in tracks)
+                    SizedBox(
+                      width: cardWidth,
+                      child: BentoTrackCard(track: track, isDark: isDark),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -673,8 +675,9 @@ class _ContactPageState extends State<ContactPage>
       ),
     ];
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+    return RepaintBoundary(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
       decoration: BoxDecoration(
         color: isDark
             ? Colors.white.withValues(alpha: 0.03)
@@ -736,28 +739,29 @@ class _ContactPageState extends State<ContactPage>
           ),
         ],
       ),
+    ),
     );
   }
 
   // ===========================================================================
   // SECTION 5: EXECUTIVE CV & CREDENTIALS
   // ===========================================================================
-
   Widget _cvCard(bool isDark) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: isDark
-            ? AppColors.slate900.withValues(alpha: 0.7)
-            : Colors.white,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(
+    return RepaintBoundary(
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
           color: isDark
-              ? _accent.withValues(alpha: 0.4)
-              : AppColors.slate200,
-          width: 1.5,
-        ),
-        boxShadow: [
+              ? AppColors.slate900.withValues(alpha: 0.7)
+              : Colors.white,
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+          border: Border.all(
+            color: isDark
+                ? _accent.withValues(alpha: 0.4)
+                : AppColors.slate200,
+            width: 1.5,
+          ),
+          boxShadow: [
           BoxShadow(
             color: _accent.withValues(alpha: isDark ? 0.06 : 0.03),
             blurRadius: 24,
@@ -915,6 +919,7 @@ class _ContactPageState extends State<ContactPage>
           );
         },
       ),
+    ),
     );
   }
 

@@ -455,18 +455,19 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                     BoxShadow(color: isDark ? Colors.black.withValues(alpha: 0.2) : AppColors.slate900.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4)),
                   ],
           ),
-          child: RepaintBoundary(
-            child: ClipRRect(
+          child: ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.lg),
             child: Stack(
                 children: [
                   // Glass background fill
                   Positioned.fill(
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      color: isDark
-                          ? (hovered ? scheme.surface.withValues(alpha: 0.35) : scheme.surface.withValues(alpha: 0.2))
-                          : (hovered ? Colors.white.withValues(alpha: 0.95) : Colors.white.withValues(alpha: 0.88)),
+                    child: RepaintBoundary(
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        color: isDark
+                            ? (hovered ? scheme.surface.withValues(alpha: 0.35) : scheme.surface.withValues(alpha: 0.2))
+                            : (hovered ? Colors.white.withValues(alpha: 0.95) : Colors.white.withValues(alpha: 0.88)),
+                      ),
                     ),
                   ),
                   
@@ -568,7 +569,6 @@ class _ExperienceCardState extends State<_ExperienceCard> {
             ),
           ),
         ),
-      ),
       ),
     );
   }
