@@ -116,26 +116,60 @@
   </script>
 
   <style>
+    @font-face {
+      font-family: 'Tenada';
+      src: url('fonts/Tenada.ttf') format('truetype');
+      font-display: swap;
+    }
     html, body { margin: 0; padding: 0; height: 100%; background: #0E0E10; }
     #boot-loader {
       position: fixed; inset: 0;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
       background: #0E0E10; color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       z-index: 9999;
       transition: opacity .4s ease;
+      overflow: hidden;
     }
     #boot-loader.hidden { opacity: 0; pointer-events: none; }
-    .spinner {
-      width: 36px; height: 36px;
-      border: 3px solid rgba(255,255,255,.15);
-      border-top-color: #ffffff;
-      border-radius: 50%;
-      animation: spin .9s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .boot-text { margin-left: 14px; font-size: 14px; opacity: .8; font-weight: 500; }
     
+    .hero-wordmark {
+      font-family: 'Tenada', sans-serif;
+      font-size: min(220px, 20vw);
+      font-weight: 900;
+      letter-spacing: 10px;
+      line-height: 0.9;
+      color: transparent;
+      -webkit-text-stroke: 3px rgba(255,255,255,0.28);
+      margin: 0;
+      padding: 0 16px;
+      text-align: center;
+    }
+    
+    .hero-subline {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 24px;
+      opacity: 0.8;
+    }
+    
+    .hero-strip {
+      background: #E11D48; /* _accent color equivalent */
+      color: #0E0E10;
+      font-weight: 900;
+      font-size: 10px;
+      letter-spacing: 2px;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+    
+    .hero-title {
+      font-size: min(24px, 3.5vw);
+      font-weight: 800;
+      letter-spacing: 4px;
+      margin: 0;
+    }
     /* Screen reader & crawler accessible semantic layout (never blocks visual Canvas) */
     .sr-only {
       position: absolute;
@@ -199,8 +233,11 @@
 </head>
 <body>
   <div id="boot-loader">
-    <div class="spinner"></div>
-    <div class="boot-text">Loading portfolio…</div>
+    <div class="hero-wordmark">ABDALLAH</div>
+    <div class="hero-subline">
+      <div class="hero-strip">ISSUE № 01</div>
+      <div class="hero-title">SENIOR MOBILE ENGINEER</div>
+    </div>
   </div>
 
   <!-- Accessible semantic DOM representation for search engines & web crawlers -->
