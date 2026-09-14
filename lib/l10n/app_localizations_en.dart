@@ -79,4 +79,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get keyboardHintEnd => 'End   last page';
+
+  @override
+  String get closeTooltip => 'Close';
+
+  @override
+  String get showHelpShortcut => 'Show this help';
+
+  @override
+  String resumeOpenError(Object publicUrl) {
+    return 'Could not open resume — visit $publicUrl';
+  }
+
+  @override
+  String projectOpenError(Object url) {
+    return 'Could not open $url';
+  }
+
+  @override
+  String get spreadAction => 'SPREAD';
+
+  @override
+  String get alignAction => 'ALIGN';
+
+  @override
+  String get previousAction => 'PREV';
+
+  @override
+  String get nextAction => 'NEXT';
+
+  @override
+  String emailCopied(Object email) {
+    return 'Email copied · $email';
+  }
+
+  @override
+  String get viewMyWork => 'VIEW MY WORK';
+
+  @override
+  String get downloadResume => 'DOWNLOAD RESUME';
+
+  @override
+  String get contactMe => 'CONTACT ME';
+
+  @override
+  String get copyEmail => 'COPY EMAIL';
 }

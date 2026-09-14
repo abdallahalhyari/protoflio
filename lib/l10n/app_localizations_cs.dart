@@ -76,8 +76,53 @@ class AppLocalizationsCs extends AppLocalizations {
   String get keyboardHintArrows => '↑ ↓   předchozí / další';
 
   @override
-  String get keyboardHintHome => 'Home  první stránka';
+  String get keyboardHintHome => 'První stránka';
 
   @override
-  String get keyboardHintEnd => 'End   poslední stránka';
+  String get keyboardHintEnd => 'Poslední stránka';
+
+  @override
+  String get closeTooltip => 'Zavřít';
+
+  @override
+  String get showHelpShortcut => 'Zobrazit tuto nápovědu';
+
+  @override
+  String resumeOpenError(Object publicUrl) {
+    return 'Nepodařilo se otevřít životopis — navštivte $publicUrl';
+  }
+
+  @override
+  String projectOpenError(Object url) {
+    return 'Nepodařilo se otevřít $url';
+  }
+
+  @override
+  String get spreadAction => 'ROZLOŽIT';
+
+  @override
+  String get alignAction => 'ZAROVNAT';
+
+  @override
+  String get previousAction => 'PŘEDCHOZÍ';
+
+  @override
+  String get nextAction => 'DALŠÍ';
+
+  @override
+  String emailCopied(Object email) {
+    return 'E-mail zkopírován · $email';
+  }
+
+  @override
+  String get viewMyWork => 'ZOBRAZIT PRÁCI';
+
+  @override
+  String get downloadResume => 'STÁHNOUT ŽIVOTOPIS';
+
+  @override
+  String get contactMe => 'KONTAKTUJTE MĚ';
+
+  @override
+  String get copyEmail => 'KOPÍROVAT E-MAIL';
 }

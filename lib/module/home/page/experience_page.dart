@@ -162,7 +162,7 @@ class _ExperiencePageState extends State<ExperiencePage>
                     child: Text(
                       'CAREER TRAJECTORY',
                       style: TextStyle(
-                        fontFamily: 'Tenada',
+                        fontFamily: AppTypography.displayFont,
                         color: scheme.onSurface,
                         fontSize: (size.width * 0.05).clamp(24.0, 48.0),
                         fontWeight: FontWeight.w900,
@@ -384,7 +384,7 @@ class _ExperiencePageState extends State<ExperiencePage>
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: scheme.primary, width: 2))),
       child: Text(
         title,
-        style: TextStyle(fontFamily: 'Tenada', color: scheme.onSurface, fontSize: 16, letterSpacing: 2),
+        style: TextStyle(fontFamily: AppTypography.displayFont, color: scheme.onSurface, fontSize: 16, letterSpacing: 2),
       ),
     );
   }
@@ -477,7 +477,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                     child: Text(
                       _watermark,
                       style: TextStyle(
-                        fontFamily: 'Tenada',
+                        fontFamily: AppTypography.displayFont,
                         fontSize: widget.isDesktop ? 160 : 90,
                         color: scheme.onSurface.withValues(alpha: 0.04),
                         height: 1.0,
@@ -532,7 +532,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
                             Text(
                               widget.exp.company,
                               style: TextStyle(
-                                fontFamily: 'Tenada',
+                                fontFamily: AppTypography.displayFont,
                                 color: scheme.onSurface,
                                 fontSize: widget.isDesktop ? 28 : 22,
                                 fontWeight: FontWeight.w900,

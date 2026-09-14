@@ -16,7 +16,7 @@ import '../widget/contact/consulting_track.dart';
 import '../widget/contact/social_chip.dart';
 import '../widget/editorial_chip.dart';
 import '../widget/pulsing_dot.dart';
-import '../widget/screen_shell.dart';
+import '../widget/scrollable_screen_shell.dart';
 
 /// Executive-grade editorial contact dossier and consulting portal.
 /// Commands trust with real-time timezone telemetry, consulting engagement matrix,
@@ -183,18 +183,10 @@ class _ContactPageState extends State<ContactPage>
       ],
     );
 
-    return AppScreenShell(
+    return ScrollableAppScreenShell(
       maxWidth: 1040,
-      verticalPadding: widget.isContinuousMobile ? AppSpacing.md : AppSpacing.lg,
-      reserveBottomNav: !widget.isContinuousMobile,
-      reserveMobileTop: !widget.isContinuousMobile,
-      child: widget.isContinuousMobile
-          ? body
-          : SingleChildScrollView(
-              primary: false,
-              physics: const ClampingScrollPhysics(),
-              child: body,
-            ),
+      isContinuousMobile: widget.isContinuousMobile,
+      child: body,
     );
   }
 
@@ -240,7 +232,7 @@ class _ContactPageState extends State<ContactPage>
       "LET'S BUILD SOMETHING EXTRAORDINARY",
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontFamily: 'Tenada',
+        fontFamily: AppTypography.displayFont,
         fontSize: fs,
         fontWeight: FontWeight.w900,
         letterSpacing: 2.5,
@@ -971,8 +963,9 @@ class _ContactPageState extends State<ContactPage>
 
     final blocks = [
       block('PRIMARY LOCATION', 'AMMAN · RELOCATING BRNO 2027'),
+      block('EU WORK STATUS', 'ELIGIBLE / NO PERMIT REQ.'),
       block('RESPONSE SLA', 'GUARANTEED WITHIN 24 HOURS'),
-      block('ENGAGEMENT SCOPE', 'SENIOR ROLES · ADVISORY · CONTRACT'),
+      block('ENGAGEMENT SCOPE', 'SENIOR ROLES · ADVISORY'),
     ];
 
     return Column(
@@ -1109,6 +1102,14 @@ class _ContactPageState extends State<ContactPage>
                     : AppColors.slate300,
               ),
               blocks[2],
+              Container(
+                width: 1,
+                height: 28,
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.2)
+                    : AppColors.slate300,
+              ),
+              blocks[3],
             ],
           ),
       ],

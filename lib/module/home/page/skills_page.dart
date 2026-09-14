@@ -28,14 +28,18 @@ class _SkillsPageState extends State<SkillsPage>
 
   final List<String> _categories = [
     'ALL',
+    'Domain Expertise',
     'Mobile Systems',
     'Security & Protocols',
     'Architecture & State',
     'Cloud & Infrastructure',
+    'Languages & Comm',
   ];
 
   List<Color> _getCategoryGradient(String category) {
     switch (category) {
+      case 'Domain Expertise':
+        return const [Color(0xFF8B5CF6), Color(0xFF6D28D9)];
       case 'Mobile Systems':
         return const [Color(0xFF38BDF8), AppColors.accentIndigo];
       case 'Security & Protocols':
@@ -44,6 +48,8 @@ class _SkillsPageState extends State<SkillsPage>
         return const [Color(0xFF34D399), Color(0xFF10B981)];
       case 'Cloud & Infrastructure':
         return const [Color(0xFFA78BFA), Color(0xFFEC4899)];
+      case 'Languages & Comm':
+        return const [Color(0xFFF472B6), Color(0xFFBE185D)];
       default:
         return const [AppColors.accentIndigo, Color(0xFFC084FC)];
     }
@@ -51,6 +57,8 @@ class _SkillsPageState extends State<SkillsPage>
 
   Color _getCategoryColor(String category) {
     switch (category) {
+      case 'Domain Expertise':
+        return const Color(0xFF8B5CF6);
       case 'Mobile Systems':
         return const Color(0xFF38BDF8);
       case 'Security & Protocols':
@@ -59,6 +67,8 @@ class _SkillsPageState extends State<SkillsPage>
         return const Color(0xFF10B981);
       case 'Cloud & Infrastructure':
         return const Color(0xFFA78BFA);
+      case 'Languages & Comm':
+        return const Color(0xFFF472B6);
       default:
         return AppColors.accentIndigo;
     }
@@ -184,7 +194,7 @@ class _SkillsPageState extends State<SkillsPage>
                     child: Text(
                       loc.navSkills.toUpperCase(),
                       style: TextStyle(
-                        fontFamily: 'Tenada',
+                        fontFamily: AppTypography.displayFont,
                         color: scheme.onSurface,
                         fontSize: (size.width * 0.05).clamp(24.0, 48.0),
                         fontWeight: FontWeight.w900,
@@ -460,6 +470,13 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
+    final Widget frontCard = _buildFront();
+    final Widget backCard = Transform(
+      alignment: Alignment.center,
+      transform: Matrix4.identity()..rotateY(math.pi),
+      child: _buildBack(),
+    );
+
     return MouseRegion(
       onEnter: (_) => _onHover(true),
       onExit: (_) => _onHover(false),
@@ -482,13 +499,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
             return Transform(
               alignment: Alignment.center,
               transform: transform,
-              child: isBack
-                  ? Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.identity()..rotateY(math.pi),
-                      child: _buildBack(),
-                    )
-                  : _buildFront(),
+              child: isBack ? backCard : frontCard,
             );
           },
         ),
@@ -553,7 +564,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontFamily: 'Tenada',
+                          fontFamily: AppTypography.displayFont,
                           color: isDark ? Colors.white : AppColors.slate900,
                           fontSize: widget.isDesktop ? 22 : 14,
                           fontWeight: FontWeight.w900,
@@ -677,7 +688,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontFamily: 'Tenada',
+                              fontFamily: AppTypography.displayFont,
                               color: isDark ? Colors.white : AppColors.slate900,
                               fontSize: widget.isDesktop ? 16 : 13,
                               fontWeight: FontWeight.w900,

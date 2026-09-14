@@ -4,7 +4,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 import '../widget/primary_button.dart';
-import '../widget/screen_shell.dart';
+import '../widget/scrollable_screen_shell.dart';
 import '../widget/scroll_explore_hint.dart';
 
 /// Intro reimagined as a premium magazine cover:
@@ -59,6 +59,8 @@ class _IntroPageState extends State<IntroPage> {
         SizedBox(height: isWide ? AppSpacing.lg : AppSpacing.md),
         _roleBlock(size, isDark),
         SizedBox(height: isWide ? AppSpacing.lg : AppSpacing.md),
+        _availabilityBanner(isDark, isWide),
+        SizedBox(height: isWide ? AppSpacing.lg : AppSpacing.md),
         _ctaRow(isDark),
         SizedBox(height: isWide ? AppSpacing.xxl : AppSpacing.xl),
         _footerStrip(size, l10n, isDark),
@@ -78,18 +80,10 @@ class _IntroPageState extends State<IntroPage> {
       ],
     );
 
-    return AppScreenShell(
+    return ScrollableAppScreenShell(
       maxWidth: 1200,
-      verticalPadding: widget.isContinuousMobile ? AppSpacing.md : AppSpacing.lg,
-      reserveBottomNav: !widget.isContinuousMobile,
-      reserveMobileTop: !widget.isContinuousMobile,
-      child: widget.isContinuousMobile
-          ? body
-          : SingleChildScrollView(
-              primary: false,
-              physics: const ClampingScrollPhysics(),
-              child: body,
-            ),
+      isContinuousMobile: widget.isContinuousMobile,
+      child: body,
     );
   }
 
@@ -160,7 +154,7 @@ class _IntroPageState extends State<IntroPage> {
             child: Text(
               'ABDALLAH',
               style: TextStyle(
-                fontFamily: 'Tenada',
+                fontFamily: AppTypography.displayFont,
                 fontSize: 220,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 10,
@@ -192,7 +186,7 @@ class _IntroPageState extends State<IntroPage> {
           Text(
             'ALHYARI',
             style: TextStyle(
-              fontFamily: 'Tenada',
+              fontFamily: AppTypography.displayFont,
               fontSize: letterSize,
               fontWeight: FontWeight.w800,
               letterSpacing: 14,
@@ -213,7 +207,7 @@ class _IntroPageState extends State<IntroPage> {
           'ALHYARI',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: 'Tenada',
+            fontFamily: AppTypography.displayFont,
             fontSize: letterSize,
             fontWeight: FontWeight.w800,
             letterSpacing: 10,
@@ -338,6 +332,38 @@ class _IntroPageState extends State<IntroPage> {
     );
   }
 
+  Widget _availabilityBanner(bool isDark, bool isWide) {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: isDark ? _accent.withValues(alpha: 0.1) : _accent.withValues(alpha: 0.05),
+          border: Border.all(color: _accent.withValues(alpha: 0.3)),
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.flight_takeoff_outlined, color: _accent, size: 18),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                'Relocating to Brno, CZ (Feb 2027) · Eligible for EU work as a Master\'s student',
+                style: TextStyle(
+                  color: isDark ? Colors.white : AppColors.slate900,
+                  fontSize: isWide ? 13 : 11,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _ctaRow(bool isDark) {
     return Wrap(
       spacing: 12,
@@ -345,14 +371,14 @@ class _IntroPageState extends State<IntroPage> {
       alignment: WrapAlignment.center,
       children: [
         PrimaryButton(
-          label: 'VIEW MY WORK',
+          label: AppLocalizations.of(context)!.viewMyWork,
           onPressed: () {
             SoundService.instance.playClick();
             (widget.onViewWork ?? widget.onScrollDown)();
           },
         ),
         _ghostButton(
-          label: 'DOWNLOAD RESUME',
+          label: AppLocalizations.of(context)!.downloadResume,
           icon: Icons.download_rounded,
           isDark: isDark,
           onPressed: () {
@@ -361,7 +387,7 @@ class _IntroPageState extends State<IntroPage> {
           },
         ),
         _ghostButton(
-          label: 'CONTACT ME',
+          label: AppLocalizations.of(context)!.contactMe,
           icon: Icons.send_rounded,
           color: _accent,
           isDark: isDark,
@@ -371,7 +397,7 @@ class _IntroPageState extends State<IntroPage> {
           },
         ),
         _ghostButton(
-          label: 'COPY EMAIL',
+          label: AppLocalizations.of(context)!.copyEmail,
           icon: Icons.content_copy_rounded,
           isDark: isDark,
           onPressed: () => _copyEmail(context),
@@ -386,6 +412,7 @@ class _IntroPageState extends State<IntroPage> {
     SoundService.instance.playClick();
     await Clipboard.setData(const ClipboardData(text: _kEmail));
     if (!context.mounted) return;
+    final loc = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -398,7 +425,7 @@ class _IntroPageState extends State<IntroPage> {
             const Icon(Icons.check_circle_rounded,
                 color: AppColors.accentGreen, size: 16),
             const SizedBox(width: 8),
-            Text('Email copied · $_kEmail'),
+            Text(loc.emailCopied(_kEmail)),
           ],
         ),
       ),

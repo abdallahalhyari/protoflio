@@ -6,6 +6,9 @@
     {
       "site": "alhyari",
       "public": "build/web",
+      "predeploy": [
+        "node patch_flutter_js.js"
+      ],
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -79,6 +82,9 @@
     {
       "site": "testfirestore-9b0b0",
       "public": "build/web",
+      "predeploy": [
+        "node patch_flutter_js.js"
+      ],
       "ignore": [
         "firebase.json",
         "**/.*",

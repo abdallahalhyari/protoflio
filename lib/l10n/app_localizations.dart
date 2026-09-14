@@ -243,6 +243,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'End   last page'**
   String get keyboardHintEnd;
+
+  /// No description provided for @closeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get closeTooltip;
+
+  /// No description provided for @showHelpShortcut.
+  ///
+  /// In en, this message translates to:
+  /// **'Show this help'**
+  String get showHelpShortcut;
+
+  /// No description provided for @resumeOpenError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open resume — visit {publicUrl}'**
+  String resumeOpenError(Object publicUrl);
+
+  /// No description provided for @projectOpenError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open {url}'**
+  String projectOpenError(Object url);
+
+  /// No description provided for @spreadAction.
+  ///
+  /// In en, this message translates to:
+  /// **'SPREAD'**
+  String get spreadAction;
+
+  /// No description provided for @alignAction.
+  ///
+  /// In en, this message translates to:
+  /// **'ALIGN'**
+  String get alignAction;
+
+  /// No description provided for @previousAction.
+  ///
+  /// In en, this message translates to:
+  /// **'PREV'**
+  String get previousAction;
+
+  /// No description provided for @nextAction.
+  ///
+  /// In en, this message translates to:
+  /// **'NEXT'**
+  String get nextAction;
+
+  /// No description provided for @emailCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Email copied · {email}'**
+  String emailCopied(Object email);
+
+  /// No description provided for @viewMyWork.
+  ///
+  /// In en, this message translates to:
+  /// **'VIEW MY WORK'**
+  String get viewMyWork;
+
+  /// No description provided for @downloadResume.
+  ///
+  /// In en, this message translates to:
+  /// **'DOWNLOAD RESUME'**
+  String get downloadResume;
+
+  /// No description provided for @contactMe.
+  ///
+  /// In en, this message translates to:
+  /// **'CONTACT ME'**
+  String get contactMe;
+
+  /// No description provided for @copyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'COPY EMAIL'**
+  String get copyEmail;
 }
 
 class _AppLocalizationsDelegate

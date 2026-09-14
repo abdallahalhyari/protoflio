@@ -388,7 +388,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       IconButton(
                         icon: const Icon(Icons.close_rounded, size: 20),
-                        tooltip: 'Close',
+                        tooltip: l10n.closeTooltip,
                         onPressed: () => Navigator.of(ctx).pop(),
                       ),
                     ],
@@ -398,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _shortcutRow(scheme, '↑ ↓', l10n.keyboardHintArrows),
                   _shortcutRow(scheme, 'Home', l10n.keyboardHintHome),
                   _shortcutRow(scheme, 'End', l10n.keyboardHintEnd),
-                  _shortcutRow(scheme, '?', 'Show this help'),
+                  _shortcutRow(scheme, '?', l10n.showHelpShortcut),
                 ],
               ),
             ),
@@ -1034,7 +1034,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: const Text(
                   'A',
                   style: TextStyle(
-                    fontFamily: 'Tenada',
+                    fontFamily: AppTypography.displayFont,
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
                     fontSize: 15,

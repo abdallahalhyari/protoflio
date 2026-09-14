@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 import '../data/hats_data.dart';
@@ -158,6 +159,7 @@ class _HatsGridPageState extends State<HatsGridPage>
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
     final isMobile = size.width < AppBreakpoints.tablet;
+    final loc = AppLocalizations.of(context)!;
 
     if (widget.isContinuousMobile) {
       return _buildMobileColumn(size);
@@ -319,7 +321,7 @@ class _HatsGridPageState extends State<HatsGridPage>
                                   Text(
                                     'ARCHITECTURAL PERSPECTIVES',
                                     style: TextStyle(
-                                      fontFamily: 'Tenada',
+                                      fontFamily: AppTypography.displayFont,
                                       color: Theme.of(context).brightness == Brightness.dark
                                           ? Colors.white
                                           : AppColors.slate900,
@@ -369,8 +371,8 @@ class _HatsGridPageState extends State<HatsGridPage>
                                     icon: const Icon(
                                         Icons.auto_awesome_motion_rounded,
                                         size: 15),
-                                    label: const Text('SPREAD',
-                                        style: TextStyle(
+                                    label: Text(loc.spreadAction,
+                                        style: const TextStyle(
                                             fontSize: 10.5,
                                             fontWeight: FontWeight.w800)),
                                   ),
@@ -388,8 +390,8 @@ class _HatsGridPageState extends State<HatsGridPage>
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 12, vertical: 6),
                                     ),
-                                    child: const Text('ALIGN',
-                                        style: TextStyle(
+                                    child: Text(loc.alignAction,
+                                        style: const TextStyle(
                                             fontSize: 10.5,
                                             fontWeight: FontWeight.w700)),
                                   ),
@@ -733,7 +735,7 @@ class _HatsGridPageState extends State<HatsGridPage>
           Text(
             'ARCHITECTURAL PERSPECTIVES',
             style: TextStyle(
-              fontFamily: 'Tenada',
+              fontFamily: AppTypography.displayFont,
               color: isDark ? Colors.white : AppColors.slate900,
               fontSize: 22,
               fontWeight: FontWeight.w900,

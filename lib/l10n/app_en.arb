@@ -23,5 +23,18 @@
   "keyboardHintDigits": "1–7   jump to section",
   "keyboardHintArrows": "↑ ↓   prev / next page",
   "keyboardHintHome": "Home  first page",
-  "keyboardHintEnd": "End   last page"
+  "keyboardHintEnd": "End   last page",
+  "closeTooltip": "Close",
+  "showHelpShortcut": "Show this help",
+  "resumeOpenError": "Could not open resume — visit {publicUrl}",
+  "projectOpenError": "Could not open {url}",
+  "spreadAction": "SPREAD",
+  "alignAction": "ALIGN",
+  "previousAction": "PREV",
+  "nextAction": "NEXT",
+  "emailCopied": "Email copied · {email}",
+  "viewMyWork": "VIEW MY WORK",
+  "downloadResume": "DOWNLOAD RESUME",
+  "contactMe": "CONTACT ME",
+  "copyEmail": "COPY EMAIL"
 }

@@ -75,8 +75,53 @@ class AppLocalizationsAr extends AppLocalizations {
   String get keyboardHintArrows => '↑ ↓   السابق / التالي';
 
   @override
-  String get keyboardHintHome => 'Home  الصفحة الأولى';
+  String get keyboardHintHome => 'الصفحة الأولى';
 
   @override
-  String get keyboardHintEnd => 'End   الصفحة الأخيرة';
+  String get keyboardHintEnd => 'الصفحة الأخيرة';
+
+  @override
+  String get closeTooltip => 'إغلاق';
+
+  @override
+  String get showHelpShortcut => 'عرض هذه المساعدة';
+
+  @override
+  String resumeOpenError(Object publicUrl) {
+    return 'تعذر فتح السيرة الذاتية — قم بزيارة $publicUrl';
+  }
+
+  @override
+  String projectOpenError(Object url) {
+    return 'تعذر فتح $url';
+  }
+
+  @override
+  String get spreadAction => 'توزيع';
+
+  @override
+  String get alignAction => 'محاذاة';
+
+  @override
+  String get previousAction => 'السابق';
+
+  @override
+  String get nextAction => 'التالي';
+
+  @override
+  String emailCopied(Object email) {
+    return 'تم نسخ البريد الإلكتروني · $email';
+  }
+
+  @override
+  String get viewMyWork => 'عرض أعمالي';
+
+  @override
+  String get downloadResume => 'تحميل السيرة الذاتية';
+
+  @override
+  String get contactMe => 'تواصل معي';
+
+  @override
+  String get copyEmail => 'نسخ البريد';
 }

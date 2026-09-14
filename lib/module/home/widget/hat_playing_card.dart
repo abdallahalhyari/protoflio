@@ -291,7 +291,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                         Text(
                           ordinal,
                           style: const TextStyle(
-                            fontFamily: 'Tenada',
+                            fontFamily: AppTypography.displayFont,
                             color: AppColors.accentAmberSoft,
                             fontSize: 24,
                             fontWeight: FontWeight.w900,
@@ -347,7 +347,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                   widget.hat.title.toUpperCase(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontFamily: 'Tenada',
+                    fontFamily: AppTypography.displayFont,
                     color: Colors.white,
                     fontSize: 21,
                     fontWeight: FontWeight.w900,

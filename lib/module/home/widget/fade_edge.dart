@@ -86,20 +86,14 @@ class _FadeEdgeState extends State<FadeEdge> {
       );
     }
 
-    return NotificationListener<ScrollNotification>(
-      onNotification: (_) {
-        _recompute();
-        return false;
-      },
-      child: Stack(
-        children: [
-          widget.child,
-          if (vertical) ...[
-            fade(_showLeading, Alignment.bottomCenter, Alignment.topCenter),
-            fade(_showTrailing, Alignment.topCenter, Alignment.bottomCenter),
-          ],
+    return Stack(
+      children: [
+        widget.child,
+        if (vertical) ...[
+          fade(_showLeading, Alignment.bottomCenter, Alignment.topCenter),
+          fade(_showTrailing, Alignment.topCenter, Alignment.bottomCenter),
         ],
-      ),
+      ],
     );
   }
 }

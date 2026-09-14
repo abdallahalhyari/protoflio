@@ -65,9 +65,10 @@ class _ProjectsPageState extends State<ProjectsPage>
     final uri = Uri.parse(url);
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok && mounted) {
+      final loc = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Could not open $url'),
+          content: Text(loc.projectOpenError(url)),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -220,7 +221,7 @@ class _ProjectsPageState extends State<ProjectsPage>
 
                   const SizedBox(height: 10),
                   // Mobile Pagination Bar (< PREV · NEXT >)
-                  _buildMobilePagination(scheme),
+                  _buildMobilePagination(scheme, loc),
                   const SizedBox(height: 6),
                   _buildFootnote(scheme),
                 ],
@@ -263,7 +264,7 @@ class _ProjectsPageState extends State<ProjectsPage>
                     child: Text(
                       loc.navProjects.toUpperCase(),
                       style: TextStyle(
-                        fontFamily: 'Tenada',
+                        fontFamily: AppTypography.displayFont,
                         color: scheme.onSurface,
                         fontSize: (size.width * 0.05).clamp(24.0, 48.0),
                         fontWeight: FontWeight.w900,
@@ -415,7 +416,7 @@ class _ProjectsPageState extends State<ProjectsPage>
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontFamily: 'Tenada',
+                      fontFamily: AppTypography.displayFont,
                       color: isSelected ? (isDark ? Colors.white : scheme.primary) : scheme.onSurface.withValues(alpha: 0.85),
                       fontSize: 14.5,
                       fontWeight: FontWeight.w900,
@@ -511,7 +512,7 @@ class _ProjectsPageState extends State<ProjectsPage>
     );
   }
 
-  Widget _buildMobilePagination(ColorScheme scheme) {
+  Widget _buildMobilePagination(ColorScheme scheme, AppLocalizations loc) {
     final isDark = scheme.brightness == Brightness.dark;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -525,7 +526,7 @@ class _ProjectsPageState extends State<ProjectsPage>
             minimumSize: const Size(0, 32),
           ),
           icon: const DirIcon(Icons.chevron_left, size: 14),
-          label: const Text('PREV', style: TextStyle(fontFamily: 'Courier', fontSize: 9.5, fontWeight: FontWeight.w700)),
+          label: Text(loc.previousAction, style: const TextStyle(fontFamily: 'Courier', fontSize: 9.5, fontWeight: FontWeight.w700)),
         ),
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -558,7 +559,7 @@ class _ProjectsPageState extends State<ProjectsPage>
             minimumSize: const Size(0, 32),
           ),
           icon: const DirIcon(Icons.chevron_right, size: 14),
-          label: const Text('NEXT', style: TextStyle(fontFamily: 'Courier', fontSize: 9.5, fontWeight: FontWeight.w700)),
+          label: Text(loc.nextAction, style: const TextStyle(fontFamily: 'Courier', fontSize: 9.5, fontWeight: FontWeight.w700)),
         ),
       ],
     );
@@ -719,7 +720,7 @@ class _ProjectsPageState extends State<ProjectsPage>
                     child: Text(
                       project.name.toUpperCase(),
                       style: TextStyle(
-                        fontFamily: 'Tenada',
+                        fontFamily: AppTypography.displayFont,
                         color: isDark ? Colors.white : AppColors.slate900,
                         fontSize: isDesktop ? 38 : 28,
                         fontWeight: FontWeight.w900,

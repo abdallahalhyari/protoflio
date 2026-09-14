@@ -22,6 +22,19 @@
   "keyboardHintTitle": "اختصارات لوحة المفاتيح",
   "keyboardHintDigits": "1–7   الانتقال إلى قسم",
   "keyboardHintArrows": "↑ ↓   السابق / التالي",
-  "keyboardHintHome": "Home  الصفحة الأولى",
-  "keyboardHintEnd": "End   الصفحة الأخيرة"
+  "keyboardHintHome": "الصفحة الأولى",
+  "keyboardHintEnd": "الصفحة الأخيرة",
+  "closeTooltip": "إغلاق",
+  "showHelpShortcut": "عرض هذه المساعدة",
+  "resumeOpenError": "تعذر فتح السيرة الذاتية — قم بزيارة {publicUrl}",
+  "projectOpenError": "تعذر فتح {url}",
+  "spreadAction": "توزيع",
+  "alignAction": "محاذاة",
+  "previousAction": "السابق",
+  "nextAction": "التالي",
+  "emailCopied": "تم نسخ البريد الإلكتروني · {email}",
+  "viewMyWork": "عرض أعمالي",
+  "downloadResume": "تحميل السيرة الذاتية",
+  "contactMe": "تواصل معي",
+  "copyEmail": "نسخ البريد"
 }

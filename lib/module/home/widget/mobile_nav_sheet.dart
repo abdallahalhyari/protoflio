@@ -187,7 +187,7 @@ class MobileNavSheet extends StatelessWidget {
                             Text(
                               'PORTFOLIO SECTIONS',
                               style: TextStyle(
-                                fontFamily: 'Tenada',
+                                fontFamily: AppTypography.displayFont,
                                 color: isDark ? Colors.white : AppColors.slate900,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w900,

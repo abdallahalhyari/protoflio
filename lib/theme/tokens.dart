@@ -126,6 +126,8 @@ class AppColors {
 class AppTypography {
   AppTypography._();
 
+  static const String displayFont = 'Tenada';
+
   // Editorial microtext — magazine-style tiny labels, kickers, meta chips.
   static const double editorialSm = 9.5;
   static const double editorial = 10.5;

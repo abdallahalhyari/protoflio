@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'analytics_service.dart';
 import 'sound_service.dart';
@@ -35,10 +36,11 @@ class CvService {
     final uri = Uri.parse(kIsWeb ? webRelativePath : publicUrl);
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok && context.mounted) {
+      final loc = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
-          content: Text('Could not open resume — visit $publicUrl'),
+          content: Text(loc.resumeOpenError(publicUrl)),
         ),
       );
     }

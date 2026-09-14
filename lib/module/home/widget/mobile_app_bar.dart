@@ -113,7 +113,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                             child: Text(
                               'A',
                               style: TextStyle(
-                                fontFamily: 'Tenada',
+                                fontFamily: AppTypography.displayFont,
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w900,
@@ -129,7 +129,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                             Text(
                               'ABDALLAH',
                               style: TextStyle(
-                                fontFamily: 'Tenada',
+                                fontFamily: AppTypography.displayFont,
                                 color: isDark ? Colors.white : AppColors.slate900,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w900,

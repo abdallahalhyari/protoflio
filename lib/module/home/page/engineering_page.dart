@@ -218,6 +218,50 @@ const List<ArchitectureTopic> kArchitectureTopics = [
       'Proactive SSL Pinning protects network transport against rogue proxy or man-in-the-middle attacks.',
     ],
   ),
+  ArchitectureTopic(
+    id: 'state_management_bloc',
+    title: 'Reactive State Management (BLoC)',
+    category: 'STATE ARCHITECTURE',
+    summary:
+        'Predictable, highly-testable reactive state container using the BLoC pattern with unidirectional data flow and strict event-to-state mapping.',
+    whyChosen:
+        'Isolates UI from complex business logic. Enables time-travel debugging, flawless dependency injection, and guarantees that the presentation layer strictly reflects the current state without side effects.',
+    diagramSteps: [
+      DiagramStep(
+        layer: 'UI / PRESENTATION',
+        title: 'BlocBuilder & BlocListener',
+        details: 'Widget tree reacts instantly to state emissions while handling side-effects (navigation, dialogs) through listeners.',
+        icon: Icons.view_quilt_outlined,
+        color: Color(0xFF38BDF8),
+      ),
+      DiagramStep(
+        layer: 'EVENT DISPATCH',
+        title: 'Unidirectional Data Flow',
+        details: 'User actions are transformed into strictly typed Events pushed into the BLoC sink.',
+        icon: Icons.alt_route_outlined,
+        color: Color(0xFFF59E0B),
+      ),
+      DiagramStep(
+        layer: 'BUSINESS LOGIC COMPONENT',
+        title: 'Event-to-State Mapping',
+        details: 'Asynchronous generators process events, interact with Domain use-cases, and yield immutable State objects.',
+        icon: Icons.memory_outlined,
+        color: AppColors.accentIndigo,
+      ),
+      DiagramStep(
+        layer: 'STATE / EMISSION',
+        title: 'Immutable State Classes',
+        details: 'Data classes with strictly defined properties and value equality (Equatable) preventing unnecessary widget rebuilds.',
+        icon: Icons.stream_outlined,
+        color: Color(0xFF10B981),
+      ),
+    ],
+    technicalHighlights: [
+      'Extensive use of Freezed and Equatable to guarantee memory-efficient value equality and copyWith mutations.',
+      'Complex asynchronous race conditions solved via restartable, sequential, and droppable event transformers (RxDart).',
+      'Flawless automated unit testing achieved using bloc_test to verify precise event-state trajectories.',
+    ],
+  ),
 ];
 
 class EngineeringPage extends StatefulWidget {
@@ -393,7 +437,7 @@ class _EngineeringPageState extends State<EngineeringPage>
                           child: Text(
                             'ENGINEERING EXPERTISE',
                             style: TextStyle(
-                              fontFamily: 'Tenada',
+                              fontFamily: AppTypography.displayFont,
                               color: scheme.onSurface,
                               fontSize: isDesktop ? 42 : 26,
                               fontWeight: FontWeight.w900,

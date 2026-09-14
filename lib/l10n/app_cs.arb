@@ -22,6 +22,19 @@
   "keyboardHintTitle": "Klávesové zkratky",
   "keyboardHintDigits": "1–7   přejít na sekci",
   "keyboardHintArrows": "↑ ↓   předchozí / další",
-  "keyboardHintHome": "Home  první stránka",
-  "keyboardHintEnd": "End   poslední stránka"
+  "keyboardHintHome": "První stránka",
+  "keyboardHintEnd": "Poslední stránka",
+  "closeTooltip": "Zavřít",
+  "showHelpShortcut": "Zobrazit tuto nápovědu",
+  "resumeOpenError": "Nepodařilo se otevřít životopis — navštivte {publicUrl}",
+  "projectOpenError": "Nepodařilo se otevřít {url}",
+  "spreadAction": "ROZLOŽIT",
+  "alignAction": "ZAROVNAT",
+  "previousAction": "PŘEDCHOZÍ",
+  "nextAction": "DALŠÍ",
+  "emailCopied": "E-mail zkopírován · {email}",
+  "viewMyWork": "ZOBRAZIT PRÁCI",
+  "downloadResume": "STÁHNOUT ŽIVOTOPIS",
+  "contactMe": "KONTAKTUJTE MĚ",
+  "copyEmail": "KOPÍROVAT E-MAIL"
 }
