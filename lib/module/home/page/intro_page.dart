@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
+import '../widget/staggered_slide_up.dart';
+import '../widget/breathing_pulse.dart';
 import '../../../service/sound_service.dart';
 import '../widget/primary_button.dart';
 import '../widget/scrollable_screen_shell.dart';
@@ -35,9 +37,8 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> {
-  // Backed by the shared AppColors palette so future rebrands propagate.
-  static const _accent = AppColors.accentIndigo;
-  static const _accentSoft = AppColors.accentIndigoSoft;
+  Color get _accent => Theme.of(context).colorScheme.primary;
+  Color get _accentSoft => Theme.of(context).colorScheme.primary.withValues(alpha: 0.35);
   static const _gold = AppColors.accentAmberSoft;
 
   @override
@@ -133,7 +134,7 @@ class _IntroPageState extends State<IntroPage> {
           child: Container(
             width: 3,
             height: 3,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: _accent,
               shape: BoxShape.circle,
             ),
@@ -142,9 +143,11 @@ class _IntroPageState extends State<IntroPage> {
       );
 
   Widget _wordmark(Size size, bool isDark) {
-    return Semantics(
-      header: true,
-      label: AppLocalizations.of(context)!.semanticTitle,
+    return StaggeredSlideUp(
+      delay: const Duration(milliseconds: 100),
+      child: Semantics(
+        header: true,
+        label: AppLocalizations.of(context)!.semanticTitle,
       child: SizedBox(
         height: (size.height * 0.22).clamp(120.0, 260.0),
         child: Padding(
@@ -163,11 +166,12 @@ class _IntroPageState extends State<IntroPage> {
                   ..style = PaintingStyle.stroke
                   ..strokeWidth = 3
                   ..color = isDark
-                      ? Colors.white.withValues(alpha: 0.28)
-                      : AppColors.accentIndigoDeep.withValues(alpha: 0.25),
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : _accent.withValues(alpha: 0.25),
               ),
             ),
           ),
+        ),
         ),
       ),
     );
@@ -177,7 +181,9 @@ class _IntroPageState extends State<IntroPage> {
     final letterSize = (size.width * 0.035).clamp(20.0, 40.0);
     final portraitSize = (size.width * 0.09).clamp(56.0, 96.0);
     if (isWide) {
-      return Row(
+      return StaggeredSlideUp(
+        delay: const Duration(milliseconds: 250),
+        child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -197,9 +203,12 @@ class _IntroPageState extends State<IntroPage> {
             ),
           ),
         ],
+      ),
       );
     }
-    return Column(
+    return StaggeredSlideUp(
+      delay: const Duration(milliseconds: 250),
+      child: Column(
       children: [
         _portrait(portraitSize),
         const SizedBox(height: AppSpacing.smd),
@@ -218,6 +227,7 @@ class _IntroPageState extends State<IntroPage> {
           ),
         ),
       ],
+    ),
     );
   }
 
@@ -276,7 +286,7 @@ class _IntroPageState extends State<IntroPage> {
           children: [
             _hairlineRow(
               isDark: isDark,
-              child: const Text(
+              child: Text(
                 '❖',
                 style: TextStyle(color: _accent, fontSize: 13),
               ),
@@ -300,7 +310,7 @@ class _IntroPageState extends State<IntroPage> {
                 fontSize: (size.width * 0.0115).clamp(12.5, 18.0),
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.5,
-                color: isDark ? _accentSoft : AppColors.accentIndigo600,
+                color: isDark ? _accentSoft : _accent,
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -334,8 +344,9 @@ class _IntroPageState extends State<IntroPage> {
 
   Widget _availabilityBanner(bool isDark, bool isWide) {
     return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: BreathingPulse(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: isDark ? _accent.withValues(alpha: 0.1) : _accent.withValues(alpha: 0.05),
           border: Border.all(color: _accent.withValues(alpha: 0.3)),
@@ -344,7 +355,7 @@ class _IntroPageState extends State<IntroPage> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.flight_takeoff_outlined, color: _accent, size: 18),
+            Icon(Icons.flight_takeoff_outlined, color: _accent, size: 18),
             const SizedBox(width: 8),
             Flexible(
               child: Text(
@@ -360,6 +371,7 @@ class _IntroPageState extends State<IntroPage> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -532,7 +544,7 @@ class _IntroPageState extends State<IntroPage> {
       block(
         AppLocalizations.of(context)!.introStatus,
         AppLocalizations.of(context)!.introOpenForRoles,
-        valueColor: isDark ? _accentSoft : AppColors.accentIndigo600,
+        valueColor: isDark ? _accentSoft : _accent,
         onTap: widget.onContactMe,
         tooltip: 'Jump to Contact',
       ),

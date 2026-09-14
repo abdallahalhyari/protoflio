@@ -16,6 +16,8 @@ class Project {
   final List<String>? results;
   final List<String>? technicalDecisions;
   final String? lessonsLearned;
+  final String? heroImagePath;
+  final bool hasArchitectureDiagram;
 
   const Project({
     required this.name,
@@ -33,6 +35,8 @@ class Project {
     this.results,
     this.technicalDecisions,
     this.lessonsLearned,
+    this.heroImagePath,
+    this.hasArchitectureDiagram = false,
   });
 }
 

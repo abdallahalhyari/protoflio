@@ -5,6 +5,7 @@ import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 import '../data/skills_data.dart';
 import '../model/skill.dart';
+import '../widget/holographic_physics.dart';
 import '../widget/screen_shell.dart';
 
 class SkillsPage extends StatefulWidget {
@@ -41,7 +42,7 @@ class _SkillsPageState extends State<SkillsPage>
       case 'Domain Expertise':
         return const [Color(0xFF8B5CF6), Color(0xFF6D28D9)];
       case 'Mobile Systems':
-        return const [Color(0xFF38BDF8), AppColors.accentIndigo];
+        return [const Color(0xFF38BDF8), Theme.of(context).colorScheme.primary];
       case 'Security & Protocols':
         return const [Color(0xFFFBBF24), Color(0xFFF59E0B)];
       case 'Architecture & State':
@@ -51,7 +52,7 @@ class _SkillsPageState extends State<SkillsPage>
       case 'Languages & Comm':
         return const [Color(0xFFF472B6), Color(0xFFBE185D)];
       default:
-        return const [AppColors.accentIndigo, Color(0xFFC084FC)];
+        return [Theme.of(context).colorScheme.primary, const Color(0xFFC084FC)];
     }
   }
 
@@ -70,7 +71,7 @@ class _SkillsPageState extends State<SkillsPage>
       case 'Languages & Comm':
         return const Color(0xFFF472B6);
       default:
-        return AppColors.accentIndigo;
+        return Theme.of(context).colorScheme.primary;
     }
   }
 
@@ -477,7 +478,9 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
       child: _buildBack(),
     );
 
-    return MouseRegion(
+    return HolographicCardPhysics(
+      borderRadius: 14,
+      child: MouseRegion(
       onEnter: (_) => _onHover(true),
       onExit: (_) => _onHover(false),
       cursor: SystemMouseCursors.click,
@@ -502,6 +505,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
               child: isBack ? backCard : frontCard,
             );
           },
+        ),
         ),
       ),
     );
@@ -752,7 +756,7 @@ class _BentoSkillTileState extends State<_BentoSkillTile> with SingleTickerProvi
                                 tag,
                                 style: TextStyle(
                                   fontFamily: 'Courier',
-                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : AppColors.accentIndigo700,
+                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : Theme.of(context).colorScheme.primary,
                                   fontSize: widget.isDesktop ? 9.5 : 8.0,
                                   fontWeight: FontWeight.w700,
                                 ),

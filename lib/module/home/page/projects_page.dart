@@ -1,19 +1,12 @@
-import 'dart:math' as math;
-import '../widget/conditional_blur.dart';
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/tokens.dart';
-import '../../../service/sound_service.dart';
 import '../data/projects_data.dart';
 import '../model/project.dart';
-import '../../../service/analytics_service.dart';
-import '../widget/directional_icon.dart';
-import '../widget/fade_edge.dart';
 import '../widget/screen_shell.dart';
-import '../widget/swipe_affordance.dart';
+import 'project_modal.dart';
 
-class ProjectsPage extends StatefulWidget {
+class ProjectsPage extends StatelessWidget {
   final bool isContinuousMobile;
 
   const ProjectsPage({
@@ -22,1050 +15,390 @@ class ProjectsPage extends StatefulWidget {
   });
 
   @override
-  State<ProjectsPage> createState() => _ProjectsPageState();
-}
-
-class _ProjectsPageState extends State<ProjectsPage>
-    with AutomaticKeepAliveClientMixin {
-  int _selectedIndex = 0;
-  final ScrollController _articleScrollController = ScrollController();
-
-  @override
-  bool get wantKeepAlive => true;
-
-
-  @override
-  void dispose() {
-    _articleScrollController.dispose();
-    super.dispose();
-  }
-
-  void _selectProject(int index) {
-    if (_selectedIndex == index) return;
-    SoundService.instance.playClick();
-    setState(() => _selectedIndex = index);
-    if (_articleScrollController.hasClients) {
-      _articleScrollController.jumpTo(0.0);
-    }
-  }
-
-  void _nextProject() {
-    SoundService.instance.playClick();
-    setState(() => _selectedIndex = (_selectedIndex + 1) % kProjects.length);
-  }
-
-  void _prevProject() {
-    SoundService.instance.playClick();
-    setState(() => _selectedIndex = (_selectedIndex - 1 + kProjects.length) % kProjects.length);
-  }
-
-  Future<void> _openProjectUrl(String url) async {
-    SoundService.instance.playClick();
-    Analytics.ctaProject(kProjects[_selectedIndex].company);
-    final uri = Uri.parse(url);
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!ok && mounted) {
-      final loc = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(loc.projectOpenError(url)),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
-  }
-
-  /// Zero-padded 2-digit ordinal for the tile / feature number.
-  /// Was previously written as `_ordinal(index)` inline everywhere —
-  /// works today (4 projects) but breaks at 10+.
-  String _ordinal(int index) => (index + 1).toString().padLeft(2, '0');
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context); // AutomaticKeepAliveClientMixin requirement
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
     final loc = AppLocalizations.of(context)!;
-    final currentProject = kProjects[_selectedIndex];
+    final isDark = scheme.brightness == Brightness.dark;
 
     return AppScreenShell(
       maxWidth: 1200,
-      verticalPadding: widget.isContinuousMobile ? AppSpacing.md : AppSpacing.md,
-      reserveBottomNav: !widget.isContinuousMobile,
-      reserveMobileTop: !widget.isContinuousMobile,
-      child: isDesktop
-            // DESKTOP: Master-Detail 2-Column (Zero nested vertical scroll!)
-            ? Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                    // Left Column: Header + 4 Project Selector Tiles
-                    Expanded(
-                      flex: 4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _buildHeader(scheme, loc, size, isDesktop),
-                          const SizedBox(height: 12),
-                          Container(height: 1, color: scheme.onSurface.withValues(alpha: 0.12)),
-                          const SizedBox(height: 12),
-
-                          // 4 Interactive Project Tiles (No scroll needed, exactly 4 tiles!)
-                          Expanded(
-                            child: ListView(
-                              primary: false,
-                              padding: EdgeInsets.zero,
-                              physics: const ClampingScrollPhysics(),
-                              children: [
-                                for (int i = 0; i < kProjects.length; i++) ...[
-                                  _buildDesktopProjectTile(
-                                    project: kProjects[i],
-                                    index: i,
-                                    isSelected: _selectedIndex == i,
-                                    scheme: scheme,
-                                  ),
-                                  if (i < kProjects.length - 1)
-                                    const SizedBox(height: 16),
-                                ],
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(height: 8),
-                          _buildFootnote(scheme),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(width: AppSpacing.xl),
-
-                    // Right Column: Feature Magazine Case Study Spread
-                    Expanded(
-                      flex: 7,
-                      child: FadeEdge(
-                        controller: _articleScrollController,
-                        tint: Theme.of(context).scaffoldBackgroundColor,
-                        child: SingleChildScrollView(
-                        controller: _articleScrollController,
-                        padding: EdgeInsets.zero,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: _buildMagazineArticle(currentProject, _selectedIndex, scheme, size, isDesktop),
-                        ),
-                      ),
-                      ),
-                    ),
-                  ],
-                )
-            // MOBILE: Compact paginated spread
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildHeader(scheme, loc, size, isDesktop),
-                  const SizedBox(height: 10),
-
-                  // Compact Project Tabs
-                  _buildMobileProjectTabs(scheme),
-                  const SizedBox(height: 8),
-                  _buildSwipeAffordance(scheme),
-                  const SizedBox(height: 8),
-                  Container(height: 1, color: scheme.onSurface.withValues(alpha: 0.12)),
-                  const SizedBox(height: 10),
-
-                  // Selected Project Case Study
-                  if (widget.isContinuousMobile)
-                    GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onHorizontalDragEnd: (details) {
-                        if (details.primaryVelocity != null) {
-                          if (details.primaryVelocity! < -200) {
-                            _nextProject();
-                          } else if (details.primaryVelocity! > 200) {
-                            _prevProject();
-                          }
-                        }
-                      },
-                      child: AnimatedSwitcher(
-                        duration: AppMotion.switcher,
-                        switchInCurve: Curves.easeOutCubic,
-                        switchOutCurve: Curves.easeInCubic,
-                        transitionBuilder: (child, animation) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: SlideTransition(
-                              position: Tween<Offset>(
-                                begin: const Offset(0.04, 0),
-                                end: Offset.zero,
-                              ).animate(animation),
-                              child: child,
-                            ),
-                          );
-                        },
-                        child: KeyedSubtree(
-                          key: ValueKey('project_article_${currentProject.name}'),
-                          child: _buildMagazineArticle(currentProject, _selectedIndex, scheme, size, isDesktop),
-                        ),
-                      ),
-                    )
-                  else
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.zero,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: _buildMagazineArticle(currentProject, _selectedIndex, scheme, size, isDesktop),
-                        ),
-                      ),
-                    ),
-
-                  const SizedBox(height: 10),
-                  // Mobile Pagination Bar (< PREV · NEXT >)
-                  _buildMobilePagination(scheme, loc),
-                  const SizedBox(height: 6),
-                  _buildFootnote(scheme),
-                ],
-              ),
-    );
-  }
-
-  Widget _buildHeader(ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
-    // Premium magazine-feature masthead: kicker rule + eyebrow +
-    // display headline + separator rule + right-side meta pill.
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-            height: 2, color: scheme.primary.withValues(alpha: 0.9)),
-        const SizedBox(height: 6),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    isDesktop
-                        ? 'FEATURE 02 · SELECTED CASE STUDIES'
-                        : 'FEATURE 02 · SELECTED WORK',
-                    style: TextStyle(
-                      color: scheme.primary,
-                      fontSize: isDesktop ? 11 : 10,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 3,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      loc.navProjects.toUpperCase(),
-                      style: TextStyle(
-                        fontFamily: AppTypography.displayFont,
-                        color: scheme.onSurface,
-                        fontSize: (size.width * 0.05).clamp(24.0, 48.0),
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 4,
-                        height: 1,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Enterprise mobile suites shipped to production',
-                    style: TextStyle(
-                      color: scheme.onSurface.withValues(alpha: 0.75),
-                      fontSize: isDesktop ? 12.5 : 11.5,
-                      fontStyle: FontStyle.italic,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (isDesktop)
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: scheme.primary.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                      color: scheme.primary.withValues(alpha: 0.4)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('✦',
-                        style: TextStyle(
-                            color: AppColors.accentAmber, fontSize: 11)),
-                    const SizedBox(width: 6),
-                    Text(
-                      '${kProjects.length} SUITES · 4+ YEARS',
-                      style: TextStyle(
-                        color: scheme.primary,
-                        fontSize: 10.5,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.4,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
-        const SizedBox(height: 6),
-        Container(
-            height: 0.75, color: scheme.primary.withValues(alpha: 0.5)),
-      ],
-    );
-  }
-
-  Widget _buildDesktopProjectTile({
-    required Project project,
-    required int index,
-    required bool isSelected,
-    required ColorScheme scheme,
-  }) {
-    final isDark = scheme.brightness == Brightness.dark;
-    return Semantics(
-      button: true,
-      selected: isSelected,
-      label:
-          '${project.company} — ${project.name}${isSelected ? ", selected" : ""}',
-      child: InkWell(
-        onTap: () => _selectProject(index),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        focusColor: scheme.primary.withValues(alpha: 0.25),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 44),
-          child: AnimatedContainer(
-              duration: AppMotion.sm,
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? scheme.primary.withValues(alpha: isDark ? 0.18 : 0.12)
-                    : (isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white.withValues(alpha: 0.85)),
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                border: Border.all(
-                  color: isSelected
-                      ? scheme.primary.withValues(alpha: 0.8)
-                      : (isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate200),
-                  width: isSelected ? 1.5 : 1.0,
-                ),
-                boxShadow: isSelected
-                    ? [
-                        BoxShadow(
-                          color: scheme.primary.withValues(alpha: 0.25),
-                          blurRadius: 20,
-                          spreadRadius: 2,
-                        ),
-                      ]
-                    : (isDark
-                        ? []
-                        : [
-                            BoxShadow(
-                              color: AppColors.slate900.withValues(alpha: 0.04),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ]),
-              ),
-              child: Row(
-          children: [
-            Container(
-              width: 30,
-              height: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: isSelected ? scheme.primary : (isDark ? Colors.white12 : AppColors.slate200),
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-              ),
-              child: Text(
-                _ordinal(index),
-                style: TextStyle(
-                  fontFamily: 'Courier',
-                  color: isSelected ? (isDark ? Colors.black : Colors.white) : (isDark ? Colors.white70 : AppColors.slate600),
-                  fontSize: 10.5,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    project.company.toUpperCase(),
-                    style: TextStyle(
-                      fontFamily: 'Courier',
-                      color: isSelected ? scheme.primary : scheme.onSurface.withValues(alpha: 0.52),
-                      fontSize: 9.5,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    project.name.toUpperCase(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontFamily: AppTypography.displayFont,
-                      color: isSelected ? (isDark ? Colors.white : scheme.primary) : scheme.onSurface.withValues(alpha: 0.85),
-                      fontSize: 14.5,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            DirIcon(
-              isSelected ? Icons.arrow_forward_rounded : Icons.chevron_right_rounded,
-              color: isSelected ? scheme.primary : scheme.onSurface.withValues(alpha: 0.3),
-              size: 16,
-            ),
-          ],
-        ),
-      ),
-      ),
-      ),
-    );
-  }
-
-  Widget _buildMobileProjectTabs(ColorScheme scheme) {
-    final isDark = scheme.brightness == Brightness.dark;
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
+      verticalPadding: AppSpacing.xl,
+      reserveBottomNav: !isContinuousMobile,
+      reserveMobileTop: !isContinuousMobile,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (int i = 0; i < kProjects.length; i++) ...[
-            if (i > 0) const SizedBox(width: 8),
-            InkWell(
-              onTap: () => _selectProject(i),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              child: AnimatedContainer(
-                    duration: AppMotion.snap,
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: _selectedIndex == i
-                          ? scheme.primary.withValues(alpha: isDark ? 0.22 : 0.15)
-                          : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.white.withValues(alpha: 0.85)),
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                      border: Border.all(
-                        color: _selectedIndex == i
-                            ? scheme.primary.withValues(alpha: 0.9)
-                            : (isDark ? Colors.white.withValues(alpha: 0.1) : AppColors.slate300),
-                        width: _selectedIndex == i ? 1.4 : 0.8,
-                      ),
-                    ),
+          _buildHeader(scheme, loc, size, isDesktop),
+          const SizedBox(height: AppSpacing.lg),
+          if (isDesktop)
+            // Desktop: 2x2 Grid
+            // Desktop: Flex Grid (stretches to fill remaining vertical space)
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: _selectedIndex == i ? scheme.primary : (isDark ? Colors.white12 : AppColors.slate200),
-                            borderRadius: BorderRadius.circular(AppRadius.xs),
-                          ),
-                          child: Text(
-                            _ordinal(i),
-                            style: TextStyle(
-                              fontFamily: 'Courier',
-                              color: _selectedIndex == i ? (isDark ? Colors.black : Colors.white) : (isDark ? Colors.white70 : AppColors.slate600),
-                              fontSize: 9.0,
-                              fontWeight: FontWeight.w900,
-                            ),
+                        Expanded(
+                          child: InteractiveProjectCard(
+                            project: kProjects[0],
+                            index: 0,
+                            scheme: scheme,
+                            isDark: isDark,
+                            isDesktop: isDesktop,
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        Text(
-                          kProjects[i].company.toUpperCase(),
-                          style: TextStyle(
-                            fontFamily: 'Courier',
-                            color: _selectedIndex == i ? (isDark ? Colors.white : scheme.primary) : scheme.onSurface.withValues(alpha: 0.7),
-                            fontSize: 9.5,
-                            fontWeight: _selectedIndex == i ? FontWeight.w800 : FontWeight.w600,
-                            letterSpacing: 0.5,
+                        const SizedBox(width: AppSpacing.lg),
+                        Expanded(
+                          child: InteractiveProjectCard(
+                            project: kProjects[1],
+                            index: 1,
+                            scheme: scheme,
+                            isDark: isDark,
+                            isDesktop: isDesktop,
                           ),
                         ),
                       ],
                     ),
                   ),
+                  const SizedBox(height: AppSpacing.lg),
+                  Expanded(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: InteractiveProjectCard(
+                            project: kProjects[2],
+                            index: 2,
+                            scheme: scheme,
+                            isDark: isDark,
+                            isDesktop: isDesktop,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.lg),
+                        if (kProjects.length > 3)
+                          Expanded(
+                            child: InteractiveProjectCard(
+                              project: kProjects[3],
+                              index: 3,
+                              scheme: scheme,
+                              isDark: isDark,
+                              isDesktop: isDesktop,
+                            ),
+                          )
+                        else
+                          const Spacer(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
+          else
+            // Mobile: Vertical List
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (int i = 0; i < kProjects.length; i++) ...[
+                  InteractiveProjectCard(
+                    project: kProjects[i],
+                    index: i,
+                    scheme: scheme,
+                    isDark: isDark,
+                    isDesktop: isDesktop,
+                  ),
+                  if (i < kProjects.length - 1) const SizedBox(height: AppSpacing.md),
+                ],
+              ],
             ),
-          ],
         ],
       ),
     );
   }
 
-  Widget _buildSwipeAffordance(ColorScheme scheme) {
-    return SwipeAffordance(
-      label:
-          'SWIPE OR TAP TO SWITCH CASE STUDIES (${_selectedIndex + 1}/${kProjects.length})',
-    );
-  }
-
-  Widget _buildMobilePagination(ColorScheme scheme, AppLocalizations loc) {
+  Widget _buildHeader(ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
     final isDark = scheme.brightness == Brightness.dark;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        OutlinedButton.icon(
-          onPressed: _prevProject,
-          style: OutlinedButton.styleFrom(
-            foregroundColor: isDark ? Colors.white70 : AppColors.slate700,
-            side: BorderSide(color: isDark ? Colors.white24 : AppColors.slate300),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            minimumSize: const Size(0, 32),
-          ),
-          icon: const DirIcon(Icons.chevron_left, size: 14),
-          label: Text(loc.previousAction, style: const TextStyle(fontFamily: 'Courier', fontSize: 9.5, fontWeight: FontWeight.w700)),
-        ),
         Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
-            for (int i = 0; i < kProjects.length; i++)
-              InkWell(
-                onTap: () => _selectProject(i),
-                borderRadius: BorderRadius.circular(AppRadius.xs),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 6),
-                  child: AnimatedContainer(
-                    duration: AppMotion.snap,
-                    width: _selectedIndex == i ? 18 : 6,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: _selectedIndex == i ? scheme.primary : (isDark ? Colors.white24 : AppColors.slate300),
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                  ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: scheme.primary.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                border: Border.all(color: scheme.primary.withValues(alpha: 0.3)),
+              ),
+              child: Text(
+                'SELECTED WORK',
+                style: TextStyle(
+                  fontFamily: 'Courier',
+                  color: scheme.primary,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 10,
+                  letterSpacing: 1.2,
                 ),
               ),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Container(height: 1, color: isDark ? Colors.white24 : Colors.black12),
+            ),
           ],
         ),
-        OutlinedButton.icon(
-          onPressed: _nextProject,
-          style: OutlinedButton.styleFrom(
-            foregroundColor: isDark ? Colors.white70 : AppColors.slate700,
-            side: BorderSide(color: isDark ? Colors.white24 : AppColors.slate300),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            minimumSize: const Size(0, 32),
+        const SizedBox(height: AppSpacing.md),
+        Text(
+          loc.navProjects,
+          style: TextStyle(
+            fontFamily: AppTypography.displayFont,
+            color: isDark ? Colors.white : AppColors.slate900,
+            fontSize: isDesktop ? 48 : 36,
+            fontWeight: FontWeight.w900,
+            letterSpacing: -0.5,
+            height: 1.1,
           ),
-          icon: const DirIcon(Icons.chevron_right, size: 14),
-          label: Text(loc.nextAction, style: const TextStyle(fontFamily: 'Courier', fontSize: 9.5, fontWeight: FontWeight.w700)),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          'In-depth looks at architecture, implementation, and measurable outcomes.',
+          style: TextStyle(
+            color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate600,
+            fontSize: isDesktop ? 16 : 14,
+            height: 1.5,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildMagazineArticle(Project project, int index, ColorScheme scheme, Size size, bool isDesktop) {
-    final isDark = scheme.brightness == Brightness.dark;
-    return RepaintBoundary(
-      child: ConditionalBlur(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        sigma: 16,
-        child: Container(
-            constraints: BoxConstraints(maxWidth: isDesktop ? 780 : 960),
-            decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.white.withValues(alpha: 0.92),
+}
+
+class InteractiveProjectCard extends StatefulWidget {
+  final Project project;
+  final int index;
+  final ColorScheme scheme;
+  final bool isDark;
+  final bool isDesktop;
+
+  const InteractiveProjectCard({
+    super.key,
+    required this.project,
+    required this.index,
+    required this.scheme,
+    required this.isDark,
+    required this.isDesktop,
+  });
+
+  @override
+  State<InteractiveProjectCard> createState() => _InteractiveProjectCardState();
+}
+
+class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
+  bool _isHovered = false;
+  Offset _mousePos = Offset.zero;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Read case study for ${widget.project.name}',
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        onHover: (e) => setState(() => _mousePos = e.localPosition),
+        child: AnimatedScale(
+          scale: _isHovered && widget.isDesktop ? 1.02 : 1.0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOutCubic,
+          child: Card(
+            margin: EdgeInsets.zero,
+            clipBehavior: Clip.antiAlias,
+            elevation: widget.isDark ? 0 : (_isHovered ? 12 : 4),
+            shadowColor: widget.isDark ? Colors.transparent : Colors.black.withValues(alpha: 0.15),
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppRadius.md),
-              border: Border.all(
-                color: isDark ? scheme.primary.withValues(alpha: 0.5) : AppColors.slate300,
-                width: isDark ? 1.5 : 1.0,
+              side: BorderSide(
+                color: widget.isDark
+                    ? (_isHovered ? widget.scheme.primary.withValues(alpha: 0.4) : Colors.white.withValues(alpha: 0.1))
+                    : (_isHovered ? widget.scheme.primary.withValues(alpha: 0.2) : Colors.transparent),
+                width: 1,
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: isDark ? Colors.black.withValues(alpha: 0.5) : AppColors.slate900.withValues(alpha: 0.06),
-                  blurRadius: 22,
-                  offset: const Offset(0, 6),
-                ),
-                BoxShadow(
-                  color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.08),
-                  blurRadius: 20,
-                ),
-              ],
             ),
-            child: AnimatedSwitcher(
-              duration: AppMotion.md,
-              switchInCurve: Curves.easeOutCubic,
-              switchOutCurve: Curves.easeInCubic,
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0.02, 0.0),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
-                  ),
-                );
-              },
+            color: widget.isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white,
+            child: InkWell(
+              onTap: () => showProjectCaseStudy(context, project: widget.project, index: widget.index),
               child: Column(
-                key: ValueKey(project.name),
-                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Top Accent Rule
-            Container(
-              height: 3,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [scheme.primary, const Color(0xFFC084FC)],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 20 : 14,
-                vertical: isDesktop ? 16 : 12,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Dateline Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                  // Image Header with Parallax & Spotlight
+                  if (widget.project.heroImagePath != null)
+                    Expanded(
+                      flex: 3,
+                      child: ClipRect(
+                        child: Stack(
+                          fit: StackFit.expand,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: scheme.primary.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(AppRadius.xs),
+                            AnimatedScale(
+                              scale: _isHovered && widget.isDesktop ? 1.08 : 1.0,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeOutCubic,
+                              child: Image.asset(
+                                widget.project.heroImagePath!,
+                                fit: BoxFit.cover,
                               ),
-                              child: Text(
-                                project.company.toUpperCase(),
-                                style: TextStyle(
-                                  fontFamily: 'Courier',
-                                  color: scheme.primary,
-                                  fontSize: 9.5,
-                                  fontWeight: FontWeight.w900,
-                                  letterSpacing: 1.2,
+                            ),
+                            // Gradient Overlay
+                            AnimatedOpacity(
+                              opacity: _isHovered ? 1.0 : 0.8,
+                              duration: const Duration(milliseconds: 300),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                    colors: [
+                                      Colors.black.withValues(alpha: 0.9),
+                                      Colors.black.withValues(alpha: 0.1),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            Flexible(
+                            // Spotlight
+                            if (_isHovered && widget.isDesktop)
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    gradient: RadialGradient(
+                                      center: FractionalOffset(
+                                        (_mousePos.dx / 400).clamp(0.0, 1.0),
+                                        (_mousePos.dy / 200).clamp(0.0, 1.0),
+                                      ),
+                                      radius: 0.6,
+                                      colors: [
+                                        widget.scheme.primary.withValues(alpha: 0.3),
+                                        Colors.transparent,
+                                      ],
+                                      stops: const [0.0, 1.0],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            // Label
+                            Positioned(
+                              left: AppSpacing.md,
+                              bottom: AppSpacing.md,
                               child: Text(
-                                isDesktop ? 'FEATURE ARTICLE // VOL. ${_ordinal(index)}' : 'VOL. ${_ordinal(index)}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
+                                widget.project.company.toUpperCase(),
+                                style: const TextStyle(
                                   fontFamily: 'Courier',
-                                  color: isDark ? Colors.white.withValues(alpha: 0.6) : AppColors.slate500,
-                                  fontSize: 9.5,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 1.0,
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1.5,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      if (project.url != null)
-                        InkWell(
-                          onTap: () => _openProjectUrl(project.url!),
-                          borderRadius: BorderRadius.circular(AppRadius.xs),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: scheme.primary.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(AppRadius.xs),
-                              border: Border.all(
-                                  color:
-                                      scheme.primary.withValues(alpha: 0.5)),
-                            ),
+                    )
+                  else
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        color: widget.scheme.primary.withValues(alpha: 0.1),
+                        alignment: Alignment.bottomLeft,
+                        padding: const EdgeInsets.all(AppSpacing.md),
+                        child: Text(
+                          widget.project.company.toUpperCase(),
+                          style: TextStyle(
+                            fontFamily: 'Courier',
+                            color: widget.scheme.primary,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ),
+                    ),
+                  // Body
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AnimatedDefaultTextStyle(
+                                duration: const Duration(milliseconds: 200),
+                                style: TextStyle(
+                                  fontFamily: AppTypography.displayFont,
+                                  color: _isHovered 
+                                      ? widget.scheme.primary 
+                                      : (widget.isDark ? Colors.white : AppColors.slate900),
+                                  fontSize: widget.isDesktop ? 22 : 18,
+                                  fontWeight: FontWeight.w900,
+                                  height: 1.1,
+                                ),
+                                child: Text(
+                                  widget.project.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                widget.project.tagline,
+                                style: TextStyle(
+                                  color: widget.isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate600,
+                                  fontSize: widget.isDesktop ? 13 : 12,
+                                  height: 1.4,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          AnimatedSlide(
+                            offset: _isHovered && widget.isDesktop ? const Offset(0.05, 0) : Offset.zero,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOutCubic,
                             child: Row(
-                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  'VISIT',
+                                  'READ CASE STUDY',
                                   style: TextStyle(
                                     fontFamily: 'Courier',
-                                    color: scheme.primary,
-                                    fontSize: 10,
+                                    color: widget.scheme.primary,
+                                    fontSize: 11,
                                     fontWeight: FontWeight.w900,
-                                    letterSpacing: 1,
+                                    letterSpacing: 1.0,
                                   ),
                                 ),
-                                const SizedBox(width: 3),
-                                Icon(Icons.arrow_outward,
-                                    size: 11, color: scheme.primary),
+                                const SizedBox(width: 6),
+                                Icon(Icons.arrow_forward_rounded, size: 14, color: widget.scheme.primary),
                               ],
                             ),
                           ),
-                        ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  // Project Headline
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      project.name.toUpperCase(),
-                      style: TextStyle(
-                        fontFamily: AppTypography.displayFont,
-                        color: isDark ? Colors.white : AppColors.slate900,
-                        fontSize: isDesktop ? 38 : 28,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 2.5,
-                        height: 1.05,
+                        ],
                       ),
                     ),
-                  ),
-
-                  const SizedBox(height: 4),
-
-                  // Tagline
-                  Text(
-                    project.tagline,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700,
-                      fontSize: isDesktop ? 13 : 11.5,
-                      height: 1.4,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // 1. Context Paragraph
-                  if (project.context != null) ...[
-                    Text(
-                      project.context!,
-                      style: TextStyle(
-                        color: isDark ? Colors.white.withValues(alpha: 0.8) : AppColors.slate700,
-                        fontSize: isDesktop ? 12.0 : 11.0,
-                        height: 1.45,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-
-                  // 2. The Architectural Dossier (Glass Bentos)
-                  _buildPipelineTopology(project, scheme, isDesktop),
-                  if (project.problem != null)
-                    _buildDossierRow('CORE PROBLEM', project.problem!, const Color(0xFFF87171), isDesktop, isDark),
-                  if (project.architecture != null)
-                    _buildDossierRow('ARCHITECTURE', project.architecture!, AppColors.accentIndigo, isDesktop, isDark),
-                  if (project.solution != null)
-                    _buildDossierRow('ENGINEERING SOLUTION', project.solution!, AppColors.accentGreen, isDesktop, isDark),
-                  if (project.technicalDecisions != null && project.technicalDecisions!.isNotEmpty)
-                    _buildDossierRow('DECISION', project.technicalDecisions!.first, const Color(0xFFFDE68A), isDesktop, isDark),
-                  if (project.lessonsLearned != null)
-                    _buildDossierRow('LESSON LEARNED', project.lessonsLearned!, const Color(0xFFFBBF24), isDesktop, isDark),
-
-                  const SizedBox(height: 8),
-                  Container(height: 1, color: isDark ? Colors.white12 : AppColors.slate200),
-                  const SizedBox(height: 16),
-
-                  // 3. Key Highlights & Measurable Results
-                  for (int i = 0; i < (isDesktop ? math.min(3, project.highlights.length) : math.min(2, project.highlights.length)); i++)
-                    _buildHighlightRow(project.highlights[i], scheme, isDesktop, isDark),
-
-                  if (project.results != null && project.results!.isNotEmpty) ...[
-                    const SizedBox(height: 4),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 1.5),
-                          child: Icon(Icons.check_circle_outline, color: AppColors.accentGreen, size: isDesktop ? 13 : 11),
-                        ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'MEASURABLE OUTCOME: ',
-                                  style: TextStyle(
-                                    fontFamily: 'Courier',
-                                    color: AppColors.accentGreen,
-                                    fontSize: isDesktop ? 10.5 : 9.5,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: project.results!.first,
-                                  style: TextStyle(
-                                    color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate800,
-                                    fontSize: isDesktop ? 11 : 9.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-
-                  const SizedBox(height: 16),
-
-                  // 4. Tech Stack Chips
-                  Wrap(
-                    spacing: 5,
-                    runSpacing: 5,
-                    children: [
-                      for (final tech in project.stack)
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2.5),
-                          decoration: BoxDecoration(
-                            color: isDark ? Colors.white.withValues(alpha: 0.06) : AppColors.slate100,
-                            borderRadius: BorderRadius.circular(AppRadius.xs),
-                            border: Border.all(color: isDark ? Colors.white12 : AppColors.slate200),
-                          ),
-                          child: Text(
-                            tech.toUpperCase(),
-                            style: TextStyle(
-                              fontFamily: 'Courier',
-                              color: isDark ? scheme.primary : AppColors.accentIndigo700,
-                              fontSize: isDesktop ? 9.5 : 8.5,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0.8,
-                            ),
-                          ),
-                        ),
-                    ],
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
-    ),
-  ),
-);
-  }
-
-  Widget _buildPipelineTopology(Project project, ColorScheme scheme, bool isDesktop) {
-    final isDark = scheme.brightness == Brightness.dark;
-    List<String> pipeline;
-    if (project.name.contains('NatHealth')) {
-      pipeline = const ['NFC APDU', 'Keystore JWT', 'Offline SQLite', 'WorkManager', 'HTTPS TPA'];
-    } else if (project.name.contains('ESKADENIA')) {
-      pipeline = const ['Feature PKG', 'MVVM Models', 'Service Locator', 'Cache Store', 'Hospital REST'];
-    } else if (project.name.contains('FAIS')) {
-      pipeline = const ['Onboarding UI', 'Inspection Form', 'Blob Storage', 'WorkManager Sync', 'Core ERP'];
-    } else if (project.name.contains('Solutions Now')) {
-      pipeline = const ['GPS Stream', 'Native Service', 'Local DB', 'Batch Sync', 'Fleet Command'];
-    } else {
-      pipeline = project.stack.take(5).toList();
-    }
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
-      decoration: BoxDecoration(
-        color: isDark ? Colors.black.withValues(alpha: 0.35) : AppColors.slate50,
-        borderRadius: BorderRadius.circular(AppRadius.chip),
-        border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 6,
-                height: 6,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF34D399),
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  'PRODUCTION PIPELINE TOPOLOGY',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: 'Courier',
-                    color: scheme.primary,
-                    fontSize: isDesktop ? 9.0 : 8.0,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                for (int i = 0; i < pipeline.length; i++) ...[
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
-                    decoration: BoxDecoration(
-                      color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.06),
-                      borderRadius: BorderRadius.circular(3),
-                      border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.3 : 0.25)),
-                    ),
-                    child: Text(
-                      pipeline[i].toUpperCase(),
-                      style: TextStyle(
-                        fontFamily: 'Courier',
-                        color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate900,
-                        fontSize: isDesktop ? 9.5 : 8.5,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  if (i < pipeline.length - 1)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Icon(
-                        Icons.arrow_forward_rounded,
-                        size: isDesktop ? 11 : 9.5,
-                        color: scheme.primary.withValues(alpha: 0.7),
-                      ),
-                    ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDossierRow(String label, String value, Color accentColor, bool isDesktop, bool isDark) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Container(
-            padding: EdgeInsets.all(isDesktop ? 12 : 10),
-            decoration: BoxDecoration(
-              color: isDark ? accentColor.withValues(alpha: 0.08) : Colors.white.withValues(alpha: 0.90),
-              borderRadius: BorderRadius.circular(AppRadius.smd),
-              border: Border.all(color: accentColor.withValues(alpha: isDark ? 0.28 : 0.4), width: 1.0),
-              boxShadow: [
-                BoxShadow(
-                  color: accentColor.withValues(alpha: isDark ? 0.05 : 0.04),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.api_rounded, size: 12, color: accentColor),
-                    const SizedBox(width: 6),
-                    Text(
-                      label,
-                      style: TextStyle(
-                        fontFamily: 'Courier',
-                        color: accentColor,
-                        fontSize: isDesktop ? 10.0 : 9.0,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.5,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  value,
-                  style: TextStyle(
-                    color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate800,
-                    fontSize: isDesktop ? 12.5 : 11.0,
-                    height: 1.45,
-                  ),
-                ),
-              ],
-            ),
-          ),
-    );
-  }
-
-  Widget _buildHighlightRow(String highlight, ColorScheme scheme, bool isDesktop, bool isDark) {
-    final colonIndex = highlight.indexOf(':');
-    final hasColon = colonIndex != -1;
-    final prefix = hasColon ? highlight.substring(0, colonIndex + 1) : '';
-    final rest = hasColon ? highlight.substring(colonIndex + 1) : highlight;
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '§ ',
-            style: TextStyle(
-              fontFamily: 'Courier',
-              color: scheme.primary,
-              fontWeight: FontWeight.w900,
-              fontSize: isDesktop ? 12.5 : 11.0,
-            ),
-          ),
-          Expanded(
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  if (hasColon)
-                    TextSpan(
-                      text: '$prefix ',
-                      style: TextStyle(
-                        fontFamily: 'Courier',
-                        color: isDark ? const Color(0xFFFDE68A) : const Color(0xFFB45309),
-                        fontWeight: FontWeight.w800,
-                        fontSize: isDesktop ? 12.0 : 10.5,
-                      ),
-                    ),
-                  TextSpan(
-                    text: rest.trim(),
-                    style: TextStyle(
-                      color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate700,
-                      fontSize: isDesktop ? 12.0 : 10.5,
-                      height: 1.35,
-                    ),
-                  ),
-                ],
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFootnote(ColorScheme scheme) {
-    return Text(
-      '✦ SELECT ANY ENTERPRISE CASE STUDY TO LOAD ARCHITECTURAL DOSSIER ✦',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontFamily: 'Courier',
-        color: scheme.onSurface.withValues(alpha: 0.5),
-        fontSize: 9.5,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1.2,
       ),
     );
   }

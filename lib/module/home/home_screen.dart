@@ -49,6 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final initialHash = UrlSyncService.instance.getInitialHash();
     if (initialHash != null) {
       _pageIndex = UrlSyncService.instance.hashToIndex(initialHash);
+      ThemeController.updateSeedFromHash(initialHash);
+    } else {
+      ThemeController.updateSeedFromHash('home');
     }
     _controller = PageController(initialPage: _pageIndex);
     _controller.addListener(_onScroll);
@@ -88,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
       SoundService.instance.playPageTurn();
       final hash = UrlSyncService.instance.indexToHash(page);
       UrlSyncService.instance.updateHash(hash);
+      ThemeController.updateSeedFromHash(hash);
       final labels = TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {
         Analytics.screen(labels[page], className: 'HomeScreen');
@@ -143,6 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _pageIndex = visibleIndex;
       final hash = UrlSyncService.instance.indexToHash(visibleIndex);
       UrlSyncService.instance.updateHash(hash);
+      ThemeController.updateSeedFromHash(hash);
     }
   }
 
@@ -152,6 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (syncUrl) {
       final hash = UrlSyncService.instance.indexToHash(target);
       UrlSyncService.instance.updateHash(hash);
+      ThemeController.updateSeedFromHash(hash);
     }
     if (target == 0 && _mobileScrollController.hasClients) {
       _mobileScrollController.animateTo(
@@ -196,6 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (syncUrl) {
       final hash = UrlSyncService.instance.indexToHash(target);
       UrlSyncService.instance.updateHash(hash);
+      ThemeController.updateSeedFromHash(hash);
     }
     if (mounted && MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
       _scrollToMobileSection(target, syncUrl: syncUrl);
@@ -486,21 +493,21 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return IntroPage(
           onScrollDown: _next,
-          onViewWork: () => _goTo(1),
+          onViewWork: () => _goTo(2),
           onDownloadResume: _downloadResume,
           onContactMe: () => _goTo(6),
         );
       case 1:
-        return const ProjectsPage();
-      case 2:
-        return const EngineeringPage();
-      case 3:
         return ExperiencePage(
           controller: _controller,
-          pageIndex: 3,
+          pageIndex: 1,
         );
-      case 4:
+      case 2:
+        return const ProjectsPage();
+      case 3:
         return const SkillsPage();
+      case 4:
+        return const EngineeringPage();
       case 5:
         return const HatsGridPage();
       case 6:
@@ -686,7 +693,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 key: _sectionKeys[0],
                 child: IntroPage(
                   onScrollDown: () => _scrollToMobileSection(1),
-                  onViewWork: () => _scrollToMobileSection(1),
+                  onViewWork: () => _scrollToMobileSection(2),
                   onDownloadResume: _downloadResume,
                   onContactMe: () => _scrollToMobileSection(6),
                   isContinuousMobile: true,
@@ -695,22 +702,22 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildMobileSectionDivider('02', _dividerLabelFor(1)),
               KeyedSubtree(
                 key: _sectionKeys[1],
-                child: const ProjectsPage(isContinuousMobile: true),
+                child: const ExperiencePage(isContinuousMobile: true),
               ),
               _buildMobileSectionDivider('03', _dividerLabelFor(2)),
               KeyedSubtree(
                 key: _sectionKeys[2],
-                child: const EngineeringPage(isContinuousMobile: true),
+                child: const ProjectsPage(isContinuousMobile: true),
               ),
               _buildMobileSectionDivider('04', _dividerLabelFor(3)),
               KeyedSubtree(
                 key: _sectionKeys[3],
-                child: const ExperiencePage(isContinuousMobile: true),
+                child: const SkillsPage(isContinuousMobile: true),
               ),
               _buildMobileSectionDivider('05', _dividerLabelFor(4)),
               KeyedSubtree(
                 key: _sectionKeys[4],
-                child: const SkillsPage(isContinuousMobile: true),
+                child: const EngineeringPage(isContinuousMobile: true),
               ),
               _buildMobileSectionDivider('06', _dividerLabelFor(5)),
               KeyedSubtree(

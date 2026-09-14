@@ -14,10 +14,10 @@ class TopNav extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     return [
       l.navHome,
-      l.navWork,
-      l.navEngineering,
       l.navExperience,
+      l.navWork,
       l.navStack,
+      l.navEngineering,
       l.navAbout,
       l.navContact,
     ];

@@ -9,6 +9,29 @@ class ThemeController {
   static final ValueNotifier<ThemeMode> mode =
       ValueNotifier<ThemeMode>(ThemeMode.dark);
 
+  static final ValueNotifier<Color> seedColor =
+      ValueNotifier<Color>(const Color(0xFF6366F1));
+
+  static void updateSeedFromHash(String hash) {
+    switch (hash.replaceAll('#', '').toLowerCase()) {
+      case 'experience':
+        seedColor.value = const Color(0xFF10B981); // Emerald
+      case 'work':
+        seedColor.value = const Color(0xFF8B5CF6); // Violet
+      case 'stack':
+        seedColor.value = const Color(0xFFF59E0B); // Amber
+      case 'engineering':
+        seedColor.value = const Color(0xFFF43F5E); // Rose
+      case 'about':
+        seedColor.value = const Color(0xFF06B6D4); // Cyan
+      case 'contact':
+        seedColor.value = const Color(0xFF3B82F6); // Sky Blue
+      case 'home':
+      default:
+        seedColor.value = const Color(0xFF6366F1); // Indigo
+    }
+  }
+
   static Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_prefsKey);

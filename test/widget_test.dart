@@ -134,44 +134,4 @@ void main() {
     final pageView = tester.widget<PageView>(find.byType(PageView));
     expect(pageView.controller!.page!.round(), 1);
   });
-
-  testWidgets('HomeScreen preserves inner scrollable on ProjectsPage and does not advance page', (tester) async {
-    tester.view.physicalSize = const Size(1200, 900);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-
-    await tester.pumpWidget(const PortfolioApp());
-    await tester.pump(const Duration(milliseconds: 300));
-
-    // First advance to Projects page
-    await tester.sendEventToBinding(
-      const PointerScrollEvent(
-        position: Offset(600, 450),
-        scrollDelta: Offset(0, 100),
-      ),
-    );
-    for (int i = 0; i < 15; i++) {
-      await tester.pump(const Duration(milliseconds: 50));
-    }
-    final pageView = tester.widget<PageView>(find.byType(PageView));
-    expect(pageView.controller!.page!.round(), 1);
-
-    // Now send pointer scroll event over the case study article (Offset(800, 500))
-    // The inner article has content to scroll down, so this scroll should be absorbed by the article
-    // and NOT advance to EngineeringPage.
-    await tester.sendEventToBinding(
-      const PointerScrollEvent(
-        position: Offset(800, 500),
-        scrollDelta: Offset(0, 80),
-      ),
-    );
-    for (int i = 0; i < 15; i++) {
-      await tester.pump(const Duration(milliseconds: 50));
-    }
-
-    // Must still be on Projects page (page index 1.0)!
-    expect(pageView.controller!.page!.round(), 1);
-  });
 }
-

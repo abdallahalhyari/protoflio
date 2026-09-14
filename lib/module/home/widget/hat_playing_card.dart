@@ -2,8 +2,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../../../service/sound_service.dart';
 import '../../../theme/tokens.dart';
-import '../model/hat_info.dart';
 import 'network_hat_image.dart';
+import 'holographic_physics.dart';
+
+import '../model/hat_info.dart';
 
 class HatPlayingCard extends StatefulWidget {
   final HatInfo hat;
@@ -151,52 +153,52 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
           }
         },
         onExit: (_) {
-          setState(() {
-            _isHovered = false;
-          });
-          _tiltOffset.value = Offset.zero;
+          setState(() => _isHovered = false);
+          if (_tiltOffset.value != Offset.zero) {
+            _tiltOffset.value = Offset.zero;
+          }
         },
-        child: Builder(
-          builder: (context) {
-            // Pre-build the complex front and back card layouts outside the AnimatedBuilder
-            // so they are cached and only rebuilt when hover state changes (setState on enter/exit),
-            // not on every single mouse movement or flip frame.
-            final Widget frontCard = _buildCardFront(context);
-            final Widget backCard = Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()..rotateY(math.pi),
-              child: _buildCardBack(context),
-            );
+        child: HolographicCardPhysics(
+          borderRadius: AppRadius.card,
+          enableGlare: false, // HatPlayingCard uses its own custom gold specular gleam
+          maxTiltAngle: 0.25, // Exaggerated tilt for the poker cards
+          child: Builder(
+            builder: (context) {
+              // Pre-build the complex front and back card layouts outside the AnimatedBuilder
+              // so they are cached and only rebuilt when hover state changes (setState on enter/exit),
+              // not on every single mouse movement or flip frame.
+              final Widget frontCard = _buildCardFront(context);
+              final Widget backCard = Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()..rotateY(math.pi),
+                child: _buildCardBack(context),
+              );
 
-            return AnimatedBuilder(
-              animation: Listenable.merge([_flipAnimation, _tiltOffset, _rotationDelta]),
-              builder: (context, _) {
-                final angle = _flipAnimation.value;
-                final isUnder = angle > math.pi / 2;
-                // reduce-motion strips the hover lift + parallax tilt so the
-                // card sits flat when the user requests less motion.
-                final double hoverLift = (_isHovered && !reduce) ? -10.0 : 0.0;
-                final tilt = _tiltOffset.value;
-                final double tiltX = (_isHovered && !reduce) ? -tilt.dy * 0.16 : 0.0;
-                final double tiltY = (_isHovered && !reduce) ? tilt.dx * 0.20 : 0.0;
-
-                return RepaintBoundary(
-                  child: Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.identity()
-                      ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
-                      ..rotateZ(widget.isStandalone
-                          ? 0.0
-                          : widget.rotation + _rotationDelta.value)
-                      ..setEntry(3, 2, 0.0015)
-                      ..rotateX(tiltX)
-                      ..rotateY(angle + tiltY),
-                    child: isUnder ? backCard : frontCard,
-                  ),
-                );
-              },
-            );
-          },
+              return AnimatedBuilder(
+                animation: Listenable.merge([_flipAnimation, _tiltOffset, _rotationDelta]),
+                builder: (context, _) {
+                  final angle = _flipAnimation.value;
+                  final isUnder = angle > math.pi / 2;
+                  // reduce-motion strips the hover lift + parallax tilt so the
+                  // card sits flat when the user requests less motion.
+                  final double hoverLift = (_isHovered && !reduce) ? -10.0 : 0.0;
+                  return RepaintBoundary(
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()
+                        ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
+                        ..rotateZ(widget.isStandalone
+                            ? 0.0
+                            : widget.rotation + _rotationDelta.value)
+                        ..setEntry(3, 2, 0.0015)
+                        ..rotateY(angle),
+                      child: isUnder ? backCard : frontCard,
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

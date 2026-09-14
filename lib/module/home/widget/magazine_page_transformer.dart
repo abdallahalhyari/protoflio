@@ -16,11 +16,8 @@ class MagazinePageTransformer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 3D perspective transforms on massive RepaintBoundary textures cause 
-    // heavy frame drops (jank) in Flutter Web (CanvasKit). We bypass it on Web.
     final reduceMotion = MediaQuery.of(context).disableAnimations ||
-        MediaQuery.of(context).accessibleNavigation ||
-        kIsWeb;
+        MediaQuery.of(context).accessibleNavigation;
 
     if (reduceMotion) {
       return child;
@@ -41,42 +38,21 @@ class MagazinePageTransformer extends StatelessWidget {
           return child!;
         }
 
-        // Page is scrolling away (turning up / upwards fold)
+        // Page is scrolling away (moving up)
+        // It fades out and scales down into the background
         if (position > 0.0 && position <= 1.0) {
           final double turnProgress = position.clamp(0.0, 1.0);
-          // 3D rotation around top edge (spine)
-          final double angle = -turnProgress * (math.pi / 5); // Up to ~36 degrees perspective fold
-          final double scale = 1.0 - (turnProgress * 0.05);
+          final double scale = 1.0 - (turnProgress * 0.1);
+          final double opacity = (1.0 - turnProgress).clamp(0.0, 1.0);
 
-          return Transform(
-            alignment: Alignment.topCenter,
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.0012)
-              ..scaleByDouble(scale, scale, 1.0, 1.0)
-              ..rotateX(angle),
-            child: Stack(
-              children: [
-                child!,
-                // Crease & paper curl shadow overlay
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black.withValues(alpha: turnProgress * 0.45),
-                            Colors.black.withValues(alpha: turnProgress * 0.15),
-                            Colors.transparent,
-                          ],
-                          stops: const [0.0, 0.35, 1.0],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          return Opacity(
+            opacity: opacity,
+            child: Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..scaleByDouble(scale, scale, 1.0, 1.0)
+                ..translate(0.0, turnProgress * 50.0), // Slight downward drift
+              child: child!,
             ),
           );
         }
@@ -84,19 +60,28 @@ class MagazinePageTransformer extends StatelessWidget {
         // Incoming page from below
         if (position < 0.0 && position >= -1.0) {
           final double emergeProgress = (-position).clamp(0.0, 1.0);
-          final double scale = 0.94 + (1.0 - emergeProgress) * 0.06;
-
-          return Transform.scale(
-            scale: scale,
-            alignment: Alignment.bottomCenter,
+          
+          return Transform.translate(
+            // Slide up slightly faster than the scroll to create overlap
+            offset: Offset(0, emergeProgress * 20.0),
             child: Stack(
               children: [
                 child!,
-                // Ambient shadow cast from the page above
-                Positioned.fill(
+                // Drop shadow cast onto the page below it
+                Positioned(
+                  top: 0, left: 0, right: 0, height: 100,
                   child: IgnorePointer(
                     child: Container(
-                      color: Colors.black.withValues(alpha: emergeProgress * 0.25),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black.withValues(alpha: emergeProgress * 0.15),
+                            Colors.transparent,
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

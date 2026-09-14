@@ -49,9 +49,8 @@ class _ContactPageState extends State<ContactPage>
   static const _githubUrl = 'https://github.com/abdallahalhyari';
   static const _githubHandle = 'abdallahalhyari';
 
-  // Backed by the shared AppColors palette so future rebrands propagate.
-  static const _accent = AppColors.accentAmber; // amber / gold
-  static const _accentSoft = AppColors.accentAmberSoft;
+  Color get _accent => Theme.of(context).colorScheme.primary;
+  Color get _accentSoft => Theme.of(context).colorScheme.primary.withValues(alpha: 0.35);
   static const _availabilityGreen = AppColors.accentGreen; // emerald
   static const _sky = AppColors.accentSky; // cyan / sky
   static const _indigo = AppColors.accentIndigo; // soft indigo
@@ -212,7 +211,7 @@ class _ContactPageState extends State<ContactPage>
             child: Text(
               'FEATURE 07 · DIRECT LINE & REACH OUT',
               style: TextStyle(
-                color: isDark ? _accentSoft : AppColors.accentIndigo600,
+                color: isDark ? _accentSoft : _accent,
                 fontSize: 11,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 4,
@@ -326,7 +325,7 @@ class _ContactPageState extends State<ContactPage>
         Text(
           AppLocalizations.of(context)!.contactHeroEyebrow,
           style: TextStyle(
-            color: isDark ? _accentSoft : AppColors.accentIndigo600,
+            color: isDark ? _accentSoft : _accent,
             fontSize: AppTypography.editorial,
             fontWeight: FontWeight.w900,
             letterSpacing: 2,
@@ -731,7 +730,7 @@ class _ContactPageState extends State<ContactPage>
                   trailing: Icon(
                     Icons.arrow_forward_rounded,
                     size: 12,
-                    color: isDark ? _accentSoft : AppColors.accentIndigoDeep,
+                    color: isDark ? _accentSoft : _accent,
                   ),
                   onTap: () => _openMail(subject: p.$2, body: p.$3),
                 ),

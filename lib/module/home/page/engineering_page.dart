@@ -708,23 +708,23 @@ class _EngineeringPageState extends State<EngineeringPage>
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.accentIndigoDeep.withValues(alpha: isDark ? 0.12 : 0.08),
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: isDark ? 0.12 : 0.08),
               borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(color: AppColors.accentIndigo.withValues(alpha: isDark ? 0.35 : 0.5)),
+              border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: isDark ? 0.35 : 0.5)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.psychology_outlined, color: AppColors.accentIndigo, size: 16),
+                    Icon(Icons.psychology_outlined, color: Theme.of(context).colorScheme.primary, size: 16),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
                         'ARCHITECTURAL RATIONALE (WHY THIS CHOICE)',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: isDark ? AppColors.accentIndigo : AppColors.accentIndigo600,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 10,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1.0,

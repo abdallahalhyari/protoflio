@@ -48,6 +48,8 @@ const List<Project> kProjects = [
       'Clean Architecture',
       'SQLite',
     ],
+    heroImagePath: 'assets/images/projects/nathealth.jpg',
+    hasArchitectureDiagram: true,
   ),
   Project(
     name: 'E-Learning & Healthcare Enterprise Suite',
@@ -84,6 +86,7 @@ const List<Project> kProjects = [
       'Applied profiling + testing cycles across stakeholders before ship.',
     ],
     stack: ['Flutter', 'Dart', 'MVVM', 'REST APIs', 'SQL Server', 'DevTools Profiling'],
+    heroImagePath: 'assets/images/projects/eskadenia.jpg',
   ),
   Project(
     name: 'Loyalty Rewards & Ephemeral Social Media Apps',
@@ -120,6 +123,7 @@ const List<Project> kProjects = [
       'Integrated dynamic REST datasets into typed models.',
     ],
     stack: ['Flutter', 'REST APIs', 'AWS S3', 'Camera Engine', 'Design System'],
+    heroImagePath: 'assets/images/projects/solutions.jpg',
   ),
   Project(
     name: 'M-Commerce & Media-Streaming Clients',
@@ -153,5 +157,6 @@ const List<Project> kProjects = [
       'Diagnosed live issues via data analysis; improved customer satisfaction.',
     ],
     stack: ['Flutter', 'Android (Java/Kotlin)', 'REST APIs', 'SQL Database', 'Media Streaming'],
+    heroImagePath: 'assets/images/projects/fais.jpg',
   ),
 ];

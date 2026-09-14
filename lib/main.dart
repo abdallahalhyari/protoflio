@@ -66,26 +66,31 @@ class PortfolioApp extends StatelessWidget {
         return ValueListenableBuilder<ThemeMode>(
           valueListenable: ThemeController.mode,
           builder: (context, mode, _) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              scrollBehavior: const _SmoothScrollBehavior(),
-              title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
-              themeMode: mode,
-              theme: AppTheme.light(),
-              darkTheme: AppTheme.dark(),
-              locale: locale,
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: const [
-                Locale('en'),
-                Locale('ar'),
-                Locale('cs'),
-              ],
-              home: const HomeScreen(),
+            return ValueListenableBuilder<Color>(
+              valueListenable: ThemeController.seedColor,
+              builder: (context, seedColor, _) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  scrollBehavior: const _SmoothScrollBehavior(),
+                  title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
+                  themeMode: mode,
+                  theme: AppTheme.light(seedColor),
+                  darkTheme: AppTheme.dark(seedColor),
+                  locale: locale,
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: const [
+                    Locale('en'),
+                    Locale('ar'),
+                    Locale('cs'),
+                  ],
+                  home: const HomeScreen(),
+                );
+              }
             );
           },
         );
