@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MagazinePageTransformer extends StatelessWidget {
@@ -15,8 +16,11 @@ class MagazinePageTransformer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 3D perspective transforms on massive RepaintBoundary textures cause 
+    // heavy frame drops (jank) in Flutter Web (CanvasKit). We bypass it on Web.
     final reduceMotion = MediaQuery.of(context).disableAnimations ||
-        MediaQuery.of(context).accessibleNavigation;
+        MediaQuery.of(context).accessibleNavigation ||
+        kIsWeb;
 
     if (reduceMotion) {
       return child;

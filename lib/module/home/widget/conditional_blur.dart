@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 
@@ -21,7 +22,9 @@ class ConditionalBlur extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final skip = AppMedia.reduceBlur(context);
+    // BackdropFilters on Web (CanvasKit) are extremely expensive when placed
+    // over scrolling areas, causing huge frame drops. We bypass it on Web.
+    final skip = AppMedia.reduceBlur(context) || kIsWeb;
     Widget content = child;
     if (!skip) {
       content = BackdropFilter(
