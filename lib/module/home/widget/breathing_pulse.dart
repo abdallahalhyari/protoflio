@@ -1,8 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-import '../../../theme/tokens.dart';
-
 class BreathingPulse extends StatefulWidget {
   final Widget child;
   final double minScale;

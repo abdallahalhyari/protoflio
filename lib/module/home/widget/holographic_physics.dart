@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -90,44 +89,44 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics> {
               final double pitch = -clampedNy * widget.maxTiltAngle;
               final double yaw = clampedNx * widget.maxTiltAngle;
 
-              final matrix = Matrix4.identity()
-                ..setEntry(3, 2, 0.001) // perspective
-                ..rotateX(pitch)
-                ..rotateY(yaw);
-
-              return Transform(
-                alignment: Alignment.center,
-                transform: matrix,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    widget.child,
-                    if (widget.enableGlare)
-                      Positioned.fill(
-                        child: IgnorePointer(
-                          child: AnimatedOpacity(
-                            opacity: _isHovering ? 1.0 : 0.0,
-                            duration: AppMotion.sm,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(widget.borderRadius),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: RadialGradient(
-                                    center: Alignment(clampedNx * 0.8, clampedNy * 0.8),
-                                    radius: 1.2,
-                                    colors: [
-                                      Colors.white.withValues(alpha: 0.15),
-                                      Colors.white.withValues(alpha: 0.0),
-                                    ],
-                                    stops: const [0.0, 1.0],
+              return RepaintBoundary(
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.001) // perspective
+                    ..rotateX(pitch)
+                    ..rotateY(yaw),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      widget.child,
+                      if (widget.enableGlare)
+                        Positioned.fill(
+                          child: IgnorePointer(
+                            child: AnimatedOpacity(
+                              opacity: _isHovering ? 1.0 : 0.0,
+                              duration: AppMotion.sm,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(widget.borderRadius),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    gradient: RadialGradient(
+                                      center: Alignment(clampedNx * 0.8, clampedNy * 0.8),
+                                      radius: 1.2,
+                                      colors: [
+                                        Colors.white.withValues(alpha: 0.15),
+                                        Colors.white.withValues(alpha: 0.0),
+                                      ],
+                                      stops: const [0.0, 1.0],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

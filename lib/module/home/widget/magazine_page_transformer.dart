@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MagazinePageTransformer extends StatelessWidget {
@@ -51,7 +49,7 @@ class MagazinePageTransformer extends StatelessWidget {
               alignment: Alignment.center,
               transform: Matrix4.identity()
                 ..scaleByDouble(scale, scale, 1.0, 1.0)
-                ..translate(0.0, turnProgress * 50.0), // Slight downward drift
+                ..translateByDouble(0.0, turnProgress * 50.0, 0.0, 1.0), // Slight downward drift
               child: child!,
             ),
           );

@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -6,7 +5,6 @@ import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/analytics_service.dart';
 import '../../../service/sound_service.dart';
-import '../data/projects_data.dart';
 import '../model/project.dart';
 import '../widget/conditional_blur.dart';
 
