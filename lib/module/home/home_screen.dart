@@ -49,9 +49,13 @@ class _HomeScreenState extends State<HomeScreen> {
     final initialHash = UrlSyncService.instance.getInitialHash();
     if (initialHash != null) {
       _pageIndex = UrlSyncService.instance.hashToIndex(initialHash);
-      ThemeController.updateSeedFromHash(initialHash);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ThemeController.updateSeedFromHash(initialHash);
+      });
     } else {
-      ThemeController.updateSeedFromHash('home');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ThemeController.updateSeedFromHash('home');
+      });
     }
     _controller = PageController(initialPage: _pageIndex);
     _controller.addListener(_onScroll);
