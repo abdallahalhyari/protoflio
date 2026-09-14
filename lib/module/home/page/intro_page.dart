@@ -104,7 +104,7 @@ class _IntroPageState extends State<IntroPage> {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              'ISSUE 01 · PORTFOLIO EDITION · MMXXVI',
+              AppLocalizations.of(context)!.introIssueStrip,
               style: TextStyle(
                 color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate600,
                 fontSize: fs,
@@ -144,7 +144,7 @@ class _IntroPageState extends State<IntroPage> {
   Widget _wordmark(Size size, bool isDark) {
     return Semantics(
       header: true,
-      label: 'Abdallah Alhyari, Senior Mobile Engineer',
+      label: AppLocalizations.of(context)!.semanticTitle,
       child: SizedBox(
         height: (size.height * 0.22).clamp(120.0, 260.0),
         child: Padding(
@@ -223,7 +223,7 @@ class _IntroPageState extends State<IntroPage> {
 
   Widget _portrait(double size) {
     return Semantics(
-      label: 'Portrait of Abdallah Alhyari',
+      label: AppLocalizations.of(context)!.semanticPortrait,
       image: true,
       child: Container(
         width: size,
@@ -258,7 +258,7 @@ class _IntroPageState extends State<IntroPage> {
               cacheWidth: 280,
               cacheHeight: 280,
               filterQuality: FilterQuality.high,
-              semanticLabel: 'Portrait of Abdallah Alhyari',
+              semanticLabel: AppLocalizations.of(context)!.semanticPortrait,
             ),
           ),
         ),
@@ -283,7 +283,7 @@ class _IntroPageState extends State<IntroPage> {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'SENIOR FLUTTER & ANDROID ENGINEER',
+              AppLocalizations.of(context)!.introSeniorEngineer.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: (size.width * 0.018).clamp(16.0, 22.0),
@@ -294,7 +294,7 @@ class _IntroPageState extends State<IntroPage> {
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
-              'BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS',
+              AppLocalizations.of(context)!.introBuildsComplex,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: (size.width * 0.0115).clamp(12.5, 18.0),
@@ -305,7 +305,7 @@ class _IntroPageState extends State<IntroPage> {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems',
+              AppLocalizations.of(context)!.introTechStack,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: (size.width * 0.011).clamp(11.5, 13.5),
@@ -348,7 +348,7 @@ class _IntroPageState extends State<IntroPage> {
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                'Relocating to Brno, CZ (Feb 2027) · Eligible for EU work as a Master\'s student',
+                AppLocalizations.of(context)!.introEuEligibility,
                 style: TextStyle(
                   color: isDark ? Colors.white : AppColors.slate900,
                   fontSize: isWide ? 13 : 11,
@@ -528,17 +528,17 @@ class _IntroPageState extends State<IntroPage> {
         );
 
     final blocks = [
-      block('BASED IN', l10n.introLocation.toUpperCase(), valueColor: isDark ? _gold : const Color(0xFFB45309)),
+      block(AppLocalizations.of(context)!.introBasedIn, AppLocalizations.of(context)!.introLocation.toUpperCase(), valueColor: isDark ? _gold : const Color(0xFFB45309)),
       block(
-        'STATUS',
-        'OPEN FOR SENIOR ROLES',
+        AppLocalizations.of(context)!.introStatus,
+        AppLocalizations.of(context)!.introOpenForRoles,
         valueColor: isDark ? _accentSoft : AppColors.accentIndigo600,
         onTap: widget.onContactMe,
         tooltip: 'Jump to Contact',
       ),
       block(
-        'DISCIPLINE',
-        'MOBILE ARCHITECTURE',
+        AppLocalizations.of(context)!.introDiscipline,
+        AppLocalizations.of(context)!.introMobileArch,
         onTap: widget.onViewWork,
         tooltip: 'Jump to Work',
       ),
@@ -551,7 +551,7 @@ class _IntroPageState extends State<IntroPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
-              '// MASTHEAD',
+              AppLocalizations.of(context)!.introMasthead,
               style: TextStyle(
                 color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate500,
                 fontSize: 10,

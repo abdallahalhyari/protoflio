@@ -125,4 +125,145 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get copyEmail => 'KOPÍROVAT E-MAIL';
+
+  @override
+  String get introSeniorEngineer => 'SENIOR MOBILNÍ VÝVOJÁŘ';
+
+  @override
+  String get introSystemArchitect => 'SYSTÉMOVÝ ARCHITEKT';
+
+  @override
+  String get introEuEligibility => 'OPRÁVNĚNÍ K PRÁCI V EU';
+
+  @override
+  String get introAvailableContracts => 'K DISPOZICI PRO KONTRAKTY';
+
+  @override
+  String get introMeticulouslyEngineered => 'Pečlivě navržené portfolio.';
+
+  @override
+  String get contactEngagementScopes => '// ROZSAHY SPOLUPRÁCE A REŽIMY';
+
+  @override
+  String get contactAtsVerified => 'ATS OVĚŘENO · EDICE 2026';
+
+  @override
+  String get contactPdfSize => 'PDF · 240 KB';
+
+  @override
+  String get contactCvDossierTitle => 'Exekutivní životopis a portfolio';
+
+  @override
+  String get contactCvDossierDesc =>
+      'Kompletní chronologický záznam, případové studie podnikové architektury a inženýrské kompetence.';
+
+  @override
+  String get contactDownloadCvPdf => 'STÁHNOUT ŽIVOTOPIS · PDF';
+
+  @override
+  String get contactPreview => 'NÁHLED';
+
+  @override
+  String get footerRightsReserved => '© 2026 · VŠECHNA PRÁVA VYHRAZENA';
+
+  @override
+  String get contactInitiateEncrypted => 'ZAHÁJIT ŠIFROVANÉ VLÁKNO';
+
+  @override
+  String get contactStartConversation => 'ZAHÁJIT KONVERZACI';
+
+  @override
+  String get contactPhone => 'TELEFON';
+
+  @override
+  String get contactCall => 'Volat';
+
+  @override
+  String get contactWhatsapp => 'WHATSAPP';
+
+  @override
+  String get contactOpen => 'Otevřít';
+
+  @override
+  String get contactCopy => 'Kopírovat';
+
+  @override
+  String get contactLinkedin => 'LINKEDIN';
+
+  @override
+  String get contactProfile => 'Profil';
+
+  @override
+  String get contactGithub => 'GITHUB';
+
+  @override
+  String get contactVisit => 'Navštívit';
+
+  @override
+  String get semanticPortrait => 'Portrét Abdallaha Alhyariho';
+
+  @override
+  String get semanticTitle => 'Abdallah Alhyari, Senior mobilní vývojář';
+
+  @override
+  String folioIndicator(Object current, Object total) {
+    return 'LIST $current / $total';
+  }
+
+  @override
+  String get blocSectionTitle => 'BLoC / ČISTÁ ARCHITEKTURA';
+
+  @override
+  String get blocSectionSubtitle =>
+      'Předvídatelná změna stavu pomocí jednosměrného toku dat';
+
+  @override
+  String get blocStep1Title => 'Odeslat událost';
+
+  @override
+  String get blocStep1Desc =>
+      'UI spustí událost. V komponentách není žádná obchodní logika.';
+
+  @override
+  String get blocStep2Title => 'Mapovat na stav';
+
+  @override
+  String get blocStep2Desc =>
+      'BLoC zpracuje událost a vytvoří nový neměnný stav.';
+
+  @override
+  String get blocStep3Title => 'Vykreslit výstup';
+
+  @override
+  String get blocStep3Desc =>
+      'UI se efektivně přestavuje na základě přesných rozdílů stavu.';
+
+  @override
+  String get introIssueStrip => 'VYDÁNÍ 01 · EDICE PORTFOLIO · MMXXVI';
+
+  @override
+  String get introBuildsComplex =>
+      'BUDUJE KOMPLEXNÍ, SPOLEHLIVÉ, ŠKÁLOVATELNÉ MOBILNÍ SYSTÉMY';
+
+  @override
+  String get introTechStack =>
+      'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
+
+  @override
+  String get introBasedIn => 'SÍDLO';
+
+  @override
+  String get introStatus => 'STATUS';
+
+  @override
+  String get introOpenForRoles => 'OTEVŘENÝ PRO SENIORSKÉ POZICE';
+
+  @override
+  String get introDiscipline => 'OBOR';
+
+  @override
+  String get introMobileArch => 'MOBILNÍ ARCHITEKTURA';
+
+  @override
+  String get introMasthead => '// HLAVIČKA';
 }

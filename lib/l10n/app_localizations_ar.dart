@@ -124,4 +124,144 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get copyEmail => 'نسخ البريد';
+
+  @override
+  String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
+
+  @override
+  String get introSystemArchitect => 'مهندس نظم';
+
+  @override
+  String get introEuEligibility => 'مؤهل للعمل في أوروبا';
+
+  @override
+  String get introAvailableContracts => 'متاح للعقود';
+
+  @override
+  String get introMeticulouslyEngineered => 'معرض أعمال مصمم هندسياً بعناية.';
+
+  @override
+  String get contactEngagementScopes => '// مجالات المشاركة وأساليب التعاون';
+
+  @override
+  String get contactAtsVerified => 'معتمد لنظام ATS · إصدار 2026';
+
+  @override
+  String get contactPdfSize => 'بي دي إف · 240 ك.ب';
+
+  @override
+  String get contactCvDossierTitle => 'السيرة الذاتية التنفيذية وملف الأعمال';
+
+  @override
+  String get contactCvDossierDesc =>
+      'سجل زمني متكامل، دراسات حالة لبنية المؤسسات، وكفاءات هندسية.';
+
+  @override
+  String get contactDownloadCvPdf => 'تحميل السيرة · PDF';
+
+  @override
+  String get contactPreview => 'معاينة';
+
+  @override
+  String get footerRightsReserved => '© 2026 · جميع الحقوق محفوظة';
+
+  @override
+  String get contactInitiateEncrypted => 'بدء محادثة مشفرة';
+
+  @override
+  String get contactStartConversation => 'بدء محادثة';
+
+  @override
+  String get contactPhone => 'هاتف';
+
+  @override
+  String get contactCall => 'اتصال';
+
+  @override
+  String get contactWhatsapp => 'واتساب';
+
+  @override
+  String get contactOpen => 'فتح';
+
+  @override
+  String get contactCopy => 'نسخ';
+
+  @override
+  String get contactLinkedin => 'لينكد إن';
+
+  @override
+  String get contactProfile => 'حساب شخصي';
+
+  @override
+  String get contactGithub => 'جيت هاب';
+
+  @override
+  String get contactVisit => 'زيارة';
+
+  @override
+  String get semanticPortrait => 'صورة شخصية لعبدالله الحياري';
+
+  @override
+  String get semanticTitle => 'عبدالله الحياري، مهندس تطبيقات هواتف أول';
+
+  @override
+  String folioIndicator(Object current, Object total) {
+    return 'الصحيفة $current / $total';
+  }
+
+  @override
+  String get blocSectionTitle => 'عمارة BLoC / التصميم النظيف';
+
+  @override
+  String get blocSectionSubtitle =>
+      'تغيرات حالة متوقعة عبر تدفق بيانات أحادي الاتجاه';
+
+  @override
+  String get blocStep1Title => 'إرسال حدث';
+
+  @override
+  String get blocStep1Desc =>
+      'واجهة المستخدم تطلق حدثاً. لا يوجد منطق أعمال في الواجهات.';
+
+  @override
+  String get blocStep2Title => 'تعيين الحالة';
+
+  @override
+  String get blocStep2Desc => 'BLoC يعالج الحدث وينتج حالة جديدة ثابتة.';
+
+  @override
+  String get blocStep3Title => 'عرض المخرجات';
+
+  @override
+  String get blocStep3Desc =>
+      'يتم إعادة بناء الواجهة بكفاءة بناءً على فروق الحالة الدقيقة.';
+
+  @override
+  String get introIssueStrip => 'الإصدار 01 · نسخة معرض الأعمال · 2026';
+
+  @override
+  String get introBuildsComplex =>
+      'يبني أنظمة هواتف محمولة معقدة، موثوقة، وقابلة للتوسع';
+
+  @override
+  String get introTechStack =>
+      'فلاتر · أندرويد · آي أو إس · معمارية برمجيات · أنظمة دون اتصال · NFC · أمان · أنظمة الوقت الفعلي';
+
+  @override
+  String get introBasedIn => 'مقر العمل';
+
+  @override
+  String get introStatus => 'الحالة';
+
+  @override
+  String get introOpenForRoles => 'متاح للأدوار القيادية';
+
+  @override
+  String get introDiscipline => 'التخصص';
+
+  @override
+  String get introMobileArch => 'بنية تطبيقات الهواتف';
+
+  @override
+  String get introMasthead => '// الترويسة';
 }

@@ -145,6 +145,7 @@ class _ContactPageState extends State<ContactPage>
   @override
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
+    final l10n = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -171,13 +172,13 @@ class _ContactPageState extends State<ContactPage>
         _expressPresets(isDark),
         const SizedBox(height: AppSpacing.xl),
         // 3. Compact 2×2 channel grid (phone / whatsapp / linkedin / github).
-        _channelsGrid(context, isDesktop, isDark),
+        _channelsGrid(context, l10n, isDesktop, isDark),
         const SizedBox(height: AppSpacing.xl),
         // 4. Recruiter-priority CV download.
-        _cvCard(isDark),
+        _cvCard(l10n, isDark),
         const SizedBox(height: AppSpacing.xl),
         // 5. Deep dive — engagement scopes for hiring managers who want more.
-        _engagementMatrix(isDark, isDesktop),
+        _engagementMatrix(l10n, isDark, isDesktop),
         const SizedBox(height: AppSpacing.xl),
         _socialAndMastheadFooter(context, isDark),
       ],
@@ -272,13 +273,12 @@ class _ContactPageState extends State<ContactPage>
   // ===========================================================================
 
   Widget _heroEmailCard(BuildContext context, bool isDark, bool isDesktop) {
-    final l10n = AppLocalizations.of(context)!;
     final ctaSend = FilledButton.icon(
       onPressed: () => _openMail(
         subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
       ),
       icon: const Icon(Icons.send_rounded, size: 16),
-      label: Text(l10n.contactSendEmailBtn),
+      label: Text(AppLocalizations.of(context)!.contactSendEmailBtn),
       style: FilledButton.styleFrom(
         backgroundColor: _accent,
         foregroundColor: Colors.black,
@@ -297,7 +297,7 @@ class _ContactPageState extends State<ContactPage>
     final ctaCopy = OutlinedButton.icon(
       onPressed: () => _copy(context, _email, isDark: isDark),
       icon: const Icon(Icons.content_copy_rounded, size: 14),
-      label: Text(l10n.contactCopyAddressBtn),
+      label: Text(AppLocalizations.of(context)!.contactCopyAddressBtn),
       style: OutlinedButton.styleFrom(
         foregroundColor: isDark ? Colors.white : AppColors.slate900,
         side: BorderSide(
@@ -324,7 +324,7 @@ class _ContactPageState extends State<ContactPage>
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          l10n.contactHeroEyebrow,
+          AppLocalizations.of(context)!.contactHeroEyebrow,
           style: TextStyle(
             color: isDark ? _accentSoft : AppColors.accentIndigo600,
             fontSize: AppTypography.editorial,
@@ -355,7 +355,7 @@ class _ContactPageState extends State<ContactPage>
             const SizedBox(width: 6),
             Flexible(
               child: Text(
-                l10n.contactReplyWindow,
+                AppLocalizations.of(context)!.contactReplyWindow,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: isDark
@@ -416,20 +416,20 @@ class _ContactPageState extends State<ContactPage>
   // COMPACT CHANNEL GRID — phone / whatsapp / linkedin / github as 2x2 tiles.
   // ===========================================================================
 
-  Widget _channelsGrid(BuildContext context, bool isDesktop, bool isDark) {
+  Widget _channelsGrid(BuildContext context, AppLocalizations l10n, bool isDesktop, bool isDark) {
     final channels = [
       ChannelData(
         badge: '📱 DIRECT LINE',
         badgeColor: _sky,
-        label: 'PHONE',
+        label: AppLocalizations.of(context)!.contactPhone,
         value: _phone,
         icon: Icons.phone_iphone_rounded,
-        primaryLabel: 'Call',
+        primaryLabel: AppLocalizations.of(context)!.contactCall,
         primaryAction: () {
           Analytics.ctaPhoneCall();
           unawaited(_open('tel:$_phoneRaw'));
         },
-        secondaryLabel: 'WhatsApp',
+        secondaryLabel: AppLocalizations.of(context)!.contactWhatsapp,
         secondaryAction: () {
           Analytics.ctaWhatsapp();
           unawaited(_open(_whatsAppUrl));
@@ -439,45 +439,45 @@ class _ContactPageState extends State<ContactPage>
       ChannelData(
         badge: '💬 QUICK CHAT',
         badgeColor: _availabilityGreen,
-        label: 'WHATSAPP',
+        label: AppLocalizations.of(context)!.contactWhatsapp,
         value: 'wa.me/962787032264',
         icon: Icons.chat_bubble_rounded,
-        primaryLabel: 'Open',
+        primaryLabel: AppLocalizations.of(context)!.contactOpen,
         primaryAction: () {
           Analytics.ctaWhatsapp();
           unawaited(_open(_whatsAppUrl));
         },
-        secondaryLabel: 'Copy',
+        secondaryLabel: AppLocalizations.of(context)!.contactCopy,
         secondaryAction: () => _copy(context, _whatsAppUrl, isDark: isDark),
         accent: _availabilityGreen,
       ),
       ChannelData(
         badge: '🌐 500+ NETWORK',
         badgeColor: _indigo,
-        label: 'LINKEDIN',
+        label: AppLocalizations.of(context)!.contactLinkedin,
         value: 'in/$_linkedInHandle',
         icon: Icons.link_rounded,
-        primaryLabel: 'Profile',
+        primaryLabel: AppLocalizations.of(context)!.contactProfile,
         primaryAction: () {
           Analytics.ctaLinkedIn();
           unawaited(_open(_linkedInUrl));
         },
-        secondaryLabel: 'Copy',
+        secondaryLabel: AppLocalizations.of(context)!.contactCopy,
         secondaryAction: () => _copy(context, _linkedInUrl, isDark: isDark),
         accent: _indigo,
       ),
       ChannelData(
         badge: '💻 REPOSITORIES',
         badgeColor: _accent,
-        label: 'GITHUB',
+        label: AppLocalizations.of(context)!.contactGithub,
         value: '@$_githubHandle',
         icon: Icons.code_rounded,
-        primaryLabel: 'Visit',
+        primaryLabel: AppLocalizations.of(context)!.contactVisit,
         primaryAction: () {
           Analytics.ctaGithub();
           unawaited(_open(_githubUrl));
         },
-        secondaryLabel: 'Copy',
+        secondaryLabel: AppLocalizations.of(context)!.contactCopy,
         secondaryAction: () => _copy(context, _githubUrl, isDark: isDark),
         accent: _accent,
       ),
@@ -541,7 +541,7 @@ class _ContactPageState extends State<ContactPage>
   // SECTION 2: EXECUTIVE ENGAGEMENT SCOPES (BENTO MATRIX)
   // ===========================================================================
 
-  Widget _engagementMatrix(bool isDark, bool isDesktop) {
+  Widget _engagementMatrix(AppLocalizations l10n, bool isDark, bool isDesktop) {
     final tracks = [
       ConsultingTrack(
         tag: 'SYSTEM AUDIT',
@@ -610,7 +610,7 @@ class _ContactPageState extends State<ContactPage>
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '// ENGAGEMENT SCOPES & COLLABORATION MODES',
+                    AppLocalizations.of(context)!.contactEngagementScopes,
                     style: TextStyle(
                       color: isDark ? Colors.white70 : AppColors.slate500,
                       fontSize: 11,
@@ -746,7 +746,7 @@ class _ContactPageState extends State<ContactPage>
   // ===========================================================================
   // SECTION 5: EXECUTIVE CV & CREDENTIALS
   // ===========================================================================
-  Widget _cvCard(bool isDark) {
+  Widget _cvCard(AppLocalizations l10n, bool isDark) {
     return RepaintBoundary(
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -794,7 +794,7 @@ class _ContactPageState extends State<ContactPage>
                       ),
                     ),
                     child: Text(
-                      'ATS-VERIFIED · 2026 EDITION',
+                      AppLocalizations.of(context)!.contactAtsVerified,
                       style: TextStyle(
                         color: isDark ? _accentSoft : const Color(0xFFD97706),
                         fontSize: 9.5,
@@ -804,7 +804,7 @@ class _ContactPageState extends State<ContactPage>
                     ),
                   ),
                   Text(
-                    'PDF · 240 KB',
+                    AppLocalizations.of(context)!.contactPdfSize,
                     style: TextStyle(
                       color: isDark ? Colors.white60 : AppColors.slate500,
                       fontSize: 10,
@@ -815,7 +815,7 @@ class _ContactPageState extends State<ContactPage>
               ),
               const SizedBox(height: 8),
               Text(
-                'Executive Curriculum Vitae & Portfolio Dossier',
+                AppLocalizations.of(context)!.contactCvDossierTitle,
                 style: TextStyle(
                   color: isDark ? Colors.white : AppColors.slate900,
                   fontSize: 16,
@@ -825,7 +825,7 @@ class _ContactPageState extends State<ContactPage>
               ),
               const SizedBox(height: 4),
               Text(
-                'Complete chronological track record, enterprise architecture case studies, and engineering competencies.',
+                AppLocalizations.of(context)!.contactCvDossierDesc,
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)
@@ -847,9 +847,9 @@ class _ContactPageState extends State<ContactPage>
                   await CvService.open(context);
                 },
                 icon: const Icon(Icons.download_rounded, size: 16),
-                label: const Text(
-                  'DOWNLOAD CV · PDF',
-                  style: TextStyle(
+                label: Text(
+                  AppLocalizations.of(context)!.contactDownloadCvPdf,
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.4,
@@ -872,9 +872,9 @@ class _ContactPageState extends State<ContactPage>
                   await CvService.open(context);
                 },
                 icon: const Icon(Icons.open_in_new_rounded, size: 14),
-                label: const Text(
-                  'PREVIEW',
-                  style: TextStyle(
+                label: Text(
+                  AppLocalizations.of(context)!.contactPreview,
+                  style: const TextStyle(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,

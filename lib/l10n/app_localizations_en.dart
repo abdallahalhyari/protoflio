@@ -124,4 +124,148 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get copyEmail => 'COPY EMAIL';
+
+  @override
+  String get introSeniorEngineer => 'SENIOR MOBILE ENGINEER';
+
+  @override
+  String get introSystemArchitect => 'SYSTEM ARCHITECT';
+
+  @override
+  String get introEuEligibility => 'EU WORK ELIGIBILITY';
+
+  @override
+  String get introAvailableContracts => 'AVAILABLE FOR CONTRACTS';
+
+  @override
+  String get introMeticulouslyEngineered =>
+      'A meticulously engineered portfolio.';
+
+  @override
+  String get contactEngagementScopes =>
+      '// ENGAGEMENT SCOPES & COLLABORATION MODES';
+
+  @override
+  String get contactAtsVerified => 'ATS-VERIFIED · 2026 EDITION';
+
+  @override
+  String get contactPdfSize => 'PDF · 240 KB';
+
+  @override
+  String get contactCvDossierTitle =>
+      'Executive Curriculum Vitae & Portfolio Dossier';
+
+  @override
+  String get contactCvDossierDesc =>
+      'Complete chronological track record, enterprise architecture case studies, and engineering competencies.';
+
+  @override
+  String get contactDownloadCvPdf => 'DOWNLOAD CV · PDF';
+
+  @override
+  String get contactPreview => 'PREVIEW';
+
+  @override
+  String get footerRightsReserved => '© 2026 · ALL RIGHTS RESERVED';
+
+  @override
+  String get contactInitiateEncrypted => 'INITIATE ENCRYPTED THREAD';
+
+  @override
+  String get contactStartConversation => 'START A CONVERSATION';
+
+  @override
+  String get contactPhone => 'PHONE';
+
+  @override
+  String get contactCall => 'Call';
+
+  @override
+  String get contactWhatsapp => 'WHATSAPP';
+
+  @override
+  String get contactOpen => 'Open';
+
+  @override
+  String get contactCopy => 'Copy';
+
+  @override
+  String get contactLinkedin => 'LINKEDIN';
+
+  @override
+  String get contactProfile => 'Profile';
+
+  @override
+  String get contactGithub => 'GITHUB';
+
+  @override
+  String get contactVisit => 'Visit';
+
+  @override
+  String get semanticPortrait => 'Portrait of Abdallah Alhyari';
+
+  @override
+  String get semanticTitle => 'Abdallah Alhyari, Senior Mobile Engineer';
+
+  @override
+  String folioIndicator(Object current, Object total) {
+    return 'FOLIO $current / $total';
+  }
+
+  @override
+  String get blocSectionTitle => 'BLoC / CLEAN ARCHITECTURE';
+
+  @override
+  String get blocSectionSubtitle =>
+      'Predictable state mutation via unidirectional data flow';
+
+  @override
+  String get blocStep1Title => 'Dispatch Event';
+
+  @override
+  String get blocStep1Desc =>
+      'UI triggers an event. No business logic in widgets.';
+
+  @override
+  String get blocStep2Title => 'Map to State';
+
+  @override
+  String get blocStep2Desc =>
+      'BLoC processes event, yields new immutable state.';
+
+  @override
+  String get blocStep3Title => 'Render Output';
+
+  @override
+  String get blocStep3Desc =>
+      'UI efficiently rebuilds based on strict state diffs.';
+
+  @override
+  String get introIssueStrip => 'ISSUE 01 · PORTFOLIO EDITION · MMXXVI';
+
+  @override
+  String get introBuildsComplex =>
+      'BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS';
+
+  @override
+  String get introTechStack =>
+      'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems';
+
+  @override
+  String get introBasedIn => 'BASED IN';
+
+  @override
+  String get introStatus => 'STATUS';
+
+  @override
+  String get introOpenForRoles => 'OPEN FOR SENIOR ROLES';
+
+  @override
+  String get introDiscipline => 'DISCIPLINE';
+
+  @override
+  String get introMobileArch => 'MOBILE ARCHITECTURE';
+
+  @override
+  String get introMasthead => '// MASTHEAD';
 }

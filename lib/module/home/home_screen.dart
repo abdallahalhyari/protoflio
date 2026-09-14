@@ -1067,7 +1067,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            '© 2026 · ALL RIGHTS RESERVED',
+            AppLocalizations.of(context)!.footerRightsReserved,
             style: TextStyle(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.35)
@@ -1112,7 +1112,10 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'FOLIO ${(_pageIndex + 1).toString().padLeft(2, '0')} / ${_pageCount.toString().padLeft(2, '0')}',
+            AppLocalizations.of(context)!.folioIndicator(
+              (_pageIndex + 1).toString().padLeft(2, '0'),
+              _pageCount.toString().padLeft(2, '0'),
+            ),
             style: TextStyle(
               color: isDark ? Colors.white70 : AppColors.slate500,
               fontSize: 10,

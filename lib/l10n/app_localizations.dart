@@ -321,6 +321,270 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'COPY EMAIL'**
   String get copyEmail;
+
+  /// No description provided for @introSeniorEngineer.
+  ///
+  /// In en, this message translates to:
+  /// **'SENIOR MOBILE ENGINEER'**
+  String get introSeniorEngineer;
+
+  /// No description provided for @introSystemArchitect.
+  ///
+  /// In en, this message translates to:
+  /// **'SYSTEM ARCHITECT'**
+  String get introSystemArchitect;
+
+  /// No description provided for @introEuEligibility.
+  ///
+  /// In en, this message translates to:
+  /// **'EU WORK ELIGIBILITY'**
+  String get introEuEligibility;
+
+  /// No description provided for @introAvailableContracts.
+  ///
+  /// In en, this message translates to:
+  /// **'AVAILABLE FOR CONTRACTS'**
+  String get introAvailableContracts;
+
+  /// No description provided for @introMeticulouslyEngineered.
+  ///
+  /// In en, this message translates to:
+  /// **'A meticulously engineered portfolio.'**
+  String get introMeticulouslyEngineered;
+
+  /// No description provided for @contactEngagementScopes.
+  ///
+  /// In en, this message translates to:
+  /// **'// ENGAGEMENT SCOPES & COLLABORATION MODES'**
+  String get contactEngagementScopes;
+
+  /// No description provided for @contactAtsVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'ATS-VERIFIED · 2026 EDITION'**
+  String get contactAtsVerified;
+
+  /// No description provided for @contactPdfSize.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF · 240 KB'**
+  String get contactPdfSize;
+
+  /// No description provided for @contactCvDossierTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Executive Curriculum Vitae & Portfolio Dossier'**
+  String get contactCvDossierTitle;
+
+  /// No description provided for @contactCvDossierDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete chronological track record, enterprise architecture case studies, and engineering competencies.'**
+  String get contactCvDossierDesc;
+
+  /// No description provided for @contactDownloadCvPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'DOWNLOAD CV · PDF'**
+  String get contactDownloadCvPdf;
+
+  /// No description provided for @contactPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'PREVIEW'**
+  String get contactPreview;
+
+  /// No description provided for @footerRightsReserved.
+  ///
+  /// In en, this message translates to:
+  /// **'© 2026 · ALL RIGHTS RESERVED'**
+  String get footerRightsReserved;
+
+  /// No description provided for @contactInitiateEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'INITIATE ENCRYPTED THREAD'**
+  String get contactInitiateEncrypted;
+
+  /// No description provided for @contactStartConversation.
+  ///
+  /// In en, this message translates to:
+  /// **'START A CONVERSATION'**
+  String get contactStartConversation;
+
+  /// No description provided for @contactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'PHONE'**
+  String get contactPhone;
+
+  /// No description provided for @contactCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get contactCall;
+
+  /// No description provided for @contactWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WHATSAPP'**
+  String get contactWhatsapp;
+
+  /// No description provided for @contactOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get contactOpen;
+
+  /// No description provided for @contactCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get contactCopy;
+
+  /// No description provided for @contactLinkedin.
+  ///
+  /// In en, this message translates to:
+  /// **'LINKEDIN'**
+  String get contactLinkedin;
+
+  /// No description provided for @contactProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get contactProfile;
+
+  /// No description provided for @contactGithub.
+  ///
+  /// In en, this message translates to:
+  /// **'GITHUB'**
+  String get contactGithub;
+
+  /// No description provided for @contactVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit'**
+  String get contactVisit;
+
+  /// No description provided for @semanticPortrait.
+  ///
+  /// In en, this message translates to:
+  /// **'Portrait of Abdallah Alhyari'**
+  String get semanticPortrait;
+
+  /// No description provided for @semanticTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdallah Alhyari, Senior Mobile Engineer'**
+  String get semanticTitle;
+
+  /// No description provided for @folioIndicator.
+  ///
+  /// In en, this message translates to:
+  /// **'FOLIO {current} / {total}'**
+  String folioIndicator(Object current, Object total);
+
+  /// No description provided for @blocSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BLoC / CLEAN ARCHITECTURE'**
+  String get blocSectionTitle;
+
+  /// No description provided for @blocSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Predictable state mutation via unidirectional data flow'**
+  String get blocSectionSubtitle;
+
+  /// No description provided for @blocStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispatch Event'**
+  String get blocStep1Title;
+
+  /// No description provided for @blocStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'UI triggers an event. No business logic in widgets.'**
+  String get blocStep1Desc;
+
+  /// No description provided for @blocStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Map to State'**
+  String get blocStep2Title;
+
+  /// No description provided for @blocStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'BLoC processes event, yields new immutable state.'**
+  String get blocStep2Desc;
+
+  /// No description provided for @blocStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Render Output'**
+  String get blocStep3Title;
+
+  /// No description provided for @blocStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'UI efficiently rebuilds based on strict state diffs.'**
+  String get blocStep3Desc;
+
+  /// No description provided for @introIssueStrip.
+  ///
+  /// In en, this message translates to:
+  /// **'ISSUE 01 · PORTFOLIO EDITION · MMXXVI'**
+  String get introIssueStrip;
+
+  /// No description provided for @introBuildsComplex.
+  ///
+  /// In en, this message translates to:
+  /// **'BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS'**
+  String get introBuildsComplex;
+
+  /// No description provided for @introTechStack.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems'**
+  String get introTechStack;
+
+  /// No description provided for @introBasedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'BASED IN'**
+  String get introBasedIn;
+
+  /// No description provided for @introStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'STATUS'**
+  String get introStatus;
+
+  /// No description provided for @introOpenForRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'OPEN FOR SENIOR ROLES'**
+  String get introOpenForRoles;
+
+  /// No description provided for @introDiscipline.
+  ///
+  /// In en, this message translates to:
+  /// **'DISCIPLINE'**
+  String get introDiscipline;
+
+  /// No description provided for @introMobileArch.
+  ///
+  /// In en, this message translates to:
+  /// **'MOBILE ARCHITECTURE'**
+  String get introMobileArch;
+
+  /// No description provided for @introMasthead.
+  ///
+  /// In en, this message translates to:
+  /// **'// MASTHEAD'**
+  String get introMasthead;
 }
 
 class _AppLocalizationsDelegate
