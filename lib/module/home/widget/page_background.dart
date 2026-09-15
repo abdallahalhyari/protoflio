@@ -54,20 +54,7 @@ class _PageBackgroundState extends State<PageBackground> {
           ),
         ),
 
-        // 2. High-Tech Tactile Texture (Subtle Whisper, Zero Brown Bleed)
-        Positioned.fill(
-          child: Opacity(
-            opacity: 0.05,
-            child: Image.asset(
-              widget.asset,
-              fit: BoxFit.cover,
-              color: Colors.black,
-              colorBlendMode: BlendMode.saturation,
-            ),
-          ),
-        ),
-
-        // 3. Dynamic Ambient Glow Orbs with Parallax Float
+        // 2. Dynamic Ambient Glow Orbs with Parallax Float
         Transform.translate(
           offset: Offset(shiftX, shiftY),
           child: Stack(
