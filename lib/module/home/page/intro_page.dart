@@ -5,6 +5,7 @@ import '../../../service/sound_service.dart';
 import '../widget/intro/intro_availability_banner.dart';
 import '../widget/intro/intro_cta_row.dart';
 import '../widget/intro/intro_footer_strip.dart';
+import '../widget/intro/hero_motion.dart';
 import '../widget/scrollable_screen_shell.dart';
 import '../widget/scroll_explore_hint.dart';
 
@@ -159,29 +160,32 @@ class _IntroPageState extends State<IntroPage>
     final wordmarkHeight = isCompactH
         ? (size.height * 0.17).clamp(95.0, 165.0)
         : (isWide ? (size.height * 0.21).clamp(120.0, 240.0) : (size.height * 0.16).clamp(85.0, 160.0));
-    return Semantics(
-      header: true,
-      label: AppLocalizations.of(context)!.semanticTitle,
-      child: SizedBox(
-        height: wordmarkHeight,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: Text(
-              'ABDALLAH',
-              style: TextStyle(
-                fontFamily: AppTypography.displayFont,
-                fontSize: 220,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 10,
-                height: 0.9,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 3
-                  ..color = isDark
-                      ? Colors.white.withValues(alpha: 0.28)
-                      : _accent.withValues(alpha: 0.35),
+    return SnappyEntrance(
+      delayMs: 0,
+      child: Semantics(
+        header: true,
+        label: AppLocalizations.of(context)!.semanticTitle,
+        child: SizedBox(
+          height: wordmarkHeight,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: Text(
+                'ABDALLAH',
+                style: TextStyle(
+                  fontFamily: AppTypography.displayFont,
+                  fontSize: 220,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 10,
+                  height: 0.9,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 3
+                    ..color = isDark
+                        ? Colors.white.withValues(alpha: 0.28)
+                        : _accent.withValues(alpha: 0.35),
+                ),
               ),
             ),
           ),
@@ -197,48 +201,53 @@ class _IntroPageState extends State<IntroPage>
     final portraitSize = isCompactH
         ? (size.height * 0.082).clamp(52.0, 78.0)
         : (isWide ? (size.height * 0.095).clamp(60.0, 96.0) : (size.width * 0.12).clamp(56.0, 80.0));
-    if (isWide) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _portrait(portraitSize),
-          SizedBox(width: portraitSize * 0.26),
-          Text(
-            'ALHYARI',
-            style: TextStyle(
-              fontFamily: AppTypography.displayFont,
-              fontSize: letterSize,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 12,
-              color: isDark ? Colors.white : AppColors.slate900,
-              shadows: isDark
-                  ? const [Shadow(color: Colors.black, blurRadius: 12)]
-                  : const [Shadow(color: Colors.black12, blurRadius: 4)],
-            ),
-          ),
-        ],
-      );
-    }
-    return Column(
-      children: [
-        _portrait(portraitSize),
-        const SizedBox(height: AppSpacing.smd),
-        Text(
-          'ALHYARI',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: AppTypography.displayFont,
-            fontSize: letterSize,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 10,
-            color: isDark ? Colors.white : AppColors.slate900,
-            shadows: isDark
-                ? const [Shadow(color: Colors.black, blurRadius: 12)]
-                : const [Shadow(color: Colors.black12, blurRadius: 4)],
-          ),
-        ),
-      ],
+
+    final content = isWide
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _portrait(portraitSize),
+              SizedBox(width: portraitSize * 0.26),
+              Text(
+                'ALHYARI',
+                style: TextStyle(
+                  fontFamily: AppTypography.displayFont,
+                  fontSize: letterSize,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 12,
+                  color: isDark ? Colors.white : AppColors.slate900,
+                  shadows: isDark
+                      ? const [Shadow(color: Colors.black, blurRadius: 12)]
+                      : const [Shadow(color: Colors.black12, blurRadius: 4)],
+                ),
+              ),
+            ],
+          )
+        : Column(
+            children: [
+              _portrait(portraitSize),
+              const SizedBox(height: AppSpacing.smd),
+              Text(
+                'ALHYARI',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: AppTypography.displayFont,
+                  fontSize: letterSize,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 10,
+                  color: isDark ? Colors.white : AppColors.slate900,
+                  shadows: isDark
+                      ? const [Shadow(color: Colors.black, blurRadius: 12)]
+                      : const [Shadow(color: Colors.black12, blurRadius: 4)],
+                ),
+              ),
+            ],
+          );
+
+    return SnappyEntrance(
+      delayMs: 30,
+      child: isWide ? HeroParallax(child: content) : content,
     );
   }
 
@@ -288,61 +297,64 @@ class _IntroPageState extends State<IntroPage>
   }
 
   Widget _roleBlock(Size size, bool isDark, bool isCompactH) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: (size.width * 0.78).clamp(320.0, 700.0),
-        ),
-        child: Column(
-          children: [
-            _hairlineRow(
-              isDark: isDark,
-              child: Text(
-                '❖',
-                style: TextStyle(color: _accent, fontSize: 13),
+    return SnappyEntrance(
+      delayMs: 60,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: (size.width * 0.78).clamp(320.0, 700.0),
+          ),
+          child: Column(
+            children: [
+              _hairlineRow(
+                isDark: isDark,
+                child: Text(
+                  '❖',
+                  style: TextStyle(color: _accent, fontSize: 13),
+                ),
               ),
-            ),
-            SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
-            Text(
-              AppLocalizations.of(context)!.introSeniorEngineer.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: isCompactH
-                    ? (size.width * 0.016).clamp(15.0, 19.0)
-                    : (size.width * 0.018).clamp(16.0, 22.0),
-                fontWeight: FontWeight.w900,
-                letterSpacing: 3,
-                color: isDark ? Colors.white : AppColors.slate900,
+              SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
+              Text(
+                AppLocalizations.of(context)!.introSeniorEngineer.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: isCompactH
+                      ? (size.width * 0.016).clamp(15.0, 19.0)
+                      : (size.width * 0.018).clamp(16.0, 22.0),
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 3,
+                  color: isDark ? Colors.white : AppColors.slate900,
+                ),
               ),
-            ),
-            const SizedBox(height: AppSpacing.xs),
-            Text(
-              AppLocalizations.of(context)!.introBuildsComplex,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: isCompactH
-                    ? (size.width * 0.0105).clamp(12.0, 15.0)
-                    : (size.width * 0.0115).clamp(12.5, 18.0),
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.5,
-                color: isDark ? _accentSoft : _accent,
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                AppLocalizations.of(context)!.introBuildsComplex,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: isCompactH
+                      ? (size.width * 0.0105).clamp(12.0, 15.0)
+                      : (size.width * 0.0115).clamp(12.5, 18.0),
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.5,
+                  color: isDark ? _accentSoft : _accent,
+                ),
               ),
-            ),
-            SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
-            Text(
-              AppLocalizations.of(context)!.introTechStack,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: isCompactH
-                    ? (size.width * 0.01).clamp(11.0, 12.5)
-                    : (size.width * 0.011).clamp(11.5, 13.5),
-                fontWeight: FontWeight.w600,
-                color: isDark ? Colors.white.withValues(alpha: 0.82) : AppColors.slate600,
-                height: 1.45,
-                letterSpacing: 0.8,
+              SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
+              Text(
+                AppLocalizations.of(context)!.introTechStack,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: isCompactH
+                      ? (size.width * 0.01).clamp(11.0, 12.5)
+                      : (size.width * 0.011).clamp(11.5, 13.5),
+                  fontWeight: FontWeight.w600,
+                  color: isDark ? Colors.white.withValues(alpha: 0.82) : AppColors.slate600,
+                  height: 1.45,
+                  letterSpacing: 0.8,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
