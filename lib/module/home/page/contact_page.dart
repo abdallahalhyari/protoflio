@@ -52,8 +52,8 @@ class _ContactPageState extends State<ContactPage>
   Color get _accent => Theme.of(context).colorScheme.primary;
   Color get _accentSoft => Theme.of(context).colorScheme.primary.withValues(alpha: 0.35);
   static const _availabilityGreen = AppColors.accentGreen; // emerald
-  static const _sky = AppColors.accentSky; // cyan / sky
-  static const _indigo = AppColors.accentIndigo; // soft indigo
+  Color get _sky => _accent; // dynamically follow theme
+  Color get _indigo => _accent; // dynamically follow theme
 
   Future<void> _open(String url) async {
     SoundService.instance.playClick();

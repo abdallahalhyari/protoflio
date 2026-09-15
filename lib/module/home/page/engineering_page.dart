@@ -41,7 +41,7 @@ class DiagramStep {
   });
 }
 
-const List<ArchitectureTopic> kArchitectureTopics = [
+final List<ArchitectureTopic> kArchitectureTopics = [
   ArchitectureTopic(
     id: 'clean_arch',
     title: 'Clean Mobile Architecture',
@@ -63,7 +63,7 @@ const List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Use Cases & Business Entities',
         details: 'Pure Dart entities, business rules, repository contracts. Zero external framework dependencies.',
         icon: Icons.account_tree_outlined,
-        color: AppColors.accentIndigo,
+        color: const Color(0xFF38BDF8),
       ),
       DiagramStep(
         layer: 'DATA LAYER',
@@ -151,7 +151,7 @@ const List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Kotlin MethodChannel Bridge',
         details: 'High-speed binary transport bridging Flutter runtime to native Android IsoDep transceive buffer.',
         icon: Icons.cable_outlined,
-        color: AppColors.accentIndigo,
+        color: const Color(0xFF38BDF8),
       ),
       DiagramStep(
         layer: 'COMMAND CHAIN',
@@ -202,7 +202,7 @@ const List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Two-Tier JWT Token Protocol',
         details: 'Short-lived access token (15 min) + hardware GUID-bound refresh token stored securely.',
         icon: Icons.vpn_key_outlined,
-        color: AppColors.accentIndigo,
+        color: const Color(0xFF38BDF8),
       ),
       DiagramStep(
         layer: 'ROTATION',
@@ -246,7 +246,7 @@ const List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Event-to-State Mapping',
         details: 'Asynchronous generators process events, interact with Domain use-cases, and yield immutable State objects.',
         icon: Icons.memory_outlined,
-        color: AppColors.accentIndigo,
+        color: const Color(0xFF38BDF8),
       ),
       DiagramStep(
         layer: 'STATE / EMISSION',

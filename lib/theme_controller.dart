@@ -16,19 +16,26 @@ class ThemeController {
     switch (hash.replaceAll('#', '').toLowerCase()) {
       case 'experience':
         seedColor.value = const Color(0xFF10B981); // Emerald
+        return;
       case 'work':
         seedColor.value = const Color(0xFF8B5CF6); // Violet
+        return;
       case 'stack':
         seedColor.value = const Color(0xFFF59E0B); // Amber
+        return;
       case 'engineering':
         seedColor.value = const Color(0xFFF43F5E); // Rose
+        return;
       case 'about':
         seedColor.value = const Color(0xFF06B6D4); // Cyan
+        return;
       case 'contact':
         seedColor.value = const Color(0xFF3B82F6); // Sky Blue
+        return;
       case 'home':
       default:
         seedColor.value = const Color(0xFF6366F1); // Indigo
+        return;
     }
   }
 
@@ -38,11 +45,16 @@ class ThemeController {
     switch (raw) {
       case 'light':
         mode.value = ThemeMode.light;
+        return;
       case 'system':
         mode.value = ThemeMode.system;
+        return;
       case 'dark':
+        mode.value = ThemeMode.dark;
+        return;
       default:
         mode.value = ThemeMode.dark;
+        return;
     }
   }
 

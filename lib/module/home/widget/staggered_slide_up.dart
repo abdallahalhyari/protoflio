@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../theme/tokens.dart';
@@ -23,6 +25,7 @@ class _StaggeredSlideUpState extends State<StaggeredSlideUp>
   late AnimationController _controller;
   late Animation<double> _opacity;
   late Animation<Offset> _slide;
+  Timer? _delayedStart;
 
   @override
   void initState() {
@@ -41,10 +44,17 @@ class _StaggeredSlideUpState extends State<StaggeredSlideUp>
     _startAnimation();
   }
 
-  void _startAnimation() async {
-    if (widget.delay > Duration.zero) {
-      await Future.delayed(widget.delay);
+  void _startAnimation() {
+    final startDelay = widget.delay;
+    if (startDelay > Duration.zero) {
+      _delayedStart = Timer(startDelay, () {
+        if (mounted) {
+          _controller.forward();
+        }
+      });
+      return;
     }
+
     if (mounted) {
       _controller.forward();
     }
@@ -52,6 +62,7 @@ class _StaggeredSlideUpState extends State<StaggeredSlideUp>
 
   @override
   void dispose() {
+    _delayedStart?.cancel();
     _controller.dispose();
     super.dispose();
   }

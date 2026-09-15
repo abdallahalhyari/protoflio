@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/locale_controller.dart';
@@ -212,6 +211,11 @@ class _HomeScreenState extends State<HomeScreen> {
       _scrollToMobileSection(target, syncUrl: syncUrl);
       return;
     }
+
+    if (mounted && target != _pageIndex) {
+      setState(() => _pageIndex = target);
+    }
+
     if (_controller.hasClients && _controller.positions.length == 1) {
       _controller.animateToPage(
         target,
@@ -237,60 +241,6 @@ class _HomeScreenState extends State<HomeScreen> {
   double _wheelAccum = 0;
   DateTime _lastWheelAt = DateTime.fromMillisecondsSinceEpoch(0);
 
-  bool _canInnerScroll(Offset globalPosition, double dy) {
-    if (!mounted) return false;
-    final result = HitTestResult();
-    final viewId = View.of(context).viewId;
-    RendererBinding.instance.hitTestInView(result, globalPosition, viewId);
-
-    for (final entry in result.path) {
-      final target = entry.target;
-      if (target is! RenderObject) continue;
-
-      RenderObject? current = target;
-      while (current != null) {
-        if (current is RenderAbstractViewport) {
-          ViewportOffset? offset;
-          if (current is RenderViewportBase) {
-            offset = current.offset;
-          } else {
-            try {
-              offset = (current as dynamic).offset as ViewportOffset?;
-            } catch (_) {}
-          }
-
-          if (offset != null) {
-            // If this viewport is the outer PageView, stop ascending this branch
-            if (_controller.hasClients && offset == _controller.position) {
-              break;
-            }
-
-            if (offset is ScrollPosition) {
-              final pos = offset;
-              if (pos.axis == Axis.vertical &&
-                  pos.hasContentDimensions &&
-                  pos.maxScrollExtent > 0) {
-                if (dy > 0) {
-                  // Scrolling down: can inner scroll further down?
-                  if (pos.pixels < pos.maxScrollExtent - 2.0) {
-                    return true;
-                  }
-                } else if (dy < 0) {
-                  // Scrolling up: can inner scroll further up?
-                  if (pos.pixels > pos.minScrollExtent + 2.0) {
-                    return true;
-                  }
-                }
-              }
-            }
-          }
-        }
-        current = current.parent;
-      }
-    }
-    return false;
-  }
-
   void _onPointerSignal(PointerSignalEvent event) {
     if (event is! PointerScrollEvent) return;
 
@@ -303,13 +253,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final dy = event.scrollDelta.dy;
     if (dy.abs() < 1.0) return;
-
-    // If an inner scrollable under the cursor can absorb this vertical scroll,
-    // let Flutter's scrollable handle it and do NOT trigger a page change.
-    if (_canInnerScroll(event.position, dy)) {
-      _wheelAccum = 0;
-      return;
-    }
 
     final now = DateTime.now();
     if (now.difference(_lastWheelAt) > AppMotion.wheelResetGap) {
@@ -522,11 +465,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildDesktopLayout(BuildContext context) {
-    return Stack(
-      children: [
-        Listener(
-          onPointerSignal: _onPointerSignal,
-          child: PageView.builder(
+    return Listener(
+      behavior: HitTestBehavior.translucent,
+      onPointerSignal: _onPointerSignal,
+      child: Stack(
+        children: [
+          PageView.builder(
             key: const PageStorageKey<String>('desktop_pageview'),
             physics: const NeverScrollableScrollPhysics(),
             controller: _controller,
@@ -540,141 +484,138 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-        ),
-        if (MediaQuery.sizeOf(context).height >= 340)
+          if (MediaQuery.sizeOf(context).height >= 340)
+            Positioned(
+              right: 12,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: PageIndicator(
+                  count: _pageCount,
+                  current: _pageIndex,
+                  onTap: _goTo,
+                ),
+              ),
+            ),
           Positioned(
-            right: 12,
             top: 0,
-            bottom: 0,
-            child: Center(
-              child: PageIndicator(
-                count: _pageCount,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              child: TopNav(
                 current: _pageIndex,
                 onTap: _goTo,
+                onResume: _downloadResume,
               ),
             ),
           ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: SafeArea(
-            child: TopNav(
-              current: _pageIndex,
-              onTap: _goTo,
-              onResume: _downloadResume,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 12,
-          right: 12,
-          child: SafeArea(
-            child: ValueListenableBuilder<ThemeMode>(
-              valueListenable: ThemeController.mode,
-              builder: (_, mode, __) {
-                final dark = mode == ThemeMode.dark;
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Material(
-                      color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
-                      elevation: dark ? 0 : 2,
-                      shadowColor: Colors.black12,
-                      shape: const CircleBorder(),
-                      child: ValueListenableBuilder<Locale>(
-                        valueListenable: LocaleController.locale,
-                        builder: (context, locale, _) {
-                          return PopupMenuButton<String>(
-                            tooltip: 'Change Language',
-                            icon: Icon(Icons.language, color: dark ? Colors.white : AppColors.slate900),
-                            onSelected: (val) {
-                              HapticFeedback.lightImpact();
-                              LocaleController.changeLocale(val);
-                            },
-                            itemBuilder: (context) => const [
-                              PopupMenuItem(value: 'en', child: Text('English')),
-                              PopupMenuItem(value: 'ar', child: Text('العربية')),
-                              PopupMenuItem(value: 'cs', child: Text('Čeština')),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Semantics(
-                      toggled: dark,
-                      label: 'Dark mode',
-                      child: Material(
+          Positioned(
+            top: 12,
+            right: 12,
+            child: SafeArea(
+              child: ValueListenableBuilder<ThemeMode>(
+                valueListenable: ThemeController.mode,
+                builder: (_, mode, __) {
+                  final dark = mode == ThemeMode.dark;
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Material(
                         color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
                         elevation: dark ? 0 : 2,
                         shadowColor: Colors.black12,
                         shape: const CircleBorder(),
-                        child: IconButton(
-                          tooltip: dark ? 'Switch to light' : 'Switch to dark',
-                          icon: Icon(
-                            dark ? Icons.light_mode : Icons.dark_mode,
-                            color: dark ? Colors.white : AppColors.slate900,
-                          ),
-                          onPressed: () {
-                            HapticFeedback.lightImpact();
-                            SoundService.instance.playClick();
-                            ThemeController.toggle();
+                        child: ValueListenableBuilder<Locale>(
+                          valueListenable: LocaleController.locale,
+                          builder: (context, locale, _) {
+                            return PopupMenuButton<String>(
+                              tooltip: 'Change Language',
+                              icon: Icon(Icons.language, color: dark ? Colors.white : AppColors.slate900),
+                              onSelected: (val) {
+                                HapticFeedback.lightImpact();
+                                LocaleController.changeLocale(val);
+                              },
+                              itemBuilder: (context) => const [
+                                PopupMenuItem(value: 'en', child: Text('English')),
+                                PopupMenuItem(value: 'ar', child: Text('العربية')),
+                                PopupMenuItem(value: 'cs', child: Text('Čeština')),
+                              ],
+                            );
                           },
                         ),
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    ValueListenableBuilder<bool>(
-                      valueListenable: SoundService.instance.isEnabled,
-                      builder: (context, enabled, _) {
-                        return Material(
+                      const SizedBox(width: AppSpacing.sm),
+                      Semantics(
+                        toggled: dark,
+                        label: 'Dark mode',
+                        child: Material(
                           color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
                           elevation: dark ? 0 : 2,
                           shadowColor: Colors.black12,
                           shape: const CircleBorder(),
                           child: IconButton(
-                            tooltip: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
+                            tooltip: dark ? 'Switch to light' : 'Switch to dark',
                             icon: Icon(
-                              enabled ? Icons.volume_up : Icons.volume_off,
-                              color: enabled
-                                  ? (dark ? Colors.white : AppColors.slate900)
-                                  : (dark ? Colors.white.withValues(alpha: 0.60) : AppColors.slate400),
-                              size: 18,
+                              dark ? Icons.light_mode : Icons.dark_mode,
+                              color: dark ? Colors.white : AppColors.slate900,
                             ),
                             onPressed: () {
-                              SoundService.instance.toggle();
+                              HapticFeedback.lightImpact();
+                              SoundService.instance.playClick();
+                              ThemeController.toggle();
                             },
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                );
-              },
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: SoundService.instance.isEnabled,
+                        builder: (context, enabled, _) {
+                          return Material(
+                            color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
+                            elevation: dark ? 0 : 2,
+                            shadowColor: Colors.black12,
+                            shape: const CircleBorder(),
+                            child: IconButton(
+                              tooltip: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
+                              icon: Icon(
+                                enabled ? Icons.volume_up : Icons.volume_off,
+                                color: enabled
+                                    ? (dark ? Colors.white : AppColors.slate900)
+                                    : (dark ? Colors.white.withValues(alpha: 0.60) : AppColors.slate400),
+                                size: 18,
+                              ),
+                              onPressed: () {
+                                SoundService.instance.toggle();
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        // FOLIO folio bar — only shows the discrete page number, so it
-        // rebuilds from the enclosing setState(_pageIndex) rather than
-        // subscribing to _controller and thrashing on every scroll frame.
-        Positioned(
-          bottom: 12,
-          left: 16,
-          child: SafeArea(child: RepaintBoundary(child: _buildFolioBar(context))),
-        ),
-        Positioned(
-          bottom: 12,
-          right: 12,
-          child: SafeArea(child: _buildKeyboardHintChip(context)),
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: RepaintBoundary(child: _buildProgressBar(context)),
-        ),
-      ],
+          Positioned(
+            bottom: 12,
+            left: 16,
+            child: SafeArea(child: RepaintBoundary(child: _buildFolioBar(context))),
+          ),
+          Positioned(
+            bottom: 12,
+            right: 12,
+            child: SafeArea(child: _buildKeyboardHintChip(context)),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: RepaintBoundary(child: _buildProgressBar(context)),
+          ),
+        ],
+      ),
     );
   }
 

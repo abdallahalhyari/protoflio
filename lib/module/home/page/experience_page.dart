@@ -195,7 +195,7 @@ class _ExperiencePageState extends State<ExperiencePage>
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('✦', style: TextStyle(color: AppColors.accentAmber, fontSize: 11)),
+                    Text('✦', style: TextStyle(color: scheme.primary, fontSize: 11)),
                     const SizedBox(width: 6),
                     Text(
                       '4 ROLES · ENTERPRISE IMPACT',

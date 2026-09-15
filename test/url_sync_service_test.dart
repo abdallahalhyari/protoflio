@@ -7,10 +7,10 @@ void main() {
   group('UrlSyncService.hashToIndex', () {
     test('exact match returns index', () {
       expect(svc.hashToIndex('home'), 0);
-      expect(svc.hashToIndex('work'), 1);
-      expect(svc.hashToIndex('engineering'), 2);
-      expect(svc.hashToIndex('experience'), 3);
-      expect(svc.hashToIndex('stack'), 4);
+      expect(svc.hashToIndex('experience'), 1);
+      expect(svc.hashToIndex('work'), 2);
+      expect(svc.hashToIndex('stack'), 3);
+      expect(svc.hashToIndex('engineering'), 4);
       expect(svc.hashToIndex('about'), 5);
       expect(svc.hashToIndex('contact'), 6);
     });
@@ -22,7 +22,7 @@ void main() {
 
     test('case-insensitive', () {
       expect(svc.hashToIndex('CONTACT'), 6);
-      expect(svc.hashToIndex('Work'), 1);
+      expect(svc.hashToIndex('Work'), 2);
     });
 
     test('unknown fragment falls back to home (0)', () {
