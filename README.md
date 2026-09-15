@@ -2,7 +2,7 @@
 
 Editorial magazine-style portfolio built in Flutter. Runs on web, iOS, and Android from a single codebase. Highlights senior mobile engineering experience: offline-first architecture, NFC / ISO-7816 APDU, JWT security, and multi-year enterprise Flutter delivery.
 
-Live: _(add production URL when domain is live)_
+Live: [alhyari.web.app](https://alhyari.web.app)
 
 ---
 
@@ -73,11 +73,12 @@ Test suites: `test/widget_test.dart`, `test/theme_audit_test.dart`, `test/respon
 Web (Firebase Hosting):
 
 ```bash
-flutter build web --release --tree-shake-icons --no-source-maps
+flutter build web --wasm --release --tree-shake-icons --no-source-maps
 firebase deploy --only hosting
 ```
 
 Build-flag notes:
+- `--wasm` compiles Dart to WebAssembly instead of JavaScript, delivering near-native performance and faster initial load times.
 - `--tree-shake-icons` drops unused MaterialIcons glyphs from the icon font (usually cuts ~80–90% of the icon-font bytes).
 - `--no-source-maps` keeps the release payload lean; drop it if you need to debug production stack traces.
 - iOS release build should ship Impeller (default on stable). No extra flag needed.

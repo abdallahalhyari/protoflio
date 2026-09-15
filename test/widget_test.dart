@@ -75,6 +75,7 @@ void main() {
     expect(find.text('PREV'), findsOneWidget);
     expect(find.text('NEXT'), findsOneWidget);
 
+    await tester.ensureVisible(find.text('NEXT'));
     await tester.tap(find.text('NEXT'));
     await tester.pump(const Duration(milliseconds: 200));
 

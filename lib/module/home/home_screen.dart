@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<GlobalKey> _sectionKeys = List.generate(7, (_) => GlobalKey());
   final ValueNotifier<bool> _showScrollToTop = ValueNotifier<bool>(false);
   final FocusNode _focusNode = FocusNode();
-  int _pageIndex = 0;
+  final ValueNotifier<int> _pageIndex = ValueNotifier<int>(0);
   bool _imagesPrecached = false;
 
   @override
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     final initialHash = UrlSyncService.instance.getInitialHash();
     if (initialHash != null) {
-      _pageIndex = UrlSyncService.instance.hashToIndex(initialHash);
+      _pageIndex.value = UrlSyncService.instance.hashToIndex(initialHash);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ThemeController.updateSeedFromHash(initialHash);
       });
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ThemeController.updateSeedFromHash('home');
       });
     }
-    _controller = PageController(initialPage: _pageIndex);
+    _controller = PageController(initialPage: _pageIndex.value);
     _controller.addListener(_onScroll);
 
     _mobileScrollController = ScrollController();
@@ -65,15 +65,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     UrlSyncService.instance.listenToHashChanges((hash) {
       final target = UrlSyncService.instance.hashToIndex(hash);
-      if (target != _pageIndex && mounted) {
+      if (target != _pageIndex.value && mounted) {
         _goTo(target, syncUrl: false);
       }
     });
 
-    if (_pageIndex > 0) {
+    if (_pageIndex.value > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted && MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
-          _scrollToMobileSection(_pageIndex, syncUrl: false);
+          _scrollToMobileSection(_pageIndex.value, syncUrl: false);
         }
       });
     }
@@ -92,8 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onScroll() {
     if (!_controller.hasClients || _controller.positions.length != 1) return;
     final page = _controller.page?.round() ?? 0;
-    if (page != _pageIndex) {
-      setState(() => _pageIndex = page);
+    if (page != _pageIndex.value) {
+      _pageIndex.value = page;
       SoundService.instance.playPageTurn();
       final hash = UrlSyncService.instance.indexToHash(page);
       UrlSyncService.instance.updateHash(hash);
@@ -113,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _mobileScrollController.dispose();
     _showScrollToTop.dispose();
     _focusNode.dispose();
+    _pageIndex.dispose();
     super.dispose();
   }
 
@@ -149,8 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
     }
-    if (visibleIndex != null && visibleIndex != _pageIndex) {
-      _pageIndex = visibleIndex;
+    if (visibleIndex != null && visibleIndex != _pageIndex.value) {
+      _pageIndex.value = visibleIndex;
       final hash = UrlSyncService.instance.indexToHash(visibleIndex);
       UrlSyncService.instance.updateHash(hash);
       ThemeController.updateSeedFromHash(hash);
@@ -159,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _scrollToMobileSection(int index, {bool syncUrl = true}) {
     final target = index.clamp(0, _pageCount - 1);
-    setState(() => _pageIndex = target);
+    _pageIndex.value = target;
     if (syncUrl) {
       final hash = UrlSyncService.instance.indexToHash(target);
       UrlSyncService.instance.updateHash(hash);
@@ -215,8 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    if (mounted && target != _pageIndex) {
-      setState(() => _pageIndex = target);
+    if (mounted && target != _pageIndex.value) {
+      _pageIndex.value = target;
     }
 
     if (_controller.hasClients && _controller.positions.length == 1) {
@@ -228,9 +229,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _next() => _goTo(_pageIndex + 1);
+  void _next() => _goTo(_pageIndex.value + 1);
 
-  void _prev() => _goTo(_pageIndex - 1);
+  void _prev() => _goTo(_pageIndex.value - 1);
 
   Future<void> _downloadResume() async {
     if (!mounted) return;
@@ -250,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Prevent multi-page rapid jumping if a page transition is already in flight
     if (_controller.hasClients &&
         _controller.page != null &&
-        (_controller.page! - _pageIndex).abs() > 0.08) {
+        (_controller.page! - _pageIndex.value).abs() > 0.08) {
       return;
     }
 
@@ -493,10 +494,13 @@ class _HomeScreenState extends State<HomeScreen> {
               top: 0,
               bottom: 0,
               child: Center(
-                child: PageIndicator(
-                  count: _pageCount,
-                  current: _pageIndex,
-                  onTap: _goTo,
+                child: ValueListenableBuilder<int>(
+                  valueListenable: _pageIndex,
+                  builder: (_, page, __) => PageIndicator(
+                    count: _pageCount,
+                    current: page,
+                    onTap: _goTo,
+                  ),
                 ),
               ),
             ),
@@ -505,10 +509,13 @@ class _HomeScreenState extends State<HomeScreen> {
             left: 0,
             right: 0,
             child: SafeArea(
-              child: TopNav(
-                current: _pageIndex,
-                onTap: _goTo,
-                onResume: _downloadResume,
+              child: ValueListenableBuilder<int>(
+                valueListenable: _pageIndex,
+                builder: (_, page, __) => TopNav(
+                  current: page,
+                  onTap: _goTo,
+                  onResume: _downloadResume,
+                ),
               ),
             ),
           ),
@@ -604,7 +611,14 @@ class _HomeScreenState extends State<HomeScreen> {
           Positioned(
             bottom: 12,
             left: 16,
-            child: SafeArea(child: RepaintBoundary(child: _buildFolioBar(context))),
+            child: SafeArea(
+              child: RepaintBoundary(
+                child: ValueListenableBuilder<int>(
+                  valueListenable: _pageIndex,
+                  builder: (context, page, __) => _buildFolioBar(context, page),
+                ),
+              ),
+            ),
           ),
           Positioned(
             bottom: 12,
@@ -615,7 +629,12 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 0,
             left: 0,
             right: 0,
-            child: RepaintBoundary(child: _buildProgressBar(context)),
+            child: RepaintBoundary(
+              child: ValueListenableBuilder<int>(
+                valueListenable: _pageIndex,
+                builder: (context, page, __) => _buildProgressBar(context, page),
+              ),
+            ),
           ),
         ],
       ),
@@ -688,19 +707,22 @@ class _HomeScreenState extends State<HomeScreen> {
           top: 0,
           left: 0,
           right: 0,
-          child: MobileAppBar(
-            activeSectionLabel: _dividerLabelFor(_pageIndex),
-            activeSectionIndex: _pageIndex + 1,
-            sectionCount: _pageCount,
-            onMenuPressed: () {
-              MobileNavSheet.show(
-                context,
-                activeIndex: _pageIndex,
-                onSelectSection: (index) => _scrollToMobileSection(index),
-                onDownloadResume: _downloadResume,
-              );
-            },
-            onLogoPressed: () => _scrollToMobileSection(0),
+          child: ValueListenableBuilder<int>(
+            valueListenable: _pageIndex,
+            builder: (context, page, __) => MobileAppBar(
+              activeSectionLabel: _dividerLabelFor(page),
+              activeSectionIndex: page + 1,
+              sectionCount: _pageCount,
+              onMenuPressed: () {
+                MobileNavSheet.show(
+                  context,
+                  activeIndex: page,
+                  onSelectSection: (index) => _scrollToMobileSection(index),
+                  onDownloadResume: _downloadResume,
+                );
+              },
+              onLogoPressed: () => _scrollToMobileSection(0),
+            ),
           ),
         ),
 
@@ -722,7 +744,12 @@ class _HomeScreenState extends State<HomeScreen> {
           top: 0,
           bottom: 0,
           right: 4,
-          child: Center(child: _buildMobileProgressRail(context)),
+          child: Center(
+            child: ValueListenableBuilder<int>(
+              valueListenable: _pageIndex,
+              builder: (context, page, __) => _buildMobileProgressRail(context, page),
+            ),
+          ),
         ),
 
         // Layer 5: Prev / Next floating pager — one-tap section skip
@@ -731,16 +758,21 @@ class _HomeScreenState extends State<HomeScreen> {
           left: 0,
           right: 0,
           bottom: 20 + MediaQuery.paddingOf(context).bottom,
-          child: Center(child: _buildMobilePager(context)),
+          child: Center(
+            child: ValueListenableBuilder<int>(
+              valueListenable: _pageIndex,
+              builder: (context, page, __) => _buildMobilePager(context, page),
+            ),
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildMobilePager(BuildContext context) {
+  Widget _buildMobilePager(BuildContext context, int page) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final canPrev = _pageIndex > 0;
-    final canNext = _pageIndex < _pageCount - 1;
+    final canPrev = page > 0;
+    final canNext = page < _pageCount - 1;
 
     Widget iconButton({
       required IconData icon,
@@ -799,11 +831,11 @@ class _HomeScreenState extends State<HomeScreen> {
             iconButton(
               icon: Icons.chevron_left_rounded,
               label: 'Previous section',
-              onTap: canPrev ? () => _scrollToMobileSection(_pageIndex - 1) : null,
+              onTap: canPrev ? () => _scrollToMobileSection(page - 1) : null,
             ),
             const SizedBox(width: 6),
             Text(
-              '${(_pageIndex + 1).toString().padLeft(2, '0')} / ${_pageCount.toString().padLeft(2, '0')}',
+              '${(page + 1).toString().padLeft(2, '0')} / ${_pageCount.toString().padLeft(2, '0')}',
               style: TextStyle(
                 fontFamily: 'Courier',
                 fontSize: 11,
@@ -816,7 +848,7 @@ class _HomeScreenState extends State<HomeScreen> {
             iconButton(
               icon: Icons.chevron_right_rounded,
               label: 'Next section',
-              onTap: canNext ? () => _scrollToMobileSection(_pageIndex + 1) : null,
+              onTap: canNext ? () => _scrollToMobileSection(page + 1) : null,
             ),
           ],
         ),
@@ -824,7 +856,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildMobileProgressRail(BuildContext context) {
+  Widget _buildMobileProgressRail(BuildContext context, int page) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final labels = TopNav.getLabels(context);
     return Container(
@@ -846,7 +878,7 @@ class _HomeScreenState extends State<HomeScreen> {
           for (int i = 0; i < _pageCount; i++)
             Semantics(
               button: true,
-              selected: i == _pageIndex,
+              selected: i == page,
               label: i < labels.length ? 'Go to ${labels[i]}' : 'Go to page ${i + 1}',
               child: InkResponse(
                 radius: 14,
@@ -855,10 +887,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 3),
                   child: AnimatedContainer(
                     duration: AppMotion.sm,
-                    width: i == _pageIndex ? 8 : 5,
-                    height: i == _pageIndex ? 8 : 5,
+                    width: i == page ? 8 : 5,
+                    height: i == page ? 8 : 5,
                     decoration: BoxDecoration(
-                      color: i == _pageIndex
+                      color: i == page
                           ? Theme.of(context).colorScheme.primary
                           : (isDark ? Colors.white38 : AppColors.slate400),
                       shape: BoxShape.circle,
@@ -1037,11 +1069,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFolioBar(BuildContext context) {
+  Widget _buildFolioBar(BuildContext context, int page) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final labels = TopNav.getLabels(context);
-    final currentLabel = (_pageIndex >= 0 && _pageIndex < labels.length)
-        ? labels[_pageIndex].toUpperCase()
+    final currentLabel = (page >= 0 && page < labels.length)
+        ? labels[page].toUpperCase()
         : '';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -1068,7 +1100,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             AppLocalizations.of(context)!.folioIndicator(
-              (_pageIndex + 1).toString().padLeft(2, '0'),
+              (page + 1).toString().padLeft(2, '0'),
               _pageCount.toString().padLeft(2, '0'),
             ),
             style: TextStyle(
@@ -1102,12 +1134,19 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Top-edge progress bar. Only the width animates every scroll frame,
   /// so `Align` + decorated `Container` are cached via the AnimatedBuilder
   /// `child:` parameter and wrapped in a RepaintBoundary by the caller.
-  Widget _buildProgressBar(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
+  Widget _buildProgressBar(BuildContext context, int page) {
+    final scheme = Theme.of(context).colorScheme;
+    final primary = scheme.primary;
     final decoratedBar = Container(
-      height: 3,
+      height: 2,
       decoration: BoxDecoration(
-        color: primary,
+        gradient: LinearGradient(
+          colors: [
+            primary.withValues(alpha: 0.3),
+            primary,
+            scheme.secondary,
+          ],
+        ),
         boxShadow: [
           BoxShadow(
             color: primary.withValues(alpha: 0.5),
@@ -1120,7 +1159,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Semantics(
       label: 'Portfolio progress',
-      value: 'Page ${_pageIndex + 1} of $_pageCount',
+      value: 'Page ${page + 1} of $_pageCount',
       child: AnimatedBuilder(
         animation: _controller,
         child: decoratedBar,

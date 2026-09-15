@@ -26,7 +26,13 @@ class InteractiveProjectCard extends StatefulWidget {
 
 class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
   bool _isHovered = false;
-  Offset _mousePos = Offset.zero;
+  final ValueNotifier<Offset> _mousePos = ValueNotifier<Offset>(Offset.zero);
+
+  @override
+  void dispose() {
+    _mousePos.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
-        onHover: (e) => setState(() => _mousePos = e.localPosition),
+        onHover: (e) => _mousePos.value = e.localPosition,
         child: AnimatedScale(
           scale: _isHovered && widget.isDesktop ? 1.02 : 1.0,
           duration: const Duration(milliseconds: 300),
@@ -102,19 +108,22 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               // Spotlight
                               if (_isHovered && widget.isDesktop)
                                 Positioned.fill(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      gradient: RadialGradient(
-                                        center: FractionalOffset(
-                                          (_mousePos.dx / 400).clamp(0.0, 1.0),
-                                          (_mousePos.dy / 200).clamp(0.0, 1.0),
+                                  child: ValueListenableBuilder<Offset>(
+                                    valueListenable: _mousePos,
+                                    builder: (context, pos, _) => Container(
+                                      decoration: BoxDecoration(
+                                        gradient: RadialGradient(
+                                          center: FractionalOffset(
+                                            (pos.dx / 400).clamp(0.0, 1.0),
+                                            (pos.dy / 200).clamp(0.0, 1.0),
+                                          ),
+                                          radius: 0.6,
+                                          colors: [
+                                            widget.scheme.primary.withValues(alpha: 0.3),
+                                            Colors.transparent,
+                                          ],
+                                          stops: const [0.0, 1.0],
                                         ),
-                                        radius: 0.6,
-                                        colors: [
-                                          widget.scheme.primary.withValues(alpha: 0.3),
-                                          Colors.transparent,
-                                        ],
-                                        stops: const [0.0, 1.0],
                                       ),
                                     ),
                                   ),

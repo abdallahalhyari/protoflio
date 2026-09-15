@@ -36,6 +36,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
      reserveMobileTop: !widget.isContinuousMobile,
      child: SingleChildScrollView(
        padding: EdgeInsets.zero,
+       physics: widget.isContinuousMobile ? const NeverScrollableScrollPhysics() : null,
        child: Column(
          crossAxisAlignment: CrossAxisAlignment.stretch,
          children: [
