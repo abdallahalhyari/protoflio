@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final ValueNotifier<bool> _showScrollToTop = ValueNotifier<bool>(false);
   final FocusNode _focusNode = FocusNode();
   int _pageIndex = 0;
+  bool _imagesPrecached = false;
 
   @override
   void initState() {
@@ -81,6 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (_imagesPrecached) return;
+    _imagesPrecached = true;
     precacheImage(const AssetImage('assets/background.webp'), context);
     precacheImage(const AssetImage('assets/my_image.png'), context);
     precacheImage(const AssetImage('assets/hat.png'), context);

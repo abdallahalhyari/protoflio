@@ -19,7 +19,7 @@ class _PulsingDotState extends State<PulsingDot>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!_c.isAnimating && !MediaQuery.of(context).disableAnimations) {
+    if (!_c.isAnimating && !MediaQuery.disableAnimationsOf(context)) {
       _c.repeat(reverse: true);
     }
   }

@@ -69,7 +69,7 @@ class _StaggeredSlideUpState extends State<StaggeredSlideUp>
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).disableAnimations) {
+    if (MediaQuery.disableAnimationsOf(context)) {
       return widget.child;
     }
     

@@ -27,7 +27,7 @@ class AppMedia {
   /// `Reduce Motion` accessibility flag — a proxy for "prefers cheaper
   /// visuals". Callers should fall back to a solid tinted surface.
   static bool reduceBlur(BuildContext context) {
-    return MediaQuery.of(context).disableAnimations;
+    return MediaQuery.disableAnimationsOf(context);
   }
 }
 

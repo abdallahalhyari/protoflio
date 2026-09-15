@@ -24,7 +24,7 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final reduce = MediaQuery.of(context).disableAnimations;
+    final reduce = MediaQuery.disableAnimationsOf(context);
     if (!reduce && !_ctrl.isAnimating) {
       _ctrl.repeat(reverse: true);
     } else if (reduce && _ctrl.isAnimating) {

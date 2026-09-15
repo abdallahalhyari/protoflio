@@ -121,7 +121,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    final reduce = MediaQuery.of(context).disableAnimations;
+    final reduce = MediaQuery.disableAnimationsOf(context);
     final cardContent = GestureDetector(
       onPanStart: widget.isStandalone ? null : (_) => widget.onDragStart?.call(),
       onPanUpdate: widget.isStandalone

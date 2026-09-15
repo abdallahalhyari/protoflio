@@ -14,8 +14,8 @@ class MagazinePageTransformer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.of(context).disableAnimations ||
-        MediaQuery.of(context).accessibleNavigation;
+    final reduceMotion = MediaQuery.disableAnimationsOf(context) ||
+        MediaQuery.accessibleNavigationOf(context);
 
     if (reduceMotion) {
       return child;

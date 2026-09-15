@@ -421,7 +421,7 @@ class _ExperienceCardState extends State<_ExperienceCard> {
   Widget build(BuildContext context) {
     final scheme = widget.scheme;
     final isDark = scheme.brightness == Brightness.dark;
-    final reduce = MediaQuery.of(context).disableAnimations;
+    final reduce = MediaQuery.disableAnimationsOf(context);
     final hovered = _hover && !reduce;
 
     return GestureDetector(

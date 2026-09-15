@@ -28,7 +28,7 @@ class _PageBackgroundState extends State<PageBackground> {
 
   Widget _buildDarkBackground(BuildContext context, Offset mouseOffset) {
     final size = MediaQuery.sizeOf(context);
-    final reduceMotion = MediaQuery.of(context).disableAnimations;
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
 
     // Boot placeholder gradient — shown while the hero bitmap is being
     // decoded. Prevents a flash of pure background color and keeps the
@@ -74,7 +74,7 @@ class _PageBackgroundState extends State<PageBackground> {
 
   Widget _buildLightBackground(BuildContext context, Offset mouseOffset) {
     final size = MediaQuery.sizeOf(context);
-    final reduceMotion = MediaQuery.of(context).disableAnimations;
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
 
     final shiftX = reduceMotion ? 0.0 : (mouseOffset.dx / size.width * 20.0);
     final shiftY = reduceMotion ? 0.0 : (mouseOffset.dy / size.height * 20.0);
@@ -180,7 +180,7 @@ class _PageBackgroundState extends State<PageBackground> {
 
     return MouseRegion(
       onHover: (event) {
-        if (MediaQuery.of(context).disableAnimations) return;
+        if (MediaQuery.disableAnimationsOf(context)) return;
         final size = MediaQuery.sizeOf(context);
         final center = Offset(size.width / 2, size.height / 2);
         final next = event.localPosition - center;

@@ -48,7 +48,7 @@ class _BreathingPulseState extends State<BreathingPulse>
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).disableAnimations) {
+    if (MediaQuery.disableAnimationsOf(context)) {
       return widget.child;
     }
     return ScaleTransition(

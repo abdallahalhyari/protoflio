@@ -29,7 +29,7 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics> {
   Size _size = Size.zero;
 
   void _onHover(PointerEvent event) {
-    if (kIsWeb && MediaQuery.of(context).disableAnimations) return; // Prevent Web CanvasKit jitter
+    if (kIsWeb && MediaQuery.disableAnimationsOf(context)) return; // Prevent Web CanvasKit jitter
     setState(() {
       _localMouse = event.localPosition;
     });
