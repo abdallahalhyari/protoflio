@@ -23,7 +23,7 @@ class MagazinePageTransformer extends StatelessWidget {
 
     return AnimatedBuilder(
       animation: controller,
-      builder: (context, child) {
+      builder: (context, staticChild) {
         double position = 0.0;
         if (controller.hasClients &&
             controller.positions.length == 1 &&
@@ -31,43 +31,50 @@ class MagazinePageTransformer extends StatelessWidget {
           position = (controller.page ?? controller.initialPage.toDouble()) - index;
         }
 
-        // When page is active
-        if (position == 0.0) {
-          return child!;
+        // Pages fully outside the viewport (1 or more screens away)
+        if (position >= 1.0 || position <= -1.0) {
+          return const SizedBox.shrink();
+        }
+
+        // When page is active and resting
+        if (position.abs() < 0.001) {
+          return staticChild!;
         }
 
         // Page is scrolling away (moving up)
         // It fades out and scales down into the background
-        if (position > 0.0 && position <= 1.0) {
-          final double turnProgress = position.clamp(0.0, 1.0);
-          final double scale = 1.0 - (turnProgress * 0.1);
+        if (position > 0.0 && position < 1.0) {
+          final double turnProgress = position;
+          final double scale = 1.0 - (turnProgress * 0.08);
           final double opacity = (1.0 - turnProgress).clamp(0.0, 1.0);
 
           return Opacity(
             opacity: opacity,
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()
-                ..scaleByDouble(scale, scale, 1.0, 1.0)
-                ..translateByDouble(0.0, turnProgress * 50.0, 0.0, 1.0), // Slight downward drift
-              child: child!,
+            child: Transform.translate(
+              offset: Offset(0.0, turnProgress * 40.0),
+              child: Transform.scale(
+                scale: scale,
+                child: staticChild!,
+              ),
             ),
           );
         }
 
         // Incoming page from below
-        if (position < 0.0 && position >= -1.0) {
-          final double emergeProgress = (-position).clamp(0.0, 1.0);
-          
+        if (position < 0.0 && position > -1.0) {
+          final double emergeProgress = -position;
+
           return Transform.translate(
-            // Slide up slightly faster than the scroll to create overlap
             offset: Offset(0, emergeProgress * 20.0),
             child: Stack(
               children: [
-                child!,
+                staticChild!,
                 // Drop shadow cast onto the page below it
                 Positioned(
-                  top: 0, left: 0, right: 0, height: 100,
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 80,
                   child: IgnorePointer(
                     child: Container(
                       decoration: BoxDecoration(
@@ -75,7 +82,7 @@ class MagazinePageTransformer extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Colors.black.withValues(alpha: emergeProgress * 0.15),
+                            Colors.black.withValues(alpha: emergeProgress * 0.12),
                             Colors.transparent,
                           ],
                         ),
@@ -88,10 +95,9 @@ class MagazinePageTransformer extends StatelessWidget {
           );
         }
 
-        // Pages far off screen
-        return child!;
+        return staticChild!;
       },
-      child: child,
+      child: RepaintBoundary(child: child),
     );
   }
 }

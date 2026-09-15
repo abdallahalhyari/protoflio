@@ -36,13 +36,18 @@ class IntroPage extends StatefulWidget {
   State<IntroPage> createState() => _IntroPageState();
 }
 
-class _IntroPageState extends State<IntroPage> {
+class _IntroPageState extends State<IntroPage>
+    with AutomaticKeepAliveClientMixin {
   Color get _accent => Theme.of(context).colorScheme.primary;
   Color get _accentSoft => Theme.of(context).colorScheme.primary.withValues(alpha: 0.35);
   static const _gold = AppColors.accentAmberSoft;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final size = MediaQuery.sizeOf(context);
     final isWide = size.width >= AppBreakpoints.tablet;
     final isDark = Theme.of(context).brightness == Brightness.dark;

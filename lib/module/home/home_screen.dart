@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,6 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final FocusNode _focusNode = FocusNode();
   final ValueNotifier<int> _pageIndex = ValueNotifier<int>(0);
   bool _imagesPrecached = false;
+  Timer? _settleTimer;
+  bool _isPageTransitioning = false;
 
   @override
   void initState() {
@@ -89,12 +92,10 @@ class _HomeScreenState extends State<HomeScreen> {
     precacheImage(const AssetImage('assets/hat.png'), context);
   }
 
-  void _onScroll() {
-    if (!_controller.hasClients || _controller.positions.length != 1) return;
-    final page = _controller.page?.round() ?? 0;
-    if (page != _pageIndex.value) {
-      _pageIndex.value = page;
-      SoundService.instance.playPageTurn();
+  void _scheduleSettle(int page) {
+    _settleTimer?.cancel();
+    _settleTimer = Timer(const Duration(milliseconds: 250), () {
+      if (!mounted) return;
       final hash = UrlSyncService.instance.indexToHash(page);
       UrlSyncService.instance.updateHash(hash);
       ThemeController.updateSeedFromHash(hash);
@@ -102,11 +103,22 @@ class _HomeScreenState extends State<HomeScreen> {
       if (page >= 0 && page < labels.length) {
         Analytics.screen(labels[page], className: 'HomeScreen');
       }
+    });
+  }
+
+  void _onScroll() {
+    if (!_controller.hasClients || _controller.positions.length != 1) return;
+    final page = _controller.page?.round() ?? 0;
+    if (page != _pageIndex.value) {
+      _pageIndex.value = page;
+      SoundService.instance.playPageTurn();
+      _scheduleSettle(page);
     }
   }
 
   @override
   void dispose() {
+    _settleTimer?.cancel();
     _controller.removeListener(_onScroll);
     _controller.dispose();
     _mobileScrollController.removeListener(_onMobileScroll);
@@ -152,9 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (visibleIndex != null && visibleIndex != _pageIndex.value) {
       _pageIndex.value = visibleIndex;
-      final hash = UrlSyncService.instance.indexToHash(visibleIndex);
-      UrlSyncService.instance.updateHash(hash);
-      ThemeController.updateSeedFromHash(hash);
+      _scheduleSettle(visibleIndex);
     }
   }
 
@@ -162,9 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final target = index.clamp(0, _pageCount - 1);
     _pageIndex.value = target;
     if (syncUrl) {
-      final hash = UrlSyncService.instance.indexToHash(target);
-      UrlSyncService.instance.updateHash(hash);
-      ThemeController.updateSeedFromHash(hash);
+      _scheduleSettle(target);
     }
     if (target == 0 && _mobileScrollController.hasClients) {
       _mobileScrollController.animateTo(
@@ -206,10 +214,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _goTo(int page, {bool syncUrl = true}) {
     final target = page.clamp(0, _pageCount - 1);
+    if (target == _pageIndex.value && !_isPageTransitioning) return;
     if (syncUrl) {
-      final hash = UrlSyncService.instance.indexToHash(target);
-      UrlSyncService.instance.updateHash(hash);
-      ThemeController.updateSeedFromHash(hash);
+      _scheduleSettle(target);
     }
     if (mounted && MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
       _scrollToMobileSection(target, syncUrl: syncUrl);
@@ -221,11 +228,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if (_controller.hasClients && _controller.positions.length == 1) {
+      _isPageTransitioning = true;
       _controller.animateToPage(
         target,
-        duration: AppMotion.lg,
-        curve: Curves.easeInOut,
-      );
+        duration: const Duration(milliseconds: 380),
+        curve: Curves.easeOutCubic,
+      ).then((_) {
+        if (mounted) {
+          _isPageTransitioning = false;
+          _wheelAccum = 0;
+        }
+      }).catchError((_) {
+        if (mounted) _isPageTransitioning = false;
+      });
     }
   }
 
@@ -248,12 +263,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onPointerSignal(PointerSignalEvent event) {
     if (event is! PointerScrollEvent) return;
 
-    // Prevent multi-page rapid jumping if a page transition is already in flight
-    if (_controller.hasClients &&
-        _controller.page != null &&
-        (_controller.page! - _pageIndex.value).abs() > 0.08) {
-      return;
-    }
+    // Drop further wheel events while a transition animation is actively in flight
+    if (_isPageTransitioning) return;
 
     final dy = event.scrollDelta.dy;
     if (dy.abs() < 1.0) return;
@@ -484,7 +495,10 @@ class _HomeScreenState extends State<HomeScreen> {
               return MagazinePageTransformer(
                 controller: _controller,
                 index: index,
-                child: _buildDesktopPage(index),
+                child: RepaintBoundary(
+                  key: ValueKey('desktop_page_repaint_$index'),
+                  child: _buildDesktopPage(index),
+                ),
               );
             },
           ),
@@ -656,45 +670,59 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              KeyedSubtree(
-                key: _sectionKeys[0],
-                child: IntroPage(
-                  onScrollDown: () => _scrollToMobileSection(1),
-                  onViewWork: () => _scrollToMobileSection(2),
-                  onDownloadResume: _downloadResume,
-                  onContactMe: () => _scrollToMobileSection(6),
-                  isContinuousMobile: true,
+              RepaintBoundary(
+                child: KeyedSubtree(
+                  key: _sectionKeys[0],
+                  child: IntroPage(
+                    onScrollDown: () => _scrollToMobileSection(1),
+                    onViewWork: () => _scrollToMobileSection(2),
+                    onDownloadResume: _downloadResume,
+                    onContactMe: () => _scrollToMobileSection(6),
+                    isContinuousMobile: true,
+                  ),
                 ),
               ),
               _buildMobileSectionDivider('02', _dividerLabelFor(1)),
-              KeyedSubtree(
-                key: _sectionKeys[1],
-                child: const ExperiencePage(isContinuousMobile: true),
+              RepaintBoundary(
+                child: KeyedSubtree(
+                  key: _sectionKeys[1],
+                  child: const ExperiencePage(isContinuousMobile: true),
+                ),
               ),
               _buildMobileSectionDivider('03', _dividerLabelFor(2)),
-              KeyedSubtree(
-                key: _sectionKeys[2],
-                child: const ProjectsPage(isContinuousMobile: true),
+              RepaintBoundary(
+                child: KeyedSubtree(
+                  key: _sectionKeys[2],
+                  child: const ProjectsPage(isContinuousMobile: true),
+                ),
               ),
               _buildMobileSectionDivider('04', _dividerLabelFor(3)),
-              KeyedSubtree(
-                key: _sectionKeys[3],
-                child: const SkillsPage(isContinuousMobile: true),
+              RepaintBoundary(
+                child: KeyedSubtree(
+                  key: _sectionKeys[3],
+                  child: const SkillsPage(isContinuousMobile: true),
+                ),
               ),
               _buildMobileSectionDivider('05', _dividerLabelFor(4)),
-              KeyedSubtree(
-                key: _sectionKeys[4],
-                child: const EngineeringPage(isContinuousMobile: true),
+              RepaintBoundary(
+                child: KeyedSubtree(
+                  key: _sectionKeys[4],
+                  child: const EngineeringPage(isContinuousMobile: true),
+                ),
               ),
               _buildMobileSectionDivider('06', _dividerLabelFor(5)),
-              KeyedSubtree(
-                key: _sectionKeys[5],
-                child: const HatsGridPage(isContinuousMobile: true),
+              RepaintBoundary(
+                child: KeyedSubtree(
+                  key: _sectionKeys[5],
+                  child: const HatsGridPage(isContinuousMobile: true),
+                ),
               ),
               _buildMobileSectionDivider('07', _dividerLabelFor(6)),
-              KeyedSubtree(
-                key: _sectionKeys[6],
-                child: const ContactPage(isContinuousMobile: true),
+              RepaintBoundary(
+                child: KeyedSubtree(
+                  key: _sectionKeys[6],
+                  child: const ContactPage(isContinuousMobile: true),
+                ),
               ),
               const SizedBox(height: 48),
               _buildMobileFooter(),

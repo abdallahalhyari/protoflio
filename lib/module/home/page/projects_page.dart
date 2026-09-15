@@ -17,11 +17,16 @@ class ProjectsPage extends StatefulWidget {
   State<ProjectsPage> createState() => _ProjectsPageState();
 }
 
-class _ProjectsPageState extends State<ProjectsPage> {
+class _ProjectsPageState extends State<ProjectsPage>
+    with AutomaticKeepAliveClientMixin {
   int _mobileSelectedIndex = 0;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
