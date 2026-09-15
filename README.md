@@ -34,18 +34,35 @@ Live: [alhyari.web.app](https://alhyari.web.app)
 ```
 lib/
 ├── main.dart                    # MaterialApp + global scroll behavior
-├── theme/                       # Design tokens + ThemeData
-├── locale_controller.dart       # Locale state
-├── theme_controller.dart        # Light/Dark toggle
+├── theme/                       # Design tokens + ThemeData (AppTheme, AppColors, AppSpacing...)
+├── locale_controller.dart       # Multi-locale state controller (en, ar, cs)
+├── theme_controller.dart        # Light/Dark mode state notifier
 ├── service/
-│   ├── sound_service.dart       # Ambient audio + click effects
+│   ├── analytics_service.dart   # Screen tracking & CTA telemetry
+│   ├── cv_service.dart          # ATS-verified CV download & preview handler
+│   ├── sound_service.dart       # Ambient audio + tactile click feedback
 │   └── url_sync_service.dart    # Hash-based deep linking (#work, #contact, …)
 └── module/home/
     ├── home_screen.dart         # Desktop PageView + mobile continuous scroll shell
-    ├── page/                    # 7 section pages
-    ├── widget/                  # Shared widgets (nav, cards, chips, backgrounds)
-    ├── model/                   # Skill / Project / Experience / Hat data models
-    └── data/                    # Content data (skills, projects, experience, hats)
+    ├── page/                    # Modularized section views (-56% total page footprint)
+    │   ├── intro_page.dart
+    │   ├── projects_page.dart
+    │   ├── engineering_page.dart
+    │   ├── experience_page.dart
+    │   ├── skills_page.dart
+    │   ├── hats_grid_page.dart
+    │   ├── contact_page.dart
+    │   └── project_modal.dart
+    ├── widget/                  # Domain-isolated component subpackages
+    │   ├── intro/               # IntroCtaRow, IntroFooterStrip, IntroAvailabilityBanner
+    │   ├── projects/            # PipelineTopologyDiagram, NfcArchitectureDiagram, ProjectDossierCard
+    │   ├── engineering/         # EngineeringHeader, ArchitectureTopicTabs, ArchitectureDiagramCard...
+    │   ├── experience/          # ExperienceHeader, CredentialsBentoCard, AnimatedExperienceNode...
+    │   ├── skills/              # SkillsHeader, SkillCategoryFilters, SkillsEmptyState...
+    │   ├── hats/                # HatDeckHeader, ContinuousMobileHatColumn, HatBioStrip, HatRolePills...
+    │   └── contact/             # ContactHeader, HeroEmailCard, ExpressPresetsBar, CvDossierCard...
+    ├── model/                   # Skill / Project / Experience / Hat / Topic data models
+    └── data/                    # Pure domain data sources (projects, skills, experience, hats)
 ```
 
 ## Running
@@ -59,14 +76,27 @@ flutter run -d ios                 # simulator
 flutter run -d android             # device / emulator
 ```
 
-## Testing
+## Testing & Quality Assurance
+
+Comprehensive verification across 112 automated tests:
 
 ```bash
-flutter analyze
-flutter test                       # widget + theme + responsive smoke suite
+flutter analyze                    # 0 static analysis issues
+flutter test                       # 112/112 passing tests
 ```
 
-Test suites: `test/widget_test.dart`, `test/theme_audit_test.dart`, `test/responsive_audit_test.dart`, `test/editorial_chip_test.dart`, `test/primary_button_test.dart`.
+Test suites:
+- `test/widget_test.dart` — Core app bootstrap, desktop keyboard navigation & section transitions.
+- `test/theme_audit_test.dart` — Comprehensive light and dark mode audits across all 7 sections.
+- `test/responsive_audit_test.dart` — Breakpoint layout assertions across desktop, tablet, and mobile.
+- `test/rtl_smoke_test.dart` — Right-to-left bidirectional layout assertions (Arabic locale).
+- `test/contact_widgets_test.dart` — Contact header, encrypted email cards, express presets, CV dossier & channels.
+- `test/hats_widgets_test.dart` — Architectural perspectives deck, continuous mobile scroll, role pills & steppers.
+- `test/engineering_widgets_test.dart` — Architecture header, topic tabs, flowchart diagrams & technical safeguards.
+- `test/experience_widgets_test.dart` — Career trajectory header, academic annex, certification bento & timeline nodes.
+- `test/skills_widgets_test.dart` — Skills header, category filters, and empty-state fallback.
+- `test/projects_widgets_test.dart` — CI/CD pipeline topology, ISO-7816 NFC APDU architecture & dossier cards.
+- `test/editorial_chip_test.dart` & `test/primary_button_test.dart` — Design system atomic token components.
 
 ## Deploying
 
