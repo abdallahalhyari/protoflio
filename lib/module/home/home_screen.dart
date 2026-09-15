@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/locale_controller.dart';
@@ -260,6 +261,60 @@ class _HomeScreenState extends State<HomeScreen> {
   double _wheelAccum = 0;
   DateTime _lastWheelAt = DateTime.fromMillisecondsSinceEpoch(0);
 
+  bool _canInnerScroll(Offset globalPosition, double dy) {
+    if (!mounted) return false;
+    final result = HitTestResult();
+    final viewId = View.of(context).viewId;
+    RendererBinding.instance.hitTestInView(result, globalPosition, viewId);
+
+    for (final entry in result.path) {
+      final target = entry.target;
+      if (target is! RenderObject) continue;
+
+      RenderObject? current = target;
+      while (current != null) {
+        if (current is RenderAbstractViewport) {
+          ViewportOffset? offset;
+          if (current is RenderViewportBase) {
+            offset = current.offset;
+          } else {
+            try {
+              offset = (current as dynamic).offset as ViewportOffset?;
+            } catch (_) {}
+          }
+
+          if (offset != null) {
+            // If this viewport is the outer PageView, stop ascending this branch
+            if (_controller.hasClients && offset == _controller.position) {
+              break;
+            }
+
+            if (offset is ScrollPosition) {
+              final pos = offset;
+              if (pos.axis == Axis.vertical &&
+                  pos.hasContentDimensions &&
+                  pos.maxScrollExtent > 0) {
+                if (dy > 0) {
+                  // Scrolling down: can inner scroll further down?
+                  if (pos.pixels < pos.maxScrollExtent - 2.0) {
+                    return true;
+                  }
+                } else if (dy < 0) {
+                  // Scrolling up: can inner scroll further up?
+                  if (pos.pixels > pos.minScrollExtent + 2.0) {
+                    return true;
+                  }
+                }
+              }
+            }
+          }
+        }
+        current = current.parent;
+      }
+    }
+    return false;
+  }
+
   void _onPointerSignal(PointerSignalEvent event) {
     if (event is! PointerScrollEvent) return;
 
@@ -268,6 +323,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final dy = event.scrollDelta.dy;
     if (dy.abs() < 1.0) return;
+
+    if (_canInnerScroll(event.position, dy)) {
+      _wheelAccum = 0;
+      return;
+    }
 
     final now = DateTime.now();
     if (now.difference(_lastWheelAt) > AppMotion.wheelResetGap) {
