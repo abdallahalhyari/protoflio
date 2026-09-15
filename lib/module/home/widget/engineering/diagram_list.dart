@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../theme/tokens.dart';
-import '../../page/engineering_page.dart' show ArchitectureTopic;
+import '../../model/architecture_topic.dart';
 
 class DiagramList extends StatelessWidget {
   final ArchitectureTopic topic;
