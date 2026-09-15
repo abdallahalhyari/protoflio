@@ -308,22 +308,18 @@
     // Safety fallback: dismiss after 1.5s in case event is delayed
     setTimeout(dismissBootLoader, 1500);
 
-    // Auto-update Service Worker to ensure visitors always receive latest deployed release
+    // Unregister any stale service workers and clear caches so visitors always receive fresh release
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for (var i = 0; i < registrations.length; i++) {
-          registrations[i].update();
-          registrations[i].onupdatefound = function() {
-            var installing = this.installing;
-            if (installing) {
-              installing.onstatechange = function() {
-                if (this.state === 'installed' && navigator.serviceWorker.controller) {
-                  installing.postMessage({ command: 'SKIP_WAITING' });
-                  window.location.reload();
-                }
-              };
-            }
-          };
+          registrations[i].unregister();
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (var i = 0; i < names.length; i++) {
+          caches.delete(names[i]);
         }
       });
     }
