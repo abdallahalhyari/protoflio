@@ -124,51 +124,23 @@
     html, body { margin: 0; padding: 0; height: 100%; background: #0E0E10; }
     #boot-loader {
       position: fixed; inset: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       background: #0E0E10; color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       z-index: 9999;
-      transition: opacity .4s ease;
+      transition: opacity .15s ease;
       overflow: hidden;
     }
     #boot-loader.hidden { opacity: 0; pointer-events: none; }
-    
-    .hero-wordmark {
-      font-family: 'Tenada', sans-serif;
-      font-size: min(220px, 20vw);
-      font-weight: 900;
-      letter-spacing: 10px;
-      line-height: 0.9;
-      color: transparent;
-      -webkit-text-stroke: 3px rgba(255,255,255,0.28);
-      margin: 0;
-      padding: 0 16px;
-      text-align: center;
+    .boot-indicator {
+      width: 48px;
+      height: 2px;
+      background: #E11D48;
+      border-radius: 2px;
+      animation: boot-pulse 1s ease-in-out infinite alternate;
     }
-    
-    .hero-subline {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 24px;
-      opacity: 0.8;
-    }
-    
-    .hero-strip {
-      background: #E11D48; /* _accent color equivalent */
-      color: #0E0E10;
-      font-weight: 900;
-      font-size: 10px;
-      letter-spacing: 2px;
-      padding: 6px 10px;
-      border-radius: 4px;
-    }
-    
-    .hero-title {
-      font-size: min(24px, 3.5vw);
-      font-weight: 800;
-      letter-spacing: 4px;
-      margin: 0;
+    @keyframes boot-pulse {
+      0% { transform: scaleX(0.3); opacity: 0.3; }
+      100% { transform: scaleX(1.0); opacity: 1.0; }
     }
     /* Screen reader & crawler accessible semantic layout (never blocks visual Canvas) */
     .sr-only {
@@ -233,11 +205,7 @@
 </head>
 <body>
   <div id="boot-loader">
-    <div class="hero-wordmark">ABDALLAH</div>
-    <div class="hero-subline">
-      <div class="hero-strip">ISSUE № 01</div>
-      <div class="hero-title">SENIOR MOBILE ENGINEER</div>
-    </div>
+    <div class="boot-indicator"></div>
   </div>
 
   <!-- Accessible semantic DOM representation for search engines & web crawlers -->
@@ -326,11 +294,19 @@
   </noscript>
 
   <script>
-    // Hide loader once Flutter renders first frame
-    window.addEventListener('flutter-first-frame', function () {
+    function dismissBootLoader() {
       var l = document.getElementById('boot-loader');
-      if (l) { l.classList.add('hidden'); setTimeout(function(){ l.remove(); }, 400); }
-    });
+      if (l && !l.classList.contains('hidden')) {
+        l.classList.add('hidden');
+        setTimeout(function(){ if (l.parentNode) l.remove(); }, 150);
+      }
+    }
+
+    // Hide loader once Flutter renders first frame
+    window.addEventListener('flutter-first-frame', dismissBootLoader);
+
+    // Safety fallback: dismiss after 1.5s in case event is delayed
+    setTimeout(dismissBootLoader, 1500);
 
     // Auto-update Service Worker to ensure visitors always receive latest deployed release
     if ('serviceWorker' in navigator) {

@@ -7,7 +7,6 @@ import '../widget/intro/intro_cta_row.dart';
 import '../widget/intro/intro_footer_strip.dart';
 import '../widget/scrollable_screen_shell.dart';
 import '../widget/scroll_explore_hint.dart';
-import '../widget/staggered_slide_up.dart';
 
 /// Intro reimagined as a premium magazine cover:
 ///   [issue strip]      TOP — small caps run + registration marks
@@ -51,34 +50,35 @@ class _IntroPageState extends State<IntroPage>
     final size = MediaQuery.sizeOf(context);
     final isWide = size.width >= AppBreakpoints.tablet;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isCompactH = isWide && size.height < 920;
 
     final body = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _issueStrip(size, isDark),
-        SizedBox(height: isWide ? AppSpacing.md : AppSpacing.sm),
-        _wordmark(size, isDark),
-        SizedBox(height: isWide ? AppSpacing.smd : AppSpacing.xs),
-        _subline(size, isWide, isDark),
-        SizedBox(height: isWide ? AppSpacing.lg : AppSpacing.md),
-        _roleBlock(size, isDark),
-        SizedBox(height: isWide ? AppSpacing.lg : AppSpacing.md),
+        SizedBox(height: isCompactH ? 8.0 : (isWide ? AppSpacing.md : AppSpacing.sm)),
+        _wordmark(size, isDark, isCompactH, isWide),
+        SizedBox(height: isCompactH ? 8.0 : (isWide ? AppSpacing.smd : AppSpacing.xs)),
+        _subline(size, isWide, isDark, isCompactH),
+        SizedBox(height: isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        _roleBlock(size, isDark, isCompactH),
+        SizedBox(height: isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
         IntroAvailabilityBanner(isDark: isDark, isWide: isWide),
-        SizedBox(height: isWide ? AppSpacing.lg : AppSpacing.md),
+        SizedBox(height: isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
         IntroCtaRow(
           isDark: isDark,
           onViewWork: widget.onViewWork ?? widget.onScrollDown,
           onDownloadResume: widget.onDownloadResume ?? widget.onScrollDown,
           onContactMe: widget.onContactMe ?? widget.onScrollDown,
         ),
-        SizedBox(height: isWide ? AppSpacing.xxl : AppSpacing.xl),
+        SizedBox(height: isCompactH ? 16.0 : (isWide ? AppSpacing.xxl : AppSpacing.xl)),
         IntroFooterStrip(
           isDark: isDark,
           onContactMe: widget.onContactMe,
           onViewWork: widget.onViewWork,
         ),
-        // Desktop scroll hint. Skipped on viewports under ~1000h so the
+        // Desktop scroll hint. Skipped on compact viewports so the
         // intro column doesn't overflow and steal the outer wheel-scroll
         // gesture from the PageView (see _canInnerScroll in home_screen).
         if (isWide && !widget.isContinuousMobile && size.height >= 1000) ...[
@@ -155,14 +155,15 @@ class _IntroPageState extends State<IntroPage>
         ),
       );
 
-  Widget _wordmark(Size size, bool isDark) {
-    return StaggeredSlideUp(
-      delay: const Duration(milliseconds: 100),
-      child: Semantics(
-        header: true,
-        label: AppLocalizations.of(context)!.semanticTitle,
+  Widget _wordmark(Size size, bool isDark, bool isCompactH, bool isWide) {
+    final wordmarkHeight = isCompactH
+        ? (size.height * 0.17).clamp(95.0, 165.0)
+        : (isWide ? (size.height * 0.21).clamp(120.0, 240.0) : (size.height * 0.16).clamp(85.0, 160.0));
+    return Semantics(
+      header: true,
+      label: AppLocalizations.of(context)!.semanticTitle,
       child: SizedBox(
-        height: (size.height * 0.22).clamp(120.0, 260.0),
+        height: wordmarkHeight,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: FittedBox(
@@ -179,36 +180,37 @@ class _IntroPageState extends State<IntroPage>
                   ..style = PaintingStyle.stroke
                   ..strokeWidth = 3
                   ..color = isDark
-                      ? Colors.white.withValues(alpha: 0.08)
-                      : _accent.withValues(alpha: 0.25),
+                      ? Colors.white.withValues(alpha: 0.28)
+                      : _accent.withValues(alpha: 0.35),
               ),
             ),
           ),
-        ),
         ),
       ),
     );
   }
 
-  Widget _subline(Size size, bool isWide, bool isDark) {
-    final letterSize = (size.width * 0.035).clamp(20.0, 40.0);
-    final portraitSize = (size.width * 0.09).clamp(56.0, 96.0);
+  Widget _subline(Size size, bool isWide, bool isDark, bool isCompactH) {
+    final letterSize = isCompactH
+        ? (size.width * 0.03).clamp(18.0, 32.0)
+        : (size.width * 0.035).clamp(20.0, 40.0);
+    final portraitSize = isCompactH
+        ? (size.height * 0.082).clamp(52.0, 78.0)
+        : (isWide ? (size.height * 0.095).clamp(60.0, 96.0) : (size.width * 0.12).clamp(56.0, 80.0));
     if (isWide) {
-      return StaggeredSlideUp(
-        delay: const Duration(milliseconds: 250),
-        child: Row(
+      return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _portrait(portraitSize),
-          SizedBox(width: portraitSize * 0.28),
+          SizedBox(width: portraitSize * 0.26),
           Text(
             'ALHYARI',
             style: TextStyle(
               fontFamily: AppTypography.displayFont,
               fontSize: letterSize,
               fontWeight: FontWeight.w800,
-              letterSpacing: 14,
+              letterSpacing: 12,
               color: isDark ? Colors.white : AppColors.slate900,
               shadows: isDark
                   ? const [Shadow(color: Colors.black, blurRadius: 12)]
@@ -216,12 +218,9 @@ class _IntroPageState extends State<IntroPage>
             ),
           ),
         ],
-      ),
       );
     }
-    return StaggeredSlideUp(
-      delay: const Duration(milliseconds: 250),
-      child: Column(
+    return Column(
       children: [
         _portrait(portraitSize),
         const SizedBox(height: AppSpacing.smd),
@@ -240,7 +239,6 @@ class _IntroPageState extends State<IntroPage>
           ),
         ),
       ],
-    ),
     );
   }
 
@@ -289,7 +287,7 @@ class _IntroPageState extends State<IntroPage>
     );
   }
 
-  Widget _roleBlock(Size size, bool isDark) {
+  Widget _roleBlock(Size size, bool isDark, bool isCompactH) {
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(
@@ -304,12 +302,14 @@ class _IntroPageState extends State<IntroPage>
                 style: TextStyle(color: _accent, fontSize: 13),
               ),
             ),
-            const SizedBox(height: AppSpacing.sm),
+            SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
             Text(
               AppLocalizations.of(context)!.introSeniorEngineer.toUpperCase(),
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: (size.width * 0.018).clamp(16.0, 22.0),
+                fontSize: isCompactH
+                    ? (size.width * 0.016).clamp(15.0, 19.0)
+                    : (size.width * 0.018).clamp(16.0, 22.0),
                 fontWeight: FontWeight.w900,
                 letterSpacing: 3,
                 color: isDark ? Colors.white : AppColors.slate900,
@@ -320,21 +320,25 @@ class _IntroPageState extends State<IntroPage>
               AppLocalizations.of(context)!.introBuildsComplex,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: (size.width * 0.0115).clamp(12.5, 18.0),
+                fontSize: isCompactH
+                    ? (size.width * 0.0105).clamp(12.0, 15.0)
+                    : (size.width * 0.0115).clamp(12.5, 18.0),
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.5,
                 color: isDark ? _accentSoft : _accent,
               ),
             ),
-            const SizedBox(height: AppSpacing.sm),
+            SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
             Text(
               AppLocalizations.of(context)!.introTechStack,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: (size.width * 0.011).clamp(11.5, 13.5),
+                fontSize: isCompactH
+                    ? (size.width * 0.01).clamp(11.0, 12.5)
+                    : (size.width * 0.011).clamp(11.5, 13.5),
                 fontWeight: FontWeight.w600,
                 color: isDark ? Colors.white.withValues(alpha: 0.82) : AppColors.slate600,
-                height: 1.55,
+                height: 1.45,
                 letterSpacing: 0.8,
               ),
             ),
