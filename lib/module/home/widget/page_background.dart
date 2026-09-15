@@ -29,46 +29,134 @@ class _PageBackgroundState extends State<PageBackground> {
   Widget _buildDarkBackground(BuildContext context, Offset mouseOffset) {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final primary = Theme.of(context).colorScheme.primary;
 
-    // Boot placeholder gradient — shown while the hero bitmap is being
-    // decoded. Prevents a flash of pure background color and keeps the
-    // indigo→slate palette visible from first paint.
-    const bootGradient = DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.slate900,
-            AppColors.accentIndigoDeep,
-          ],
+    final shiftX = reduceMotion ? 0.0 : (mouseOffset.dx / size.width * 24.0);
+    final shiftY = reduceMotion ? 0.0 : (mouseOffset.dy / size.height * 24.0);
+
+    return Stack(
+      children: [
+        // 1. Base Deep Obsidian Midnight Canvas
+        const Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF080C14),
+                  Color(0xFF0B101D),
+                  Color(0xFF080C14),
+                ],
+                stops: [0.0, 0.55, 1.0],
+              ),
+            ),
+          ),
         ),
-      ),
-    );
 
-    // RepaintBoundary here isolates the scaled bitmap so parallax
-    // transforms don't force the image to repaint every frame.
-    Widget baseImage = RepaintBoundary(
-      child: Transform.scale(
-        scale: 1.35,
-        child: Image.asset(
-          widget.asset,
-          fit: BoxFit.cover,
-          frameBuilder: (context, child, frame, wasSyncLoaded) {
-            if (wasSyncLoaded || frame != null) return child;
-            return const SizedBox.expand(child: bootGradient);
-          },
+        // 2. High-Tech Tactile Texture (Subtle Whisper, Zero Brown Bleed)
+        Positioned.fill(
+          child: Opacity(
+            opacity: 0.05,
+            child: Image.asset(
+              widget.asset,
+              fit: BoxFit.cover,
+              color: Colors.black,
+              colorBlendMode: BlendMode.saturation,
+            ),
+          ),
         ),
-      ),
-    );
 
-    return AnimatedSlide(
-      duration: reduceMotion ? Duration.zero : AppMotion.xs,
-      offset: Offset(
-        mouseOffset.dx / size.width * 0.04,
-        mouseOffset.dy / size.height * 0.04,
-      ),
-      child: baseImage,
+        // 3. Dynamic Ambient Glow Orbs with Parallax Float
+        Transform.translate(
+          offset: Offset(shiftX, shiftY),
+          child: Stack(
+            children: [
+              // Top-right dynamic active accent glow (harmonizes with current section)
+              Positioned(
+                top: -100,
+                right: -80,
+                width: 540,
+                height: 540,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        primary.withValues(alpha: 0.16),
+                        primary.withValues(alpha: 0.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // Bottom-left cyber cyan/blue ambient glow
+              Positioned(
+                bottom: -120,
+                left: -100,
+                width: 580,
+                height: 580,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        const Color(0xFF06B6D4).withValues(alpha: 0.10),
+                        const Color(0xFF06B6D4).withValues(alpha: 0.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // Center-right electric violet depth aura
+              Positioned(
+                top: size.height * 0.35,
+                left: size.width * 0.4,
+                width: 440,
+                height: 440,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        const Color(0xFF8B5CF6).withValues(alpha: 0.08),
+                        const Color(0xFF8B5CF6).withValues(alpha: 0.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // 4. Architectural Precision Micro-Dot Matrix
+        const Positioned.fill(
+          child: IgnorePointer(
+            child: CustomPaint(
+              painter: _DarkGridPainter(),
+            ),
+          ),
+        ),
+
+        // 5. Subtle Edge Vignette
+        Positioned.fill(
+          child: IgnorePointer(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment.center,
+                  radius: 1.25,
+                  colors: [
+                    Colors.transparent,
+                    const Color(0xFF080C14).withValues(alpha: 0.65),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -207,21 +295,6 @@ class _PageBackgroundState extends State<PageBackground> {
               ),
             ),
           ),
-          if (isDark && widget.overlay != null)
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      widget.overlay!.withValues(alpha: 0.65),
-                      widget.overlay!.withValues(alpha: 0.9),
-                    ],
-                  ),
-                ),
-              ),
-            ),
           Positioned.fill(
             child: RepaintBoundary(
               child: widget.child,
@@ -233,13 +306,34 @@ class _PageBackgroundState extends State<PageBackground> {
   }
 }
 
+class _DarkGridPainter extends CustomPainter {
+  const _DarkGridPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final dotPaint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.045)
+      ..style = PaintingStyle.fill;
+
+    const step = 32.0;
+    for (double x = 16; x < size.width; x += step) {
+      for (double y = 16; y < size.height; y += step) {
+        canvas.drawCircle(Offset(x, y), 0.75, dotPaint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
 class _LightGridPainter extends CustomPainter {
   const _LightGridPainter();
 
   @override
   void paint(Canvas canvas, Size size) {
     final dotPaint = Paint()
-      ..color = AppColors.slate400.withValues(alpha: 0.24)
+      ..color = AppColors.slate400.withValues(alpha: 0.20)
       ..style = PaintingStyle.fill;
 
     const step = 28.0;

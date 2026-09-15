@@ -39,7 +39,6 @@ class IntroPage extends StatefulWidget {
 class _IntroPageState extends State<IntroPage>
     with AutomaticKeepAliveClientMixin {
   Color get _accent => Theme.of(context).colorScheme.primary;
-  Color get _accentSoft => Theme.of(context).colorScheme.primary.withValues(alpha: 0.35);
   static const _gold = AppColors.accentAmberSoft;
 
   @override
@@ -183,8 +182,8 @@ class _IntroPageState extends State<IntroPage>
                     ..style = PaintingStyle.stroke
                     ..strokeWidth = 3
                     ..color = isDark
-                        ? Colors.white.withValues(alpha: 0.28)
-                        : _accent.withValues(alpha: 0.35),
+                        ? Colors.white.withValues(alpha: 0.38)
+                        : _accent.withValues(alpha: 0.40),
                 ),
               ),
             ),
@@ -218,7 +217,10 @@ class _IntroPageState extends State<IntroPage>
                   letterSpacing: 12,
                   color: isDark ? Colors.white : AppColors.slate900,
                   shadows: isDark
-                      ? const [Shadow(color: Colors.black, blurRadius: 12)]
+                      ? const [
+                          Shadow(color: Colors.black, blurRadius: 16),
+                          Shadow(color: Color(0x666366F1), blurRadius: 24),
+                        ]
                       : const [Shadow(color: Colors.black12, blurRadius: 4)],
                 ),
               ),
@@ -238,7 +240,10 @@ class _IntroPageState extends State<IntroPage>
                   letterSpacing: 10,
                   color: isDark ? Colors.white : AppColors.slate900,
                   shadows: isDark
-                      ? const [Shadow(color: Colors.black, blurRadius: 12)]
+                      ? const [
+                          Shadow(color: Colors.black, blurRadius: 16),
+                          Shadow(color: Color(0x666366F1), blurRadius: 24),
+                        ]
                       : const [Shadow(color: Colors.black12, blurRadius: 4)],
                 ),
               ),
@@ -265,16 +270,16 @@ class _IntroPageState extends State<IntroPage>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              _accent.withValues(alpha: 0.8),
-              _gold.withValues(alpha: 0.4),
-              _accent.withValues(alpha: 0.2),
+              _accent,
+              _gold.withValues(alpha: 0.8),
+              _accent.withValues(alpha: 0.4),
             ],
           ),
           boxShadow: [
             BoxShadow(
-              color: _accent.withValues(alpha: 0.25),
-              blurRadius: 24,
-              spreadRadius: 1,
+              color: _accent.withValues(alpha: 0.40),
+              blurRadius: 28,
+              spreadRadius: 2,
             ),
           ],
         ),
@@ -336,7 +341,7 @@ class _IntroPageState extends State<IntroPage>
                       : (size.width * 0.0115).clamp(12.5, 18.0),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.5,
-                  color: isDark ? _accentSoft : _accent,
+                  color: isDark ? const Color(0xFFA5B4FC) : _accent,
                 ),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),

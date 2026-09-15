@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'theme/tokens.dart';
 
 class ThemeController {
   ThemeController._();
@@ -10,31 +11,33 @@ class ThemeController {
       ValueNotifier<ThemeMode>(ThemeMode.dark);
 
   static final ValueNotifier<Color> seedColor =
-      ValueNotifier<Color>(const Color(0xFF6366F1));
+      ValueNotifier<Color>(AppColors.seed);
+
+  static Color get activeAccent => seedColor.value;
 
   static void updateSeedFromHash(String hash) {
     switch (hash.replaceAll('#', '').toLowerCase()) {
       case 'experience':
-        seedColor.value = const Color(0xFF10B981); // Emerald
+        seedColor.value = const Color(0xFF10B981); // Neo-Mint Emerald
         return;
       case 'work':
-        seedColor.value = const Color(0xFF8B5CF6); // Violet
+        seedColor.value = const Color(0xFF8B5CF6); // Royal Cyber Violet
         return;
       case 'stack':
-        seedColor.value = const Color(0xFFF59E0B); // Amber
+        seedColor.value = const Color(0xFFF59E0B); // Solar Radiant Amber
         return;
       case 'engineering':
-        seedColor.value = const Color(0xFFF43F5E); // Rose
+        seedColor.value = const Color(0xFFF43F5E); // Crimson Coral Flare
         return;
       case 'about':
-        seedColor.value = const Color(0xFF06B6D4); // Cyan
+        seedColor.value = const Color(0xFF06B6D4); // Quantum Cyber Cyan
         return;
       case 'contact':
-        seedColor.value = const Color(0xFF3B82F6); // Sky Blue
+        seedColor.value = const Color(0xFF2563EB); // Ultramarine Sapphire
         return;
       case 'home':
       default:
-        seedColor.value = const Color(0xFF6366F1); // Indigo
+        seedColor.value = AppColors.seed; // Vibrant Electric Indigo
         return;
     }
   }

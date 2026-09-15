@@ -11,11 +11,28 @@ class AppTheme {
   static ThemeData dark([Color seedColor = AppColors.seed]) => _base(Brightness.dark, seedColor);
 
   static ThemeData _base(Brightness brightness, Color seedColor) {
-    final scheme = ColorScheme.fromSeed(
+    final isDark = brightness == Brightness.dark;
+    final baseScheme = ColorScheme.fromSeed(
       seedColor: seedColor,
       brightness: brightness,
+      surface: isDark ? AppColors.darkSurface : AppColors.lightSurface,
     );
-    final isDark = brightness == Brightness.dark;
+
+    // In dark mode, ColorScheme.fromSeed washes out the primary into a muted tone-80 pastel.
+    // We preserve the punchy, luminous seed color with pure white onPrimary (>7:1 contrast).
+    final scheme = isDark
+        ? baseScheme.copyWith(
+            primary: seedColor,
+            onPrimary: Colors.white,
+            surface: AppColors.darkSurface,
+            onSurface: Colors.white,
+            surfaceContainer: AppColors.darkCard,
+            surfaceContainerHigh: AppColors.darkSurfaceElevated,
+          )
+        : baseScheme.copyWith(
+            surface: AppColors.lightSurface,
+            onSurface: AppColors.slate900,
+          );
 
     // Focus-visible ring: shows a 2px seed-tinted outline whenever an
     // interactive element gains keyboard focus. Uses WidgetStateProperty
@@ -34,6 +51,17 @@ class AppTheme {
       scaffoldBackgroundColor:
           isDark ? AppColors.darkSurface : AppColors.lightSurface,
       focusColor: scheme.primary.withValues(alpha: 0.24),
+      cardTheme: CardThemeData(
+        color: isDark ? AppColors.darkCard : Colors.white,
+        elevation: isDark ? 0 : 1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          side: BorderSide(
+            color: isDark ? Colors.white.withValues(alpha: 0.10) : AppColors.slate200,
+            width: 1,
+          ),
+        ),
+      ),
       textTheme: GoogleFonts.interTextTheme(
         ThemeData(brightness: brightness).textTheme,
       ).copyWith(

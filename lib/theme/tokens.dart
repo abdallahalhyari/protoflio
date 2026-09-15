@@ -73,11 +73,13 @@ class AppMotion {
 class AppColors {
   AppColors._();
 
-  static const Color seed = Color(0xFF6366F1); // Indigo
+  static const Color seed = Color(0xFF6366F1); // Vibrant Electric Indigo
 
-  // Dark surface tones (used by scaffolds/pages)
-  static const Color darkSurface = Color(0xFF0F172A); // Slate 900
-  static const Color lightSurface = Color(0xFFF8FAFC); // Slate 50
+  // Deep luxury obsidian dark surface tones (replacing washed slate)
+  static const Color darkSurface = Color(0xFF080C14); // Deep Obsidian Midnight
+  static const Color darkSurfaceElevated = Color(0xFF0D1322); // Layered Surface
+  static const Color darkCard = Color(0xFF111726); // Glass Card Surface
+  static const Color lightSurface = Color(0xFFF8FAFC); // Slate 50 Pearl
 
   // Hat palette — 90% alpha (0xE6) so a hint of the card gradient shows through.
   static const int _hatAlpha = 0xE6;
@@ -88,27 +90,30 @@ class AppColors {
   static Color hatGreen = const Color(0xFF1B5E20).withAlpha(_hatAlpha);
   static Color hatPurple = const Color(0xFF4527A0).withAlpha(_hatAlpha);
 
-  // Scrim overlay applied on top of photo backgrounds.
-  static Color scrimMedium = Colors.black.withValues(alpha: 0.35);
+  // Scrim overlay applied on top of photo backgrounds (deep obsidian tint)
+  static Color scrimMedium = const Color(0xFF080C14).withValues(alpha: 0.88);
 
-  // Editorial accent palette — extracted from the magic hex values that
-  // were littered across intro / contact / experience / hats pages.
-  // Use these instead of writing `Color(0xFFxxxxxx)` inline.
+  // Curated luminous section accents
   static const Color accentIndigo = Color(0xFF818CF8);
-  static const Color accentIndigoSoft = Color(0xFFB6C9FF);
+  static const Color accentIndigoSoft = Color(0xFFA5B4FC);
   static const Color accentIndigoDeep = Color(0xFF6366F1);
+  static const Color accentViolet = Color(0xFF8B5CF6);
+  static const Color accentVioletLight = Color(0xFFA78BFA);
   static const Color accentAmber = Color(0xFFFBBF24);
   static const Color accentAmberSoft = Color(0xFFFDE68A);
   static const Color accentGreen = Color(0xFF10B981);
+  static const Color accentGreenLight = Color(0xFF34D399);
+  static const Color accentRose = Color(0xFFF43F5E);
+  static const Color accentRoseLight = Color(0xFFFB7185);
+  static const Color accentCyan = Color(0xFF06B6D4);
+  static const Color accentCyanLight = Color(0xFF22D3EE);
   static const Color accentSky = Color(0xFF38BDF8);
-  static const Color accentSkySoft = Color(0xFF7DD3FC); // Sky 300 hover / soft state
-  static const Color accentIndigo600 = Color(0xFF4F46E5); // Indigo 600
-  static const Color accentIndigo700 = Color(0xFF4338CA); // Indigo 700
-  // Casino / poker-fan gold used on the Hats deck felt border + selection ring.
+  static const Color accentSkySoft = Color(0xFF7DD3FC);
+  static const Color accentIndigo600 = Color(0xFF4F46E5);
+  static const Color accentIndigo700 = Color(0xFF4338CA);
   static const Color hatGold = Color(0xFFC8A951);
 
-  // Neutral slate palette — every literal below matches the Tailwind
-  // slate scale so cross-file greys stay identical.
+  // Neutral slate palette
   static const Color slate50 = Color(0xFFF8FAFC);
   static const Color slate100 = Color(0xFFF1F5F9);
   static const Color slate200 = Color(0xFFE2E8F0);
@@ -119,6 +124,7 @@ class AppColors {
   static const Color slate700 = Color(0xFF334155);
   static const Color slate800 = Color(0xFF1E293B);
   static const Color slate900 = Color(0xFF0F172A);
+  static const Color slate950 = Color(0xFF080C14);
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site

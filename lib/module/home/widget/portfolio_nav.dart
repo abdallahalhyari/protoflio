@@ -33,6 +33,7 @@ class TopNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accent = Theme.of(context).colorScheme.primary;
 
     return Semantics(
       container: true,
@@ -53,19 +54,19 @@ class TopNav extends StatelessWidget {
                     horizontal: AppSpacing.md, vertical: AppSpacing.xs),
                 decoration: BoxDecoration(
                   color: isDark
-                      ? Colors.black.withValues(alpha: 0.42)
-                      : Colors.white.withValues(alpha: 0.82),
+                      ? const Color(0xFF0D1322).withValues(alpha: 0.65)
+                      : Colors.white.withValues(alpha: 0.85),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(
-                    color: const Color(0xFF8B5CF6).withValues(alpha: isDark ? 0.32 : 0.22),
+                    color: accent.withValues(alpha: isDark ? 0.35 : 0.22),
                     width: 1,
                   ),
                   boxShadow: [
                     BoxShadow(
                       color: isDark
-                          ? const Color(0xFF8B5CF6).withValues(alpha: 0.12)
+                          ? accent.withValues(alpha: 0.15)
                           : Colors.black.withValues(alpha: 0.06),
-                      blurRadius: 18,
+                      blurRadius: 20,
                       offset: const Offset(0, 4),
                     ),
                   ],
@@ -147,6 +148,7 @@ class NavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accent = Theme.of(context).colorScheme.primary;
 
     return Semantics(
       button: true,
@@ -161,21 +163,30 @@ class NavItem extends StatelessWidget {
               horizontal: AppSpacing.smd, vertical: AppSpacing.sm),
           decoration: BoxDecoration(
             color: active
-                ? const Color(0xFF8B5CF6).withValues(alpha: isDark ? 0.22 : 0.14)
+                ? accent.withValues(alpha: isDark ? 0.24 : 0.14)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(AppRadius.pill),
             border: active
                 ? Border.all(
-                    color: const Color(0xFF8B5CF6).withValues(alpha: isDark ? 0.4 : 0.3),
+                    color: accent.withValues(alpha: isDark ? 0.55 : 0.40),
                     width: 1)
+                : null,
+            boxShadow: active
+                ? [
+                    BoxShadow(
+                      color: accent.withValues(alpha: isDark ? 0.22 : 0.12),
+                      blurRadius: 10,
+                      spreadRadius: 0.5,
+                    ),
+                  ]
                 : null,
           ),
           child: Text(
             label,
             style: TextStyle(
               color: active
-                  ? (isDark ? const Color(0xFFE9D5FF) : AppColors.accentIndigoDeep)
-                  : (isDark ? Colors.white : AppColors.slate600),
+                  ? (isDark ? Colors.white : accent)
+                  : (isDark ? Colors.white70 : AppColors.slate600),
               fontSize: AppTypography.small,
               fontWeight: active ? FontWeight.w800 : FontWeight.w600,
               letterSpacing: 0.3,

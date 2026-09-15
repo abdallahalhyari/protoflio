@@ -156,13 +156,12 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadius.sm),
               boxShadow: [
-                if (hover)
-                  BoxShadow(
-                    color: base.withValues(alpha: 0.5),
-                    blurRadius: 12,
-                    spreadRadius: 2,
-                    offset: const Offset(0, 4),
-                  ),
+                BoxShadow(
+                  color: base.withValues(alpha: hover ? 0.55 : 0.28),
+                  blurRadius: hover ? 18 : 10,
+                  spreadRadius: hover ? 2 : 0,
+                  offset: const Offset(0, 4),
+                ),
               ],
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -170,15 +169,23 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                 colors: !_enabled
                     ? [
                         base.withValues(alpha: 0.35),
-                        base.withValues(alpha: 0.28),
+                        base.withValues(alpha: 0.25),
                       ]
                     : hover
-                        ? [base, base.withValues(alpha: 0.7)]
-                        : [base.withValues(alpha: 0.85), base],
+                        ? [
+                            Color.lerp(base, Colors.white, 0.15)!,
+                            base,
+                          ]
+                        : [
+                            Color.lerp(base, Colors.white, 0.08)!,
+                            Color.lerp(base, Colors.black, 0.12)!,
+                          ],
               ),
               border: Border.all(
-                color: hover ? base : Colors.white24,
-                width: hover ? 2 : 1,
+                color: hover
+                    ? Color.lerp(base, Colors.white, 0.40)!
+                    : Colors.white.withValues(alpha: 0.22),
+                width: hover ? 1.5 : 1,
               ),
             ),
             child: Padding(
