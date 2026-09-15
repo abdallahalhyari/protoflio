@@ -6,6 +6,10 @@ import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 import '../data/hats_data.dart';
 import '../widget/hat_playing_card.dart';
+import '../widget/hats/hat_bio_strip.dart';
+import '../widget/hats/hat_drag_hint.dart';
+import '../widget/hats/hat_pagination_row.dart';
+import '../widget/hats/hat_role_pills.dart';
 import '../widget/screen_shell.dart';
 
 class HatsGridPage extends StatefulWidget {
@@ -213,7 +217,7 @@ class _HatsGridPageState extends State<HatsGridPage>
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: [
-                        _buildBioStrip(isMobile),
+                        HatBioStrip(isMobile: isMobile),
                         const SizedBox(height: AppSpacing.md),
                         // Centered Active 3D Card
                         Expanded(
@@ -231,7 +235,12 @@ class _HatsGridPageState extends State<HatsGridPage>
                         ),
                         const SizedBox(height: 8),
                         // Mobile Role Pagination Bar
-                        _buildPaginationRow(size),
+                        HatPaginationRow(
+                          selectedIndex: _selectedHatIndex,
+                          totalCount: kHats.length,
+                          onPrev: () => _prevRole(size, true),
+                          onNext: () => _nextRole(size, true),
+                        ),
                         const SizedBox(height: 4),
                         Text(
                           'TAP THE CARD TO FLIP',
@@ -408,13 +417,17 @@ class _HatsGridPageState extends State<HatsGridPage>
                         // label real semantic weight (was pure role cards
                         // without any personal context before).
                         if (!isMobile) ...[
-                          _buildBioStrip(isMobile),
+                          HatBioStrip(isMobile: isMobile),
                           const SizedBox(height: AppSpacing.smd),
-                          _buildDragHint(),
+                          const HatDragHint(),
                           const SizedBox(height: AppSpacing.sm),
                         ],
                         // Role Selector Pills (Zero inner scroll!)
-                        _buildRolePills(size, !isMobile),
+                        HatRolePills(
+                          selectedIndex: _selectedHatIndex,
+                          isDesktop: !isMobile,
+                          onSelectRole: (index) => _selectRole(index, size, isMobile),
+                        ),
                       ],
                     ),
                   ),
@@ -426,286 +439,7 @@ class _HatsGridPageState extends State<HatsGridPage>
     );
   }
 
-  /// Small discoverability chip: the felt table cards are draggable +
-  /// tappable but that isn't visually obvious. This puts the affordance
-  /// in writing right under the toolbar on desktop.
-  Widget _buildDragHint() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          decoration: BoxDecoration(
-            color: isDark
-                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.10)
-                : Theme.of(context).colorScheme.primary.withValues(alpha: 0.14),
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            border: Border.all(
-              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
-            ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.back_hand_outlined,
-                  size: 13,
-                  color: isDark
-                      ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.35)
-                      : Theme.of(context).colorScheme.primary),
-              const SizedBox(width: 6),
-              Text(
-                'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE',
-                style: TextStyle(
-                  fontFamily: 'Courier',
-                  color: isDark
-                      ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.35)
-                      : Theme.of(context).colorScheme.primary,
-                  fontSize: AppTypography.editorial,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 
-  Widget _buildBioStrip(bool isMobile) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bio =
-        'Senior mobile engineer with 4+ years shipping enterprise Flutter & '
-        'Android systems at scale — offline-first pipelines, NFC + hardware-bound '
-        'auth, RabbitMQ event flows, WorkManager sync. Based in Amman, relocating '
-        'to Brno for 2027.';
-    if (isMobile) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: isDark ? Colors.black.withValues(alpha: 0.45) : Colors.white.withValues(alpha: 0.88),
-          borderRadius: BorderRadius.circular(AppRadius.smd),
-          border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
-              blurRadius: 8,
-            ),
-          ],
-        ),
-        child: Text(
-          bio,
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate700,
-            fontSize: 11.5,
-            height: 1.45,
-            letterSpacing: 0.2,
-          ),
-        ),
-      );
-    }
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 5,
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md, vertical: AppSpacing.smd),
-            decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(color: Theme.of(context).colorScheme.primary, width: 3),
-              ),
-              color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.white.withValues(alpha: 0.85),
-              borderRadius: const BorderRadius.horizontal(right: Radius.circular(8)),
-            ),
-            child: Text(
-              bio,
-              style: TextStyle(
-                color: isDark ? Colors.white.withValues(alpha: 0.92) : AppColors.slate800,
-                fontSize: 13.5,
-                height: 1.6,
-                letterSpacing: 0.2,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.md),
-        Expanded(
-          flex: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _bioMetaBlock('BASED', 'AMMAN · JORDAN', isDark),
-              const SizedBox(height: 8),
-              _bioMetaBlock('NEXT', 'BRNO · CZECH REPUBLIC · 2027', isDark),
-              const SizedBox(height: 8),
-              _bioMetaBlock('OPEN FOR', 'SENIOR ROLES · CONSULTING', isDark),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _bioMetaBlock(String label, String value, bool isDark) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label,
-            style: TextStyle(
-              color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate500,
-              fontSize: 9.5,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 2.4,
-            )),
-        const SizedBox(height: 2),
-        Text(value,
-            style: TextStyle(
-              color: isDark ? Colors.white : AppColors.slate900,
-              fontSize: 11.5,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.2,
-            )),
-      ],
-    );
-  }
-
-  Widget _buildRolePills(Size size, bool isDesktop) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Wrap(
-      spacing: 6,
-      runSpacing: 5,
-      children: [
-        for (int i = 0; i < kHats.length; i++)
-          InkWell(
-            onTap: () => _selectRole(i, size, !isDesktop),
-            borderRadius: BorderRadius.circular(AppRadius.chip),
-            child: AnimatedContainer(
-              duration: AppMotion.chipHover,
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 9 : 7,
-                vertical: isDesktop ? 4 : 3,
-              ),
-              decoration: BoxDecoration(
-                color: _selectedHatIndex == i
-                    ? AppColors.hatGold.withValues(alpha: 0.28)
-                    : (isDark ? Colors.black.withValues(alpha: 0.3) : Colors.white.withValues(alpha: 0.85)),
-                borderRadius: BorderRadius.circular(AppRadius.chip),
-                border: Border.all(
-                  color: _selectedHatIndex == i
-                      ? Theme.of(context).colorScheme.primary
-                      : (isDark ? AppColors.hatGold.withValues(alpha: 0.4) : AppColors.slate300),
-                  width: _selectedHatIndex == i ? 1.6 : 1.0,
-                ),
-                boxShadow: _selectedHatIndex == i
-                    ? [
-                        BoxShadow(
-                          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
-                          blurRadius: 8,
-                        ),
-                      ]
-                    : null,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration: BoxDecoration(
-                      color: kHats[i].color,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    '0${i + 1} ${kHats[i].title.toUpperCase()}',
-                    style: TextStyle(
-                      fontFamily: 'Courier',
-                      color: _selectedHatIndex == i
-                          ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.35)
-                          : (isDark ? Colors.white70 : AppColors.slate700),
-                      fontSize: isDesktop ? 10.0 : 8.5,
-                      fontWeight: _selectedHatIndex == i
-                          ? FontWeight.w900
-                          : FontWeight.w700,
-                      letterSpacing: 0.8,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildPaginationRow(Size size) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        OutlinedButton.icon(
-          onPressed: () => _prevRole(size, true),
-          style: OutlinedButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.35),
-            side: const BorderSide(color: AppColors.hatGold),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-            visualDensity: VisualDensity.compact,
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          icon: const Icon(Icons.chevron_left, size: 14),
-          label: const Text(
-            'PREV',
-            style: TextStyle(
-                fontFamily: 'Courier',
-                fontSize: 9.5,
-                fontWeight: FontWeight.w800),
-          ),
-        ),
-        Flexible(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                'ROLE 0${_selectedHatIndex + 1} / 0${kHats.length}',
-                style: TextStyle(
-                  fontFamily: 'Courier',
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 10.5,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.0,
-                ),
-              ),
-            ),
-          ),
-        ),
-        OutlinedButton.icon(
-          onPressed: () => _nextRole(size, true),
-          style: OutlinedButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.35),
-            side: const BorderSide(color: AppColors.hatGold),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-            visualDensity: VisualDensity.compact,
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          icon: const Icon(Icons.chevron_right, size: 14),
-          label: const Text(
-            'NEXT',
-            style: TextStyle(
-                fontFamily: 'Courier',
-                fontSize: 9.5,
-                fontWeight: FontWeight.w800),
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget _buildMobileColumn(Size size) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -743,9 +477,13 @@ class _HatsGridPageState extends State<HatsGridPage>
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          _buildRolePills(size, false),
+          HatRolePills(
+            selectedIndex: _selectedHatIndex,
+            isDesktop: false,
+            onSelectRole: (index) => _selectRole(index, size, true),
+          ),
           const SizedBox(height: AppSpacing.md),
-          _buildBioStrip(true),
+          const HatBioStrip(isMobile: true),
           const SizedBox(height: AppSpacing.md),
           GestureDetector(
             behavior: HitTestBehavior.translucent,
@@ -783,7 +521,12 @@ class _HatsGridPageState extends State<HatsGridPage>
             ),
           ),
           const SizedBox(height: 12),
-          _buildPaginationRow(size),
+          HatPaginationRow(
+            selectedIndex: _selectedHatIndex,
+            totalCount: kHats.length,
+            onPrev: () => _prevRole(size, true),
+            onNext: () => _nextRole(size, true),
+          ),
           const SizedBox(height: 6),
           Center(
             child: Container(
