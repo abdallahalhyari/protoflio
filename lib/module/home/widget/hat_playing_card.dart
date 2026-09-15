@@ -175,7 +175,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
               );
 
               return AnimatedBuilder(
-                animation: Listenable.merge([_flipAnimation, _tiltOffset, _rotationDelta]),
+                animation: Listenable.merge([_flipAnimation, _rotationDelta]),
                 builder: (context, _) {
                   final angle = _flipAnimation.value;
                   final isUnder = angle > math.pi / 2;

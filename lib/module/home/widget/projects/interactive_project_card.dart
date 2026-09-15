@@ -61,7 +61,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                 width: 1,
               ),
             ),
-            color: widget.isDark ? Colors.white.withValues(alpha: 0.05) : Colors.white,
+            color: widget.isDark ? AppColors.darkCard : Colors.white,
             child: InkWell(
               onTap: () => showProjectCaseStudy(context, project: widget.project, index: widget.index),
               child: ConstrainedBox(

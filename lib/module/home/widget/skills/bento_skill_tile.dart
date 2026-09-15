@@ -102,7 +102,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF0D121B) : Colors.white,
+        color: isDark ? AppColors.darkSurfaceElevated : Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(
           color: widget.categoryColor.withValues(alpha: isDark ? 0.3 : 0.4),
@@ -239,7 +239,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF131A26) : Colors.white,
+        color: isDark ? AppColors.darkCard : Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(color: widget.categoryColor, width: 2),
         boxShadow: [

@@ -229,6 +229,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if (_controller.hasClients && _controller.positions.length == 1) {
+      final current = _controller.page?.round() ?? _pageIndex.value;
+      if ((target - current).abs() > 1) {
+        // Pre-jump to the step right before target so only 1 slide is rendered,
+        // skipping unneeded mounting and layout of all intermediate pages.
+        final preStep = target > current ? target - 1 : target + 1;
+        _controller.jumpToPage(preStep);
+      }
       _isPageTransitioning = true;
       _controller.animateToPage(
         target,

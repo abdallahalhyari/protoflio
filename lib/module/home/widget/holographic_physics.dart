@@ -1,10 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme/tokens.dart';
 
-/// A 3D interactive physics wrapper that tilts its child based on the mouse
-/// cursor's local position, and renders a dynamic specular glare.
+/// A high-performance 3D interactive physics wrapper that tilts its child based
+/// on the mouse cursor position and renders a dynamic specular glare.
+///
+/// Uses [ValueNotifier] and [ValueListenableBuilder] to isolate tilt updates to
+/// the GPU transform layer without triggering full-tree widget rebuilds.
 class HolographicCardPhysics extends StatefulWidget {
   final Widget child;
   final double borderRadius;
@@ -23,74 +25,93 @@ class HolographicCardPhysics extends StatefulWidget {
   State<HolographicCardPhysics> createState() => _HolographicCardPhysicsState();
 }
 
-class _HolographicCardPhysicsState extends State<HolographicCardPhysics> {
-  Offset _localMouse = Offset.zero;
-  bool _isHovering = false;
-  Size _size = Size.zero;
+class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
+    with SingleTickerProviderStateMixin {
+  final ValueNotifier<Offset> _norm = ValueNotifier<Offset>(Offset.zero);
+  final ValueNotifier<bool> _isHovering = ValueNotifier<bool>(false);
+  late final AnimationController _resetCtrl;
+  late Animation<Offset> _resetAnimation;
 
-  void _onHover(PointerEvent event) {
-    if (kIsWeb && MediaQuery.disableAnimationsOf(context)) return; // Prevent Web CanvasKit jitter
-    setState(() {
-      _localMouse = event.localPosition;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _resetCtrl = AnimationController(
+      vsync: this,
+      duration: AppMotion.sm,
+    );
   }
 
-  void _onEnter(PointerEvent event) {
-    setState(() {
-      _isHovering = true;
-      _localMouse = event.localPosition;
-    });
+  @override
+  void dispose() {
+    _norm.dispose();
+    _isHovering.dispose();
+    _resetCtrl.dispose();
+    super.dispose();
   }
 
-  void _onExit(PointerEvent event) {
-    setState(() {
-      _isHovering = false;
-      // Mouse is reset to the center of the card
-      _localMouse = Offset(_size.width / 2, _size.height / 2);
+  void _onEnter(PointerEvent _) {
+    _resetCtrl.stop();
+    _isHovering.value = true;
+  }
+
+  void _onHover(PointerEvent event, Size size) {
+    if (size.width <= 0 || size.height <= 0) return;
+    if (_resetCtrl.isAnimating) _resetCtrl.stop();
+
+    final nx = (((event.localPosition.dx / size.width) - 0.5) * 2.0).clamp(-1.0, 1.0);
+    final ny = (((event.localPosition.dy / size.height) - 0.5) * 2.0).clamp(-1.0, 1.0);
+    final next = Offset(nx, ny);
+
+    if ((next - _norm.value).distanceSquared < 0.0004) return;
+    _norm.value = next;
+  }
+
+  void _onExit(PointerEvent _) {
+    _isHovering.value = false;
+    final current = _norm.value;
+    if (current == Offset.zero) return;
+
+    _resetAnimation = Tween<Offset>(
+      begin: current,
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _resetCtrl, curve: Curves.easeOutCubic),
+    );
+
+    _resetCtrl.reset();
+    _resetAnimation.addListener(() {
+      _norm.value = _resetAnimation.value;
     });
+    _resetCtrl.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: _onEnter,
-      onHover: _onHover,
-      onExit: _onExit,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          // If unconstrained or 0, fallback gracefully.
-          if (!constraints.hasBoundedWidth || !constraints.hasBoundedHeight) {
-            return widget.child;
-          }
-          _size = Size(constraints.maxWidth, constraints.maxHeight);
+    if (MediaQuery.disableAnimationsOf(context)) {
+      return widget.child;
+    }
 
-          // If not hovering, target the center so it springs back to flat (0,0)
-          final targetMouse = _isHovering 
-              ? _localMouse 
-              : Offset(_size.width / 2, _size.height / 2);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (!constraints.hasBoundedWidth || !constraints.hasBoundedHeight) {
+          return widget.child;
+        }
+        final size = Size(constraints.maxWidth, constraints.maxHeight);
 
-          // Tween to the target mouse position to create a spring effect
-          return TweenAnimationBuilder<Offset>(
-            tween: Tween<Offset>(begin: targetMouse, end: targetMouse),
-            duration: _isHovering ? Duration.zero : AppMotion.sm,
-            curve: Curves.easeOutCubic,
-            builder: (context, animatedMouse, child) {
-              
-              // Normalize mouse position to range [-1, 1] relative to center
-              final double nx = (animatedMouse.dx - _size.width / 2) / (_size.width / 2);
-              final double ny = (animatedMouse.dy - _size.height / 2) / (_size.height / 2);
-              
-              // Clamp to prevent wild rotations if mouse flies out
-              final double clampedNx = nx.clamp(-1.0, 1.0);
-              final double clampedNy = ny.clamp(-1.0, 1.0);
+        return MouseRegion(
+          onEnter: _onEnter,
+          onHover: (e) => _onHover(e, size),
+          onExit: _onExit,
+          child: RepaintBoundary(
+            child: ValueListenableBuilder<Offset>(
+              valueListenable: _norm,
+              builder: (context, norm, staticChild) {
+                // Pitch (X-axis tilt): cursor down tilts top towards viewer
+                final double pitch = -norm.dy * widget.maxTiltAngle;
+                // Yaw (Y-axis tilt): cursor right tilts right away
+                final double yaw = norm.dx * widget.maxTiltAngle;
 
-              // Calculate pitch (X-axis) and yaw (Y-axis)
-              // Pitch is inverted: mouse moving down (positive Y) tilts bottom away (negative X rotation)
-              final double pitch = -clampedNy * widget.maxTiltAngle;
-              final double yaw = clampedNx * widget.maxTiltAngle;
-
-              return RepaintBoundary(
-                child: Transform(
+                return Transform(
                   alignment: Alignment.center,
                   transform: Matrix4.identity()
                     ..setEntry(3, 2, 0.001) // perspective
@@ -99,40 +120,46 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      widget.child,
+                      staticChild!,
                       if (widget.enableGlare)
-                        Positioned.fill(
-                          child: IgnorePointer(
-                            child: AnimatedOpacity(
-                              opacity: _isHovering ? 1.0 : 0.0,
-                              duration: AppMotion.sm,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(widget.borderRadius),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    gradient: RadialGradient(
-                                      center: Alignment(clampedNx * 0.8, clampedNy * 0.8),
-                                      radius: 1.2,
-                                      colors: [
-                                        Colors.white.withValues(alpha: 0.15),
-                                        Colors.white.withValues(alpha: 0.0),
-                                      ],
-                                      stops: const [0.0, 1.0],
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _isHovering,
+                          builder: (context, hovering, _) {
+                            return Positioned.fill(
+                              child: IgnorePointer(
+                                child: AnimatedOpacity(
+                                  opacity: hovering ? 1.0 : 0.0,
+                                  duration: AppMotion.sm,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        gradient: RadialGradient(
+                                          center: Alignment(norm.dx * 0.8, norm.dy * 0.8),
+                                          radius: 1.2,
+                                          colors: [
+                                            Colors.white.withValues(alpha: 0.15),
+                                            Colors.white.withValues(alpha: 0.0),
+                                          ],
+                                          stops: const [0.0, 1.0],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                     ],
                   ),
-                ),
-              );
-            },
-          );
-        },
-      ),
+                );
+              },
+              child: widget.child,
+            ),
+          ),
+        );
+      },
     );
   }
 }

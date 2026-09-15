@@ -22,6 +22,16 @@ class AnimatedExperienceNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final card = Padding(
+      padding: EdgeInsets.only(
+        bottom: isDesktop ? 0 : AppSpacing.lg,
+      ),
+      child: ExperienceCard(exp: exp, scheme: scheme, isDesktop: isDesktop),
+    );
+
+    if (MediaQuery.disableAnimationsOf(context)) {
+      return card;
+    }
 
     return AnimatedOpacity(
       duration: AppMotion.sectionScroll,
@@ -33,12 +43,7 @@ class AnimatedExperienceNode extends StatelessWidget {
         offset: isVisible
             ? Offset.zero
             : (isDesktop ? const Offset(0.2, 0) : const Offset(0, 0.2)),
-        child: Padding(
-          padding: EdgeInsets.only(
-            bottom: isDesktop ? 0 : AppSpacing.lg,
-          ),
-          child: ExperienceCard(exp: exp, scheme: scheme, isDesktop: isDesktop),
-        ),
+        child: card,
       ),
     );
   }
