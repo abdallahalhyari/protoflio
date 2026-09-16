@@ -23,9 +23,10 @@ import 'page/contact_page.dart';
 import 'home_controller.dart';
 import 'widget/custom_cursor.dart';
 import 'widget/deferred_mount.dart';
-import 'widget/directional_icon.dart';
 import 'widget/keyboard_hint_chip.dart';
 import 'widget/mobile_footer.dart';
+import 'widget/mobile_pager.dart';
+import 'widget/mobile_progress_rail.dart';
 import 'widget/scroll_to_top_button.dart';
 import 'widget/magazine_page_transformer.dart';
 import 'widget/portfolio_nav.dart';
@@ -874,16 +875,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
         // Layer 4: Vertical progress rail — tap any dot to jump.
-        Positioned(
+        const Positioned(
           top: 0,
           bottom: 0,
           right: 4,
-          child: Center(
-            child: ValueListenableBuilder<int>(
-              valueListenable: _pageIndex,
-              builder: (context, page, __) => _buildMobileProgressRail(context, page),
-            ),
-          ),
+          child: Center(child: MobileProgressRail()),
         ),
 
         // Layer 5: Prev / Next floating pager — one-tap section skip
@@ -892,149 +888,9 @@ class _HomeScreenState extends State<HomeScreen> {
           left: 0,
           right: 0,
           bottom: 20 + MediaQuery.paddingOf(context).bottom,
-          child: Center(
-            child: ValueListenableBuilder<int>(
-              valueListenable: _pageIndex,
-              builder: (context, page, __) => _buildMobilePager(context, page),
-            ),
-          ),
+          child: const Center(child: MobilePager()),
         ),
       ],
-    );
-  }
-
-  Widget _buildMobilePager(BuildContext context, int page) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final canPrev = page > 0;
-    final canNext = page < _pageCount - 1;
-
-    Widget iconButton({
-      required IconData icon,
-      required String label,
-      required VoidCallback? onTap,
-    }) {
-      return Semantics(
-        button: true,
-        enabled: onTap != null,
-        label: label,
-        child: Tooltip(
-          message: label,
-          child: InkResponse(
-            radius: 22,
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(6),
-              child: DirIcon(
-                icon,
-                size: 18,
-                color: onTap == null
-                    ? (isDark ? Colors.white24 : AppColors.slate300)
-                    : (isDark ? Colors.white : AppColors.slate700),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return Material(
-      color: Colors.transparent,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-        decoration: BoxDecoration(
-          color: isDark
-              ? Colors.black.withValues(alpha: 0.55)
-              : Colors.white.withValues(alpha: 0.92),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          border: Border.all(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.14)
-                : AppColors.slate200,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            iconButton(
-              icon: Icons.chevron_left_rounded,
-              label: 'Previous section',
-              onTap: canPrev ? () => _scrollToMobileSection(page - 1) : null,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              '${(page + 1).toString().padLeft(2, '0')} / ${_pageCount.toString().padLeft(2, '0')}',
-              style: TextStyle(
-                fontFamily: 'Courier',
-                fontSize: 11,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
-                color: isDark ? Colors.white70 : AppColors.slate600,
-              ),
-            ),
-            const SizedBox(width: 6),
-            iconButton(
-              icon: Icons.chevron_right_rounded,
-              label: 'Next section',
-              onTap: canNext ? () => _scrollToMobileSection(page + 1) : null,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMobileProgressRail(BuildContext context, int page) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labels = TopNav.getLabels(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.black.withValues(alpha: 0.35)
-            : Colors.white.withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.10)
-              : AppColors.slate200,
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (int i = 0; i < _pageCount; i++)
-            Semantics(
-              button: true,
-              selected: i == page,
-              label: i < labels.length ? 'Go to ${labels[i]}' : 'Go to page ${i + 1}',
-              child: InkResponse(
-                radius: 14,
-                onTap: () => _scrollToMobileSection(i),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3),
-                  child: AnimatedContainer(
-                    duration: AppMotion.sm,
-                    width: i == page ? 8 : 5,
-                    height: i == page ? 8 : 5,
-                    decoration: BoxDecoration(
-                      color: i == page
-                          ? Theme.of(context).colorScheme.primary
-                          : (isDark ? Colors.white38 : AppColors.slate400),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
     );
   }
 
