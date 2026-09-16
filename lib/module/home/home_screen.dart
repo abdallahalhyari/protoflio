@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/locale_controller.dart';
 
 import '../../theme/tokens.dart';
 import '../../theme_controller.dart';
@@ -23,6 +22,7 @@ import 'page/contact_page.dart';
 import 'home_controller.dart';
 import 'widget/custom_cursor.dart';
 import 'widget/deferred_mount.dart';
+import 'widget/desktop_toolbar.dart';
 import 'widget/folio_bar.dart';
 import 'widget/keyboard_hint_chip.dart';
 import 'widget/mobile_footer.dart';
@@ -617,94 +617,10 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 0,
             child: SafeArea(child: TopNav()),
           ),
-          Positioned(
+          const Positioned(
             top: 12,
             right: 12,
-            child: SafeArea(
-              child: ValueListenableBuilder<ThemeMode>(
-                valueListenable: ThemeController.mode,
-                builder: (_, mode, __) {
-                  final dark = mode == ThemeMode.dark;
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Material(
-                        color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
-                        elevation: dark ? 0 : 2,
-                        shadowColor: Colors.black12,
-                        shape: const CircleBorder(),
-                        child: ValueListenableBuilder<Locale>(
-                          valueListenable: LocaleController.locale,
-                          builder: (context, locale, _) {
-                            return PopupMenuButton<String>(
-                              tooltip: 'Change Language',
-                              icon: Icon(Icons.language, color: dark ? Colors.white : AppColors.slate900),
-                              onSelected: (val) {
-                                HapticFeedback.lightImpact();
-                                LocaleController.changeLocale(val);
-                              },
-                              itemBuilder: (context) => const [
-                                PopupMenuItem(value: 'en', child: Text('English')),
-                                PopupMenuItem(value: 'ar', child: Text('العربية')),
-                                PopupMenuItem(value: 'cs', child: Text('Čeština')),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Semantics(
-                        toggled: dark,
-                        label: 'Dark mode',
-                        child: Material(
-                          color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
-                          elevation: dark ? 0 : 2,
-                          shadowColor: Colors.black12,
-                          shape: const CircleBorder(),
-                          child: IconButton(
-                            tooltip: dark ? 'Switch to light' : 'Switch to dark',
-                            icon: Icon(
-                              dark ? Icons.light_mode : Icons.dark_mode,
-                              color: dark ? Colors.white : AppColors.slate900,
-                            ),
-                            onPressed: () {
-                              HapticFeedback.lightImpact();
-                              SoundService.instance.playClick();
-                              ThemeController.toggle();
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      ValueListenableBuilder<bool>(
-                        valueListenable: SoundService.instance.isEnabled,
-                        builder: (context, enabled, _) {
-                          return Material(
-                            color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
-                            elevation: dark ? 0 : 2,
-                            shadowColor: Colors.black12,
-                            shape: const CircleBorder(),
-                            child: IconButton(
-                              tooltip: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
-                              icon: Icon(
-                                enabled ? Icons.volume_up : Icons.volume_off,
-                                color: enabled
-                                    ? (dark ? Colors.white : AppColors.slate900)
-                                    : (dark ? Colors.white.withValues(alpha: 0.60) : AppColors.slate400),
-                                size: 18,
-                              ),
-                              onPressed: () {
-                                SoundService.instance.toggle();
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
+            child: SafeArea(child: DesktopToolbar()),
           ),
           const Positioned(
             bottom: 12,
