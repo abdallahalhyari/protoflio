@@ -157,6 +157,7 @@ class _PageBackgroundState extends State<PageBackground> {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final showDecoLayers = size.width >= AppBreakpoints.tablet;
+    final primary = Theme.of(context).colorScheme.primary;
 
     final shiftX = reduceMotion ? 0.0 : (mouseOffset.dx / size.width * 20.0);
     final shiftY = reduceMotion ? 0.0 : (mouseOffset.dy / size.height * 20.0);
@@ -186,7 +187,7 @@ class _PageBackgroundState extends State<PageBackground> {
           offset: Offset(shiftX, shiftY),
           child: Stack(
             children: [
-              // Top-right soft indigo glow
+              // Top-right dynamic active accent glow (harmonizes with current section)
               Positioned(
                 top: -80,
                 right: -60,
@@ -197,8 +198,8 @@ class _PageBackgroundState extends State<PageBackground> {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.accentIndigoDeep.withValues(alpha: 0.12),
-                        AppColors.accentIndigoDeep.withValues(alpha: 0.0),
+                        primary.withValues(alpha: 0.12),
+                        primary.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -283,9 +284,23 @@ class _PageBackgroundState extends State<PageBackground> {
               child: ValueListenableBuilder<Offset>(
                 valueListenable: _mouseOffset,
                 builder: (context, mouseOffset, _) {
-                  return isDark
-                      ? _buildDarkBackground(context, mouseOffset)
-                      : _buildLightBackground(context, mouseOffset);
+                  return AnimatedCrossFade(
+                    duration: AppMotion.sm,
+                    crossFadeState: isDark
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
+                    firstChild: _buildDarkBackground(context, mouseOffset),
+                    secondChild: _buildLightBackground(context, mouseOffset),
+                    layoutBuilder: (topChild, topKey, bottomChild, bottomKey) {
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Positioned.fill(key: bottomKey, child: bottomChild),
+                          Positioned.fill(key: topKey, child: topChild),
+                        ],
+                      );
+                    },
+                  );
                 },
               ),
             ),

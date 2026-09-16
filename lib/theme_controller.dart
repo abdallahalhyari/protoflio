@@ -16,7 +16,8 @@ class ThemeController {
   static Color get activeAccent => seedColor.value;
 
   static void updateSeedFromHash(String hash) {
-    switch (hash.replaceAll('#', '').toLowerCase()) {
+    final clean = hash.replaceAll('#', '').split('/').first.toLowerCase();
+    switch (clean) {
       case 'experience':
         seedColor.value = AppColors.accentGreen; // Neo-Mint Emerald (0xFF10B981)
         return;
