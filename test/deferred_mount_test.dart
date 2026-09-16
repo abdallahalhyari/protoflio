@@ -17,6 +17,7 @@ Widget _wrap({
     next: () {},
     prev: () {},
     scrollToMobileSection: (int _, {bool syncUrl = true}) {},
+    downloadResume: () async {},
   );
   return Directionality(
     textDirection: TextDirection.ltr,

@@ -19,6 +19,7 @@ class HomeController {
     required this.next,
     required this.prev,
     required this.scrollToMobileSection,
+    required this.downloadResume,
   });
 
   final ValueListenable<int> pageIndex;
@@ -31,6 +32,10 @@ class HomeController {
   final VoidCallback next;
   final VoidCallback prev;
   final void Function(int index, {bool syncUrl}) scrollToMobileSection;
+
+  /// Opens the CV in a new tab / native viewer. Async because the
+  /// underlying `CvService.open` awaits an external launch handler.
+  final Future<void> Function() downloadResume;
 
   /// Lookup the nearest [HomeController] in the widget tree. Returns
   /// `null` outside the `HomeScreen` subtree.

@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
+import '../home_controller.dart';
 import 'conditional_blur.dart';
 
 class TopNav extends StatelessWidget {
-  final int current;
-  final ValueChanged<int> onTap;
-  final VoidCallback onResume;
-
   static List<String> getLabels(BuildContext context) {
     final l = AppLocalizations.of(context)!;
     return [
@@ -23,17 +20,13 @@ class TopNav extends StatelessWidget {
     ];
   }
 
-  const TopNav({
-    super.key,
-    required this.current,
-    required this.onTap,
-    required this.onResume,
-  });
+  const TopNav({super.key});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final accent = Theme.of(context).colorScheme.primary;
+    final controller = HomeController.of(context);
 
     return Semantics(
       container: true,
@@ -75,15 +68,26 @@ class TopNav extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      for (var i = 0; i < getLabels(context).length; i++)
-                        NavItem(
-                          label: getLabels(context)[i],
-                          active: current == i,
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            onTap(i);
-                          },
-                        ),
+                      ValueListenableBuilder<int>(
+                        valueListenable: controller.pageIndex,
+                        builder: (context, current, _) {
+                          final labels = getLabels(context);
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              for (var i = 0; i < labels.length; i++)
+                                NavItem(
+                                  label: labels[i],
+                                  active: current == i,
+                                  onTap: () {
+                                    HapticFeedback.selectionClick();
+                                    controller.goTo(i);
+                                  },
+                                ),
+                            ],
+                          );
+                        },
+                      ),
                       const SizedBox(width: AppSpacing.sm),
                       Container(
                         width: 1,
@@ -97,7 +101,7 @@ class TopNav extends StatelessWidget {
                         child: OutlinedButton.icon(
                           onPressed: () {
                             HapticFeedback.lightImpact();
-                            onResume();
+                            controller.downloadResume();
                           },
                           icon: const Icon(Icons.download_rounded, size: 14),
                           label: Text(
@@ -283,27 +287,21 @@ class _EdgeFadeScrollerState extends State<_EdgeFadeScroller> {
 }
 
 class PageIndicator extends StatelessWidget {
-  final int count;
-  final int current;
-  final ValueChanged<int> onTap;
-
-  const PageIndicator({
-    super.key,
-    required this.count,
-    required this.current,
-    required this.onTap,
-  });
+  const PageIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final labels = TopNav.getLabels(context);
+    final controller = HomeController.of(context);
 
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(count, (i) {
+      child: ValueListenableBuilder<int>(
+        valueListenable: controller.pageIndex,
+        builder: (context, current, _) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(controller.pageCount, (i) {
         final active = i == current;
         final label = i < labels.length ? labels[i] : 'Page ${i + 1}';
         return Tooltip(
@@ -319,7 +317,7 @@ class PageIndicator extends StatelessWidget {
               child: InkResponse(
                 onTap: () {
                   HapticFeedback.selectionClick();
-                  onTap(i);
+                  controller.goTo(i);
                 },
                 radius: 22,
                 child: Center(
@@ -344,6 +342,7 @@ class PageIndicator extends StatelessWidget {
           ),
         );
       }),
+        ),
       ),
     );
   }

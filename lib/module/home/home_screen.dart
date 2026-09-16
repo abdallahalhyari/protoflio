@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     next: _next,
     prev: _prev,
     scrollToMobileSection: _scrollToMobileSection,
+    downloadResume: _downloadResume,
   );
 
   @override
@@ -597,35 +598,17 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           if (MediaQuery.sizeOf(context).height >= 340)
-            Positioned(
+            const Positioned(
               right: 12,
               top: 0,
               bottom: 0,
-              child: Center(
-                child: ValueListenableBuilder<int>(
-                  valueListenable: _pageIndex,
-                  builder: (_, page, __) => PageIndicator(
-                    count: _pageCount,
-                    current: page,
-                    onTap: _goTo,
-                  ),
-                ),
-              ),
+              child: Center(child: PageIndicator()),
             ),
-          Positioned(
+          const Positioned(
             top: 0,
             left: 0,
             right: 0,
-            child: SafeArea(
-              child: ValueListenableBuilder<int>(
-                valueListenable: _pageIndex,
-                builder: (_, page, __) => TopNav(
-                  current: page,
-                  onTap: _goTo,
-                  onResume: _downloadResume,
-                ),
-              ),
-            ),
+            child: SafeArea(child: TopNav()),
           ),
           Positioned(
             top: 12,

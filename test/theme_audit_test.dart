@@ -9,6 +9,7 @@ import 'package:profile/module/home/page/experience_page.dart';
 import 'package:profile/module/home/page/skills_page.dart';
 import 'package:profile/module/home/page/hats_grid_page.dart';
 import 'package:profile/module/home/page/contact_page.dart';
+import 'package:profile/module/home/home_controller.dart';
 import 'package:profile/module/home/widget/portfolio_nav.dart';
 import 'package:profile/module/home/widget/mobile_app_bar.dart';
 import 'package:profile/theme/app_theme.dart';
@@ -149,12 +150,25 @@ void main() {
 
       testWidgets('$modeName - PortfolioNav TopNav and MobileAppBar adapt to theme', (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
+        final stubController = HomeController(
+          pageIndex: ValueNotifier<int>(0),
+          showScrollToTop: ValueNotifier<bool>(false),
+          pageCount: 7,
+          goTo: (int _, {bool syncUrl = true}) {},
+          next: () {},
+          prev: () {},
+          scrollToMobileSection: (int _, {bool syncUrl = true}) {},
+          downloadResume: () async {},
+        );
         await tester.pumpWidget(createThemedTestApp(
-          child: Column(
-            children: [
-              TopNav(current: 0, onTap: (_) {}, onResume: () {}),
-              MobileAppBar(onMenuPressed: () {}),
-            ],
+          child: HomeControllerScope(
+            controller: stubController,
+            child: Column(
+              children: [
+                const TopNav(),
+                MobileAppBar(onMenuPressed: () {}),
+              ],
+            ),
           ),
           brightness: brightness,
         ));
