@@ -123,6 +123,13 @@
       font-display: swap;
     }
     html, body { margin: 0; padding: 0; height: 100%; background: #0E0E10; }
+    .skip-link {
+      position: fixed; left: -9999px; top: 8px;
+      background: #E11D48; color: #fff; padding: 10px 14px;
+      border-radius: 4px; font-family: system-ui, sans-serif;
+      font-size: 14px; text-decoration: none; z-index: 10000;
+    }
+    .skip-link:focus { left: 8px; outline: 2px solid #fff; outline-offset: 2px; }
     #boot-loader {
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
@@ -233,6 +240,10 @@
   </style>
 </head>
 <body>
+  <!-- Skip link — keyboard users tab-first to the main content instead
+       of walking through the boot loader / decorative overlays. -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <div id="boot-loader">
     <h1 class="boot-hero">Abdallah<br><span class="accent">Alhyari</span></h1>
     <p class="boot-role">Senior Flutter &amp; Android Engineer</p>
@@ -240,7 +251,7 @@
   </div>
 
   <!-- Accessible semantic DOM representation for search engines & web crawlers -->
-  <main class="sr-only" aria-hidden="true">
+  <main class="sr-only" id="main-content" aria-hidden="true">
     <h1>Abdallah Alhyari — Senior Flutter & Android Engineer</h1>
     <p>I build reliable, scalable mobile applications and complex digital products, with expertise in Flutter, Android, offline-first systems, NFC smart-cards, security, real-time communication, and enterprise architectures.</p>
     
@@ -369,6 +380,66 @@
         window.localStorage.setItem('flutter.themeMode', theme);
       }
     } catch(e) {}
+
+    // Global JS error / promise rejection → gtag event. Portfolio has
+    // no other error backend; this at least surfaces production crashes
+    // in GA4 debug view without shipping a full error-tracking SDK.
+    window.addEventListener('error', function(e){
+      try {
+        gtag('event', 'js_error', {
+          message: (e.error && e.error.message) || e.message || 'unknown',
+          filename: e.filename || '', lineno: e.lineno || 0
+        });
+      } catch(_){}
+    });
+    window.addEventListener('unhandledrejection', function(e){
+      try {
+        gtag('event', 'js_promise_rejection', {
+          message: (e.reason && (e.reason.message || String(e.reason))) || 'unknown'
+        });
+      } catch(_){}
+    });
+
+    // Web Vitals — LCP + CLS + INP + FCP via PerformanceObserver, sent
+    // as gtag events. No external `web-vitals` package required (~2 KB
+    // avoided); we sacrifice edge-case attribution for size.
+    (function(){
+      function send(name, value, id){
+        try { gtag('event', name, {
+          metric_value: Math.round(value),
+          metric_id: id || '',
+          non_interaction: true
+        }); } catch(_){}
+      }
+      try {
+        // LCP
+        new PerformanceObserver(function(list){
+          var entries = list.getEntries();
+          var last = entries[entries.length - 1];
+          if (last) send('web_vitals_lcp', last.renderTime || last.loadTime);
+        }).observe({type:'largest-contentful-paint', buffered:true});
+        // CLS
+        var cls = 0;
+        new PerformanceObserver(function(list){
+          list.getEntries().forEach(function(e){
+            if (!e.hadRecentInput) cls += e.value;
+          });
+          send('web_vitals_cls', cls * 1000);
+        }).observe({type:'layout-shift', buffered:true});
+        // FCP
+        new PerformanceObserver(function(list){
+          list.getEntries().forEach(function(e){
+            if (e.name === 'first-contentful-paint') send('web_vitals_fcp', e.startTime);
+          });
+        }).observe({type:'paint', buffered:true});
+        // INP proxy via first-input delay
+        new PerformanceObserver(function(list){
+          list.getEntries().forEach(function(e){
+            send('web_vitals_fid', e.processingStart - e.startTime);
+          });
+        }).observe({type:'first-input', buffered:true});
+      } catch(_){}
+    })();
 
     // Google Analytics — stub gtag() immediately so app code can call it
     // during boot without waiting on the SDK. Defer the 158 KB gtag.js
