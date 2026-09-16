@@ -101,30 +101,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Warm up deferred page bundles after first frame, in order of
-  // distance from the current page. Each chunk is only a few KB and
-  // `loadLibrary` is idempotent, so re-mount by DeferredPage costs
-  // nothing once the future resolves.
+  // distance from the current page. `loadLibrary` is idempotent, so
+  // re-mount by `DeferredPage` costs nothing once the future resolves.
+  // Skipped in test environments — the prefetch chain returns Futures
+  // that don't complete synchronously and would strand the test binding.
   void _schedulePrefetch() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future<void>.delayed(const Duration(milliseconds: 300), () async {
+    if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
+      return;
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      final current = _pageIndex.value;
+      final loaders = <(int, Future<void> Function())>[
+        (1, experience_lib.loadLibrary),
+        (2, projects_lib.loadLibrary),
+        (3, skills_lib.loadLibrary),
+        (4, engineering_lib.loadLibrary),
+        (5, hats_lib.loadLibrary),
+        (6, contact_lib.loadLibrary),
+      ]..sort((a, b) =>
+          (a.$1 - current).abs().compareTo((b.$1 - current).abs()));
+      for (final entry in loaders) {
         if (!mounted) return;
-        final current = _pageIndex.value;
-        final loaders = <(int, Future<void> Function())>[
-          (1, experience_lib.loadLibrary),
-          (2, projects_lib.loadLibrary),
-          (3, skills_lib.loadLibrary),
-          (4, engineering_lib.loadLibrary),
-          (5, hats_lib.loadLibrary),
-          (6, contact_lib.loadLibrary),
-        ]..sort((a, b) =>
-            (a.$1 - current).abs().compareTo((b.$1 - current).abs()));
-        for (final entry in loaders) {
-          if (!mounted) return;
-          try {
-            await entry.$2();
-          } catch (_) {}
-        }
-      });
+        try {
+          await entry.$2();
+        } catch (_) {}
+      }
     });
   }
 
