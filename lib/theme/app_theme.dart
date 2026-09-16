@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'tokens.dart';
 
 /// App-wide light + dark ThemeData composed from tokens in [tokens.dart].
 class AppTheme {
   AppTheme._();
 
+  /// Base themes seeded with [AppColors.seed]. The live section-accent
+  /// override is applied by `_AccentTheme` in `main.dart` so callers
+  /// never need to pass a dynamic seed here.
   static ThemeData light([Color seedColor = AppColors.seed]) => _base(Brightness.light, seedColor);
   static ThemeData dark([Color seedColor = AppColors.seed]) => _base(Brightness.dark, seedColor);
 
@@ -62,19 +64,17 @@ class AppTheme {
           ),
         ),
       ),
-      textTheme: GoogleFonts.interTextTheme(
-        ThemeData(brightness: brightness).textTheme,
-      ).copyWith(
-        bodyMedium: GoogleFonts.inter(
+      textTheme: ThemeData(brightness: brightness).textTheme.copyWith(
+        bodyMedium: TextStyle(
           color: scheme.onSurface,
           fontSize: AppTypography.body,
         ),
-        titleMedium: GoogleFonts.inter(
+        titleMedium: TextStyle(
           color: scheme.onSurface,
           fontSize: AppTypography.title,
           fontWeight: FontWeight.w700,
         ),
-        headlineMedium: GoogleFonts.inter(
+        headlineMedium: TextStyle(
           color: scheme.onSurface,
           fontSize: AppTypography.heading,
           fontWeight: FontWeight.w900,

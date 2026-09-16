@@ -1,9 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'firebase_options.dart';
 import 'package:profile/module/home/home_screen.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme_controller.dart';
@@ -16,16 +13,12 @@ Future<void> main() async {
   await ThemeController.load();
   await LocaleController.load();
 
-  // Initialize Firebase asynchronously
-  try {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
-  } catch (_) {
-    // Non-fatal if offline or analytics blocked by browser client
-  }
-
-
   runApp(const PortfolioApp());
+
+  // Analytics: `web/index.html` sets up `window.gtag` synchronously and
+  // lazy-loads `gtag.js` on first user interaction. No Dart-side init is
+  // needed — Analytics.event/screen forward directly to gtag via
+  // dart:js_interop.
 }
 
 /// Global scroll behavior:
@@ -60,41 +53,75 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Locale>(
-      valueListenable: LocaleController.locale,
-      builder: (context, locale, _) {
-        return ValueListenableBuilder<ThemeMode>(
-          valueListenable: ThemeController.mode,
-          builder: (context, mode, _) {
-            return ValueListenableBuilder<Color>(
-              valueListenable: ThemeController.seedColor,
-              builder: (context, seedColor, _) {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  scrollBehavior: const _SmoothScrollBehavior(),
-                  title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
-                  themeMode: mode,
-                  theme: AppTheme.light(seedColor),
-                  darkTheme: AppTheme.dark(seedColor),
-                  locale: locale,
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: const [
-                    Locale('en'),
-                    Locale('ar'),
-                    Locale('cs'),
-                  ],
-                  home: const HomeScreen(),
-                );
-              }
-            );
-          },
+    // MaterialApp is rebuilt only for locale + mode changes — those
+    // require a full theme reconstruction. The per-section accent
+    // (seed) color is applied lower in the tree via `_AccentTheme` so
+    // page navigation doesn't tear down + re-inherit the whole
+    // widget subtree. AnimatedTheme inside `_AccentTheme` lerps the
+    // primary color smoothly instead of snapping on every section.
+    final shellListenable = Listenable.merge([
+      LocaleController.locale,
+      ThemeController.mode,
+    ]);
+    return ListenableBuilder(
+      listenable: shellListenable,
+      builder: (context, _) {
+        final locale = LocaleController.locale.value;
+        final mode = ThemeController.mode.value;
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          scrollBehavior: const _SmoothScrollBehavior(),
+          title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
+          themeMode: mode,
+          theme: AppTheme.light(),
+          darkTheme: AppTheme.dark(),
+          locale: locale,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('ar'),
+            Locale('cs'),
+          ],
+          home: const _AccentTheme(child: HomeScreen()),
         );
-      }
+      },
+    );
+  }
+}
+
+/// Applies the live section-accent color as an `AnimatedTheme` override
+/// on top of the base MaterialApp theme. Only this subtree rebuilds on
+/// seed change, and the color transition is lerped over 260ms — no
+/// visible refresh flash on section navigation.
+class _AccentTheme extends StatelessWidget {
+  const _AccentTheme({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<Color>(
+      valueListenable: ThemeController.seedColor,
+      builder: (context, seed, staticChild) {
+        final base = Theme.of(context);
+        final scheme = base.colorScheme.copyWith(
+          primary: seed,
+          onPrimary: base.brightness == Brightness.dark
+              ? Colors.white
+              : base.colorScheme.onPrimary,
+        );
+        return AnimatedTheme(
+          data: base.copyWith(colorScheme: scheme),
+          duration: const Duration(milliseconds: 260),
+          child: staticChild!,
+        );
+      },
+      child: child,
     );
   }
 }

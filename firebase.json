@@ -60,6 +60,15 @@
           ]
         },
         {
+          "source": "canvaskit/**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=86400, must-revalidate"
+            }
+          ]
+        },
+        {
           "source": "**/*.pdf",
           "headers": [
             {
@@ -73,7 +82,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate, max-age=0"
+              "value": "no-cache, must-revalidate, max-age=0"
             }
           ]
         },
@@ -82,7 +91,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate, max-age=0"
+              "value": "no-cache, must-revalidate, max-age=0"
             }
           ]
         },
@@ -91,16 +100,34 @@
           "headers": [
             {
               "key": "Cache-Control",
+              "value": "no-cache, must-revalidate, max-age=0"
+            }
+          ]
+        },
+        {
+          "source": "@(flutter_service_worker.js|version.json)",
+          "headers": [
+            {
+              "key": "Cache-Control",
               "value": "no-cache, no-store, must-revalidate, max-age=0"
             }
           ]
         },
         {
-          "source": "@(flutter_bootstrap.js|main.dart.js|main.dart.mjs|main.dart.wasm|flutter_service_worker.js|version.json)",
+          "source": "@(flutter_bootstrap.js|main.dart.js|main.dart.mjs|main.dart.wasm)",
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate, max-age=0"
+              "value": "public, max-age=300, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "**/*.part.js",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=300, must-revalidate"
             }
           ]
         }
@@ -163,6 +190,15 @@
           ]
         },
         {
+          "source": "canvaskit/**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=86400, must-revalidate"
+            }
+          ]
+        },
+        {
           "source": "**/*.pdf",
           "headers": [
             {
@@ -176,7 +212,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate, max-age=0"
+              "value": "no-cache, must-revalidate, max-age=0"
             }
           ]
         },
@@ -185,7 +221,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate, max-age=0"
+              "value": "no-cache, must-revalidate, max-age=0"
             }
           ]
         },
@@ -194,16 +230,34 @@
           "headers": [
             {
               "key": "Cache-Control",
+              "value": "no-cache, must-revalidate, max-age=0"
+            }
+          ]
+        },
+        {
+          "source": "@(flutter_service_worker.js|version.json)",
+          "headers": [
+            {
+              "key": "Cache-Control",
               "value": "no-cache, no-store, must-revalidate, max-age=0"
             }
           ]
         },
         {
-          "source": "@(flutter_bootstrap.js|main.dart.js|main.dart.mjs|main.dart.wasm|flutter_service_worker.js|version.json)",
+          "source": "@(flutter_bootstrap.js|main.dart.js|main.dart.mjs|main.dart.wasm)",
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate, max-age=0"
+              "value": "public, max-age=300, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "**/*.part.js",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=300, must-revalidate"
             }
           ]
         }

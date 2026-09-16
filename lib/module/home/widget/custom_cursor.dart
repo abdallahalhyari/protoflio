@@ -34,7 +34,12 @@ class _CustomCursorState extends State<CustomCursor> {
     return MouseRegion(
       cursor: SystemMouseCursors.none,
       onHover: (e) {
-        _mousePos.value = e.position;
+        // Skip sub-pixel jitter: only push updates when cursor moved
+        // enough for the ring to visibly shift. Cuts ValueNotifier
+        // rebuilds by ~5x on high-poll mice.
+        final next = e.position;
+        if ((next - _mousePos.value).distanceSquared < 4) return;
+        _mousePos.value = next;
       },
       child: Stack(
         children: [

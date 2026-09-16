@@ -289,7 +289,7 @@ class _IntroPageState extends State<IntroPage>
           child: Container(
             color: Colors.black.withValues(alpha: 0.4),
             child: Image.asset(
-              'assets/my_image.png',
+              'assets/my_image.webp',
               fit: BoxFit.cover,
               cacheWidth: 280,
               cacheHeight: 280,

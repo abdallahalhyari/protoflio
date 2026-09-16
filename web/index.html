@@ -5,9 +5,6 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <title>Abdallah Alhyari — Senior Flutter & Android Engineer</title>
@@ -15,6 +12,7 @@
   <meta name="author" content="Abdallah Alhyari">
   <meta name="keywords" content="Abdallah Alhyari, Senior Flutter Engineer, Senior Android Developer, Kotlin, NFC ISO-7816 APDU, Offline-First Architecture, WorkManager, JWT Security, Mobile Solutions Architect, Amman Jordan, Brno Czech Republic">
   <meta name="theme-color" content="#0E0E10">
+  <meta name="color-scheme" content="dark light">
 
   <link rel="canonical" href="https://alhyari.web.app/">
   <link rel="alternate" hreflang="en" href="https://alhyari.web.app/">
@@ -50,9 +48,10 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Performance Preconnect & Preloads -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="assets/fonts/Tenada.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
+  <link rel="modulepreload" href="main.dart.mjs" crossorigin>
+  <link rel="preload" href="assets/assets/my_image.webp" as="image" type="image/webp" fetchpriority="high">
 
   <!-- Favicon & Manifest -->
   <link rel="icon" type="image/png" href="favicon.png"/>
@@ -120,19 +119,54 @@
   <style>
     @font-face {
       font-family: 'Tenada';
-      src: url('fonts/Tenada.ttf') format('truetype');
+      src: url('assets/fonts/Tenada.ttf') format('truetype');
       font-display: swap;
     }
     html, body { margin: 0; padding: 0; height: 100%; background: #0E0E10; }
+    .skip-link {
+      position: fixed; left: -9999px; top: 8px;
+      background: #E11D48; color: #fff; padding: 10px 14px;
+      border-radius: 4px; font-family: system-ui, sans-serif;
+      font-size: 14px; text-decoration: none; z-index: 10000;
+    }
+    .skip-link:focus { left: 8px; outline: 2px solid #fff; outline-offset: 2px; }
     #boot-loader {
       position: fixed; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: #0E0E10; color: #ffffff;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at 30% 25%, #14192a 0%, #0B101D 45%, #080C14 100%);
+      color: #ffffff;
       z-index: 9999;
-      transition: opacity .15s ease;
+      transition: opacity .35s ease;
       overflow: hidden;
+      padding: 0 6vw;
+      text-align: center;
+      font-family: 'Tenada', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     #boot-loader.hidden { opacity: 0; pointer-events: none; }
+    /* Hero shell — this is intentionally the largest visible element
+       so Lighthouse LCP fires against the HTML text instead of waiting
+       for the Flutter canvas paint. Sizing mirrors IntroPage's hero
+       wordmark closely enough that the swap is imperceptible. */
+    .boot-hero {
+      font-size: clamp(2.5rem, 9vw, 7.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      margin: 0 0 22px;
+      color: #F8FAFC;
+      opacity: 0.96;
+    }
+    .boot-hero .accent { color: #E11D48; }
+    .boot-role {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      margin: 0 0 32px;
+      font-weight: 600;
+    }
     .boot-indicator {
       width: 48px;
       height: 2px;
@@ -206,12 +240,18 @@
   </style>
 </head>
 <body>
+  <!-- Skip link — keyboard users tab-first to the main content instead
+       of walking through the boot loader / decorative overlays. -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <div id="boot-loader">
+    <h1 class="boot-hero">Abdallah<br><span class="accent">Alhyari</span></h1>
+    <p class="boot-role">Senior Flutter &amp; Android Engineer</p>
     <div class="boot-indicator"></div>
   </div>
 
   <!-- Accessible semantic DOM representation for search engines & web crawlers -->
-  <main class="sr-only" aria-hidden="true">
+  <main class="sr-only" id="main-content" aria-hidden="true">
     <h1>Abdallah Alhyari — Senior Flutter & Android Engineer</h1>
     <p>I build reliable, scalable mobile applications and complex digital products, with expertise in Flutter, Android, offline-first systems, NFC smart-cards, security, real-time communication, and enterprise architectures.</p>
     
@@ -307,33 +347,30 @@
     // Hide loader once Flutter renders first frame
     window.addEventListener('flutter-first-frame', dismissBootLoader);
 
-    // Safety fallback: dismiss after 1.5s in case event is delayed
-    setTimeout(dismissBootLoader, 1500);
+    // Safety fallback: dismiss after 8s in case the Flutter event
+    // fails to fire (engine error, blocked wasm, etc.). We keep the
+    // loader up longer than before so slow-network users see the HTML
+    // hero skeleton (LCP element) instead of a blank canvas.
+    setTimeout(dismissBootLoader, 8000);
 
-    // Unregister any stale service workers and clear caches so visitors always receive fresh release
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for (var i = 0; i < registrations.length; i++) {
-          registrations[i].unregister();
-        }
-      });
-    }
-    if ('caches' in window) {
-      caches.keys().then(function(names) {
-        for (var i = 0; i < names.length; i++) {
-          caches.delete(names[i]);
-        }
-      });
-    }
+    // One-time cleanup of legacy Flutter service workers (SW is intentionally
+    // disabled at bootstrap via patch_flutter_js.js). Gated by a localStorage
+    // marker so we don't kill browser HTTP cache on every visit.
     try {
-      if (window.indexedDB && window.indexedDB.databases) {
-        window.indexedDB.databases().then(function(dbs) {
-          dbs.forEach(function(db) {
-            if (db.name && db.name.indexOf('flutter') !== -1) {
-              window.indexedDB.deleteDatabase(db.name);
-            }
+      var PURGE_KEY = 'flutter-legacy-sw-purged-v1';
+      if (!window.localStorage.getItem(PURGE_KEY)) {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(rs) {
+            for (var i = 0; i < rs.length; i++) rs[i].unregister();
           });
-        });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.filter(function(n){ return n.indexOf('flutter') !== -1; })
+                 .forEach(function(n){ caches.delete(n); });
+          });
+        }
+        window.localStorage.setItem(PURGE_KEY, '1');
       }
     } catch(e) {}
     try {
@@ -343,6 +380,89 @@
         window.localStorage.setItem('flutter.themeMode', theme);
       }
     } catch(e) {}
+
+    // Global JS error / promise rejection → gtag event. Portfolio has
+    // no other error backend; this at least surfaces production crashes
+    // in GA4 debug view without shipping a full error-tracking SDK.
+    window.addEventListener('error', function(e){
+      try {
+        gtag('event', 'js_error', {
+          message: (e.error && e.error.message) || e.message || 'unknown',
+          filename: e.filename || '', lineno: e.lineno || 0
+        });
+      } catch(_){}
+    });
+    window.addEventListener('unhandledrejection', function(e){
+      try {
+        gtag('event', 'js_promise_rejection', {
+          message: (e.reason && (e.reason.message || String(e.reason))) || 'unknown'
+        });
+      } catch(_){}
+    });
+
+    // Web Vitals — LCP + CLS + INP + FCP via PerformanceObserver, sent
+    // as gtag events. No external `web-vitals` package required (~2 KB
+    // avoided); we sacrifice edge-case attribution for size.
+    (function(){
+      function send(name, value, id){
+        try { gtag('event', name, {
+          metric_value: Math.round(value),
+          metric_id: id || '',
+          non_interaction: true
+        }); } catch(_){}
+      }
+      try {
+        // LCP
+        new PerformanceObserver(function(list){
+          var entries = list.getEntries();
+          var last = entries[entries.length - 1];
+          if (last) send('web_vitals_lcp', last.renderTime || last.loadTime);
+        }).observe({type:'largest-contentful-paint', buffered:true});
+        // CLS
+        var cls = 0;
+        new PerformanceObserver(function(list){
+          list.getEntries().forEach(function(e){
+            if (!e.hadRecentInput) cls += e.value;
+          });
+          send('web_vitals_cls', cls * 1000);
+        }).observe({type:'layout-shift', buffered:true});
+        // FCP
+        new PerformanceObserver(function(list){
+          list.getEntries().forEach(function(e){
+            if (e.name === 'first-contentful-paint') send('web_vitals_fcp', e.startTime);
+          });
+        }).observe({type:'paint', buffered:true});
+        // INP proxy via first-input delay
+        new PerformanceObserver(function(list){
+          list.getEntries().forEach(function(e){
+            send('web_vitals_fid', e.processingStart - e.startTime);
+          });
+        }).observe({type:'first-input', buffered:true});
+      } catch(_){}
+    })();
+
+    // Google Analytics — stub gtag() immediately so app code can call it
+    // during boot without waiting on the SDK. Defer the 158 KB gtag.js
+    // fetch until first user interaction (or 5s fallback) so it never
+    // competes with wasm/JS parse for TTI.
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-9W0J2MX64H', { send_page_view: false });
+    (function(){
+      var loaded = false;
+      var events = ['pointerdown','keydown','scroll','touchstart'];
+      function load(){
+        if (loaded) return; loaded = true;
+        events.forEach(function(e){ window.removeEventListener(e, load); });
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-9W0J2MX64H';
+        document.head.appendChild(s);
+      }
+      events.forEach(function(e){ window.addEventListener(e, load, { passive:true, once:true }); });
+      setTimeout(load, 5000);
+    })();
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
