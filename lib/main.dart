@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/module/home/home_screen.dart';
 import 'package:profile/theme/app_theme.dart';
+import 'package:profile/theme/tokens.dart';
 import 'package:profile/theme_controller.dart';
 import 'package:profile/locale_controller.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -117,7 +118,7 @@ class _AccentTheme extends StatelessWidget {
         );
         return AnimatedTheme(
           data: base.copyWith(colorScheme: scheme),
-          duration: const Duration(milliseconds: 260),
+          duration: AppMotion.heroEntry,
           child: staticChild!,
         );
       },

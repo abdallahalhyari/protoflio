@@ -32,6 +32,9 @@ class SoundService {
   // clipped and messy. 180ms > single page-turn duration but < the
   // gap a deliberate user would produce.
   DateTime _lastPageTurnAt = DateTime.fromMillisecondsSinceEpoch(0);
+  // Kept literal — semantics (audio debounce) don't map to any motion
+  // token; matching against AppMotion.chipHover (a hover animation
+  // duration) would misdirect future timing tweaks.
   static const Duration _pageTurnMinGap = Duration(milliseconds: 180);
 
   void playPageTurn() {
