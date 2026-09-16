@@ -119,7 +119,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                         t.tag,
                         style: TextStyle(
                           color: accentText,
-                          fontSize: 10,
+                          fontSize: AppTypography.micro,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.0,
                         ),
@@ -161,7 +161,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                     'INQUIRE TRACK',
                     style: TextStyle(
                       color: accentText,
-                      fontSize: 10,
+                      fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1.4,
                     ),

@@ -49,7 +49,7 @@ class SwipeAffordance extends StatelessWidget {
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.72)
                       : AppColors.slate600,
-                  fontSize: 10,
+                  fontSize: AppTypography.micro,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.2,
                 ),

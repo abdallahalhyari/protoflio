@@ -318,7 +318,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.8)
                         : AppColors.slate600,
-                    fontSize: 10,
+                    fontSize: AppTypography.micro,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.4,
                   ),
@@ -349,7 +349,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: isDark
                   ? Colors.white.withValues(alpha: 0.7)
                   : AppColors.slate600,
-              fontSize: 10,
+              fontSize: AppTypography.micro,
               fontWeight: FontWeight.w800,
               letterSpacing: 1.0,
             ),

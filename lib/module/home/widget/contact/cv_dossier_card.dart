@@ -76,7 +76,7 @@ class CvDossierCard extends StatelessWidget {
                       l10n.contactPdfSize,
                       style: TextStyle(
                         color: isDark ? Colors.white60 : AppColors.slate500,
-                        fontSize: 10,
+                        fontSize: AppTypography.micro,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

@@ -130,7 +130,7 @@ class IntroFooterStrip extends StatelessWidget {
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.7)
                     : AppColors.slate500,
-                fontSize: 10,
+                fontSize: AppTypography.micro,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 3,
               ),

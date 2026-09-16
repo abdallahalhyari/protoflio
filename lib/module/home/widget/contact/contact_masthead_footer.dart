@@ -141,7 +141,7 @@ class ContactMastheadFooter extends StatelessWidget {
                     '// COLOPHON & DISPATCH',
                     style: TextStyle(
                       color: isDark ? Colors.white.withValues(alpha: 0.60) : AppColors.slate400,
-                      fontSize: 10,
+                      fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2,
                     ),

@@ -210,6 +210,7 @@ class AppTypography {
   static const double editorial = 10.5;
 
   // Standard typographic steps.
+  static const double micro = 10; // meta labels above chip size, timeline stamps
   static const double caption = 11; // sub-body helper text, chip labels
   static const double overline = 12; // uppercase kickers over headings
   static const double small = 13;

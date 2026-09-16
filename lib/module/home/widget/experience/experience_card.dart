@@ -140,7 +140,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                   ),
                                   child: Text(
                                     widget.exp.period.toUpperCase(),
-                                    style: TextStyle(color: scheme.primary, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 1),
+                                    style: TextStyle(color: scheme.primary, fontSize: AppTypography.micro, fontWeight: FontWeight.w800, letterSpacing: 1),
                                   ),
                                 ),
                                 if (_isCurrent) ...[
@@ -163,7 +163,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                         color: isDark
                                             ? _kNowAccent
                                             : AppColors.accentGreenDeep,
-                                        fontSize: 10,
+                                        fontSize: AppTypography.micro,
                                         fontWeight: FontWeight.w900,
                                         letterSpacing: 1,
                                       ),

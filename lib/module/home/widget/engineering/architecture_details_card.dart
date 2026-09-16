@@ -87,7 +87,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: scheme.primary,
-                          fontSize: 10,
+                          fontSize: AppTypography.micro,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1.0,
                         ),

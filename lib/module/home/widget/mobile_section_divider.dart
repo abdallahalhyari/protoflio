@@ -44,7 +44,7 @@ class MobileSectionDivider extends StatelessWidget {
               number,
               style: const TextStyle(
                 color: AppColors.accentIndigo,
-                fontSize: 10,
+                fontSize: AppTypography.micro,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 2,
               ),
@@ -55,7 +55,7 @@ class MobileSectionDivider extends StatelessWidget {
             title,
             style: TextStyle(
               color: context.subtleText,
-              fontSize: 10,
+              fontSize: AppTypography.micro,
               fontWeight: FontWeight.w800,
               letterSpacing: 2,
             ),

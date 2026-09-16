@@ -246,7 +246,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                             style: TextStyle(
                                               fontFamily: 'Courier',
                                               color: scheme.primary,
-                                              fontSize: 10,
+                                              fontSize: AppTypography.micro,
                                               fontWeight: FontWeight.w900,
                                               letterSpacing: 1,
                                             ),

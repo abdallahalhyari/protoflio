@@ -330,7 +330,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                                 style: TextStyle(
                                   fontFamily: 'Courier',
                                   color: accentText,
-                                  fontSize: 10.0,
+                                  fontSize: AppTypography.micro,
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),

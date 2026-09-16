@@ -316,7 +316,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                           'ROLE',
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.6),
-                            fontSize: 10,
+                            fontSize: AppTypography.micro,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 3,
                           ),
