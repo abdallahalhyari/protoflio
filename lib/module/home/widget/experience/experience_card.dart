@@ -48,10 +48,15 @@ class _ExperienceCardState extends State<ExperienceCard> {
     final hovered = _hover && !reduce;
 
     return GestureDetector(
-      onTap: () {
-        SoundService.instance.playClick();
-        setState(() => _hover = !_hover);
-      },
+      // Tap toggle is only useful on touch — on desktop, MouseRegion
+      // already drives the hover state, so a click while hovered would
+      // otherwise flip _hover to false right under the cursor.
+      onTap: widget.isDesktop
+          ? null
+          : () {
+              SoundService.instance.playClick();
+              setState(() => _hover = !_hover);
+            },
       child: MouseRegion(
         onEnter: (_) => setState(() => _hover = true),
         onExit: (_) => setState(() => _hover = false),
