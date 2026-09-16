@@ -48,7 +48,7 @@
 
   <!-- Performance Preconnect & Preloads -->
   <link rel="preload" href="assets/fonts/Tenada.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin>
+  <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="modulepreload" href="main.dart.mjs" crossorigin>
   <link rel="preload" href="assets/assets/my_image.webp" as="image" type="image/webp" fetchpriority="high">
 
@@ -335,6 +335,29 @@
         window.localStorage.setItem('flutter.themeMode', theme);
       }
     } catch(e) {}
+
+    // Google Analytics — stub gtag() immediately so app code can call it
+    // during boot without waiting on the SDK. Defer the 158 KB gtag.js
+    // fetch until first user interaction (or 5s fallback) so it never
+    // competes with wasm/JS parse for TTI.
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-9W0J2MX64H', { send_page_view: false });
+    (function(){
+      var loaded = false;
+      var events = ['pointerdown','keydown','scroll','touchstart'];
+      function load(){
+        if (loaded) return; loaded = true;
+        events.forEach(function(e){ window.removeEventListener(e, load); });
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-9W0J2MX64H';
+        document.head.appendChild(s);
+      }
+      events.forEach(function(e){ window.addEventListener(e, load, { passive:true, once:true }); });
+      setTimeout(load, 5000);
+    })();
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>

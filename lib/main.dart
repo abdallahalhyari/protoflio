@@ -1,9 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'firebase_options.dart';
 import 'package:profile/module/home/home_screen.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme_controller.dart';
@@ -18,22 +15,10 @@ Future<void> main() async {
 
   runApp(const PortfolioApp());
 
-  // Defer Firebase off the critical path so it can't delay first frame.
-  // Analytics is fire-and-forget; a slow SDK boot no longer holds up TTI.
-  // Extra 2s delay pushes the 158 KB gtag fetch past the TBT window that
-  // Lighthouse samples, and past the moment the user first sees content.
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    Future<void>.delayed(const Duration(seconds: 2), () async {
-      try {
-        await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        );
-        FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
-      } catch (_) {
-        // Non-fatal if offline or analytics blocked by browser client
-      }
-    });
-  });
+  // Analytics: `web/index.html` sets up `window.gtag` synchronously and
+  // lazy-loads `gtag.js` on first user interaction. No Dart-side init is
+  // needed — Analytics.event/screen forward directly to gtag via
+  // dart:js_interop.
 }
 
 /// Global scroll behavior:

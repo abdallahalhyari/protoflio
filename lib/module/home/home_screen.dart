@@ -136,7 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_imagesPrecached) return;
     _imagesPrecached = true;
     // Defer non-critical decodes until after first frame so they don't
-    // fight with Dart VM boot for main-thread time.
+    // fight with Dart VM boot for main-thread time. All three images
+    // benefit from being decoded early — the raster cache is warm by
+    // the time IntroPage requests them.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       precacheImage(const AssetImage('assets/background.webp'), context);
