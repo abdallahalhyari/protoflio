@@ -119,7 +119,7 @@ class ContactChannelsGrid extends StatelessWidget {
               height: 18,
               decoration: BoxDecoration(
                 color: _sky,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: BorderRadius.circular(AppRadius.xxs),
               ),
             ),
             const SizedBox(width: 8),
