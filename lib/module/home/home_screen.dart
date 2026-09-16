@@ -836,22 +836,16 @@ class _HomeScreenState extends State<HomeScreen> {
           top: 0,
           left: 0,
           right: 0,
-          child: ValueListenableBuilder<int>(
-            valueListenable: _pageIndex,
-            builder: (context, page, __) => MobileAppBar(
-              activeSectionLabel: _dividerLabelFor(page),
-              activeSectionIndex: page + 1,
-              sectionCount: _pageCount,
-              onMenuPressed: () {
-                MobileNavSheet.show(
-                  context,
-                  activeIndex: page,
-                  onSelectSection: (index) => _scrollToMobileSection(index),
-                  onDownloadResume: _downloadResume,
-                );
-              },
-              onLogoPressed: () => _scrollToMobileSection(0),
-            ),
+          child: MobileAppBar(
+            onMenuPressed: () {
+              MobileNavSheet.show(
+                context,
+                activeIndex: _pageIndex.value,
+                onSelectSection: (index) => _scrollToMobileSection(index),
+                onDownloadResume: _downloadResume,
+              );
+            },
+            onLogoPressed: () => _scrollToMobileSection(0),
           ),
         ),
 

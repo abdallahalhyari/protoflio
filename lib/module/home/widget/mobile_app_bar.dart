@@ -3,7 +3,9 @@ import 'package:profile/locale_controller.dart';
 import '../../../service/sound_service.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme_controller.dart';
+import '../home_controller.dart';
 import 'conditional_blur.dart';
+import 'portfolio_nav.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Public constant so callers (mobile scroll snap, section anchors)
@@ -13,25 +15,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onMenuPressed;
   final VoidCallback? onLogoPressed;
 
-  /// Currently-visible section label. When provided (and not tight), the
-  /// AVAILABLE dot is replaced with a live section indicator so users
-  /// always know which chapter they're in.
-  final String? activeSectionLabel;
-
-  /// 1-based index of the current section (e.g. 3). Rendered next to the
-  /// label as a subtle "03" prefix.
-  final int? activeSectionIndex;
-
-  /// Total number of sections (denominator for the tiny "03 / 07" chip).
-  final int? sectionCount;
-
   const MobileAppBar({
     super.key,
     required this.onMenuPressed,
     this.onLogoPressed,
-    this.activeSectionLabel,
-    this.activeSectionIndex,
-    this.sectionCount,
   });
 
   @override
@@ -138,7 +125,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ),
                             if (!tight)
-                              _buildSubBadge(isDark),
+                              _buildSubBadge(context, isDark),
                           ],
                         ),
                       ],
@@ -288,16 +275,70 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   /// Sub-row under the ABDALLAH monogram. Falls back to the AVAILABLE
-  /// presence dot when no active section is passed; otherwise renders a
+  /// presence dot when no controller is in scope; otherwise renders a
   /// live "03 · Engineering" chip so mobile users always see where they
   /// are without opening the menu.
-  Widget _buildSubBadge(bool isDark) {
-    final hasSection = activeSectionLabel != null &&
-        activeSectionIndex != null &&
-        activeSectionIndex! > 0;
+  Widget _buildSubBadge(BuildContext context, bool isDark) {
+    final controller = HomeController.maybeOf(context);
+    if (controller == null) return _availableBadge(isDark);
 
-    if (!hasSection) {
-      return Row(
+    return ValueListenableBuilder<int>(
+      valueListenable: controller.pageIndex,
+      builder: (context, page, _) {
+        if (page < 0) return _availableBadge(isDark);
+        final labels = TopNav.getLabels(context);
+        if (page >= labels.length) return _availableBadge(isDark);
+
+        final ordinal = (page + 1).toString().padLeft(2, '0');
+        final denom = ' / ${controller.pageCount.toString().padLeft(2, '0')}';
+        final label = labels[page].toUpperCase();
+
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '$ordinal$denom',
+              style: TextStyle(
+                fontFamily: 'Courier',
+                color: AppColors.accentIndigo,
+                fontSize: 9.5,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(width: 6),
+            Container(
+              width: 1,
+              height: 8,
+              color: isDark ? Colors.white24 : AppColors.slate300,
+            ),
+            const SizedBox(width: 6),
+            Flexible(
+              child: AnimatedSwitcher(
+                duration: AppMotion.chipHover,
+                child: Text(
+                  label,
+                  key: ValueKey(label),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.8)
+                        : AppColors.slate600,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.4,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _availableBadge(bool isDark) => Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
@@ -322,52 +363,4 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       );
-    }
-
-    final ordinal = activeSectionIndex!.toString().padLeft(2, '0');
-    final denom = sectionCount == null
-        ? ''
-        : ' / ${sectionCount!.toString().padLeft(2, '0')}';
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          '$ordinal$denom',
-          style: TextStyle(
-            fontFamily: 'Courier',
-            color: AppColors.accentIndigo,
-            fontSize: 9.5,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1.2,
-          ),
-        ),
-        const SizedBox(width: 6),
-        Container(
-          width: 1,
-          height: 8,
-          color: isDark ? Colors.white24 : AppColors.slate300,
-        ),
-        const SizedBox(width: 6),
-        Flexible(
-          child: AnimatedSwitcher(
-            duration: AppMotion.chipHover,
-            child: Text(
-              activeSectionLabel!.toUpperCase(),
-              key: ValueKey(activeSectionLabel),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.8)
-                    : AppColors.slate600,
-                fontSize: 10,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.4,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }

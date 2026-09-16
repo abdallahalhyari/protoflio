@@ -1,37 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/module/home/home_controller.dart';
 import 'package:profile/module/home/widget/mobile_app_bar.dart';
 
-Widget _host(Widget child) {
+HomeController _stub({ValueNotifier<int>? pageIndex}) {
+  return HomeController(
+    pageIndex: pageIndex ?? ValueNotifier<int>(0),
+    showScrollToTop: ValueNotifier<bool>(false),
+    pageCount: 7,
+    goTo: (int _, {bool syncUrl = true}) {},
+    next: () {},
+    prev: () {},
+    scrollToMobileSection: (int _, {bool syncUrl = true}) {},
+    downloadResume: () async {},
+  );
+}
+
+Widget _host(Widget child, {HomeController? controller}) {
   return MaterialApp(
     theme: ThemeData(brightness: Brightness.dark),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
     home: Scaffold(
-      appBar: null,
-      body: SafeArea(child: child),
+      body: SafeArea(
+        child: controller == null
+            ? child
+            : HomeControllerScope(controller: controller, child: child),
+      ),
     ),
   );
 }
 
 void main() {
-  testWidgets('renders monogram + AVAILABLE fallback when no section passed',
+  testWidgets('renders AVAILABLE fallback outside a HomeControllerScope',
       (tester) async {
     await tester.pumpWidget(_host(MobileAppBar(onMenuPressed: () {})));
     expect(find.text('ABDALLAH'), findsOneWidget);
     expect(find.text('AVAILABLE'), findsOneWidget);
-    // MENU pill always present.
     expect(find.text('MENU'), findsOneWidget);
   });
 
-  testWidgets('renders live section badge when passed', (tester) async {
-    await tester.pumpWidget(_host(MobileAppBar(
-      onMenuPressed: () {},
-      activeSectionLabel: 'Engineering',
-      activeSectionIndex: 3,
-      sectionCount: 7,
-    )));
+  testWidgets('renders live section badge from controller.pageIndex',
+      (tester) async {
+    final pageIndex = ValueNotifier<int>(4);
+    await tester.pumpWidget(_host(
+      MobileAppBar(onMenuPressed: () {}),
+      controller: _stub(pageIndex: pageIndex),
+    ));
+    await tester.pumpAndSettle();
     expect(find.text('AVAILABLE'), findsNothing);
-    expect(find.text('03 / 07'), findsOneWidget);
-    expect(find.text('ENGINEERING'), findsOneWidget);
+    expect(find.text('05 / 07'), findsOneWidget);
   });
 
   testWidgets('menu callback fires', (tester) async {
