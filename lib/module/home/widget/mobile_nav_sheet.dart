@@ -53,7 +53,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'FEATURED WORK',
       subtitle: 'Production Systems & Case Studies',
       icon: Icons.rocket_launch_rounded,
-      accentColor: Color(0xFFFBBF24),
+      accentColor: AppColors.accentAmber,
     ),
     NavSectionItem(
       index: 2,
@@ -61,7 +61,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'SYSTEM ARCHITECTURES',
       subtitle: 'Enterprise Blueprints & Offline-First',
       icon: Icons.hub_rounded,
-      accentColor: Color(0xFF38BDF8),
+      accentColor: AppColors.accentSky,
     ),
     NavSectionItem(
       index: 3,
@@ -69,7 +69,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'CAREER TRAJECTORY',
       subtitle: '4+ Years Enterprise Engineering & Milestones',
       icon: Icons.timeline_rounded,
-      accentColor: Color(0xFFA78BFA),
+      accentColor: AppColors.accentVioletLight,
     ),
     NavSectionItem(
       index: 4,
@@ -77,7 +77,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'SKILLS & STACK',
       subtitle: 'Technical Proficiency Matrix',
       icon: Icons.code_rounded,
-      accentColor: Color(0xFF34D399),
+      accentColor: AppColors.accentGreenLight,
     ),
     NavSectionItem(
       index: 5,
@@ -93,7 +93,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'CONTACT & COLOPHON',
       subtitle: 'Direct Channels & Availability',
       icon: Icons.mail_rounded,
-      accentColor: Color(0xFF38BDF8),
+      accentColor: AppColors.accentSky,
     ),
   ];
 
@@ -440,7 +440,7 @@ class MobileNavSheet extends StatelessWidget {
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFFBBF24),
+                              backgroundColor: AppColors.accentAmber,
                               foregroundColor: Colors.black,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                               shape: RoundedRectangleBorder(

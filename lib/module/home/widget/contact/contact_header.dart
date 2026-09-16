@@ -7,8 +7,8 @@ import '../../../../theme/tokens.dart';
 class ContactHeader extends StatelessWidget {
   const ContactHeader({super.key});
 
-  static const _accent = Color(0xFF8B5CF6);
-  static const _accentSoft = Color(0xFFA78BFA);
+  static const _accent = AppColors.accentViolet;
+  static const _accentSoft = AppColors.accentVioletLight;
 
   Widget _issueStrip(bool isDark) {
     Widget rule() => Container(

@@ -98,7 +98,7 @@ class IntroFooterStrip extends StatelessWidget {
       block(
         l10n.introBasedIn,
         l10n.introLocation.toUpperCase(),
-        valueColor: isDark ? _gold : const Color(0xFFB45309),
+        valueColor: isDark ? _gold : AppColors.accentAmberDeep,
       ),
       block(
         l10n.introStatus,

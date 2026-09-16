@@ -342,7 +342,7 @@ class _IntroPageState extends State<IntroPage>
                       : (size.width * 0.0115).clamp(12.5, 18.0),
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.5,
-                  color: isDark ? const Color(0xFFA5B4FC) : _accent,
+                  color: isDark ? AppColors.accentIndigoSoft : _accent,
                 ),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),

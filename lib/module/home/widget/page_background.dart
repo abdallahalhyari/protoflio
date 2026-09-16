@@ -47,9 +47,9 @@ class _PageBackgroundState extends State<PageBackground> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color(0xFF080C14),
+                  AppColors.slate950,
                   Color(0xFF0B101D),
-                  Color(0xFF080C14),
+                  AppColors.slate950,
                 ],
                 stops: [0.0, 0.55, 1.0],
               ),
@@ -91,8 +91,8 @@ class _PageBackgroundState extends State<PageBackground> {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFF06B6D4).withValues(alpha: 0.10),
-                        const Color(0xFF06B6D4).withValues(alpha: 0.0),
+                        AppColors.accentCyan.withValues(alpha: 0.10),
+                        AppColors.accentCyan.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -109,8 +109,8 @@ class _PageBackgroundState extends State<PageBackground> {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFF8B5CF6).withValues(alpha: 0.08),
-                        const Color(0xFF8B5CF6).withValues(alpha: 0.0),
+                        AppColors.accentViolet.withValues(alpha: 0.08),
+                        AppColors.accentViolet.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -142,7 +142,7 @@ class _PageBackgroundState extends State<PageBackground> {
                     radius: 1.25,
                     colors: [
                       Colors.transparent,
-                      const Color(0xFF080C14).withValues(alpha: 0.65),
+                      AppColors.slate950.withValues(alpha: 0.65),
                     ],
                   ),
                 ),
@@ -215,8 +215,8 @@ class _PageBackgroundState extends State<PageBackground> {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFF38BDF8).withValues(alpha: 0.10),
-                        const Color(0xFF38BDF8).withValues(alpha: 0.0),
+                        AppColors.accentSky.withValues(alpha: 0.10),
+                        AppColors.accentSky.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -233,8 +233,8 @@ class _PageBackgroundState extends State<PageBackground> {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFFFBBF24).withValues(alpha: 0.07),
-                        const Color(0xFFFBBF24).withValues(alpha: 0.0),
+                        AppColors.accentAmber.withValues(alpha: 0.07),
+                        AppColors.accentAmber.withValues(alpha: 0.0),
                       ],
                     ),
                   ),

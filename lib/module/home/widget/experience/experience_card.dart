@@ -5,7 +5,7 @@ import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../model/experience.dart';
 
-const _kNowAccent = Color(0xFF10B981); // Emerald green for "Present"
+const _kNowAccent = AppColors.accentGreen; // Emerald green for "Present"
 const _kGlassBorder = Color(0x33FFFFFF);
 
 class ExperienceCard extends StatefulWidget {

@@ -127,7 +127,7 @@ class ProjectHighlightRow extends StatelessWidget {
                       text: '$prefix ',
                       style: TextStyle(
                         fontFamily: 'Courier',
-                        color: isDark ? const Color(0xFFFDE68A) : const Color(0xFFB45309),
+                        color: isDark ? AppColors.accentAmberSoft : AppColors.accentAmberDeep,
                         fontWeight: FontWeight.w800,
                         fontSize: isDesktop ? 12.0 : 10.5,
                       ),

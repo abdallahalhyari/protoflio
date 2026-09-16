@@ -348,7 +348,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ProjectDossierCard(
                                 label: 'DECISION',
                                 value: project.technicalDecisions!.first,
-                                accentColor: const Color(0xFFFDE68A),
+                                accentColor: AppColors.accentAmberSoft,
                                 isDesktop: isDesktop,
                                 isDark: isDark,
                               ),
@@ -356,7 +356,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ProjectDossierCard(
                                 label: 'LESSON LEARNED',
                                 value: project.lessonsLearned!,
-                                accentColor: const Color(0xFFFBBF24),
+                                accentColor: AppColors.accentAmber,
                                 isDesktop: isDesktop,
                                 isDark: isDark,
                               ),

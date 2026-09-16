@@ -48,15 +48,15 @@ class SkillCategoryStyle {
   static List<Color> getGradient(String category, ColorScheme scheme) {
     switch (category) {
       case 'Domain Expertise':
-        return const [Color(0xFF8B5CF6), Color(0xFF6D28D9)];
+        return const [AppColors.accentViolet, AppColors.accentVioletDeep];
       case 'Mobile Systems':
-        return [const Color(0xFF38BDF8), scheme.primary];
+        return [AppColors.accentSky, scheme.primary];
       case 'Security & Protocols':
-        return const [Color(0xFFFBBF24), Color(0xFFF59E0B)];
+        return const [AppColors.accentAmber, Color(0xFFF59E0B)];
       case 'Architecture & State':
-        return const [Color(0xFF34D399), Color(0xFF10B981)];
+        return const [AppColors.accentGreenLight, AppColors.accentGreen];
       case 'Cloud & Infrastructure':
-        return const [Color(0xFFA78BFA), Color(0xFFEC4899)];
+        return const [AppColors.accentVioletLight, Color(0xFFEC4899)];
       case 'Languages & Comm':
         return const [Color(0xFFF472B6), Color(0xFFBE185D)];
       default:

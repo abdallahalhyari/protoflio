@@ -30,7 +30,7 @@ class MobileFooter extends StatelessWidget {
                 height: 28,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF38BDF8), AppColors.accentIndigo],
+                    colors: [AppColors.accentSky, AppColors.accentIndigo],
                   ),
                   borderRadius: BorderRadius.circular(AppRadius.chip),
                 ),

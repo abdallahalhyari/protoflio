@@ -78,7 +78,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                             gradient: const LinearGradient(
-                              colors: [AppColors.accentIndigo, Color(0xFFFBBF24)],
+                              colors: [AppColors.accentIndigo, AppColors.accentAmber],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
@@ -203,7 +203,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                       icon: Icon(
                         enabled ? Icons.volume_up_outlined : Icons.volume_off_outlined,
                         color: enabled
-                            ? const Color(0xFFFBBF24)
+                            ? AppColors.accentAmber
                             : (isDark ? Colors.white38 : AppColors.slate400),
                       ),
                       onPressed: () {

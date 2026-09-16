@@ -33,10 +33,10 @@ class ContactChannelsGrid extends StatelessWidget {
     required this.onCopy,
   });
 
-  static const _sky = Color(0xFF38BDF8);
-  static const _availabilityGreen = Color(0xFF34D399);
-  static const _indigo = Color(0xFF818CF8);
-  static const _accent = Color(0xFF8B5CF6);
+  static const _sky = AppColors.accentSky;
+  static const _availabilityGreen = AppColors.accentGreenLight;
+  static const _indigo = AppColors.accentIndigo;
+  static const _accent = AppColors.accentViolet;
 
   @override
   Widget build(BuildContext context) {

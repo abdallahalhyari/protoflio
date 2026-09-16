@@ -105,7 +105,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                   center: Alignment(tilt.dx, tilt.dy),
                   radius: 0.9,
                   colors: [
-                    const Color(0xFFFBBF24).withValues(alpha: 0.2),
+                    AppColors.accentAmber.withValues(alpha: 0.2),
                     Colors.white.withValues(alpha: 0.06),
                     Colors.transparent,
                   ],

@@ -84,7 +84,7 @@ class HatDeckHeader extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: isDark
                       ? scheme.primary
-                      : const Color(0xFF0284C7),
+                      : AppColors.accentSkyDeep,
                   side: BorderSide(
                       color: scheme.primary.withValues(alpha: 0.6)),
                   padding: const EdgeInsets.symmetric(
