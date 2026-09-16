@@ -27,8 +27,18 @@ class SoundService {
     } catch (_) {}
   }
 
+  // Debounce identical page-turn sounds when the user rapid-flicks the
+  // wheel or presses arrow keys — overlapping page-turn plays sound
+  // clipped and messy. 180ms > single page-turn duration but < the
+  // gap a deliberate user would produce.
+  DateTime _lastPageTurnAt = DateTime.fromMillisecondsSinceEpoch(0);
+  static const Duration _pageTurnMinGap = Duration(milliseconds: 180);
+
   void playPageTurn() {
     if (!isEnabled.value) return;
+    final now = DateTime.now();
+    if (now.difference(_lastPageTurnAt) < _pageTurnMinGap) return;
+    _lastPageTurnAt = now;
     try {
       if (kIsWeb) {
         playWebPageTurn();
