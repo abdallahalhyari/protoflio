@@ -5,7 +5,10 @@ import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/analytics_service.dart';
 import '../../../service/sound_service.dart';
+import '../../case_study/case_study_eskadenia.dart';
+import '../../case_study/case_study_fais.dart';
 import '../../case_study/case_study_nathealth.dart';
+import '../../case_study/case_study_solutions.dart';
 import '../model/project.dart';
 import '../widget/conditional_blur.dart';
 import '../widget/projects/nfc_architecture_diagram.dart';
@@ -20,14 +23,23 @@ Future<void> showProjectCaseStudy(
   SoundService.instance.playClick();
   Analytics.ctaProject(project.company);
 
-  // NatHealth has a full deep-dive case-study page. Other projects still
-  // open in the existing modal until they get their own dedicated page.
+  Widget? caseStudyPage;
   if (project.company == 'NatHealth') {
+    caseStudyPage = const NatHealthCaseStudy();
+  } else if (project.company == 'ESKADENIA Software') {
+    caseStudyPage = const EskadeniaCaseStudy();
+  } else if (project.company == 'Solutions Now IT') {
+    caseStudyPage = const SolutionsCaseStudy();
+  } else if (project.company == 'Future Advanced Internet Solutions') {
+    caseStudyPage = const FaisCaseStudy();
+  }
+
+  if (caseStudyPage != null) {
     await Navigator.of(context, rootNavigator: true).push(
       PageRouteBuilder(
         transitionDuration: AppMotion.md,
         reverseTransitionDuration: AppMotion.sm,
-        pageBuilder: (_, __, ___) => const NatHealthCaseStudy(),
+        pageBuilder: (_, __, ___) => caseStudyPage!,
         transitionsBuilder: (_, animation, __, child) {
           return FadeTransition(
             opacity: CurvedAnimation(

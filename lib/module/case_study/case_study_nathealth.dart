@@ -248,15 +248,19 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          PulsingDot(color: AppColors.accentGreen),
+          const PulsingDot(color: AppColors.accentGreen),
           const SizedBox(width: AppSpacing.sm),
-          Text(
-            'SENIOR MOBILE ENGINEER · 2024 — PRESENT',
-            style: TextStyle(
-              fontSize: AppTypography.editorial,
-              letterSpacing: 3,
-              fontWeight: FontWeight.w800,
-              color: scheme.onSurface.withValues(alpha: 0.6),
+          Expanded(
+            child: Text(
+              'SENIOR MOBILE ENGINEER · 2024 — PRESENT',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: AppTypography.editorial,
+                letterSpacing: 3,
+                fontWeight: FontWeight.w800,
+                color: scheme.onSurface.withValues(alpha: 0.6),
+              ),
             ),
           ),
         ]),

@@ -20,6 +20,10 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
     vsync: this,
     duration: AppMotion.ambient,
   );
+  late final Animation<double> _anim = CurvedAnimation(
+    parent: _ctrl,
+    curve: Curves.easeInOut,
+  );
 
   @override
   void didChangeDependencies() {
@@ -68,18 +72,18 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
                 const SizedBox(height: 6),
                 RepaintBoundary(
                   child: AnimatedBuilder(
-                    animation: _ctrl,
-                    builder: (_, __) {
-                      final t = Curves.easeInOut.transform(_ctrl.value);
+                    animation: _anim,
+                    builder: (_, child) {
                       return Transform.translate(
-                        offset: Offset(0, t * 6),
-                        child: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          size: 24,
-                          color: tint,
-                        ),
+                        offset: Offset(0, _anim.value * 6),
+                        child: child,
                       );
                     },
+                    child: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      size: 24,
+                      color: tint,
+                    ),
                   ),
                 ),
               ],
