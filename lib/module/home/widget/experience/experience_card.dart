@@ -252,7 +252,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
                             color: isDark ? scheme.onSurface : AppColors.slate900,
-                            fontSize: 13.5,
+                            fontSize: AppTypography.smallLoose,
                             height: 1.5,
                           ),
                         ),
@@ -261,7 +261,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: isDark ? scheme.onSurface.withValues(alpha: 0.85) : AppColors.slate700,
-                            fontSize: 13.5,
+                            fontSize: AppTypography.smallLoose,
                             height: 1.5,
                           ),
                         ),
@@ -272,7 +272,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                     highlight,
                     style: TextStyle(
                       color: isDark ? scheme.onSurface.withValues(alpha: 0.85) : AppColors.slate700,
-                      fontSize: 13.5,
+                      fontSize: AppTypography.smallLoose,
                       height: 1.5,
                     ),
                   ),

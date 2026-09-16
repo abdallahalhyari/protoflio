@@ -146,7 +146,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.72)
                     : AppColors.slate500,
-                fontSize: 11.5,
+                fontSize: AppTypography.captionSm,
                 height: 1.45,
               ),
             ),

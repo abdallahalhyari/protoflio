@@ -99,7 +99,7 @@ class CvDossierCard extends StatelessWidget {
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.7)
                         : AppColors.slate500,
-                    fontSize: 12.5,
+                    fontSize: AppTypography.overlineTight,
                     height: 1.4,
                   ),
                 ),
@@ -144,7 +144,7 @@ class CvDossierCard extends StatelessWidget {
                   label: Text(
                     l10n.contactPreview,
                     style: const TextStyle(
-                      fontSize: 11.5,
+                      fontSize: AppTypography.captionSm,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1.2,
                     ),

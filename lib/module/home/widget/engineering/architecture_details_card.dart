@@ -137,7 +137,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                       item,
                       style: TextStyle(
                         color: isDark ? Colors.white.withValues(alpha: 0.8) : AppColors.slate700,
-                        fontSize: 11.5,
+                        fontSize: AppTypography.captionSm,
                         height: 1.35,
                       ),
                     ),

@@ -59,7 +59,7 @@ class HeroEmailCard extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         textStyle: const TextStyle(
-          fontSize: 11.5,
+          fontSize: AppTypography.captionSm,
           fontWeight: FontWeight.w800,
           letterSpacing: 1.2,
         ),

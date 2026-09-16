@@ -85,7 +85,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'LEADERSHIP ROLES',
       subtitle: 'Architectural Perspectives & Hats',
       icon: Icons.style_rounded,
-      accentColor: Color(0xFFF59E0B),
+      accentColor: AppColors.accentAmberMid,
     ),
     NavSectionItem(
       index: 6,
@@ -434,7 +434,7 @@ class MobileNavSheet extends StatelessWidget {
                             label: const Text(
                               'DOWNLOAD RESUME · PDF',
                               style: TextStyle(
-                                fontSize: 12.5,
+                                fontSize: AppTypography.overlineTight,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.4,
                               ),

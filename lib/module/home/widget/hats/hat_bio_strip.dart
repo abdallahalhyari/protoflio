@@ -47,7 +47,7 @@ class HatBioStrip extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate700,
-            fontSize: 11.5,
+            fontSize: AppTypography.captionSm,
             height: 1.45,
             letterSpacing: 0.2,
           ),
@@ -80,7 +80,7 @@ class HatBioStrip extends StatelessWidget {
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.92)
                     : AppColors.slate800,
-                fontSize: 13.5,
+                fontSize: AppTypography.smallLoose,
                 height: 1.6,
                 letterSpacing: 0.2,
               ),
@@ -125,7 +125,7 @@ class HatBioStrip extends StatelessWidget {
           value,
           style: TextStyle(
             color: isDark ? Colors.white : AppColors.slate900,
-            fontSize: 11.5,
+            fontSize: AppTypography.captionSm,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.2,
           ),

@@ -138,7 +138,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                         height: 3,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [scheme.primary, const Color(0xFFC084FC)],
+                            colors: [scheme.primary, AppColors.accentPurpleSoft],
                           ),
                         ),
                       ),
@@ -319,7 +319,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ProjectDossierCard(
                                 label: 'CORE PROBLEM',
                                 value: project.problem!,
-                                accentColor: const Color(0xFFF87171),
+                                accentColor: AppColors.accentRoseSoft,
                                 isDesktop: isDesktop,
                                 isDark: isDark,
                               ),

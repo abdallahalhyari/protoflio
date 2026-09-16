@@ -102,7 +102,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                     '${edu.institution} · ${edu.period}',
                                     style: TextStyle(
                                       color: scheme.primary,
-                                      fontSize: 12.5,
+                                      fontSize: AppTypography.overlineTight,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),

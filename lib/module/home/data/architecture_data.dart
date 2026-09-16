@@ -77,7 +77,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Android WorkManager Pipeline',
         details: 'OS-managed background worker triggered with NETWORK_CONNECTED constraints & exponential backoff.',
         icon: Icons.schedule_outlined,
-        color: Color(0xFFF59E0B),
+        color: AppColors.accentAmberMid,
       ),
       DiagramStep(
         layer: 'STEP 4: REMOTE RECONCILIATION',
@@ -158,7 +158,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Android Keystore / iOS Keychain',
         details: 'Hardware-backed AES-256 GCM key encryption. Private keys never leave secure hardware enclave.',
         icon: Icons.lock_outlined,
-        color: Color(0xFFF59E0B),
+        color: AppColors.accentAmberMid,
       ),
       DiagramStep(
         layer: 'EXCHANGE',
@@ -202,7 +202,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         title: 'Unidirectional Data Flow',
         details: 'User actions are transformed into strictly typed Events pushed into the BLoC sink.',
         icon: Icons.alt_route_outlined,
-        color: Color(0xFFF59E0B),
+        color: AppColors.accentAmberMid,
       ),
       DiagramStep(
         layer: 'BUSINESS LOGIC COMPONENT',

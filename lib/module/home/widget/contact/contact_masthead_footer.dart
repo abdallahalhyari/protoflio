@@ -53,7 +53,7 @@ class ContactMastheadFooter extends StatelessWidget {
               value,
               style: TextStyle(
                 color: isDark ? Colors.white : AppColors.slate900,
-                fontSize: 11.5,
+                fontSize: AppTypography.captionSm,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.0,
               ),

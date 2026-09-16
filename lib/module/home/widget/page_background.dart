@@ -48,7 +48,7 @@ class _PageBackgroundState extends State<PageBackground> {
                 end: Alignment.bottomRight,
                 colors: [
                   AppColors.slate950,
-                  Color(0xFF0B101D),
+                  AppColors.darkNight,
                   AppColors.slate950,
                 ],
                 stops: [0.0, 0.55, 1.0],
@@ -171,7 +171,7 @@ class _PageBackgroundState extends State<PageBackground> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: const [
-                  Color(0xFFFAFBFC),
+                  AppColors.lightMist,
                   AppColors.slate100,
                   AppColors.slate200,
                 ],

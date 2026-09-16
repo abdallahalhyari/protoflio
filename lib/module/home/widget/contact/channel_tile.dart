@@ -131,7 +131,7 @@ class _ChannelTileState extends State<ChannelTile> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: isDark ? Colors.white : AppColors.slate900,
-                          fontSize: 13.5,
+                          fontSize: AppTypography.smallLoose,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.2,
                         ),

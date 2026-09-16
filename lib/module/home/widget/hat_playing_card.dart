@@ -258,8 +258,8 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  const Color(0xFF141B2A),
-                  const Color(0xFF0A0F1A),
+                  AppColors.darkCanvasElevated,
+                  AppColors.darkCanvas,
                   accent.withValues(alpha: 0.22),
                 ],
                 stops: const [0.0, 0.55, 1.0],
@@ -431,9 +431,9 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  const Color(0xFF0A0F1A),
+                  AppColors.darkCanvas,
                   accent.withValues(alpha: 0.14),
-                  const Color(0xFF141B2A),
+                  AppColors.darkCanvasElevated,
                 ],
               ),
               boxShadow: [
@@ -532,7 +532,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                     widget.hat.desc,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.92),
-                      fontSize: 12.5,
+                      fontSize: AppTypography.overlineTight,
                       height: 1.55,
                       letterSpacing: 0.15,
                     ),
