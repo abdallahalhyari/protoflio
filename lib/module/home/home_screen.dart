@@ -19,22 +19,16 @@ import 'page/contact_page.dart';
 
 import 'home_controller.dart';
 import 'widget/custom_cursor.dart';
-import 'widget/deferred_mount.dart';
 import 'widget/desktop_toolbar.dart';
 import 'widget/folio_bar.dart';
 import 'widget/keyboard_hint_chip.dart';
-import 'widget/mobile_footer.dart';
-import 'widget/mobile_pager.dart';
-import 'widget/mobile_progress_rail.dart';
-import 'widget/mobile_section_divider.dart';
+import 'widget/mobile_home_layout.dart';
 import 'widget/progress_bar.dart';
-import 'widget/scroll_to_top_button.dart';
 import 'widget/shortcut_help_dialog.dart';
 import 'widget/magazine_page_transformer.dart';
 import 'widget/portfolio_nav.dart';
 import 'widget/page_background.dart';
 import 'widget/mobile_app_bar.dart';
-import 'widget/mobile_nav_sheet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -557,168 +551,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildMobileLayout(BuildContext context) {
-    return Stack(
-      children: [
-        // Layer 1: Continuous scrollable column containing all 7 sections
-        SingleChildScrollView(
-          key: const PageStorageKey<String>('mobile_scrollview'),
-          controller: _mobileScrollController,
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.only(
-            top: 60 + MediaQuery.paddingOf(context).top,
-            bottom: 40,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              RepaintBoundary(
-                child: KeyedSubtree(
-                  key: _sectionKeys[0],
-                  child: IntroPage(
-                    onScrollDown: () => _scrollToMobileSection(1),
-                    onViewWork: () => _scrollToMobileSection(2),
-                    onDownloadResume: _downloadResume,
-                    onContactMe: () => _scrollToMobileSection(6),
-                    isContinuousMobile: true,
-                  ),
-                ),
-              ),
-              MobileSectionDivider(number: '02', title: _dividerLabelFor(1)),
-              DeferredMount(
-                sectionIndex: 1,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: _sectionKeys[1],
-                    child: const ExperiencePage(isContinuousMobile: true),
-                  ),
-                ),
-              ),
-              MobileSectionDivider(number: '03', title: _dividerLabelFor(2)),
-              DeferredMount(
-                sectionIndex: 2,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: _sectionKeys[2],
-                    child: const ProjectsPage(isContinuousMobile: true),
-                  ),
-                ),
-              ),
-              MobileSectionDivider(number: '04', title: _dividerLabelFor(3)),
-              DeferredMount(
-                sectionIndex: 3,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: _sectionKeys[3],
-                    child: const SkillsPage(isContinuousMobile: true),
-                  ),
-                ),
-              ),
-              MobileSectionDivider(number: '05', title: _dividerLabelFor(4)),
-              DeferredMount(
-                sectionIndex: 4,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: _sectionKeys[4],
-                    child: const EngineeringPage(isContinuousMobile: true),
-                  ),
-                ),
-              ),
-              MobileSectionDivider(number: '06', title: _dividerLabelFor(5)),
-              DeferredMount(
-                sectionIndex: 5,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: _sectionKeys[5],
-                    child: const HatsGridPage(isContinuousMobile: true),
-                  ),
-                ),
-              ),
-              MobileSectionDivider(number: '07', title: _dividerLabelFor(6)),
-              DeferredMount(
-                sectionIndex: 6,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: _sectionKeys[6],
-                    child: const ContactPage(isContinuousMobile: true),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 48),
-              const MobileFooter(),
-            ],
-          ),
-        ),
-
-        // Layer 2: Sticky frosted-glass MobileAppBar
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: MobileAppBar(
-            onMenuPressed: () {
-              MobileNavSheet.show(
-                context,
-                activeIndex: _pageIndex.value,
-                onSelectSection: (index) => _scrollToMobileSection(index),
-                onDownloadResume: _downloadResume,
-              );
-            },
-            onLogoPressed: () => _scrollToMobileSection(0),
-          ),
-        ),
-
-        // Layer 3: Floating Scroll-To-Top button
-        Positioned(
-          bottom: 24,
-          right: 18,
-          child: ValueListenableBuilder<bool>(
-            valueListenable: _showScrollToTop,
-            builder: (context, show, child) {
-              if (!show) return const SizedBox.shrink();
-              return ScrollToTopButton(
-                onPressed: () => _mobileScrollController.animateTo(
-                  0,
-                  duration: AppMotion.sectionScroll,
-                  curve: AppMotion.emphasized,
-                ),
-              );
-            },
-          ),
-        ),
-
-        // Layer 4: Vertical progress rail — tap any dot to jump.
-        const Positioned(
-          top: 0,
-          bottom: 0,
-          right: 4,
-          child: Center(child: MobileProgressRail()),
-        ),
-
-        // Layer 5: Prev / Next floating pager — one-tap section skip
-        // without opening the menu sheet.
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 20 + MediaQuery.paddingOf(context).bottom,
-          child: const Center(child: MobilePager()),
-        ),
-      ],
+    return MobileHomeLayout(
+      scrollController: _mobileScrollController,
+      sectionKeys: _sectionKeys,
     );
   }
-
-  /// Returns the localized nav label for `index` uppercased, used as the
-  /// mobile continuous-scroll section divider title so those labels are
-  /// automatically translated (en / ar / cs) with the rest of the nav.
-  String _dividerLabelFor(int index) {
-    final labels = TopNav.getLabels(context);
-    if (index < 0 || index >= labels.length) return '';
-    return labels[index].toUpperCase();
-  }
-
 }
