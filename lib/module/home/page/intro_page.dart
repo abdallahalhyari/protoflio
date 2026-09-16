@@ -316,7 +316,7 @@ class _IntroPageState extends State<IntroPage>
                 isDark: isDark,
                 child: Text(
                   '❖',
-                  style: TextStyle(color: _accent, fontSize: 13),
+                  style: TextStyle(color: _accent, fontSize: AppTypography.small),
                 ),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),

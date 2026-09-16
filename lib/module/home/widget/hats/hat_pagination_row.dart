@@ -38,7 +38,7 @@ class HatPaginationRow extends StatelessWidget {
             'PREV',
             style: TextStyle(
               fontFamily: 'Courier',
-              fontSize: 9.5,
+              fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -53,7 +53,7 @@ class HatPaginationRow extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Courier',
                   color: primary,
-                  fontSize: 10.5,
+                  fontSize: AppTypography.editorial,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.0,
                 ),
@@ -76,7 +76,7 @@ class HatPaginationRow extends StatelessWidget {
             'NEXT',
             style: TextStyle(
               fontFamily: 'Courier',
-              fontSize: 9.5,
+              fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w800,
             ),
           ),

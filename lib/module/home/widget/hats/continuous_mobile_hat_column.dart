@@ -47,7 +47,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
             'FEATURE 06 · 6 ROLES',
             style: TextStyle(
               color: theme.colorScheme.primary.withValues(alpha: 0.35),
-              fontSize: 10.5,
+              fontSize: AppTypography.editorial,
               fontWeight: FontWeight.w900,
               letterSpacing: 3,
             ),
@@ -144,7 +144,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.72)
                               : AppColors.slate500,
-                          fontSize: 9.5,
+                          fontSize: AppTypography.editorialSm,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,
                         ),

@@ -46,7 +46,7 @@ class SkillsEmptyState extends StatelessWidget {
               l10n.skillsEmptyTitle,
               style: TextStyle(
                 color: isDark ? Colors.white : AppColors.slate900,
-                fontSize: 13,
+                fontSize: AppTypography.small,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -56,7 +56,7 @@ class SkillsEmptyState extends StatelessWidget {
               child: Text(
                 l10n.skillsEmptyShowAll,
                 style: const TextStyle(
-                  fontSize: 11,
+                  fontSize: AppTypography.caption,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.4,
                 ),

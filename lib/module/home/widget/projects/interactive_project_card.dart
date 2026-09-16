@@ -220,7 +220,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                       style: TextStyle(
                                         fontFamily: 'Courier',
                                         color: ctaColor,
-                                        fontSize: 11,
+                                        fontSize: AppTypography.caption,
                                         fontWeight: FontWeight.w900,
                                         letterSpacing: 1.0,
                                       ),

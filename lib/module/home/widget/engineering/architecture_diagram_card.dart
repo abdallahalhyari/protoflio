@@ -68,7 +68,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Courier',
                     color: isDark ? Colors.white70 : AppColors.slate600,
-                    fontSize: 9.5,
+                    fontSize: AppTypography.editorialSm,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

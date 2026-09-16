@@ -65,7 +65,7 @@ class IntroCtaRow extends StatelessWidget {
       label: Text(
         label,
         style: const TextStyle(
-          fontSize: 13,
+          fontSize: AppTypography.small,
           fontWeight: FontWeight.w800,
           letterSpacing: 1.2,
         ),

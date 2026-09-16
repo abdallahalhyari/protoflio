@@ -36,7 +36,7 @@ class HeroEmailCard extends StatelessWidget {
         foregroundColor: Colors.black,
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
         textStyle: const TextStyle(
-          fontSize: 12,
+          fontSize: AppTypography.overline,
           fontWeight: FontWeight.w900,
           letterSpacing: 1.4,
         ),
@@ -113,7 +113,7 @@ class HeroEmailCard extends StatelessWidget {
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)
                       : AppColors.slate500,
-                  fontSize: 12,
+                  fontSize: AppTypography.overline,
                   fontWeight: FontWeight.w600,
                 ),
               ),

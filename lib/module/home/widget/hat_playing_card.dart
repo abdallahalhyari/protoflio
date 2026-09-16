@@ -393,7 +393,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                       'TAP TO FLIP',
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.82),
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.8,
                       ),
@@ -464,7 +464,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                             text: 'REVERSE · ',
                             style: TextStyle(
                               color: Colors.white.withValues(alpha: 0.5),
-                              fontSize: 11,
+                              fontSize: AppTypography.caption,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 2,
                             ),
@@ -473,7 +473,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                             text: widget.hat.title.toUpperCase(),
                             style: TextStyle(
                               color: accent,
-                              fontSize: 12,
+                              fontSize: AppTypography.overline,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.8,
                             ),
@@ -518,7 +518,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                     widget.hat.titleDesc,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 12,
+                      fontSize: AppTypography.overline,
                       fontWeight: FontWeight.w800,
                       height: 1.4,
                       letterSpacing: 0.3,
@@ -550,7 +550,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                       'TAP TO RETURN',
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.82),
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.8,
                       ),

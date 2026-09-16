@@ -57,7 +57,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
           Text(
             topic.summary,
             style: TextStyle(
-              fontSize: 13,
+              fontSize: AppTypography.small,
               color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700,
               height: 1.45,
             ),
@@ -100,7 +100,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                   topic.whyChosen,
                   style: TextStyle(
                     color: isDark ? Colors.white : AppColors.slate800,
-                    fontSize: 12,
+                    fontSize: AppTypography.overline,
                     height: 1.45,
                     fontWeight: FontWeight.w500,
                   ),
@@ -116,7 +116,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Courier',
               color: scheme.primary,
-              fontSize: 10.5,
+              fontSize: AppTypography.editorial,
               fontWeight: FontWeight.w800,
               letterSpacing: 1.2,
             ),
@@ -130,7 +130,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 children: [
                   Text(
                     '❖ ',
-                    style: TextStyle(color: scheme.primary, fontSize: 11),
+                    style: TextStyle(color: scheme.primary, fontSize: AppTypography.caption),
                   ),
                   Expanded(
                     child: Text(
