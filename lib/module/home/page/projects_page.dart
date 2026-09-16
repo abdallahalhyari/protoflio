@@ -32,7 +32,6 @@ class _ProjectsPageState extends State<ProjectsPage>
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
     final loc = AppLocalizations.of(context)!;
-    final isDark = scheme.brightness == Brightness.dark;
 
     return AppScreenShell(
      maxWidth: 1200,
@@ -60,7 +59,6 @@ class _ProjectsPageState extends State<ProjectsPage>
                            project: kProjects[0],
                            index: 0,
                            scheme: scheme,
-                           isDark: isDark,
                            isDesktop: isDesktop,
                          ),
                        ),
@@ -73,7 +71,6 @@ class _ProjectsPageState extends State<ProjectsPage>
                            project: kProjects[1],
                            index: 1,
                            scheme: scheme,
-                           isDark: isDark,
                            isDesktop: isDesktop,
                          ),
                        ),
@@ -91,7 +88,6 @@ class _ProjectsPageState extends State<ProjectsPage>
                            project: kProjects[2],
                            index: 2,
                            scheme: scheme,
-                           isDark: isDark,
                            isDesktop: isDesktop,
                          ),
                        ),
@@ -105,7 +101,6 @@ class _ProjectsPageState extends State<ProjectsPage>
                              project: kProjects[3],
                              index: 3,
                              scheme: scheme,
-                             isDark: isDark,
                              isDesktop: isDesktop,
                            ),
                          ),
@@ -135,7 +130,6 @@ class _ProjectsPageState extends State<ProjectsPage>
                        project: kProjects[i],
                        index: i,
                        scheme: scheme,
-                       isDark: isDark,
                        isDesktop: isDesktop,
                      ),
                    ),

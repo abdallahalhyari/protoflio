@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../service/sound_service.dart';
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../model/experience.dart';
 
@@ -42,7 +43,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
   @override
   Widget build(BuildContext context) {
     final scheme = widget.scheme;
-    final isDark = scheme.brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final reduce = MediaQuery.disableAnimationsOf(context);
     final hovered = _hover && !reduce;
 
@@ -200,7 +201,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
   }
 
   Widget _buildHighlight(String highlight, ColorScheme scheme) {
-    final isDark = scheme.brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final int colonIndex = highlight.indexOf(':');
     final bool hasColon = colonIndex != -1;
     final String prefix = hasColon ? highlight.substring(0, colonIndex + 1) : '';

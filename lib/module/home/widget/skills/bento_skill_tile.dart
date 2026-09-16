@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../../../service/sound_service.dart';
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../model/skill.dart';
 import '../holographic_physics.dart';
@@ -99,7 +100,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
   }
 
   Widget _buildFront() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurfaceElevated : Colors.white,
@@ -236,7 +237,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
   }
 
   Widget _buildBack() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,

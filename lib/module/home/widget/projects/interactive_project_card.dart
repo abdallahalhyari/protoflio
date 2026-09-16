@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../model/project.dart';
 import '../../page/project_modal.dart';
@@ -8,7 +9,6 @@ class InteractiveProjectCard extends StatefulWidget {
   final Project project;
   final int index;
   final ColorScheme scheme;
-  final bool isDark;
   final bool isDesktop;
 
   const InteractiveProjectCard({
@@ -16,7 +16,6 @@ class InteractiveProjectCard extends StatefulWidget {
     required this.project,
     required this.index,
     required this.scheme,
-    required this.isDark,
     required this.isDesktop,
   });
 
@@ -36,6 +35,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.isDarkMode;
     return Semantics(
       button: true,
       label: 'Read case study for ${widget.project.name}',
@@ -50,18 +50,18 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
           child: Card(
             margin: EdgeInsets.zero,
             clipBehavior: Clip.antiAlias,
-            elevation: widget.isDark ? 0 : (_isHovered ? 12 : 4),
-            shadowColor: widget.isDark ? Colors.transparent : Colors.black.withValues(alpha: 0.15),
+            elevation: isDark ? 0 : (_isHovered ? 12 : 4),
+            shadowColor: isDark ? Colors.transparent : Colors.black.withValues(alpha: 0.15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppRadius.md),
               side: BorderSide(
-                color: widget.isDark
+                color: isDark
                     ? (_isHovered ? widget.scheme.primary.withValues(alpha: 0.4) : Colors.white.withValues(alpha: 0.1))
                     : (_isHovered ? widget.scheme.primary.withValues(alpha: 0.2) : Colors.transparent),
                 width: 1,
               ),
             ),
-            color: widget.isDark ? AppColors.darkCard : Colors.white,
+            color: isDark ? AppColors.darkCard : Colors.white,
             child: InkWell(
               onTap: () => showProjectCaseStudy(context, project: widget.project, index: widget.index),
               child: ConstrainedBox(
@@ -182,7 +182,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                   fontFamily: AppTypography.displayFont,
                                   color: _isHovered
                                       ? widget.scheme.primary
-                                      : (widget.isDark ? Colors.white : AppColors.slate900),
+                                      : (isDark ? Colors.white : AppColors.slate900),
                                   fontSize: widget.isDesktop ? 22 : 18,
                                   fontWeight: FontWeight.w900,
                                   height: 1.1,
@@ -197,7 +197,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               Text(
                                 widget.project.tagline,
                                 style: TextStyle(
-                                  color: widget.isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate600,
+                                  color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate600,
                                   fontSize: widget.isDesktop ? 13 : 12,
                                   height: 1.4,
                                 ),

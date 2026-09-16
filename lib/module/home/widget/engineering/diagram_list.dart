@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../model/architecture_topic.dart';
 
@@ -16,7 +17,7 @@ class DiagramList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = scheme.brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final list = ListView.separated(
       shrinkWrap: !isDesktop,
       physics: isDesktop
