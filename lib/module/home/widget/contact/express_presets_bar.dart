@@ -65,7 +65,7 @@ class ExpressPresetsBar extends StatelessWidget {
                 Icon(
                   Icons.bolt_rounded,
                   size: 16,
-                  color: isDark ? accentSoft : const Color(0xFFD97706),
+                  color: context.amberText,
                 ),
                 const SizedBox(width: 6),
                 Expanded(
@@ -75,7 +75,7 @@ class ExpressPresetsBar extends StatelessWidget {
                     child: Text(
                       'ONE-TAP EXPRESS REACH-OUT PRESETS',
                       style: TextStyle(
-                        color: isDark ? accentSoft : const Color(0xFFD97706),
+                        color: context.amberText,
                         fontSize: 10.5,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.8,

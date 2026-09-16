@@ -83,7 +83,7 @@ class HatDeckHeader extends StatelessWidget {
                 onPressed: onShuffle,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: isDark
-                      ? scheme.primary.withValues(alpha: 0.35)
+                      ? scheme.primary
                       : const Color(0xFF0284C7),
                   side: BorderSide(
                       color: scheme.primary.withValues(alpha: 0.6)),

@@ -47,8 +47,8 @@ class SwipeAffordance extends StatelessWidget {
                 label,
                 style: TextStyle(
                   color: isDark
-                      ? Colors.white.withValues(alpha: 0.65)
-                      : AppColors.slate500,
+                      ? Colors.white.withValues(alpha: 0.72)
+                      : AppColors.slate600,
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.2,

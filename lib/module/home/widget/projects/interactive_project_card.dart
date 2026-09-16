@@ -56,8 +56,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
               borderRadius: BorderRadius.circular(AppRadius.md),
               side: BorderSide(
                 color: isDark
-                    ? (_isHovered ? widget.scheme.primary.withValues(alpha: 0.4) : Colors.white.withValues(alpha: 0.1))
-                    : (_isHovered ? widget.scheme.primary.withValues(alpha: 0.2) : Colors.transparent),
+                    ? (_isHovered ? widget.scheme.primary.withValues(alpha: 0.5) : Colors.white.withValues(alpha: 0.12))
+                    : (_isHovered ? widget.scheme.primary.withValues(alpha: 0.45) : AppColors.slate200),
                 width: 1,
               ),
             ),
@@ -210,21 +210,26 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                             offset: _isHovered && widget.isDesktop ? const Offset(0.05, 0) : Offset.zero,
                             duration: AppMotion.cardHover,
                             curve: AppMotion.emphasized,
-                            child: Row(
-                              children: [
-                                Text(
-                                  'READ CASE STUDY',
-                                  style: TextStyle(
-                                    fontFamily: 'Courier',
-                                    color: widget.scheme.primary,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: 1.0,
-                                  ),
-                                ),
-                                const SizedBox(width: 6),
-                                Icon(Icons.arrow_forward_rounded, size: 14, color: widget.scheme.primary),
-                              ],
+                            child: Builder(
+                              builder: (context) {
+                                final ctaColor = isDark ? widget.scheme.primary : AppColors.accentIndigoDeepText;
+                                return Row(
+                                  children: [
+                                    Text(
+                                      'READ CASE STUDY',
+                                      style: TextStyle(
+                                        fontFamily: 'Courier',
+                                        color: ctaColor,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 1.0,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Icon(Icons.arrow_forward_rounded, size: 14, color: ctaColor),
+                                  ],
+                                );
+                              },
                             ),
                           ),
                         ],

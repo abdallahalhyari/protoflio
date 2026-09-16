@@ -20,7 +20,7 @@ class ContactMastheadFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const availabilityGreen = AppColors.accentGreen;
+    final availabilityGreen = context.greenText;
     final isMobile = MediaQuery.sizeOf(context).width < 640;
     final isDark = context.isDarkMode;
 
@@ -111,7 +111,7 @@ class ContactMastheadFooter extends StatelessWidget {
               spacing: 6,
               runSpacing: 4,
               children: [
-                const Icon(Icons.shield_outlined,
+                Icon(Icons.shield_outlined,
                     size: 13, color: availabilityGreen),
                 Text(
                   'VERIFIED SENIOR MOBILE ARCHITECT · DIRECT COMMUNICATION',

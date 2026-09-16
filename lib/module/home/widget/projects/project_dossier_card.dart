@@ -20,8 +20,19 @@ class ProjectDossierCard extends StatelessWidget {
     required this.isDark,
   });
 
+  Color _resolveAdaptiveAccent(Color color) {
+    if (isDark) return color;
+    final val = color.toARGB32();
+    if (val == 0xFFF87171 || val == 0xFFEF4444) return AppColors.accentRoseDeep;
+    if (val == 0xFF818CF8 || val == 0xFF6366F1) return AppColors.accentIndigoDeepText;
+    if (val == 0xFF10B981 || val == 0xFF34D399) return AppColors.accentGreenDeep;
+    if (val == 0xFFFDE68A || val == 0xFFFBBF24 || val == 0xFFF59E0B) return AppColors.accentAmberDeep;
+    return color;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final effectiveAccent = _resolveAdaptiveAccent(accentColor);
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
@@ -29,10 +40,10 @@ class ProjectDossierCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: isDark ? accentColor.withValues(alpha: 0.08) : Colors.white.withValues(alpha: 0.90),
           borderRadius: BorderRadius.circular(AppRadius.smd),
-          border: Border.all(color: accentColor.withValues(alpha: isDark ? 0.28 : 0.4), width: 1.0),
+          border: Border.all(color: (isDark ? accentColor : effectiveAccent).withValues(alpha: isDark ? 0.28 : 0.4), width: 1.0),
           boxShadow: [
             BoxShadow(
-              color: accentColor.withValues(alpha: isDark ? 0.05 : 0.04),
+              color: (isDark ? accentColor : effectiveAccent).withValues(alpha: isDark ? 0.05 : 0.04),
               blurRadius: 10,
             ),
           ],
@@ -42,13 +53,13 @@ class ProjectDossierCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.api_rounded, size: 12, color: accentColor),
+                Icon(Icons.api_rounded, size: 12, color: effectiveAccent),
                 const SizedBox(width: 6),
                 Text(
                   label,
                   style: TextStyle(
                     fontFamily: 'Courier',
-                    color: accentColor,
+                    color: effectiveAccent,
                     fontSize: isDesktop ? 10.0 : 9.0,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.5,

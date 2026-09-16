@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../data/experience_data.dart';
 
@@ -129,9 +130,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                     '❖ ',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: isDark
-                                          ? const Color(0xFFFBBF24)
-                                          : const Color(0xFFD97706),
+                                      color: context.amberText,
                                     ),
                                   ),
                                   const SizedBox(width: 6),

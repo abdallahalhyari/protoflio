@@ -24,7 +24,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? scheme.surface.withValues(alpha: 0.5) : Colors.white.withValues(alpha: 0.90),
         borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: isDark ? Colors.white12 : AppColors.slate200),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200),
         boxShadow: isDark
             ? []
             : [

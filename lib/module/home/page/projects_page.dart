@@ -214,7 +214,7 @@ class _ProjectsPageState extends State<ProjectsPage>
             ),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
-              child: Container(height: 1, color: isDark ? Colors.white24 : Colors.black12),
+              child: Container(height: 1, color: isDark ? Colors.white24 : AppColors.slate300),
             ),
           ],
         ),

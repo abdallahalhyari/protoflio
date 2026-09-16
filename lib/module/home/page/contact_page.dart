@@ -102,7 +102,7 @@ class _ContactPageState extends State<ContactPage>
               color: isDark ? AppColors.slate900 : Colors.white,
               borderRadius: BorderRadius.circular(AppRadius.pill),
               border: Border.all(
-                color: _availabilityGreen.withValues(alpha: 0.65),
+                color: (isDark ? _availabilityGreen : AppColors.accentGreenDeep).withValues(alpha: 0.65),
                 width: 1.2,
               ),
               boxShadow: [
@@ -116,8 +116,8 @@ class _ContactPageState extends State<ContactPage>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.check_circle_rounded,
-                    color: _availabilityGreen, size: 18),
+                Icon(Icons.check_circle_rounded,
+                    color: isDark ? _availabilityGreen : AppColors.accentGreenDeep, size: 18),
                 const SizedBox(width: 10),
                 Flexible(
                   child: Text(

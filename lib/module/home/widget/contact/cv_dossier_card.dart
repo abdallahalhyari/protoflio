@@ -14,7 +14,6 @@ class CvDossierCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
     final isDark = context.isDarkMode;
-    final accentSoft = accent.withValues(alpha: 0.35);
     final l10n = AppLocalizations.of(context)!;
 
     return RepaintBoundary(
@@ -66,7 +65,7 @@ class CvDossierCard extends StatelessWidget {
                       child: Text(
                         l10n.contactAtsVerified,
                         style: TextStyle(
-                          color: isDark ? accentSoft : const Color(0xFFD97706),
+                          color: context.amberText,
                           fontSize: 9.5,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.4,

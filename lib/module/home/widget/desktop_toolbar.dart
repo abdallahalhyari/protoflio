@@ -45,7 +45,12 @@ class _Puck extends StatelessWidget {
       color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
       elevation: dark ? 0 : 2,
       shadowColor: Colors.black12,
-      shape: const CircleBorder(),
+      shape: CircleBorder(
+        side: BorderSide(
+          color: dark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200,
+          width: 1.0,
+        ),
+      ),
       child: child,
     );
   }

@@ -76,7 +76,7 @@ class HatRolePills extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Courier',
                       color: selectedIndex == i
-                          ? primary.withValues(alpha: 0.35)
+                          ? (isDark ? Colors.white : AppColors.slate900)
                           : (isDark ? Colors.white70 : AppColors.slate700),
                       fontSize: isDesktop ? 10.0 : 8.5,
                       fontWeight: selectedIndex == i

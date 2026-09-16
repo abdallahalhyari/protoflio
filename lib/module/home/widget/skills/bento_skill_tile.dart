@@ -370,7 +370,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                                 tag,
                                 style: TextStyle(
                                   fontFamily: 'Courier',
-                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : Theme.of(context).colorScheme.primary,
+                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : _adaptiveAccent(context, widget.categoryColor),
                                   fontSize: widget.isDesktop ? 9.5 : 8.0,
                                   fontWeight: FontWeight.w700,
                                 ),

@@ -67,11 +67,11 @@ class _TelemetryBarState extends State<TelemetryBar> {
         runSpacing: 8,
         children: [
           pill(
-            border: AppColors.accentGreen.withValues(alpha: 0.45),
+            border: (isDark ? AppColors.accentGreen : AppColors.accentGreenDeep).withValues(alpha: 0.45),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const PulsingDot(color: AppColors.accentGreen),
+                PulsingDot(color: isDark ? AppColors.accentGreen : AppColors.accentGreenDeep),
                 const SizedBox(width: 6),
                 Flexible(
                   child: FittedBox(
@@ -80,8 +80,8 @@ class _TelemetryBarState extends State<TelemetryBar> {
                       isOfficeHours
                           ? 'ACTIVE WORKING HOURS'
                           : 'STANDBY · ASYNC',
-                      style: const TextStyle(
-                        color: AppColors.accentGreen,
+                      style: TextStyle(
+                        color: context.greenText,
                         fontSize: 10.5,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.0,

@@ -244,7 +244,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.menu_rounded, size: 14, color: AppColors.accentIndigo),
+                        Icon(Icons.menu_rounded, size: 14, color: isDark ? AppColors.accentIndigo : AppColors.accentIndigo600),
                         const SizedBox(width: 4),
                         Text(
                           'MENU',

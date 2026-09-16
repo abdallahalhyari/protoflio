@@ -38,10 +38,21 @@ class BentoTrackCard extends StatefulWidget {
 class _BentoTrackCardState extends State<BentoTrackCard> {
   bool _hover = false;
 
+  Color _adaptiveAccent(BuildContext context, Color color) {
+    if (context.isDarkMode) return color;
+    final val = color.toARGB32();
+    if (val == 0xFF38BDF8) return AppColors.accentSkyDeep;
+    if (val == 0xFF34D399) return AppColors.accentGreenDeep;
+    if (val == 0xFF818CF8) return AppColors.accentIndigoDeepText;
+    if (val == 0xFF8B5CF6) return AppColors.accentVioletDeep;
+    return color;
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = widget.track;
     final isDark = context.isDarkMode;
+    final accentText = _adaptiveAccent(context, t.accent);
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
@@ -58,7 +69,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
             color: _hover
-                ? t.accent.withValues(alpha: 0.6)
+                ? (isDark ? t.accent : accentText).withValues(alpha: 0.6)
                 : (isDark
                     ? Colors.white.withValues(alpha: 0.1)
                     : AppColors.slate200),
@@ -84,14 +95,14 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                   height: 38,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: t.accent.withValues(alpha: 0.14),
+                    color: t.accent.withValues(alpha: isDark ? 0.14 : 0.10),
                     borderRadius: BorderRadius.circular(AppRadius.sm),
                     border: Border.all(
-                      color: t.accent.withValues(alpha: 0.35),
+                      color: (isDark ? t.accent : accentText).withValues(alpha: isDark ? 0.35 : 0.4),
                       width: 1,
                     ),
                   ),
-                  child: Icon(t.icon, size: 18, color: t.accent),
+                  child: Icon(t.icon, size: 18, color: accentText),
                 ),
                 const SizedBox(width: 8),
                 Flexible(
@@ -99,7 +110,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                     decoration: BoxDecoration(
-                      color: t.accent.withValues(alpha: 0.10),
+                      color: t.accent.withValues(alpha: isDark ? 0.10 : 0.08),
                       borderRadius: BorderRadius.circular(AppRadius.xs),
                     ),
                     child: FittedBox(
@@ -107,7 +118,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                       child: Text(
                         t.tag,
                         style: TextStyle(
-                          color: t.accent,
+                          color: accentText,
                           fontSize: 10,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.0,
@@ -149,7 +160,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                   Text(
                     'INQUIRE TRACK',
                     style: TextStyle(
-                      color: t.accent,
+                      color: accentText,
                       fontSize: 10,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1.4,
@@ -157,7 +168,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                   ),
                   const SizedBox(width: 4),
                   Icon(Icons.arrow_forward_rounded,
-                      size: 12, color: t.accent),
+                      size: 12, color: accentText),
                 ],
               ),
             ),

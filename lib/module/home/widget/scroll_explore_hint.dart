@@ -42,8 +42,8 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
   @override
   Widget build(BuildContext context) {
     final tint = widget.isDark
-        ? Colors.white.withValues(alpha: 0.65)
-        : AppColors.slate500;
+        ? Colors.white.withValues(alpha: 0.72)
+        : AppColors.slate600;
     return Semantics(
       button: true,
       label: 'Scroll to explore the portfolio',

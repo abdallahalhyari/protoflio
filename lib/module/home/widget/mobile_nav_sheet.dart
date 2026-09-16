@@ -244,6 +244,15 @@ class MobileNavSheet extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final item = sections[index];
                         final isActive = activeIndex == item.index;
+                        final activeColor = isDark
+                            ? item.accentColor
+                            : switch (item.accentColor.toARGB32()) {
+                                0xFF38BDF8 => AppColors.accentSkyDeep,
+                                0xFF34D399 => AppColors.accentGreenDeep,
+                                0xFFA78BFA || 0xFF818CF8 => AppColors.accentVioletDeep,
+                                0xFFFBBF24 || 0xFFF59E0B => AppColors.accentAmberDeep,
+                                _ => item.accentColor,
+                              };
 
                         return InkWell(
                           onTap: () {
@@ -268,7 +277,7 @@ class MobileNavSheet extends StatelessWidget {
                               borderRadius: BorderRadius.circular(AppRadius.md),
                               border: Border.all(
                                 color: isActive
-                                    ? item.accentColor.withValues(alpha: isDark ? 0.6 : 0.45)
+                                    ? activeColor.withValues(alpha: isDark ? 0.6 : 0.55)
                                     : (isDark
                                         ? Colors.white.withValues(alpha: 0.07)
                                         : AppColors.slate200),
@@ -308,7 +317,7 @@ class MobileNavSheet extends StatelessWidget {
                                   item.icon,
                                   size: 18,
                                   color: isActive
-                                      ? item.accentColor
+                                      ? activeColor
                                       : (isDark ? Colors.white60 : AppColors.slate500),
                                 ),
                                 const SizedBox(width: 12),
