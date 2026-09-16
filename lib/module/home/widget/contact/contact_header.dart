@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 
 /// Top header banner, display headline, and lede paragraph for the Contact & Reach Out section.
 class ContactHeader extends StatelessWidget {
-  final bool isDark;
-
-  const ContactHeader({
-    super.key,
-    required this.isDark,
-  });
+  const ContactHeader({super.key});
 
   static const _accent = Color(0xFF8B5CF6);
   static const _accentSoft = Color(0xFFA78BFA);
 
-  Widget _issueStrip() {
+  Widget _issueStrip(bool isDark) {
     Widget rule() => Container(
           width: 36,
           height: 1.5,
@@ -45,7 +41,8 @@ class ContactHeader extends StatelessWidget {
     );
   }
 
-  Widget _headline(Size size) {
+  Widget _headline(Size size, BuildContext context) {
+    final isDark = context.isDarkMode;
     final fs = (size.width * 0.055).clamp(32.0, 68.0);
     return Text(
       "LET'S BUILD SOMETHING EXTRAORDINARY",
@@ -55,7 +52,7 @@ class ContactHeader extends StatelessWidget {
         fontSize: fs,
         fontWeight: FontWeight.w900,
         letterSpacing: 2.5,
-        color: isDark ? Colors.white : AppColors.slate900,
+        color: context.onSurface,
         height: 1.05,
         shadows: isDark
             ? const [Shadow(color: Colors.black, blurRadius: 20)]
@@ -64,7 +61,7 @@ class ContactHeader extends StatelessWidget {
     );
   }
 
-  Widget _lede(Size size) {
+  Widget _lede(Size size, BuildContext context) {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 720),
@@ -74,9 +71,7 @@ class ContactHeader extends StatelessWidget {
           'Available for senior full-time leadership, architectural audits, and technical partnerships.',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.88)
-                : AppColors.slate600,
+            color: context.mutedText,
             fontSize: (size.width * 0.014).clamp(13.5, 17.0),
             height: 1.6,
             letterSpacing: 0.3,
@@ -89,15 +84,16 @@ class ContactHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    final isDark = context.isDarkMode;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _issueStrip(),
+        _issueStrip(isDark),
         const SizedBox(height: AppSpacing.xl),
-        _headline(size),
+        _headline(size, context),
         const SizedBox(height: AppSpacing.md),
-        _lede(size),
+        _lede(size, context),
       ],
     );
   }

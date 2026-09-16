@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import 'social_chip.dart';
 
 class ContactMastheadFooter extends StatelessWidget {
-  final bool isDark;
   final String linkedInHandle;
   final String githubHandle;
   final VoidCallback onOpenLinkedIn;
@@ -12,7 +12,6 @@ class ContactMastheadFooter extends StatelessWidget {
 
   const ContactMastheadFooter({
     super.key,
-    required this.isDark,
     required this.linkedInHandle,
     required this.githubHandle,
     required this.onOpenLinkedIn,
@@ -23,6 +22,7 @@ class ContactMastheadFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     const availabilityGreen = AppColors.accentGreen;
     final isMobile = MediaQuery.sizeOf(context).width < 640;
+    final isDark = context.isDarkMode;
 
     Widget rule() => Expanded(
           child: Container(

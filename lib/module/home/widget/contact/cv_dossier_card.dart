@@ -3,20 +3,17 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import '../../../../service/analytics_service.dart';
 import '../../../../service/cv_service.dart';
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 
 class CvDossierCard extends StatelessWidget {
-  final bool isDark;
-
-  const CvDossierCard({
-    super.key,
-    required this.isDark,
-  });
+  const CvDossierCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
+    final isDark = context.isDarkMode;
     final accentSoft = accent.withValues(alpha: 0.35);
     final l10n = AppLocalizations.of(context)!;
 

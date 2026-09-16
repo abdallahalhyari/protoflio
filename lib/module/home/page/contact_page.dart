@@ -153,14 +153,13 @@ class _ContactPageState extends State<ContactPage>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        ContactHeader(isDark: isDark),
+        const ContactHeader(),
         const SizedBox(height: AppSpacing.md),
-        TelemetryBar(isDark: isDark),
+        const TelemetryBar(),
         const SizedBox(height: AppSpacing.xl),
         // 1. Primary CTA — send email, right up front.
         HeroEmailCard(
           email: _email,
-          isDark: isDark,
           isDesktop: isDesktop,
           onSendEmail: () => _openMail(
             subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
@@ -170,7 +169,6 @@ class _ContactPageState extends State<ContactPage>
         const SizedBox(height: AppSpacing.lg),
         // 2. Fast pre-filled subject lines beneath the primary CTA.
         ExpressPresetsBar(
-          isDark: isDark,
           onSelectPreset: (subject, body) =>
               _openMail(subject: subject, body: body),
         ),
@@ -185,23 +183,20 @@ class _ContactPageState extends State<ContactPage>
           githubHandle: _githubHandle,
           githubUrl: _githubUrl,
           isDesktop: isDesktop,
-          isDark: isDark,
           onOpenUrl: (url) => unawaited(_open(url)),
           onCopy: (value) => _copy(context, value, isDark: isDark),
         ),
         const SizedBox(height: AppSpacing.xl),
         // 4. Recruiter-priority CV download.
-        CvDossierCard(isDark: isDark),
+        const CvDossierCard(),
         const SizedBox(height: AppSpacing.xl),
         // 5. Deep dive — engagement scopes for hiring managers who want more.
         EngagementMatrixSection(
           isDesktop: isDesktop,
-          isDark: isDark,
           onInquire: (subject, body) => _openMail(subject: subject, body: body),
         ),
         const SizedBox(height: AppSpacing.xl),
         ContactMastheadFooter(
-          isDark: isDark,
           linkedInHandle: _linkedInHandle,
           githubHandle: _githubHandle,
           onOpenLinkedIn: () => unawaited(_open(_linkedInUrl)),

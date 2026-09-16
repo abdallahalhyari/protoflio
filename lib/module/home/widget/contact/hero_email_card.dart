@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 
 class HeroEmailCard extends StatelessWidget {
   final String email;
-  final bool isDark;
   final bool isDesktop;
   final VoidCallback onSendEmail;
   final VoidCallback onCopyEmail;
@@ -13,7 +13,6 @@ class HeroEmailCard extends StatelessWidget {
   const HeroEmailCard({
     super.key,
     required this.email,
-    required this.isDark,
     required this.isDesktop,
     required this.onSendEmail,
     required this.onCopyEmail,
@@ -23,6 +22,7 @@ class HeroEmailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
+    final isDark = context.isDarkMode;
     final accentSoft = accent.withValues(alpha: 0.35);
     const availabilityGreen = AppColors.accentGreen;
     final l10n = AppLocalizations.of(context)!;

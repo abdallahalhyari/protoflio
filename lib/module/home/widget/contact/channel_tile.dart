@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 
 class ChannelData {
@@ -32,9 +33,8 @@ class ChannelData {
 /// icon puck, label + value, and two inline actions (primary / secondary).
 class ChannelTile extends StatefulWidget {
   final ChannelData data;
-  final bool isDark;
 
-  const ChannelTile({super.key, required this.data, required this.isDark});
+  const ChannelTile({super.key, required this.data});
 
   @override
   State<ChannelTile> createState() => _ChannelTileState();
@@ -46,7 +46,7 @@ class _ChannelTileState extends State<ChannelTile> {
   @override
   Widget build(BuildContext context) {
     final d = widget.data;
-    final isDark = widget.isDark;
+    final isDark = context.isDarkMode;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),

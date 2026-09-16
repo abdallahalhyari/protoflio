@@ -25,7 +25,7 @@ Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
 void main() {
   group('Contact Widgets Test Suite', () {
     testWidgets('ContactHeader renders feature strip, headline, and lede', (tester) async {
-      await tester.pumpWidget(_wrap(const ContactHeader(isDark: true)));
+      await tester.pumpWidget(_wrap(const ContactHeader()));
       await tester.pumpAndSettle();
 
       expect(find.text('FEATURE 07 · DIRECT LINE & REACH OUT'), findsOneWidget);
@@ -39,7 +39,6 @@ void main() {
       await tester.pumpWidget(_wrap(
         HeroEmailCard(
           email: 'alhyariabdallh@gmail.com',
-          isDark: true,
           isDesktop: true,
           onSendEmail: () => sent = true,
           onCopyEmail: () => copied = true,
@@ -64,7 +63,6 @@ void main() {
       String? selectedSubject;
       await tester.pumpWidget(_wrap(
         ExpressPresetsBar(
-          isDark: true,
           onSelectPreset: (subj, body) => selectedSubject = subj,
         ),
       ));
@@ -80,7 +78,7 @@ void main() {
     });
 
     testWidgets('CvDossierCard renders ATS badge and CV download triggers', (tester) async {
-      await tester.pumpWidget(_wrap(const CvDossierCard(isDark: true)));
+      await tester.pumpWidget(_wrap(const CvDossierCard()));
       await tester.pumpAndSettle();
 
       expect(find.text('ATS-VERIFIED · 2026 EDITION'), findsOneWidget);
@@ -100,7 +98,6 @@ void main() {
           githubHandle: 'abdallahalhyari',
           githubUrl: 'https://github.com/abdallahalhyari',
           isDesktop: true,
-          isDark: true,
           onOpenUrl: (_) {},
           onCopy: (_) {},
         ),
@@ -119,7 +116,6 @@ void main() {
       await tester.pumpWidget(_wrap(
         EngagementMatrixSection(
           isDesktop: true,
-          isDark: true,
           onInquire: (subj, body) => inquiredSubject = subj,
         ),
       ));
@@ -140,7 +136,6 @@ void main() {
       bool githubOpened = false;
       await tester.pumpWidget(_wrap(
         ContactMastheadFooter(
-          isDark: true,
           linkedInHandle: 'abdallah-alhyari',
           githubHandle: 'abdallahalhyari',
           onOpenLinkedIn: () => linkedInOpened = true,

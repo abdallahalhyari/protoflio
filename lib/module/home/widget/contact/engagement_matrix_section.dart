@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import 'consulting_track.dart';
 
 /// Executive engagement scopes (Architecture Audit, Full-Lifecycle App Engineering, Tech Leadership).
 class EngagementMatrixSection extends StatelessWidget {
   final bool isDesktop;
-  final bool isDark;
   final void Function(String subject, String body) onInquire;
 
   const EngagementMatrixSection({
     super.key,
     required this.isDesktop,
-    required this.isDark,
     required this.onInquire,
   });
 
@@ -24,6 +23,7 @@ class EngagementMatrixSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = context.isDarkMode;
 
     final tracks = [
       ConsultingTrack(
@@ -116,7 +116,7 @@ class EngagementMatrixSection extends StatelessWidget {
                   for (final track in tracks)
                     SizedBox(
                       width: cardWidth,
-                      child: BentoTrackCard(track: track, isDark: isDark),
+                      child: BentoTrackCard(track: track),
                     ),
                 ],
               );

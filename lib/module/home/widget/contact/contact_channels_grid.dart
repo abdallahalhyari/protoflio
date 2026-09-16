@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../../../service/analytics_service.dart';
 import 'channel_tile.dart';
@@ -15,7 +16,6 @@ class ContactChannelsGrid extends StatelessWidget {
   final String githubHandle;
   final String githubUrl;
   final bool isDesktop;
-  final bool isDark;
   final void Function(String url) onOpenUrl;
   final void Function(String value) onCopy;
 
@@ -29,7 +29,6 @@ class ContactChannelsGrid extends StatelessWidget {
     required this.githubHandle,
     required this.githubUrl,
     required this.isDesktop,
-    required this.isDark,
     required this.onOpenUrl,
     required this.onCopy,
   });
@@ -42,6 +41,7 @@ class ContactChannelsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = context.isDarkMode;
 
     final channels = [
       ChannelData(
@@ -153,7 +153,7 @@ class ContactChannelsGrid extends StatelessWidget {
                 for (final c in channels)
                   SizedBox(
                     width: tileW,
-                    child: ChannelTile(data: c, isDark: isDark),
+                    child: ChannelTile(data: c),
                   ),
               ],
             );

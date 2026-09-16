@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../editorial_chip.dart';
 import '../pulsing_dot.dart';
 
 class TelemetryBar extends StatefulWidget {
-  final bool isDark;
-  const TelemetryBar({super.key, required this.isDark});
+  const TelemetryBar({super.key});
 
   @override
   State<TelemetryBar> createState() => _TelemetryBarState();
@@ -42,7 +42,7 @@ class _TelemetryBarState extends State<TelemetryBar> {
     final period = hour >= 12 ? 'PM' : 'AM';
     final displayHour = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
     final isOfficeHours = hour >= 9 && hour < 19;
-    final isDark = widget.isDark;
+    final isDark = context.isDarkMode;
 
     Widget pill({required Widget child, Color? border}) => Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -52,8 +52,7 @@ class _TelemetryBarState extends State<TelemetryBar> {
                 : Colors.white.withValues(alpha: 0.85),
             borderRadius: BorderRadius.circular(AppRadius.pill),
             border: Border.all(
-              color:
-                  border ?? (isDark ? Colors.white12 : AppColors.slate200),
+              color: border ?? context.glassBorder,
               width: 1,
             ),
           ),

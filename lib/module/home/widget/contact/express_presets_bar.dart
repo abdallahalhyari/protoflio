@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../editorial_chip.dart';
 
 class ExpressPresetsBar extends StatelessWidget {
-  final bool isDark;
   final void Function(String subject, String body) onSelectPreset;
 
   const ExpressPresetsBar({
     super.key,
-    required this.isDark,
     required this.onSelectPreset,
   });
 
@@ -41,6 +40,7 @@ class ExpressPresetsBar extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
     final accentSoft = accent.withValues(alpha: 0.35);
+    final isDark = context.isDarkMode;
 
     return RepaintBoundary(
       child: Container(

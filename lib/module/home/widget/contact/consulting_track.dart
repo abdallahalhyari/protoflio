@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 
 class ConsultingTrack {
@@ -24,12 +25,10 @@ class ConsultingTrack {
 
 class BentoTrackCard extends StatefulWidget {
   final ConsultingTrack track;
-  final bool isDark;
 
   const BentoTrackCard({
     super.key,
     required this.track,
-    required this.isDark,
   });
 
   @override
@@ -42,6 +41,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
   @override
   Widget build(BuildContext context) {
     final t = widget.track;
+    final isDark = context.isDarkMode;
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
@@ -50,7 +50,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
         curve: Curves.easeOut,
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          color: widget.isDark
+          color: isDark
               ? (_hover
                   ? Colors.white.withValues(alpha: 0.08)
                   : Colors.white.withValues(alpha: 0.04))
@@ -59,7 +59,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
           border: Border.all(
             color: _hover
                 ? t.accent.withValues(alpha: 0.6)
-                : (widget.isDark
+                : (isDark
                     ? Colors.white.withValues(alpha: 0.1)
                     : AppColors.slate200),
             width: 1.2,
@@ -67,7 +67,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
           boxShadow: [
             if (_hover)
               BoxShadow(
-                color: t.accent.withValues(alpha: widget.isDark ? 0.15 : 0.08),
+                color: t.accent.withValues(alpha: isDark ? 0.15 : 0.08),
                 blurRadius: 18,
                 offset: const Offset(0, 6),
               ),
@@ -122,7 +122,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
             Text(
               t.title,
               style: TextStyle(
-                color: widget.isDark ? Colors.white : AppColors.slate900,
+                color: isDark ? Colors.white : AppColors.slate900,
                 fontSize: 14.5,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 0.3,
@@ -132,7 +132,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
             Text(
               t.description,
               style: TextStyle(
-                color: widget.isDark
+                color: isDark
                     ? Colors.white.withValues(alpha: 0.72)
                     : AppColors.slate500,
                 fontSize: 11.5,
