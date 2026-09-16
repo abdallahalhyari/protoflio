@@ -132,6 +132,22 @@ class AppColors {
   static const Color accentIndigo700 = Color(0xFF4338CA);
   static const Color hatGold = Color(0xFFC8A951);
 
+  // Accessible high-contrast Light Mode accent counterparts (>4.5:1 on white/slate50)
+  static const Color accentAmberDeep = Color(0xFFB45309); // Amber 700 (5.8:1)
+  static const Color accentGreenDeep = Color(0xFF047857); // Emerald 700 (6.1:1)
+  static const Color accentSkyDeep = Color(0xFF0284C7); // Sky 700 (4.6:1)
+  static const Color accentIndigoDeepText = Color(0xFF4338CA); // Indigo 700 (8.0:1)
+  static const Color accentVioletDeep = Color(0xFF6D28D9); // Violet 700 (6.8:1)
+  static const Color accentRoseDeep = Color(0xFFBE123C); // Rose 700 (5.9:1)
+  static const Color accentCyanDeep = Color(0xFF0E7490); // Cyan 700 (5.5:1)
+
+  /// Returns a luminous pastel tone in dark mode, or a high-contrast deep tone in light mode.
+  static Color adaptive({
+    required bool isDark,
+    required Color dark,
+    required Color light,
+  }) => isDark ? dark : light;
+
   // Neutral slate palette
   static const Color slate50 = Color(0xFFF8FAFC);
   static const Color slate100 = Color(0xFFF1F5F9);

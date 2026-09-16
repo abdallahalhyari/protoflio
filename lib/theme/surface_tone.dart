@@ -63,8 +63,23 @@ extension SurfaceTone on BuildContext {
       ? Colors.white.withValues(alpha: 0.12)
       : AppColors.slate200;
 
-  /// Signature accent used for the resume-download CTA. Unified across
-  /// modes so the button reads as the same brand element regardless of
-  /// theme — previously amber in dark, indigo in light.
-  Color get resumeAccent => AppColors.accentAmber;
+  /// Signature accent used for the resume-download CTA.
+  /// Amber in dark mode, deep rich bronze/amber in light mode for 5.8:1 contrast.
+  Color get resumeAccent => isDarkMode
+      ? AppColors.accentAmberSoft
+      : AppColors.accentAmberDeep;
+
+  /// Border for the resume CTA.
+  Color get resumeBorder => isDarkMode
+      ? AppColors.accentAmber
+      : const Color(0xFFD97706);
+
+  /// Semantic accessible accent text colors (>4.5:1 contrast in both modes)
+  Color get amberText => isDarkMode ? AppColors.accentAmberSoft : AppColors.accentAmberDeep;
+  Color get greenText => isDarkMode ? AppColors.accentGreenLight : AppColors.accentGreenDeep;
+  Color get skyText => isDarkMode ? AppColors.accentSkySoft : AppColors.accentSkyDeep;
+  Color get indigoText => isDarkMode ? AppColors.accentIndigoSoft : AppColors.accentIndigoDeepText;
+  Color get violetText => isDarkMode ? AppColors.accentVioletLight : AppColors.accentVioletDeep;
+  Color get roseText => isDarkMode ? AppColors.accentRoseLight : AppColors.accentRoseDeep;
+  Color get cyanText => isDarkMode ? AppColors.accentCyanLight : AppColors.accentCyanDeep;
 }

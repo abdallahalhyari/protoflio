@@ -147,13 +147,26 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                     decoration: BoxDecoration(
-                                      color: _kNowAccent.withValues(alpha: 0.15),
+                                      color: isDark
+                                          ? _kNowAccent.withValues(alpha: 0.15)
+                                          : AppColors.accentGreenDeep.withValues(alpha: 0.10),
                                       borderRadius: BorderRadius.circular(AppRadius.xs),
-                                      border: Border.all(color: _kNowAccent.withValues(alpha: 0.5)),
+                                      border: Border.all(
+                                        color: isDark
+                                            ? _kNowAccent.withValues(alpha: 0.5)
+                                            : AppColors.accentGreenDeep.withValues(alpha: 0.45),
+                                      ),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'LATEST DISPATCH',
-                                      style: TextStyle(color: _kNowAccent, fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 1),
+                                      style: TextStyle(
+                                        color: isDark
+                                            ? _kNowAccent
+                                            : AppColors.accentGreenDeep,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 1,
+                                      ),
                                     ),
                                   ),
                                 ]

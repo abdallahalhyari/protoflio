@@ -99,8 +99,33 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
     );
   }
 
+  Color _adaptiveAccent(BuildContext context, Color color) {
+    final isDark = context.isDarkMode;
+    if (isDark) return color;
+    if (color == AppColors.accentAmber || color.toARGB32() == 0xFFFBBF24 || color.toARGB32() == 0xFFF59E0B) {
+      return AppColors.accentAmberDeep;
+    }
+    if (color == AppColors.accentSky || color.toARGB32() == 0xFF38BDF8) {
+      return AppColors.accentSkyDeep;
+    }
+    if (color == AppColors.accentGreen || color.toARGB32() == 0xFF10B981) {
+      return AppColors.accentGreenDeep;
+    }
+    if (color == AppColors.accentViolet || color.toARGB32() == 0xFF8B5CF6) {
+      return AppColors.accentVioletDeep;
+    }
+    if (color == AppColors.accentVioletLight || color.toARGB32() == 0xFFA78BFA) {
+      return const Color(0xFF7C3AED);
+    }
+    if (color.toARGB32() == 0xFFF472B6) {
+      return const Color(0xFFBE185D);
+    }
+    return Theme.of(context).colorScheme.primary;
+  }
+
   Widget _buildFront() {
     final isDark = context.isDarkMode;
+    final accentText = _adaptiveAccent(context, widget.categoryColor);
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurfaceElevated : Colors.white,
@@ -143,11 +168,11 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                     Container(
                         padding: EdgeInsets.all(widget.isDesktop ? 12 : 6),
                         decoration: BoxDecoration(
-                          color: widget.categoryColor.withValues(alpha: 0.15),
+                          color: widget.categoryColor.withValues(alpha: isDark ? 0.15 : 0.10),
                           shape: BoxShape.circle,
-                          border: Border.all(color: widget.categoryColor.withValues(alpha: 0.3)),
+                          border: Border.all(color: widget.categoryColor.withValues(alpha: isDark ? 0.3 : 0.4)),
                         ),
-                        child: Icon(widget.skill.icon, color: widget.categoryColor, size: widget.isDesktop ? 36 : 20),
+                        child: Icon(widget.skill.icon, color: accentText, size: widget.isDesktop ? 36 : 20),
                       ),
                       SizedBox(height: widget.isDesktop ? 16 : 8),
                       Text(
@@ -167,14 +192,14 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: widget.categoryColor.withValues(alpha: 0.2),
+                          color: widget.categoryColor.withValues(alpha: isDark ? 0.2 : 0.12),
                           borderRadius: BorderRadius.circular(AppRadius.xs),
                         ),
                         child: Text(
                           _masteryLabel(widget.skill.level),
                           style: TextStyle(
                             fontFamily: 'Courier',
-                            color: widget.categoryColor,
+                            color: accentText,
                             fontSize: widget.isDesktop ? 11 : 9,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.2,
@@ -238,6 +263,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
 
   Widget _buildBack() {
     final isDark = context.isDarkMode;
+    final accentText = _adaptiveAccent(context, widget.categoryColor);
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,
@@ -272,7 +298,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                   children: [
                     Row(
                       children: [
-                        Icon(widget.skill.icon, color: widget.categoryColor, size: widget.isDesktop ? 20 : 16),
+                        Icon(widget.skill.icon, color: accentText, size: widget.isDesktop ? 20 : 16),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
@@ -291,19 +317,19 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
-                            color: widget.categoryColor.withValues(alpha: 0.12),
+                            color: widget.categoryColor.withValues(alpha: isDark ? 0.12 : 0.10),
                             borderRadius: BorderRadius.circular(AppRadius.xs),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.flip_to_front_rounded, size: 10, color: widget.categoryColor),
+                              Icon(Icons.flip_to_front_rounded, size: 10, color: accentText),
                               const SizedBox(width: 3),
                               Text(
                                 'FLIP',
                                 style: TextStyle(
                                   fontFamily: 'Courier',
-                                  color: widget.categoryColor,
+                                  color: accentText,
                                   fontSize: 10.0,
                                   fontWeight: FontWeight.w800,
                                 ),

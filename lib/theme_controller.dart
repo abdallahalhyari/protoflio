@@ -18,22 +18,22 @@ class ThemeController {
   static void updateSeedFromHash(String hash) {
     switch (hash.replaceAll('#', '').toLowerCase()) {
       case 'experience':
-        seedColor.value = const Color(0xFF10B981); // Neo-Mint Emerald
+        seedColor.value = AppColors.accentGreen; // Neo-Mint Emerald (0xFF10B981)
         return;
       case 'work':
-        seedColor.value = const Color(0xFF8B5CF6); // Royal Cyber Violet
+        seedColor.value = AppColors.accentViolet; // Royal Cyber Violet (0xFF8B5CF6)
         return;
       case 'stack':
-        seedColor.value = const Color(0xFFF59E0B); // Solar Radiant Amber
+        seedColor.value = AppColors.accentAmber; // Solar Radiant Amber (0xFFFBBF24)
         return;
       case 'engineering':
-        seedColor.value = const Color(0xFFF43F5E); // Crimson Coral Flare
+        seedColor.value = AppColors.accentRose; // Crimson Coral Flare (0xFFF43F5E)
         return;
       case 'about':
-        seedColor.value = const Color(0xFF06B6D4); // Quantum Cyber Cyan
+        seedColor.value = AppColors.accentCyan; // Quantum Cyber Cyan (0xFF06B6D4)
         return;
       case 'contact':
-        seedColor.value = const Color(0xFF2563EB); // Ultramarine Sapphire
+        seedColor.value = AppColors.accentIndigoDeep; // Luminous Cyber Indigo (0xFF6366F1)
         return;
       case 'home':
       default:
@@ -43,6 +43,15 @@ class ThemeController {
   }
 
   static Future<void> load() async {
+    final urlTheme = Uri.base.queryParameters['theme']?.toLowerCase();
+    if (urlTheme == 'light') {
+      mode.value = ThemeMode.light;
+      return;
+    } else if (urlTheme == 'dark') {
+      mode.value = ThemeMode.dark;
+      return;
+    }
+
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_prefsKey);
     switch (raw) {

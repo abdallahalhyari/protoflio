@@ -37,19 +37,22 @@ class EditorialChip extends StatelessWidget {
 
   Color _toneColor(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final isDark = context.isDarkMode;
     switch (tone) {
       case ChipTone.primary:
         return scheme.primary;
       case ChipTone.amber:
-        return AppColors.accentAmber;
+        return isDark ? AppColors.accentAmber : AppColors.accentAmberDeep;
       case ChipTone.green:
-        return AppColors.accentGreen;
+        return isDark ? AppColors.accentGreen : AppColors.accentGreenDeep;
       case ChipTone.sky:
-        return AppColors.accentSky;
+        return isDark ? AppColors.accentSky : AppColors.accentSkyDeep;
       case ChipTone.indigo:
-        return AppColors.accentIndigo;
+        return isDark ? AppColors.accentIndigo : AppColors.accentIndigoDeepText;
       case ChipTone.neutral:
-        return scheme.onSurface.withValues(alpha: 0.6);
+        return isDark
+            ? scheme.onSurface.withValues(alpha: 0.7)
+            : AppColors.slate700;
     }
   }
 

@@ -9,17 +9,37 @@ class SkillCategoryStyle {
   static Color getColor(String category, ColorScheme scheme) {
     switch (category) {
       case 'Domain Expertise':
-        return const Color(0xFF8B5CF6);
+        return AppColors.accentViolet;
       case 'Mobile Systems':
-        return const Color(0xFF38BDF8);
+        return AppColors.accentSky;
       case 'Security & Protocols':
-        return const Color(0xFFFBBF24);
+        return AppColors.accentAmber;
       case 'Architecture & State':
-        return const Color(0xFF10B981);
+        return AppColors.accentGreen;
       case 'Cloud & Infrastructure':
-        return const Color(0xFFA78BFA);
+        return AppColors.accentVioletLight;
       case 'Languages & Comm':
         return const Color(0xFFF472B6);
+      default:
+        return scheme.primary;
+    }
+  }
+
+  static Color getTextColor(String category, ColorScheme scheme, bool isDark) {
+    if (isDark) return getColor(category, scheme);
+    switch (category) {
+      case 'Domain Expertise':
+        return AppColors.accentVioletDeep;
+      case 'Mobile Systems':
+        return AppColors.accentSkyDeep;
+      case 'Security & Protocols':
+        return AppColors.accentAmberDeep;
+      case 'Architecture & State':
+        return AppColors.accentGreenDeep;
+      case 'Cloud & Infrastructure':
+        return const Color(0xFF7C3AED);
+      case 'Languages & Comm':
+        return const Color(0xFFBE185D);
       default:
         return scheme.primary;
     }
@@ -90,6 +110,7 @@ class SkillCategoryFilters extends StatelessWidget {
     final isDark = scheme.brightness == Brightness.dark;
     final isSelected = selectedCategory == cat;
     final color = cat == 'ALL' ? scheme.primary : SkillCategoryStyle.getColor(cat, scheme);
+    final textColor = cat == 'ALL' ? scheme.primary : SkillCategoryStyle.getTextColor(cat, scheme, isDark);
     final count = cat == 'ALL' ? kSkills.length : kSkills.where((s) => s.category == cat).length;
 
     return Semantics(
@@ -155,8 +176,8 @@ class SkillCategoryFilters extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Courier',
                     color: isSelected
-                        ? (isDark ? color : (cat == 'ALL' ? scheme.primary : color))
-                        : (isDark ? scheme.onSurface.withValues(alpha: 0.7) : AppColors.slate600),
+                        ? (isDark ? color : textColor)
+                        : (isDark ? scheme.onSurface.withValues(alpha: 0.7) : AppColors.slate700),
                     fontSize: isDesktop ? 11 : 9.5,
                     fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                     letterSpacing: 0.8,
@@ -168,8 +189,8 @@ class SkillCategoryFilters extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Courier',
                     color: isSelected
-                        ? color.withValues(alpha: 0.8)
-                        : (isDark ? scheme.onSurface.withValues(alpha: 0.4) : AppColors.slate400),
+                        ? (isDark ? color.withValues(alpha: 0.85) : textColor)
+                        : (isDark ? scheme.onSurface.withValues(alpha: 0.45) : AppColors.slate500),
                     fontSize: isDesktop ? 10 : 8.5,
                     fontWeight: FontWeight.w700,
                   ),

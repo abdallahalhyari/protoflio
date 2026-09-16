@@ -43,10 +43,22 @@ class ChannelTile extends StatefulWidget {
 class _ChannelTileState extends State<ChannelTile> {
   bool _hover = false;
 
+  Color _adaptiveAccent(BuildContext context, Color color) {
+    final isDark = context.isDarkMode;
+    if (isDark) return color;
+    if (color.toARGB32() == 0xFF38BDF8) return AppColors.accentSkyDeep;
+    if (color.toARGB32() == 0xFF34D399) return AppColors.accentGreenDeep;
+    if (color.toARGB32() == 0xFF818CF8) return AppColors.accentIndigoDeepText;
+    if (color.toARGB32() == 0xFF8B5CF6) return AppColors.accentVioletDeep;
+    return color;
+  }
+
   @override
   Widget build(BuildContext context) {
     final d = widget.data;
     final isDark = context.isDarkMode;
+    final labelColor = _adaptiveAccent(context, d.accent);
+    final buttonTextColor = d.accent.computeLuminance() > 0.35 ? Colors.black : Colors.white;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
@@ -89,13 +101,13 @@ class _ChannelTileState extends State<ChannelTile> {
                   height: 40,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: d.accent.withValues(alpha: 0.14),
+                    color: d.accent.withValues(alpha: isDark ? 0.14 : 0.10),
                     borderRadius: BorderRadius.circular(AppRadius.smd),
                     border: Border.all(
-                      color: d.accent.withValues(alpha: 0.45),
+                      color: d.accent.withValues(alpha: isDark ? 0.45 : 0.35),
                     ),
                   ),
-                  child: Icon(d.icon, size: 20, color: d.accent),
+                  child: Icon(d.icon, size: 20, color: labelColor),
                 ),
                 const SizedBox(width: AppSpacing.smd),
                 Expanded(
@@ -106,7 +118,7 @@ class _ChannelTileState extends State<ChannelTile> {
                       Text(
                         d.label,
                         style: TextStyle(
-                          color: d.accent,
+                          color: labelColor,
                           fontSize: AppTypography.editorialSm,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 2,
@@ -137,7 +149,7 @@ class _ChannelTileState extends State<ChannelTile> {
                     onPressed: d.primaryAction,
                     style: FilledButton.styleFrom(
                       backgroundColor: d.accent,
-                      foregroundColor: Colors.black,
+                      foregroundColor: buttonTextColor,
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppRadius.pill),

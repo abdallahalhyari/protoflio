@@ -117,11 +117,9 @@ class TopNav extends StatelessWidget {
                             // both modes — previously the button flipped
                             // to indigo in light and read as a second
                             // brand element.
-                            foregroundColor: isDark
-                                ? AppColors.accentAmberSoft
-                                : AppColors.accentAmber,
+                            foregroundColor: context.resumeAccent,
                             side: BorderSide(
-                              color: AppColors.accentAmber,
+                              color: context.resumeBorder,
                               width: 1.2,
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

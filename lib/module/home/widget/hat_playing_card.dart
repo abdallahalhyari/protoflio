@@ -290,15 +290,26 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          ordinal,
-                          style: const TextStyle(
-                            fontFamily: AppTypography.displayFont,
-                            color: AppColors.accentAmberSoft,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w900,
-                            height: 1,
-                            letterSpacing: 1,
+                        ShaderMask(
+                          shaderCallback: (bounds) => const LinearGradient(
+                            colors: [
+                              AppColors.accentAmberSoft,
+                              AppColors.hatGold,
+                              AppColors.accentAmberSoft,
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ).createShader(bounds),
+                          child: Text(
+                            ordinal,
+                            style: const TextStyle(
+                              fontFamily: AppTypography.displayFont,
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w900,
+                              height: 1,
+                              letterSpacing: 1,
+                            ),
                           ),
                         ),
                         Text(

@@ -336,6 +336,13 @@
         });
       }
     } catch(e) {}
+    try {
+      var urlParams = new URLSearchParams(window.location.search);
+      var theme = urlParams.get('theme');
+      if (theme === 'light' || theme === 'dark') {
+        window.localStorage.setItem('flutter.themeMode', theme);
+      }
+    } catch(e) {}
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
