@@ -20,7 +20,9 @@ import 'page/engineering_page.dart';
 import 'page/experience_page.dart';
 import 'page/contact_page.dart';
 
+import 'home_controller.dart';
 import 'widget/custom_cursor.dart';
+import 'widget/deferred_mount.dart';
 import 'widget/directional_icon.dart';
 import 'widget/magazine_page_transformer.dart';
 import 'widget/portfolio_nav.dart';
@@ -46,6 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _imagesPrecached = false;
   Timer? _settleTimer;
   bool _isPageTransitioning = false;
+
+  late final HomeController _homeController = HomeController(
+    pageIndex: _pageIndex,
+    showScrollToTop: _showScrollToTop,
+    pageCount: _pageCount,
+    goTo: _goTo,
+    next: _next,
+    prev: _prev,
+    scrollToMobileSection: _scrollToMobileSection,
+  );
 
   @override
   void initState() {
@@ -188,9 +200,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Scrolls the target section top to sit *below* the sticky MobileAppBar
   /// (~60px) — plain `ensureVisible` would tuck the section title under it.
-  void _animateSectionIntoView(int target) {
+  void _animateSectionIntoView(int target, {int retry = 0}) {
     final keyContext = _sectionKeys[target].currentContext;
-    if (keyContext == null || !_mobileScrollController.hasClients) return;
+    // Section may be wrapped in a DeferredMount and not yet materialized
+    // — bumping _pageIndex fires the mount, but the key attaches next
+    // frame. Retry once via a post-frame callback so tap-from-menu jumps
+    // to a section the user hasn't scrolled near still work.
+    if (keyContext == null) {
+      if (retry < 1 && _mobileScrollController.hasClients) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) _animateSectionIntoView(target, retry: retry + 1);
+        });
+      }
+      return;
+    }
+    if (!_mobileScrollController.hasClients) return;
     final box = keyContext.findRenderObject() as RenderBox?;
     if (box == null || !box.hasSize || !box.attached) return;
 
@@ -500,17 +524,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
 
-    return CustomCursor(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Focus(
-          focusNode: _focusNode,
-          autofocus: true,
-          onKeyEvent: _handleKey,
-          child: PageBackground(
-            asset: 'assets/background.webp',
-            overlay: AppColors.scrimMedium,
-            child: isDesktop ? _buildDesktopLayout(context) : _buildMobileLayout(context),
+    return HomeControllerScope(
+      controller: _homeController,
+      child: CustomCursor(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Focus(
+            focusNode: _focusNode,
+            autofocus: true,
+            onKeyEvent: _handleKey,
+            child: PageBackground(
+              asset: 'assets/background.webp',
+              overlay: AppColors.scrimMedium,
+              child: isDesktop ? _buildDesktopLayout(context) : _buildMobileLayout(context),
+            ),
           ),
         ),
       ),
@@ -750,45 +777,69 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               _buildMobileSectionDivider('02', _dividerLabelFor(1)),
-              RepaintBoundary(
-                child: KeyedSubtree(
-                  key: _sectionKeys[1],
-                  child: const ExperiencePage(isContinuousMobile: true),
+              DeferredMount(
+                sectionIndex: 1,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
+                  child: KeyedSubtree(
+                    key: _sectionKeys[1],
+                    child: const ExperiencePage(isContinuousMobile: true),
+                  ),
                 ),
               ),
               _buildMobileSectionDivider('03', _dividerLabelFor(2)),
-              RepaintBoundary(
-                child: KeyedSubtree(
-                  key: _sectionKeys[2],
-                  child: const ProjectsPage(isContinuousMobile: true),
+              DeferredMount(
+                sectionIndex: 2,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
+                  child: KeyedSubtree(
+                    key: _sectionKeys[2],
+                    child: const ProjectsPage(isContinuousMobile: true),
+                  ),
                 ),
               ),
               _buildMobileSectionDivider('04', _dividerLabelFor(3)),
-              RepaintBoundary(
-                child: KeyedSubtree(
-                  key: _sectionKeys[3],
-                  child: const SkillsPage(isContinuousMobile: true),
+              DeferredMount(
+                sectionIndex: 3,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
+                  child: KeyedSubtree(
+                    key: _sectionKeys[3],
+                    child: const SkillsPage(isContinuousMobile: true),
+                  ),
                 ),
               ),
               _buildMobileSectionDivider('05', _dividerLabelFor(4)),
-              RepaintBoundary(
-                child: KeyedSubtree(
-                  key: _sectionKeys[4],
-                  child: const EngineeringPage(isContinuousMobile: true),
+              DeferredMount(
+                sectionIndex: 4,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
+                  child: KeyedSubtree(
+                    key: _sectionKeys[4],
+                    child: const EngineeringPage(isContinuousMobile: true),
+                  ),
                 ),
               ),
               _buildMobileSectionDivider('06', _dividerLabelFor(5)),
-              RepaintBoundary(
-                child: KeyedSubtree(
-                  key: _sectionKeys[5],
-                  child: const HatsGridPage(isContinuousMobile: true),
+              DeferredMount(
+                sectionIndex: 5,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
+                  child: KeyedSubtree(
+                    key: _sectionKeys[5],
+                    child: const HatsGridPage(isContinuousMobile: true),
+                  ),
                 ),
               ),
               _buildMobileSectionDivider('07', _dividerLabelFor(6)),
-              RepaintBoundary(
-                child: KeyedSubtree(
-                  key: _sectionKeys[6],
-                  child: const ContactPage(isContinuousMobile: true),
+              DeferredMount(
+                sectionIndex: 6,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
+                  child: KeyedSubtree(
+                    key: _sectionKeys[6],
+                    child: const ContactPage(isContinuousMobile: true),
+                  ),
                 ),
               ),
               const SizedBox(height: 48),
