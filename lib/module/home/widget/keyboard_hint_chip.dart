@@ -1,0 +1,76 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:profile/l10n/app_localizations.dart';
+
+import '../../../service/sound_service.dart';
+import '../../../theme/tokens.dart';
+
+/// Desktop bottom-right keyboard-hint chip. Renders a small kbd-icon
+/// puck with a rich tooltip listing all keyboard shortcuts. Tapping
+/// invokes [onShowHelp] — the parent typically opens a dialog.
+class KeyboardHintChip extends StatelessWidget {
+  const KeyboardHintChip({super.key, required this.onShowHelp});
+
+  final VoidCallback onShowHelp;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+    return Tooltip(
+      preferBelow: false,
+      richMessage: TextSpan(
+        style: const TextStyle(fontSize: 12, height: 1.5, color: Colors.white),
+        children: [
+          TextSpan(
+              text: '${l10n.keyboardHintTitle}\n',
+              style: const TextStyle(fontWeight: FontWeight.w900)),
+          TextSpan(text: '${l10n.keyboardHintDigits}\n'),
+          TextSpan(text: '${l10n.keyboardHintArrows}\n'),
+          TextSpan(text: '${l10n.keyboardHintHome}\n'),
+          TextSpan(text: l10n.keyboardHintEnd),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkResponse(
+          radius: 22,
+          onTap: () {
+            SoundService.instance.playClick();
+            HapticFeedback.selectionClick();
+            onShowHelp();
+          },
+          child: Container(
+            width: 32,
+            height: 32,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isDark
+                  ? Colors.black.withValues(alpha: 0.55)
+                  : Colors.white.withValues(alpha: 0.92),
+              border: Border.all(
+                color: isDark ? Colors.white24 : AppColors.slate300,
+                width: 1,
+              ),
+              boxShadow: isDark
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.06),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+            ),
+            child: Icon(
+              Icons.keyboard_alt_outlined,
+              size: 16,
+              color: isDark ? Colors.white70 : AppColors.slate600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

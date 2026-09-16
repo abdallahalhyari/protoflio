@@ -24,6 +24,9 @@ import 'home_controller.dart';
 import 'widget/custom_cursor.dart';
 import 'widget/deferred_mount.dart';
 import 'widget/directional_icon.dart';
+import 'widget/keyboard_hint_chip.dart';
+import 'widget/mobile_footer.dart';
+import 'widget/scroll_to_top_button.dart';
 import 'widget/magazine_page_transformer.dart';
 import 'widget/portfolio_nav.dart';
 import 'widget/page_background.dart';
@@ -714,7 +717,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Positioned(
             bottom: 12,
             right: 12,
-            child: SafeArea(child: _buildKeyboardHintChip(context)),
+            child: SafeArea(
+              child: KeyboardHintChip(onShowHelp: _showShortcutHelp),
+            ),
           ),
           Positioned(
             top: 0,
@@ -826,7 +831,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 48),
-              _buildMobileFooter(),
+              const MobileFooter(),
             ],
           ),
         ),
@@ -857,7 +862,13 @@ class _HomeScreenState extends State<HomeScreen> {
             valueListenable: _showScrollToTop,
             builder: (context, show, child) {
               if (!show) return const SizedBox.shrink();
-              return _buildScrollToTopButton();
+              return ScrollToTopButton(
+                onPressed: () => _mobileScrollController.animateTo(
+                  0,
+                  duration: AppMotion.sectionScroll,
+                  curve: AppMotion.emphasized,
+                ),
+              );
             },
           ),
         ),
@@ -1110,88 +1121,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildMobileFooter() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.08)
-                : AppColors.slate200,
-          ),
-        ),
-        color: isDark
-            ? Colors.black.withValues(alpha: 0.4)
-            : Colors.white.withValues(alpha: 0.7),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 28,
-                height: 28,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF38BDF8), AppColors.accentIndigo],
-                  ),
-                  borderRadius: BorderRadius.circular(AppRadius.chip),
-                ),
-                alignment: Alignment.center,
-                child: const Text(
-                  'A',
-                  style: TextStyle(
-                    fontFamily: AppTypography.displayFont,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                'ABDALLAH AL-HYARI',
-                style: TextStyle(
-                  color: isDark ? Colors.white : AppColors.slate900,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 12,
-                  letterSpacing: 2,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'SENIOR MOBILE ENGINEER · SYSTEM ARCHITECT',
-            style: TextStyle(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.6)
-                  : AppColors.slate600,
-              fontSize: 9.5,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 2,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            AppLocalizations.of(context)!.footerRightsReserved,
-            style: TextStyle(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.35)
-                  : AppColors.slate400,
-              fontSize: 9,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.5,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildFolioBar(BuildContext context, int page) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final labels = TopNav.getLabels(context);
@@ -1299,119 +1228,6 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-    );
-  }
-
-  Widget _buildKeyboardHintChip(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final l10n = AppLocalizations.of(context)!;
-    return Tooltip(
-      preferBelow: false,
-      richMessage: TextSpan(
-        style: const TextStyle(fontSize: 12, height: 1.5, color: Colors.white),
-        children: [
-          TextSpan(
-              text: '${l10n.keyboardHintTitle}\n',
-              style: const TextStyle(fontWeight: FontWeight.w900)),
-          TextSpan(text: '${l10n.keyboardHintDigits}\n'),
-          TextSpan(text: '${l10n.keyboardHintArrows}\n'),
-          TextSpan(text: '${l10n.keyboardHintHome}\n'),
-          TextSpan(text: l10n.keyboardHintEnd),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkResponse(
-          radius: 22,
-          onTap: () {
-            SoundService.instance.playClick();
-            HapticFeedback.selectionClick();
-            _showShortcutHelp();
-          },
-          child: Container(
-            width: 32,
-            height: 32,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.55)
-                  : Colors.white.withValues(alpha: 0.92),
-              border: Border.all(
-                color: isDark ? Colors.white24 : AppColors.slate300,
-                width: 1,
-              ),
-              boxShadow: isDark
-                  ? null
-                  : [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.06),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-            ),
-            child: Icon(
-              Icons.keyboard_alt_outlined,
-              size: 16,
-              color: isDark ? Colors.white70 : AppColors.slate600,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildScrollToTopButton() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Semantics(
-      button: true,
-      label: 'Scroll to top',
-      child: Tooltip(
-        message: 'Scroll to top',
-        child: Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          SoundService.instance.playClick();
-          _mobileScrollController.animateTo(
-            0,
-            duration: AppMotion.sectionScroll,
-            curve: Curves.easeOutCubic,
-          );
-        },
-        borderRadius: BorderRadius.circular(22),
-        child: Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: isDark
-                ? AppColors.slate800.withValues(alpha: 0.9)
-                : Colors.white.withValues(alpha: 0.9),
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              color: AppColors.accentIndigo.withValues(alpha: isDark ? 0.5 : 0.4),
-              width: 1.2,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: isDark
-                    ? Colors.black.withValues(alpha: 0.4)
-                    : Colors.black.withValues(alpha: 0.08),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Icon(
-            Icons.keyboard_arrow_up_rounded,
-            color: isDark ? Colors.white : AppColors.accentIndigo600,
-            size: 24,
-          ),
-        ),
-      ),
-    ),
-    ),
     );
   }
 }
