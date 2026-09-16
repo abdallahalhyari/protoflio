@@ -10,15 +10,16 @@ import '../../service/cv_service.dart';
 import '../../service/sound_service.dart';
 import '../../service/url_sync_service.dart';
 import 'page/intro_page.dart';
-import 'page/hats_grid_page.dart';
-import 'page/skills_page.dart';
-import 'page/projects_page.dart';
-import 'page/engineering_page.dart';
-import 'page/experience_page.dart';
-import 'page/contact_page.dart';
+import 'page/hats_grid_page.dart' deferred as hats_lib;
+import 'page/skills_page.dart' deferred as skills_lib;
+import 'page/projects_page.dart' deferred as projects_lib;
+import 'page/engineering_page.dart' deferred as engineering_lib;
+import 'page/experience_page.dart' deferred as experience_lib;
+import 'page/contact_page.dart' deferred as contact_lib;
 
 import 'home_controller.dart';
 import 'widget/custom_cursor.dart';
+import 'widget/deferred_page.dart';
 import 'widget/desktop_toolbar.dart';
 import 'widget/folio_bar.dart';
 import 'widget/keyboard_hint_chip.dart';
@@ -48,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _imagesPrecached = false;
   Timer? _settleTimer;
   bool _isPageTransitioning = false;
+  void Function()? _cancelHashListener;
 
   late final HomeController _homeController = HomeController(
     pageIndex: _pageIndex,
@@ -80,7 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _mobileScrollController = ScrollController();
     _mobileScrollController.addListener(_onMobileScroll);
 
-    UrlSyncService.instance.listenToHashChanges((hash) {
+    _schedulePrefetch();
+
+    _cancelHashListener = UrlSyncService.instance.listenToHashChanges((hash) {
       final target = UrlSyncService.instance.hashToIndex(hash);
       if (target != _pageIndex.value && mounted) {
         _goTo(target, syncUrl: false);
@@ -96,14 +100,47 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // Warm up deferred page bundles after first frame, in order of
+  // distance from the current page. Each chunk is only a few KB and
+  // `loadLibrary` is idempotent, so re-mount by DeferredPage costs
+  // nothing once the future resolves.
+  void _schedulePrefetch() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future<void>.delayed(const Duration(milliseconds: 300), () async {
+        if (!mounted) return;
+        final current = _pageIndex.value;
+        final loaders = <(int, Future<void> Function())>[
+          (1, experience_lib.loadLibrary),
+          (2, projects_lib.loadLibrary),
+          (3, skills_lib.loadLibrary),
+          (4, engineering_lib.loadLibrary),
+          (5, hats_lib.loadLibrary),
+          (6, contact_lib.loadLibrary),
+        ]..sort((a, b) =>
+            (a.$1 - current).abs().compareTo((b.$1 - current).abs()));
+        for (final entry in loaders) {
+          if (!mounted) return;
+          try {
+            await entry.$2();
+          } catch (_) {}
+        }
+      });
+    });
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_imagesPrecached) return;
     _imagesPrecached = true;
-    precacheImage(const AssetImage('assets/background.webp'), context);
-    precacheImage(const AssetImage('assets/my_image.png'), context);
-    precacheImage(const AssetImage('assets/hat.png'), context);
+    // Defer non-critical decodes until after first frame so they don't
+    // fight with Dart VM boot for main-thread time.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      precacheImage(const AssetImage('assets/background.webp'), context);
+      precacheImage(const AssetImage('assets/my_image.webp'), context);
+      precacheImage(const AssetImage('assets/hat.webp'), context);
+    });
   }
 
   void _scheduleSettle(int page) {
@@ -133,6 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _settleTimer?.cancel();
+    _cancelHashListener?.call();
     _controller.removeListener(_onScroll);
     _controller.dispose();
     _mobileScrollController.removeListener(_onMobileScroll);
@@ -469,20 +507,38 @@ class _HomeScreenState extends State<HomeScreen> {
           onContactMe: () => _goTo(6),
         );
       case 1:
-        return ExperiencePage(
-          controller: _controller,
-          pageIndex: 1,
+        return DeferredPage(
+          loader: experience_lib.loadLibrary,
+          builder: () => experience_lib.ExperiencePage(
+            controller: _controller,
+            pageIndex: 1,
+          ),
         );
       case 2:
-        return const ProjectsPage();
+        return DeferredPage(
+          loader: projects_lib.loadLibrary,
+          builder: () => projects_lib.ProjectsPage(),
+        );
       case 3:
-        return const SkillsPage();
+        return DeferredPage(
+          loader: skills_lib.loadLibrary,
+          builder: () => skills_lib.SkillsPage(),
+        );
       case 4:
-        return const EngineeringPage();
+        return DeferredPage(
+          loader: engineering_lib.loadLibrary,
+          builder: () => engineering_lib.EngineeringPage(),
+        );
       case 5:
-        return const HatsGridPage();
+        return DeferredPage(
+          loader: hats_lib.loadLibrary,
+          builder: () => hats_lib.HatsGridPage(),
+        );
       case 6:
-        return const ContactPage();
+        return DeferredPage(
+          loader: contact_lib.loadLibrary,
+          builder: () => contact_lib.ContactPage(),
+        );
       default:
         return const SizedBox.shrink();
     }

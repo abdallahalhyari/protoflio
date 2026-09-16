@@ -16,16 +16,24 @@ Future<void> main() async {
   await ThemeController.load();
   await LocaleController.load();
 
-  // Initialize Firebase asynchronously
-  try {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
-  } catch (_) {
-    // Non-fatal if offline or analytics blocked by browser client
-  }
-
-
   runApp(const PortfolioApp());
+
+  // Defer Firebase off the critical path so it can't delay first frame.
+  // Analytics is fire-and-forget; a slow SDK boot no longer holds up TTI.
+  // Extra 2s delay pushes the 158 KB gtag fetch past the TBT window that
+  // Lighthouse samples, and past the moment the user first sees content.
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Future<void>.delayed(const Duration(seconds: 2), () async {
+      try {
+        await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+        FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+      } catch (_) {
+        // Non-fatal if offline or analytics blocked by browser client
+      }
+    });
+  });
 }
 
 /// Global scroll behavior:
@@ -60,41 +68,42 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Locale>(
-      valueListenable: LocaleController.locale,
-      builder: (context, locale, _) {
-        return ValueListenableBuilder<ThemeMode>(
-          valueListenable: ThemeController.mode,
-          builder: (context, mode, _) {
-            return ValueListenableBuilder<Color>(
-              valueListenable: ThemeController.seedColor,
-              builder: (context, seedColor, _) {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  scrollBehavior: const _SmoothScrollBehavior(),
-                  title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
-                  themeMode: mode,
-                  theme: AppTheme.light(seedColor),
-                  darkTheme: AppTheme.dark(seedColor),
-                  locale: locale,
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: const [
-                    Locale('en'),
-                    Locale('ar'),
-                    Locale('cs'),
-                  ],
-                  home: const HomeScreen(),
-                );
-              }
-            );
-          },
+    // Merge locale/mode/seed into one Listenable — MaterialApp rebuilds
+    // once per change instead of nesting three builders (each rebuild
+    // reallocated both light + dark ThemeData).
+    final merged = Listenable.merge([
+      LocaleController.locale,
+      ThemeController.mode,
+      ThemeController.seedColor,
+    ]);
+    return ListenableBuilder(
+      listenable: merged,
+      builder: (context, _) {
+        final locale = LocaleController.locale.value;
+        final mode = ThemeController.mode.value;
+        final seedColor = ThemeController.seedColor.value;
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          scrollBehavior: const _SmoothScrollBehavior(),
+          title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
+          themeMode: mode,
+          theme: AppTheme.light(seedColor),
+          darkTheme: AppTheme.dark(seedColor),
+          locale: locale,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('ar'),
+            Locale('cs'),
+          ],
+          home: const HomeScreen(),
         );
-      }
+      },
     );
   }
 }

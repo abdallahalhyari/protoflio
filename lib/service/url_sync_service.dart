@@ -30,5 +30,9 @@ abstract class UrlSyncService {
 
   void updateHash(String hash);
   String? getInitialHash();
-  void listenToHashChanges(void Function(String hash) onHashChange);
+
+  /// Registers [onHashChange] for future `hashchange` / `popstate` events.
+  /// Returns a cancel callback the caller must invoke on dispose to detach
+  /// the listener; safe to call multiple times.
+  void Function() listenToHashChanges(void Function(String hash) onHashChange);
 }

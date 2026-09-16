@@ -23,8 +23,19 @@ class _HatImageState extends State<HatImage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    _c = AnimationController(vsync: this, duration: const Duration(seconds: 3))..repeat(reverse: true);
+    _c = AnimationController(vsync: this, duration: const Duration(seconds: 3));
     _anim = Tween<double>(begin: -0.02, end: 0.02).animate(CurvedAnimation(parent: _c, curve: Curves.easeInOutSine));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final shouldAnimate = !MediaQuery.disableAnimationsOf(context);
+    if (shouldAnimate && !_c.isAnimating) {
+      _c.repeat(reverse: true);
+    } else if (!shouldAnimate && _c.isAnimating) {
+      _c.stop();
+    }
   }
 
   @override

@@ -5,9 +5,6 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <title>Abdallah Alhyari — Senior Flutter & Android Engineer</title>
@@ -50,9 +47,10 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Performance Preconnect & Preloads -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="assets/fonts/Tenada.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin>
+  <link rel="modulepreload" href="main.dart.mjs" crossorigin>
+  <link rel="preload" href="assets/assets/my_image.webp" as="image" type="image/webp" fetchpriority="high">
 
   <!-- Favicon & Manifest -->
   <link rel="icon" type="image/png" href="favicon.png"/>
@@ -120,7 +118,7 @@
   <style>
     @font-face {
       font-family: 'Tenada';
-      src: url('fonts/Tenada.ttf') format('truetype');
+      src: url('assets/fonts/Tenada.ttf') format('truetype');
       font-display: swap;
     }
     html, body { margin: 0; padding: 0; height: 100%; background: #0E0E10; }
@@ -310,30 +308,24 @@
     // Safety fallback: dismiss after 1.5s in case event is delayed
     setTimeout(dismissBootLoader, 1500);
 
-    // Unregister any stale service workers and clear caches so visitors always receive fresh release
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for (var i = 0; i < registrations.length; i++) {
-          registrations[i].unregister();
-        }
-      });
-    }
-    if ('caches' in window) {
-      caches.keys().then(function(names) {
-        for (var i = 0; i < names.length; i++) {
-          caches.delete(names[i]);
-        }
-      });
-    }
+    // One-time cleanup of legacy Flutter service workers (SW is intentionally
+    // disabled at bootstrap via patch_flutter_js.js). Gated by a localStorage
+    // marker so we don't kill browser HTTP cache on every visit.
     try {
-      if (window.indexedDB && window.indexedDB.databases) {
-        window.indexedDB.databases().then(function(dbs) {
-          dbs.forEach(function(db) {
-            if (db.name && db.name.indexOf('flutter') !== -1) {
-              window.indexedDB.deleteDatabase(db.name);
-            }
+      var PURGE_KEY = 'flutter-legacy-sw-purged-v1';
+      if (!window.localStorage.getItem(PURGE_KEY)) {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(rs) {
+            for (var i = 0; i < rs.length; i++) rs[i].unregister();
           });
-        });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.filter(function(n){ return n.indexOf('flutter') !== -1; })
+                 .forEach(function(n){ caches.delete(n); });
+          });
+        }
+        window.localStorage.setItem(PURGE_KEY, '1');
       }
     } catch(e) {}
     try {

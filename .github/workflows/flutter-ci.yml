@@ -82,3 +82,22 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: testfirestore-9b0b0
           channelId: live
+
+  lighthouse:
+    # Runs Lighthouse against the live URL after deploy and fails the run
+    # if any core score regresses below the threshold. Baseline captured
+    # 2026-09-16: perf 63, a11y 100, best-practices 82, seo 100.
+    needs: deploy-live
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Wait for CDN propagation
+        run: sleep 30
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://alhyari.web.app/
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          configPath: ./.lighthouserc.json

@@ -31,6 +31,10 @@ class _PageBackgroundState extends State<PageBackground> {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final primary = Theme.of(context).colorScheme.primary;
+    // Skip decorative micro-dot painter + vignette full-screen fill on
+    // mobile — those layers only cost fill-rate and are barely visible
+    // on smaller viewports.
+    final showDecoLayers = size.width >= AppBreakpoints.tablet;
 
     final shiftX = reduceMotion ? 0.0 : (mouseOffset.dx / size.width * 24.0);
     final shiftY = reduceMotion ? 0.0 : (mouseOffset.dy / size.height * 24.0);
@@ -118,32 +122,35 @@ class _PageBackgroundState extends State<PageBackground> {
           ),
         ),
 
-        // 4. Architectural Precision Micro-Dot Matrix
-        const Positioned.fill(
-          child: IgnorePointer(
-            child: CustomPaint(
-              painter: _DarkGridPainter(),
+        // 4. Architectural Precision Micro-Dot Matrix (desktop only)
+        if (showDecoLayers)
+          const Positioned.fill(
+            child: IgnorePointer(
+              child: CustomPaint(
+                painter: _DarkGridPainter(),
+              ),
             ),
           ),
-        ),
 
-        // 5. Subtle Edge Vignette
-        Positioned.fill(
-          child: IgnorePointer(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  center: Alignment.center,
-                  radius: 1.25,
-                  colors: [
-                    Colors.transparent,
-                    const Color(0xFF080C14).withValues(alpha: 0.65),
-                  ],
+        // 5. Subtle Edge Vignette (desktop only — saves full-screen fill
+        // on mobile where the LinearGradient base already provides depth)
+        if (showDecoLayers)
+          Positioned.fill(
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: Alignment.center,
+                    radius: 1.25,
+                    colors: [
+                      Colors.transparent,
+                      const Color(0xFF080C14).withValues(alpha: 0.65),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
@@ -151,6 +158,7 @@ class _PageBackgroundState extends State<PageBackground> {
   Widget _buildLightBackground(BuildContext context, Offset mouseOffset) {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final showDecoLayers = size.width >= AppBreakpoints.tablet;
 
     final shiftX = reduceMotion ? 0.0 : (mouseOffset.dx / size.width * 20.0);
     final shiftY = reduceMotion ? 0.0 : (mouseOffset.dy / size.height * 20.0);
@@ -238,14 +246,15 @@ class _PageBackgroundState extends State<PageBackground> {
           ),
         ),
 
-        // Tactile micro-dot architectural pattern
-        const Positioned.fill(
-          child: IgnorePointer(
-            child: CustomPaint(
-              painter: _LightGridPainter(),
+        // Tactile micro-dot architectural pattern (desktop only)
+        if (showDecoLayers)
+          const Positioned.fill(
+            child: IgnorePointer(
+              child: CustomPaint(
+                painter: _LightGridPainter(),
+              ),
             ),
           ),
-        ),
       ],
     );
   }

@@ -25,7 +25,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Sorting',
     heroTag: 'Sorting hat',
-    image: 'assets/hat.png',
+    image: 'assets/hat.webp',
     color: AppColors.hatAmber,
     titleDesc: 'I AM WELL ORGANIZED',
     desc:

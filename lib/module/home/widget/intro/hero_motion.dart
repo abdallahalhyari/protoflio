@@ -46,6 +46,13 @@ class _SnappyEntranceState extends State<SnappyEntrance>
       CurvedAnimation(parent: _controller, curve: AppMotion.emphasizedDecel),
     );
 
+    // Skip the ticker cost entirely when the platform reports reduced
+    // motion — build() already returns the child directly in that case.
+    if (PlatformDispatcher.instance.accessibilityFeatures.disableAnimations) {
+      _controller.value = 1.0;
+      return;
+    }
+
     if (widget.delayMs > 0) {
       Future.delayed(Duration(milliseconds: widget.delayMs), () {
         if (mounted) _controller.forward();

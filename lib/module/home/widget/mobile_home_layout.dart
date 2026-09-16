@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/tokens.dart';
 import '../home_controller.dart';
-import '../page/contact_page.dart';
-import '../page/engineering_page.dart';
-import '../page/experience_page.dart';
-import '../page/hats_grid_page.dart';
+import '../page/contact_page.dart' deferred as contact_lib;
+import '../page/engineering_page.dart' deferred as engineering_lib;
+import '../page/experience_page.dart' deferred as experience_lib;
+import '../page/hats_grid_page.dart' deferred as hats_lib;
 import '../page/intro_page.dart';
-import '../page/projects_page.dart';
-import '../page/skills_page.dart';
+import '../page/projects_page.dart' deferred as projects_lib;
+import '../page/skills_page.dart' deferred as skills_lib;
 import 'deferred_mount.dart';
+import 'deferred_page.dart';
 import 'mobile_app_bar.dart';
 import 'mobile_footer.dart';
 import 'mobile_nav_sheet.dart';
@@ -81,7 +82,11 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: KeyedSubtree(
                     key: sectionKeys[1],
-                    child: const ExperiencePage(isContinuousMobile: true),
+                    child: DeferredPage(
+                      loader: experience_lib.loadLibrary,
+                      builder: () => experience_lib.ExperiencePage(
+                          isContinuousMobile: true),
+                    ),
                   ),
                 ),
               ),
@@ -93,7 +98,11 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: KeyedSubtree(
                     key: sectionKeys[2],
-                    child: const ProjectsPage(isContinuousMobile: true),
+                    child: DeferredPage(
+                      loader: projects_lib.loadLibrary,
+                      builder: () => projects_lib.ProjectsPage(
+                          isContinuousMobile: true),
+                    ),
                   ),
                 ),
               ),
@@ -105,7 +114,11 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: KeyedSubtree(
                     key: sectionKeys[3],
-                    child: const SkillsPage(isContinuousMobile: true),
+                    child: DeferredPage(
+                      loader: skills_lib.loadLibrary,
+                      builder: () => skills_lib.SkillsPage(
+                          isContinuousMobile: true),
+                    ),
                   ),
                 ),
               ),
@@ -117,7 +130,11 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: KeyedSubtree(
                     key: sectionKeys[4],
-                    child: const EngineeringPage(isContinuousMobile: true),
+                    child: DeferredPage(
+                      loader: engineering_lib.loadLibrary,
+                      builder: () => engineering_lib.EngineeringPage(
+                          isContinuousMobile: true),
+                    ),
                   ),
                 ),
               ),
@@ -129,7 +146,11 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: KeyedSubtree(
                     key: sectionKeys[5],
-                    child: const HatsGridPage(isContinuousMobile: true),
+                    child: DeferredPage(
+                      loader: hats_lib.loadLibrary,
+                      builder: () => hats_lib.HatsGridPage(
+                          isContinuousMobile: true),
+                    ),
                   ),
                 ),
               ),
@@ -141,7 +162,11 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: KeyedSubtree(
                     key: sectionKeys[6],
-                    child: const ContactPage(isContinuousMobile: true),
+                    child: DeferredPage(
+                      loader: contact_lib.loadLibrary,
+                      builder: () => contact_lib.ContactPage(
+                          isContinuousMobile: true),
+                    ),
                   ),
                 ),
               ),

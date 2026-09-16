@@ -28,8 +28,26 @@ function patchBootstrap(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
     // Disable deprecated service worker registration
     content = content.replace(/serviceWorkerSettings:\s*\{[\s\S]*?\}/g, 'serviceWorkerSettings: null');
+    // Self-host CanvasKit/Skwasm from /canvaskit/ (files ship in build/web/canvaskit/).
+    // Saves the cross-origin round-trip to www.gstatic.com and lets the browser
+    // reuse a single HTTP/2 connection for the entire boot payload. Targets the
+    // tail-of-file loader invocation (the one preceded by a newline), skipping
+    // any occurrence inside the minified library body earlier in the file.
+    if (!/config:\s*\{\s*canvasKitBaseUrl/.test(content)) {
+      const before = content;
+      content = content.replace(
+        /(\n_flutter\.loader\.load\(\s*)\{/,
+        "$1{\n  config: { canvasKitBaseUrl: '/canvaskit/' },"
+      );
+      if (content === before) {
+        throw new Error(
+          `${path.basename(filePath)}: could not locate _flutter.loader.load({ ... }) — ` +
+          `canvasKitBaseUrl patch skipped. Flutter loader shape may have changed; update patch_flutter_js.js.`
+        );
+      }
+    }
     fs.writeFileSync(filePath, content, 'utf8');
-    console.log(`Successfully patched ${path.basename(filePath)} to disable stale service worker.`);
+    console.log(`Successfully patched ${path.basename(filePath)} (SW disabled + local CanvasKit).`);
   } catch (e) {
     console.error(`Error patching ${path.basename(filePath)}:`, e);
   }
