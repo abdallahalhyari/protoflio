@@ -23,10 +23,13 @@ import 'page/contact_page.dart';
 import 'home_controller.dart';
 import 'widget/custom_cursor.dart';
 import 'widget/deferred_mount.dart';
+import 'widget/folio_bar.dart';
 import 'widget/keyboard_hint_chip.dart';
 import 'widget/mobile_footer.dart';
 import 'widget/mobile_pager.dart';
 import 'widget/mobile_progress_rail.dart';
+import 'widget/mobile_section_divider.dart';
+import 'widget/progress_bar.dart';
 import 'widget/scroll_to_top_button.dart';
 import 'widget/magazine_page_transformer.dart';
 import 'widget/portfolio_nav.dart';
@@ -703,16 +706,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             bottom: 12,
             left: 16,
             child: SafeArea(
-              child: RepaintBoundary(
-                child: ValueListenableBuilder<int>(
-                  valueListenable: _pageIndex,
-                  builder: (context, page, __) => _buildFolioBar(context, page),
-                ),
-              ),
+              child: RepaintBoundary(child: FolioBar()),
             ),
           ),
           Positioned(
@@ -727,9 +725,9 @@ class _HomeScreenState extends State<HomeScreen> {
             left: 0,
             right: 0,
             child: RepaintBoundary(
-              child: ValueListenableBuilder<int>(
-                valueListenable: _pageIndex,
-                builder: (context, page, __) => _buildProgressBar(context, page),
+              child: PortfolioProgressBar(
+                controller: _controller,
+                pageCount: _pageCount,
               ),
             ),
           ),
@@ -765,7 +763,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              _buildMobileSectionDivider('02', _dividerLabelFor(1)),
+              MobileSectionDivider(number: '02', title: _dividerLabelFor(1)),
               DeferredMount(
                 sectionIndex: 1,
                 placeholderHeight: 720,
@@ -776,7 +774,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              _buildMobileSectionDivider('03', _dividerLabelFor(2)),
+              MobileSectionDivider(number: '03', title: _dividerLabelFor(2)),
               DeferredMount(
                 sectionIndex: 2,
                 placeholderHeight: 720,
@@ -787,7 +785,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              _buildMobileSectionDivider('04', _dividerLabelFor(3)),
+              MobileSectionDivider(number: '04', title: _dividerLabelFor(3)),
               DeferredMount(
                 sectionIndex: 3,
                 placeholderHeight: 720,
@@ -798,7 +796,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              _buildMobileSectionDivider('05', _dividerLabelFor(4)),
+              MobileSectionDivider(number: '05', title: _dividerLabelFor(4)),
               DeferredMount(
                 sectionIndex: 4,
                 placeholderHeight: 720,
@@ -809,7 +807,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              _buildMobileSectionDivider('06', _dividerLabelFor(5)),
+              MobileSectionDivider(number: '06', title: _dividerLabelFor(5)),
               DeferredMount(
                 sectionIndex: 5,
                 placeholderHeight: 720,
@@ -820,7 +818,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              _buildMobileSectionDivider('07', _dividerLabelFor(6)),
+              MobileSectionDivider(number: '07', title: _dividerLabelFor(6)),
               DeferredMount(
                 sectionIndex: 6,
                 placeholderHeight: 720,
@@ -903,187 +901,4 @@ class _HomeScreenState extends State<HomeScreen> {
     return labels[index].toUpperCase();
   }
 
-  Widget _buildMobileSectionDivider(String number, String title) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.08)
-                  : Colors.white,
-              borderRadius: BorderRadius.circular(AppRadius.xs),
-              border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.15)
-                    : AppColors.slate200,
-              ),
-              boxShadow: isDark
-                  ? null
-                  : [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.04),
-                        blurRadius: 4,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
-            ),
-            child: Text(
-              number,
-              style: const TextStyle(
-                color: AppColors.accentIndigo,
-                fontSize: 10,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 2,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Text(
-            title,
-            style: TextStyle(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.55)
-                  : AppColors.slate600,
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 2,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Container(
-              height: 1,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: isDark
-                      ? [
-                          Colors.white.withValues(alpha: 0.25),
-                          Colors.white.withValues(alpha: 0.02),
-                        ]
-                      : [
-                          AppColors.slate300,
-                          AppColors.slate200.withValues(alpha: 0.0),
-                        ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFolioBar(BuildContext context, int page) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labels = TopNav.getLabels(context);
-    final currentLabel = (page >= 0 && page < labels.length)
-        ? labels[page].toUpperCase()
-        : '';
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.black.withValues(alpha: 0.6)
-            : Colors.white.withValues(alpha: 0.88),
-        borderRadius: BorderRadius.circular(AppRadius.xs),
-        border: Border.all(
-          color: isDark ? Colors.white12 : AppColors.slate200,
-        ),
-        boxShadow: isDark
-            ? null
-            : [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            AppLocalizations.of(context)!.folioIndicator(
-              (page + 1).toString().padLeft(2, '0'),
-              _pageCount.toString().padLeft(2, '0'),
-            ),
-            style: TextStyle(
-              color: isDark ? Colors.white70 : AppColors.slate500,
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.5,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Container(
-            width: 1,
-            height: 10,
-            color: isDark ? Colors.white24 : AppColors.slate300,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            currentLabel,
-            style: TextStyle(
-              color: isDark ? Colors.white : AppColors.slate900,
-              fontSize: 10,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 2,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Top-edge progress bar. Only the width animates every scroll frame,
-  /// so `Align` + decorated `Container` are cached via the AnimatedBuilder
-  /// `child:` parameter and wrapped in a RepaintBoundary by the caller.
-  Widget _buildProgressBar(BuildContext context, int page) {
-    final scheme = Theme.of(context).colorScheme;
-    final primary = scheme.primary;
-    final decoratedBar = Container(
-      height: 2,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            primary.withValues(alpha: 0.3),
-            primary,
-            scheme.secondary,
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: primary.withValues(alpha: 0.5),
-            blurRadius: 4,
-          ),
-        ],
-      ),
-    );
-    final viewportWidth = MediaQuery.sizeOf(context).width;
-
-    return Semantics(
-      label: 'Portfolio progress',
-      value: 'Page ${page + 1} of $_pageCount',
-      child: AnimatedBuilder(
-        animation: _controller,
-        child: decoratedBar,
-        builder: (context, child) {
-          double progress = 0.0;
-          if (_controller.hasClients &&
-              _controller.positions.length == 1 &&
-              _controller.position.haveDimensions) {
-            progress = (_controller.page ?? 0) / (_pageCount - 1);
-          }
-          return Align(
-            alignment: Alignment.centerLeft,
-            child: SizedBox(width: viewportWidth * progress, child: child),
-          );
-        },
-      ),
-    );
-  }
 }
