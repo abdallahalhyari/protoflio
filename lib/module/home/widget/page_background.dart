@@ -29,6 +29,7 @@ class _PageBackgroundState extends State<PageBackground> {
     final size = MediaQuery.sizeOf(context);
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final primary = Theme.of(context).colorScheme.primary;
+    final secondary = Theme.of(context).colorScheme.secondary;
     // Skip decorative micro-dot painter + vignette full-screen fill on
     // mobile — those layers only cost fill-rate and are barely visible
     // on smaller viewports.
@@ -80,7 +81,7 @@ class _PageBackgroundState extends State<PageBackground> {
                   ),
                 ),
               ),
-              // Bottom-left cyber cyan/blue ambient glow
+              // Bottom-left harmonic secondary ambient glow
               Positioned(
                 bottom: -120,
                 left: -100,
@@ -91,8 +92,8 @@ class _PageBackgroundState extends State<PageBackground> {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.accentCyan.withValues(alpha: 0.10),
-                        AppColors.accentCyan.withValues(alpha: 0.0),
+                        secondary.withValues(alpha: 0.12),
+                        secondary.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -158,6 +159,7 @@ class _PageBackgroundState extends State<PageBackground> {
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final showDecoLayers = size.width >= AppBreakpoints.tablet;
     final primary = Theme.of(context).colorScheme.primary;
+    final secondary = Theme.of(context).colorScheme.secondary;
 
     final shiftX = reduceMotion ? 0.0 : (mouseOffset.dx / size.width * 20.0);
     final shiftY = reduceMotion ? 0.0 : (mouseOffset.dy / size.height * 20.0);
@@ -205,7 +207,7 @@ class _PageBackgroundState extends State<PageBackground> {
                   ),
                 ),
               ),
-              // Bottom-left soft sky glow
+              // Bottom-left harmonic secondary soft glow
               Positioned(
                 bottom: -100,
                 left: -80,
@@ -216,8 +218,8 @@ class _PageBackgroundState extends State<PageBackground> {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.accentSky.withValues(alpha: 0.10),
-                        AppColors.accentSky.withValues(alpha: 0.0),
+                        secondary.withValues(alpha: 0.10),
+                        secondary.withValues(alpha: 0.0),
                       ],
                     ),
                   ),

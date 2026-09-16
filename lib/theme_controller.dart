@@ -15,30 +15,56 @@ class ThemeController {
 
   static Color get activeAccent => seedColor.value;
 
+  /// Canonical mapping of section indices to chromatic accent identities.
+  static Color colorForIndex(int index) {
+    switch (index) {
+      case 1:
+        return AppColors.accentGreen; // Experience: Neo-Mint Emerald (0xFF10B981)
+      case 2:
+        return AppColors.accentViolet; // Projects / Work: Royal Cyber Violet (0xFF8B5CF6)
+      case 3:
+        return AppColors.accentAmber; // Skills / Stack: Solar Radiant Amber (0xFFFBBF24)
+      case 4:
+        return AppColors.accentRose; // Engineering: Crimson Coral Flare (0xFFF43F5E)
+      case 5:
+        return AppColors.accentCyan; // Perspectives / Hats: Quantum Cyber Cyan (0xFF06B6D4)
+      case 6:
+        return AppColors.accentIndigoDeep; // Contact: Luminous Cyber Indigo (0xFF6366F1)
+      case 0:
+      default:
+        return AppColors.seed; // Home / Intro: Vibrant Electric Indigo (0xFF4F46E5)
+    }
+  }
+
+  /// Immediately updates seed color from section index.
+  static void updateSeedFromIndex(int index) {
+    seedColor.value = colorForIndex(index);
+  }
+
   static void updateSeedFromHash(String hash) {
     final clean = hash.replaceAll('#', '').split('/').first.toLowerCase();
     switch (clean) {
       case 'experience':
-        seedColor.value = AppColors.accentGreen; // Neo-Mint Emerald (0xFF10B981)
+        updateSeedFromIndex(1);
         return;
       case 'work':
-        seedColor.value = AppColors.accentViolet; // Royal Cyber Violet (0xFF8B5CF6)
+        updateSeedFromIndex(2);
         return;
       case 'stack':
-        seedColor.value = AppColors.accentAmber; // Solar Radiant Amber (0xFFFBBF24)
+        updateSeedFromIndex(3);
         return;
       case 'engineering':
-        seedColor.value = AppColors.accentRose; // Crimson Coral Flare (0xFFF43F5E)
+        updateSeedFromIndex(4);
         return;
       case 'about':
-        seedColor.value = AppColors.accentCyan; // Quantum Cyber Cyan (0xFF06B6D4)
+        updateSeedFromIndex(5);
         return;
       case 'contact':
-        seedColor.value = AppColors.accentIndigoDeep; // Luminous Cyber Indigo (0xFF6366F1)
+        updateSeedFromIndex(6);
         return;
       case 'home':
       default:
-        seedColor.value = AppColors.seed; // Vibrant Electric Indigo
+        updateSeedFromIndex(0);
         return;
     }
   }

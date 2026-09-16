@@ -61,6 +61,23 @@ class FolioBar extends StatelessWidget {
                 color: context.glassBorderStrong,
               ),
               const SizedBox(width: 8),
+              AnimatedContainer(
+                duration: AppMotion.sm,
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primary,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+                      blurRadius: 6,
+                      spreadRadius: 0.5,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 6),
               Text(
                 currentLabel,
                 style: TextStyle(

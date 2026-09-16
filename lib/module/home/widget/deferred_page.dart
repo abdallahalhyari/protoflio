@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/tokens.dart';
 
 /// Wraps a page whose Dart code is behind a `deferred as` import.
 /// Invokes [loader] (which should call `libname.loadLibrary()`), then
@@ -43,9 +44,15 @@ class _DeferredPageState extends State<DeferredPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_loaded) return widget.builder();
-    if (_loadError != null) {
-      return SizedBox(
+    Widget content;
+    if (_loaded) {
+      content = KeyedSubtree(
+        key: const ValueKey('loaded_content'),
+        child: widget.builder(),
+      );
+    } else if (_loadError != null) {
+      content = SizedBox(
+        key: const ValueKey('load_error'),
         height: widget.placeholderHeight,
         child: Center(
           child: TextButton(
@@ -57,16 +64,29 @@ class _DeferredPageState extends State<DeferredPage> {
           ),
         ),
       );
-    }
-    return SizedBox(
-      height: widget.placeholderHeight,
-      child: const Center(
-        child: SizedBox(
-          width: 24,
-          height: 24,
-          child: CircularProgressIndicator(strokeWidth: 2),
+    } else {
+      final accent = Theme.of(context).colorScheme.primary;
+      content = SizedBox(
+        key: const ValueKey('load_placeholder'),
+        height: widget.placeholderHeight,
+        child: Center(
+          child: SizedBox(
+            width: 28,
+            height: 28,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              valueColor: AlwaysStoppedAnimation<Color>(accent),
+            ),
+          ),
         ),
-      ),
+      );
+    }
+
+    return AnimatedSwitcher(
+      duration: AppMotion.sm,
+      switchInCurve: AppMotion.standard,
+      switchOutCurve: AppMotion.standard,
+      child: content,
     );
   }
 }

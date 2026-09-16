@@ -29,6 +29,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
     final tight = MediaQuery.sizeOf(context).width < 460;
+    final primary = Theme.of(context).colorScheme.primary;
+    final secondary = Theme.of(context).colorScheme.secondary;
 
     return RepaintBoundary(
       child: ConditionalBlur(
@@ -43,7 +45,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
             decoration: BoxDecoration(
               color: context.glassSurface,
               border: Border(
-                bottom: BorderSide(color: context.divider, width: 1.0),
+                bottom: BorderSide(
+                  color: primary.withValues(alpha: isDark ? 0.28 : 0.16),
+                  width: 1.0,
+                ),
               ),
               boxShadow: [
                 BoxShadow(
@@ -77,14 +82,14 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           height: 32,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
-                            gradient: const LinearGradient(
-                              colors: [AppColors.accentIndigo, AppColors.accentAmber],
+                            gradient: LinearGradient(
+                              colors: [primary, secondary],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.accentIndigo.withValues(alpha: 0.3),
+                                color: primary.withValues(alpha: 0.35),
                                 blurRadius: 8,
                               ),
                             ],
@@ -228,15 +233,15 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
                     decoration: BoxDecoration(
-                      color: AppColors.accentIndigo.withValues(alpha: isDark ? 0.22 : 0.15),
+                      color: primary.withValues(alpha: isDark ? 0.22 : 0.15),
                       borderRadius: BorderRadius.circular(AppRadius.pill),
                       border: Border.all(
-                        color: AppColors.accentIndigo.withValues(alpha: 0.6),
+                        color: primary.withValues(alpha: 0.6),
                         width: 1.2,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.accentIndigo.withValues(alpha: 0.2),
+                          color: primary.withValues(alpha: 0.2),
                           blurRadius: 8,
                         ),
                       ],
@@ -244,12 +249,12 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.menu_rounded, size: 14, color: isDark ? AppColors.accentIndigo : AppColors.accentIndigo600),
+                        Icon(Icons.menu_rounded, size: 14, color: primary),
                         const SizedBox(width: 4),
                         Text(
                           'MENU',
                           style: TextStyle(
-                            color: isDark ? Colors.white : AppColors.accentIndigo600,
+                            color: isDark ? Colors.white : primary,
                             fontSize: AppTypography.editorial,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.2,

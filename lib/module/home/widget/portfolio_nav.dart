@@ -189,16 +189,39 @@ class NavItem extends StatelessWidget {
                   ]
                 : null,
           ),
-          child: Text(
-            label,
-            style: TextStyle(
-              color: active
-                  ? (isDark ? Colors.white : accent)
-                  : (isDark ? Colors.white70 : AppColors.slate600),
-              fontSize: AppTypography.small,
-              fontWeight: active ? FontWeight.w800 : FontWeight.w600,
-              letterSpacing: 0.3,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (active) ...[
+                Container(
+                  width: 6,
+                  height: 6,
+                  margin: const EdgeInsets.only(right: 6),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isDark ? Colors.white : accent,
+                    boxShadow: [
+                      BoxShadow(
+                        color: accent.withValues(alpha: 0.8),
+                        blurRadius: 6,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+              Text(
+                label,
+                style: TextStyle(
+                  color: active
+                      ? (isDark ? Colors.white : accent)
+                      : (isDark ? Colors.white70 : AppColors.slate600),
+                  fontSize: AppTypography.small,
+                  fontWeight: active ? FontWeight.w800 : FontWeight.w600,
+                  letterSpacing: 0.3,
+                ),
+              ),
+            ],
           ),
         ),
       ),

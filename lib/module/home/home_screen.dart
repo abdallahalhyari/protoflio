@@ -164,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final page = _controller.page?.round() ?? 0;
     if (page != _pageIndex.value) {
       _pageIndex.value = page;
+      ThemeController.updateSeedFromIndex(page);
       SoundService.instance.playPageTurn();
       _scheduleSettle(page);
     }
@@ -218,6 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (visibleIndex != null && visibleIndex != _pageIndex.value) {
       _pageIndex.value = visibleIndex;
+      ThemeController.updateSeedFromIndex(visibleIndex);
       _scheduleSettle(visibleIndex);
     }
   }
@@ -225,6 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _scrollToMobileSection(int index, {bool syncUrl = true}) {
     final target = index.clamp(0, _pageCount - 1);
     _pageIndex.value = target;
+    ThemeController.updateSeedFromIndex(target);
     if (syncUrl) {
       _scheduleSettle(target);
     }
@@ -281,6 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _goTo(int page, {bool syncUrl = true}) {
     final target = page.clamp(0, _pageCount - 1);
     if (target == _pageIndex.value && !_isPageTransitioning) return;
+    ThemeController.updateSeedFromIndex(target);
     if (syncUrl) {
       _scheduleSettle(target);
     }
