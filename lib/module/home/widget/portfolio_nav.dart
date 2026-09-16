@@ -25,7 +25,7 @@ class TopNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final accent = Theme.of(context).colorScheme.primary;
     final controller = HomeController.of(context);
 
@@ -157,7 +157,7 @@ class NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final accent = Theme.of(context).colorScheme.primary;
 
     return Semantics(
@@ -297,7 +297,7 @@ class PageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final labels = TopNav.getLabels(context);
     final controller = HomeController.of(context);
 

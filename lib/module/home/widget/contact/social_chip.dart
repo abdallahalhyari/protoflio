@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 
 class SocialChip extends StatelessWidget {
@@ -16,7 +17,7 @@ class SocialChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     return OutlinedButton.icon(
       onPressed: onTap,
       icon: Icon(icon, size: 14),

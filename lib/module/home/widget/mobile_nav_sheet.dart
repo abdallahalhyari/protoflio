@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../service/cv_service.dart';
 import '../../../service/sound_service.dart';
 import '../../../service/url_sync_service.dart';
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import 'conditional_blur.dart';
 
@@ -118,7 +119,7 @@ class MobileNavSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
 
     return RepaintBoundary(
       child: Container(
@@ -520,7 +521,7 @@ class _SocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
 
     return InkWell(
       onTap: () async {

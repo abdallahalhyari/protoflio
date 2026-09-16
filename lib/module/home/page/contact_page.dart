@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 
 import '../../../service/analytics_service.dart';
@@ -144,7 +145,7 @@ class _ContactPageState extends State<ContactPage>
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
 
     // Redesigned flow — hero above the fold, recruiter-friendly path
     // (email + CV) prioritized, dense sections regrouped into a

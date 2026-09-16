@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 import '../widget/intro/intro_availability_banner.dart';
@@ -49,7 +50,7 @@ class _IntroPageState extends State<IntroPage>
     super.build(context);
     final size = MediaQuery.sizeOf(context);
     final isWide = size.width >= AppBreakpoints.tablet;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final isCompactH = isWide && size.height < 920;
 
     final body = Column(

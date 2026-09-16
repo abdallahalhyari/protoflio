@@ -27,7 +27,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final tight = MediaQuery.sizeOf(context).width < 460;
 
     return RepaintBoundary(

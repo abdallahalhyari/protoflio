@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 
 /// Semantic tone → color slot mapping for EditorialChip.
@@ -55,7 +56,7 @@ class EditorialChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tint = _toneColor(context);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
 
     Color bg;
     Color border;
