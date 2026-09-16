@@ -49,7 +49,6 @@
   <!-- Performance Preconnect & Preloads -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="assets/assets/background.webp" as="image" type="image/webp">
   <link rel="preload" href="assets/fonts/Tenada.ttf" as="font" type="font/ttf" crossorigin>
 
   <!-- Favicon & Manifest -->
@@ -323,6 +322,17 @@
         }
       });
     }
+    try {
+      if (window.indexedDB && window.indexedDB.databases) {
+        window.indexedDB.databases().then(function(dbs) {
+          dbs.forEach(function(db) {
+            if (db.name && db.name.indexOf('flutter') !== -1) {
+              window.indexedDB.deleteDatabase(db.name);
+            }
+          });
+        });
+      }
+    } catch(e) {}
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
