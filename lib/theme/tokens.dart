@@ -31,7 +31,10 @@ class AppMedia {
   }
 }
 
-/// Border-radius scale.
+/// Border-radius scale. Mixes tier names (`xxs`-`lg`) with intent names
+/// (`chip`, `card`, `pill`). **Prefer intent tokens** when one fits —
+/// they encode design decisions and are easier to migrate. Tier tokens
+/// remain for one-off geometry.
 class AppRadius {
   AppRadius._();
   static const double xxs = 2;
@@ -45,7 +48,10 @@ class AppRadius {
   static const double pill = 999;
 }
 
-/// Motion scale — named durations + easing.
+/// Motion scale — named durations + easing. Mixes numeric tiers
+/// (`micro`, `xs`, `sm`, ...) with intent-named durations (`cardHover`,
+/// `heroEntry`, ...). **Prefer intent tokens** — they express *why*, not
+/// *how long*, and let global timing tune without hunting call sites.
 class AppMotion {
   AppMotion._();
 
@@ -94,20 +100,27 @@ class AppColors {
 
   static const Color seed = Color(0xFF6366F1); // Vibrant Electric Indigo
 
+  /// Alias: seed brand color. Kept for semantic clarity when referring to
+  /// the primary brand hue in accent contexts (e.g. section indigo).
+  /// Same value as [seed] — pick whichever reads clearer at the callsite.
+  static const Color brandPrimary = seed;
+
   // Deep luxury obsidian dark surface tones (replacing washed slate)
   static const Color darkSurface = Color(0xFF080C14); // Deep Obsidian Midnight
   static const Color darkSurfaceElevated = Color(0xFF0D1322); // Layered Surface
   static const Color darkCard = Color(0xFF111726); // Glass Card Surface
   static const Color lightSurface = Color(0xFFF8FAFC); // Slate 50 Pearl
 
-  // Hat palette — 90% alpha (0xE6) so a hint of the card gradient shows through.
-  static const int _hatAlpha = 0xE6;
-  static Color hatBrown = const Color(0xFF3E2723).withAlpha(_hatAlpha);
-  static Color hatOrange = const Color(0xFFE65100).withAlpha(_hatAlpha);
-  static Color hatAmber = const Color(0xFFB26A00).withAlpha(_hatAlpha);
-  static Color hatRed = const Color(0xFFC62828).withAlpha(_hatAlpha);
-  static Color hatGreen = const Color(0xFF1B5E20).withAlpha(_hatAlpha);
-  static Color hatPurple = const Color(0xFF4527A0).withAlpha(_hatAlpha);
+  // Hat palette — 90% alpha so a hint of the card gradient shows through.
+  // Uses `withValues(alpha:)` (M3 style) to stay consistent with the rest
+  // of the file — no `withAlpha` mixing.
+  static const double _hatAlpha = 0.90;
+  static Color hatBrown = const Color(0xFF3E2723).withValues(alpha: _hatAlpha);
+  static Color hatOrange = const Color(0xFFE65100).withValues(alpha: _hatAlpha);
+  static Color hatAmber = const Color(0xFFB26A00).withValues(alpha: _hatAlpha);
+  static Color hatRed = const Color(0xFFC62828).withValues(alpha: _hatAlpha);
+  static Color hatGreen = const Color(0xFF1B5E20).withValues(alpha: _hatAlpha);
+  static Color hatPurple = const Color(0xFF4527A0).withValues(alpha: _hatAlpha);
 
   // Scrim overlay applied on top of photo backgrounds (deep obsidian tint)
   static Color scrimMedium = const Color(0xFF080C14).withValues(alpha: 0.88);
@@ -185,7 +198,8 @@ class AppColors {
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site
-/// when responsive.
+/// when responsive. Prefer these constants over raw `fontSize:` literals;
+/// the 6 named steps cover 95% of cases.
 class AppTypography {
   AppTypography._();
 
@@ -196,8 +210,13 @@ class AppTypography {
   static const double editorial = 10.5;
 
   // Standard typographic steps.
+  static const double caption = 11; // sub-body helper text, chip labels
+  static const double overline = 12; // uppercase kickers over headings
   static const double small = 13;
   static const double body = 14;
+  static const double subtitle = 16;
   static const double title = 20;
   static const double heading = 28;
+  static const double display = 40; // full-bleed page titles
+  static const double hero = 72;    // intro wordmark, splash impact text
 }
