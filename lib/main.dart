@@ -99,26 +99,51 @@ class PortfolioApp extends StatelessWidget {
 /// on top of the base MaterialApp theme. Only this subtree rebuilds on
 /// seed change, and the color transition is lerped over 260ms — no
 /// visible refresh flash on section navigation.
+///
+/// The override propagates the seed to the full family of accent slots
+/// (primary + secondary + tertiary + surfaceTint) so gradient-driven
+/// widgets that read `secondary` also shift with the section.
+/// Reduced-motion users get an instant snap instead of the lerp.
 class _AccentTheme extends StatelessWidget {
   const _AccentTheme({required this.child});
 
   final Widget child;
 
+  static Color _shift(Color c, double delta) {
+    final hsl = HSLColor.fromColor(c);
+    return hsl
+        .withHue((hsl.hue + delta) % 360)
+        .withSaturation(hsl.saturation.clamp(0.0, 1.0))
+        .toColor();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
     return ValueListenableBuilder<Color>(
       valueListenable: ThemeController.seedColor,
       builder: (context, seed, staticChild) {
         final base = Theme.of(context);
+        final onPrimary = base.brightness == Brightness.dark
+            ? Colors.white
+            : base.colorScheme.onPrimary;
+        // Derive an analogous pair via hue shift so the secondary/tertiary
+        // slots read as "family of the current section", not "leftover from
+        // the base theme". Widgets that pull `secondary` for gradient
+        // stops now animate in sync with `primary`.
         final scheme = base.colorScheme.copyWith(
           primary: seed,
-          onPrimary: base.brightness == Brightness.dark
-              ? Colors.white
-              : base.colorScheme.onPrimary,
+          onPrimary: onPrimary,
+          secondary: _shift(seed, 24),
+          onSecondary: onPrimary,
+          tertiary: _shift(seed, -24),
+          onTertiary: onPrimary,
+          surfaceTint: seed,
         );
         return AnimatedTheme(
           data: base.copyWith(colorScheme: scheme),
-          duration: AppMotion.heroEntry,
+          duration: reduceMotion ? Duration.zero : AppMotion.heroEntry,
+          curve: AppMotion.standard,
           child: staticChild!,
         );
       },

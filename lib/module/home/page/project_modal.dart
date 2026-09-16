@@ -5,6 +5,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/analytics_service.dart';
 import '../../../service/sound_service.dart';
+import '../../case_study/case_study_nathealth.dart';
 import '../model/project.dart';
 import '../widget/conditional_blur.dart';
 import '../widget/projects/nfc_architecture_diagram.dart';
@@ -18,6 +19,26 @@ Future<void> showProjectCaseStudy(
 }) async {
   SoundService.instance.playClick();
   Analytics.ctaProject(project.company);
+
+  // NatHealth has a full deep-dive case-study page. Other projects still
+  // open in the existing modal until they get their own dedicated page.
+  if (project.company == 'NatHealth') {
+    await Navigator.of(context, rootNavigator: true).push(
+      PageRouteBuilder(
+        transitionDuration: AppMotion.md,
+        reverseTransitionDuration: AppMotion.sm,
+        pageBuilder: (_, __, ___) => const NatHealthCaseStudy(),
+        transitionsBuilder: (_, animation, __, child) {
+          return FadeTransition(
+            opacity: CurvedAnimation(
+                parent: animation, curve: AppMotion.emphasizedDecel),
+            child: child,
+          );
+        },
+      ),
+    );
+    return;
+  }
 
   await showGeneralDialog(
     context: context,
