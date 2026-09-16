@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import '../home_controller.dart';
 import 'directional_icon.dart';
@@ -12,8 +13,8 @@ class MobilePager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final controller = HomeController.of(context);
+    final isDark = context.isDarkMode;
 
     return ValueListenableBuilder<int>(
       valueListenable: controller.pageIndex,
@@ -41,7 +42,7 @@ class MobilePager extends StatelessWidget {
                     icon,
                     size: 18,
                     color: onTap == null
-                        ? (isDark ? Colors.white24 : AppColors.slate300)
+                        ? context.glassBorderStrong
                         : (isDark ? Colors.white : AppColors.slate700),
                   ),
                 ),
@@ -55,18 +56,13 @@ class MobilePager extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
             decoration: BoxDecoration(
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.55)
-                  : Colors.white.withValues(alpha: 0.92),
+              color: context.glassSurface,
               borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.14)
-                    : AppColors.slate200,
-              ),
+              border: Border.all(color: context.glassBorder),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
+                  color:
+                      isDark ? AppColors.shadowMedium : AppColors.shadowSoft,
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -91,7 +87,7 @@ class MobilePager extends StatelessWidget {
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
-                    color: isDark ? Colors.white70 : AppColors.slate600,
+                    color: context.mutedText,
                   ),
                 ),
                 const SizedBox(width: 6),

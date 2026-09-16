@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import '../home_controller.dart';
 import 'portfolio_nav.dart' show TopNav;
@@ -12,22 +13,16 @@ class MobileProgressRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final controller = HomeController.of(context);
     final labels = TopNav.getLabels(context);
+    final isDark = context.isDarkMode;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.black.withValues(alpha: 0.35)
-            : Colors.white.withValues(alpha: 0.85),
+        color: context.glassSurface,
         borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.10)
-              : AppColors.slate200,
-        ),
+        border: Border.all(color: context.glassBorder),
       ),
       child: ValueListenableBuilder<int>(
         valueListenable: controller.pageIndex,

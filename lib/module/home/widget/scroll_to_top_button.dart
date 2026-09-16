@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../service/sound_service.dart';
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 
 /// Circular arrow-up button anchored bottom-right on the mobile
@@ -13,7 +14,7 @@ class ScrollToTopButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     return Semantics(
       button: true,
       label: 'Scroll to top',
@@ -31,9 +32,7 @@ class ScrollToTopButton extends StatelessWidget {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: isDark
-                    ? AppColors.slate800.withValues(alpha: 0.9)
-                    : Colors.white.withValues(alpha: 0.9),
+                color: context.glassRaised,
                 borderRadius: BorderRadius.circular(22),
                 border: Border.all(
                   color: AppColors.accentIndigo
@@ -43,8 +42,8 @@ class ScrollToTopButton extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: isDark
-                        ? Colors.black.withValues(alpha: 0.4)
-                        : Colors.black.withValues(alpha: 0.08),
+                        ? AppColors.shadowMedium
+                        : AppColors.shadowSoft,
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),

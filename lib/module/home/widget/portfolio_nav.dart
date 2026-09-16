@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import '../home_controller.dart';
 import 'conditional_blur.dart';
@@ -46,9 +47,7 @@ class TopNav extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.md, vertical: AppSpacing.xs),
                 decoration: BoxDecoration(
-                  color: isDark
-                      ? const Color(0xFF0D1322).withValues(alpha: 0.65)
-                      : Colors.white.withValues(alpha: 0.85),
+                  color: context.glassSurface,
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(
                     color: accent.withValues(alpha: isDark ? 0.35 : 0.22),
@@ -58,7 +57,7 @@ class TopNav extends StatelessWidget {
                     BoxShadow(
                       color: isDark
                           ? accent.withValues(alpha: 0.15)
-                          : Colors.black.withValues(alpha: 0.06),
+                          : AppColors.shadowSoft,
                       blurRadius: 20,
                       offset: const Offset(0, 4),
                     ),
@@ -114,9 +113,15 @@ class TopNav extends StatelessWidget {
                             ),
                           ),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: isDark ? const Color(0xFFFDE68A) : AppColors.accentIndigoDeep,
+                            // Resume CTA locks to the amber signature in
+                            // both modes — previously the button flipped
+                            // to indigo in light and read as a second
+                            // brand element.
+                            foregroundColor: isDark
+                                ? AppColors.accentAmberSoft
+                                : AppColors.accentAmber,
                             side: BorderSide(
-                              color: isDark ? const Color(0xFFFBBF24) : AppColors.accentIndigoDeep,
+                              color: AppColors.accentAmber,
                               width: 1.2,
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

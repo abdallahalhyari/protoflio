@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import '../home_controller.dart';
 import 'portfolio_nav.dart' show TopNav;
@@ -13,7 +14,6 @@ class FolioBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final controller = HomeController.of(context);
     final labels = TopNav.getLabels(context);
 
@@ -26,18 +26,14 @@ class FolioBar extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
-            color: isDark
-                ? Colors.black.withValues(alpha: 0.6)
-                : Colors.white.withValues(alpha: 0.88),
+            color: context.glassSurface,
             borderRadius: BorderRadius.circular(AppRadius.xs),
-            border: Border.all(
-              color: isDark ? Colors.white12 : AppColors.slate200,
-            ),
-            boxShadow: isDark
+            border: Border.all(color: context.glassBorder),
+            boxShadow: context.isDarkMode
                 ? null
                 : [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
+                      color: AppColors.shadowSoft,
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -52,7 +48,7 @@ class FolioBar extends StatelessWidget {
                   controller.pageCount.toString().padLeft(2, '0'),
                 ),
                 style: TextStyle(
-                  color: isDark ? Colors.white70 : AppColors.slate500,
+                  color: context.subtleText,
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.5,
@@ -62,13 +58,13 @@ class FolioBar extends StatelessWidget {
               Container(
                 width: 1,
                 height: 10,
-                color: isDark ? Colors.white24 : AppColors.slate300,
+                color: context.glassBorderStrong,
               ),
               const SizedBox(width: 8),
               Text(
                 currentLabel,
                 style: TextStyle(
-                  color: isDark ? Colors.white : AppColors.slate900,
+                  color: context.onSurface,
                   fontSize: 10,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 2,

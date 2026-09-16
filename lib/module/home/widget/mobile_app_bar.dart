@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/locale_controller.dart';
 import '../../../service/sound_service.dart';
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme_controller.dart';
 import '../home_controller.dart';
@@ -40,22 +41,14 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
               right: AppSpacing.md,
             ),
             decoration: BoxDecoration(
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.75)
-                  : Colors.white.withValues(alpha: 0.85),
+              color: context.glassSurface,
               border: Border(
-                bottom: BorderSide(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.12)
-                      : Colors.black.withValues(alpha: 0.08),
-                  width: 1.0,
-                ),
+                bottom: BorderSide(color: context.divider, width: 1.0),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: isDark
-                      ? Colors.black.withValues(alpha: 0.35)
-                      : Colors.black.withValues(alpha: 0.06),
+                  color:
+                      isDark ? AppColors.shadowMedium : AppColors.shadowSoft,
                   blurRadius: 16,
                   offset: const Offset(0, 4),
                 ),
