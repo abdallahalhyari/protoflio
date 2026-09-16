@@ -69,11 +69,29 @@
           ]
         },
         {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, must-revalidate, max-age=0"
+            }
+          ]
+        },
+        {
+          "source": "index.html",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, must-revalidate, max-age=0"
+            }
+          ]
+        },
+        {
           "source": "**/*.html",
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
+              "value": "no-cache, no-store, must-revalidate, max-age=0"
             }
           ]
         },
@@ -82,7 +100,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
+              "value": "no-cache, no-store, must-revalidate, max-age=0"
             }
           ]
         }
@@ -154,11 +172,29 @@
           ]
         },
         {
+          "source": "/",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, must-revalidate, max-age=0"
+            }
+          ]
+        },
+        {
+          "source": "index.html",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, must-revalidate, max-age=0"
+            }
+          ]
+        },
+        {
           "source": "**/*.html",
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
+              "value": "no-cache, no-store, must-revalidate, max-age=0"
             }
           ]
         },
@@ -167,7 +203,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "no-cache, no-store, must-revalidate"
+              "value": "no-cache, no-store, must-revalidate, max-age=0"
             }
           ]
         }
