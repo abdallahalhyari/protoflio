@@ -115,7 +115,7 @@ class HatBioStrip extends StatelessWidget {
             color: isDark
                 ? Colors.white.withValues(alpha: 0.7)
                 : AppColors.slate500,
-            fontSize: 9.5,
+            fontSize: AppTypography.editorialSm,
             fontWeight: FontWeight.w900,
             letterSpacing: 2.4,
           ),

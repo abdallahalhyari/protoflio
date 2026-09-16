@@ -179,7 +179,7 @@ class MobileNavSheet extends StatelessWidget {
                               '// DIRECTORY',
                               style: TextStyle(
                                 color: AppColors.accentIndigo,
-                                fontSize: 11,
+                                fontSize: AppTypography.caption,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 2.0,
                               ),
@@ -190,7 +190,7 @@ class MobileNavSheet extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: AppTypography.displayFont,
                                 color: isDark ? Colors.white : AppColors.slate900,
-                                fontSize: 16,
+                                fontSize: AppTypography.subtitle,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.5,
                               ),
@@ -305,7 +305,7 @@ class MobileNavSheet extends StatelessWidget {
                                         color: isActive
                                             ? Colors.black
                                             : (isDark ? Colors.white70 : AppColors.slate600),
-                                        fontSize: 11,
+                                        fontSize: AppTypography.caption,
                                         fontWeight: FontWeight.w900,
                                         fontFamily: 'Courier',
                                       ),
@@ -334,7 +334,7 @@ class MobileNavSheet extends StatelessWidget {
                                               : (isDark
                                                   ? Colors.white.withValues(alpha: 0.85)
                                                   : AppColors.slate800),
-                                          fontSize: 13,
+                                          fontSize: AppTypography.small,
                                           fontWeight: FontWeight.w800,
                                           letterSpacing: 1.0,
                                         ),
@@ -346,7 +346,7 @@ class MobileNavSheet extends StatelessWidget {
                                           color: isActive
                                               ? item.accentColor.withValues(alpha: 0.9)
                                               : (isDark ? Colors.white38 : AppColors.slate500),
-                                          fontSize: 10.5,
+                                          fontSize: AppTypography.editorial,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -556,7 +556,7 @@ class _SocialButton extends StatelessWidget {
               label,
               style: TextStyle(
                 color: isDark ? Colors.white70 : AppColors.slate600,
-                fontSize: 11,
+                fontSize: AppTypography.caption,
                 fontWeight: FontWeight.w700,
               ),
             ),

@@ -93,7 +93,7 @@ class EngagementMatrixSection extends StatelessWidget {
                     l10n.contactEngagementScopes,
                     style: TextStyle(
                       color: isDark ? Colors.white70 : AppColors.slate500,
-                      fontSize: 11,
+                      fontSize: AppTypography.caption,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2.2,
                     ),

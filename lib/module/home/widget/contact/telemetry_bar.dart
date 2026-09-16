@@ -82,7 +82,7 @@ class _TelemetryBarState extends State<TelemetryBar> {
                           : 'STANDBY · ASYNC',
                       style: TextStyle(
                         color: context.greenText,
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.0,
                       ),

@@ -76,7 +76,7 @@ class ExpressPresetsBar extends StatelessWidget {
                       'ONE-TAP EXPRESS REACH-OUT PRESETS',
                       style: TextStyle(
                         color: context.amberText,
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.8,
                       ),

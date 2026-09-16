@@ -83,13 +83,13 @@ class ExperienceHeader extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text('✦',
-                        style: TextStyle(color: scheme.primary, fontSize: 11)),
+                        style: TextStyle(color: scheme.primary, fontSize: AppTypography.caption)),
                     const SizedBox(width: 6),
                     Text(
                       '4 ROLES · ENTERPRISE IMPACT',
                       style: TextStyle(
                         color: scheme.primary,
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.4,
                       ),

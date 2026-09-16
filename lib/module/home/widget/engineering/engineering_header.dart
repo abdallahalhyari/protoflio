@@ -96,7 +96,7 @@ class EngineeringHeader extends StatelessWidget {
                             '4 ARCHITECTURES',
                             style: TextStyle(
                               color: scheme.primary,
-                              fontSize: 10.5,
+                              fontSize: AppTypography.editorial,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.4,
                             ),

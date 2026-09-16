@@ -24,7 +24,7 @@ class SocialChip extends StatelessWidget {
       label: Text(
         label,
         style: const TextStyle(
-          fontSize: 11,
+          fontSize: AppTypography.caption,
           fontWeight: FontWeight.w900,
           letterSpacing: 1.6,
         ),

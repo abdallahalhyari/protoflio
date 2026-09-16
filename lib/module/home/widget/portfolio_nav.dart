@@ -107,7 +107,7 @@ class TopNav extends StatelessWidget {
                           label: Text(
                             AppLocalizations.of(context)!.navResume.toUpperCase(),
                             style: const TextStyle(
-                              fontSize: 11,
+                              fontSize: AppTypography.caption,
                               fontWeight: FontWeight.w800,
                               letterSpacing: 1.0,
                             ),

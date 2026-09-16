@@ -43,7 +43,7 @@ class HatDeckHeader extends StatelessWidget {
                     : 'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP',
                 style: TextStyle(
                   color: scheme.primary,
-                  fontSize: 10.5,
+                  fontSize: AppTypography.editorial,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 3,
                 ),
@@ -95,7 +95,7 @@ class HatDeckHeader extends StatelessWidget {
                     size: 15),
                 label: Text(loc.spreadAction,
                     style: const TextStyle(
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w800)),
               ),
               const SizedBox(width: AppSpacing.sm),
@@ -110,7 +110,7 @@ class HatDeckHeader extends StatelessWidget {
                 ),
                 child: Text(loc.alignAction,
                     style: const TextStyle(
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w700)),
               ),
               // Reserve the top-right toggle cluster's width

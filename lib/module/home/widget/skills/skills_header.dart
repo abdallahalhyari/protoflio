@@ -86,13 +86,13 @@ class SkillsHeader extends StatelessWidget {
                   children: [
                     const Text('✦',
                         style: TextStyle(
-                            color: AppColors.accentAmber, fontSize: 11)),
+                            color: AppColors.accentAmber, fontSize: AppTypography.caption)),
                     const SizedBox(width: 6),
                     Text(
                       '12 CORE DISCIPLINES',
                       style: TextStyle(
                         color: scheme.primary,
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.4,
                       ),

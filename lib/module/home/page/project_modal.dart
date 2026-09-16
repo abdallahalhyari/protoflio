@@ -203,7 +203,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                           style: TextStyle(
                                             fontFamily: 'Courier',
                                             color: scheme.primary,
-                                            fontSize: 9.5,
+                                            fontSize: AppTypography.editorialSm,
                                             fontWeight: FontWeight.w900,
                                             letterSpacing: 1.2,
                                           ),
@@ -218,7 +218,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                           style: TextStyle(
                                             fontFamily: 'Courier',
                                             color: isDark ? Colors.white.withValues(alpha: 0.6) : AppColors.slate500,
-                                            fontSize: 9.5,
+                                            fontSize: AppTypography.editorialSm,
                                             fontWeight: FontWeight.w700,
                                             letterSpacing: 1.0,
                                           ),

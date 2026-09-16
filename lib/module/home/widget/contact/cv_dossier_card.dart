@@ -66,7 +66,7 @@ class CvDossierCard extends StatelessWidget {
                         l10n.contactAtsVerified,
                         style: TextStyle(
                           color: context.amberText,
-                          fontSize: 9.5,
+                          fontSize: AppTypography.editorialSm,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.4,
                         ),
@@ -87,7 +87,7 @@ class CvDossierCard extends StatelessWidget {
                   l10n.contactCvDossierTitle,
                   style: TextStyle(
                     color: isDark ? Colors.white : AppColors.slate900,
-                    fontSize: 16,
+                    fontSize: AppTypography.subtitle,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0.3,
                   ),
@@ -119,7 +119,7 @@ class CvDossierCard extends StatelessWidget {
                   label: Text(
                     l10n.contactDownloadCvPdf,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: AppTypography.overline,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1.4,
                     ),
