@@ -80,6 +80,7 @@ class TopNav extends StatelessWidget {
                                   label: labels[i],
                                   active: current == i,
                                   onTap: () {
+                                    if (i == current) return;
                                     HapticFeedback.selectionClick();
                                     controller.goTo(i);
                                   },
@@ -316,6 +317,7 @@ class PageIndicator extends StatelessWidget {
               height: 44,
               child: InkResponse(
                 onTap: () {
+                  if (active) return;
                   HapticFeedback.selectionClick();
                   controller.goTo(i);
                 },

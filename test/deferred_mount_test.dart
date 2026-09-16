@@ -53,6 +53,22 @@ void main() {
     expect(find.text('mounted'), findsOneWidget);
   });
 
+  testWidgets('mounts eagerly when rendered outside a HomeControllerScope',
+      (tester) async {
+    // No HomeControllerScope wraps the child — DeferredMount should
+    // fall back to mounting immediately rather than freezing on the
+    // placeholder.
+    await tester.pumpWidget(const Directionality(
+      textDirection: TextDirection.ltr,
+      child: DeferredMount(
+        sectionIndex: 5,
+        placeholderHeight: 720,
+        child: Text('mounted'),
+      ),
+    ));
+    expect(find.text('mounted'), findsOneWidget);
+  });
+
   testWidgets('mounts on notifier change without unmounting again',
       (tester) async {
     final pageIndex = ValueNotifier<int>(0);

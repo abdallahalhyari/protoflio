@@ -56,7 +56,14 @@ class _DeferredMountState extends State<DeferredMount> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final controller = HomeController.maybeOf(context);
-    final next = controller?.pageIndex;
+    // No controller in scope? Mount eagerly. Better to render the section
+    // (as it would in an isolated widget test or a future embedded use)
+    // than to freeze on the placeholder SizedBox with no clue why.
+    if (controller == null) {
+      if (!_mounted) setState(() => _mounted = true);
+      return;
+    }
+    final next = controller.pageIndex;
     if (next != _pageIndex) {
       _pageIndex?.removeListener(_reevaluate);
       _pageIndex = next;

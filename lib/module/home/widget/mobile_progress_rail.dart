@@ -43,7 +43,9 @@ class MobileProgressRail extends StatelessWidget {
                     : 'Go to page ${i + 1}',
                 child: InkResponse(
                   radius: 14,
-                  onTap: () => controller.scrollToMobileSection(i),
+                  onTap: i == page
+                      ? null
+                      : () => controller.scrollToMobileSection(i),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 3),
                     child: AnimatedContainer(

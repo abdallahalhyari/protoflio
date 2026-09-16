@@ -38,8 +38,7 @@ class MobileHomeLayout extends StatelessWidget {
   final ScrollController scrollController;
   final List<GlobalKey> sectionKeys;
 
-  String _dividerLabelFor(BuildContext context, int index) {
-    final labels = TopNav.getLabels(context);
+  static String _dividerLabel(List<String> labels, int index) {
     if (index < 0 || index >= labels.length) return '';
     return labels[index].toUpperCase();
   }
@@ -47,6 +46,7 @@ class MobileHomeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = HomeController.of(context);
+    final labels = TopNav.getLabels(context);
     return Stack(
       children: [
         // Layer 1: Continuous scrollable column containing all 7 sections
@@ -74,7 +74,7 @@ class MobileHomeLayout extends StatelessWidget {
                 ),
               ),
               MobileSectionDivider(
-                  number: '02', title: _dividerLabelFor(context, 1)),
+                  number: '02', title: _dividerLabel(labels, 1)),
               DeferredMount(
                 sectionIndex: 1,
                 placeholderHeight: 720,
@@ -86,7 +86,7 @@ class MobileHomeLayout extends StatelessWidget {
                 ),
               ),
               MobileSectionDivider(
-                  number: '03', title: _dividerLabelFor(context, 2)),
+                  number: '03', title: _dividerLabel(labels, 2)),
               DeferredMount(
                 sectionIndex: 2,
                 placeholderHeight: 720,
@@ -98,7 +98,7 @@ class MobileHomeLayout extends StatelessWidget {
                 ),
               ),
               MobileSectionDivider(
-                  number: '04', title: _dividerLabelFor(context, 3)),
+                  number: '04', title: _dividerLabel(labels, 3)),
               DeferredMount(
                 sectionIndex: 3,
                 placeholderHeight: 720,
@@ -110,7 +110,7 @@ class MobileHomeLayout extends StatelessWidget {
                 ),
               ),
               MobileSectionDivider(
-                  number: '05', title: _dividerLabelFor(context, 4)),
+                  number: '05', title: _dividerLabel(labels, 4)),
               DeferredMount(
                 sectionIndex: 4,
                 placeholderHeight: 720,
@@ -122,7 +122,7 @@ class MobileHomeLayout extends StatelessWidget {
                 ),
               ),
               MobileSectionDivider(
-                  number: '06', title: _dividerLabelFor(context, 5)),
+                  number: '06', title: _dividerLabel(labels, 5)),
               DeferredMount(
                 sectionIndex: 5,
                 placeholderHeight: 720,
@@ -134,7 +134,7 @@ class MobileHomeLayout extends StatelessWidget {
                 ),
               ),
               MobileSectionDivider(
-                  number: '07', title: _dividerLabelFor(context, 6)),
+                  number: '07', title: _dividerLabel(labels, 6)),
               DeferredMount(
                 sectionIndex: 6,
                 placeholderHeight: 720,

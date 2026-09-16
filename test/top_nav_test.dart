@@ -53,7 +53,37 @@ void main() {
     expect(selected, findsOneWidget);
   });
 
-  testWidgets('TopNav goTo is invoked on nav item tap', (tester) async {
+  testWidgets('TopNav goTo is invoked on non-active nav item tap',
+      (tester) async {
+    tester.view.physicalSize = const Size(1200, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+
+    var tapped = 0;
+    // Start on section 0 so tapping the last NavItem is not a no-op.
+    await tester.pumpWidget(_wrap(
+      const TopNav(),
+      _stub(
+        pageIndex: ValueNotifier<int>(0),
+        onGoTo: () {
+          tapped++;
+          return 0;
+        },
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final items = find.byType(NavItem);
+    expect(items, findsWidgets);
+    // Tap a non-active NavItem (index != 0) — active-index guard would
+    // otherwise swallow the tap.
+    await tester.tap(items.last);
+    await tester.pump();
+    expect(tapped, greaterThan(0));
+  });
+
+  testWidgets('TopNav swallows tap on the already-active nav item',
+      (tester) async {
     tester.view.physicalSize = const Size(1200, 900);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -61,18 +91,20 @@ void main() {
     var tapped = 0;
     await tester.pumpWidget(_wrap(
       const TopNav(),
-      _stub(onGoTo: () {
-        tapped++;
-        return 0;
-      }),
+      _stub(
+        pageIndex: ValueNotifier<int>(0),
+        onGoTo: () {
+          tapped++;
+          return 0;
+        },
+      ),
     ));
     await tester.pumpAndSettle();
 
-    final items = find.byType(NavItem);
-    expect(items, findsWidgets);
-    await tester.tap(items.first);
+    // items.first == active section 0 — guard should prevent goTo.
+    await tester.tap(find.byType(NavItem).first);
     await tester.pump();
-    expect(tapped, greaterThan(0));
+    expect(tapped, 0);
   });
 
   testWidgets('PageIndicator dot count matches controller.pageCount',
