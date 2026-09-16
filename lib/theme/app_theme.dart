@@ -6,6 +6,9 @@ import 'tokens.dart';
 class AppTheme {
   AppTheme._();
 
+  /// Base themes seeded with [AppColors.seed]. The live section-accent
+  /// override is applied by `_AccentTheme` in `main.dart` so callers
+  /// never need to pass a dynamic seed here.
   static ThemeData light([Color seedColor = AppColors.seed]) => _base(Brightness.light, seedColor);
   static ThemeData dark([Color seedColor = AppColors.seed]) => _base(Brightness.dark, seedColor);
 

@@ -53,27 +53,28 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Merge locale/mode/seed into one Listenable — MaterialApp rebuilds
-    // once per change instead of nesting three builders (each rebuild
-    // reallocated both light + dark ThemeData).
-    final merged = Listenable.merge([
+    // MaterialApp is rebuilt only for locale + mode changes — those
+    // require a full theme reconstruction. The per-section accent
+    // (seed) color is applied lower in the tree via `_AccentTheme` so
+    // page navigation doesn't tear down + re-inherit the whole
+    // widget subtree. AnimatedTheme inside `_AccentTheme` lerps the
+    // primary color smoothly instead of snapping on every section.
+    final shellListenable = Listenable.merge([
       LocaleController.locale,
       ThemeController.mode,
-      ThemeController.seedColor,
     ]);
     return ListenableBuilder(
-      listenable: merged,
+      listenable: shellListenable,
       builder: (context, _) {
         final locale = LocaleController.locale.value;
         final mode = ThemeController.mode.value;
-        final seedColor = ThemeController.seedColor.value;
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           scrollBehavior: const _SmoothScrollBehavior(),
           title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
           themeMode: mode,
-          theme: AppTheme.light(seedColor),
-          darkTheme: AppTheme.dark(seedColor),
+          theme: AppTheme.light(),
+          darkTheme: AppTheme.dark(),
           locale: locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -86,9 +87,41 @@ class PortfolioApp extends StatelessWidget {
             Locale('ar'),
             Locale('cs'),
           ],
-          home: const HomeScreen(),
+          home: const _AccentTheme(child: HomeScreen()),
         );
       },
+    );
+  }
+}
+
+/// Applies the live section-accent color as an `AnimatedTheme` override
+/// on top of the base MaterialApp theme. Only this subtree rebuilds on
+/// seed change, and the color transition is lerped over 260ms — no
+/// visible refresh flash on section navigation.
+class _AccentTheme extends StatelessWidget {
+  const _AccentTheme({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<Color>(
+      valueListenable: ThemeController.seedColor,
+      builder: (context, seed, staticChild) {
+        final base = Theme.of(context);
+        final scheme = base.colorScheme.copyWith(
+          primary: seed,
+          onPrimary: base.brightness == Brightness.dark
+              ? Colors.white
+              : base.colorScheme.onPrimary,
+        );
+        return AnimatedTheme(
+          data: base.copyWith(colorScheme: scheme),
+          duration: const Duration(milliseconds: 260),
+          child: staticChild!,
+        );
+      },
+      child: child,
     );
   }
 }
