@@ -295,6 +295,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool _canInnerScroll(Offset globalPosition, double dy) {
     if (!mounted) return false;
+
+    // Fast-path: On desktop, Experience (1), Skills (3), Engineering (4),
+    // and Hats (5) have no vertical inner scrollables. Bypass expensive
+    // hit-testing and parent ascension completely.
+    final current = _pageIndex.value;
+    if (current == 1 || current == 3 || current == 4 || current == 5) {
+      return false;
+    }
+
     final result = HitTestResult();
     final viewId = View.of(context).viewId;
     RendererBinding.instance.hitTestInView(result, globalPosition, viewId);
@@ -507,7 +516,9 @@ class _HomeScreenState extends State<HomeScreen> {
               right: 12,
               top: 0,
               bottom: 0,
-              child: Center(child: PageIndicator()),
+              child: RepaintBoundary(
+                child: Center(child: PageIndicator()),
+              ),
             ),
           const Positioned(
             top: 0,

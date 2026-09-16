@@ -33,9 +33,17 @@ class MagazinePageTransformer extends StatelessWidget {
           position = (controller.page ?? controller.initialPage.toDouble()) - index;
         }
 
-        // Pages fully outside the viewport (1 or more screens away)
+        // Pages fully outside the viewport (1 or more screens away):
+        // Retain them in Offstage + TickerMode(enabled: false) so widgets,
+        // elements, and state are preserved without paying GPU raster or CPU tick cost.
         if (position >= 1.0 || position <= -1.0) {
-          return const SizedBox.shrink();
+          return Offstage(
+            offstage: true,
+            child: TickerMode(
+              enabled: false,
+              child: staticChild!,
+            ),
+          );
         }
 
         // When page is active and resting
@@ -46,23 +54,29 @@ class MagazinePageTransformer extends StatelessWidget {
         // Page is scrolling away (moving up)
         // It fades out and scales down into the background
         if (position > 0.0 && position < 1.0) {
-          // Ease progress with M3 decel so the leaving page slows into
-          // the background instead of yanking away linearly.
           final double turnProgress =
               AppMotion.emphasizedDecel.transform(position);
           final double scale = 1.0 - (turnProgress * 0.08);
           final double opacity = (1.0 - turnProgress).clamp(0.0, 1.0);
 
-          return Opacity(
-            opacity: opacity,
-            child: Transform.translate(
-              offset: Offset(0.0, turnProgress * 40.0),
-              child: Transform.scale(
-                scale: scale,
-                child: staticChild!,
-              ),
+          Widget transformed = Transform.translate(
+            offset: Offset(0.0, turnProgress * 40.0),
+            child: Transform.scale(
+              scale: scale,
+              child: staticChild!,
             ),
           );
+
+          // Only invoke Opacity (which allocates a full-screen saveLayer texture)
+          // when opacity is noticeably fractional.
+          if (opacity < 0.99) {
+            transformed = Opacity(
+              opacity: opacity,
+              child: transformed,
+            );
+          }
+
+          return transformed;
         }
 
         // Incoming page from below
@@ -75,16 +89,13 @@ class MagazinePageTransformer extends StatelessWidget {
             child: Stack(
               children: [
                 staticChild!,
-                // Drop shadow cast onto the page below it — tinted with
-                // shadowDeep so the transition reads on both light and
-                // dark canvases.
                 Positioned(
                   top: 0,
                   left: 0,
                   right: 0,
                   height: 80,
                   child: IgnorePointer(
-                    child: Container(
+                    child: DecoratedBox(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,

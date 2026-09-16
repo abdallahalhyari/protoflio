@@ -64,11 +64,7 @@ class _ExperiencePageState extends State<ExperiencePage>
 
     if (isFocused && !_isVisible) {
       setState(() => _isVisible = true);
-    } else if (!isFocused &&
-        _isVisible &&
-        (page - (widget.pageIndex ?? 0)).abs() > 0.8) {
-      // Optional: reset visibility when scrolling far away to replay animation when returning
-      setState(() => _isVisible = false);
+      widget.controller?.removeListener(_checkVisibility);
     }
   }
 
