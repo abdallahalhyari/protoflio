@@ -84,7 +84,7 @@ class MobilePager extends StatelessWidget {
                   '${controller.pageCount.toString().padLeft(2, '0')}',
                   style: TextStyle(
                     fontFamily: 'Courier',
-                    fontSize: 11,
+                    fontSize: AppTypography.caption,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                     color: context.mutedText,

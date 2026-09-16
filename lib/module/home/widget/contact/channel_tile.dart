@@ -131,7 +131,7 @@ class _ChannelTileState extends State<ChannelTile> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: isDark ? Colors.white : AppColors.slate900,
-                          fontSize: 13.5,
+                          fontSize: AppTypography.smallLoose,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.2,
                         ),
@@ -158,7 +158,7 @@ class _ChannelTileState extends State<ChannelTile> {
                     child: Text(
                       d.primaryLabel.toUpperCase(),
                       style: const TextStyle(
-                        fontSize: 11,
+                        fontSize: AppTypography.caption,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
                       ),
@@ -185,7 +185,7 @@ class _ChannelTileState extends State<ChannelTile> {
                   child: Text(
                     d.secondaryLabel.toUpperCase(),
                     style: const TextStyle(
-                      fontSize: 11,
+                      fontSize: AppTypography.caption,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1.2,
                     ),

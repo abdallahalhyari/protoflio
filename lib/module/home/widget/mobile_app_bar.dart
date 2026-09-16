@@ -78,7 +78,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(AppRadius.sm),
                             gradient: const LinearGradient(
-                              colors: [AppColors.accentIndigo, Color(0xFFFBBF24)],
+                              colors: [AppColors.accentIndigo, AppColors.accentAmber],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
@@ -95,7 +95,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                               style: TextStyle(
                                 fontFamily: AppTypography.displayFont,
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: AppTypography.subtitle,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
@@ -111,7 +111,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                               style: TextStyle(
                                 fontFamily: AppTypography.displayFont,
                                 color: isDark ? Colors.white : AppColors.slate900,
-                                fontSize: 13,
+                                fontSize: AppTypography.small,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.4,
                                 height: 1.1,
@@ -157,7 +157,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                             code,
                             style: TextStyle(
                               color: isDark ? Colors.white : AppColors.slate900,
-                              fontSize: 10.5,
+                              fontSize: AppTypography.editorial,
                               fontWeight: FontWeight.w800,
                               letterSpacing: 0.8,
                             ),
@@ -203,7 +203,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                       icon: Icon(
                         enabled ? Icons.volume_up_outlined : Icons.volume_off_outlined,
                         color: enabled
-                            ? const Color(0xFFFBBF24)
+                            ? AppColors.accentAmber
                             : (isDark ? Colors.white38 : AppColors.slate400),
                       ),
                       onPressed: () {
@@ -250,7 +250,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           'MENU',
                           style: TextStyle(
                             color: isDark ? Colors.white : AppColors.accentIndigo600,
-                            fontSize: 10.5,
+                            fontSize: AppTypography.editorial,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.2,
                           ),
@@ -294,7 +294,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: TextStyle(
                 fontFamily: 'Courier',
                 color: AppColors.accentIndigo,
-                fontSize: 9.5,
+                fontSize: AppTypography.editorialSm,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 1.2,
               ),
@@ -318,7 +318,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.8)
                         : AppColors.slate600,
-                    fontSize: 10,
+                    fontSize: AppTypography.micro,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.4,
                   ),
@@ -349,7 +349,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: isDark
                   ? Colors.white.withValues(alpha: 0.7)
                   : AppColors.slate600,
-              fontSize: 10,
+              fontSize: AppTypography.micro,
               fontWeight: FontWeight.w800,
               letterSpacing: 1.0,
             ),

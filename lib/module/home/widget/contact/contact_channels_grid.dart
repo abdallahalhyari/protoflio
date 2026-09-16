@@ -33,10 +33,10 @@ class ContactChannelsGrid extends StatelessWidget {
     required this.onCopy,
   });
 
-  static const _sky = Color(0xFF38BDF8);
-  static const _availabilityGreen = Color(0xFF34D399);
-  static const _indigo = Color(0xFF818CF8);
-  static const _accent = Color(0xFF8B5CF6);
+  static const _sky = AppColors.accentSky;
+  static const _availabilityGreen = AppColors.accentGreenLight;
+  static const _indigo = AppColors.accentIndigo;
+  static const _accent = AppColors.accentViolet;
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +119,7 @@ class ContactChannelsGrid extends StatelessWidget {
               height: 18,
               decoration: BoxDecoration(
                 color: _sky,
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: BorderRadius.circular(AppRadius.xxs),
               ),
             ),
             const SizedBox(width: 8),
@@ -131,7 +131,7 @@ class ContactChannelsGrid extends StatelessWidget {
                   '// DIRECT COMMUNICATION CHANNELS',
                   style: TextStyle(
                     color: isDark ? Colors.white70 : AppColors.slate500,
-                    fontSize: 11,
+                    fontSize: AppTypography.caption,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 2.2,
                   ),

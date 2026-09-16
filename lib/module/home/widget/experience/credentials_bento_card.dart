@@ -27,7 +27,7 @@ class CredentialsBentoCard extends StatelessWidget {
         style: TextStyle(
           fontFamily: AppTypography.displayFont,
           color: scheme.onSurface,
-          fontSize: 16,
+          fontSize: AppTypography.subtitle,
           letterSpacing: 2,
         ),
       ),
@@ -102,7 +102,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                     '${edu.institution} · ${edu.period}',
                                     style: TextStyle(
                                       color: scheme.primary,
-                                      fontSize: 12.5,
+                                      fontSize: AppTypography.overlineTight,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -129,7 +129,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                   Text(
                                     '❖ ',
                                     style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: AppTypography.overline,
                                       color: context.amberText,
                                     ),
                                   ),
@@ -140,7 +140,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                       style: TextStyle(
                                         color: scheme.onSurface
                                             .withValues(alpha: 0.9),
-                                        fontSize: 13,
+                                        fontSize: AppTypography.small,
                                         height: 1.4,
                                       ),
                                     ),

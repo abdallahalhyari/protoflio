@@ -5,7 +5,7 @@ import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../model/experience.dart';
 
-const _kNowAccent = Color(0xFF10B981); // Emerald green for "Present"
+const _kNowAccent = AppColors.accentGreen; // Emerald green for "Present"
 const _kGlassBorder = Color(0x33FFFFFF);
 
 class ExperienceCard extends StatefulWidget {
@@ -140,7 +140,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                   ),
                                   child: Text(
                                     widget.exp.period.toUpperCase(),
-                                    style: TextStyle(color: scheme.primary, fontSize: 10, fontWeight: FontWeight.w800, letterSpacing: 1),
+                                    style: TextStyle(color: scheme.primary, fontSize: AppTypography.micro, fontWeight: FontWeight.w800, letterSpacing: 1),
                                   ),
                                 ),
                                 if (_isCurrent) ...[
@@ -163,7 +163,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                         color: isDark
                                             ? _kNowAccent
                                             : AppColors.accentGreenDeep,
-                                        fontSize: 10,
+                                        fontSize: AppTypography.micro,
                                         fontWeight: FontWeight.w900,
                                         letterSpacing: 1,
                                       ),
@@ -252,7 +252,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
                             color: isDark ? scheme.onSurface : AppColors.slate900,
-                            fontSize: 13.5,
+                            fontSize: AppTypography.smallLoose,
                             height: 1.5,
                           ),
                         ),
@@ -261,7 +261,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: isDark ? scheme.onSurface.withValues(alpha: 0.85) : AppColors.slate700,
-                            fontSize: 13.5,
+                            fontSize: AppTypography.smallLoose,
                             height: 1.5,
                           ),
                         ),
@@ -272,7 +272,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                     highlight,
                     style: TextStyle(
                       color: isDark ? scheme.onSurface.withValues(alpha: 0.85) : AppColors.slate700,
-                      fontSize: 13.5,
+                      fontSize: AppTypography.smallLoose,
                       height: 1.5,
                     ),
                   ),

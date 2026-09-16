@@ -111,7 +111,7 @@ class ArchitectureTopicTabs extends StatelessWidget {
                   color: isSelected
                       ? (isDark ? Colors.white : scheme.primary)
                       : (isDark ? Colors.white70 : AppColors.slate600),
-                  fontSize: 11.5,
+                  fontSize: AppTypography.captionSm,
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                   letterSpacing: 0.8,
                 ),

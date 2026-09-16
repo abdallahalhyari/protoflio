@@ -49,11 +49,26 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   ({double fontSize, double hPad, double vPad, double iconSize}) get _dims {
     switch (widget.size) {
       case PrimaryButtonSize.sm:
-        return (fontSize: 13, hPad: 18, vPad: 6, iconSize: 14);
+        return (
+          fontSize: AppTypography.small,
+          hPad: 18,
+          vPad: AppSpacing.xs + 2,
+          iconSize: 14,
+        );
       case PrimaryButtonSize.md:
-        return (fontSize: 16, hPad: 28, vPad: 8, iconSize: 16);
+        return (
+          fontSize: AppTypography.subtitle,
+          hPad: 28,
+          vPad: AppSpacing.sm,
+          iconSize: AppSpacing.md,
+        );
       case PrimaryButtonSize.lg:
-        return (fontSize: 18, hPad: 36, vPad: 12, iconSize: 20);
+        return (
+          fontSize: AppTypography.subtitle + 2,
+          hPad: 36,
+          vPad: AppSpacing.smd,
+          iconSize: 20,
+        );
     }
   }
 
@@ -90,7 +105,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
           Icon(widget.icon,
               size: dims.iconSize,
               color: _enabled ? Colors.white : Colors.white70),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           content,
         ],
       );
@@ -108,7 +123,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: AppSpacing.sm + 2),
           content,
         ],
       );

@@ -30,7 +30,7 @@ class MobileFooter extends StatelessWidget {
                 height: 28,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF38BDF8), AppColors.accentIndigo],
+                    colors: [AppColors.accentSky, AppColors.accentIndigo],
                   ),
                   borderRadius: BorderRadius.circular(AppRadius.chip),
                 ),
@@ -51,7 +51,7 @@ class MobileFooter extends StatelessWidget {
                 style: TextStyle(
                   color: context.onSurface,
                   fontWeight: FontWeight.w900,
-                  fontSize: 12,
+                  fontSize: AppTypography.overline,
                   letterSpacing: 2,
                 ),
               ),
@@ -62,7 +62,7 @@ class MobileFooter extends StatelessWidget {
             'SENIOR MOBILE ENGINEER · SYSTEM ARCHITECT',
             style: TextStyle(
               color: context.mutedText,
-              fontSize: 9.5,
+              fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w700,
               letterSpacing: 2,
             ),

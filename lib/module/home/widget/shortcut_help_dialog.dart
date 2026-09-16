@@ -82,7 +82,7 @@ Widget _shortcutRow(ColorScheme scheme, String key, String label) {
             style: TextStyle(
               fontFamily: 'Courier',
               color: scheme.primary,
-              fontSize: 12,
+              fontSize: AppTypography.overline,
               fontWeight: FontWeight.w900,
               letterSpacing: 0.5,
             ),
@@ -94,7 +94,7 @@ Widget _shortcutRow(ColorScheme scheme, String key, String label) {
             label,
             style: TextStyle(
               color: scheme.onSurface.withValues(alpha: 0.85),
-              fontSize: 13,
+              fontSize: AppTypography.small,
               fontWeight: FontWeight.w600,
             ),
           ),

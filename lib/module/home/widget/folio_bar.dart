@@ -49,7 +49,7 @@ class FolioBar extends StatelessWidget {
                 ),
                 style: TextStyle(
                   color: context.subtleText,
-                  fontSize: 10,
+                  fontSize: AppTypography.micro,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.5,
                 ),
@@ -65,7 +65,7 @@ class FolioBar extends StatelessWidget {
                 currentLabel,
                 style: TextStyle(
                   color: context.onSurface,
-                  fontSize: 10,
+                  fontSize: AppTypography.micro,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 2,
                 ),

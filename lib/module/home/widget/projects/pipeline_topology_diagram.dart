@@ -50,7 +50,7 @@ class PipelineTopologyDiagram extends StatelessWidget {
                 width: 6,
                 height: 6,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF34D399),
+                  color: AppColors.accentGreenLight,
                   shape: BoxShape.circle,
                 ),
               ),

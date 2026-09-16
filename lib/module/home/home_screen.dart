@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _scheduleSettle(int page) {
     _settleTimer?.cancel();
-    _settleTimer = Timer(const Duration(milliseconds: 250), () {
+    _settleTimer = Timer(AppMotion.sm, () {
       if (!mounted) return;
       final hash = UrlSyncService.instance.indexToHash(page);
       UrlSyncService.instance.updateHash(hash);

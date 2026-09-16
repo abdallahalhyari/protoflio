@@ -124,7 +124,7 @@ class _ContactPageState extends State<ContactPage>
                     'Copied: $value',
                     style: TextStyle(
                       color: isDark ? Colors.white : AppColors.slate900,
-                      fontSize: 12.5,
+                      fontSize: AppTypography.overlineTight,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.3,
                     ),

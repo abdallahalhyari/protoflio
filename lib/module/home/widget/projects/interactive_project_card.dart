@@ -137,7 +137,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                   style: const TextStyle(
                                     fontFamily: 'Courier',
                                     color: Colors.white,
-                                    fontSize: 10,
+                                    fontSize: AppTypography.micro,
                                     fontWeight: FontWeight.w900,
                                     letterSpacing: 1.5,
                                   ),
@@ -159,7 +159,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                             style: TextStyle(
                               fontFamily: 'Courier',
                               color: widget.scheme.primary,
-                              fontSize: 10,
+                              fontSize: AppTypography.micro,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.5,
                             ),
@@ -220,7 +220,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                       style: TextStyle(
                                         fontFamily: 'Courier',
                                         color: ctaColor,
-                                        fontSize: 11,
+                                        fontSize: AppTypography.caption,
                                         fontWeight: FontWeight.w900,
                                         letterSpacing: 1.0,
                                       ),

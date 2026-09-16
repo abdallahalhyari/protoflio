@@ -115,10 +115,10 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
       return AppColors.accentVioletDeep;
     }
     if (color == AppColors.accentVioletLight || color.toARGB32() == 0xFFA78BFA) {
-      return const Color(0xFF7C3AED);
+      return AppColors.accentVioletMid;
     }
     if (color.toARGB32() == 0xFFF472B6) {
-      return const Color(0xFFBE185D);
+      return AppColors.accentPinkDeep;
     }
     return Theme.of(context).colorScheme.primary;
   }
@@ -330,7 +330,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                                 style: TextStyle(
                                   fontFamily: 'Courier',
                                   color: accentText,
-                                  fontSize: 10.0,
+                                  fontSize: AppTypography.micro,
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),

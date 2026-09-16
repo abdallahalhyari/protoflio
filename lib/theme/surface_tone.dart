@@ -72,7 +72,7 @@ extension SurfaceTone on BuildContext {
   /// Border for the resume CTA.
   Color get resumeBorder => isDarkMode
       ? AppColors.accentAmber
-      : const Color(0xFFD97706);
+      : AppColors.accentAmberBright;
 
   /// Semantic accessible accent text colors (>4.5:1 contrast in both modes)
   Color get amberText => isDarkMode ? AppColors.accentAmberSoft : AppColors.accentAmberDeep;

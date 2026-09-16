@@ -145,6 +145,21 @@ class AppColors {
   static const Color accentIndigo700 = Color(0xFF4338CA);
   static const Color hatGold = Color(0xFFC8A951);
 
+  // Extended palette — one-off tints reused just enough to name.
+  static const Color accentAmberMid = Color(0xFFF59E0B); // amber 500 — mid warmth
+  static const Color accentAmberBright = Color(0xFFD97706); // amber 600 — punchy warm
+  static const Color accentPink = Color(0xFFF472B6); // pink 400 — soft accent
+  static const Color accentPinkBright = Color(0xFFEC4899); // pink 500 — vivid accent
+  static const Color accentPinkDeep = Color(0xFFBE185D); // pink 700 — high-contrast pink
+  static const Color accentVioletMid = Color(0xFF7C3AED); // violet 600 — mid violet
+  static const Color accentPurpleSoft = Color(0xFFC084FC); // purple 400 — soft purple
+  static const Color accentRoseSoft = Color(0xFFF87171); // red 400 — soft rose
+  // Dark bg variants — layered obsidian tones sub-slate950.
+  static const Color darkCanvas = Color(0xFF0A0F1A); // between slate950 and midnight
+  static const Color darkCanvasElevated = Color(0xFF141B2A); // one tier above canvas
+  static const Color darkNight = Color(0xFF0B101D); // page bg midnight blue-black
+  static const Color lightMist = Color(0xFFFAFBFC); // pearl white background wash
+
   // Accessible high-contrast Light Mode accent counterparts (>4.5:1 on white/slate50)
   static const Color accentAmberDeep = Color(0xFFB45309); // Amber 700 (5.8:1)
   static const Color accentGreenDeep = Color(0xFF047857); // Emerald 700 (6.1:1)
@@ -210,8 +225,12 @@ class AppTypography {
   static const double editorial = 10.5;
 
   // Standard typographic steps.
+  static const double micro = 10; // meta labels above chip size, timeline stamps
+  static const double captionSm = 11.5; // fine crop between caption and overline
   static const double caption = 11; // sub-body helper text, chip labels
+  static const double overlineTight = 12.5; // fine crop between overline and small
   static const double overline = 12; // uppercase kickers over headings
+  static const double smallLoose = 13.5; // fine crop between small and body
   static const double small = 13;
   static const double body = 14;
   static const double subtitle = 16;

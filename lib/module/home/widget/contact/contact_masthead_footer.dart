@@ -43,7 +43,7 @@ class ContactMastheadFooter extends StatelessWidget {
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.72)
                     : AppColors.slate500,
-                fontSize: 9.5,
+                fontSize: AppTypography.editorialSm,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 2.2,
               ),
@@ -53,7 +53,7 @@ class ContactMastheadFooter extends StatelessWidget {
               value,
               style: TextStyle(
                 color: isDark ? Colors.white : AppColors.slate900,
-                fontSize: 11.5,
+                fontSize: AppTypography.captionSm,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.0,
               ),
@@ -118,7 +118,7 @@ class ContactMastheadFooter extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: isDark ? Colors.white70 : AppColors.slate600,
-                    fontSize: 9.5,
+                    fontSize: AppTypography.editorialSm,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                   ),
@@ -141,7 +141,7 @@ class ContactMastheadFooter extends StatelessWidget {
                     '// COLOPHON & DISPATCH',
                     style: TextStyle(
                       color: isDark ? Colors.white.withValues(alpha: 0.60) : AppColors.slate400,
-                      fontSize: 10,
+                      fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2,
                     ),

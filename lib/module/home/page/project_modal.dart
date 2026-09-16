@@ -138,7 +138,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                         height: 3,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [scheme.primary, const Color(0xFFC084FC)],
+                            colors: [scheme.primary, AppColors.accentPurpleSoft],
                           ),
                         ),
                       ),
@@ -203,7 +203,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                           style: TextStyle(
                                             fontFamily: 'Courier',
                                             color: scheme.primary,
-                                            fontSize: 9.5,
+                                            fontSize: AppTypography.editorialSm,
                                             fontWeight: FontWeight.w900,
                                             letterSpacing: 1.2,
                                           ),
@@ -218,7 +218,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                           style: TextStyle(
                                             fontFamily: 'Courier',
                                             color: isDark ? Colors.white.withValues(alpha: 0.6) : AppColors.slate500,
-                                            fontSize: 9.5,
+                                            fontSize: AppTypography.editorialSm,
                                             fontWeight: FontWeight.w700,
                                             letterSpacing: 1.0,
                                           ),
@@ -246,7 +246,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                             style: TextStyle(
                                               fontFamily: 'Courier',
                                               color: scheme.primary,
-                                              fontSize: 10,
+                                              fontSize: AppTypography.micro,
                                               fontWeight: FontWeight.w900,
                                               letterSpacing: 1,
                                             ),
@@ -319,7 +319,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ProjectDossierCard(
                                 label: 'CORE PROBLEM',
                                 value: project.problem!,
-                                accentColor: const Color(0xFFF87171),
+                                accentColor: AppColors.accentRoseSoft,
                                 isDesktop: isDesktop,
                                 isDark: isDark,
                               ),
@@ -348,7 +348,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ProjectDossierCard(
                                 label: 'DECISION',
                                 value: project.technicalDecisions!.first,
-                                accentColor: const Color(0xFFFDE68A),
+                                accentColor: AppColors.accentAmberSoft,
                                 isDesktop: isDesktop,
                                 isDark: isDark,
                               ),
@@ -356,7 +356,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ProjectDossierCard(
                                 label: 'LESSON LEARNED',
                                 value: project.lessonsLearned!,
-                                accentColor: const Color(0xFFFBBF24),
+                                accentColor: AppColors.accentAmber,
                                 isDesktop: isDesktop,
                                 isDark: isDark,
                               ),

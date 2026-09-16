@@ -105,7 +105,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                   center: Alignment(tilt.dx, tilt.dy),
                   radius: 0.9,
                   colors: [
-                    const Color(0xFFFBBF24).withValues(alpha: 0.2),
+                    AppColors.accentAmber.withValues(alpha: 0.2),
                     Colors.white.withValues(alpha: 0.06),
                     Colors.transparent,
                   ],
@@ -258,8 +258,8 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  const Color(0xFF141B2A),
-                  const Color(0xFF0A0F1A),
+                  AppColors.darkCanvasElevated,
+                  AppColors.darkCanvas,
                   accent.withValues(alpha: 0.22),
                 ],
                 stops: const [0.0, 0.55, 1.0],
@@ -316,7 +316,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                           'ROLE',
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.6),
-                            fontSize: 10,
+                            fontSize: AppTypography.micro,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 3,
                           ),
@@ -393,7 +393,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                       'TAP TO FLIP',
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.82),
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.8,
                       ),
@@ -431,9 +431,9 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  const Color(0xFF0A0F1A),
+                  AppColors.darkCanvas,
                   accent.withValues(alpha: 0.14),
-                  const Color(0xFF141B2A),
+                  AppColors.darkCanvasElevated,
                 ],
               ),
               boxShadow: [
@@ -464,7 +464,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                             text: 'REVERSE · ',
                             style: TextStyle(
                               color: Colors.white.withValues(alpha: 0.5),
-                              fontSize: 11,
+                              fontSize: AppTypography.caption,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 2,
                             ),
@@ -473,7 +473,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                             text: widget.hat.title.toUpperCase(),
                             style: TextStyle(
                               color: accent,
-                              fontSize: 12,
+                              fontSize: AppTypography.overline,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.8,
                             ),
@@ -518,7 +518,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                     widget.hat.titleDesc,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 12,
+                      fontSize: AppTypography.overline,
                       fontWeight: FontWeight.w800,
                       height: 1.4,
                       letterSpacing: 0.3,
@@ -532,7 +532,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                     widget.hat.desc,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.92),
-                      fontSize: 12.5,
+                      fontSize: AppTypography.overlineTight,
                       height: 1.55,
                       letterSpacing: 0.15,
                     ),
@@ -550,7 +550,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                       'TAP TO RETURN',
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.82),
-                        fontSize: 10.5,
+                        fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.8,
                       ),
