@@ -179,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _mobileScrollController.animateTo(
         0,
         duration: AppMotion.sectionScroll,
-        curve: Curves.easeInOutCubic,
+        curve: AppMotion.standard,
       );
       return;
     }
@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _mobileScrollController.animateTo(
       targetOffset,
       duration: AppMotion.sectionScroll,
-      curve: Curves.easeInOutCubic,
+      curve: AppMotion.standard,
     );
   }
 
@@ -239,8 +239,8 @@ class _HomeScreenState extends State<HomeScreen> {
       _isPageTransitioning = true;
       _controller.animateToPage(
         target,
-        duration: const Duration(milliseconds: 380),
-        curve: Curves.easeOutCubic,
+        duration: AppMotion.pageTurn,
+        curve: AppMotion.emphasized,
       ).then((_) {
         if (mounted) {
           _isPageTransitioning = false;

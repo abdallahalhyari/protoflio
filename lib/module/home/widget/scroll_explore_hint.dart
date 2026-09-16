@@ -18,7 +18,7 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
     with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1400),
+    duration: AppMotion.ambient,
   );
 
   @override

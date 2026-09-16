@@ -96,8 +96,8 @@ class _EngineeringPageState extends State<EngineeringPage>
               },
               child: AnimatedSwitcher(
                 duration: AppMotion.switcher,
-                switchInCurve: Curves.easeOutCubic,
-                switchOutCurve: Curves.easeInCubic,
+                switchInCurve: AppMotion.emphasized,
+                switchOutCurve: AppMotion.emphasizedAccel,
                 transitionBuilder: (child, animation) => FadeTransition(
                   opacity: animation,
                   child: SlideTransition(

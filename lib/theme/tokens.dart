@@ -50,23 +50,42 @@ class AppMotion {
   AppMotion._();
 
   // Numeric scale — Material-style tiers.
+  static const Duration micro = Duration(milliseconds: 100);
   static const Duration xs = Duration(milliseconds: 150);
   static const Duration sm = Duration(milliseconds: 250);
   static const Duration md = Duration(milliseconds: 350);
   static const Duration lg = Duration(milliseconds: 500);
+  static const Duration xl = Duration(milliseconds: 700);
 
   // Intent-named durations — use these where the numeric scale doesn't
   // fit an established interaction beat. Values chosen from the ad-hoc
   // Duration literals that used to live across pages.
   static const Duration chipHover = Duration(milliseconds: 180); // filter / tab hover
   static const Duration snap = Duration(milliseconds: 200); // page pill / snap-to
+  static const Duration cardHover = Duration(milliseconds: 300); // card lift / border pulse
   static const Duration switcher = Duration(milliseconds: 280); // AnimatedSwitcher content
+  static const Duration heroEntry = Duration(milliseconds: 260); // intro wordmark
+  static const Duration pageTurn = Duration(milliseconds: 380); // desktop wheel page jump
   static const Duration cardFlip = Duration(milliseconds: 400); // skill / hat card flip
   static const Duration sectionScroll = Duration(milliseconds: 600); // mobile section jump
   static const Duration entry = Duration(milliseconds: 800); // page-entry stagger
+  static const Duration ambient = Duration(milliseconds: 1400); // long-loop hint bounces
   static const Duration pulse = Duration(milliseconds: 1500); // presence dot breath
   static const Duration wheelResetGap = Duration(milliseconds: 220); // wheel accumulator reset
   static const Duration toast = Duration(milliseconds: 2600); // floating snack lifetime
+
+  // Material 3 emphasized easing — snappier at the top, decelerates
+  // gently. Use for state changes the user drove (tap, hover), so the
+  // motion feels responsive without whip-crack.
+  static const Cubic emphasized = Cubic(0.2, 0.0, 0.0, 1.0);
+  static const Cubic emphasizedAccel = Cubic(0.3, 0.0, 0.8, 0.15);
+  static const Cubic emphasizedDecel = Cubic(0.05, 0.7, 0.1, 1.0);
+  // Standard Material curve — for continuous transitions where the user
+  // isn't the trigger (auto-advance, section snap).
+  static const Cubic standard = Cubic(0.2, 0.0, 0.0, 1.0);
+  // Overshoot spring — for pill-drop / card-catch beats that want a
+  // gentle bounce past the target.
+  static const Cubic spring = Cubic(0.34, 1.56, 0.64, 1.0);
 }
 
 /// Colors. Brand seed + semantic surface tones + hat palette (with overlay alpha baked in).
@@ -125,6 +144,28 @@ class AppColors {
   static const Color slate800 = Color(0xFF1E293B);
   static const Color slate900 = Color(0xFF0F172A);
   static const Color slate950 = Color(0xFF080C14);
+
+  // Depth & atmosphere — colored shadows and glow tints layered under
+  // hover states. Alpha baked in; drop straight into `boxShadow.color`.
+  // Colored shadows read as "premium" where black shadows read as "flat
+  // material" — use these on hero cards, primary CTAs, hovered chips.
+  static Color glowIndigo = const Color(0xFF6366F1).withValues(alpha: 0.32);
+  static Color glowIndigoSoft = const Color(0xFF6366F1).withValues(alpha: 0.16);
+  static Color glowAmber = const Color(0xFFFBBF24).withValues(alpha: 0.30);
+  static Color glowRose = const Color(0xFFF43F5E).withValues(alpha: 0.28);
+  static Color glowCyan = const Color(0xFF06B6D4).withValues(alpha: 0.26);
+  static Color glowGreen = const Color(0xFF10B981).withValues(alpha: 0.28);
+
+  // Rim lights — thin bright borders that give glass surfaces a lifted
+  // edge under the dark obsidian canvas.
+  static Color rimLight = Colors.white.withValues(alpha: 0.10);
+  static Color rimLightStrong = Colors.white.withValues(alpha: 0.18);
+
+  // Neutral shadow tokens — use `shadowSoft` for resting cards,
+  // `shadowMedium` under hovered / lifted surfaces.
+  static Color shadowSoft = Colors.black.withValues(alpha: 0.14);
+  static Color shadowMedium = Colors.black.withValues(alpha: 0.28);
+  static Color shadowDeep = Colors.black.withValues(alpha: 0.42);
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site

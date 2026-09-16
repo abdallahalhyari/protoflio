@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/tokens.dart';
+
 class MagazinePageTransformer extends StatelessWidget {
   final Widget child;
   final PageController controller;
@@ -44,7 +46,10 @@ class MagazinePageTransformer extends StatelessWidget {
         // Page is scrolling away (moving up)
         // It fades out and scales down into the background
         if (position > 0.0 && position < 1.0) {
-          final double turnProgress = position;
+          // Ease progress with M3 decel so the leaving page slows into
+          // the background instead of yanking away linearly.
+          final double turnProgress =
+              AppMotion.emphasizedDecel.transform(position);
           final double scale = 1.0 - (turnProgress * 0.08);
           final double opacity = (1.0 - turnProgress).clamp(0.0, 1.0);
 
@@ -62,14 +67,17 @@ class MagazinePageTransformer extends StatelessWidget {
 
         // Incoming page from below
         if (position < 0.0 && position > -1.0) {
-          final double emergeProgress = -position;
+          final double emergeProgress =
+              AppMotion.emphasizedDecel.transform(-position);
 
           return Transform.translate(
             offset: Offset(0, emergeProgress * 20.0),
             child: Stack(
               children: [
                 staticChild!,
-                // Drop shadow cast onto the page below it
+                // Drop shadow cast onto the page below it — tinted with
+                // shadowDeep so the transition reads on both light and
+                // dark canvases.
                 Positioned(
                   top: 0,
                   left: 0,
@@ -82,7 +90,8 @@ class MagazinePageTransformer extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Colors.black.withValues(alpha: emergeProgress * 0.12),
+                            AppColors.shadowDeep
+                                .withValues(alpha: emergeProgress * 0.35),
                             Colors.transparent,
                           ],
                         ),

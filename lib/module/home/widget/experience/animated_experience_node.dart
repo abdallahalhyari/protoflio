@@ -35,11 +35,11 @@ class AnimatedExperienceNode extends StatelessWidget {
 
     return AnimatedOpacity(
       duration: AppMotion.sectionScroll,
-      curve: Curves.easeOutCubic,
+      curve: AppMotion.emphasized,
       opacity: isVisible ? 1.0 : 0.0,
       child: AnimatedSlide(
         duration: AppMotion.sectionScroll,
-        curve: Curves.easeOutCubic,
+        curve: AppMotion.emphasized,
         offset: isVisible
             ? Offset.zero
             : (isDesktop ? const Offset(0.2, 0) : const Offset(0, 0.2)),

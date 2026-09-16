@@ -56,8 +56,8 @@ class _ExperienceCardState extends State<ExperienceCard> {
         onExit: (_) => setState(() => _hover = false),
         child: AnimatedScale(
           scale: hovered ? 1.02 : 1.0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOutCubic,
+          duration: AppMotion.cardHover,
+          curve: AppMotion.emphasized,
           child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -70,11 +70,14 @@ class _ExperienceCardState extends State<ExperienceCard> {
             ),
             boxShadow: hovered
                 ? [
-                    BoxShadow(color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.12), blurRadius: 20, spreadRadius: 2),
-                    BoxShadow(color: isDark ? Colors.black.withValues(alpha: 0.4) : AppColors.slate900.withValues(alpha: 0.08), blurRadius: 10, offset: const Offset(0, 8)),
+                    // Colored inner glow tinted with the section accent
+                    // — reads as "lit from within" instead of a flat
+                    // grey drop shadow.
+                    BoxShadow(color: scheme.primary.withValues(alpha: isDark ? 0.22 : 0.16), blurRadius: 24, spreadRadius: 2),
+                    BoxShadow(color: isDark ? AppColors.shadowMedium : AppColors.shadowSoft, blurRadius: 12, offset: const Offset(0, 10)),
                   ]
                 : [
-                    BoxShadow(color: isDark ? Colors.black.withValues(alpha: 0.2) : AppColors.slate900.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4)),
+                    BoxShadow(color: isDark ? AppColors.shadowSoft : AppColors.slate900.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4)),
                   ],
           ),
           child: ClipRRect(
@@ -85,7 +88,8 @@ class _ExperienceCardState extends State<ExperienceCard> {
                   Positioned.fill(
                     child: RepaintBoundary(
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
+                        duration: AppMotion.cardHover,
+                        curve: AppMotion.emphasized,
                         color: isDark
                             ? (hovered ? scheme.surface.withValues(alpha: 0.35) : scheme.surface.withValues(alpha: 0.2))
                             : (hovered ? Colors.white.withValues(alpha: 0.95) : Colors.white.withValues(alpha: 0.88)),

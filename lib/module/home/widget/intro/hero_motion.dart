@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../theme/tokens.dart';
+
 /// Snappy entrance micro-motion that smoothly fades and slides its child into
 /// place over 260ms without blocking or delaying page rendering.
 ///
@@ -33,13 +35,15 @@ class _SnappyEntranceState extends State<SnappyEntrance>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 260),
+      duration: AppMotion.heroEntry,
     );
+    // Use M3 emphasizedDecel — the entrance decelerates smoothly into
+    // the resting frame instead of clipping to a stop.
     _opacity = Tween<double>(begin: 0.35, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
+      CurvedAnimation(parent: _controller, curve: AppMotion.emphasizedDecel),
     );
     _slide = Tween<double>(begin: widget.yOffset, end: 0.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
+      CurvedAnimation(parent: _controller, curve: AppMotion.emphasizedDecel),
     );
 
     if (widget.delayMs > 0) {
@@ -113,7 +117,7 @@ class _HeroParallaxState extends State<HeroParallax>
     super.initState();
     _resetCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: AppMotion.cardHover,
     );
   }
 
@@ -142,7 +146,7 @@ class _HeroParallaxState extends State<HeroParallax>
       begin: current,
       end: Offset.zero,
     ).animate(
-      CurvedAnimation(parent: _resetCtrl, curve: Curves.easeOutCubic),
+      CurvedAnimation(parent: _resetCtrl, curve: AppMotion.emphasizedDecel),
     );
 
     _resetCtrl.reset();

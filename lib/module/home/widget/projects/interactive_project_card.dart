@@ -45,8 +45,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
         onHover: (e) => _mousePos.value = e.localPosition,
         child: AnimatedScale(
           scale: _isHovered && widget.isDesktop ? 1.02 : 1.0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOutCubic,
+          duration: AppMotion.cardHover,
+          curve: AppMotion.emphasized,
           child: Card(
             margin: EdgeInsets.zero,
             clipBehavior: Clip.antiAlias,
@@ -81,8 +81,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                             children: [
                               AnimatedScale(
                                 scale: _isHovered && widget.isDesktop ? 1.08 : 1.0,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeOutCubic,
+                                duration: AppMotion.lg,
+                                curve: AppMotion.emphasizedDecel,
                                 child: Image.asset(
                                   widget.project.heroImagePath!,
                                   fit: BoxFit.cover,
@@ -91,7 +91,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               // Gradient Overlay
                               AnimatedOpacity(
                                 opacity: _isHovered ? 1.0 : 0.8,
-                                duration: const Duration(milliseconds: 300),
+                                duration: AppMotion.cardHover,
                                 child: Container(
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
@@ -177,7 +177,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AnimatedDefaultTextStyle(
-                                duration: const Duration(milliseconds: 200),
+                                duration: AppMotion.snap,
                                 style: TextStyle(
                                   fontFamily: AppTypography.displayFont,
                                   color: _isHovered
@@ -208,8 +208,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                           ),
                           AnimatedSlide(
                             offset: _isHovered && widget.isDesktop ? const Offset(0.05, 0) : Offset.zero,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeOutCubic,
+                            duration: AppMotion.cardHover,
+                            curve: AppMotion.emphasized,
                             child: Row(
                               children: [
                                 Text(

@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+import '../../../theme/tokens.dart';
+
 class BreathingPulse extends StatefulWidget {
   final Widget child;
   final double minScale;
@@ -12,7 +14,7 @@ class BreathingPulse extends StatefulWidget {
     required this.child,
     this.minScale = 0.98,
     this.maxScale = 1.02,
-    this.duration = const Duration(milliseconds: 1500),
+    this.duration = AppMotion.pulse,
   });
 
   @override
