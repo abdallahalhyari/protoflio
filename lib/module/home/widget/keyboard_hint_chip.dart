@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import '../../../service/sound_service.dart';
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 
 /// Desktop bottom-right keyboard-hint chip. Renders a small kbd-icon
@@ -15,7 +16,7 @@ class KeyboardHintChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     final l10n = AppLocalizations.of(context)!;
     return Tooltip(
       preferBelow: false,
@@ -46,18 +47,13 @@ class KeyboardHintChip extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.55)
-                  : Colors.white.withValues(alpha: 0.92),
-              border: Border.all(
-                color: isDark ? Colors.white24 : AppColors.slate300,
-                width: 1,
-              ),
+              color: context.glassSurface,
+              border: Border.all(color: context.glassBorderStrong, width: 1),
               boxShadow: isDark
                   ? null
                   : [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.06),
+                        color: AppColors.shadowSoft,
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
@@ -66,7 +62,7 @@ class KeyboardHintChip extends StatelessWidget {
             child: Icon(
               Icons.keyboard_alt_outlined,
               size: 16,
-              color: isDark ? Colors.white70 : AppColors.slate600,
+              color: context.mutedText,
             ),
           ),
         ),

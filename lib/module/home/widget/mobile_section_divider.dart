@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 
 /// Between-section divider chip on mobile continuous scroll —
@@ -16,7 +17,7 @@ class MobileSectionDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = context.isDarkMode;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
       child: Row(
@@ -28,16 +29,12 @@ class MobileSectionDivider extends StatelessWidget {
                   ? Colors.white.withValues(alpha: 0.08)
                   : Colors.white,
               borderRadius: BorderRadius.circular(AppRadius.xs),
-              border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.15)
-                    : AppColors.slate200,
-              ),
+              border: Border.all(color: context.glassBorder),
               boxShadow: isDark
                   ? null
                   : [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.04),
+                        color: AppColors.shadowSoft,
                         blurRadius: 4,
                         offset: const Offset(0, 1),
                       ),
@@ -57,9 +54,7 @@ class MobileSectionDivider extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.55)
-                  : AppColors.slate600,
+              color: context.subtleText,
               fontSize: 10,
               fontWeight: FontWeight.w800,
               letterSpacing: 2,
