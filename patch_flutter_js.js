@@ -56,3 +56,43 @@ function patchBootstrap(filePath) {
 patchFile(mjsPath);
 patchFile(jsPath);
 patchBootstrap(bootstrapPath);
+
+// Inject <link rel="prefetch"> tags for every deferred `.part.js` chunk
+// so the browser downloads them at idle priority in parallel with the
+// wasm/JS boot, off the main thread. Flutter's Dart-side `loadLibrary`
+// call becomes an HTTP-cache hit instead of a fresh network fetch.
+function injectPartPrefetch() {
+  const indexPath = path.join(__dirname, 'build', 'web', 'index.html');
+  if (!fs.existsSync(indexPath)) {
+    console.log('index.html not found, skipping .part.js prefetch injection.');
+    return;
+  }
+  try {
+    const buildDir = path.join(__dirname, 'build', 'web');
+    const parts = fs.readdirSync(buildDir).filter((f) => f.endsWith('.part.js'));
+    if (parts.length === 0) {
+      console.log('No .part.js chunks found (deferred imports likely disabled).');
+      return;
+    }
+    let html = fs.readFileSync(indexPath, 'utf8');
+    const marker = '<!-- Performance Preconnect & Preloads -->';
+    if (!html.includes(marker)) {
+      throw new Error(`index.html: could not locate marker "${marker}" for .part.js prefetch injection.`);
+    }
+    if (html.includes('<!-- deferred-part-prefetch -->')) {
+      return; // already patched (idempotent)
+    }
+    const tags = parts
+      .map((p) => `  <link rel="prefetch" href="${p}" as="script">`)
+      .join('\n');
+    const block = `\n  <!-- deferred-part-prefetch -->\n${tags}\n`;
+    html = html.replace(marker, `${marker}${block}`);
+    fs.writeFileSync(indexPath, html, 'utf8');
+    console.log(`Injected prefetch tags for ${parts.length} .part.js chunks.`);
+  } catch (e) {
+    console.error('Error injecting .part.js prefetch:', e);
+    throw e;
+  }
+}
+
+injectPartPrefetch();
