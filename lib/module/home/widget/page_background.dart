@@ -3,13 +3,11 @@ import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 
 class PageBackground extends StatefulWidget {
-  final String asset;
   final Widget child;
   final Color? overlay;
 
   const PageBackground({
     super.key,
-    required this.asset,
     required this.child,
     this.overlay,
   });

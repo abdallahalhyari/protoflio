@@ -136,12 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_imagesPrecached) return;
     _imagesPrecached = true;
     // Defer non-critical decodes until after first frame so they don't
-    // fight with Dart VM boot for main-thread time. All three images
-    // benefit from being decoded early — the raster cache is warm by
-    // the time IntroPage requests them.
+    // fight with Dart VM boot for main-thread time. The raster cache is
+    // warm by the time IntroPage / HatsGrid actually request them.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      precacheImage(const AssetImage('assets/background.webp'), context);
       precacheImage(const AssetImage('assets/my_image.webp'), context);
       precacheImage(const AssetImage('assets/hat.webp'), context);
     });
@@ -491,7 +489,6 @@ class _HomeScreenState extends State<HomeScreen> {
             autofocus: true,
             onKeyEvent: _handleKey,
             child: PageBackground(
-              asset: 'assets/background.webp',
               overlay: AppColors.scrimMedium,
               child: isDesktop ? _buildDesktopLayout(context) : _buildMobileLayout(context),
             ),
