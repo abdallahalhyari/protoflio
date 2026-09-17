@@ -5,10 +5,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/analytics_service.dart';
 import '../../../service/sound_service.dart';
-import '../../case_study/case_study_eskadenia.dart';
-import '../../case_study/case_study_fais.dart';
-import '../../case_study/case_study_nathealth.dart';
-import '../../case_study/case_study_solutions.dart';
+import '../../case_study/case_study_router.dart';
 import '../model/project.dart';
 import '../widget/conditional_blur.dart';
 import '../widget/projects/nfc_architecture_diagram.dart';
@@ -23,32 +20,9 @@ Future<void> showProjectCaseStudy(
   SoundService.instance.playClick();
   Analytics.ctaProject(project.company);
 
-  Widget? caseStudyPage;
-  if (project.company == 'NatHealth') {
-    caseStudyPage = const NatHealthCaseStudy();
-  } else if (project.company == 'ESKADENIA Software') {
-    caseStudyPage = const EskadeniaCaseStudy();
-  } else if (project.company == 'Solutions Now IT') {
-    caseStudyPage = const SolutionsCaseStudy();
-  } else if (project.company == 'Future Advanced Internet Solutions') {
-    caseStudyPage = const FaisCaseStudy();
-  }
-
-  if (caseStudyPage != null) {
-    await Navigator.of(context, rootNavigator: true).push(
-      PageRouteBuilder(
-        transitionDuration: AppMotion.md,
-        reverseTransitionDuration: AppMotion.sm,
-        pageBuilder: (_, __, ___) => caseStudyPage!,
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(
-            opacity: CurvedAnimation(
-                parent: animation, curve: AppMotion.emphasizedDecel),
-            child: child,
-          );
-        },
-      ),
-    );
+  final slug = CaseStudyRouter.slugForCompany(project.company);
+  if (slug != null) {
+    await CaseStudyRouter.push(context, slug);
     return;
   }
 
