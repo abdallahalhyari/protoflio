@@ -9,6 +9,7 @@ import '../../service/analytics_service.dart';
 import '../../service/cv_service.dart';
 import '../../service/sound_service.dart';
 import '../../service/url_sync_service.dart';
+import '../case_study/case_study_router.dart';
 import 'page/intro_page.dart';
 import 'page/hats_grid_page.dart' deferred as hats_lib;
 import 'page/skills_page.dart' deferred as skills_lib;
@@ -40,6 +41,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static const int _pageCount = 7;
+
+  // Hashes look like `home`, `work`, or `work/nathealth`.
+  // Return the section slug (`home`, `work`, ...) or null when malformed.
+  static String? _sectionFromHash(String? hash) {
+    if (hash == null) return null;
+    final clean = hash.replaceAll('#', '');
+    if (clean.isEmpty) return null;
+    return clean.split('/').first;
+  }
+
+  // Case-study slug when the hash is `work/<slug>`; otherwise null.
+  static String? _slugFromHash(String? hash) {
+    if (hash == null) return null;
+    final parts = hash.replaceAll('#', '').split('/');
+    if (parts.length < 2 || parts.first != 'work') return null;
+    final slug = parts[1];
+    return slug.isEmpty ? null : slug;
+  }
+
   late final PageController _controller;
   late final ScrollController _mobileScrollController;
   final List<GlobalKey> _sectionKeys = List.generate(7, (_) => GlobalKey());
@@ -66,14 +86,28 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     final initialHash = UrlSyncService.instance.getInitialHash();
-    if (initialHash != null) {
-      _pageIndex.value = UrlSyncService.instance.hashToIndex(initialHash);
+    final initialSection = _sectionFromHash(initialHash);
+    final initialSlug = _slugFromHash(initialHash);
+
+    if (initialSection != null) {
+      _pageIndex.value =
+          UrlSyncService.instance.hashToIndex(initialSection);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ThemeController.updateSeedFromHash(initialHash);
+        ThemeController.updateSeedFromHash(initialSection);
       });
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ThemeController.updateSeedFromHash('home');
+      });
+    }
+
+    // Deep-link into a case study when the URL had `#work/<slug>`.
+    // Deferred until after first frame so the outer section paints
+    // behind the pushed page.
+    if (initialSlug != null && CaseStudyRouter.has(initialSlug)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        CaseStudyRouter.push(context, initialSlug);
       });
     }
     _controller = PageController(initialPage: _pageIndex.value);
@@ -85,9 +119,17 @@ class _HomeScreenState extends State<HomeScreen> {
     _schedulePrefetch();
 
     _cancelHashListener = UrlSyncService.instance.listenToHashChanges((hash) {
-      final target = UrlSyncService.instance.hashToIndex(hash);
-      if (target != _pageIndex.value && mounted) {
-        _goTo(target, syncUrl: false);
+      final section = _sectionFromHash(hash);
+      final slug = _slugFromHash(hash);
+      if (slug != null && CaseStudyRouter.has(slug) && mounted) {
+        CaseStudyRouter.push(context, slug);
+        return;
+      }
+      if (section != null) {
+        final target = UrlSyncService.instance.hashToIndex(section);
+        if (target != _pageIndex.value && mounted) {
+          _goTo(target, syncUrl: false);
+        }
       }
     });
 
