@@ -66,19 +66,32 @@ class AppMotion {
   // Intent-named durations — use these where the numeric scale doesn't
   // fit an established interaction beat. Values chosen from the ad-hoc
   // Duration literals that used to live across pages.
-  static const Duration chipHover = Duration(milliseconds: 180); // filter / tab hover
-  static const Duration snap = Duration(milliseconds: 200); // page pill / snap-to
-  static const Duration cardHover = Duration(milliseconds: 300); // card lift / border pulse
-  static const Duration switcher = Duration(milliseconds: 280); // AnimatedSwitcher content
-  static const Duration heroEntry = Duration(milliseconds: 260); // intro wordmark
-  static const Duration pageTurn = Duration(milliseconds: 380); // desktop wheel page jump
-  static const Duration cardFlip = Duration(milliseconds: 400); // skill / hat card flip
-  static const Duration sectionScroll = Duration(milliseconds: 600); // mobile section jump
-  static const Duration entry = Duration(milliseconds: 800); // page-entry stagger
-  static const Duration ambient = Duration(milliseconds: 1400); // long-loop hint bounces
-  static const Duration pulse = Duration(milliseconds: 1500); // presence dot breath
-  static const Duration wheelResetGap = Duration(milliseconds: 220); // wheel accumulator reset
-  static const Duration toast = Duration(milliseconds: 2600); // floating snack lifetime
+  static const Duration chipHover =
+      Duration(milliseconds: 180); // filter / tab hover
+  static const Duration snap =
+      Duration(milliseconds: 200); // page pill / snap-to
+  static const Duration cardHover =
+      Duration(milliseconds: 300); // card lift / border pulse
+  static const Duration switcher =
+      Duration(milliseconds: 280); // AnimatedSwitcher content
+  static const Duration heroEntry =
+      Duration(milliseconds: 260); // intro wordmark
+  static const Duration pageTurn =
+      Duration(milliseconds: 380); // desktop wheel page jump
+  static const Duration cardFlip =
+      Duration(milliseconds: 400); // skill / hat card flip
+  static const Duration sectionScroll =
+      Duration(milliseconds: 600); // mobile section jump
+  static const Duration entry =
+      Duration(milliseconds: 800); // page-entry stagger
+  static const Duration ambient =
+      Duration(milliseconds: 1400); // long-loop hint bounces
+  static const Duration pulse =
+      Duration(milliseconds: 1500); // presence dot breath
+  static const Duration wheelResetGap =
+      Duration(milliseconds: 220); // wheel accumulator reset
+  static const Duration toast =
+      Duration(milliseconds: 2600); // floating snack lifetime
 
   // Material 3 emphasized easing — snappier at the top, decelerates
   // gently. Use for state changes the user drove (tap, hover), so the
@@ -104,6 +117,9 @@ class AppColors {
   /// the primary brand hue in accent contexts (e.g. section indigo).
   /// Same value as [seed] — pick whichever reads clearer at the callsite.
   static const Color brandPrimary = seed;
+
+  /// Official LinkedIn corporate brand identity color.
+  static const Color linkedIn = Color(0xFF0A66C2);
 
   // Deep luxury obsidian dark surface tones (replacing washed slate)
   static const Color darkSurface = Color(0xFF080C14); // Deep Obsidian Midnight
@@ -146,25 +162,36 @@ class AppColors {
   static const Color hatGold = Color(0xFFC8A951);
 
   // Extended palette — one-off tints reused just enough to name.
-  static const Color accentAmberMid = Color(0xFFF59E0B); // amber 500 — mid warmth
-  static const Color accentAmberBright = Color(0xFFD97706); // amber 600 — punchy warm
+  static const Color accentAmberMid =
+      Color(0xFFF59E0B); // amber 500 — mid warmth
+  static const Color accentAmberBright =
+      Color(0xFFD97706); // amber 600 — punchy warm
   static const Color accentPink = Color(0xFFF472B6); // pink 400 — soft accent
-  static const Color accentPinkBright = Color(0xFFEC4899); // pink 500 — vivid accent
-  static const Color accentPinkDeep = Color(0xFFBE185D); // pink 700 — high-contrast pink
-  static const Color accentVioletMid = Color(0xFF7C3AED); // violet 600 — mid violet
-  static const Color accentPurpleSoft = Color(0xFFC084FC); // purple 400 — soft purple
+  static const Color accentPinkBright =
+      Color(0xFFEC4899); // pink 500 — vivid accent
+  static const Color accentPinkDeep =
+      Color(0xFFBE185D); // pink 700 — high-contrast pink
+  static const Color accentVioletMid =
+      Color(0xFF7C3AED); // violet 600 — mid violet
+  static const Color accentPurpleSoft =
+      Color(0xFFC084FC); // purple 400 — soft purple
   static const Color accentRoseSoft = Color(0xFFF87171); // red 400 — soft rose
   // Dark bg variants — layered obsidian tones sub-slate950.
-  static const Color darkCanvas = Color(0xFF0A0F1A); // between slate950 and midnight
-  static const Color darkCanvasElevated = Color(0xFF141B2A); // one tier above canvas
-  static const Color darkNight = Color(0xFF0B101D); // page bg midnight blue-black
-  static const Color lightMist = Color(0xFFFAFBFC); // pearl white background wash
+  static const Color darkCanvas =
+      Color(0xFF0A0F1A); // between slate950 and midnight
+  static const Color darkCanvasElevated =
+      Color(0xFF141B2A); // one tier above canvas
+  static const Color darkNight =
+      Color(0xFF0B101D); // page bg midnight blue-black
+  static const Color lightMist =
+      Color(0xFFFAFBFC); // pearl white background wash
 
   // Accessible high-contrast Light Mode accent counterparts (>4.5:1 on white/slate50)
   static const Color accentAmberDeep = Color(0xFFB45309); // Amber 700 (5.8:1)
   static const Color accentGreenDeep = Color(0xFF047857); // Emerald 700 (6.1:1)
   static const Color accentSkyDeep = Color(0xFF0284C7); // Sky 700 (4.6:1)
-  static const Color accentIndigoDeepText = Color(0xFF4338CA); // Indigo 700 (8.0:1)
+  static const Color accentIndigoDeepText =
+      Color(0xFF4338CA); // Indigo 700 (8.0:1)
   static const Color accentVioletDeep = Color(0xFF6D28D9); // Violet 700 (6.8:1)
   static const Color accentRoseDeep = Color(0xFFBE123C); // Rose 700 (5.9:1)
   static const Color accentCyanDeep = Color(0xFF0E7490); // Cyan 700 (5.5:1)
@@ -174,7 +201,42 @@ class AppColors {
     required bool isDark,
     required Color dark,
     required Color light,
-  }) => isDark ? dark : light;
+  }) =>
+      isDark ? dark : light;
+
+  /// Maps a vibrant or pastel accent tone into an accessible, high-contrast
+  /// deep tone (>4.5:1, typical >5.5:1) for text/icons on white/slate50 in light mode.
+  static Color toAccessibleLightText(Color color) {
+    final argb = color.toARGB32();
+    if (color == accentAmber || argb == 0xFFFBBF24 || argb == 0xFFF59E0B || argb == 0xFFFDE68A) {
+      return accentAmberDeep;
+    }
+    if (color == accentGreen || color == accentGreenLight || argb == 0xFF10B981 || argb == 0xFF34D399) {
+      return accentGreenDeep;
+    }
+    if (color == accentSky || color == accentSkySoft || argb == 0xFF38BDF8 || argb == 0xFF7DD3FC) {
+      return accentSkyDeep;
+    }
+    if (color == accentCyan || color == accentCyanLight || argb == 0xFF06B6D4 || argb == 0xFF22D3EE) {
+      return accentCyanDeep;
+    }
+    if (color == accentRose || color == accentRoseLight || color == accentRoseSoft || argb == 0xFFF43F5E || argb == 0xFFFB7185 || argb == 0xFFF87171) {
+      return accentRoseDeep;
+    }
+    if (color == accentViolet || argb == 0xFF8B5CF6) {
+      return accentVioletDeep;
+    }
+    if (color == accentVioletLight || argb == 0xFFA78BFA) {
+      return accentVioletMid;
+    }
+    if (argb == 0xFFF472B6 || argb == 0xFFEC4899) {
+      return accentPinkDeep;
+    }
+    if (color == accentIndigo || color == accentIndigoSoft || argb == 0xFF818CF8 || argb == 0xFFA5B4FC) {
+      return accentIndigoDeepText;
+    }
+    return color;
+  }
 
   // Neutral slate palette
   static const Color slate50 = Color(0xFFF8FAFC);
@@ -210,32 +272,6 @@ class AppColors {
   static Color shadowSoft = Colors.black.withValues(alpha: 0.14);
   static Color shadowMedium = Colors.black.withValues(alpha: 0.28);
   static Color shadowDeep = Colors.black.withValues(alpha: 0.42);
-
-  // Case Study Brand Signatures
-  static const Color caseStudyNatHealthPrimary = Color(0xFF10B981); // Emerald Mint
-  static const Color caseStudyNatHealthSecondary = Color(0xFF06B6D4); // Cyber Cyan
-  static const Color caseStudyEskadeniaPrimary = Color(0xFF6366F1); // Electric Indigo
-  static const Color caseStudyEskadeniaSecondary = Color(0xFF38BDF8); // Sapphire Sky
-  static const Color caseStudySolutionsPrimary = Color(0xFFF59E0B); // Solar Amber
-  static const Color caseStudySolutionsSecondary = Color(0xFFEC4899); // Vivid Sunset Pink
-  static const Color caseStudyFaisPrimary = Color(0xFF0284C7); // Quantum Sky
-  static const Color caseStudyFaisSecondary = Color(0xFF8B5CF6); // Royal Cyber Violet
-
-  // Curated Chromatic Palette for Theme Accent Customizer
-  static const List<(String label, Color color)> themeAccents = [
-    ('Indigo', Color(0xFF6366F1)),
-    ('Emerald', Color(0xFF10B981)),
-    ('Cyan', Color(0xFF06B6D4)),
-    ('Amber', Color(0xFFF59E0B)),
-    ('Rose', Color(0xFFF43F5E)),
-    ('Violet', Color(0xFF8B5CF6)),
-  ];
-
-  // Glassmorphism surfaces & borders
-  static const Color glassSurfaceDark = Color(0xE80A0E18);
-  static Color glassSurfaceLight = Colors.white.withValues(alpha: 0.94);
-  static Color glassBorderDark = Colors.white.withValues(alpha: 0.14);
-  static Color glassBorderLight = slate300.withValues(alpha: 0.85);
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site
@@ -245,23 +281,38 @@ class AppTypography {
   AppTypography._();
 
   static const String displayFont = 'Tenada';
+  static const String monoFont = 'Courier';
 
   // Editorial microtext — magazine-style tiny labels, kickers, meta chips.
+  static const double nano = 8.5; // badge numbers, tiny logo badges
   static const double editorialSm = 9.5;
   static const double editorial = 10.5;
 
   // Standard typographic steps.
-  static const double micro = 10; // meta labels above chip size, timeline stamps
-  static const double captionSm = 11.5; // fine crop between caption and overline
+  static const double micro =
+      10; // meta labels above chip size, timeline stamps
+  static const double captionSm =
+      11.5; // fine crop between caption and overline
   static const double caption = 11; // sub-body helper text, chip labels
-  static const double overlineTight = 12.5; // fine crop between overline and small
+  static const double overlineTight =
+      12.5; // fine crop between overline and small
   static const double overline = 12; // uppercase kickers over headings
-  static const double smallLoose = 13.5; // fine crop between small and body
   static const double small = 13;
+  static const double smallLoose = 13.5; // fine crop between small and body
   static const double body = 14;
+  static const double bodyLoose = 14.5; // fine crop between body and subtitle
+  static const double bodyLg = 15;
   static const double subtitle = 16;
+  static const double titleSm = 18;
   static const double title = 20;
+  static const double titleMid = 22;
+  static const double titleLg = 24;
   static const double heading = 28;
+  static const double displaySm = 36;
+  static const double statDisplay = 38;
   static const double display = 40; // full-bleed page titles
-  static const double hero = 72;    // intro wordmark, splash impact text
+  static const double displayLg = 54;
+  static const double heroSm = 60;
+  static const double hero = 72; // intro wordmark, splash impact text
+  static const double watermark = 220; // fitted background display wordmark
 }

@@ -79,32 +79,31 @@ class _SkillsPageState extends State<SkillsPage>
 
     return AppScreenShell(
       maxWidth: 1400,
-      verticalPadding:
-          widget.isContinuousMobile ? AppSpacing.md : AppSpacing.md,
+      verticalPadding: AppSpacing.md,
       reserveBottomNav: !widget.isContinuousMobile,
       reserveMobileTop: !widget.isContinuousMobile,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SkillsHeader(isDesktop: isDesktop),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.smd),
           SkillCategoryFilters(
             categories: _categories,
             selectedCategory: _selectedCategory,
             onSelectCategory: (cat) => setState(() => _selectedCategory = cat),
             isDesktop: isDesktop,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.smd),
           Container(
               height: 1, color: scheme.onSurface.withValues(alpha: 0.12)),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           if (widget.isContinuousMobile)
             // Vertical 2-column grid feeds parent scroll — no nested
             // horizontal-in-vertical scrolling. Fixed tile height keeps
             // rows uniform without a horizontal viewport.
             LayoutBuilder(
               builder: (context, constraints) {
-                const spacing = 12.0;
+                const spacing = AppSpacing.smd;
                 final tileW = (constraints.maxWidth - spacing) / 2;
                 const tileH = 180.0;
                 return Wrap(

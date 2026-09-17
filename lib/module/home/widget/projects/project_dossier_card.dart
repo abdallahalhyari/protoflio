@@ -58,7 +58,7 @@ class ProjectDossierCard extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                    fontFamily: 'Courier',
+                    fontFamily: AppTypography.monoFont,
                     color: effectiveAccent,
                     fontSize: isDesktop ? 10.0 : 9.0,
                     fontWeight: FontWeight.w900,
@@ -112,7 +112,7 @@ class ProjectHighlightRow extends StatelessWidget {
           Text(
             '§ ',
             style: TextStyle(
-              fontFamily: 'Courier',
+              fontFamily: AppTypography.monoFont,
               color: scheme.primary,
               fontWeight: FontWeight.w900,
               fontSize: isDesktop ? 12.5 : 11.0,
@@ -126,7 +126,7 @@ class ProjectHighlightRow extends StatelessWidget {
                     TextSpan(
                       text: '$prefix ',
                       style: TextStyle(
-                        fontFamily: 'Courier',
+                        fontFamily: AppTypography.monoFont,
                         color: isDark ? AppColors.accentAmberSoft : AppColors.accentAmberDeep,
                         fontWeight: FontWeight.w800,
                         fontSize: isDesktop ? 12.0 : 10.5,

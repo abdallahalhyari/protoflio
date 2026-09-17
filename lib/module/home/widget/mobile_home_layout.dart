@@ -57,7 +57,7 @@ class MobileHomeLayout extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.only(
             top: 60 + MediaQuery.paddingOf(context).top,
-            bottom: 40,
+            bottom: 80 + MediaQuery.paddingOf(context).bottom,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

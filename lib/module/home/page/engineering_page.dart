@@ -65,8 +65,7 @@ class _EngineeringPageState extends State<EngineeringPage>
 
     return AppScreenShell(
       maxWidth: 1280,
-      verticalPadding:
-          widget.isContinuousMobile ? AppSpacing.md : AppSpacing.md,
+      verticalPadding: AppSpacing.md,
       reserveBottomNav: !widget.isContinuousMobile,
       reserveMobileTop: !widget.isContinuousMobile,
       child: Column(

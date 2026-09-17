@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,25 @@ import '../../service/analytics_service.dart';
 import '../../service/sound_service.dart';
 import '../../theme/surface_tone.dart';
 import '../../theme/tokens.dart';
+
+/// Responsive layout metrics for case studies.
+class CaseStudyLayout {
+  CaseStudyLayout._();
+
+  /// Maximum comfortable reading width for longform case study prose.
+  static const double maxContentWidth = 960.0;
+
+  /// Responsive horizontal padding that caps the reading column to [maxContentWidth]
+  /// and centers it on wide desktop displays, while providing comfortable margins
+  /// on smaller screens.
+  static double horizontalPadding(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    if (width >= AppBreakpoints.tablet) {
+      return math.max(48.0, (width - maxContentWidth) / 2);
+    }
+    return AppSpacing.lg;
+  }
+}
 
 /// Section kicker: numeric label + uppercase title + rule.
 class SectionKicker extends StatelessWidget {
@@ -275,7 +295,7 @@ class OutcomeCard extends StatelessWidget {
               headline,
               style: TextStyle(
                 fontFamily: AppTypography.displayFont,
-                fontSize: 38,
+                fontSize: AppTypography.statDisplay,
                 fontWeight: FontWeight.w900,
                 color: scheme.primary,
                 height: 1.0,
@@ -323,9 +343,8 @@ class OutcomeGrid extends StatelessWidget {
       childAspectRatio: isDesktop ? 1.15 : 1.05,
       mainAxisSpacing: AppSpacing.md,
       crossAxisSpacing: AppSpacing.md,
-      children: items
-          .map((c) => OutcomeCard(headline: c.$1, body: c.$2))
-          .toList(),
+      children:
+          items.map((c) => OutcomeCard(headline: c.$1, body: c.$2)).toList(),
     );
   }
 }
@@ -354,7 +373,7 @@ Future<void> shareCaseStudy(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: const Color(0xFF0F172A),
+            color: AppColors.slate900,
             borderRadius: BorderRadius.circular(AppRadius.md),
             border: Border.all(
               color: AppColors.accentGreen.withValues(alpha: 0.7),
@@ -385,7 +404,7 @@ Future<void> shareCaseStudy(
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 13,
+                    fontSize: AppTypography.small,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -524,7 +543,8 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
   @override
   Widget build(BuildContext context) {
     final isDark = widget.isDark;
-    final primary = widget.isLinkedIn ? const Color(0xFF0A66C2) : widget.scheme.primary;
+    final primary =
+        widget.isLinkedIn ? AppColors.linkedIn : widget.scheme.primary;
 
     return Tooltip(
       message: widget.tooltip,
@@ -562,7 +582,8 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                 boxShadow: _hovered
                     ? [
                         BoxShadow(
-                          color: primary.withValues(alpha: isDark ? 0.35 : 0.22),
+                          color:
+                              primary.withValues(alpha: isDark ? 0.35 : 0.22),
                           blurRadius: 10,
                           spreadRadius: 0.5,
                         ),
@@ -577,7 +598,7 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                       width: 13,
                       height: 13,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0A66C2),
+                        color: AppColors.linkedIn,
                         borderRadius: BorderRadius.circular(2),
                       ),
                       alignment: Alignment.center,
@@ -585,7 +606,7 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                         'in',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 9.0,
+                          fontSize: AppTypography.nano,
                           fontWeight: FontWeight.w900,
                           fontFamily: 'sans-serif',
                           height: 1.0,
@@ -605,13 +626,15 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                   Text(
                     widget.label,
                     style: TextStyle(
-                      fontFamily: 'Courier',
+                      fontFamily: AppTypography.monoFont,
                       fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1.2,
                       color: _hovered
                           ? (isDark ? Colors.white : primary)
-                          : (isDark ? Colors.white.withValues(alpha: 0.88) : AppColors.slate800),
+                          : (isDark
+                              ? Colors.white.withValues(alpha: 0.88)
+                              : AppColors.slate800),
                     ),
                   ),
                   const SizedBox(width: 3),
@@ -665,7 +688,8 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
         onEnter: (_) => setState(() => _hovered = true),
         onExit: (_) => setState(() => _hovered = false),
         child: GestureDetector(
-          onTap: () => shareCaseStudy(context, slug: widget.slug, title: widget.title),
+          onTap: () =>
+              shareCaseStudy(context, slug: widget.slug, title: widget.title),
           behavior: HitTestBehavior.opaque,
           child: AnimatedScale(
             scale: _hovered ? 1.05 : 1.0,
@@ -714,13 +738,15 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
                   Text(
                     'SHARE STUDY',
                     style: TextStyle(
-                      fontFamily: 'Courier',
+                      fontFamily: AppTypography.monoFont,
                       fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1.2,
                       color: _hovered
                           ? (isDark ? Colors.white : AppColors.accentGreenDeep)
-                          : (isDark ? Colors.white.withValues(alpha: 0.88) : AppColors.slate800),
+                          : (isDark
+                              ? Colors.white.withValues(alpha: 0.88)
+                              : AppColors.slate800),
                     ),
                   ),
                 ],
@@ -756,22 +782,17 @@ class CaseStudyChapter {
 /// 3. Real-time reading % HUD with mini circular arc.
 /// 4. 1-tap chapter anchors with active section detection and smooth scrolling.
 /// 5. Back-to-Top smooth jump with audio feedback.
-/// 6. Chromatic brand identity adaptation per case study.
 class CaseStudyReadingCompanion extends StatefulWidget {
   const CaseStudyReadingCompanion({
     super.key,
     required this.scrollController,
     required this.chapters,
     required this.child,
-    this.primaryAccent,
-    this.secondaryAccent,
   });
 
   final ScrollController scrollController;
   final List<CaseStudyChapter> chapters;
   final Widget child;
-  final Color? primaryAccent;
-  final Color? secondaryAccent;
 
   @override
   State<CaseStudyReadingCompanion> createState() =>
@@ -848,7 +869,8 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
 
   void _scrollToChapter(CaseStudyChapter chapter) {
     SoundService.instance.playClick();
-    Analytics.event('case_study_chapter_click', params: {'chapter': chapter.id});
+    Analytics.event('case_study_chapter_click',
+        params: {'chapter': chapter.id});
     final ctx = chapter.key.currentContext;
     if (ctx != null) {
       Scrollable.ensureVisible(
@@ -873,9 +895,6 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
-    final scheme = Theme.of(context).colorScheme;
-    final primary = widget.primaryAccent ?? scheme.primary;
-    final secondary = widget.secondaryAccent ?? scheme.secondary;
 
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
@@ -891,8 +910,6 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
           _TopReadingProgressBar(
             progress: _progress,
             isDark: isDark,
-            primaryAccent: primary,
-            secondaryAccent: secondary,
           ),
           _FloatingChapterDock(
             visible: _showDock,
@@ -902,8 +919,6 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
             onChapterTap: _scrollToChapter,
             onBackToTop: _scrollToTop,
             isDark: isDark,
-            primaryAccent: primary,
-            secondaryAccent: secondary,
           ),
         ],
       ),
@@ -915,17 +930,15 @@ class _TopReadingProgressBar extends StatelessWidget {
   const _TopReadingProgressBar({
     required this.progress,
     required this.isDark,
-    required this.primaryAccent,
-    required this.secondaryAccent,
   });
 
   final double progress;
   final bool isDark;
-  final Color primaryAccent;
-  final Color secondaryAccent;
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Positioned(
       key: const Key('case_study_reading_progress_bar'),
       top: 0,
@@ -950,20 +963,20 @@ class _TopReadingProgressBar extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        primaryAccent,
-                        secondaryAccent,
-                        primaryAccent,
+                        AppColors.accentCyan,
+                        scheme.primary,
+                        AppColors.accentGreen,
                       ],
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: primaryAccent
+                        color: AppColors.accentCyan
                             .withValues(alpha: isDark ? 0.8 : 0.6),
                         blurRadius: 8,
                         spreadRadius: 1,
                       ),
                       BoxShadow(
-                        color: secondaryAccent
+                        color: AppColors.accentGreen
                             .withValues(alpha: isDark ? 0.6 : 0.4),
                         blurRadius: 12,
                         spreadRadius: -1,
@@ -973,7 +986,8 @@ class _TopReadingProgressBar extends StatelessWidget {
                 ),
                 if (progress > 0.01 && progress < 0.995)
                   Positioned(
-                    left: (filledWidth - 3).clamp(0.0, constraints.maxWidth - 6),
+                    left:
+                        (filledWidth - 3).clamp(0.0, constraints.maxWidth - 6),
                     top: -1.2,
                     child: Container(
                       width: 6,
@@ -981,9 +995,9 @@ class _TopReadingProgressBar extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: primaryAccent,
+                            color: AppColors.accentCyan,
                             blurRadius: 6,
                             spreadRadius: 1.5,
                           ),
@@ -1009,8 +1023,6 @@ class _FloatingChapterDock extends StatelessWidget {
     required this.onChapterTap,
     required this.onBackToTop,
     required this.isDark,
-    required this.primaryAccent,
-    required this.secondaryAccent,
   });
 
   final bool visible;
@@ -1020,8 +1032,6 @@ class _FloatingChapterDock extends StatelessWidget {
   final ValueChanged<CaseStudyChapter> onChapterTap;
   final VoidCallback onBackToTop;
   final bool isDark;
-  final Color primaryAccent;
-  final Color secondaryAccent;
 
   @override
   Widget build(BuildContext context) {
@@ -1052,14 +1062,14 @@ class _FloatingChapterDock extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black
-                          .withValues(alpha: isDark ? 0.55 : 0.16),
+                      color:
+                          Colors.black.withValues(alpha: isDark ? 0.55 : 0.16),
                       blurRadius: 28,
                       offset: const Offset(0, 10),
                     ),
                     BoxShadow(
-                      color: primaryAccent
-                          .withValues(alpha: isDark ? 0.22 : 0.10),
+                      color: AppColors.accentCyan
+                          .withValues(alpha: isDark ? 0.16 : 0.08),
                       blurRadius: 14,
                       spreadRadius: -2,
                     ),
@@ -1076,12 +1086,12 @@ class _FloatingChapterDock extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isDark
-                            ? const Color(0xE80A0E18)
+                            ? AppColors.darkCanvas.withValues(alpha: 0.91)
                             : Colors.white.withValues(alpha: 0.94),
                         borderRadius: BorderRadius.circular(AppRadius.pill),
                         border: Border.all(
                           color: isDark
-                              ? primaryAccent.withValues(alpha: 0.32)
+                              ? AppColors.accentCyan.withValues(alpha: 0.28)
                               : AppColors.slate300.withValues(alpha: 0.9),
                           width: 1.2,
                         ),
@@ -1094,8 +1104,6 @@ class _FloatingChapterDock extends StatelessWidget {
                             progress: progress,
                             isDark: isDark,
                             isCompact: isCompact,
-                            primaryAccent: primaryAccent,
-                            secondaryAccent: secondaryAccent,
                           ),
                           const SizedBox(width: 8),
                           _DockDivider(isDark: isDark),
@@ -1123,7 +1131,6 @@ class _FloatingChapterDock extends StatelessWidget {
                             onTap: onBackToTop,
                             isDark: isDark,
                             isCompact: isCompact,
-                            hoverAccent: secondaryAccent,
                           ),
                         ],
                       ),
@@ -1148,8 +1155,6 @@ class _FloatingChapterDock extends StatelessWidget {
         isActive: ch.id == activeChapterId,
         isCompact: isCompact,
         isDark: isDark,
-        primaryAccent: primaryAccent,
-        secondaryAccent: secondaryAccent,
         onTap: () => onChapterTap(ch),
       ));
     }
@@ -1176,15 +1181,11 @@ class _ReadingPercentPill extends StatelessWidget {
     required this.progress,
     required this.isDark,
     required this.isCompact,
-    required this.primaryAccent,
-    required this.secondaryAccent,
   });
 
   final double progress;
   final bool isDark;
   final bool isCompact;
-  final Color primaryAccent;
-  final Color secondaryAccent;
 
   @override
   Widget build(BuildContext context) {
@@ -1193,9 +1194,8 @@ class _ReadingPercentPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.05)
-            : AppColors.slate100,
+        color:
+            isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100,
         borderRadius: BorderRadius.circular(AppRadius.pill),
         border: Border.all(
           color: isDark
@@ -1212,19 +1212,17 @@ class _ReadingPercentPill extends StatelessWidget {
             painter: _MiniCircularProgressPainter(
               progress: progress,
               isDark: isDark,
-              primaryAccent: primaryAccent,
-              secondaryAccent: secondaryAccent,
             ),
           ),
           const SizedBox(width: 5),
           Text(
             isCompact ? '$pct%' : '$pct% READ',
             style: TextStyle(
-              fontFamily: 'Courier',
+              fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.micro,
               fontWeight: FontWeight.w900,
               letterSpacing: 0.8,
-              color: primaryAccent,
+              color: isDark ? AppColors.accentCyan : AppColors.accentCyanDeep,
             ),
           ),
         ],
@@ -1239,8 +1237,6 @@ class _ChapterPill extends StatefulWidget {
     required this.isActive,
     required this.isCompact,
     required this.isDark,
-    required this.primaryAccent,
-    required this.secondaryAccent,
     required this.onTap,
   });
 
@@ -1248,8 +1244,6 @@ class _ChapterPill extends StatefulWidget {
   final bool isActive;
   final bool isCompact;
   final bool isDark;
-  final Color primaryAccent;
-  final Color secondaryAccent;
   final VoidCallback onTap;
 
   @override
@@ -1263,12 +1257,9 @@ class _ChapterPillState extends State<_ChapterPill> {
   Widget build(BuildContext context) {
     final isDark = widget.isDark;
     final isActive = widget.isActive;
-    final primary = widget.primaryAccent;
-    final secondary = widget.secondaryAccent;
 
-    final label = widget.isCompact
-        ? widget.chapter.shortLabel
-        : widget.chapter.label;
+    final label =
+        widget.isCompact ? widget.chapter.shortLabel : widget.chapter.label;
 
     return Tooltip(
       message: 'Jump to ${widget.chapter.label}',
@@ -1294,8 +1285,10 @@ class _ChapterPillState extends State<_ChapterPill> {
                 gradient: isActive
                     ? LinearGradient(
                         colors: [
-                          primary.withValues(alpha: isDark ? 0.28 : 0.18),
-                          secondary.withValues(alpha: isDark ? 0.22 : 0.12),
+                          AppColors.accentCyan
+                              .withValues(alpha: isDark ? 0.26 : 0.18),
+                          AppColors.accentGreen
+                              .withValues(alpha: isDark ? 0.20 : 0.12),
                         ],
                       )
                     : null,
@@ -1309,7 +1302,7 @@ class _ChapterPillState extends State<_ChapterPill> {
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: Border.all(
                   color: isActive
-                      ? primary
+                      ? AppColors.accentCyan
                       : (_hovered
                           ? (isDark ? Colors.white30 : AppColors.slate400)
                           : Colors.transparent),
@@ -1318,7 +1311,8 @@ class _ChapterPillState extends State<_ChapterPill> {
                 boxShadow: isActive
                     ? [
                         BoxShadow(
-                          color: primary.withValues(alpha: isDark ? 0.38 : 0.22),
+                          color: AppColors.accentCyan
+                              .withValues(alpha: isDark ? 0.35 : 0.2),
                           blurRadius: 8,
                           spreadRadius: 0.5,
                         ),
@@ -1332,9 +1326,9 @@ class _ChapterPillState extends State<_ChapterPill> {
                     Container(
                       width: 5,
                       height: 5,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: primary,
+                        color: AppColors.accentCyan,
                       ),
                     ),
                     const SizedBox(width: 5),
@@ -1342,18 +1336,17 @@ class _ChapterPillState extends State<_ChapterPill> {
                   Text(
                     label,
                     style: TextStyle(
-                      fontFamily: 'Courier',
+                      fontFamily: AppTypography.monoFont,
                       fontSize: AppTypography.micro,
-                      fontWeight:
-                          isActive ? FontWeight.w900 : FontWeight.w700,
+                      fontWeight: isActive ? FontWeight.w900 : FontWeight.w700,
                       letterSpacing: 1.0,
                       color: isActive
-                          ? primary
+                          ? (isDark
+                              ? AppColors.accentCyan
+                              : AppColors.accentCyanDeep)
                           : (_hovered
                               ? (isDark ? Colors.white : AppColors.slate900)
-                              : (isDark
-                                  ? Colors.white70
-                                  : AppColors.slate600)),
+                              : (isDark ? Colors.white70 : AppColors.slate600)),
                     ),
                   ),
                 ],
@@ -1371,13 +1364,11 @@ class _BackToTopPill extends StatefulWidget {
     required this.onTap,
     required this.isDark,
     required this.isCompact,
-    required this.hoverAccent,
   });
 
   final VoidCallback onTap;
   final bool isDark;
   final bool isCompact;
-  final Color hoverAccent;
 
   @override
   State<_BackToTopPill> createState() => _BackToTopPillState();
@@ -1389,7 +1380,6 @@ class _BackToTopPillState extends State<_BackToTopPill> {
   @override
   Widget build(BuildContext context) {
     final isDark = widget.isDark;
-    final accent = widget.hoverAccent;
 
     return Tooltip(
       message: 'Back to top',
@@ -1414,15 +1404,15 @@ class _BackToTopPillState extends State<_BackToTopPill> {
               decoration: BoxDecoration(
                 color: _hovered
                     ? (isDark
-                        ? accent.withValues(alpha: 0.22)
-                        : accent.withValues(alpha: 0.14))
+                        ? AppColors.accentGreen.withValues(alpha: 0.22)
+                        : AppColors.accentGreen.withValues(alpha: 0.14))
                     : (isDark
                         ? Colors.white.withValues(alpha: 0.06)
                         : AppColors.slate100),
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: Border.all(
                   color: _hovered
-                      ? accent
+                      ? AppColors.accentGreen
                       : (isDark
                           ? Colors.white.withValues(alpha: 0.18)
                           : AppColors.slate300),
@@ -1431,7 +1421,8 @@ class _BackToTopPillState extends State<_BackToTopPill> {
                 boxShadow: _hovered
                     ? [
                         BoxShadow(
-                          color: accent.withValues(alpha: isDark ? 0.35 : 0.2),
+                          color: AppColors.accentGreen
+                              .withValues(alpha: isDark ? 0.35 : 0.2),
                           blurRadius: 10,
                           spreadRadius: 0.5,
                         ),
@@ -1445,7 +1436,7 @@ class _BackToTopPillState extends State<_BackToTopPill> {
                     Icons.arrow_upward_rounded,
                     size: 13,
                     color: _hovered
-                        ? (isDark ? Colors.white : accent)
+                        ? (isDark ? Colors.white : AppColors.accentGreenDeep)
                         : (isDark ? Colors.white70 : AppColors.slate600),
                   ),
                   if (!widget.isCompact) ...[
@@ -1453,12 +1444,14 @@ class _BackToTopPillState extends State<_BackToTopPill> {
                     Text(
                       'TOP',
                       style: TextStyle(
-                        fontFamily: 'Courier',
+                        fontFamily: AppTypography.monoFont,
                         fontSize: AppTypography.micro,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
                         color: _hovered
-                            ? (isDark ? Colors.white : accent)
+                            ? (isDark
+                                ? Colors.white
+                                : AppColors.accentGreenDeep)
                             : (isDark ? Colors.white70 : AppColors.slate600),
                       ),
                     ),
@@ -1474,17 +1467,10 @@ class _BackToTopPillState extends State<_BackToTopPill> {
 }
 
 class _MiniCircularProgressPainter extends CustomPainter {
-  _MiniCircularProgressPainter({
-    required this.progress,
-    required this.isDark,
-    required this.primaryAccent,
-    required this.secondaryAccent,
-  });
+  _MiniCircularProgressPainter({required this.progress, required this.isDark});
 
   final double progress;
   final bool isDark;
-  final Color primaryAccent;
-  final Color secondaryAccent;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -1494,9 +1480,8 @@ class _MiniCircularProgressPainter extends CustomPainter {
     final trackPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
-      ..color = isDark
-          ? Colors.white.withValues(alpha: 0.15)
-          : AppColors.slate300;
+      ..color =
+          isDark ? Colors.white.withValues(alpha: 0.15) : AppColors.slate300;
     canvas.drawCircle(center, radius, trackPaint);
 
     if (progress > 0) {
@@ -1504,8 +1489,8 @@ class _MiniCircularProgressPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round
         ..strokeWidth = 2.2
-        ..shader = LinearGradient(
-          colors: [primaryAccent, secondaryAccent],
+        ..shader = const LinearGradient(
+          colors: [AppColors.accentCyan, AppColors.accentGreen],
         ).createShader(Rect.fromCircle(center: center, radius: radius));
 
       const startAngle = -3.141592653589793 / 2;
@@ -1522,9 +1507,5 @@ class _MiniCircularProgressPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_MiniCircularProgressPainter oldDelegate) =>
-      oldDelegate.progress != progress ||
-      oldDelegate.isDark != isDark ||
-      oldDelegate.primaryAccent != primaryAccent ||
-      oldDelegate.secondaryAccent != secondaryAccent;
+      oldDelegate.progress != progress || oldDelegate.isDark != isDark;
 }
-

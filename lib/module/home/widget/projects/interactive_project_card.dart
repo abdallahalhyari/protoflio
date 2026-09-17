@@ -98,18 +98,18 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               AnimatedOpacity(
                                 opacity: _isHovered ? 1.0 : 0.8,
                                 duration: AppMotion.cardHover,
-                                child: const DecoratedBox(
+                                child: DecoratedBox(
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       begin: Alignment.bottomCenter,
                                       end: Alignment.topCenter,
                                       colors: [
-                                        Color(0xE6000000), // 0.9 alpha black
-                                        Color(0x1A000000), // 0.1 alpha black
+                                        Colors.black.withValues(alpha: 0.90),
+                                        Colors.black.withValues(alpha: 0.10),
                                       ],
                                     ),
                                   ),
-                                  child: SizedBox.expand(),
+                                  child: const SizedBox.expand(),
                                 ),
                               ),
                               // Spotlight
@@ -142,7 +142,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                 child: Text(
                                   widget.project.company.toUpperCase(),
                                   style: const TextStyle(
-                                    fontFamily: 'Courier',
+                                    fontFamily: AppTypography.monoFont,
                                     color: Colors.white,
                                     fontSize: AppTypography.micro,
                                     fontWeight: FontWeight.w900,
@@ -215,7 +215,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               Text(
                                 widget.project.company.toUpperCase(),
                                 style: TextStyle(
-                                  fontFamily: 'Courier',
+                                  fontFamily: AppTypography.monoFont,
                                   color: widget.scheme.primary,
                                   fontSize: AppTypography.micro,
                                   fontWeight: FontWeight.w900,
@@ -321,7 +321,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                     Text(
                                       'READ CASE STUDY',
                                       style: TextStyle(
-                                        fontFamily: 'Courier',
+                                        fontFamily: AppTypography.monoFont,
                                         color: ctaColor,
                                         fontSize: AppTypography.caption,
                                         fontWeight: FontWeight.w900,
@@ -396,7 +396,7 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = widget.isLinkedIn ? const Color(0xFF0A66C2) : widget.scheme.primary;
+    final activeColor = widget.isLinkedIn ? AppColors.linkedIn : widget.scheme.primary;
 
     return Tooltip(
       message: widget.tooltip,
@@ -443,14 +443,14 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
                       height: 15,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: _hovered ? Colors.white : const Color(0xFF0A66C2),
+                        color: _hovered ? Colors.white : AppColors.linkedIn,
                         borderRadius: BorderRadius.circular(2.5),
                       ),
                       child: Text(
                         'in',
                         style: TextStyle(
-                          color: _hovered ? const Color(0xFF0A66C2) : Colors.white,
-                          fontSize: 9.5,
+                          color: _hovered ? AppColors.linkedIn : Colors.white,
+                          fontSize: AppTypography.editorialSm,
                           fontWeight: FontWeight.w900,
                           fontFamily: 'sans-serif',
                           height: 1.0,

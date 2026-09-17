@@ -33,7 +33,7 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                       child: Text(
                         l10n.keyboardHintTitle,
                         style: const TextStyle(
-                          fontSize: 15,
+                          fontSize: AppTypography.body + 1,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 0.3,
                         ),
@@ -80,7 +80,7 @@ Widget _shortcutRow(ColorScheme scheme, String key, String label) {
           child: Text(
             key,
             style: TextStyle(
-              fontFamily: 'Courier',
+              fontFamily: AppTypography.monoFont,
               color: scheme.primary,
               fontSize: AppTypography.overline,
               fontWeight: FontWeight.w900,

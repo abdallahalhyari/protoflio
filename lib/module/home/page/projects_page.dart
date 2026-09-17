@@ -158,7 +158,7 @@ class _ProjectsPageState extends State<ProjectsPage>
                            textAlign: TextAlign.center,
                            style: TextStyle(
                              color: scheme.primary,
-                             fontFamily: 'Courier',
+                             fontFamily: AppTypography.monoFont,
                              fontWeight: FontWeight.w900,
                              letterSpacing: 1.2,
                              fontSize: AppTypography.micro,
@@ -204,7 +204,7 @@ class _ProjectsPageState extends State<ProjectsPage>
               child: Text(
                 'CASE STUDIES',
                 style: TextStyle(
-                  fontFamily: 'Courier',
+                  fontFamily: AppTypography.monoFont,
                   color: scheme.primary,
                   fontWeight: FontWeight.w900,
                   fontSize: AppTypography.micro,
@@ -222,7 +222,7 @@ class _ProjectsPageState extends State<ProjectsPage>
         Text(
           'SELECTED WORK',
           style: TextStyle(
-            fontFamily: 'Courier',
+            fontFamily: AppTypography.monoFont,
             color: scheme.primary,
             fontWeight: FontWeight.w900,
             fontSize: AppTypography.micro,

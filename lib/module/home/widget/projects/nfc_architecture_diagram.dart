@@ -38,9 +38,11 @@ class NfcArchitectureDiagram extends StatelessWidget {
                 child: Text(
                   'SYSTEM ARCHITECTURE TOPOLOGY',
                   style: TextStyle(
-                    fontFamily: 'Courier',
+                    fontFamily: AppTypography.monoFont,
                     color: scheme.primary,
-                    fontSize: isDesktop ? 10.0 : 9.0,
+                    fontSize: isDesktop
+                        ? AppTypography.micro
+                        : AppTypography.editorialSm,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.5,
                   ),
@@ -103,7 +105,7 @@ class NfcArchitectureDiagram extends StatelessWidget {
             label,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 8.5,
+              fontSize: AppTypography.nano,
               fontWeight: FontWeight.w700,
               color: isDark ? Colors.white70 : AppColors.slate700,
               height: 1.2,

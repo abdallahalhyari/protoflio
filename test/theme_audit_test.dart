@@ -13,6 +13,8 @@ import 'package:profile/module/home/home_controller.dart';
 import 'package:profile/module/home/widget/portfolio_nav.dart';
 import 'package:profile/module/home/widget/mobile_app_bar.dart';
 import 'package:profile/theme/app_theme.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 Widget createThemedTestApp({
   required Widget child,
@@ -254,6 +256,51 @@ void main() {
 
       tester.view.resetPhysicalSize();
       tester.view.resetDevicePixelRatio();
+    });
+  });
+
+  group('Token Unification and Accessible Contrast Audit', () {
+    test('AppColors.linkedIn token matches corporate standard', () {
+      expect(AppColors.linkedIn, const Color(0xFF0A66C2));
+    });
+
+    test('toAccessibleLightText maps saturated dark-mode tones to high-contrast light tones', () {
+      expect(AppColors.toAccessibleLightText(AppColors.accentAmber), AppColors.accentAmberDeep);
+      expect(AppColors.toAccessibleLightText(const Color(0xFFFBBF24)), AppColors.accentAmberDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentGreen), AppColors.accentGreenDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentSky), AppColors.accentSkyDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentCyan), AppColors.accentCyanDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentRose), AppColors.accentRoseDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentViolet), AppColors.accentVioletDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentIndigo), AppColors.accentIndigoDeepText);
+    });
+
+    testWidgets('SurfaceTone.adaptiveAccentText adapts according to theme brightness', (tester) async {
+      await tester.pumpWidget(
+        Theme(
+          data: ThemeData.light(),
+          child: Builder(
+            builder: (context) {
+              expect(context.isDarkMode, isFalse);
+              expect(context.adaptiveAccentText(AppColors.accentAmber), AppColors.accentAmberDeep);
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+
+      await tester.pumpWidget(
+        Theme(
+          data: ThemeData.dark(),
+          child: Builder(
+            builder: (context) {
+              expect(context.isDarkMode, isTrue);
+              expect(context.adaptiveAccentText(AppColors.accentAmber), AppColors.accentAmber);
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
     });
   });
 }

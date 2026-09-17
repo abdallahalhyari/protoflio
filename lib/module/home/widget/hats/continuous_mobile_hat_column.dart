@@ -58,7 +58,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
             style: TextStyle(
               fontFamily: AppTypography.displayFont,
               color: isDark ? Colors.white : AppColors.slate900,
-              fontSize: 22,
+              fontSize: AppTypography.titleMid,
               fontWeight: FontWeight.w900,
               letterSpacing: 3,
             ),

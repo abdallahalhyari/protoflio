@@ -174,11 +174,13 @@ class SkillCategoryFilters extends StatelessWidget {
                 Text(
                   cat.toUpperCase(),
                   style: TextStyle(
-                    fontFamily: 'Courier',
+                    fontFamily: AppTypography.monoFont,
                     color: isSelected
                         ? (isDark ? color : textColor)
                         : (isDark ? scheme.onSurface.withValues(alpha: 0.7) : AppColors.slate700),
-                    fontSize: isDesktop ? 11 : 9.5,
+                    fontSize: isDesktop
+                        ? AppTypography.caption
+                        : AppTypography.editorialSm,
                     fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                     letterSpacing: 0.8,
                   ),
@@ -187,11 +189,13 @@ class SkillCategoryFilters extends StatelessWidget {
                 Text(
                   '($count)',
                   style: TextStyle(
-                    fontFamily: 'Courier',
+                    fontFamily: AppTypography.monoFont,
                     color: isSelected
                         ? (isDark ? color.withValues(alpha: 0.85) : textColor)
                         : (isDark ? scheme.onSurface.withValues(alpha: 0.45) : AppColors.slate500),
-                    fontSize: isDesktop ? 10 : 8.5,
+                    fontSize: isDesktop
+                        ? AppTypography.micro
+                        : AppTypography.nano,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

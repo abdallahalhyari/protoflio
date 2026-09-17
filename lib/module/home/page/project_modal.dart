@@ -108,15 +108,15 @@ class _ProjectCaseStudyModal extends StatelessWidget {
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(
-              horizontal: isDesktop ? 24 : 16,
-              vertical: isDesktop ? 64 : 48,
+              horizontal: isDesktop ? AppSpacing.lg : AppSpacing.md,
+              vertical: isDesktop ? AppSpacing.xxl : AppSpacing.xl,
             ),
             child: RepaintBoundary(
               child: ConditionalBlur(
                 borderRadius: BorderRadius.circular(AppRadius.md),
                 sigma: 16,
                 child: Container(
-                  constraints: BoxConstraints(maxWidth: isDesktop ? 780 : 960),
+                  constraints: const BoxConstraints(maxWidth: 800),
                   decoration: BoxDecoration(
                     color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.white.withValues(alpha: 0.92),
                     borderRadius: BorderRadius.circular(AppRadius.md),
@@ -172,7 +172,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ),
                             ),
                             alignment: Alignment.topRight,
-                            padding: const EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(AppSpacing.smd),
                             child: IconButton(
                               icon: const Icon(Icons.close_rounded, color: Colors.white),
                               onPressed: () => Navigator.of(context).pop(),
@@ -184,8 +184,8 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                         ),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: isDesktop ? 20 : 14,
-                          vertical: isDesktop ? 16 : 12,
+                          horizontal: isDesktop ? AppSpacing.lg : AppSpacing.md,
+                          vertical: isDesktop ? AppSpacing.md : AppSpacing.smd,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +208,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                         child: Text(
                                           project.company.toUpperCase(),
                                           style: TextStyle(
-                                            fontFamily: 'Courier',
+                                            fontFamily: AppTypography.monoFont,
                                             color: scheme.primary,
                                             fontSize: AppTypography.editorialSm,
                                             fontWeight: FontWeight.w900,
@@ -216,14 +216,14 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(width: 8),
+                                      const SizedBox(width: AppSpacing.sm),
                                       Flexible(
                                         child: Text(
                                           isDesktop ? 'FEATURE ARTICLE // VOL. ${_ordinal(index)}' : 'VOL. ${_ordinal(index)}',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                            fontFamily: 'Courier',
+                                            fontFamily: AppTypography.monoFont,
                                             color: isDark ? Colors.white.withValues(alpha: 0.6) : AppColors.slate500,
                                             fontSize: AppTypography.editorialSm,
                                             fontWeight: FontWeight.w700,
@@ -258,7 +258,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                                 Text(
                                                   'WEBSITE',
                                                   style: TextStyle(
-                                                    fontFamily: 'Courier',
+                                                    fontFamily: AppTypography.monoFont,
                                                     color: scheme.primary,
                                                     fontSize: AppTypography.micro,
                                                     fontWeight: FontWeight.w900,
@@ -278,9 +278,9 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                             decoration: BoxDecoration(
-                                              color: const Color(0xFF0A66C2).withValues(alpha: 0.15),
+                                              color: AppColors.linkedIn.withValues(alpha: 0.15),
                                               borderRadius: BorderRadius.circular(AppRadius.xs),
-                                              border: Border.all(color: const Color(0xFF0A66C2).withValues(alpha: 0.6)),
+                                              border: Border.all(color: AppColors.linkedIn.withValues(alpha: 0.6)),
                                             ),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
@@ -289,7 +289,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                                   width: 12,
                                                   height: 12,
                                                   decoration: BoxDecoration(
-                                                    color: const Color(0xFF0A66C2),
+                                                    color: AppColors.linkedIn,
                                                     borderRadius: BorderRadius.circular(2),
                                                   ),
                                                   alignment: Alignment.center,
@@ -297,7 +297,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                                     'in',
                                                     style: TextStyle(
                                                       color: Colors.white,
-                                                      fontSize: 8.5,
+                                                      fontSize: AppTypography.nano,
                                                       fontWeight: FontWeight.w900,
                                                       fontFamily: 'sans-serif',
                                                       height: 1.0,
@@ -308,15 +308,15 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                                 const Text(
                                                   'LINKEDIN',
                                                   style: TextStyle(
-                                                    fontFamily: 'Courier',
-                                                    color: Color(0xFF0A66C2),
+                                                    fontFamily: AppTypography.monoFont,
+                                                    color: AppColors.linkedIn,
                                                     fontSize: AppTypography.micro,
                                                     fontWeight: FontWeight.w900,
                                                     letterSpacing: 1,
                                                   ),
                                                 ),
                                                 const SizedBox(width: 3),
-                                                const Icon(Icons.arrow_outward, size: 11, color: Color(0xFF0A66C2)),
+                                                const Icon(Icons.arrow_outward, size: 11, color: AppColors.linkedIn),
                                               ],
                                             ),
                                           ),
@@ -360,7 +360,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ),
                             ),
 
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.smd),
 
                             // 1. Context Paragraph
                             if (project.context != null) ...[
@@ -372,7 +372,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                   height: 1.45,
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: AppSpacing.md),
                             ],
 
                             // 2. The Architectural Dossier (Glass Bentos)
@@ -427,9 +427,9 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                 isDark: isDark,
                               ),
 
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             Container(height: 1, color: isDark ? Colors.white12 : AppColors.slate200),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: AppSpacing.md),
 
                             // 3. Key Highlights & Measurable Results
                             for (int i = 0; i < project.highlights.length; i++)
@@ -456,9 +456,11 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                           TextSpan(
                                             text: 'MEASURABLE OUTCOME: ',
                                             style: TextStyle(
-                                              fontFamily: 'Courier',
+                                              fontFamily: AppTypography.monoFont,
                                               color: AppColors.accentGreen,
-                                              fontSize: isDesktop ? 10.5 : 9.5,
+                                              fontSize: isDesktop
+                                                  ? AppTypography.editorial
+                                                  : AppTypography.editorialSm,
                                               fontWeight: FontWeight.w800,
                                             ),
                                           ),
@@ -479,7 +481,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ),
                             ],
 
-                            const SizedBox(height: 16),
+                            const SizedBox(height: AppSpacing.md),
 
                             // 4. Tech Stack Chips
                             Wrap(
@@ -497,9 +499,11 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                     child: Text(
                                       tech.toUpperCase(),
                                       style: TextStyle(
-                                        fontFamily: 'Courier',
+                                        fontFamily: AppTypography.monoFont,
                                         color: scheme.primary,
-                                        fontSize: isDesktop ? 9.5 : 8.5,
+                                        fontSize: isDesktop
+                                            ? AppTypography.editorialSm
+                                            : AppTypography.nano,
                                         fontWeight: FontWeight.w700,
                                         letterSpacing: 0.8,
                                       ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../service/analytics_service.dart';
 import '../../theme/surface_tone.dart';
 import '../../theme/tokens.dart';
-import '../../theme_controller.dart';
 import '../home/widget/editorial_chip.dart';
 import '../home/widget/page_background.dart';
 import '../home/widget/primary_button.dart';
@@ -39,7 +38,6 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    ThemeController.updateSeedFromHash('work/nathealth');
   }
 
   @override
@@ -53,7 +51,7 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
     final scheme = Theme.of(context).colorScheme;
     final isDark = context.isDarkMode;
     final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
-    final hPad = isDesktop ? 96.0 : AppSpacing.lg;
+    final hPad = CaseStudyLayout.horizontalPadding(context);
 
     final chapters = [
       CaseStudyChapter(
@@ -94,243 +92,249 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
         child: CaseStudyReadingCompanion(
           scrollController: _scrollController,
           chapters: chapters,
-          primaryAccent: AppColors.caseStudyNatHealthPrimary,
-          secondaryAccent: AppColors.caseStudyNatHealthSecondary,
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [
-            SliverAppBar(
-              pinned: true,
-              backgroundColor:
-                  isDark ? AppColors.darkSurface.withValues(alpha: 0.94) : Colors.white.withValues(alpha: 0.94),
-              elevation: 0,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_rounded),
-                tooltip: 'Back to portfolio',
-                onPressed: () {
-                  Analytics.event('case_study_back',
-                      params: {'study': 'nathealth'});
-                  ThemeController.updateSeedFromHash('work');
-                  Navigator.of(context).maybePop();
-                },
+              SliverAppBar(
+                pinned: true,
+                backgroundColor: isDark
+                    ? AppColors.darkSurface.withValues(alpha: 0.94)
+                    : Colors.white.withValues(alpha: 0.94),
+                elevation: 0,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  tooltip: 'Back to portfolio',
+                  onPressed: () {
+                    Analytics.event('case_study_back',
+                        params: {'study': 'nathealth'});
+                    Navigator.of(context).maybePop();
+                  },
+                ),
+                title: Text(
+                  'NATHEALTH · CASE STUDY',
+                  style: TextStyle(
+                    fontSize: AppTypography.overline,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2.4,
+                    color: scheme.onSurface.withValues(alpha: 0.8),
+                  ),
+                ),
+                actions: const [
+                  CaseStudyToolbarShareButton(
+                    slug: 'nathealth',
+                    title: 'NatHealth Mobile Suite',
+                  ),
+                  SizedBox(width: AppSpacing.sm),
+                ],
               ),
-              title: Text(
-                'NATHEALTH · CASE STUDY',
-                style: TextStyle(
-                  fontSize: AppTypography.overline,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 2.4,
-                  color: scheme.onSurface.withValues(alpha: 0.8),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: hPad,
+                  vertical: AppSpacing.xl,
                 ),
-              ),
-              actions: const [
-                CaseStudyToolbarShareButton(
-                  slug: 'nathealth',
-                  title: 'NatHealth Mobile Suite',
-                ),
-                SizedBox(width: AppSpacing.sm),
-              ],
-            ),
-            SliverPadding(
-              padding: EdgeInsets.symmetric(
-                horizontal: hPad,
-                vertical: AppSpacing.xl,
-              ),
-              sliver: SliverList.list(children: [
-                _Masthead(isDesktop: isDesktop),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _problemKey,
-                  child: const _SectionKicker(number: '01', label: 'THE PROBLEM'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _Prose(
-                  'Jordan\'s largest health-insurance TPA processes millions of '
-                  'claims across hospitals, clinics, and pharmacies. Paper '
-                  'submissions were the bottleneck: fraud exposure, days-long '
-                  'reimbursement lag, and clinics operating in areas with '
-                  'intermittent cellular connectivity had to fall back to '
-                  'phone-in verification.',
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _Prose(
-                  'The mobile suite needed to (a) verify a member\'s smart-card '
-                  'contactlessly in under a second, (b) survive the network '
-                  'dropping mid-transaction without ever losing a claim, and '
-                  '(c) resist credential extraction on rooted or compromised '
-                  'Android handsets — all while meeting national health-data '
-                  'regulatory audit requirements.',
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _roleKey,
-                  child: const _SectionKicker(number: '02', label: 'MY ROLE'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _BulletList(items: const [
-                  'Senior Mobile Engineer leading mobile architecture across three shipped clients (Ring App, E-Health Gate, Compliance System).',
-                  'Owned native Kotlin bridging to Android NFC / IsoDep transceive buffers.',
-                  'Designed the two-tier JWT + hardware-GUID token protocol implemented across the suite.',
-                  'Owned the offline-first WorkManager sync pipeline and its retry semantics.',
-                ]),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _archKey,
-                  child: const _SectionKicker(
-                      number: '03', label: 'SYSTEM ARCHITECTURE'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                NfcArchitectureDiagram(isDesktop: isDesktop, isDark: isDark),
-                const SizedBox(height: AppSpacing.md),
-                _Prose(
-                  'Clean Architecture with strict boundary isolation. '
-                  'Presentation widgets never touch NFC or JWT primitives; '
-                  'they consume a Repository interface backed by a Data layer '
-                  'that fans out to the native Kotlin channel, SQLite cache, '
-                  'and REST endpoints. The Domain tier is pure Dart — no '
-                  'Flutter, no platform channels — so the business rules run '
-                  'under `dart test` without a Flutter harness.',
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                _TechnicalChapter(
-                  number: '04',
-                  title: 'ISO-7816 APDU PIPELINE',
-                  steps: const [
-                    _TechStep(
-                      layer: 'DISCOVERY',
-                      title: 'NFC adapter + tag dispatch',
-                      body:
-                          'Foreground dispatch filter latches onto IsoDep-compatible smart-cards within ~30ms of tap. Non-matching tags are ignored so misfires don\'t interrupt the user.',
-                    ),
-                    _TechStep(
-                      layer: 'BRIDGE',
-                      title: 'Kotlin MethodChannel',
-                      body:
-                          'A binary transceive channel bridges Flutter to the Android IsoDep buffer. Payloads move as raw `ByteBuffer` to avoid JSON encode/decode round-trips inside the APDU timeout envelope.',
-                    ),
-                    _TechStep(
-                      layer: 'COMMAND CHAIN',
-                      title: 'AID select → auth → binary read',
-                      body:
-                          'Application selection (AID), mutual authentication with the card\'s embedded certificate, then encrypted binary block reads. Each command has a strict per-step timeout; a defensive state machine unwinds cleanly if the card is displaced mid-chain.',
-                    ),
-                    _TechStep(
-                      layer: 'VERIFY',
-                      title: 'Cryptographic validation',
-                      body:
-                          'Card payload is parsed and validated against digital certificates from the TPA\'s CA chain. Cards that fail integrity checks are rejected before reaching the domain tier.',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                _TechnicalChapter(
-                  number: '05',
-                  title: 'HARDWARE-BOUND TOKEN LIFECYCLE',
-                  steps: const [
-                    _TechStep(
-                      layer: 'AUTHENTICATION',
-                      title: 'Biometric + hardware challenge',
-                      body:
-                          'BiometricPrompt gated by Android Keystore StrongBox / TEE where available; falls back to the standard TEE elsewhere. The keystore challenge is bound to a hardware GUID so cloned APKs on a different device fail immediately.',
-                    ),
-                    _TechStep(
-                      layer: 'STORAGE',
-                      title: 'AES-256 GCM in Keystore',
-                      body:
-                          'Refresh token encrypted with a hardware-backed key that never leaves the secure enclave. Even a fully rooted phone can\'t exfiltrate the key material — only the plaintext token after biometric approval.',
-                    ),
-                    _TechStep(
-                      layer: 'EXCHANGE',
-                      title: 'Two-tier JWT rotation',
-                      body:
-                          'A short-lived access token (15 min) is exchanged for API calls. Refresh happens via a hardware-GUID-bound refresh token; the server rejects any refresh whose device GUID doesn\'t match the one recorded at enrollment.',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                _TechnicalChapter(
-                  number: '06',
-                  title: 'OFFLINE-FIRST SYNC PIPELINE',
-                  steps: const [
-                    _TechStep(
-                      layer: 'DISPATCH',
-                      title: 'Optimistic UI + local ACID commit',
-                      body:
-                          'Every submission writes to SQLite inside a transaction, marked `PENDING_SYNC`, before the UI acknowledges. Nothing lives only in RAM.',
-                    ),
-                    _TechStep(
-                      layer: 'SCHEDULE',
-                      title: 'Android WorkManager',
-                      body:
-                          'A NETWORK_CONNECTED-constrained worker takes over — survives process death, doze mode, and app force-quit. Retries use exponential backoff with jitter to protect the backend during recovery storms.',
-                    ),
-                    _TechStep(
-                      layer: 'RECONCILE',
-                      title: 'Idempotent server ACK',
-                      body:
-                          'Each pending item carries a client-generated idempotency key so retries never double-submit. Server timestamp response flips the row to `SYNCED`; conflicts resolve via last-write-wins keyed to server clock.',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _outcomesKey,
-                  child: const _SectionKicker(number: '07', label: 'OUTCOMES'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _OutcomeGrid(isDesktop: isDesktop),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _lessonsKey,
-                  child: const _SectionKicker(number: '08', label: 'LESSONS'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                _Prose(
-                  'NFC APDU timing envelopes are unforgiving and vary by handset. '
-                  'Different antenna coil geometries across OEMs meant our '
-                  'end-to-end read budget had to account for a ~2× variance in '
-                  'transceive latency between flagship and budget devices. '
-                  'The fix wasn\'t tighter code — it was a defensive state '
-                  'machine that treated every command as potentially '
-                  'interruptable, plus per-step timeouts that could fail '
-                  'gracefully and prompt the user to re-tap without losing '
-                  'the outer transaction state.',
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                RelatedCaseStudies(
-                  currentSlug: 'nathealth',
-                  isDesktop: isDesktop,
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                Center(
-                  child: Wrap(
-                    spacing: AppSpacing.md,
-                    runSpacing: AppSpacing.md,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      PrimaryButton(
-                        label: 'Back to portfolio',
-                        icon: Icons.arrow_back_rounded,
-                        size: PrimaryButtonSize.md,
-                        onPressed: () {
-                          Analytics.event('case_study_cta',
-                              params: {'study': 'nathealth', 'cta': 'back'});
-                          ThemeController.updateSeedFromHash('work');
-                          Navigator.of(context).maybePop();
-                        },
+                sliver: SliverList.list(children: [
+                  _Masthead(isDesktop: isDesktop),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _problemKey,
+                    child: const _SectionKicker(
+                        number: '01', label: 'THE PROBLEM'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  _Prose(
+                    'Jordan\'s largest health-insurance TPA processes millions of '
+                    'claims across hospitals, clinics, and pharmacies. Paper '
+                    'submissions were the bottleneck: fraud exposure, days-long '
+                    'reimbursement lag, and clinics operating in areas with '
+                    'intermittent cellular connectivity had to fall back to '
+                    'phone-in verification.',
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  _Prose(
+                    'The mobile suite needed to (a) verify a member\'s smart-card '
+                    'contactlessly in under a second, (b) survive the network '
+                    'dropping mid-transaction without ever losing a claim, and '
+                    '(c) resist credential extraction on rooted or compromised '
+                    'Android handsets — all while meeting national health-data '
+                    'regulatory audit requirements.',
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _roleKey,
+                    child: const _SectionKicker(number: '02', label: 'MY ROLE'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  _BulletList(items: const [
+                    'Senior Mobile Engineer leading mobile architecture across three shipped clients (Ring App, E-Health Gate, Compliance System).',
+                    'Owned native Kotlin bridging to Android NFC / IsoDep transceive buffers.',
+                    'Designed the two-tier JWT + hardware-GUID token protocol implemented across the suite.',
+                    'Owned the offline-first WorkManager sync pipeline and its retry semantics.',
+                  ]),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _archKey,
+                    child: const _SectionKicker(
+                        number: '03', label: 'SYSTEM ARCHITECTURE'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  NfcArchitectureDiagram(isDesktop: isDesktop, isDark: isDark),
+                  const SizedBox(height: AppSpacing.md),
+                  _Prose(
+                    'Clean Architecture with strict boundary isolation. '
+                    'Presentation widgets never touch NFC or JWT primitives; '
+                    'they consume a Repository interface backed by a Data layer '
+                    'that fans out to the native Kotlin channel, SQLite cache, '
+                    'and REST endpoints. The Domain tier is pure Dart — no '
+                    'Flutter, no platform channels — so the business rules run '
+                    'under `dart test` without a Flutter harness.',
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  _TechnicalChapter(
+                    number: '04',
+                    title: 'ISO-7816 APDU PIPELINE',
+                    steps: const [
+                      _TechStep(
+                        layer: 'DISCOVERY',
+                        title: 'NFC adapter + tag dispatch',
+                        body:
+                            'Foreground dispatch filter latches onto IsoDep-compatible smart-cards within ~30ms of tap. Non-matching tags are ignored so misfires don\'t interrupt the user.',
+                      ),
+                      _TechStep(
+                        layer: 'BRIDGE',
+                        title: 'Kotlin MethodChannel',
+                        body:
+                            'A binary transceive channel bridges Flutter to the Android IsoDep buffer. Payloads move as raw `ByteBuffer` to avoid JSON encode/decode round-trips inside the APDU timeout envelope.',
+                      ),
+                      _TechStep(
+                        layer: 'COMMAND CHAIN',
+                        title: 'AID select → auth → binary read',
+                        body:
+                            'Application selection (AID), mutual authentication with the card\'s embedded certificate, then encrypted binary block reads. Each command has a strict per-step timeout; a defensive state machine unwinds cleanly if the card is displaced mid-chain.',
+                      ),
+                      _TechStep(
+                        layer: 'VERIFY',
+                        title: 'Cryptographic validation',
+                        body:
+                            'Card payload is parsed and validated against digital certificates from the TPA\'s CA chain. Cards that fail integrity checks are rejected before reaching the domain tier.',
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: AppSpacing.xl),
-              ]),
-            ),
-          ],
+                  const SizedBox(height: AppSpacing.xxl),
+                  _TechnicalChapter(
+                    number: '05',
+                    title: 'HARDWARE-BOUND TOKEN LIFECYCLE',
+                    steps: const [
+                      _TechStep(
+                        layer: 'AUTHENTICATION',
+                        title: 'Biometric + hardware challenge',
+                        body:
+                            'BiometricPrompt gated by Android Keystore StrongBox / TEE where available; falls back to the standard TEE elsewhere. The keystore challenge is bound to a hardware GUID so cloned APKs on a different device fail immediately.',
+                      ),
+                      _TechStep(
+                        layer: 'STORAGE',
+                        title: 'AES-256 GCM in Keystore',
+                        body:
+                            'Refresh token encrypted with a hardware-backed key that never leaves the secure enclave. Even a fully rooted phone can\'t exfiltrate the key material — only the plaintext token after biometric approval.',
+                      ),
+                      _TechStep(
+                        layer: 'EXCHANGE',
+                        title: 'Two-tier JWT rotation',
+                        body:
+                            'A short-lived access token (15 min) is exchanged for API calls. Refresh happens via a hardware-GUID-bound refresh token; the server rejects any refresh whose device GUID doesn\'t match the one recorded at enrollment.',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  _TechnicalChapter(
+                    number: '06',
+                    title: 'OFFLINE-FIRST SYNC PIPELINE',
+                    steps: const [
+                      _TechStep(
+                        layer: 'DISPATCH',
+                        title: 'Optimistic UI + local ACID commit',
+                        body:
+                            'Every submission writes to SQLite inside a transaction, marked `PENDING_SYNC`, before the UI acknowledges. Nothing lives only in RAM.',
+                      ),
+                      _TechStep(
+                        layer: 'SCHEDULE',
+                        title: 'Android WorkManager',
+                        body:
+                            'A NETWORK_CONNECTED-constrained worker takes over — survives process death, doze mode, and app force-quit. Retries use exponential backoff with jitter to protect the backend during recovery storms.',
+                      ),
+                      _TechStep(
+                        layer: 'RECONCILE',
+                        title: 'Idempotent server ACK',
+                        body:
+                            'Each pending item carries a client-generated idempotency key so retries never double-submit. Server timestamp response flips the row to `SYNCED`; conflicts resolve via last-write-wins keyed to server clock.',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _outcomesKey,
+                    child:
+                        const _SectionKicker(number: '07', label: 'OUTCOMES'),
+                  ),
+                  OutcomeGrid(
+                    isDesktop: isDesktop,
+                    items: const [
+                      ('< 1s', 'contactless card verification, flagship → budget handsets'),
+                      ('100%', 'reliable offline batch sync during connectivity drops'),
+                      ('0', 'security breaches under hardware-bound token lifecycle'),
+                      ('3', 'coordinated clients shipped on the shared architecture'),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _lessonsKey,
+                    child: const _SectionKicker(number: '08', label: 'LESSONS'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  _Prose(
+                    'NFC APDU timing envelopes are unforgiving and vary by handset. '
+                    'Different antenna coil geometries across OEMs meant our '
+                    'end-to-end read budget had to account for a ~2× variance in '
+                    'transceive latency between flagship and budget devices. '
+                    'The fix wasn\'t tighter code — it was a defensive state '
+                    'machine that treated every command as potentially '
+                    'interruptable, plus per-step timeouts that could fail '
+                    'gracefully and prompt the user to re-tap without losing '
+                    'the outer transaction state.',
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  RelatedCaseStudies(
+                    currentSlug: 'nathealth',
+                    isDesktop: isDesktop,
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  Center(
+                    child: Wrap(
+                      spacing: AppSpacing.md,
+                      runSpacing: AppSpacing.md,
+                      alignment: WrapAlignment.center,
+                      children: [
+                        PrimaryButton(
+                          label: 'Back to portfolio',
+                          icon: Icons.arrow_back_rounded,
+                          size: PrimaryButtonSize.md,
+                          onPressed: () {
+                            Analytics.event('case_study_cta',
+                                params: {'study': 'nathealth', 'cta': 'back'});
+                            Navigator.of(context).maybePop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
+                ]),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
 
 class _Masthead extends StatelessWidget {
@@ -366,7 +370,9 @@ class _Masthead extends StatelessWidget {
           'NatHealth Mobile Suite',
           style: TextStyle(
             fontFamily: AppTypography.displayFont,
-            fontSize: isDesktop ? 60 : 40,
+            fontSize: isDesktop
+                ? AppTypography.heroSm
+                : AppTypography.display,
             fontWeight: FontWeight.w900,
             height: 1.0,
             color: scheme.onSurface,
@@ -421,7 +427,7 @@ class _SectionKicker extends StatelessWidget {
         number,
         style: TextStyle(
           fontFamily: AppTypography.displayFont,
-          fontSize: 28,
+          fontSize: AppTypography.heading,
           fontWeight: FontWeight.w900,
           color: scheme.primary,
         ),
@@ -634,77 +640,3 @@ class _TechStepCard extends StatelessWidget {
   }
 }
 
-class _OutcomeGrid extends StatelessWidget {
-  const _OutcomeGrid({required this.isDesktop});
-  final bool isDesktop;
-
-  static const List<(String, String)> _cards = [
-    ('< 1s', 'contactless card verification, flagship → budget handsets'),
-    ('100%', 'reliable offline batch sync during connectivity drops'),
-    ('0', 'security breaches under hardware-bound token lifecycle'),
-    ('3', 'coordinated clients shipped on the shared architecture'),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final cols = isDesktop ? 4 : 2;
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: cols,
-      childAspectRatio: isDesktop ? 1.3 : 1.15,
-      mainAxisSpacing: AppSpacing.md,
-      crossAxisSpacing: AppSpacing.md,
-      children: _cards.map((c) => _OutcomeCard(headline: c.$1, body: c.$2)).toList(),
-    );
-  }
-}
-
-class _OutcomeCard extends StatelessWidget {
-  const _OutcomeCard({required this.headline, required this.body});
-
-  final String headline;
-  final String body;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final isDark = context.isDarkMode;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.04)
-            : Colors.white.withValues(alpha: 0.75),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: scheme.primary.withValues(alpha: isDark ? 0.18 : 0.22),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            headline,
-            style: TextStyle(
-              fontFamily: AppTypography.displayFont,
-              fontSize: 44,
-              fontWeight: FontWeight.w900,
-              color: scheme.primary,
-              height: 1.0,
-            ),
-          ),
-          Text(
-            body,
-            style: TextStyle(
-              fontSize: AppTypography.small,
-              height: 1.4,
-              color: scheme.onSurface.withValues(alpha: 0.75),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

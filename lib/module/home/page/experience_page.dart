@@ -76,26 +76,20 @@ class _ExperiencePageState extends State<ExperiencePage>
 
     return AppScreenShell(
       maxWidth: 1600, // Wider for horizontal scroll
-      verticalPadding:
-          widget.isContinuousMobile ? AppSpacing.md : AppSpacing.md,
+      verticalPadding: AppSpacing.md,
       reserveBottomNav: !widget.isContinuousMobile,
       reserveMobileTop: !widget.isContinuousMobile,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Header
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? AppSpacing.xl : AppSpacing.md),
-            child: ExperienceHeader(isDesktop: isDesktop),
-          ),
+          ExperienceHeader(isDesktop: isDesktop),
           const SizedBox(height: AppSpacing.sm),
 
           // Timeline Grid
           if (widget.isContinuousMobile)
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
                 vertical: AppSpacing.sm,
               ),
               child: _buildContinuousMobileList(),
@@ -103,8 +97,7 @@ class _ExperiencePageState extends State<ExperiencePage>
           else
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: isDesktop ? AppSpacing.xl : AppSpacing.md,
+                padding: const EdgeInsets.symmetric(
                   vertical: AppSpacing.sm,
                 ),
                 child: isDesktop

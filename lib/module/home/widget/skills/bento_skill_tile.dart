@@ -99,33 +99,9 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
     );
   }
 
-  Color _adaptiveAccent(BuildContext context, Color color) {
-    final isDark = context.isDarkMode;
-    if (isDark) return color;
-    if (color == AppColors.accentAmber || color.toARGB32() == 0xFFFBBF24 || color.toARGB32() == 0xFFF59E0B) {
-      return AppColors.accentAmberDeep;
-    }
-    if (color == AppColors.accentSky || color.toARGB32() == 0xFF38BDF8) {
-      return AppColors.accentSkyDeep;
-    }
-    if (color == AppColors.accentGreen || color.toARGB32() == 0xFF10B981) {
-      return AppColors.accentGreenDeep;
-    }
-    if (color == AppColors.accentViolet || color.toARGB32() == 0xFF8B5CF6) {
-      return AppColors.accentVioletDeep;
-    }
-    if (color == AppColors.accentVioletLight || color.toARGB32() == 0xFFA78BFA) {
-      return AppColors.accentVioletMid;
-    }
-    if (color.toARGB32() == 0xFFF472B6) {
-      return AppColors.accentPinkDeep;
-    }
-    return Theme.of(context).colorScheme.primary;
-  }
-
   Widget _buildFront() {
     final isDark = context.isDarkMode;
-    final accentText = _adaptiveAccent(context, widget.categoryColor);
+    final accentText = context.adaptiveAccentText(widget.categoryColor);
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurfaceElevated : Colors.white,
@@ -198,7 +174,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                         child: Text(
                           _masteryLabel(widget.skill.level),
                           style: TextStyle(
-                            fontFamily: 'Courier',
+                            fontFamily: AppTypography.monoFont,
                             color: accentText,
                             fontSize: widget.isDesktop ? 11 : 9,
                             fontWeight: FontWeight.w900,
@@ -237,7 +213,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                               Text(
                                 'TAP TO FLIP ↺',
                                 style: TextStyle(
-                                  fontFamily: 'Courier',
+                                  fontFamily: AppTypography.monoFont,
                                   color: isDark
                                       ? Colors.white.withValues(alpha: 0.6)
                                       : AppColors.slate500,
@@ -263,7 +239,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
 
   Widget _buildBack() {
     final isDark = context.isDarkMode;
-    final accentText = _adaptiveAccent(context, widget.categoryColor);
+    final accentText = context.adaptiveAccentText(widget.categoryColor);
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCard : Colors.white,
@@ -328,7 +304,7 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                               Text(
                                 'FLIP',
                                 style: TextStyle(
-                                  fontFamily: 'Courier',
+                                  fontFamily: AppTypography.monoFont,
                                   color: accentText,
                                   fontSize: AppTypography.micro,
                                   fontWeight: FontWeight.w800,
@@ -369,8 +345,8 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                               child: Text(
                                 tag,
                                 style: TextStyle(
-                                  fontFamily: 'Courier',
-                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : _adaptiveAccent(context, widget.categoryColor),
+                                  fontFamily: AppTypography.monoFont,
+                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : context.adaptiveAccentText(widget.categoryColor),
                                   fontSize: widget.isDesktop ? 9.5 : 8.0,
                                   fontWeight: FontWeight.w700,
                                 ),

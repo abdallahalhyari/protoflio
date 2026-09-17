@@ -82,4 +82,8 @@ extension SurfaceTone on BuildContext {
   Color get violetText => isDarkMode ? AppColors.accentVioletLight : AppColors.accentVioletDeep;
   Color get roseText => isDarkMode ? AppColors.accentRoseLight : AppColors.accentRoseDeep;
   Color get cyanText => isDarkMode ? AppColors.accentCyanLight : AppColors.accentCyanDeep;
+
+  /// Returns [color] in dark mode, or its accessible high-contrast counterpart in light mode.
+  Color adaptiveAccentText(Color color) =>
+      isDarkMode ? color : AppColors.toAccessibleLightText(color);
 }

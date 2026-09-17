@@ -47,9 +47,11 @@ class ArchitectureDiagramCard extends StatelessWidget {
                   'ARCHITECTURE FLOWCHART',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontFamily: 'Courier',
+                    fontFamily: AppTypography.monoFont,
                     color: scheme.primary,
-                    fontSize: isDesktop ? 11 : 9.5,
+                    fontSize: isDesktop
+                        ? AppTypography.caption
+                        : AppTypography.editorialSm,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                   ),
@@ -66,7 +68,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
                 child: Text(
                   '${topic.diagramSteps.length} TIERS',
                   style: TextStyle(
-                    fontFamily: 'Courier',
+                    fontFamily: AppTypography.monoFont,
                     color: isDark ? Colors.white70 : AppColors.slate600,
                     fontSize: AppTypography.editorialSm,
                     fontWeight: FontWeight.w700,

@@ -175,7 +175,7 @@ class _IntroPageState extends State<IntroPage>
                 'ABDALLAH',
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
-                  fontSize: 220,
+                  fontSize: AppTypography.watermark,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 10,
                   height: 0.9,
@@ -218,9 +218,9 @@ class _IntroPageState extends State<IntroPage>
                   letterSpacing: 12,
                   color: isDark ? Colors.white : AppColors.slate900,
                   shadows: isDark
-                      ? const [
-                          Shadow(color: Colors.black, blurRadius: 16),
-                          Shadow(color: Color(0x666366F1), blurRadius: 24),
+                      ? [
+                          const Shadow(color: Colors.black, blurRadius: 16),
+                          Shadow(color: AppColors.glowIndigo, blurRadius: 24),
                         ]
                       : const [Shadow(color: Colors.black12, blurRadius: 4)],
                 ),
@@ -241,9 +241,9 @@ class _IntroPageState extends State<IntroPage>
                   letterSpacing: 10,
                   color: isDark ? Colors.white : AppColors.slate900,
                   shadows: isDark
-                      ? const [
-                          Shadow(color: Colors.black, blurRadius: 16),
-                          Shadow(color: Color(0x666366F1), blurRadius: 24),
+                      ? [
+                          const Shadow(color: Colors.black, blurRadius: 16),
+                          Shadow(color: AppColors.glowIndigo, blurRadius: 24),
                         ]
                       : const [Shadow(color: Colors.black12, blurRadius: 4)],
                 ),

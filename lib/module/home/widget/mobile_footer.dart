@@ -41,7 +41,7 @@ class MobileFooter extends StatelessWidget {
                     fontFamily: AppTypography.displayFont,
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
-                    fontSize: 15,
+                    fontSize: AppTypography.bodyLg,
                   ),
                 ),
               ),
@@ -72,7 +72,7 @@ class MobileFooter extends StatelessWidget {
             AppLocalizations.of(context)!.footerRightsReserved,
             style: TextStyle(
               color: context.subtleText,
-              fontSize: 9,
+              fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.5,
             ),

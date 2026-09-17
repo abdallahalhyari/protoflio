@@ -88,9 +88,19 @@ class PortfolioApp extends StatelessWidget {
             Locale('ar'),
             Locale('cs'),
           ],
-          builder: (context, child) =>
-              _AccentTheme(child: child ?? const SizedBox.shrink()),
-          home: const HomeScreen(),
+          builder: (context, child) {
+            final media = MediaQuery.of(context);
+            return MediaQuery(
+              data: media.copyWith(
+                textScaler: media.textScaler.clamp(
+                  minScaleFactor: 0.85,
+                  maxScaleFactor: 1.35,
+                ),
+              ),
+              child: child!,
+            );
+          },
+          home: const _AccentTheme(child: HomeScreen()),
         );
       },
     );

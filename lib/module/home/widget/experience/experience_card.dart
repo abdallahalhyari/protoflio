@@ -8,7 +8,6 @@ import '../../../../theme/tokens.dart';
 import '../../model/experience.dart';
 
 const _kNowAccent = AppColors.accentGreen; // Emerald green for "Present"
-const _kGlassBorder = Color(0x33FFFFFF);
 
 class ExperienceCard extends StatefulWidget {
   final Experience exp;
@@ -73,7 +72,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
             border: Border.all(
               color: hovered
                   ? scheme.primary.withValues(alpha: isDark ? 0.6 : 0.8)
-                  : (isDark ? _kGlassBorder : AppColors.slate200),
+                  : (isDark ? context.glassBorderStrong : AppColors.slate200),
               width: hovered ? 1.5 : 1.0,
             ),
             boxShadow: hovered
@@ -363,7 +362,7 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
   Widget build(BuildContext context) {
     final isDark = widget.isDark;
     final scheme = widget.scheme;
-    final primary = widget.isLinkedIn ? const Color(0xFF0A66C2) : scheme.primary;
+    final primary = widget.isLinkedIn ? AppColors.linkedIn : scheme.primary;
 
     return Tooltip(
       message: widget.tooltip,
@@ -416,7 +415,7 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
                       width: 13,
                       height: 13,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0A66C2),
+                        color: AppColors.linkedIn,
                         borderRadius: BorderRadius.circular(2),
                       ),
                       alignment: Alignment.center,
@@ -424,7 +423,7 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
                         'in',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 9.0,
+                          fontSize: AppTypography.nano,
                           fontWeight: FontWeight.w900,
                           fontFamily: 'sans-serif',
                           height: 1.0,
@@ -444,7 +443,7 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
                   Text(
                     widget.label,
                     style: TextStyle(
-                      fontFamily: 'Courier',
+                      fontFamily: AppTypography.monoFont,
                       fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1.2,

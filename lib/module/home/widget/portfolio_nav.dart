@@ -29,6 +29,13 @@ class TopNav extends StatelessWidget {
     final accent = Theme.of(context).colorScheme.primary;
     final controller = HomeController.of(context);
 
+    final width = MediaQuery.sizeOf(context).width;
+    // On desktop viewports (>= tablet), reserve clearance for the top-right
+    // DesktopToolbar (~140px + 12px margin = ~152px) on both sides so the
+    // centered nav pill never collides with toolbar pucks on mid-size screens.
+    final horizontalReserve =
+        width >= AppBreakpoints.tablet ? 320.0 : AppSpacing.xl;
+
     return Semantics(
       container: true,
       explicitChildNodes: true,
@@ -36,7 +43,7 @@ class TopNav extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: math.max(0.0, MediaQuery.sizeOf(context).width - AppSpacing.xl),
+            maxWidth: math.max(0.0, width - horizontalReserve),
           ),
           child: RepaintBoundary(
             child: ConditionalBlur(

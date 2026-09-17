@@ -134,7 +134,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
               t.title,
               style: TextStyle(
                 color: isDark ? Colors.white : AppColors.slate900,
-                fontSize: 14.5,
+                fontSize: AppTypography.bodyLoose,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 0.3,
               ),

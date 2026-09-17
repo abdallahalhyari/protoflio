@@ -74,11 +74,13 @@ class HatRolePills extends StatelessWidget {
                   Text(
                     '0${i + 1} ${kHats[i].title.toUpperCase()}',
                     style: TextStyle(
-                      fontFamily: 'Courier',
+                      fontFamily: AppTypography.monoFont,
                       color: selectedIndex == i
                           ? (isDark ? Colors.white : AppColors.slate900)
                           : (isDark ? Colors.white70 : AppColors.slate700),
-                      fontSize: isDesktop ? 10.0 : 8.5,
+                      fontSize: isDesktop
+                          ? AppTypography.micro
+                          : AppTypography.nano,
                       fontWeight: selectedIndex == i
                           ? FontWeight.w900
                           : FontWeight.w700,

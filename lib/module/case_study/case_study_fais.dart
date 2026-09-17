@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../service/analytics_service.dart';
 import '../../theme/surface_tone.dart';
 import '../../theme/tokens.dart';
-import '../../theme_controller.dart';
 import '../home/data/projects_data.dart';
 import '../home/widget/editorial_chip.dart';
 import '../home/widget/page_background.dart';
@@ -36,7 +35,6 @@ class _FaisCaseStudyState extends State<FaisCaseStudy> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    ThemeController.updateSeedFromHash('work/fais');
   }
 
   @override
@@ -50,7 +48,7 @@ class _FaisCaseStudyState extends State<FaisCaseStudy> {
     final scheme = Theme.of(context).colorScheme;
     final isDark = context.isDarkMode;
     final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
-    final hPad = isDesktop ? 96.0 : AppSpacing.lg;
+    final hPad = CaseStudyLayout.horizontalPadding(context);
 
     final chapters = [
       CaseStudyChapter(
@@ -91,245 +89,255 @@ class _FaisCaseStudyState extends State<FaisCaseStudy> {
         child: CaseStudyReadingCompanion(
           scrollController: _scrollController,
           chapters: chapters,
-          primaryAccent: AppColors.caseStudyFaisPrimary,
-          secondaryAccent: AppColors.caseStudyFaisSecondary,
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [
-            SliverAppBar(
-              pinned: true,
-              backgroundColor: isDark
-                  ? AppColors.darkSurface.withValues(alpha: 0.94)
-                  : Colors.white.withValues(alpha: 0.94),
-              elevation: 0,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_rounded),
-                tooltip: 'Back to portfolio',
-                onPressed: () {
-                  Analytics.event('case_study_back',
-                      params: {'study': 'fais'});
-                  ThemeController.updateSeedFromHash('work');
-                  Navigator.of(context).maybePop();
-                },
+              SliverAppBar(
+                pinned: true,
+                backgroundColor: isDark
+                    ? AppColors.darkSurface.withValues(alpha: 0.94)
+                    : Colors.white.withValues(alpha: 0.94),
+                elevation: 0,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  tooltip: 'Back to portfolio',
+                  onPressed: () {
+                    Analytics.event('case_study_back',
+                        params: {'study': 'fais'});
+                    Navigator.of(context).maybePop();
+                  },
+                ),
+                title: Text(
+                  'FAIS · CASE STUDY',
+                  style: TextStyle(
+                    fontSize: AppTypography.overline,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2.4,
+                    color: scheme.onSurface.withValues(alpha: 0.8),
+                  ),
+                ),
+                actions: const [
+                  CaseStudyToolbarShareButton(
+                    slug: 'fais',
+                    title: 'M-Commerce & Media-Streaming Clients',
+                  ),
+                  SizedBox(width: AppSpacing.sm),
+                ],
               ),
-              title: Text(
-                'FAIS · CASE STUDY',
-                style: TextStyle(
-                  fontSize: AppTypography.overline,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 2.4,
-                  color: scheme.onSurface.withValues(alpha: 0.8),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: hPad,
+                  vertical: AppSpacing.xl,
                 ),
-              ),
-              actions: const [
-                CaseStudyToolbarShareButton(
-                  slug: 'fais',
-                  title: 'M-Commerce & Media-Streaming Clients',
-                ),
-                SizedBox(width: AppSpacing.sm),
-              ],
-            ),
-            SliverPadding(
-              padding: EdgeInsets.symmetric(
-                horizontal: hPad,
-                vertical: AppSpacing.xl,
-              ),
-              sliver: SliverList.list(children: [
-                _Masthead(isDesktop: isDesktop),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _problemKey,
-                  child: const SectionKicker(number: '01', label: 'THE PROBLEM'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                const Prose(
-                  'At Future Advanced Internet Solutions (FAIS), our engineering '
-                  'squads built high-concurrency commercial m-commerce platforms and '
-                  'on-demand media-streaming fitness applications for regional clients. '
-                  'The primary vulnerability in the m-commerce platform was payment-funnel '
-                  'fragility: users on volatile cellular connections frequently experienced '
-                  'drops during checkout handshakes, leading to duplicate transaction attempts, '
-                  'unconfirmed authorizations, and elevated cart abandonment.',
-                ),
-                const SizedBox(height: AppSpacing.md),
-                const Prose(
-                  'Simultaneously, the media-streaming client required continuous audio playback '
-                  'and video workout streaming that resisted background termination by aggressive '
-                  'Android OEM battery savers, while dynamically adapting buffer sizes to '
-                  'prevent playback stutter across erratic cellular networks.',
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _roleKey,
-                  child: const SectionKicker(number: '02', label: 'MY ROLE'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                const BulletList(items: [
-                  'Mobile Developer across Flutter and native Android (Kotlin/Java), coordinating end-to-end frontend-to-backend API integrations and checkout reliability.',
-                  'Engineered transactional checkout flows with client-side idempotency keys and state reconciliation to eliminate duplicate customer billing.',
-                  'Architected the media streaming buffer manager and native Android foreground service lifecycle for uninterrupted playback.',
-                  'Analyzed production telemetry, error crash logs, and network latency metrics to diagnose and resolve critical live runtime bottlenecks.',
-                ]),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _archKey,
-                  child: const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                PipelineTopologyDiagram(
-                  project: kProjects[3],
-                  isDesktop: isDesktop,
-                  isDark: isDark,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                const Prose(
-                  'Service-oriented client architecture prioritizing transactional '
-                  'atomicity and defensive I/O. The checkout engine operates as an explicit '
-                  'finite state machine with local SQL persistence, guaranteeing that '
-                  'in-flight cart operations can resume safely after unexpected terminations. '
-                  'The streaming subsystem interfaces with native Android audio/video framework '
-                  'APIs via platform channels, wrapped in adaptive buffer controllers that '
-                  'respond to network throughput shifts.',
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                const TechnicalChapter(
-                  number: '04',
-                  title: 'TRANSACTIONAL CHECKOUT FUNNEL & IDEMPOTENCY',
-                  steps: [
-                    TechStep(
-                      layer: 'INTEGRITY',
-                      title: 'Client-Generated Idempotency Keys',
-                      body:
-                          'Assigned unique cryptographically secure UUID transaction tokens to every payment submission. Retried requests following network timeouts carried identical tokens, allowing backend gateways to recognize replays and prevent double-charging.',
-                    ),
-                    TechStep(
-                      layer: 'STATE MACHINE',
-                      title: 'Deterministic Funnel Navigation',
-                      body:
-                          'Structured checkout steps (Cart → Delivery → Payment Gateway → Order Confirmation) as a strict finite state machine. Impossible state transitions and accidental back-navigation during payment processing were blocked defensively.',
-                    ),
-                    TechStep(
-                      layer: 'PERSISTENCE',
-                      title: 'Atomic Local Order Staging',
-                      body:
-                          'Staged cart and order payloads in local SQLite storage before initiating network requests. If the app process was interrupted mid-funnel, the checkout session recovered seamlessly without data loss.',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                const TechnicalChapter(
-                  number: '05',
-                  title: 'UNINTERRUPTED MEDIA STREAMING PIPELINE',
-                  steps: [
-                    TechStep(
-                      layer: 'LIFECYCLE',
-                      title: 'Foreground Service & Audio Focus',
-                      body:
-                          'Implemented native Android foreground services with persistent playback notifications and system audio-focus listeners. Media streaming continued uninterrupted when users locked their screens or switched apps.',
-                    ),
-                    TechStep(
-                      layer: 'BUFFERING',
-                      title: 'Adaptive Buffer Management',
-                      body:
-                          'Constructed a predictive buffer controller that adjusted audio and video cache horizons dynamically based on moving-average network throughput, eliminating stutter on intermittent connections.',
-                    ),
-                    TechStep(
-                      layer: 'TELEMETRY',
-                      title: 'Quality of Service (QoS) Telemetry',
-                      body:
-                          'Monitored buffer underrun occurrences, playback start latencies, and stream bitrates to identify ISP peering bottlenecks and optimize CDN distribution rules.',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                const TechnicalChapter(
-                  number: '06',
-                  title: 'DATA-DRIVEN TRIAGE & RESOLUTION',
-                  steps: [
-                    TechStep(
-                      layer: 'MONITORING',
-                      title: 'Automated Network Interception',
-                      body:
-                          'Wired network interceptors logging response latencies, payload sizes, and HTTP status codes, flagging degrading endpoints before user reports arrived.',
-                    ),
-                    TechStep(
-                      layer: 'TRIAGE',
-                      title: 'Rapid Root-Cause Diagnosis',
-                      body:
-                          'Correlated client crash reports with server access logs to pinpoint edge-case serialization anomalies in legacy backend microservices.',
-                    ),
-                    TechStep(
-                      layer: 'EFFICIENCY',
-                      title: 'Optimized JSON Serialization',
-                      body:
-                          'Refactored catalog models to use lazy JSON decoding and selective deserialization, slashing memory footprint during large search result page loads.',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _outcomesKey,
-                  child: const SectionKicker(number: '07', label: 'OUTCOMES'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                OutcomeGrid(
-                  isDesktop: isDesktop,
-                  items: const [
-                    ('99.8%', 'successful checkout transaction completion rate with zero duplicate charges'),
-                    ('-45%', 'reduction in customer support escalation tickets for failed checkout orders'),
-                    ('< 200ms', 'instantaneous cart calculation and state reconciliation latency'),
-                    ('10k+', 'daily active sessions supported across commercial commerce funnels'),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                KeyedSubtree(
-                  key: _lessonsKey,
-                  child: const SectionKicker(number: '08', label: 'LESSONS'),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                const Prose(
-                  'In mobile commerce and streaming platforms, network unreliability is the '
-                  'rule rather than the exception. Building resilient systems demands that '
-                  'engineers treat the network interface as inherently untrusted and prone to '
-                  'interruption. Implementing client-side idempotency, explicit state machine '
-                  'transitions, and persistent local staging transforms flaky user experiences '
-                  'into robust, trustworthy products.',
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                RelatedCaseStudies(
-                  currentSlug: 'fais',
-                  isDesktop: isDesktop,
-                ),
-                const SizedBox(height: AppSpacing.xxl),
-                Center(
-                  child: Wrap(
-                    spacing: AppSpacing.md,
-                    runSpacing: AppSpacing.md,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      PrimaryButton(
-                        label: 'Back to portfolio',
-                        icon: Icons.arrow_back_rounded,
-                        size: PrimaryButtonSize.md,
-                        onPressed: () {
-                          Analytics.event('case_study_cta',
-                              params: {'study': 'fais', 'cta': 'back'});
-                          ThemeController.updateSeedFromHash('work');
-                          Navigator.of(context).maybePop();
-                        },
+                sliver: SliverList.list(children: [
+                  _Masthead(isDesktop: isDesktop),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _problemKey,
+                    child:
+                        const SectionKicker(number: '01', label: 'THE PROBLEM'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  const Prose(
+                    'At Future Advanced Internet Solutions (FAIS), our engineering '
+                    'squads built high-concurrency commercial m-commerce platforms and '
+                    'on-demand media-streaming fitness applications for regional clients. '
+                    'The primary vulnerability in the m-commerce platform was payment-funnel '
+                    'fragility: users on volatile cellular connections frequently experienced '
+                    'drops during checkout handshakes, leading to duplicate transaction attempts, '
+                    'unconfirmed authorizations, and elevated cart abandonment.',
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  const Prose(
+                    'Simultaneously, the media-streaming client required continuous audio playback '
+                    'and video workout streaming that resisted background termination by aggressive '
+                    'Android OEM battery savers, while dynamically adapting buffer sizes to '
+                    'prevent playback stutter across erratic cellular networks.',
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _roleKey,
+                    child: const SectionKicker(number: '02', label: 'MY ROLE'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  const BulletList(items: [
+                    'Mobile Developer across Flutter and native Android (Kotlin/Java), coordinating end-to-end frontend-to-backend API integrations and checkout reliability.',
+                    'Engineered transactional checkout flows with client-side idempotency keys and state reconciliation to eliminate duplicate customer billing.',
+                    'Architected the media streaming buffer manager and native Android foreground service lifecycle for uninterrupted playback.',
+                    'Analyzed production telemetry, error crash logs, and network latency metrics to diagnose and resolve critical live runtime bottlenecks.',
+                  ]),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _archKey,
+                    child: const SectionKicker(
+                        number: '03', label: 'SYSTEM ARCHITECTURE'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  PipelineTopologyDiagram(
+                    project: kProjects[3],
+                    isDesktop: isDesktop,
+                    isDark: isDark,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  const Prose(
+                    'Service-oriented client architecture prioritizing transactional '
+                    'atomicity and defensive I/O. The checkout engine operates as an explicit '
+                    'finite state machine with local SQL persistence, guaranteeing that '
+                    'in-flight cart operations can resume safely after unexpected terminations. '
+                    'The streaming subsystem interfaces with native Android audio/video framework '
+                    'APIs via platform channels, wrapped in adaptive buffer controllers that '
+                    'respond to network throughput shifts.',
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  const TechnicalChapter(
+                    number: '04',
+                    title: 'TRANSACTIONAL CHECKOUT FUNNEL & IDEMPOTENCY',
+                    steps: [
+                      TechStep(
+                        layer: 'INTEGRITY',
+                        title: 'Client-Generated Idempotency Keys',
+                        body:
+                            'Assigned unique cryptographically secure UUID transaction tokens to every payment submission. Retried requests following network timeouts carried identical tokens, allowing backend gateways to recognize replays and prevent double-charging.',
+                      ),
+                      TechStep(
+                        layer: 'STATE MACHINE',
+                        title: 'Deterministic Funnel Navigation',
+                        body:
+                            'Structured checkout steps (Cart → Delivery → Payment Gateway → Order Confirmation) as a strict finite state machine. Impossible state transitions and accidental back-navigation during payment processing were blocked defensively.',
+                      ),
+                      TechStep(
+                        layer: 'PERSISTENCE',
+                        title: 'Atomic Local Order Staging',
+                        body:
+                            'Staged cart and order payloads in local SQLite storage before initiating network requests. If the app process was interrupted mid-funnel, the checkout session recovered seamlessly without data loss.',
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: AppSpacing.xl),
-              ]),
-            ),
-          ],
+                  const SizedBox(height: AppSpacing.xxl),
+                  const TechnicalChapter(
+                    number: '05',
+                    title: 'UNINTERRUPTED MEDIA STREAMING PIPELINE',
+                    steps: [
+                      TechStep(
+                        layer: 'LIFECYCLE',
+                        title: 'Foreground Service & Audio Focus',
+                        body:
+                            'Implemented native Android foreground services with persistent playback notifications and system audio-focus listeners. Media streaming continued uninterrupted when users locked their screens or switched apps.',
+                      ),
+                      TechStep(
+                        layer: 'BUFFERING',
+                        title: 'Adaptive Buffer Management',
+                        body:
+                            'Constructed a predictive buffer controller that adjusted audio and video cache horizons dynamically based on moving-average network throughput, eliminating stutter on intermittent connections.',
+                      ),
+                      TechStep(
+                        layer: 'TELEMETRY',
+                        title: 'Quality of Service (QoS) Telemetry',
+                        body:
+                            'Monitored buffer underrun occurrences, playback start latencies, and stream bitrates to identify ISP peering bottlenecks and optimize CDN distribution rules.',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  const TechnicalChapter(
+                    number: '06',
+                    title: 'DATA-DRIVEN TRIAGE & RESOLUTION',
+                    steps: [
+                      TechStep(
+                        layer: 'MONITORING',
+                        title: 'Automated Network Interception',
+                        body:
+                            'Wired network interceptors logging response latencies, payload sizes, and HTTP status codes, flagging degrading endpoints before user reports arrived.',
+                      ),
+                      TechStep(
+                        layer: 'TRIAGE',
+                        title: 'Rapid Root-Cause Diagnosis',
+                        body:
+                            'Correlated client crash reports with server access logs to pinpoint edge-case serialization anomalies in legacy backend microservices.',
+                      ),
+                      TechStep(
+                        layer: 'EFFICIENCY',
+                        title: 'Optimized JSON Serialization',
+                        body:
+                            'Refactored catalog models to use lazy JSON decoding and selective deserialization, slashing memory footprint during large search result page loads.',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _outcomesKey,
+                    child: const SectionKicker(number: '07', label: 'OUTCOMES'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  OutcomeGrid(
+                    isDesktop: isDesktop,
+                    items: const [
+                      (
+                        '99.8%',
+                        'successful checkout transaction completion rate with zero duplicate charges'
+                      ),
+                      (
+                        '-45%',
+                        'reduction in customer support escalation tickets for failed checkout orders'
+                      ),
+                      (
+                        '< 200ms',
+                        'instantaneous cart calculation and state reconciliation latency'
+                      ),
+                      (
+                        '10k+',
+                        'daily active sessions supported across commercial commerce funnels'
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  KeyedSubtree(
+                    key: _lessonsKey,
+                    child: const SectionKicker(number: '08', label: 'LESSONS'),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  const Prose(
+                    'In mobile commerce and streaming platforms, network unreliability is the '
+                    'rule rather than the exception. Building resilient systems demands that '
+                    'engineers treat the network interface as inherently untrusted and prone to '
+                    'interruption. Implementing client-side idempotency, explicit state machine '
+                    'transitions, and persistent local staging transforms flaky user experiences '
+                    'into robust, trustworthy products.',
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  RelatedCaseStudies(
+                    currentSlug: 'fais',
+                    isDesktop: isDesktop,
+                  ),
+                  const SizedBox(height: AppSpacing.xxl),
+                  Center(
+                    child: Wrap(
+                      spacing: AppSpacing.md,
+                      runSpacing: AppSpacing.md,
+                      alignment: WrapAlignment.center,
+                      children: [
+                        PrimaryButton(
+                          label: 'Back to portfolio',
+                          icon: Icons.arrow_back_rounded,
+                          size: PrimaryButtonSize.md,
+                          onPressed: () {
+                            Analytics.event('case_study_cta',
+                                params: {'study': 'fais', 'cta': 'back'});
+                            Navigator.of(context).maybePop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
+                ]),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 }
 
 class _Masthead extends StatelessWidget {
@@ -365,7 +373,9 @@ class _Masthead extends StatelessWidget {
           'M-Commerce & Media-Streaming Clients',
           style: TextStyle(
             fontFamily: AppTypography.displayFont,
-            fontSize: isDesktop ? 54 : 36,
+            fontSize: isDesktop
+                ? AppTypography.displayLg
+                : AppTypography.displaySm,
             fontWeight: FontWeight.w900,
             height: 1.05,
             color: scheme.onSurface,

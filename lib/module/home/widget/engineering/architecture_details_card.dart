@@ -47,7 +47,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
           Text(
             topic.title,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: AppTypography.titleSm,
               fontWeight: FontWeight.w800,
               color: isDark ? Colors.white : AppColors.slate900,
               letterSpacing: 0.5,
@@ -114,7 +114,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
           Text(
             'KEY IMPLEMENTATION SAFEGUARDS',
             style: TextStyle(
-              fontFamily: 'Courier',
+              fontFamily: AppTypography.monoFont,
               color: scheme.primary,
               fontSize: AppTypography.editorial,
               fontWeight: FontWeight.w800,

@@ -37,7 +37,7 @@ class HatPaginationRow extends StatelessWidget {
           label: const Text(
             'PREV',
             style: TextStyle(
-              fontFamily: 'Courier',
+              fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w800,
             ),
@@ -51,7 +51,7 @@ class HatPaginationRow extends StatelessWidget {
               child: Text(
                 'ROLE 0${selectedIndex + 1} / 0$totalCount',
                 style: TextStyle(
-                  fontFamily: 'Courier',
+                  fontFamily: AppTypography.monoFont,
                   color: primary,
                   fontSize: AppTypography.editorial,
                   fontWeight: FontWeight.w900,
@@ -75,7 +75,7 @@ class HatPaginationRow extends StatelessWidget {
           label: const Text(
             'NEXT',
             style: TextStyle(
-              fontFamily: 'Courier',
+              fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w800,
             ),

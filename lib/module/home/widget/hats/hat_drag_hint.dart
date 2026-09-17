@@ -38,7 +38,7 @@ class HatDragHint extends StatelessWidget {
               Text(
                 'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE',
                 style: TextStyle(
-                  fontFamily: 'Courier',
+                  fontFamily: AppTypography.monoFont,
                   color: isDark
                       ? primary.withValues(alpha: 0.35)
                       : primary,

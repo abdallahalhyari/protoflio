@@ -60,7 +60,7 @@ class PipelineTopologyDiagram extends StatelessWidget {
                   'PRODUCTION PIPELINE TOPOLOGY',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontFamily: 'Courier',
+                    fontFamily: AppTypography.monoFont,
                     color: scheme.primary,
                     fontSize: isDesktop ? 9.0 : 8.0,
                     fontWeight: FontWeight.w800,
@@ -86,9 +86,11 @@ class PipelineTopologyDiagram extends StatelessWidget {
                     child: Text(
                       pipeline[i].toUpperCase(),
                       style: TextStyle(
-                        fontFamily: 'Courier',
+                        fontFamily: AppTypography.monoFont,
                         color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate900,
-                        fontSize: isDesktop ? 9.5 : 8.5,
+                        fontSize: isDesktop
+                            ? AppTypography.editorialSm
+                            : AppTypography.nano,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

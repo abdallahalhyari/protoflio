@@ -94,7 +94,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                     edu.degree,
                                     style: TextStyle(
                                       color: scheme.onSurface,
-                                      fontSize: 14.5,
+                                      fontSize: AppTypography.bodyLoose,
                                       fontWeight: FontWeight.w900,
                                     ),
                                   ),
@@ -112,7 +112,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                       style: TextStyle(
                                         color: scheme.onSurface
                                             .withValues(alpha: 0.7),
-                                        fontSize: 12.0,
+                                        fontSize: AppTypography.overline,
                                       ),
                                     ),
                                 ],

@@ -7,7 +7,6 @@ import '../../../theme_controller.dart';
 import '../home_controller.dart';
 import 'conditional_blur.dart';
 import 'portfolio_nav.dart';
-import 'theme_accent_picker.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Public constant so callers (mobile scroll snap, section anchors)
@@ -196,12 +195,6 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
                 ),
 
-                // Theme Accent
-                if (!tight) ...[
-                  const SizedBox(width: 6),
-                  const ThemeAccentPickerButton(isMobile: true),
-                ],
-
                 const SizedBox(width: 6),
 
                 // Audio
@@ -304,7 +297,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
             Text(
               '$ordinal$denom',
               style: TextStyle(
-                fontFamily: 'Courier',
+                fontFamily: AppTypography.monoFont,
                 color: AppColors.accentIndigo,
                 fontSize: AppTypography.editorialSm,
                 fontWeight: FontWeight.w900,
