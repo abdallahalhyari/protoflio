@@ -10,6 +10,7 @@ import '../home/widget/primary_button.dart';
 import '../home/widget/projects/pipeline_topology_diagram.dart';
 import '../home/widget/pulsing_dot.dart';
 import 'case_study_widgets.dart';
+import 'related_case_studies.dart';
 
 /// Deep-dive case study on FAIS's M-Commerce & Media-Streaming Clients.
 /// Full-screen scrollable narrative matching the NatHealth case-study pattern.
@@ -205,6 +206,11 @@ class FaisCaseStudy extends StatelessWidget {
                   'interruption. Implementing client-side idempotency, explicit state machine '
                   'transitions, and persistent local staging transforms flaky user experiences '
                   'into robust, trustworthy products.',
+                ),
+                const SizedBox(height: AppSpacing.xxl),
+                RelatedCaseStudies(
+                  currentSlug: 'fais',
+                  isDesktop: isDesktop,
                 ),
                 const SizedBox(height: AppSpacing.xxl),
                 Center(

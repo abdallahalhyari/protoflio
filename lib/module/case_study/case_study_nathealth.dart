@@ -8,6 +8,7 @@ import '../home/widget/page_background.dart';
 import '../home/widget/primary_button.dart';
 import '../home/widget/projects/nfc_architecture_diagram.dart';
 import '../home/widget/pulsing_dot.dart';
+import 'related_case_studies.dart';
 
 /// Deep-dive case study on the NatHealth NFC platform. Full-screen
 /// scrollable narrative: problem → role → architecture → three
@@ -205,6 +206,11 @@ class NatHealthCaseStudy extends StatelessWidget {
                   'interruptable, plus per-step timeouts that could fail '
                   'gracefully and prompt the user to re-tap without losing '
                   'the outer transaction state.',
+                ),
+                const SizedBox(height: AppSpacing.xxl),
+                RelatedCaseStudies(
+                  currentSlug: 'nathealth',
+                  isDesktop: isDesktop,
                 ),
                 const SizedBox(height: AppSpacing.xxl),
                 Center(

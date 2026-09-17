@@ -10,6 +10,7 @@ import '../home/widget/primary_button.dart';
 import '../home/widget/projects/pipeline_topology_diagram.dart';
 import '../home/widget/pulsing_dot.dart';
 import 'case_study_widgets.dart';
+import 'related_case_studies.dart';
 
 /// Deep-dive case study on ESKADENIA Software's E-Learning & Healthcare
 /// Enterprise Suite.
@@ -207,6 +208,11 @@ class EskadeniaCaseStudy extends StatelessWidget {
                   'The decisive factor in ESKADENIA\'s architectural transformation was incremental '
                   'module extraction: decoupling one subsystem at a time under strict regression '
                   'safety nets and continuous performance profiling.',
+                ),
+                const SizedBox(height: AppSpacing.xxl),
+                RelatedCaseStudies(
+                  currentSlug: 'eskadenia',
+                  isDesktop: isDesktop,
                 ),
                 const SizedBox(height: AppSpacing.xxl),
                 Center(
