@@ -92,17 +92,18 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               AnimatedOpacity(
                                 opacity: _isHovered ? 1.0 : 0.8,
                                 duration: AppMotion.cardHover,
-                                child: Container(
+                                child: const DecoratedBox(
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       begin: Alignment.bottomCenter,
                                       end: Alignment.topCenter,
                                       colors: [
-                                        Colors.black.withValues(alpha: 0.9),
-                                        Colors.black.withValues(alpha: 0.1),
+                                        Color(0xE6000000), // 0.9 alpha black
+                                        Color(0x1A000000), // 0.1 alpha black
                                       ],
                                     ),
                                   ),
+                                  child: SizedBox.expand(),
                                 ),
                               ),
                               // Spotlight

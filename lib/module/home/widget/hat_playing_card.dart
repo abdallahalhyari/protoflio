@@ -98,7 +98,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
         child: ValueListenableBuilder<Offset>(
           valueListenable: _tiltOffset,
           builder: (context, tilt, _) {
-            return Container(
+            return DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppRadius.card),
                 gradient: RadialGradient(

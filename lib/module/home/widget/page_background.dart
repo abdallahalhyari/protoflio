@@ -69,7 +69,7 @@ class _PageBackgroundState extends State<PageBackground> {
                 right: -80,
                 width: 540,
                 height: 540,
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
@@ -87,7 +87,7 @@ class _PageBackgroundState extends State<PageBackground> {
                 left: -100,
                 width: 580,
                 height: 580,
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
@@ -105,7 +105,7 @@ class _PageBackgroundState extends State<PageBackground> {
                 left: size.width * 0.4,
                 width: 440,
                 height: 440,
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
@@ -195,7 +195,7 @@ class _PageBackgroundState extends State<PageBackground> {
                 right: -60,
                 width: 480,
                 height: 480,
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
@@ -213,7 +213,7 @@ class _PageBackgroundState extends State<PageBackground> {
                 left: -80,
                 width: 520,
                 height: 520,
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
@@ -231,7 +231,7 @@ class _PageBackgroundState extends State<PageBackground> {
                 left: size.width * 0.45,
                 width: 380,
                 height: 380,
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
