@@ -8,6 +8,7 @@ import '../home/widget/page_background.dart';
 import '../home/widget/primary_button.dart';
 import '../home/widget/projects/nfc_architecture_diagram.dart';
 import '../home/widget/pulsing_dot.dart';
+import 'case_study_widgets.dart';
 import 'related_case_studies.dart';
 
 /// Deep-dive case study on the NatHealth NFC platform. Full-screen
@@ -56,6 +57,13 @@ class NatHealthCaseStudy extends StatelessWidget {
                   color: scheme.onSurface.withValues(alpha: 0.8),
                 ),
               ),
+              actions: const [
+                CaseStudyToolbarShareButton(
+                  slug: 'nathealth',
+                  title: 'NatHealth Mobile Suite',
+                ),
+                SizedBox(width: AppSpacing.sm),
+              ],
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(
@@ -303,6 +311,13 @@ class _Masthead extends StatelessWidget {
             EditorialChip(label: 'Clean Architecture', tone: ChipTone.neutral),
             EditorialChip(label: 'SQLite', tone: ChipTone.neutral),
           ],
+        ),
+        const CaseStudyCorporateHeader(
+          company: 'NatHealth',
+          websiteUrl: 'https://www.nathealth.net',
+          linkedinUrl: 'https://www.linkedin.com/company/nathealth',
+          slug: 'nathealth',
+          title: 'NatHealth Mobile Suite',
         ),
       ],
     );

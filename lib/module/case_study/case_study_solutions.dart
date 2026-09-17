@@ -56,6 +56,13 @@ class SolutionsCaseStudy extends StatelessWidget {
                   color: scheme.onSurface.withValues(alpha: 0.8),
                 ),
               ),
+              actions: const [
+                CaseStudyToolbarShareButton(
+                  slug: 'solutions',
+                  title: 'Loyalty Rewards & Ephemeral Social Media Apps',
+                ),
+                SizedBox(width: AppSpacing.sm),
+              ],
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(
@@ -303,6 +310,13 @@ class _Masthead extends StatelessWidget {
             EditorialChip(label: 'Isolate Compression', tone: ChipTone.green),
             EditorialChip(label: 'Real-Time Feeds', tone: ChipTone.indigo),
           ],
+        ),
+        const CaseStudyCorporateHeader(
+          company: 'Solutions Now IT',
+          websiteUrl: 'https://itsolutions-now.com',
+          linkedinUrl: 'https://www.linkedin.com/company/solutionsnowit',
+          slug: 'solutions',
+          title: 'Loyalty Rewards & Ephemeral Social Media Apps',
         ),
       ],
     );

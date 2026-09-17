@@ -55,6 +55,13 @@ class FaisCaseStudy extends StatelessWidget {
                   color: scheme.onSurface.withValues(alpha: 0.8),
                 ),
               ),
+              actions: const [
+                CaseStudyToolbarShareButton(
+                  slug: 'fais',
+                  title: 'M-Commerce & Media-Streaming Clients',
+                ),
+                SizedBox(width: AppSpacing.sm),
+              ],
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(
@@ -303,6 +310,13 @@ class _Masthead extends StatelessWidget {
             EditorialChip(label: 'Payment Gateways', tone: ChipTone.green),
             EditorialChip(label: 'Idempotency', tone: ChipTone.indigo),
           ],
+        ),
+        const CaseStudyCorporateHeader(
+          company: 'Future Advanced Internet Solutions',
+          websiteUrl: 'http://www.fuais.com/',
+          linkedinUrl: 'https://www.linkedin.com/company/futureadvnced',
+          slug: 'fais',
+          title: 'M-Commerce & Media-Streaming Clients',
         ),
       ],
     );

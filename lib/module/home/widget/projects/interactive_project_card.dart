@@ -5,6 +5,8 @@ import '../../../../service/analytics_service.dart';
 import '../../../../service/sound_service.dart';
 import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
+import '../../../case_study/case_study_router.dart';
+import '../../../case_study/case_study_widgets.dart';
 import '../../model/project.dart';
 import '../../page/project_modal.dart';
 
@@ -39,6 +41,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final caseStudySlug = CaseStudyRouter.slugForCompany(widget.project.company);
     return Semantics(
       button: true,
       label: 'Read case study for ${widget.project.name}',
@@ -148,7 +151,9 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                 ),
                               ),
                               // Company Quick Links
-                              if (widget.project.url != null || widget.project.linkedinUrl != null)
+                              if (widget.project.url != null ||
+                                  widget.project.linkedinUrl != null ||
+                                  caseStudySlug != null)
                                 Positioned(
                                   top: AppSpacing.sm,
                                   right: AppSpacing.sm,
@@ -172,6 +177,21 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                           isLinkedIn: true,
                                           company: widget.project.company,
                                           type: 'linkedin',
+                                          scheme: widget.scheme,
+                                        ),
+                                      ],
+                                      if (caseStudySlug != null) ...[
+                                        const SizedBox(width: 6),
+                                        _ProjectCardLinkIcon(
+                                          tooltip: 'Copy link to ${widget.project.name} case study',
+                                          icon: Icons.share_rounded,
+                                          onTap: () => shareCaseStudy(
+                                            context,
+                                            slug: caseStudySlug,
+                                            title: widget.project.name,
+                                          ),
+                                          company: widget.project.company,
+                                          type: 'share_case_study',
                                           scheme: widget.scheme,
                                         ),
                                       ],
@@ -202,7 +222,9 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                   letterSpacing: 1.5,
                                 ),
                               ),
-                              if (widget.project.url != null || widget.project.linkedinUrl != null)
+                              if (widget.project.url != null ||
+                                  widget.project.linkedinUrl != null ||
+                                  caseStudySlug != null)
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -223,6 +245,21 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                         isLinkedIn: true,
                                         company: widget.project.company,
                                         type: 'linkedin',
+                                        scheme: widget.scheme,
+                                      ),
+                                    ],
+                                    if (caseStudySlug != null) ...[
+                                      const SizedBox(width: 6),
+                                      _ProjectCardLinkIcon(
+                                        tooltip: 'Copy link to ${widget.project.name} case study',
+                                        icon: Icons.share_rounded,
+                                        onTap: () => shareCaseStudy(
+                                          context,
+                                          slug: caseStudySlug,
+                                          title: widget.project.name,
+                                        ),
+                                        company: widget.project.company,
+                                        type: 'share_case_study',
                                         scheme: widget.scheme,
                                       ),
                                     ],
@@ -314,7 +351,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
 
 class _ProjectCardLinkIcon extends StatefulWidget {
   final String tooltip;
-  final String url;
+  final String? url;
+  final VoidCallback? onTap;
   final IconData? icon;
   final bool isLinkedIn;
   final String company;
@@ -323,7 +361,8 @@ class _ProjectCardLinkIcon extends StatefulWidget {
 
   const _ProjectCardLinkIcon({
     required this.tooltip,
-    required this.url,
+    this.url,
+    this.onTap,
     this.icon,
     this.isLinkedIn = false,
     required this.company,
@@ -339,14 +378,20 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
   bool _hovered = false;
 
   Future<void> _handleTap() async {
+    if (widget.onTap != null) {
+      widget.onTap!();
+      return;
+    }
     SoundService.instance.playClick();
     Analytics.event('project_company_link_click', params: {
       'company': widget.company,
       'type': widget.type,
-      'url': widget.url,
+      'url': widget.url ?? '',
     });
-    final uri = Uri.parse(widget.url);
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (widget.url != null) {
+      final uri = Uri.parse(widget.url!);
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 
   @override

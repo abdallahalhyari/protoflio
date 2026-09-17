@@ -56,6 +56,13 @@ class EskadeniaCaseStudy extends StatelessWidget {
                   color: scheme.onSurface.withValues(alpha: 0.8),
                 ),
               ),
+              actions: const [
+                CaseStudyToolbarShareButton(
+                  slug: 'eskadenia',
+                  title: 'E-Learning & Healthcare Enterprise Suite',
+                ),
+                SizedBox(width: AppSpacing.sm),
+              ],
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(
@@ -306,6 +313,13 @@ class _Masthead extends StatelessWidget {
             EditorialChip(label: 'Modular Packages', tone: ChipTone.indigo),
             EditorialChip(label: 'Clean Repository', tone: ChipTone.neutral),
           ],
+        ),
+        const CaseStudyCorporateHeader(
+          company: 'ESKADENIA Software',
+          websiteUrl: 'https://www.eskadenia.com',
+          linkedinUrl: 'https://www.linkedin.com/company/eskadenia-software',
+          slug: 'eskadenia',
+          title: 'E-Learning & Healthcare Enterprise Suite',
         ),
       ],
     );
