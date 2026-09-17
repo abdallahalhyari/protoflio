@@ -35,11 +35,20 @@ class PrimaryButton extends StatefulWidget {
 
 class _PrimaryButtonState extends State<PrimaryButton> {
   bool _isHovered = false;
+  bool _isFocused = false;
   final ValueNotifier<Offset> _parallaxOffset = ValueNotifier<Offset>(Offset.zero);
   final GlobalKey _key = GlobalKey();
+  late final FocusNode _focusNode = FocusNode()..addListener(_onFocus);
+
+  void _onFocus() {
+    if (!mounted) return;
+    setState(() => _isFocused = _focusNode.hasFocus);
+  }
 
   @override
   void dispose() {
+    _focusNode.removeListener(_onFocus);
+    _focusNode.dispose();
     _parallaxOffset.dispose();
     super.dispose();
   }
@@ -133,7 +142,20 @@ class _PrimaryButtonState extends State<PrimaryButton> {
       button: true,
       enabled: _enabled,
       label: widget.label,
-      child: MouseRegion(
+      child: FocusableActionDetector(
+        focusNode: _focusNode,
+        enabled: _enabled,
+        actions: <Type, Action<Intent>>{
+          ActivateIntent: CallbackAction<ActivateIntent>(
+            onInvoke: (_) {
+              if (!_enabled) return null;
+              HapticFeedback.lightImpact();
+              widget.onPressed!();
+              return null;
+            },
+          ),
+        },
+        child: MouseRegion(
         onEnter: (_) {
           if (!_enabled) return;
           setState(() => _isHovered = true);
@@ -213,10 +235,12 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                             ],
                 ),
                 border: Border.all(
-                  color: hover
-                      ? Color.lerp(base, Colors.white, 0.40)!
-                      : Colors.white.withValues(alpha: 0.22),
-                  width: hover ? 1.5 : 1,
+                  color: _isFocused
+                      ? Colors.white
+                      : hover
+                          ? Color.lerp(base, Colors.white, 0.40)!
+                          : Colors.white.withValues(alpha: 0.22),
+                  width: _isFocused ? 2 : (hover ? 1.5 : 1),
                 ),
               ),
               child: Padding(
@@ -229,6 +253,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             ),
           ),
         ),
+      ),
       ),
     );
   }
