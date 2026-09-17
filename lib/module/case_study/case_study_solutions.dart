@@ -10,6 +10,7 @@ import '../home/widget/primary_button.dart';
 import '../home/widget/projects/pipeline_topology_diagram.dart';
 import '../home/widget/pulsing_dot.dart';
 import 'case_study_widgets.dart';
+import 'related_case_studies.dart';
 
 /// Deep-dive case study on Solutions Now IT's Loyalty Rewards & Ephemeral
 /// Social Media Apps.
@@ -205,6 +206,11 @@ class SolutionsCaseStudy extends StatelessWidget {
                   'and background thread isolation are mandatory from day one. Investing early '
                   'in a unified design system proved to be the single highest-ROI architectural '
                   'decision for the consultancy\'s velocity.',
+                ),
+                const SizedBox(height: AppSpacing.xxl),
+                RelatedCaseStudies(
+                  currentSlug: 'solutions',
+                  isDesktop: isDesktop,
                 ),
                 const SizedBox(height: AppSpacing.xxl),
                 Center(
