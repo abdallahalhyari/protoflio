@@ -156,5 +156,68 @@ void main() {
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
+
+    testWidgets('CaseStudyReadingCompanion renders top progress bar, reveals dock on scroll, jumps to chapters and back to top',
+        (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1200, 800));
+      await tester.pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(1200, 800)));
+      await tester.pump(const Duration(milliseconds: 300));
+
+      // Verify top reading progress bar is present
+      expect(find.byKey(const Key('case_study_reading_progress_bar')), findsOneWidget);
+
+      // Verify floating chapter dock is present
+      expect(find.byKey(const Key('case_study_chapter_dock')), findsOneWidget);
+
+      // Scroll down by 600px to trigger dock reveal
+      await tester.drag(find.byType(CustomScrollView), const Offset(0, -600));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      // Verify chapter pills are rendered
+      expect(find.byKey(const Key('case_study_chapter_problem')), findsOneWidget);
+      expect(find.byKey(const Key('case_study_chapter_role')), findsOneWidget);
+      expect(find.byKey(const Key('case_study_chapter_architecture')), findsOneWidget);
+      expect(find.byKey(const Key('case_study_chapter_outcomes')), findsOneWidget);
+      expect(find.byKey(const Key('case_study_chapter_lessons')), findsOneWidget);
+
+      // Tap chapter pill '07 OUTCOMES'
+      await tester.tap(find.byKey(const Key('case_study_chapter_outcomes')));
+      await tester.pump(const Duration(milliseconds: 600));
+
+      // Tap Back to top
+      expect(find.byKey(const Key('case_study_back_to_top')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('case_study_back_to_top')));
+      await tester.pump(const Duration(milliseconds: 650));
+
+      expect(tester.takeException(), isNull);
+      await tester.binding.setSurfaceSize(null);
+    });
+
+    testWidgets('CaseStudyReadingCompanion adapts cleanly to mobile viewport',
+        (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      await tester.pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(390, 844)));
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(find.byKey(const Key('case_study_reading_progress_bar')), findsOneWidget);
+      expect(find.byKey(const Key('case_study_chapter_dock')), findsOneWidget);
+
+      // Scroll down on mobile
+      await tester.drag(find.byType(CustomScrollView), const Offset(0, -500));
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 400));
+
+      // Verify compact chapter labels are visible
+      expect(find.text('PROB'), findsOneWidget);
+      expect(find.text('ARCH'), findsOneWidget);
+
+      // Tap compact chapter chip
+      await tester.tap(find.byKey(const Key('case_study_chapter_architecture')));
+      await tester.pump(const Duration(milliseconds: 600));
+
+      expect(tester.takeException(), isNull);
+      await tester.binding.setSurfaceSize(null);
+    });
   });
 }

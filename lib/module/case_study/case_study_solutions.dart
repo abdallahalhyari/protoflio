@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../service/analytics_service.dart';
 import '../../theme/surface_tone.dart';
 import '../../theme/tokens.dart';
+import '../../theme_controller.dart';
 import '../home/data/projects_data.dart';
 import '../home/widget/editorial_chip.dart';
 import '../home/widget/page_background.dart';
@@ -15,10 +16,35 @@ import 'related_case_studies.dart';
 /// Deep-dive case study on Solutions Now IT's Loyalty Rewards & Ephemeral
 /// Social Media Apps.
 /// Full-screen scrollable narrative matching the NatHealth case-study pattern.
-class SolutionsCaseStudy extends StatelessWidget {
+class SolutionsCaseStudy extends StatefulWidget {
   const SolutionsCaseStudy({super.key});
 
   static const String routePath = '/work/solutions';
+
+  @override
+  State<SolutionsCaseStudy> createState() => _SolutionsCaseStudyState();
+}
+
+class _SolutionsCaseStudyState extends State<SolutionsCaseStudy> {
+  late final ScrollController _scrollController;
+  final GlobalKey _problemKey = GlobalKey();
+  final GlobalKey _roleKey = GlobalKey();
+  final GlobalKey _archKey = GlobalKey();
+  final GlobalKey _outcomesKey = GlobalKey();
+  final GlobalKey _lessonsKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    ThemeController.updateSeedFromHash('work/solutions');
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +53,50 @@ class SolutionsCaseStudy extends StatelessWidget {
     final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
     final hPad = isDesktop ? 96.0 : AppSpacing.lg;
 
+    final chapters = [
+      CaseStudyChapter(
+        id: 'problem',
+        label: '01 PROBLEM',
+        shortLabel: 'PROB',
+        key: _problemKey,
+      ),
+      CaseStudyChapter(
+        id: 'role',
+        label: '02 ROLE',
+        shortLabel: 'ROLE',
+        key: _roleKey,
+      ),
+      CaseStudyChapter(
+        id: 'architecture',
+        label: '03 ARCH',
+        shortLabel: 'ARCH',
+        key: _archKey,
+      ),
+      CaseStudyChapter(
+        id: 'outcomes',
+        label: '07 OUTCOMES',
+        shortLabel: 'RESULTS',
+        key: _outcomesKey,
+      ),
+      CaseStudyChapter(
+        id: 'lessons',
+        label: '08 LESSONS',
+        shortLabel: 'LESSONS',
+        key: _lessonsKey,
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: PageBackground(
-        child: CustomScrollView(
-          slivers: [
+        child: CaseStudyReadingCompanion(
+          scrollController: _scrollController,
+          chapters: chapters,
+          primaryAccent: AppColors.caseStudySolutionsPrimary,
+          secondaryAccent: AppColors.caseStudySolutionsSecondary,
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
             SliverAppBar(
               pinned: true,
               backgroundColor: isDark
@@ -44,6 +109,7 @@ class SolutionsCaseStudy extends StatelessWidget {
                 onPressed: () {
                   Analytics.event('case_study_back',
                       params: {'study': 'solutions'});
+                  ThemeController.updateSeedFromHash('work');
                   Navigator.of(context).maybePop();
                 },
               ),
@@ -72,7 +138,10 @@ class SolutionsCaseStudy extends StatelessWidget {
               sliver: SliverList.list(children: [
                 _Masthead(isDesktop: isDesktop),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '01', label: 'THE PROBLEM'),
+                KeyedSubtree(
+                  key: _problemKey,
+                  child: const SectionKicker(number: '01', label: 'THE PROBLEM'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 const Prose(
                   'As a fast-paced technology consultancy, Solutions Now IT needed to '
@@ -91,7 +160,10 @@ class SolutionsCaseStudy extends StatelessWidget {
                   'UX behaviors, and doubled testing overhead.',
                 ),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '02', label: 'MY ROLE'),
+                KeyedSubtree(
+                  key: _roleKey,
+                  child: const SectionKicker(number: '02', label: 'MY ROLE'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 const BulletList(items: [
                   'Core Flutter Developer architecting cross-platform mobile standards and engineering core media and transaction pipelines.',
@@ -100,7 +172,10 @@ class SolutionsCaseStudy extends StatelessWidget {
                   'Designed and implemented an internal atomic design token library shared between both consumer client applications.',
                 ]),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
+                KeyedSubtree(
+                  key: _archKey,
+                  child: const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 PipelineTopologyDiagram(
                   project: kProjects[2],
@@ -192,7 +267,10 @@ class SolutionsCaseStudy extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '07', label: 'OUTCOMES'),
+                KeyedSubtree(
+                  key: _outcomesKey,
+                  child: const SectionKicker(number: '07', label: 'OUTCOMES'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 OutcomeGrid(
                   isDesktop: isDesktop,
@@ -204,7 +282,10 @@ class SolutionsCaseStudy extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '08', label: 'LESSONS'),
+                KeyedSubtree(
+                  key: _lessonsKey,
+                  child: const SectionKicker(number: '08', label: 'LESSONS'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 const Prose(
                   'Mobile media applications live or die by memory hygiene and hardware '
@@ -233,6 +314,7 @@ class SolutionsCaseStudy extends StatelessWidget {
                         onPressed: () {
                           Analytics.event('case_study_cta',
                               params: {'study': 'solutions', 'cta': 'back'});
+                          ThemeController.updateSeedFromHash('work');
                           Navigator.of(context).maybePop();
                         },
                       ),
@@ -245,8 +327,9 @@ class SolutionsCaseStudy extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class _Masthead extends StatelessWidget {

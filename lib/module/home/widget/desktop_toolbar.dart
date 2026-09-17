@@ -5,6 +5,7 @@ import 'package:profile/locale_controller.dart';
 import '../../../service/sound_service.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme_controller.dart';
+import 'theme_accent_picker.dart';
 
 /// Top-right desktop toolbar — language picker, theme toggle, audio
 /// mute. Self-contained: reads its own state from
@@ -25,6 +26,8 @@ class DesktopToolbar extends StatelessWidget {
             _LanguagePickerPuck(dark: dark),
             const SizedBox(width: AppSpacing.sm),
             _ThemeTogglePuck(dark: dark),
+            const SizedBox(width: AppSpacing.sm),
+            const ThemeAccentPickerButton(),
             const SizedBox(width: AppSpacing.sm),
             _AudioTogglePuck(dark: dark),
           ],

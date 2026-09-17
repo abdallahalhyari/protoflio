@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../service/analytics_service.dart';
 import '../../theme/surface_tone.dart';
 import '../../theme/tokens.dart';
+import '../../theme_controller.dart';
 import '../home/widget/editorial_chip.dart';
 import '../home/widget/page_background.dart';
 import '../home/widget/primary_button.dart';
@@ -17,10 +18,35 @@ import 'related_case_studies.dart';
 ///
 /// Routed at hash `#work/nathealth` by the URL sync service (see
 /// `HomeScreen`).
-class NatHealthCaseStudy extends StatelessWidget {
+class NatHealthCaseStudy extends StatefulWidget {
   const NatHealthCaseStudy({super.key});
 
   static const String routePath = '/work/nathealth';
+
+  @override
+  State<NatHealthCaseStudy> createState() => _NatHealthCaseStudyState();
+}
+
+class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
+  late final ScrollController _scrollController;
+  final GlobalKey _problemKey = GlobalKey();
+  final GlobalKey _roleKey = GlobalKey();
+  final GlobalKey _archKey = GlobalKey();
+  final GlobalKey _outcomesKey = GlobalKey();
+  final GlobalKey _lessonsKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    ThemeController.updateSeedFromHash('work/nathealth');
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +55,50 @@ class NatHealthCaseStudy extends StatelessWidget {
     final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
     final hPad = isDesktop ? 96.0 : AppSpacing.lg;
 
+    final chapters = [
+      CaseStudyChapter(
+        id: 'problem',
+        label: '01 PROBLEM',
+        shortLabel: 'PROB',
+        key: _problemKey,
+      ),
+      CaseStudyChapter(
+        id: 'role',
+        label: '02 ROLE',
+        shortLabel: 'ROLE',
+        key: _roleKey,
+      ),
+      CaseStudyChapter(
+        id: 'architecture',
+        label: '03 ARCH',
+        shortLabel: 'ARCH',
+        key: _archKey,
+      ),
+      CaseStudyChapter(
+        id: 'outcomes',
+        label: '07 OUTCOMES',
+        shortLabel: 'RESULTS',
+        key: _outcomesKey,
+      ),
+      CaseStudyChapter(
+        id: 'lessons',
+        label: '08 LESSONS',
+        shortLabel: 'LESSONS',
+        key: _lessonsKey,
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: PageBackground(
-        child: CustomScrollView(
-          slivers: [
+        child: CaseStudyReadingCompanion(
+          scrollController: _scrollController,
+          chapters: chapters,
+          primaryAccent: AppColors.caseStudyNatHealthPrimary,
+          secondaryAccent: AppColors.caseStudyNatHealthSecondary,
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
             SliverAppBar(
               pinned: true,
               backgroundColor:
@@ -45,6 +110,7 @@ class NatHealthCaseStudy extends StatelessWidget {
                 onPressed: () {
                   Analytics.event('case_study_back',
                       params: {'study': 'nathealth'});
+                  ThemeController.updateSeedFromHash('work');
                   Navigator.of(context).maybePop();
                 },
               ),
@@ -73,7 +139,10 @@ class NatHealthCaseStudy extends StatelessWidget {
               sliver: SliverList.list(children: [
                 _Masthead(isDesktop: isDesktop),
                 const SizedBox(height: AppSpacing.xxl),
-                const _SectionKicker(number: '01', label: 'THE PROBLEM'),
+                KeyedSubtree(
+                  key: _problemKey,
+                  child: const _SectionKicker(number: '01', label: 'THE PROBLEM'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 _Prose(
                   'Jordan\'s largest health-insurance TPA processes millions of '
@@ -93,7 +162,10 @@ class NatHealthCaseStudy extends StatelessWidget {
                   'regulatory audit requirements.',
                 ),
                 const SizedBox(height: AppSpacing.xxl),
-                const _SectionKicker(number: '02', label: 'MY ROLE'),
+                KeyedSubtree(
+                  key: _roleKey,
+                  child: const _SectionKicker(number: '02', label: 'MY ROLE'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 _BulletList(items: const [
                   'Senior Mobile Engineer leading mobile architecture across three shipped clients (Ring App, E-Health Gate, Compliance System).',
@@ -102,8 +174,11 @@ class NatHealthCaseStudy extends StatelessWidget {
                   'Owned the offline-first WorkManager sync pipeline and its retry semantics.',
                 ]),
                 const SizedBox(height: AppSpacing.xxl),
-                const _SectionKicker(
-                    number: '03', label: 'SYSTEM ARCHITECTURE'),
+                KeyedSubtree(
+                  key: _archKey,
+                  child: const _SectionKicker(
+                      number: '03', label: 'SYSTEM ARCHITECTURE'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 NfcArchitectureDiagram(isDesktop: isDesktop, isDark: isDark),
                 const SizedBox(height: AppSpacing.md),
@@ -198,11 +273,17 @@ class NatHealthCaseStudy extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xxl),
-                const _SectionKicker(number: '07', label: 'OUTCOMES'),
+                KeyedSubtree(
+                  key: _outcomesKey,
+                  child: const _SectionKicker(number: '07', label: 'OUTCOMES'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 _OutcomeGrid(isDesktop: isDesktop),
                 const SizedBox(height: AppSpacing.xxl),
-                const _SectionKicker(number: '08', label: 'LESSONS'),
+                KeyedSubtree(
+                  key: _lessonsKey,
+                  child: const _SectionKicker(number: '08', label: 'LESSONS'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 _Prose(
                   'NFC APDU timing envelopes are unforgiving and vary by handset. '
@@ -234,6 +315,7 @@ class NatHealthCaseStudy extends StatelessWidget {
                         onPressed: () {
                           Analytics.event('case_study_cta',
                               params: {'study': 'nathealth', 'cta': 'back'});
+                          ThemeController.updateSeedFromHash('work');
                           Navigator.of(context).maybePop();
                         },
                       ),
@@ -246,8 +328,9 @@ class NatHealthCaseStudy extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class _Masthead extends StatelessWidget {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../service/analytics_service.dart';
 import '../../theme/surface_tone.dart';
 import '../../theme/tokens.dart';
+import '../../theme_controller.dart';
 import '../home/data/projects_data.dart';
 import '../home/widget/editorial_chip.dart';
 import '../home/widget/page_background.dart';
@@ -14,10 +15,35 @@ import 'related_case_studies.dart';
 
 /// Deep-dive case study on FAIS's M-Commerce & Media-Streaming Clients.
 /// Full-screen scrollable narrative matching the NatHealth case-study pattern.
-class FaisCaseStudy extends StatelessWidget {
+class FaisCaseStudy extends StatefulWidget {
   const FaisCaseStudy({super.key});
 
   static const String routePath = '/work/fais';
+
+  @override
+  State<FaisCaseStudy> createState() => _FaisCaseStudyState();
+}
+
+class _FaisCaseStudyState extends State<FaisCaseStudy> {
+  late final ScrollController _scrollController;
+  final GlobalKey _problemKey = GlobalKey();
+  final GlobalKey _roleKey = GlobalKey();
+  final GlobalKey _archKey = GlobalKey();
+  final GlobalKey _outcomesKey = GlobalKey();
+  final GlobalKey _lessonsKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    ThemeController.updateSeedFromHash('work/fais');
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +52,50 @@ class FaisCaseStudy extends StatelessWidget {
     final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
     final hPad = isDesktop ? 96.0 : AppSpacing.lg;
 
+    final chapters = [
+      CaseStudyChapter(
+        id: 'problem',
+        label: '01 PROBLEM',
+        shortLabel: 'PROB',
+        key: _problemKey,
+      ),
+      CaseStudyChapter(
+        id: 'role',
+        label: '02 ROLE',
+        shortLabel: 'ROLE',
+        key: _roleKey,
+      ),
+      CaseStudyChapter(
+        id: 'architecture',
+        label: '03 ARCH',
+        shortLabel: 'ARCH',
+        key: _archKey,
+      ),
+      CaseStudyChapter(
+        id: 'outcomes',
+        label: '07 OUTCOMES',
+        shortLabel: 'RESULTS',
+        key: _outcomesKey,
+      ),
+      CaseStudyChapter(
+        id: 'lessons',
+        label: '08 LESSONS',
+        shortLabel: 'LESSONS',
+        key: _lessonsKey,
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: PageBackground(
-        child: CustomScrollView(
-          slivers: [
+        child: CaseStudyReadingCompanion(
+          scrollController: _scrollController,
+          chapters: chapters,
+          primaryAccent: AppColors.caseStudyFaisPrimary,
+          secondaryAccent: AppColors.caseStudyFaisSecondary,
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
             SliverAppBar(
               pinned: true,
               backgroundColor: isDark
@@ -43,6 +108,7 @@ class FaisCaseStudy extends StatelessWidget {
                 onPressed: () {
                   Analytics.event('case_study_back',
                       params: {'study': 'fais'});
+                  ThemeController.updateSeedFromHash('work');
                   Navigator.of(context).maybePop();
                 },
               ),
@@ -71,7 +137,10 @@ class FaisCaseStudy extends StatelessWidget {
               sliver: SliverList.list(children: [
                 _Masthead(isDesktop: isDesktop),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '01', label: 'THE PROBLEM'),
+                KeyedSubtree(
+                  key: _problemKey,
+                  child: const SectionKicker(number: '01', label: 'THE PROBLEM'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 const Prose(
                   'At Future Advanced Internet Solutions (FAIS), our engineering '
@@ -90,7 +159,10 @@ class FaisCaseStudy extends StatelessWidget {
                   'prevent playback stutter across erratic cellular networks.',
                 ),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '02', label: 'MY ROLE'),
+                KeyedSubtree(
+                  key: _roleKey,
+                  child: const SectionKicker(number: '02', label: 'MY ROLE'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 const BulletList(items: [
                   'Mobile Developer across Flutter and native Android (Kotlin/Java), coordinating end-to-end frontend-to-backend API integrations and checkout reliability.',
@@ -99,7 +171,10 @@ class FaisCaseStudy extends StatelessWidget {
                   'Analyzed production telemetry, error crash logs, and network latency metrics to diagnose and resolve critical live runtime bottlenecks.',
                 ]),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
+                KeyedSubtree(
+                  key: _archKey,
+                  child: const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 PipelineTopologyDiagram(
                   project: kProjects[3],
@@ -192,7 +267,10 @@ class FaisCaseStudy extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '07', label: 'OUTCOMES'),
+                KeyedSubtree(
+                  key: _outcomesKey,
+                  child: const SectionKicker(number: '07', label: 'OUTCOMES'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 OutcomeGrid(
                   isDesktop: isDesktop,
@@ -204,7 +282,10 @@ class FaisCaseStudy extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xxl),
-                const SectionKicker(number: '08', label: 'LESSONS'),
+                KeyedSubtree(
+                  key: _lessonsKey,
+                  child: const SectionKicker(number: '08', label: 'LESSONS'),
+                ),
                 const SizedBox(height: AppSpacing.md),
                 const Prose(
                   'In mobile commerce and streaming platforms, network unreliability is the '
@@ -233,6 +314,7 @@ class FaisCaseStudy extends StatelessWidget {
                         onPressed: () {
                           Analytics.event('case_study_cta',
                               params: {'study': 'fais', 'cta': 'back'});
+                          ThemeController.updateSeedFromHash('work');
                           Navigator.of(context).maybePop();
                         },
                       ),
@@ -245,8 +327,9 @@ class FaisCaseStudy extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class _Masthead extends StatelessWidget {

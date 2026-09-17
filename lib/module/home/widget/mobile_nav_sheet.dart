@@ -7,6 +7,7 @@ import '../../../service/url_sync_service.dart';
 import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import 'conditional_blur.dart';
+import 'theme_accent_picker.dart';
 
 class NavSectionItem {
   final int index;
@@ -197,26 +198,33 @@ class MobileNavSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        InkWell(
-                          onTap: () {
-                            SoundService.instance.playClick();
-                            Navigator.of(context).pop();
-                          },
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                          child: Container(
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                              color: isDark
-                                  ? Colors.white.withValues(alpha: 0.08)
-                                  : AppColors.slate100,
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const ThemeAccentPickerButton(isMobile: true),
+                            const SizedBox(width: AppSpacing.sm),
+                            InkWell(
+                              onTap: () {
+                                SoundService.instance.playClick();
+                                Navigator.of(context).pop();
+                              },
                               borderRadius: BorderRadius.circular(AppRadius.sm),
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  color: isDark
+                                      ? Colors.white.withValues(alpha: 0.08)
+                                      : AppColors.slate100,
+                                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                                ),
+                                child: Icon(
+                                  Icons.close_rounded,
+                                  size: 18,
+                                  color: isDark ? Colors.white70 : AppColors.slate900,
+                                ),
+                              ),
                             ),
-                            child: Icon(
-                              Icons.close_rounded,
-                              size: 18,
-                              color: isDark ? Colors.white70 : AppColors.slate900,
-                            ),
-                          ),
+                          ],
                         ),
                       ],
                     ),

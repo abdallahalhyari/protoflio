@@ -210,6 +210,32 @@ class AppColors {
   static Color shadowSoft = Colors.black.withValues(alpha: 0.14);
   static Color shadowMedium = Colors.black.withValues(alpha: 0.28);
   static Color shadowDeep = Colors.black.withValues(alpha: 0.42);
+
+  // Case Study Brand Signatures
+  static const Color caseStudyNatHealthPrimary = Color(0xFF10B981); // Emerald Mint
+  static const Color caseStudyNatHealthSecondary = Color(0xFF06B6D4); // Cyber Cyan
+  static const Color caseStudyEskadeniaPrimary = Color(0xFF6366F1); // Electric Indigo
+  static const Color caseStudyEskadeniaSecondary = Color(0xFF38BDF8); // Sapphire Sky
+  static const Color caseStudySolutionsPrimary = Color(0xFFF59E0B); // Solar Amber
+  static const Color caseStudySolutionsSecondary = Color(0xFFEC4899); // Vivid Sunset Pink
+  static const Color caseStudyFaisPrimary = Color(0xFF0284C7); // Quantum Sky
+  static const Color caseStudyFaisSecondary = Color(0xFF8B5CF6); // Royal Cyber Violet
+
+  // Curated Chromatic Palette for Theme Accent Customizer
+  static const List<(String label, Color color)> themeAccents = [
+    ('Indigo', Color(0xFF6366F1)),
+    ('Emerald', Color(0xFF10B981)),
+    ('Cyan', Color(0xFF06B6D4)),
+    ('Amber', Color(0xFFF59E0B)),
+    ('Rose', Color(0xFFF43F5E)),
+    ('Violet', Color(0xFF8B5CF6)),
+  ];
+
+  // Glassmorphism surfaces & borders
+  static const Color glassSurfaceDark = Color(0xE80A0E18);
+  static Color glassSurfaceLight = Colors.white.withValues(alpha: 0.94);
+  static Color glassBorderDark = Colors.white.withValues(alpha: 0.14);
+  static Color glassBorderLight = slate300.withValues(alpha: 0.85);
 }
 
 /// Typography scale. Sizes align to a modular scale — clamp at call site
