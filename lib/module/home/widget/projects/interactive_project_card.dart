@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../service/analytics_service.dart';
+import '../../../../service/sound_service.dart';
 import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 import '../../model/project.dart';
@@ -144,6 +147,37 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                   ),
                                 ),
                               ),
+                              // Company Quick Links
+                              if (widget.project.url != null || widget.project.linkedinUrl != null)
+                                Positioned(
+                                  top: AppSpacing.sm,
+                                  right: AppSpacing.sm,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      if (widget.project.url != null)
+                                        _ProjectCardLinkIcon(
+                                          tooltip: 'Visit ${widget.project.company} official website',
+                                          url: widget.project.url!,
+                                          icon: Icons.language_rounded,
+                                          company: widget.project.company,
+                                          type: 'website',
+                                          scheme: widget.scheme,
+                                        ),
+                                      if (widget.project.linkedinUrl != null) ...[
+                                        const SizedBox(width: 6),
+                                        _ProjectCardLinkIcon(
+                                          tooltip: 'View ${widget.project.company} on LinkedIn',
+                                          url: widget.project.linkedinUrl!,
+                                          isLinkedIn: true,
+                                          company: widget.project.company,
+                                          type: 'linkedin',
+                                          scheme: widget.scheme,
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                ),
                             ],
                           ),
                         ),
@@ -153,17 +187,48 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                         height: widget.isDesktop ? 220 : 180,
                         child: Container(
                           color: widget.scheme.primary.withValues(alpha: 0.1),
-                          alignment: Alignment.bottomLeft,
                           padding: const EdgeInsets.all(AppSpacing.md),
-                          child: Text(
-                            widget.project.company.toUpperCase(),
-                            style: TextStyle(
-                              fontFamily: 'Courier',
-                              color: widget.scheme.primary,
-                              fontSize: AppTypography.micro,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.5,
-                            ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.project.company.toUpperCase(),
+                                style: TextStyle(
+                                  fontFamily: 'Courier',
+                                  color: widget.scheme.primary,
+                                  fontSize: AppTypography.micro,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
+                              if (widget.project.url != null || widget.project.linkedinUrl != null)
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (widget.project.url != null)
+                                      _ProjectCardLinkIcon(
+                                        tooltip: 'Visit ${widget.project.company} official website',
+                                        url: widget.project.url!,
+                                        icon: Icons.language_rounded,
+                                        company: widget.project.company,
+                                        type: 'website',
+                                        scheme: widget.scheme,
+                                      ),
+                                    if (widget.project.linkedinUrl != null) ...[
+                                      const SizedBox(width: 6),
+                                      _ProjectCardLinkIcon(
+                                        tooltip: 'View ${widget.project.company} on LinkedIn',
+                                        url: widget.project.linkedinUrl!,
+                                        isLinkedIn: true,
+                                        company: widget.project.company,
+                                        type: 'linkedin',
+                                        scheme: widget.scheme,
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                            ],
                           ),
                         ),
                       ),
@@ -246,3 +311,117 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
     );
   }
 }
+
+class _ProjectCardLinkIcon extends StatefulWidget {
+  final String tooltip;
+  final String url;
+  final IconData? icon;
+  final bool isLinkedIn;
+  final String company;
+  final String type;
+  final ColorScheme scheme;
+
+  const _ProjectCardLinkIcon({
+    required this.tooltip,
+    required this.url,
+    this.icon,
+    this.isLinkedIn = false,
+    required this.company,
+    required this.type,
+    required this.scheme,
+  });
+
+  @override
+  State<_ProjectCardLinkIcon> createState() => _ProjectCardLinkIconState();
+}
+
+class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
+  bool _hovered = false;
+
+  Future<void> _handleTap() async {
+    SoundService.instance.playClick();
+    Analytics.event('project_company_link_click', params: {
+      'company': widget.company,
+      'type': widget.type,
+      'url': widget.url,
+    });
+    final uri = Uri.parse(widget.url);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final activeColor = widget.isLinkedIn ? const Color(0xFF0A66C2) : widget.scheme.primary;
+
+    return Tooltip(
+      message: widget.tooltip,
+      waitDuration: const Duration(milliseconds: 250),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: GestureDetector(
+          onTap: _handleTap,
+          behavior: HitTestBehavior.opaque,
+          child: AnimatedScale(
+            scale: _hovered ? 1.1 : 1.0,
+            duration: AppMotion.snap,
+            child: AnimatedContainer(
+              duration: AppMotion.snap,
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                color: _hovered
+                    ? activeColor.withValues(alpha: 0.85)
+                    : Colors.black.withValues(alpha: 0.55),
+                borderRadius: BorderRadius.circular(AppRadius.xs),
+                border: Border.all(
+                  color: _hovered
+                      ? Colors.white
+                      : Colors.white.withValues(alpha: 0.25),
+                  width: 1.0,
+                ),
+                boxShadow: _hovered
+                    ? [
+                        BoxShadow(
+                          color: activeColor.withValues(alpha: 0.45),
+                          blurRadius: 8,
+                          spreadRadius: 1,
+                        ),
+                      ]
+                    : null,
+              ),
+              alignment: Alignment.center,
+              child: widget.isLinkedIn
+                  ? Container(
+                      width: 15,
+                      height: 15,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: _hovered ? Colors.white : const Color(0xFF0A66C2),
+                        borderRadius: BorderRadius.circular(2.5),
+                      ),
+                      child: Text(
+                        'in',
+                        style: TextStyle(
+                          color: _hovered ? const Color(0xFF0A66C2) : Colors.white,
+                          fontSize: 9.5,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: 'sans-serif',
+                          height: 1.0,
+                        ),
+                      ),
+                    )
+                  : Icon(
+                      widget.icon ?? Icons.language_rounded,
+                      size: 14,
+                      color: Colors.white,
+                    ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+

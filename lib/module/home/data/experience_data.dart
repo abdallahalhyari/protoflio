@@ -5,6 +5,8 @@ const List<Experience> kExperience = [
     role: 'Senior Mobile Engineer',
     company: 'NatHealth',
     period: '10/2024 – Present',
+    websiteUrl: 'https://www.nathealth.net',
+    linkedinUrl: 'https://www.linkedin.com/company/nathealth',
     highlights: [
       'Led NFC integration for secure smart-card authentication; designed the NFCCardReader interface supporting multiple card technologies.',
       'Built token-lifecycle security framework: two-step JWT issuance, secure storage, GUID-based device binding.',
@@ -16,6 +18,8 @@ const List<Experience> kExperience = [
     role: 'Mobile Developer',
     company: 'ESKADENIA Software',
     period: '11/2022 – 10/2024',
+    websiteUrl: 'https://www.eskadenia.com',
+    linkedinUrl: 'https://www.linkedin.com/company/eskadenia-software',
     highlights: [
       'Rebuilt and restructured Flutter apps for performance and maintainability; introduced modular architecture.',
       'Applied profiling and optimization; led thorough testing before release.',
@@ -26,6 +30,8 @@ const List<Experience> kExperience = [
     role: 'Flutter Developer',
     company: 'Solutions Now IT',
     period: '11/2021 – 11/2022',
+    websiteUrl: 'https://itsolutions-now.com',
+    linkedinUrl: 'https://www.linkedin.com/company/solutions-now-it',
     highlights: [
       'Established reusable Flutter design principles and template libraries.',
       'Documented design patterns for reuse across iterations.',
@@ -36,6 +42,8 @@ const List<Experience> kExperience = [
     role: 'Mobile Developer (Flutter & Android)',
     company: 'Future Advanced Internet Solutions',
     period: '07/2021 – 12/2021',
+    websiteUrl: 'https://www.fuais.com',
+    linkedinUrl: 'https://www.linkedin.com/company/futureadvnced',
     highlights: [
       'Coordinated backend–frontend integration for an M-Commerce app and a fitness & media-streaming app.',
       'Diagnosed and resolved issues through data analysis.',

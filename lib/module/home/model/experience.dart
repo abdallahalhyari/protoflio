@@ -3,12 +3,16 @@ class Experience {
   final String company;
   final String period;
   final List<String> highlights;
+  final String? websiteUrl;
+  final String? linkedinUrl;
 
   const Experience({
     required this.role,
     required this.company,
     required this.period,
     required this.highlights,
+    this.websiteUrl,
+    this.linkedinUrl,
   });
 }
 

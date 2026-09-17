@@ -60,5 +60,23 @@ void main() {
       expect(find.text(exp.company), findsOneWidget);
       expect(find.text(exp.role.toUpperCase()), findsOneWidget);
     });
+
+    testWidgets('AnimatedExperienceNode renders company website and linkedin action pills', (tester) async {
+      final exp = kExperience.first;
+      await tester.pumpWidget(_wrap(
+        AnimatedExperienceNode(
+          exp: exp,
+          index: 0,
+          isVisible: true,
+          isDesktop: true,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('WEBSITE'), findsOneWidget);
+      expect(find.text('LINKEDIN'), findsOneWidget);
+      expect(find.byIcon(Icons.language_rounded), findsOneWidget);
+      expect(find.text('in'), findsOneWidget);
+    });
   });
 }

@@ -5,6 +5,7 @@ class Project {
   final List<String> highlights;
   final List<String> stack;
   final String? url;
+  final String? linkedinUrl;
   
   // Senior Case Study Fields
   final String? problem;
@@ -26,6 +27,7 @@ class Project {
     required this.highlights,
     required this.stack,
     this.url,
+    this.linkedinUrl,
     this.problem,
     this.context,
     this.role,

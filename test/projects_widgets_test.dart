@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/module/home/data/projects_data.dart';
+import 'package:profile/module/home/widget/projects/interactive_project_card.dart';
 import 'package:profile/module/home/widget/projects/nfc_architecture_diagram.dart';
 import 'package:profile/module/home/widget/projects/pipeline_topology_diagram.dart';
 import 'package:profile/module/home/widget/projects/project_dossier_card.dart';
@@ -84,6 +85,23 @@ void main() {
       expect(find.textContaining('SECURITY:'), findsOneWidget);
       expect(find.textContaining('Keystore backed JWT encryption'), findsOneWidget);
       expect(find.textContaining('§'), findsOneWidget);
+    });
+
+    testWidgets('InteractiveProjectCard renders company website and linkedin quick-link buttons', (tester) async {
+      final project = kProjects.first;
+      await tester.pumpWidget(_wrap(
+        InteractiveProjectCard(
+          project: project,
+          index: 0,
+          scheme: AppTheme.dark().colorScheme,
+          isDesktop: true,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.byTooltip('Visit NatHealth official website'), findsOneWidget);
+      expect(find.byTooltip('View NatHealth on LinkedIn'), findsOneWidget);
+      expect(find.text('in'), findsOneWidget);
     });
   });
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../service/analytics_service.dart';
 import '../../../../service/sound_service.dart';
 import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
@@ -196,6 +198,39 @@ class _ExperienceCardState extends State<ExperienceCard> {
                               ),
                             ),
 
+                            if (widget.exp.websiteUrl != null || widget.exp.linkedinUrl != null) ...[
+                              const SizedBox(height: 12),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 6,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  if (widget.exp.websiteUrl != null)
+                                    _CompanyActionPill(
+                                      label: 'WEBSITE',
+                                      tooltip: 'Visit ${widget.exp.company} official website',
+                                      icon: Icons.language_rounded,
+                                      url: widget.exp.websiteUrl!,
+                                      company: widget.exp.company,
+                                      type: 'website',
+                                      scheme: scheme,
+                                      isDark: isDark,
+                                    ),
+                                  if (widget.exp.linkedinUrl != null)
+                                    _CompanyActionPill(
+                                      label: 'LINKEDIN',
+                                      tooltip: 'View ${widget.exp.company} on LinkedIn',
+                                      isLinkedIn: true,
+                                      url: widget.exp.linkedinUrl!,
+                                      company: widget.exp.company,
+                                      type: 'linkedin',
+                                      scheme: scheme,
+                                      isDark: isDark,
+                                    ),
+                                ],
+                              ),
+                            ],
+
                             const SizedBox(height: 16),
 
                             // Highlights
@@ -282,3 +317,157 @@ class _ExperienceCardState extends State<ExperienceCard> {
     );
   }
 }
+
+class _CompanyActionPill extends StatefulWidget {
+  final String label;
+  final String tooltip;
+  final IconData? icon;
+  final bool isLinkedIn;
+  final String url;
+  final String company;
+  final String type;
+  final ColorScheme scheme;
+  final bool isDark;
+
+  const _CompanyActionPill({
+    required this.label,
+    required this.tooltip,
+    this.icon,
+    this.isLinkedIn = false,
+    required this.url,
+    required this.company,
+    required this.type,
+    required this.scheme,
+    required this.isDark,
+  });
+
+  @override
+  State<_CompanyActionPill> createState() => _CompanyActionPillState();
+}
+
+class _CompanyActionPillState extends State<_CompanyActionPill> {
+  bool _hovered = false;
+
+  Future<void> _handleTap() async {
+    SoundService.instance.playClick();
+    Analytics.event('company_link_click', params: {
+      'company': widget.company,
+      'type': widget.type,
+      'url': widget.url,
+    });
+    final uri = Uri.parse(widget.url);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = widget.isDark;
+    final scheme = widget.scheme;
+    final primary = widget.isLinkedIn ? const Color(0xFF0A66C2) : scheme.primary;
+
+    return Tooltip(
+      message: widget.tooltip,
+      waitDuration: const Duration(milliseconds: 300),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: GestureDetector(
+          onTap: _handleTap,
+          behavior: HitTestBehavior.opaque,
+          child: AnimatedScale(
+            scale: _hovered ? 1.05 : 1.0,
+            duration: AppMotion.snap,
+            child: AnimatedContainer(
+              duration: AppMotion.snap,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: _hovered
+                    ? (isDark
+                        ? primary.withValues(alpha: 0.22)
+                        : primary.withValues(alpha: 0.12))
+                    : (isDark
+                        ? Colors.white.withValues(alpha: 0.06)
+                        : AppColors.slate100),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                border: Border.all(
+                  color: _hovered
+                      ? primary.withValues(alpha: isDark ? 0.9 : 0.8)
+                      : (isDark
+                          ? Colors.white.withValues(alpha: 0.2)
+                          : AppColors.slate300),
+                  width: _hovered ? 1.4 : 1.0,
+                ),
+                boxShadow: _hovered
+                    ? [
+                        BoxShadow(
+                          color: primary.withValues(alpha: isDark ? 0.35 : 0.22),
+                          blurRadius: 10,
+                          spreadRadius: 0.5,
+                        ),
+                      ]
+                    : null,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (widget.isLinkedIn) ...[
+                    Container(
+                      width: 13,
+                      height: 13,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF0A66C2),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'in',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 9.0,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: 'sans-serif',
+                          height: 1.0,
+                        ),
+                      ),
+                    ),
+                  ] else if (widget.icon != null) ...[
+                    Icon(
+                      widget.icon,
+                      size: 13,
+                      color: _hovered
+                          ? (isDark ? Colors.white : primary)
+                          : (isDark ? Colors.white70 : AppColors.slate600),
+                    ),
+                  ],
+                  const SizedBox(width: 5),
+                  Text(
+                    widget.label,
+                    style: TextStyle(
+                      fontFamily: 'Courier',
+                      fontSize: AppTypography.micro,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.2,
+                      color: _hovered
+                          ? (isDark ? Colors.white : primary)
+                          : (isDark ? Colors.white.withValues(alpha: 0.88) : AppColors.slate800),
+                    ),
+                  ),
+                  const SizedBox(width: 3),
+                  Icon(
+                    Icons.arrow_outward_rounded,
+                    size: 10,
+                    color: _hovered
+                        ? (isDark ? primary : primary)
+                        : (isDark ? Colors.white38 : AppColors.slate400),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+

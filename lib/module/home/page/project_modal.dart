@@ -234,35 +234,94 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                if (project.url != null)
-                                  InkWell(
-                                    onTap: () => _openProjectUrl(context, project.url!),
-                                    borderRadius: BorderRadius.circular(AppRadius.xs),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: scheme.primary.withValues(alpha: 0.15),
-                                        borderRadius: BorderRadius.circular(AppRadius.xs),
-                                        border: Border.all(color: scheme.primary.withValues(alpha: 0.5)),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            'VISIT',
-                                            style: TextStyle(
-                                              fontFamily: 'Courier',
-                                              color: scheme.primary,
-                                              fontSize: AppTypography.micro,
-                                              fontWeight: FontWeight.w900,
-                                              letterSpacing: 1,
+                                if (project.url != null || project.linkedinUrl != null)
+                                  Wrap(
+                                    spacing: 6,
+                                    runSpacing: 4,
+                                    children: [
+                                      if (project.url != null)
+                                        InkWell(
+                                          onTap: () => _openProjectUrl(context, project.url!),
+                                          borderRadius: BorderRadius.circular(AppRadius.xs),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                            decoration: BoxDecoration(
+                                              color: scheme.primary.withValues(alpha: 0.15),
+                                              borderRadius: BorderRadius.circular(AppRadius.xs),
+                                              border: Border.all(color: scheme.primary.withValues(alpha: 0.5)),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(Icons.language_rounded, size: 12, color: scheme.primary),
+                                                const SizedBox(width: 4),
+                                                Text(
+                                                  'WEBSITE',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Courier',
+                                                    color: scheme.primary,
+                                                    fontSize: AppTypography.micro,
+                                                    fontWeight: FontWeight.w900,
+                                                    letterSpacing: 1,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 3),
+                                                Icon(Icons.arrow_outward, size: 11, color: scheme.primary),
+                                              ],
                                             ),
                                           ),
-                                          const SizedBox(width: 3),
-                                          Icon(Icons.arrow_outward, size: 11, color: scheme.primary),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      if (project.linkedinUrl != null)
+                                        InkWell(
+                                          onTap: () => _openProjectUrl(context, project.linkedinUrl!),
+                                          borderRadius: BorderRadius.circular(AppRadius.xs),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFF0A66C2).withValues(alpha: 0.15),
+                                              borderRadius: BorderRadius.circular(AppRadius.xs),
+                                              border: Border.all(color: const Color(0xFF0A66C2).withValues(alpha: 0.6)),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
+                                                  width: 12,
+                                                  height: 12,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0xFF0A66C2),
+                                                    borderRadius: BorderRadius.circular(2),
+                                                  ),
+                                                  alignment: Alignment.center,
+                                                  child: const Text(
+                                                    'in',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 8.5,
+                                                      fontWeight: FontWeight.w900,
+                                                      fontFamily: 'sans-serif',
+                                                      height: 1.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 4),
+                                                const Text(
+                                                  'LINKEDIN',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Courier',
+                                                    color: Color(0xFF0A66C2),
+                                                    fontSize: AppTypography.micro,
+                                                    fontWeight: FontWeight.w900,
+                                                    letterSpacing: 1,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 3),
+                                                const Icon(Icons.arrow_outward, size: 11, color: Color(0xFF0A66C2)),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                    ],
                                   ),
                               ],
                             ),

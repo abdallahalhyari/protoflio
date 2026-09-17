@@ -48,6 +48,8 @@ const List<Project> kProjects = [
       'Clean Architecture',
       'SQLite',
     ],
+    url: 'https://www.nathealth.net',
+    linkedinUrl: 'https://www.linkedin.com/company/nathealth',
     heroImagePath: 'assets/images/projects/nathealth.webp',
     hasArchitectureDiagram: true,
   ),
@@ -86,6 +88,8 @@ const List<Project> kProjects = [
       'Applied profiling + testing cycles across stakeholders before ship.',
     ],
     stack: ['Flutter', 'Dart', 'MVVM', 'REST APIs', 'SQL Server', 'DevTools Profiling'],
+    url: 'https://www.eskadenia.com',
+    linkedinUrl: 'https://www.linkedin.com/company/eskadenia-software',
     heroImagePath: 'assets/images/projects/eskadenia.webp',
   ),
   Project(
@@ -123,6 +127,8 @@ const List<Project> kProjects = [
       'Integrated dynamic REST datasets into typed models.',
     ],
     stack: ['Flutter', 'REST APIs', 'AWS S3', 'Camera Engine', 'Design System'],
+    url: 'https://itsolutions-now.com',
+    linkedinUrl: 'https://www.linkedin.com/company/solutions-now-it',
     heroImagePath: 'assets/images/projects/solutions.webp',
   ),
   Project(
@@ -157,6 +163,8 @@ const List<Project> kProjects = [
       'Diagnosed live issues via data analysis; improved customer satisfaction.',
     ],
     stack: ['Flutter', 'Android (Java/Kotlin)', 'REST APIs', 'SQL Database', 'Media Streaming'],
+    url: 'https://www.fuais.com',
+    linkedinUrl: 'https://www.linkedin.com/company/futureadvnced',
     heroImagePath: 'assets/images/projects/fais.webp',
   ),
 ];
