@@ -31,7 +31,7 @@ const List<Experience> kExperience = [
     company: 'Solutions Now IT',
     period: '11/2021 – 11/2022',
     websiteUrl: 'https://itsolutions-now.com',
-    linkedinUrl: 'https://www.linkedin.com/company/solutions-now-it',
+    linkedinUrl: 'https://www.linkedin.com/company/solutionsnowit',
     highlights: [
       'Established reusable Flutter design principles and template libraries.',
       'Documented design patterns for reuse across iterations.',

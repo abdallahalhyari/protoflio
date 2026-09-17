@@ -128,7 +128,7 @@ const List<Project> kProjects = [
     ],
     stack: ['Flutter', 'REST APIs', 'AWS S3', 'Camera Engine', 'Design System'],
     url: 'https://itsolutions-now.com',
-    linkedinUrl: 'https://www.linkedin.com/company/solutions-now-it',
+    linkedinUrl: 'https://www.linkedin.com/company/solutionsnowit',
     heroImagePath: 'assets/images/projects/solutions.webp',
   ),
   Project(
