@@ -42,7 +42,7 @@ const List<Experience> kExperience = [
     role: 'Mobile Developer (Flutter & Android)',
     company: 'Future Advanced Internet Solutions',
     period: '07/2021 – 12/2021',
-    websiteUrl: 'https://www.fuais.com',
+    websiteUrl: 'http://www.fuais.com/',
     linkedinUrl: 'https://www.linkedin.com/company/futureadvnced',
     highlights: [
       'Coordinated backend–frontend integration for an M-Commerce app and a fitness & media-streaming app.',

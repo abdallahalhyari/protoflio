@@ -163,7 +163,7 @@ const List<Project> kProjects = [
       'Diagnosed live issues via data analysis; improved customer satisfaction.',
     ],
     stack: ['Flutter', 'Android (Java/Kotlin)', 'REST APIs', 'SQL Database', 'Media Streaming'],
-    url: 'https://www.fuais.com',
+    url: 'http://www.fuais.com/',
     linkedinUrl: 'https://www.linkedin.com/company/futureadvnced',
     heroImagePath: 'assets/images/projects/fais.webp',
   ),
