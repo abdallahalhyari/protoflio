@@ -1,22 +1,25 @@
 import 'dart:async';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import '../../../theme/tokens.dart';
-import '../../../service/sound_service.dart';
-import '../data/hats_data.dart';
-import '../widget/hat_playing_card.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/hats/bloc/hats_deck_bloc.dart';
+import 'package:profile/features/hats/bloc/hats_deck_event.dart';
+import 'package:profile/features/hats/bloc/hats_deck_state.dart';
+import 'package:profile/features/hats/data/hats_data.dart';
 import 'package:profile/features/hats/widget/continuous_mobile_hat_column.dart';
 import 'package:profile/features/hats/widget/hat_bio_strip.dart';
 import 'package:profile/features/hats/widget/hat_console_dock.dart';
 import 'package:profile/features/hats/widget/hat_deck_header.dart';
 import 'package:profile/features/hats/widget/hat_drag_hint.dart';
+import 'package:profile/features/hats/widget/hat_playing_card.dart';
 import 'package:profile/features/hats/widget/hat_role_pills.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
 
-class HatsGridPage extends StatefulWidget {
+class HatsGridPage extends StatelessWidget {
   final bool isContinuousMobile;
 
   const HatsGridPage({
@@ -25,41 +28,46 @@ class HatsGridPage extends StatefulWidget {
   });
 
   @override
-  State<HatsGridPage> createState() => _HatsGridPageState();
+  Widget build(BuildContext context) {
+    HatsDeckBloc? bloc;
+    try {
+      bloc = context.read<HatsDeckBloc>();
+    } catch (_) {
+      bloc = null;
+    }
+
+    if (bloc != null) {
+      return _HatsGridPageView(isContinuousMobile: isContinuousMobile);
+    }
+
+    return BlocProvider<HatsDeckBloc>(
+      create: (_) => HatsDeckBloc(),
+      child: _HatsGridPageView(isContinuousMobile: isContinuousMobile),
+    );
+  }
 }
 
-// Layout constants for the poker-fan card spread. Kept here so
-// _layoutCards / _shuffleDeck / _selectRole all reference one source of
-// truth instead of re-declaring `cardW`/`cardH` per method.
-const double _kCardW = 255;
-const double _kCardH = 370;
-const double _kEdgeInset = 16;
-const double _kTopInset = 80;
-const double _kFanSideReserve = 200; // px reserved on each side for the fan
-const double _kFanArcHeight = 30;
-const double _kShuffleSpread = 260; // horizontal jitter range
-const double _kShuffleDrop = 100; // vertical jitter range
+class _HatsGridPageView extends StatefulWidget {
+  final bool isContinuousMobile;
 
-class _HatsGridPageState extends State<HatsGridPage>
+  const _HatsGridPageView({required this.isContinuousMobile});
+
+  @override
+  State<_HatsGridPageView> createState() => _HatsGridPageViewState();
+}
+
+class _HatsGridPageViewState extends State<_HatsGridPageView>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
   late final FocusNode _focusNode;
-  late List<Offset> _cardPositions;
-  late List<double> _cardRotations;
-  late List<int> _renderOrder;
-  int _selectedHatIndex = 0;
-  bool _isInitialized = false;
   Size? _lastLayoutSize;
 
   @override
   void initState() {
     super.initState();
     _focusNode = FocusNode(debugLabel: 'HatsGridFocus');
-    _cardPositions = List.filled(kHats.length, Offset.zero);
-    _cardRotations = _fanRotations(kHats.length);
-    _renderOrder = List.generate(kHats.length, (i) => i);
   }
 
   @override
@@ -90,38 +98,14 @@ class _HatsGridPageState extends State<HatsGridPage>
     return KeyEventResult.ignored;
   }
 
-  /// Even spread from -0.14 to 0.14 radians so the fan stays symmetric
-  /// regardless of how many hats exist. Was previously a fixed 6-element
-  /// literal that would go out-of-range the moment another hat was added.
-  static List<double> _fanRotations(int count) {
-    if (count <= 1) return const [0.0];
-    const double spread = 0.28; // ~16° total fan
-    return List<double>.generate(count, (i) {
-      final t = i / (count - 1);
-      return -spread / 2 + spread * t;
-    });
-  }
-
   void _bringToFront(int index) {
-    if (_renderOrder.isNotEmpty && _renderOrder.last == index) return;
-    setState(() {
-      _renderOrder.remove(index);
-      _renderOrder.add(index);
-    });
+    context.read<HatsDeckBloc>().add(HatCardBroughtToFront(index));
   }
 
   void _selectRole(int index, Size size, bool isMobile) {
     SoundService.instance.playPageTurn();
-    setState(() {
-      _selectedHatIndex = index;
-      _bringToFront(index);
-      // Intentionally do NOT rewrite _cardPositions[index] or
-      // _cardRotations[index] here — a click / tap keeps the card
-      // exactly where it was dealt. Use SPREAD / ALIGN to reset
-      // positions.
-    });
-    // Announce the selection to screen readers so keyboard / SR users
-    // hear the role change instead of getting only visual feedback.
+    context.read<HatsDeckBloc>().add(HatRoleSelected(index));
+
     final roleTitle = kHats[index].title;
     final announcement =
         AppLocalizations.of(context)?.selectedRoleAnnouncement(roleTitle) ??
@@ -136,66 +120,23 @@ class _HatsGridPageState extends State<HatsGridPage>
   }
 
   void _nextRole(Size size, bool isMobile) {
-    _selectRole((_selectedHatIndex + 1) % kHats.length, size, isMobile);
+    SoundService.instance.playPageTurn();
+    context.read<HatsDeckBloc>().add(const HatNextRole());
   }
 
   void _prevRole(Size size, bool isMobile) {
-    _selectRole(
-        (_selectedHatIndex - 1 + kHats.length) % kHats.length, size, isMobile);
-  }
-
-  void _layoutCards(Size size) {
-    final double centerX = size.width / 2;
-    final double centerY = size.height / 2 + 30;
-
-    // Arrange in an elegant arc / poker fan across the felt table.
-    final int count = kHats.length;
-    final double availableWidth = size.width - _kFanSideReserve * 2;
-    final double spacing = (availableWidth / (count - 1)).clamp(80.0, 170.0);
-    final double totalW = spacing * (count - 1);
-    final double startX = centerX - totalW / 2 - _kCardW / 2;
-
-    for (int i = 0; i < count; i++) {
-      final double progress = (i - (count - 1) / 2) / ((count - 1) / 2);
-      final double arcY = progress * progress * _kFanArcHeight;
-      _cardPositions[i] = Offset(
-        (startX + i * spacing)
-            .clamp(_kEdgeInset * 2, size.width - _kCardW - _kEdgeInset * 3),
-        (centerY - _kCardH / 2 + arcY)
-            .clamp(_kTopInset, size.height - _kCardH - _kEdgeInset),
-      );
-    }
-    _isInitialized = true;
-    _lastLayoutSize = size;
+    SoundService.instance.playPageTurn();
+    context.read<HatsDeckBloc>().add(const HatPrevRole());
   }
 
   void _shuffleDeck(Size size) {
     SoundService.instance.playPageTurn();
-    final random = math.Random();
-
-    setState(() {
-      for (int i = 0; i < kHats.length; i++) {
-        final double rx = (size.width / 2 - _kCardW / 2) +
-            (random.nextDouble() * _kShuffleSpread - _kShuffleSpread / 2);
-        final double ry = (size.height / 2 - _kCardH / 2 + 30) +
-            (random.nextDouble() * _kShuffleDrop - _kShuffleDrop / 2);
-        _cardPositions[i] = Offset(
-          rx.clamp(_kEdgeInset, size.width - _kCardW - _kEdgeInset),
-          ry.clamp(_kTopInset, size.height - _kCardH - _kEdgeInset),
-        );
-        _cardRotations[i] = (random.nextDouble() * 0.36) - 0.18;
-      }
-    });
+    context.read<HatsDeckBloc>().add(HatDeckShuffled(size));
   }
 
   void _resetSpread(Size size) {
     SoundService.instance.playClick();
-    setState(() {
-      _isInitialized = false;
-      _renderOrder = List.generate(kHats.length, (i) => i);
-      _layoutCards(size);
-      _cardRotations = _fanRotations(kHats.length);
-    });
+    context.read<HatsDeckBloc>().add(HatDeckSpreadReset(size));
   }
 
   @override
@@ -204,150 +145,154 @@ class _HatsGridPageState extends State<HatsGridPage>
     final size = MediaQuery.sizeOf(context);
     final isMobile = size.width < AppBreakpoints.tablet;
 
-    if (widget.isContinuousMobile) {
-      return ContinuousMobileHatColumn(
-        selectedHatIndex: _selectedHatIndex,
-        onSelectRole: (index) => _selectRole(index, size, true),
-        onNextRole: () => _nextRole(size, true),
-        onPrevRole: () => _prevRole(size, true),
-        onCardTap: () => _bringToFront(_selectedHatIndex),
-      );
-    }
+    return BlocBuilder<HatsDeckBloc, HatsDeckState>(
+      builder: (context, deckState) {
+        final selectedHatIndex = deckState.selectedHatIndex;
+        final renderOrder = deckState.renderOrder;
+        final cardPositions = deckState.cardPositions;
+        final cardRotations = deckState.cardRotations;
 
-    if (isMobile) {
-      return SingleChildScrollView(
-        child: ContinuousMobileHatColumn(
-          selectedHatIndex: _selectedHatIndex,
-          onSelectRole: (index) => _selectRole(index, size, true),
-          onNextRole: () => _nextRole(size, true),
-          onPrevRole: () => _prevRole(size, true),
-          onCardTap: () => _bringToFront(_selectedHatIndex),
-        ),
-      );
-    }
+        if (widget.isContinuousMobile) {
+          return ContinuousMobileHatColumn(
+            selectedHatIndex: selectedHatIndex,
+            onSelectRole: (index) => _selectRole(index, size, true),
+            onNextRole: () => _nextRole(size, true),
+            onPrevRole: () => _prevRole(size, true),
+            onCardTap: () => _bringToFront(selectedHatIndex),
+          );
+        }
 
-    // Recompute the fan layout when the viewport size changes (first
-    // frame, or user resizes their browser window) — schedule it for
-    // after this frame so we don't mutate state during build.
-    if (!isMobile && (!_isInitialized || _lastLayoutSize != size)) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        if (_isInitialized && _lastLayoutSize == size) return;
-        setState(() => _layoutCards(size));
-      });
-    }
+        if (isMobile) {
+          return SingleChildScrollView(
+            child: ContinuousMobileHatColumn(
+              selectedHatIndex: selectedHatIndex,
+              onSelectRole: (index) => _selectRole(index, size, true),
+              onNextRole: () => _nextRole(size, true),
+              onPrevRole: () => _prevRole(size, true),
+              onCardTap: () => _bringToFront(selectedHatIndex),
+            ),
+          );
+        }
 
-    return Focus(
-      focusNode: _focusNode,
-      autofocus: true,
-      onKeyEvent: (node, event) => _handleKeyEvent(node, event, size),
-      child: SizedBox.expand(
-        child: Stack(
-          children: [
-            // Enterprise Architectural Inlay Border
-            Positioned.fill(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppRadius.lg),
-                    border: Border.all(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: 0.18),
-                      width: 1.5,
+        // Recompute the fan layout when the viewport size changes
+        if (!isMobile && (!deckState.isInitialized || _lastLayoutSize != size)) {
+          _lastLayoutSize = size;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
+            context.read<HatsDeckBloc>().add(HatLayoutInitialized(size));
+          });
+        }
+
+        return Focus(
+          focusNode: _focusNode,
+          autofocus: true,
+          onKeyEvent: (node, event) => _handleKeyEvent(node, event, size),
+          child: SizedBox.expand(
+            child: Stack(
+              children: [
+                // Enterprise Architectural Inlay Border
+                Positioned.fill(
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(AppRadius.lg),
+                        border: Border.all(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withValues(alpha: 0.18),
+                          width: 1.5,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
 
-            // Cards Surface (Rendered first on felt)
-            Positioned.fill(
-              top: 130,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  for (final i in _renderOrder)
-                    HatPlayingCard(
-                      key: ValueKey('hat_card_${kHats[i].title}'),
-                      hat: kHats[i],
-                      index: i,
-                      position: _cardPositions[i],
-                      rotation: _cardRotations[i],
-                      onCardTap: () => _selectRole(i, size, false),
-                      onDragStart: () => _bringToFront(i),
-                      onDragEnd: (newPos) {
-                        setState(() {
-                          _cardPositions[i] = newPos;
-                        });
-                      },
-                    ),
-                ],
-              ),
-            ),
+                // Cards Surface (Rendered first on felt)
+                Positioned.fill(
+                  top: 130,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      for (final i in renderOrder)
+                        HatPlayingCard(
+                          key: ValueKey('hat_card_${kHats[i].title}'),
+                          hat: kHats[i],
+                          index: i,
+                          position: i < cardPositions.length ? cardPositions[i] : Offset.zero,
+                          rotation: i < cardRotations.length ? cardRotations[i] : 0.0,
+                          onCardTap: () => _selectRole(i, size, false),
+                          onDragStart: () => _bringToFront(i),
+                          onDragEnd: (newPos) {
+                            context.read<HatsDeckBloc>().add(HatCardPositionSet(i, newPos));
+                          },
+                        ),
+                    ],
+                  ),
+                ),
 
-            // Header Toolbar & Role Selector (Rendered on top so pills/buttons are interactive).
-            Positioned(
-              top: isMobile ? 14 : (14 + kTopNavReserve),
-              left: isMobile ? 14 : 24,
-              right: isMobile ? 14 : 24,
-              child: SafeArea(
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        HatDeckHeader(
-                          isMobile: isMobile,
-                          onShuffle: () => _shuffleDeck(size),
-                          onReset: () => _resetSpread(size),
+                // Header Toolbar & Role Selector
+                Positioned(
+                  top: isMobile ? 14 : (14 + kTopNavReserve),
+                  left: isMobile ? 14 : 24,
+                  right: isMobile ? 14 : 24,
+                  child: SafeArea(
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            HatDeckHeader(
+                              isMobile: isMobile,
+                              onShuffle: () => _shuffleDeck(size),
+                              onReset: () => _resetSpread(size),
+                            ),
+                            const SizedBox(height: AppSpacing.smd),
+                            if (!isMobile) ...[
+                              HatBioStrip(isMobile: isMobile),
+                              const SizedBox(height: AppSpacing.smd),
+                              const HatDragHint(),
+                              const SizedBox(height: AppSpacing.sm),
+                            ],
+                            HatRolePills(
+                              selectedIndex: selectedHatIndex,
+                              isDesktop: !isMobile,
+                              onSelectRole: (index) =>
+                                  _selectRole(index, size, isMobile),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: AppSpacing.smd),
-                        if (!isMobile) ...[
-                          HatBioStrip(isMobile: isMobile),
-                          const SizedBox(height: AppSpacing.smd),
-                          const HatDragHint(),
-                          const SizedBox(height: AppSpacing.sm),
-                        ],
-                        // Role Selector Pills (Zero inner scroll!)
-                        HatRolePills(
-                          selectedIndex: _selectedHatIndex,
-                          isDesktop: !isMobile,
-                          onSelectRole: (index) =>
-                              _selectRole(index, size, isMobile),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
 
-            // Interactive Bottom Console Dock (Desktop)
-            Positioned(
-              left: 24,
-              right: 24,
-              bottom: 24,
-              child: SafeArea(
-                top: false,
-                child: HatConsoleDock(
-                  selectedIndex: _selectedHatIndex,
-                  totalCount: kHats.length,
-                  currentHat: kHats[_selectedHatIndex],
-                  onPrev: () => _prevRole(size, false),
-                  onNext: () => _nextRole(size, false),
-                  onShuffle: () => _shuffleDeck(size),
-                  onReset: () => _resetSpread(size),
+                // Interactive Bottom Console Dock (Desktop)
+                Positioned(
+                  left: 24,
+                  right: 24,
+                  bottom: 24,
+                  child: SafeArea(
+                    top: false,
+                    child: HatConsoleDock(
+                      selectedIndex: selectedHatIndex,
+                      totalCount: kHats.length,
+                      currentHat: kHats[selectedHatIndex.clamp(0, kHats.length - 1)],
+                      onPrev: () => _prevRole(size, false),
+                      onNext: () => _nextRole(size, false),
+                      onShuffle: () => _shuffleDeck(size),
+                      onReset: () => _resetSpread(size),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
