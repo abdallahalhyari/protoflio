@@ -9,7 +9,7 @@ import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
-import 'package:profile/module/home/home_screen.dart';
+import 'package:profile/features/shell/home_screen.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/theme_controller.dart';
