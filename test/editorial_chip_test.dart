@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/module/home/widget/editorial_chip.dart';
+import 'package:profile/shared/widget/editorial_chip.dart';
 
 Widget _host(Widget child, {Brightness brightness = Brightness.dark}) {
   return MaterialApp(

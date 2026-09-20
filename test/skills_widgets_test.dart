@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/widget/skills/skill_category_filters.dart';
-import 'package:profile/module/home/widget/skills/skill_search_bar.dart';
-import 'package:profile/module/home/widget/skills/skills_empty_state.dart';
-import 'package:profile/module/home/widget/skills/skills_header.dart';
+import 'package:profile/features/skills/widget/skill_category_filters.dart';
+import 'package:profile/features/skills/widget/skill_search_bar.dart';
+import 'package:profile/features/skills/widget/skills_empty_state.dart';
+import 'package:profile/features/skills/widget/skills_header.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {

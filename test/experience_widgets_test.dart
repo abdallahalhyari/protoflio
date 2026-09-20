@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/data/experience_data.dart';
-import 'package:profile/module/home/widget/experience/animated_experience_node.dart';
-import 'package:profile/module/home/widget/experience/credentials_bento_card.dart';
-import 'package:profile/module/home/widget/experience/experience_header.dart';
+import 'package:profile/features/experience/data/experience_data.dart';
+import 'package:profile/features/experience/widget/animated_experience_node.dart';
+import 'package:profile/features/experience/widget/credentials_bento_card.dart';
+import 'package:profile/features/experience/widget/experience_header.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {

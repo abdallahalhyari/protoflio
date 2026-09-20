@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/module/home/bloc/projects/projects_filter_bloc.dart';
-import 'package:profile/module/home/bloc/projects/projects_filter_event.dart';
-import 'package:profile/module/home/bloc/projects/projects_filter_state.dart';
-import 'package:profile/module/home/data/projects_data.dart';
+import 'package:profile/features/projects/bloc/projects_filter_bloc.dart';
+import 'package:profile/features/projects/bloc/projects_filter_event.dart';
+import 'package:profile/features/projects/bloc/projects_filter_state.dart';
+import 'package:profile/features/projects/data/projects_data.dart';
 
 void main() {
   group('ProjectsFilterBloc Test Suite', () {

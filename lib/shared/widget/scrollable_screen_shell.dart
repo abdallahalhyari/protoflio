@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profile/module/home/widget/screen_shell.dart';
+import 'package:profile/shared/widget/screen_shell.dart';
 import 'package:profile/theme/tokens.dart';
 
 class ScrollableAppScreenShell extends StatelessWidget {

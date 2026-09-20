@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/data/hats_data.dart';
-import 'package:profile/module/home/widget/hats/continuous_mobile_hat_column.dart';
-import 'package:profile/module/home/widget/hats/hat_bio_strip.dart';
-import 'package:profile/module/home/widget/hats/hat_console_dock.dart';
-import 'package:profile/module/home/widget/hats/hat_deck_header.dart';
-import 'package:profile/module/home/widget/hats/hat_drag_hint.dart';
-import 'package:profile/module/home/widget/hats/hat_pagination_row.dart';
-import 'package:profile/module/home/widget/hats/hat_role_pills.dart';
+import 'package:profile/features/hats/data/hats_data.dart';
+import 'package:profile/features/hats/widget/continuous_mobile_hat_column.dart';
+import 'package:profile/features/hats/widget/hat_bio_strip.dart';
+import 'package:profile/features/hats/widget/hat_console_dock.dart';
+import 'package:profile/features/hats/widget/hat_deck_header.dart';
+import 'package:profile/features/hats/widget/hat_drag_hint.dart';
+import 'package:profile/features/hats/widget/hat_pagination_row.dart';
+import 'package:profile/features/hats/widget/hat_role_pills.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {

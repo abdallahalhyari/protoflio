@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/widget/desktop_toolbar.dart';
+import 'package:profile/features/shell/widget/desktop_toolbar.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme_controller.dart';

@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/module/home/data/projects_data.dart';
-import 'package:profile/module/home/widget/custom_cursor.dart';
-import 'package:profile/module/home/widget/desktop_toolbar.dart';
-import 'package:profile/module/home/widget/magazine_page_transformer.dart';
-import 'package:profile/module/home/widget/projects/interactive_project_card.dart';
+import 'package:profile/features/projects/data/projects_data.dart';
+import 'package:profile/features/shell/widget/custom_cursor.dart';
+import 'package:profile/features/shell/widget/desktop_toolbar.dart';
+import 'package:profile/features/shell/widget/magazine_page_transformer.dart';
+import 'package:profile/features/projects/widget/interactive_project_card.dart';
 
 void main() {
   group('Asset Size Budget & Format Audit', () {

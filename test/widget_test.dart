@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/main.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/page/hats_grid_page.dart';
-import 'package:profile/module/home/page/projects_page.dart';
-import 'package:profile/module/home/page/skills_page.dart';
-import 'package:profile/module/home/page/engineering_page.dart';
+import 'package:profile/features/hats/page/hats_grid_page.dart';
+import 'package:profile/features/projects/page/projects_page.dart';
+import 'package:profile/features/skills/page/skills_page.dart';
+import 'package:profile/features/engineering/page/engineering_page.dart';
 
 Widget createTestApp(Widget child, [Size size = const Size(1200, 900)]) {
   return MaterialApp(

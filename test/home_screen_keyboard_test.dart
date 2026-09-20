@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/home_screen.dart';
+import 'package:profile/features/shell/home_screen.dart';
 
 Widget _wrap() {
   return MaterialApp(

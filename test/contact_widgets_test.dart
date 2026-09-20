@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/widget/contact/contact_channels_grid.dart';
-import 'package:profile/module/home/widget/contact/contact_header.dart';
-import 'package:profile/module/home/widget/contact/contact_masthead_footer.dart';
-import 'package:profile/module/home/widget/contact/cv_dossier_card.dart';
-import 'package:profile/module/home/widget/contact/engagement_matrix_section.dart';
-import 'package:profile/module/home/widget/contact/express_presets_bar.dart';
-import 'package:profile/module/home/widget/contact/hero_email_card.dart';
-import 'package:profile/module/home/widget/contact/inquiry_composer_dialog.dart';
+import 'package:profile/features/contact/widget/contact_channels_grid.dart';
+import 'package:profile/features/contact/widget/contact_header.dart';
+import 'package:profile/features/contact/widget/contact_masthead_footer.dart';
+import 'package:profile/features/contact/widget/cv_dossier_card.dart';
+import 'package:profile/features/contact/widget/engagement_matrix_section.dart';
+import 'package:profile/features/contact/widget/express_presets_bar.dart';
+import 'package:profile/features/contact/widget/hero_email_card.dart';
+import 'package:profile/features/contact/widget/inquiry_composer_dialog.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {

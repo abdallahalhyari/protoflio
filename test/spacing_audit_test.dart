@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/case_study/case_study_widgets.dart';
-import 'package:profile/module/home/home_controller.dart';
-import 'package:profile/module/home/page/experience_page.dart';
-import 'package:profile/module/home/widget/experience/experience_header.dart';
-import 'package:profile/module/home/widget/mobile_home_layout.dart';
-import 'package:profile/module/home/widget/portfolio_nav.dart';
-import 'package:profile/module/home/widget/screen_shell.dart';
+import 'package:profile/features/case_study/case_study_widgets.dart';
+import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/experience/page/experience_page.dart';
+import 'package:profile/features/experience/widget/experience_header.dart';
+import 'package:profile/features/shell/widget/mobile_home_layout.dart';
+import 'package:profile/features/shell/widget/portfolio_nav.dart';
+import 'package:profile/shared/widget/screen_shell.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
 

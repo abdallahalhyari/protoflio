@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/module/home/bloc/engineering/architecture_simulator_bloc.dart';
-import 'package:profile/module/home/bloc/engineering/architecture_simulator_event.dart';
-import 'package:profile/module/home/bloc/engineering/architecture_simulator_state.dart';
-import 'package:profile/module/home/data/architecture_data.dart';
+import 'package:profile/features/engineering/bloc/architecture_simulator_bloc.dart';
+import 'package:profile/features/engineering/bloc/architecture_simulator_event.dart';
+import 'package:profile/features/engineering/bloc/architecture_simulator_state.dart';
+import 'package:profile/features/engineering/data/architecture_data.dart';
 
 void main() {
   group('ArchitectureSimulatorBloc Test Suite', () {

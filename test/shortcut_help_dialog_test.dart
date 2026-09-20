@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/widget/shortcut_help_dialog.dart';
+import 'package:profile/features/shell/widget/shortcut_help_dialog.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _host() {

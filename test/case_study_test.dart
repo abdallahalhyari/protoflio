@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/case_study/case_study_eskadenia.dart';
-import 'package:profile/module/case_study/case_study_fais.dart';
-import 'package:profile/module/case_study/case_study_nathealth.dart';
-import 'package:profile/module/case_study/case_study_solutions.dart';
-import 'package:profile/module/case_study/case_study_widgets.dart';
+import 'package:profile/features/case_study/case_study_eskadenia.dart';
+import 'package:profile/features/case_study/case_study_fais.dart';
+import 'package:profile/features/case_study/case_study_nathealth.dart';
+import 'package:profile/features/case_study/case_study_solutions.dart';
+import 'package:profile/features/case_study/case_study_widgets.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 5000)]) {

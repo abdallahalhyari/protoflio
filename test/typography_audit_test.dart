@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/home_controller.dart';
-import 'package:profile/module/home/widget/mobile_footer.dart';
-import 'package:profile/module/home/widget/experience/credentials_bento_card.dart';
+import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/shell/widget/mobile_footer.dart';
+import 'package:profile/features/experience/widget/credentials_bento_card.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
 

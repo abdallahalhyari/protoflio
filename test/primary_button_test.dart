@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/module/home/widget/primary_button.dart';
+import 'package:profile/shared/widget/primary_button.dart';
 
 Widget _host(Widget child) {
   return MaterialApp(
