@@ -62,8 +62,7 @@ class MobilePager extends StatelessWidget {
               border: Border.all(color: context.glassBorder),
               boxShadow: [
                 BoxShadow(
-                  color:
-                      isDark ? AppColors.shadowMedium : AppColors.shadowSoft,
+                  color: isDark ? AppColors.shadowMedium : AppColors.shadowSoft,
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),

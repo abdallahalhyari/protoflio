@@ -73,8 +73,9 @@ class PortfolioApp extends StatelessWidget {
             ..add(const ThemeStarted()),
         ),
         BlocProvider<LocaleBloc>(
-          create: (_) => LocaleBloc(initialLocale: LocaleController.locale.value)
-            ..add(const LocaleStarted()),
+          create: (_) =>
+              LocaleBloc(initialLocale: LocaleController.locale.value)
+                ..add(const LocaleStarted()),
         ),
         BlocProvider<NavigationBloc>(
           create: (_) => NavigationBloc(),
@@ -184,7 +185,8 @@ class _AccentTheme extends StatelessWidget {
     if (bloc != null) {
       return BlocBuilder<ThemeBloc, ThemeState>(
         buildWhen: (prev, curr) => prev.seedColor != curr.seedColor,
-        builder: (context, state) => _buildThemed(context, state.seedColor, child),
+        builder: (context, state) =>
+            _buildThemed(context, state.seedColor, child),
       );
     }
 

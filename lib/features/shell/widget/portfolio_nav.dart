@@ -112,7 +112,9 @@ class TopNav extends StatelessWidget {
                           },
                           icon: const Icon(Icons.download_rounded, size: 14),
                           label: Text(
-                            AppLocalizations.of(context)!.navResume.toUpperCase(),
+                            AppLocalizations.of(context)!
+                                .navResume
+                                .toUpperCase(),
                             style: const TextStyle(
                               fontSize: AppTypography.caption,
                               fontWeight: FontWeight.w800,
@@ -129,9 +131,11 @@ class TopNav extends StatelessWidget {
                               color: context.resumeBorder,
                               width: 1.2,
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(AppRadius.pill),
+                              borderRadius:
+                                  BorderRadius.circular(AppRadius.pill),
                             ),
                           ),
                         ),
@@ -337,48 +341,50 @@ class PageIndicator extends StatelessWidget {
         builder: (context, current, _) => Column(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(controller.pageCount, (i) {
-        final active = i == current;
-        final label = i < labels.length ? labels[i] : 'Page ${i + 1}';
-        return Tooltip(
-          message: label,
-          preferBelow: false,
-          child: Semantics(
-            button: true,
-            selected: active,
-            label: 'Go to $label',
-            child: SizedBox(
-              width: 44,
-              height: 44,
-              child: InkResponse(
-                onTap: () {
-                  if (active) return;
-                  HapticFeedback.selectionClick();
-                  controller.goTo(i);
-                },
-                radius: 22,
-                child: Center(
-                  child: AnimatedContainer(
-                    duration: AppMotion.sm,
-                    curve: AppMotion.emphasized,
-                    width: active ? 12 : 8,
-                    height: active ? 12 : 8,
-                    decoration: BoxDecoration(
-                      color: active
-                          ? (isDark ? Colors.white : AppColors.accentIndigoDeep)
-                          : (isDark ? Colors.white70 : AppColors.slate400),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: isDark ? Colors.black45 : Colors.white,
-                        width: 1,
+            final active = i == current;
+            final label = i < labels.length ? labels[i] : 'Page ${i + 1}';
+            return Tooltip(
+              message: label,
+              preferBelow: false,
+              child: Semantics(
+                button: true,
+                selected: active,
+                label: 'Go to $label',
+                child: SizedBox(
+                  width: 44,
+                  height: 44,
+                  child: InkResponse(
+                    onTap: () {
+                      if (active) return;
+                      HapticFeedback.selectionClick();
+                      controller.goTo(i);
+                    },
+                    radius: 22,
+                    child: Center(
+                      child: AnimatedContainer(
+                        duration: AppMotion.sm,
+                        curve: AppMotion.emphasized,
+                        width: active ? 12 : 8,
+                        height: active ? 12 : 8,
+                        decoration: BoxDecoration(
+                          color: active
+                              ? (isDark
+                                  ? Colors.white
+                                  : AppColors.accentIndigoDeep)
+                              : (isDark ? Colors.white70 : AppColors.slate400),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: isDark ? Colors.black45 : Colors.white,
+                            width: 1,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-        );
-      }),
+            );
+          }),
         ),
       ),
     );

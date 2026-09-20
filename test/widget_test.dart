@@ -28,10 +28,13 @@ void main() {
     expect(find.text('VIEW MY WORK'), findsOneWidget);
   });
 
-  testWidgets('HatsGridPage renders and role selector updates state (desktop & mobile)', (tester) async {
+  testWidgets(
+      'HatsGridPage renders and role selector updates state (desktop & mobile)',
+      (tester) async {
     // Desktop layout
     await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester.pumpWidget(createTestApp(const HatsGridPage(), const Size(1200, 900)));
+    await tester
+        .pumpWidget(createTestApp(const HatsGridPage(), const Size(1200, 900)));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('ARCHITECTURAL PERSPECTIVES'), findsOneWidget);
@@ -45,7 +48,8 @@ void main() {
 
     // Mobile layout
     await tester.binding.setSurfaceSize(const Size(400, 800));
-    await tester.pumpWidget(createTestApp(const HatsGridPage(), const Size(400, 800)));
+    await tester
+        .pumpWidget(createTestApp(const HatsGridPage(), const Size(400, 800)));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('PREV'), findsOneWidget);
@@ -58,10 +62,13 @@ void main() {
     await tester.binding.setSurfaceSize(null);
   });
 
-  testWidgets('ProjectsPage renders master-detail and mobile tabs without scroll issues', (tester) async {
+  testWidgets(
+      'ProjectsPage renders master-detail and mobile tabs without scroll issues',
+      (tester) async {
     // Desktop layout
     await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester.pumpWidget(createTestApp(const ProjectsPage(), const Size(1200, 900)));
+    await tester
+        .pumpWidget(createTestApp(const ProjectsPage(), const Size(1200, 900)));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('NATHEALTH'), findsWidgets);
@@ -69,7 +76,8 @@ void main() {
 
     // Mobile layout
     await tester.binding.setSurfaceSize(const Size(400, 800));
-    await tester.pumpWidget(createTestApp(const ProjectsPage(), const Size(400, 800)));
+    await tester
+        .pumpWidget(createTestApp(const ProjectsPage(), const Size(400, 800)));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('PREV'), findsOneWidget);
@@ -82,18 +90,23 @@ void main() {
     await tester.binding.setSurfaceSize(null);
   });
 
-  testWidgets('SkillsPage renders kinetic cloud and category filters', (tester) async {
+  testWidgets('SkillsPage renders kinetic cloud and category filters',
+      (tester) async {
     await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester.pumpWidget(createTestApp(const SkillsPage(), const Size(1200, 900)));
+    await tester
+        .pumpWidget(createTestApp(const SkillsPage(), const Size(1200, 900)));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('SKILLS'), findsWidgets);
     await tester.binding.setSurfaceSize(null);
   });
 
-  testWidgets('EngineeringPage renders 4 production architectures and tabs work', (tester) async {
+  testWidgets(
+      'EngineeringPage renders 4 production architectures and tabs work',
+      (tester) async {
     await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester.pumpWidget(createTestApp(const EngineeringPage(), const Size(1200, 900)));
+    await tester.pumpWidget(
+        createTestApp(const EngineeringPage(), const Size(1200, 900)));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('ENGINEERING EXPERTISE'), findsOneWidget);
@@ -109,7 +122,9 @@ void main() {
     await tester.binding.setSurfaceSize(null);
   });
 
-  testWidgets('HomeScreen desktop pointer scroll advances pages when not over inner scrollable', (tester) async {
+  testWidgets(
+      'HomeScreen desktop pointer scroll advances pages when not over inner scrollable',
+      (tester) async {
     tester.view.physicalSize = const Size(1200, 900);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);

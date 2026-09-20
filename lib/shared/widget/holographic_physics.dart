@@ -58,8 +58,10 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
     if (size.width <= 0 || size.height <= 0) return;
     if (_resetCtrl.isAnimating) _resetCtrl.stop();
 
-    final nx = (((event.localPosition.dx / size.width) - 0.5) * 2.0).clamp(-1.0, 1.0);
-    final ny = (((event.localPosition.dy / size.height) - 0.5) * 2.0).clamp(-1.0, 1.0);
+    final nx =
+        (((event.localPosition.dx / size.width) - 0.5) * 2.0).clamp(-1.0, 1.0);
+    final ny =
+        (((event.localPosition.dy / size.height) - 0.5) * 2.0).clamp(-1.0, 1.0);
     final next = Offset(nx, ny);
 
     if ((next - _norm.value).distanceSquared < 0.0004) return;
@@ -131,14 +133,17 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
                                   opacity: hovering ? 1.0 : 0.0,
                                   duration: AppMotion.sm,
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                                    borderRadius: BorderRadius.circular(
+                                        widget.borderRadius),
                                     child: DecoratedBox(
                                       decoration: BoxDecoration(
                                         gradient: RadialGradient(
-                                          center: Alignment(norm.dx * 0.8, norm.dy * 0.8),
+                                          center: Alignment(
+                                              norm.dx * 0.8, norm.dy * 0.8),
                                           radius: 1.2,
                                           colors: [
-                                            Colors.white.withValues(alpha: 0.15),
+                                            Colors.white
+                                                .withValues(alpha: 0.15),
                                             Colors.white.withValues(alpha: 0.0),
                                           ],
                                           stops: const [0.0, 1.0],

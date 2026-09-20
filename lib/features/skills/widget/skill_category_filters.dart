@@ -109,9 +109,15 @@ class SkillCategoryFilters extends StatelessWidget {
   Widget _buildFilterChip(String cat, ColorScheme scheme, bool isDesktop) {
     final isDark = scheme.brightness == Brightness.dark;
     final isSelected = selectedCategory == cat;
-    final color = cat == 'ALL' ? scheme.primary : SkillCategoryStyle.getColor(cat, scheme);
-    final textColor = cat == 'ALL' ? scheme.primary : SkillCategoryStyle.getTextColor(cat, scheme, isDark);
-    final count = cat == 'ALL' ? kSkills.length : kSkills.where((s) => s.category == cat).length;
+    final color = cat == 'ALL'
+        ? scheme.primary
+        : SkillCategoryStyle.getColor(cat, scheme);
+    final textColor = cat == 'ALL'
+        ? scheme.primary
+        : SkillCategoryStyle.getTextColor(cat, scheme, isDark);
+    final count = cat == 'ALL'
+        ? kSkills.length
+        : kSkills.where((s) => s.category == cat).length;
 
     return Semantics(
       button: true,
@@ -134,12 +140,16 @@ class SkillCategoryFilters extends StatelessWidget {
           decoration: BoxDecoration(
             color: isSelected
                 ? color.withValues(alpha: isDark ? 0.18 : 0.12)
-                : (isDark ? Colors.transparent : Colors.white.withValues(alpha: 0.8)),
+                : (isDark
+                    ? Colors.transparent
+                    : Colors.white.withValues(alpha: 0.8)),
             borderRadius: BorderRadius.circular(AppRadius.sm),
             border: Border.all(
               color: isSelected
                   ? color
-                  : (isDark ? scheme.onSurface.withValues(alpha: 0.15) : AppColors.slate300),
+                  : (isDark
+                      ? scheme.onSurface.withValues(alpha: 0.15)
+                      : AppColors.slate300),
               width: isSelected ? 1.5 : 1.0,
             ),
             boxShadow: isSelected
@@ -168,7 +178,8 @@ class SkillCategoryFilters extends StatelessWidget {
                   Container(
                     width: 6,
                     height: 6,
-                    decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                    decoration:
+                        BoxDecoration(color: color, shape: BoxShape.circle),
                   ),
                   const SizedBox(width: 6),
                 ],
@@ -178,7 +189,9 @@ class SkillCategoryFilters extends StatelessWidget {
                     fontFamily: AppTypography.monoFont,
                     color: isSelected
                         ? (isDark ? color : textColor)
-                        : (isDark ? scheme.onSurface.withValues(alpha: 0.7) : AppColors.slate700),
+                        : (isDark
+                            ? scheme.onSurface.withValues(alpha: 0.7)
+                            : AppColors.slate700),
                     fontSize: isDesktop
                         ? AppTypography.caption
                         : AppTypography.editorialSm,
@@ -193,10 +206,11 @@ class SkillCategoryFilters extends StatelessWidget {
                     fontFamily: AppTypography.monoFont,
                     color: isSelected
                         ? (isDark ? color.withValues(alpha: 0.85) : textColor)
-                        : (isDark ? scheme.onSurface.withValues(alpha: 0.45) : AppColors.slate500),
-                    fontSize: isDesktop
-                        ? AppTypography.micro
-                        : AppTypography.nano,
+                        : (isDark
+                            ? scheme.onSurface.withValues(alpha: 0.45)
+                            : AppColors.slate500),
+                    fontSize:
+                        isDesktop ? AppTypography.micro : AppTypography.nano,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

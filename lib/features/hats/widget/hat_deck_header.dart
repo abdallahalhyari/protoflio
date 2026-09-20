@@ -82,17 +82,14 @@ class HatDeckHeader extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: onShuffle,
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: isDark
-                      ? scheme.primary
-                      : AppColors.accentSkyDeep,
-                  side: BorderSide(
-                      color: scheme.primary.withValues(alpha: 0.6)),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12, vertical: 6),
+                  foregroundColor:
+                      isDark ? scheme.primary : AppColors.accentSkyDeep,
+                  side:
+                      BorderSide(color: scheme.primary.withValues(alpha: 0.6)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 ),
-                icon: const Icon(
-                    Icons.auto_awesome_motion_rounded,
-                    size: 15),
+                icon: const Icon(Icons.auto_awesome_motion_rounded, size: 15),
                 label: Text(loc.spreadAction,
                     style: const TextStyle(
                         fontSize: AppTypography.editorial,
@@ -105,8 +102,8 @@ class HatDeckHeader extends StatelessWidget {
                   foregroundColor: isDark ? Colors.white70 : AppColors.slate600,
                   side: BorderSide(
                       color: isDark ? Colors.white24 : AppColors.slate300),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 ),
                 child: Text(loc.alignAction,
                     style: const TextStyle(

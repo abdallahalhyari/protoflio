@@ -33,7 +33,8 @@ class _BreathingPulseState extends State<BreathingPulse>
       vsync: this,
       duration: widget.duration,
     );
-    _scale = Tween<double>(begin: widget.minScale, end: widget.maxScale).animate(
+    _scale =
+        Tween<double>(begin: widget.minScale, end: widget.maxScale).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine),
     );
 

@@ -57,7 +57,9 @@ class AppScreenShell extends StatelessWidget {
     if (width >= AppBreakpoints.desktopWide) return 48;
     if (width >= AppBreakpoints.desktop) return 32;
     if (width >= AppBreakpoints.mobile) return 24;
-    if (width < 360) return 12; // Extra breathability for compact displays (e.g. 320px iPhone SE)
+    if (width < 360) {
+      return 12; // Extra breathability for compact displays (e.g. 320px iPhone SE)
+    }
     return 16;
   }
 
@@ -68,7 +70,8 @@ class AppScreenShell extends StatelessWidget {
     final topExtra = wide
         ? (reserveTopNav ? kTopNavReserve : 0.0)
         : (reserveMobileTop ? kMobileTopReserve : 0.0);
-    final mobileBottomExtra = (!wide && reserveBottomNav) ? kBottomNavReserve : 0.0;
+    final mobileBottomExtra =
+        (!wide && reserveBottomNav) ? kBottomNavReserve : 0.0;
 
     final shellPadding = padding ??
         EdgeInsets.fromLTRB(

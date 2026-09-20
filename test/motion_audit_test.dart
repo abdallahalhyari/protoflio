@@ -91,7 +91,8 @@ void main() {
       expect(AppMotion.easeInOutSine, Curves.easeInOutSine);
     });
 
-    testWidgets('AppMedia.reduceMotion detects accessibility settings', (tester) async {
+    testWidgets('AppMedia.reduceMotion detects accessibility settings',
+        (tester) async {
       late bool normalMotion;
       late bool reducedDisabledAnim;
       late bool reducedAccessibleNav;
@@ -161,7 +162,8 @@ void main() {
   });
 
   group('Interactive Widgets Motion & Reduced-Motion Response', () {
-    testWidgets('InteractiveProjectCard does not scale on hover when reduceMotion is active',
+    testWidgets(
+        'InteractiveProjectCard does not scale on hover when reduceMotion is active',
         (tester) async {
       final project = kProjects.first;
 
@@ -172,7 +174,8 @@ void main() {
             project: project,
             index: 0,
             isDesktop: true,
-            scheme: ColorScheme.fromSeed(seedColor: AppColors.seed, brightness: Brightness.dark),
+            scheme: ColorScheme.fromSeed(
+                seedColor: AppColors.seed, brightness: Brightness.dark),
           ),
         ),
       );
@@ -181,14 +184,17 @@ void main() {
       // Trigger hover
       final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
       await gesture.addPointer(location: Offset.zero);
-      await gesture.moveTo(tester.getCenter(find.byType(InteractiveProjectCard)));
+      await gesture
+          .moveTo(tester.getCenter(find.byType(InteractiveProjectCard)));
       await tester.pump(const Duration(milliseconds: 100));
 
       final animatedScale = tester.widget<AnimatedScale>(
-        find.descendant(
-          of: find.byType(InteractiveProjectCard),
-          matching: find.byType(AnimatedScale),
-        ).first,
+        find
+            .descendant(
+              of: find.byType(InteractiveProjectCard),
+              matching: find.byType(AnimatedScale),
+            )
+            .first,
       );
 
       // Scale should remain locked to 1.0 under reduced motion
@@ -228,7 +234,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('MobileProgressRail triggers section scroll on tap', (tester) async {
+    testWidgets('MobileProgressRail triggers section scroll on tap',
+        (tester) async {
       final controller = _mockController(initialPage: 0);
 
       await tester.pumpWidget(
@@ -277,7 +284,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('NavItem uses AppMotion.emphasized curve on selection transition',
+    testWidgets(
+        'NavItem uses AppMotion.emphasized curve on selection transition',
         (tester) async {
       await tester.pumpWidget(
         _wrapWithMedia(
@@ -301,7 +309,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('ProjectModal opens with pure FadeTransition under reduced motion',
+    testWidgets(
+        'ProjectModal opens with pure FadeTransition under reduced motion',
         (tester) async {
       final project = kProjects.first;
 
@@ -311,7 +320,8 @@ void main() {
           child: Builder(
             builder: (context) {
               return ElevatedButton(
-                onPressed: () => showProjectCaseStudy(context, project: project, index: 0),
+                onPressed: () =>
+                    showProjectCaseStudy(context, project: project, index: 0),
                 child: const Text('Open Modal'),
               );
             },

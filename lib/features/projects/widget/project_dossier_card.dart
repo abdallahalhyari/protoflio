@@ -24,9 +24,15 @@ class ProjectDossierCard extends StatelessWidget {
     if (isDark) return color;
     final val = color.toARGB32();
     if (val == 0xFFF87171 || val == 0xFFEF4444) return AppColors.accentRoseDeep;
-    if (val == 0xFF818CF8 || val == 0xFF6366F1) return AppColors.accentIndigoDeepText;
-    if (val == 0xFF10B981 || val == 0xFF34D399) return AppColors.accentGreenDeep;
-    if (val == 0xFFFDE68A || val == 0xFFFBBF24 || val == 0xFFF59E0B) return AppColors.accentAmberDeep;
+    if (val == 0xFF818CF8 || val == 0xFF6366F1) {
+      return AppColors.accentIndigoDeepText;
+    }
+    if (val == 0xFF10B981 || val == 0xFF34D399) {
+      return AppColors.accentGreenDeep;
+    }
+    if (val == 0xFFFDE68A || val == 0xFFFBBF24 || val == 0xFFF59E0B) {
+      return AppColors.accentAmberDeep;
+    }
     return color;
   }
 
@@ -38,12 +44,18 @@ class ProjectDossierCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(isDesktop ? 12 : 10),
         decoration: BoxDecoration(
-          color: isDark ? accentColor.withValues(alpha: 0.08) : Colors.white.withValues(alpha: 0.90),
+          color: isDark
+              ? accentColor.withValues(alpha: 0.08)
+              : Colors.white.withValues(alpha: 0.90),
           borderRadius: BorderRadius.circular(AppRadius.smd),
-          border: Border.all(color: (isDark ? accentColor : effectiveAccent).withValues(alpha: isDark ? 0.28 : 0.4), width: 1.0),
+          border: Border.all(
+              color: (isDark ? accentColor : effectiveAccent)
+                  .withValues(alpha: isDark ? 0.28 : 0.4),
+              width: 1.0),
           boxShadow: [
             BoxShadow(
-              color: (isDark ? accentColor : effectiveAccent).withValues(alpha: isDark ? 0.05 : 0.04),
+              color: (isDark ? accentColor : effectiveAccent)
+                  .withValues(alpha: isDark ? 0.05 : 0.04),
               blurRadius: 10,
             ),
           ],
@@ -71,7 +83,9 @@ class ProjectDossierCard extends StatelessWidget {
             Text(
               value,
               style: TextStyle(
-                color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate800,
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.95)
+                    : AppColors.slate800,
                 fontSize: isDesktop ? 12.5 : 11.0,
                 height: 1.45,
               ),
@@ -127,7 +141,9 @@ class ProjectHighlightRow extends StatelessWidget {
                       text: '$prefix ',
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
-                        color: isDark ? AppColors.accentAmberSoft : AppColors.accentAmberDeep,
+                        color: isDark
+                            ? AppColors.accentAmberSoft
+                            : AppColors.accentAmberDeep,
                         fontWeight: FontWeight.w800,
                         fontSize: isDesktop ? 12.0 : 10.5,
                       ),
@@ -135,7 +151,9 @@ class ProjectHighlightRow extends StatelessWidget {
                   TextSpan(
                     text: rest.trim(),
                     style: TextStyle(
-                      color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate700,
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.9)
+                          : AppColors.slate700,
                       fontSize: isDesktop ? 12.0 : 10.5,
                       height: 1.35,
                     ),

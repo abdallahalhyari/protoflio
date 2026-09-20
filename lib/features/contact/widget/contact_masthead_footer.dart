@@ -111,8 +111,7 @@ class ContactMastheadFooter extends StatelessWidget {
               spacing: 6,
               runSpacing: 4,
               children: [
-                Icon(Icons.shield_outlined,
-                    size: 13, color: availabilityGreen),
+                Icon(Icons.shield_outlined, size: 13, color: availabilityGreen),
                 Text(
                   'VERIFIED SENIOR MOBILE ARCHITECT · DIRECT COMMUNICATION',
                   textAlign: TextAlign.center,
@@ -140,7 +139,9 @@ class ContactMastheadFooter extends StatelessWidget {
                   child: Text(
                     '// COLOPHON & DISPATCH',
                     style: TextStyle(
-                      color: isDark ? Colors.white.withValues(alpha: 0.60) : AppColors.slate400,
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.60)
+                          : AppColors.slate400,
                       fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2,

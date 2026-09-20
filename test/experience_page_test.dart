@@ -5,7 +5,8 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/experience/page/experience_page.dart';
 import 'package:profile/theme/app_theme.dart';
 
-Widget _wrap(Widget child, {Size size = const Size(1400, 900), bool scrollable = false}) {
+Widget _wrap(Widget child,
+    {Size size = const Size(1400, 900), bool scrollable = false}) {
   return MaterialApp(
     theme: AppTheme.dark(),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -27,7 +28,9 @@ Widget _wrap(Widget child, {Size size = const Size(1400, 900), bool scrollable =
 
 void main() {
   group('ExperiencePage Test Suite', () {
-    testWidgets('renders ExperiencePage desktop grid with 4 roles and credentials', (tester) async {
+    testWidgets(
+        'renders ExperiencePage desktop grid with 4 roles and credentials',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         const ExperiencePage(isContinuousMobile: true),
         scrollable: true,
@@ -42,7 +45,8 @@ void main() {
       expect(find.text('ACADEMIC ANNEX'), findsOneWidget);
     });
 
-    testWidgets('keyboard navigation updates selected experience node', (tester) async {
+    testWidgets('keyboard navigation updates selected experience node',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         const ExperiencePage(isContinuousMobile: false),
         scrollable: false,

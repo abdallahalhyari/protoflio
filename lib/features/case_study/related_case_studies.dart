@@ -50,7 +50,8 @@ class RelatedCaseStudies extends StatelessWidget {
             children: [
               for (int i = 0; i < siblings.length; i++) ...[
                 Expanded(
-                    child: _RelatedCard(slug: siblings[i], data: _summary[siblings[i]]!)),
+                    child: _RelatedCard(
+                        slug: siblings[i], data: _summary[siblings[i]]!)),
                 if (i < siblings.length - 1)
                   const SizedBox(width: AppSpacing.md),
               ],

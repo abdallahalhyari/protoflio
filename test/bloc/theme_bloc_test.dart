@@ -66,7 +66,8 @@ void main() {
       await bloc.close();
     });
 
-    test('ThemeAccentUpdated updates chromatic seed color per section index', () async {
+    test('ThemeAccentUpdated updates chromatic seed color per section index',
+        () async {
       final bloc = ThemeBloc();
 
       // Section 1: Experience (Neo-Mint Emerald)
@@ -94,7 +95,9 @@ void main() {
       await bloc.close();
     });
 
-    test('ThemeAccentUpdatedFromHash parses slug and resolves chromatic identity', () async {
+    test(
+        'ThemeAccentUpdatedFromHash parses slug and resolves chromatic identity',
+        () async {
       final bloc = ThemeBloc();
 
       bloc.add(const ThemeAccentUpdatedFromHash('#work/nathealth'));
@@ -120,7 +123,8 @@ void main() {
       await bloc.close();
     });
 
-    test('ThemeBloc bi-directionally synchronizes with ThemeController', () async {
+    test('ThemeBloc bi-directionally synchronizes with ThemeController',
+        () async {
       final bloc = ThemeBloc();
 
       // Calling ThemeController.updateSeedFromIndex triggers bloc event

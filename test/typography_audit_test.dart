@@ -103,7 +103,8 @@ void main() {
   });
 
   group('Dynamic Text Scaling Clamping Audit', () {
-    testWidgets('Clamps huge OS font accessibility scale factor (2.5x) down to 1.35x',
+    testWidgets(
+        'Clamps huge OS font accessibility scale factor (2.5x) down to 1.35x',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       late double effectiveScale;
@@ -141,7 +142,8 @@ void main() {
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('Clamps tiny font accessibility scale factor (0.5x) up to 0.85x',
+    testWidgets(
+        'Clamps tiny font accessibility scale factor (0.5x) up to 0.85x',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       late double effectiveScale;
@@ -194,7 +196,8 @@ void main() {
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('Renders CredentialsBentoCard cleanly under max clamped scale (1.35x)',
+    testWidgets(
+        'Renders CredentialsBentoCard cleanly under max clamped scale (1.35x)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(420, 844));
       await tester.pumpWidget(

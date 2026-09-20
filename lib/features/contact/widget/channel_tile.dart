@@ -58,7 +58,8 @@ class _ChannelTileState extends State<ChannelTile> {
     final d = widget.data;
     final isDark = context.isDarkMode;
     final labelColor = _adaptiveAccent(context, d.accent);
-    final buttonTextColor = d.accent.computeLuminance() > 0.35 ? Colors.black : Colors.white;
+    final buttonTextColor =
+        d.accent.computeLuminance() > 0.35 ? Colors.black : Colors.white;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),

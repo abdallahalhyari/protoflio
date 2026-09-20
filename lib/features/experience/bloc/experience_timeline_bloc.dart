@@ -37,7 +37,8 @@ class ExperienceTimelineBloc
     ExperienceNodeSelected event,
     Emitter<ExperienceTimelineState> emit,
   ) {
-    final nextSelected = state.selectedIndex == event.index ? null : event.index;
+    final nextSelected =
+        state.selectedIndex == event.index ? null : event.index;
     emit(state.copyWith(selectedIndex: () => nextSelected));
   }
 

@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/theme/tokens.dart';
 import '../home_controller.dart';
-import 'package:profile/features/contact/page/contact_page.dart' deferred as contact_lib;
-import 'package:profile/features/engineering/page/engineering_page.dart' deferred as engineering_lib;
-import 'package:profile/features/experience/page/experience_page.dart' deferred as experience_lib;
-import 'package:profile/features/hats/page/hats_grid_page.dart' deferred as hats_lib;
+import 'package:profile/features/contact/page/contact_page.dart'
+    deferred as contact_lib;
+import 'package:profile/features/engineering/page/engineering_page.dart'
+    deferred as engineering_lib;
+import 'package:profile/features/experience/page/experience_page.dart'
+    deferred as experience_lib;
+import 'package:profile/features/hats/page/hats_grid_page.dart'
+    deferred as hats_lib;
 import 'package:profile/features/intro/page/intro_page.dart';
-import 'package:profile/features/projects/page/projects_page.dart' deferred as projects_lib;
-import 'package:profile/features/skills/page/skills_page.dart' deferred as skills_lib;
+import 'package:profile/features/projects/page/projects_page.dart'
+    deferred as projects_lib;
+import 'package:profile/features/skills/page/skills_page.dart'
+    deferred as skills_lib;
 import 'deferred_mount.dart';
 import 'deferred_page.dart';
 import 'mobile_app_bar.dart';
@@ -100,8 +106,8 @@ class MobileHomeLayout extends StatelessWidget {
                     key: sectionKeys[2],
                     child: DeferredPage(
                       loader: projects_lib.loadLibrary,
-                      builder: () => projects_lib.ProjectsPage(
-                          isContinuousMobile: true),
+                      builder: () =>
+                          projects_lib.ProjectsPage(isContinuousMobile: true),
                     ),
                   ),
                 ),
@@ -116,8 +122,8 @@ class MobileHomeLayout extends StatelessWidget {
                     key: sectionKeys[3],
                     child: DeferredPage(
                       loader: skills_lib.loadLibrary,
-                      builder: () => skills_lib.SkillsPage(
-                          isContinuousMobile: true),
+                      builder: () =>
+                          skills_lib.SkillsPage(isContinuousMobile: true),
                     ),
                   ),
                 ),
@@ -148,8 +154,8 @@ class MobileHomeLayout extends StatelessWidget {
                     key: sectionKeys[5],
                     child: DeferredPage(
                       loader: hats_lib.loadLibrary,
-                      builder: () => hats_lib.HatsGridPage(
-                          isContinuousMobile: true),
+                      builder: () =>
+                          hats_lib.HatsGridPage(isContinuousMobile: true),
                     ),
                   ),
                 ),
@@ -164,8 +170,8 @@ class MobileHomeLayout extends StatelessWidget {
                     key: sectionKeys[6],
                     child: DeferredPage(
                       loader: contact_lib.loadLibrary,
-                      builder: () => contact_lib.ContactPage(
-                          isContinuousMobile: true),
+                      builder: () =>
+                          contact_lib.ContactPage(isContinuousMobile: true),
                     ),
                   ),
                 ),

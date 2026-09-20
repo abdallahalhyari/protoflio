@@ -8,8 +8,14 @@ const List<Skill> kSkills = [
     level: 0.96,
     category: 'Mobile Systems',
     provenIn: 'NatHealth, Eskadenia Health, Eskadenia Care',
-    description: 'Enterprise cross-platform architecture, custom render objects, reactive state management pipelines, native platform channels, and 60fps frame-budget animations.',
-    tags: ['CUSTOM PAINTER', 'BLOC & RIVERPOD', 'PLATFORM CHANNELS', 'FRAME BUDGETING'],
+    description:
+        'Enterprise cross-platform architecture, custom render objects, reactive state management pipelines, native platform channels, and 60fps frame-budget animations.',
+    tags: [
+      'CUSTOM PAINTER',
+      'BLOC & RIVERPOD',
+      'PLATFORM CHANNELS',
+      'FRAME BUDGETING'
+    ],
   ),
   Skill(
     name: 'Android (Kotlin)',
@@ -17,8 +23,14 @@ const List<Skill> kSkills = [
     level: 0.92,
     category: 'Mobile Systems',
     provenIn: 'NatHealth Smart-Card & Eskadenia Suites',
-    description: 'Native Kotlin platform channels, Coroutines & Flow concurrency, WorkManager background processing, custom view groups, and native hardware bindings.',
-    tags: ['COROUTINES & FLOW', 'WORKMANAGER', 'NDK CHANNELS', 'HARDWARE BINDING'],
+    description:
+        'Native Kotlin platform channels, Coroutines & Flow concurrency, WorkManager background processing, custom view groups, and native hardware bindings.',
+    tags: [
+      'COROUTINES & FLOW',
+      'WORKMANAGER',
+      'NDK CHANNELS',
+      'HARDWARE BINDING'
+    ],
   ),
   Skill(
     name: 'NFC & Smart Cards',
@@ -26,8 +38,14 @@ const List<Skill> kSkills = [
     level: 0.95,
     category: 'Security & Protocols',
     provenIn: 'NatHealth Contactless Medical Insurance',
-    description: 'APDU ISO-7816 communication protocol engineering, contactless smart card identification, hardware reader firmware integration, and zero-trust paperless validation.',
-    tags: ['ISO-7816 APDU', 'CONTACTLESS NFC', 'SMART CHIP AUTH', 'HARDWARE READERS'],
+    description:
+        'APDU ISO-7816 communication protocol engineering, contactless smart card identification, hardware reader firmware integration, and zero-trust paperless validation.',
+    tags: [
+      'ISO-7816 APDU',
+      'CONTACTLESS NFC',
+      'SMART CHIP AUTH',
+      'HARDWARE READERS'
+    ],
   ),
   Skill(
     name: 'QR & Barcode Systems',
@@ -35,8 +53,14 @@ const List<Skill> kSkills = [
     level: 0.92,
     category: 'Mobile Systems',
     provenIn: 'Ticketing, Claims, and Identity Verification Flows',
-    description: 'End-to-end QR & 1D/2D barcode pipelines: high-throughput camera scanning with autofocus & torch control, offline decoding, dynamic QR generation with logo overlay, error-correction tuning, colored/branded styling, and secure signed-payload verification.',
-    tags: ['CAMERA SCAN', 'ML KIT DECODE', 'DYNAMIC GENERATION', 'BRANDED STYLING'],
+    description:
+        'End-to-end QR & 1D/2D barcode pipelines: high-throughput camera scanning with autofocus & torch control, offline decoding, dynamic QR generation with logo overlay, error-correction tuning, colored/branded styling, and secure signed-payload verification.',
+    tags: [
+      'CAMERA SCAN',
+      'ML KIT DECODE',
+      'DYNAMIC GENERATION',
+      'BRANDED STYLING'
+    ],
   ),
   Skill(
     name: 'JWT & Secure Auth',
@@ -44,8 +68,14 @@ const List<Skill> kSkills = [
     level: 0.94,
     category: 'Security & Protocols',
     provenIn: 'NatHealth, Eskadenia Broker & Care',
-    description: 'Cryptographic token lifecycle management, hardware GUID device binding, biometric local authentication, secure enclave key storage, and tamper detection.',
-    tags: ['DEVICE GUID BINDING', 'BIOMETRICS', 'SECURE ENCLAVE', 'TOKEN ROTATION'],
+    description:
+        'Cryptographic token lifecycle management, hardware GUID device binding, biometric local authentication, secure enclave key storage, and tamper detection.',
+    tags: [
+      'DEVICE GUID BINDING',
+      'BIOMETRICS',
+      'SECURE ENCLAVE',
+      'TOKEN ROTATION'
+    ],
   ),
   Skill(
     name: 'MVVM & Clean Arch',
@@ -53,8 +83,14 @@ const List<Skill> kSkills = [
     level: 0.93,
     category: 'Architecture & State',
     provenIn: 'Enterprise Multi-Module Codebases',
-    description: 'Strict domain separation, dependency injection, unidirectional data flow, repository contracts, and isolated decoupled unit and widget testing.',
-    tags: ['DOMAIN ISOLATION', 'DEPENDENCY INJECTION', 'UDF PATTERN', 'TESTABILITY'],
+    description:
+        'Strict domain separation, dependency injection, unidirectional data flow, repository contracts, and isolated decoupled unit and widget testing.',
+    tags: [
+      'DOMAIN ISOLATION',
+      'DEPENDENCY INJECTION',
+      'UDF PATTERN',
+      'TESTABILITY'
+    ],
   ),
   Skill(
     name: 'Offline-First & Sync',
@@ -62,8 +98,14 @@ const List<Skill> kSkills = [
     level: 0.93,
     category: 'Architecture & State',
     provenIn: 'Eskadenia Health Medical Dispatch',
-    description: 'Resilient local caching pipelines, persistent queueing with exponential backoff retries, delta reconciliation, and continuous operation in zero-network environments.',
-    tags: ['DELTA SYNC', 'EXPONENTIAL BACKOFF', 'PERSISTENT QUEUE', 'CONFLICT RESOLUTION'],
+    description:
+        'Resilient local caching pipelines, persistent queueing with exponential backoff retries, delta reconciliation, and continuous operation in zero-network environments.',
+    tags: [
+      'DELTA SYNC',
+      'EXPONENTIAL BACKOFF',
+      'PERSISTENT QUEUE',
+      'CONFLICT RESOLUTION'
+    ],
   ),
   Skill(
     name: 'REST APIs & Network',
@@ -71,8 +113,14 @@ const List<Skill> kSkills = [
     level: 0.91,
     category: 'Cloud & Infrastructure',
     provenIn: 'All Enterprise Mobile Solutions',
-    description: 'High-throughput HTTP client pipelines, request/response interceptors, resilient retry policies, dynamic schema serialization, and rigorous API error contracts.',
-    tags: ['HTTP INTERCEPTORS', 'DYNAMIC SERIALIZATION', 'RETRY POLICIES', 'SSE CONTRACTS'],
+    description:
+        'High-throughput HTTP client pipelines, request/response interceptors, resilient retry policies, dynamic schema serialization, and rigorous API error contracts.',
+    tags: [
+      'HTTP INTERCEPTORS',
+      'DYNAMIC SERIALIZATION',
+      'RETRY POLICIES',
+      'SSE CONTRACTS'
+    ],
   ),
   Skill(
     name: 'Firebase Platform',
@@ -80,8 +128,14 @@ const List<Skill> kSkills = [
     level: 0.88,
     category: 'Cloud & Infrastructure',
     provenIn: 'Production Apps & Portals',
-    description: 'Cloud Firestore realtime streams, Firebase Authentication, Cloud Functions, Remote Config dynamic rollouts, and Cloud Messaging push pipelines.',
-    tags: ['FIRESTORE STREAMS', 'REMOTE CONFIG', 'CLOUD MESSAGING', 'CRASHLYTICS'],
+    description:
+        'Cloud Firestore realtime streams, Firebase Authentication, Cloud Functions, Remote Config dynamic rollouts, and Cloud Messaging push pipelines.',
+    tags: [
+      'FIRESTORE STREAMS',
+      'REMOTE CONFIG',
+      'CLOUD MESSAGING',
+      'CRASHLYTICS'
+    ],
   ),
   Skill(
     name: 'AWS CloudFront & CDN',
@@ -89,7 +143,8 @@ const List<Skill> kSkills = [
     level: 0.78,
     category: 'Cloud & Infrastructure',
     provenIn: 'Asset Streaming & Global Distribution',
-    description: 'Global CDN edge caching, secure media streaming distribution, signed URLs, and latency optimization for multi-regional mobile consumers.',
+    description:
+        'Global CDN edge caching, secure media streaming distribution, signed URLs, and latency optimization for multi-regional mobile consumers.',
     tags: ['EDGE CACHING', 'SIGNED URLS', 'LATENCY TUNING', 'S3 STORAGE'],
   ),
   Skill(
@@ -98,8 +153,14 @@ const List<Skill> kSkills = [
     level: 0.84,
     category: 'Architecture & State',
     provenIn: 'Relational Database Backends',
-    description: 'Relational schema modeling, index optimization, complex transactional querying, ACID compliance, and high-performance local SQLite abstractions.',
-    tags: ['SCHEMA MODELING', 'ACID TRANSACTIONS', 'SQLITE ENGINES', 'INDEX TUNING'],
+    description:
+        'Relational schema modeling, index optimization, complex transactional querying, ACID compliance, and high-performance local SQLite abstractions.',
+    tags: [
+      'SCHEMA MODELING',
+      'ACID TRANSACTIONS',
+      'SQLITE ENGINES',
+      'INDEX TUNING'
+    ],
   ),
   Skill(
     name: 'Git & CI/CD Pipelines',
@@ -107,8 +168,14 @@ const List<Skill> kSkills = [
     level: 0.92,
     category: 'Architecture & State',
     provenIn: 'Trunk-Based Engineering Teams',
-    description: 'Trunk-based development, semantic release automation, GitHub Actions / Bitbucket pipelines, comprehensive code review gates, and automated test runs.',
-    tags: ['GITHUB ACTIONS', 'TRUNK-BASED DEV', 'RELEASE AUTOMATION', 'SEMANTIC TAGGING'],
+    description:
+        'Trunk-based development, semantic release automation, GitHub Actions / Bitbucket pipelines, comprehensive code review gates, and automated test runs.',
+    tags: [
+      'GITHUB ACTIONS',
+      'TRUNK-BASED DEV',
+      'RELEASE AUTOMATION',
+      'SEMANTIC TAGGING'
+    ],
   ),
   Skill(
     name: 'Algorithms & DS',
@@ -116,8 +183,14 @@ const List<Skill> kSkills = [
     level: 0.86,
     category: 'Mobile Systems',
     provenIn: 'System Optimization & Tree Traversal',
-    description: 'Space-time algorithmic complexity minimization, graph traversals, LRU memory caching policies, and high-efficiency tree data structures.',
-    tags: ['LRU CACHING', 'ASYMPTOTIC ANALYSIS', 'GRAPH ALGORITHMS', 'EFFICIENCY TUNING'],
+    description:
+        'Space-time algorithmic complexity minimization, graph traversals, LRU memory caching policies, and high-efficiency tree data structures.',
+    tags: [
+      'LRU CACHING',
+      'ASYMPTOTIC ANALYSIS',
+      'GRAPH ALGORITHMS',
+      'EFFICIENCY TUNING'
+    ],
   ),
   Skill(
     name: 'Healthcare & Smart-ID',
@@ -125,8 +198,14 @@ const List<Skill> kSkills = [
     level: 0.95,
     category: 'Domain Expertise',
     provenIn: 'NatHealth & Eskadenia Suites',
-    description: 'Deep business-logic understanding of HIPAA-compliant patient record handling, national smart-ID verification schemas, and highly regulated insurance claims pipelines.',
-    tags: ['HIPAA COMPLIANCE', 'SMART-ID SCHEMAS', 'INSURANCE PIPELINES', 'E-HEALTH'],
+    description:
+        'Deep business-logic understanding of HIPAA-compliant patient record handling, national smart-ID verification schemas, and highly regulated insurance claims pipelines.',
+    tags: [
+      'HIPAA COMPLIANCE',
+      'SMART-ID SCHEMAS',
+      'INSURANCE PIPELINES',
+      'E-HEALTH'
+    ],
   ),
   Skill(
     name: 'E-Commerce & Enterprise',
@@ -134,7 +213,8 @@ const List<Skill> kSkills = [
     level: 0.90,
     category: 'Domain Expertise',
     provenIn: 'Solutions Now & Future Advanced',
-    description: 'Developed complete m-commerce checkout flows, product catalog synchronizations, and ERP integration modules for dynamic supply-chain and fitness applications.',
+    description:
+        'Developed complete m-commerce checkout flows, product catalog synchronizations, and ERP integration modules for dynamic supply-chain and fitness applications.',
     tags: ['M-COMMERCE', 'ERP MODULES', 'CHECKOUT FLOWS', 'FITNESS APPS'],
   ),
   Skill(
@@ -143,8 +223,14 @@ const List<Skill> kSkills = [
     level: 0.95,
     category: 'Languages & Comm',
     provenIn: 'Global Engineering Teams',
-    description: 'Bilingual proficiency (Professional English / Native Arabic) with certified multinational workplace communication skills. Proven track record of gathering cross-border requirements and delivering specs on schedule.',
-    tags: ['ENGLISH (PROFESSIONAL)', 'ARABIC (NATIVE)', 'CROSS-CULTURAL', 'AGILE SYNC'],
+    description:
+        'Bilingual proficiency (Professional English / Native Arabic) with certified multinational workplace communication skills. Proven track record of gathering cross-border requirements and delivering specs on schedule.',
+    tags: [
+      'ENGLISH (PROFESSIONAL)',
+      'ARABIC (NATIVE)',
+      'CROSS-CULTURAL',
+      'AGILE SYNC'
+    ],
   ),
   Skill(
     name: 'iOS & Swift (Foundations)',
@@ -152,7 +238,8 @@ const List<Skill> kSkills = [
     level: 0.82,
     category: 'Mobile Systems',
     provenIn: 'Cross-platform native bridging',
-    description: 'Foundational iOS ecosystem knowledge. Competent in writing and debugging Swift MethodChannels to bridge Flutter applications to native iOS Core Bluetooth and Keychain services.',
+    description:
+        'Foundational iOS ecosystem knowledge. Competent in writing and debugging Swift MethodChannels to bridge Flutter applications to native iOS Core Bluetooth and Keychain services.',
     tags: ['SWIFT', 'IOS KEYCHAIN', 'APP STORE CONNECT', 'NATIVE CHANNELS'],
   ),
 ];

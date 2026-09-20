@@ -79,7 +79,8 @@ class CredentialsBentoCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.lg),
               child: Builder(
                 builder: (context) {
-                  final lang = Localizations.maybeLocaleOf(context)?.languageCode;
+                  final lang =
+                      Localizations.maybeLocaleOf(context)?.languageCode;
                   final l10n = AppLocalizations.of(context);
                   final eduTitle = lang == 'ar'
                       ? (l10n?.sectionEducation ?? 'التعليم')

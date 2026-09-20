@@ -20,14 +20,11 @@ class CvDossierCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
-          color: isDark
-              ? AppColors.slate900.withValues(alpha: 0.7)
-              : Colors.white,
+          color:
+              isDark ? AppColors.slate900.withValues(alpha: 0.7) : Colors.white,
           borderRadius: BorderRadius.circular(AppRadius.lg),
           border: Border.all(
-            color: isDark
-                ? accent.withValues(alpha: 0.4)
-                : AppColors.slate200,
+            color: isDark ? accent.withValues(alpha: 0.4) : AppColors.slate200,
             width: 1.5,
           ),
           boxShadow: [
@@ -150,8 +147,7 @@ class CvDossierCard extends StatelessWidget {
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor:
-                        isDark ? Colors.white : AppColors.slate900,
+                    foregroundColor: isDark ? Colors.white : AppColors.slate900,
                     side: BorderSide(
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.3)

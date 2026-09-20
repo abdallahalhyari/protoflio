@@ -81,15 +81,16 @@ class SkillsHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: scheme.primary.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                      color: scheme.primary.withValues(alpha: 0.4)),
+                  border:
+                      Border.all(color: scheme.primary.withValues(alpha: 0.4)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text('✦',
                         style: TextStyle(
-                            color: AppColors.accentAmber, fontSize: AppTypography.caption)),
+                            color: AppColors.accentAmber,
+                            fontSize: AppTypography.caption)),
                     const SizedBox(width: 6),
                     Text(
                       '12 CORE DISCIPLINES',

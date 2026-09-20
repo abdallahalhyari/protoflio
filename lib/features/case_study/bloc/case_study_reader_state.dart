@@ -22,7 +22,8 @@ class CaseStudyReaderState extends Equatable {
     return CaseStudyReaderState(
       progress: progress ?? this.progress,
       showDock: showDock ?? this.showDock,
-      activeChapterId: activeChapterId != null ? activeChapterId() : this.activeChapterId,
+      activeChapterId:
+          activeChapterId != null ? activeChapterId() : this.activeChapterId,
       isCompleted: isCompleted ?? this.isCompleted,
     );
   }

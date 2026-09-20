@@ -22,7 +22,8 @@ Widget _wrap(Widget child, [Size size = const Size(1200, 5000)]) {
 
 void main() {
   group('Case Study Pages Test Suite', () {
-    testWidgets('NatHealthCaseStudy renders all chapters and outcomes (Desktop & Mobile)',
+    testWidgets(
+        'NatHealthCaseStudy renders all chapters and outcomes (Desktop & Mobile)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 5000));
       await tester.pumpWidget(_wrap(const NatHealthCaseStudy()));
@@ -40,21 +41,24 @@ void main() {
 
       // Mobile
       await tester.binding.setSurfaceSize(const Size(390, 844));
-      await tester.pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(390, 844)));
+      await tester
+          .pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
       expect(find.text('NATHEALTH · CASE STUDY'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('EskadeniaCaseStudy renders all chapters and outcomes (Desktop & Mobile)',
+    testWidgets(
+        'EskadeniaCaseStudy renders all chapters and outcomes (Desktop & Mobile)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 5000));
       await tester.pumpWidget(_wrap(const EskadeniaCaseStudy()));
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(find.text('ESKADENIA · CASE STUDY'), findsOneWidget);
-      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsOneWidget);
+      expect(find.text('E-Learning & Healthcare Enterprise Suite'),
+          findsOneWidget);
       expect(find.text('THE PROBLEM'), findsOneWidget);
       expect(find.text('MY ROLE'), findsOneWidget);
       expect(find.text('SYSTEM ARCHITECTURE'), findsOneWidget);
@@ -66,21 +70,24 @@ void main() {
 
       // Mobile
       await tester.binding.setSurfaceSize(const Size(390, 844));
-      await tester.pumpWidget(_wrap(const EskadeniaCaseStudy(), const Size(390, 844)));
+      await tester
+          .pumpWidget(_wrap(const EskadeniaCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
       expect(find.text('ESKADENIA · CASE STUDY'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('SolutionsCaseStudy renders all chapters and outcomes (Desktop & Mobile)',
+    testWidgets(
+        'SolutionsCaseStudy renders all chapters and outcomes (Desktop & Mobile)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 5000));
       await tester.pumpWidget(_wrap(const SolutionsCaseStudy()));
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(find.text('SOLUTIONS NOW · CASE STUDY'), findsOneWidget);
-      expect(find.text('Loyalty Rewards & Ephemeral Social Media Apps'), findsOneWidget);
+      expect(find.text('Loyalty Rewards & Ephemeral Social Media Apps'),
+          findsOneWidget);
       expect(find.text('THE PROBLEM'), findsOneWidget);
       expect(find.text('MY ROLE'), findsOneWidget);
       expect(find.text('SYSTEM ARCHITECTURE'), findsOneWidget);
@@ -92,14 +99,16 @@ void main() {
 
       // Mobile
       await tester.binding.setSurfaceSize(const Size(390, 844));
-      await tester.pumpWidget(_wrap(const SolutionsCaseStudy(), const Size(390, 844)));
+      await tester
+          .pumpWidget(_wrap(const SolutionsCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
       expect(find.text('SOLUTIONS NOW · CASE STUDY'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('FaisCaseStudy renders all chapters and outcomes (Desktop & Mobile)',
+    testWidgets(
+        'FaisCaseStudy renders all chapters and outcomes (Desktop & Mobile)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 5000));
       await tester.pumpWidget(_wrap(const FaisCaseStudy()));
@@ -118,14 +127,16 @@ void main() {
 
       // Mobile
       await tester.binding.setSurfaceSize(const Size(390, 844));
-      await tester.pumpWidget(_wrap(const FaisCaseStudy(), const Size(390, 844)));
+      await tester
+          .pumpWidget(_wrap(const FaisCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
       expect(find.text('FAIS · CASE STUDY'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('Case study masthead renders corporate verification links and share action',
+    testWidgets(
+        'Case study masthead renders corporate verification links and share action',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 5000));
       await tester.pumpWidget(_wrap(const NatHealthCaseStudy()));
@@ -157,14 +168,17 @@ void main() {
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('CaseStudyReadingCompanion renders top progress bar, reveals dock on scroll, jumps to chapters and back to top',
+    testWidgets(
+        'CaseStudyReadingCompanion renders top progress bar, reveals dock on scroll, jumps to chapters and back to top',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 800));
-      await tester.pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(1200, 800)));
+      await tester
+          .pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(1200, 800)));
       await tester.pump(const Duration(milliseconds: 300));
 
       // Verify top reading progress bar is present
-      expect(find.byKey(const Key('case_study_reading_progress_bar')), findsOneWidget);
+      expect(find.byKey(const Key('case_study_reading_progress_bar')),
+          findsOneWidget);
 
       // Verify floating chapter dock is present
       expect(find.byKey(const Key('case_study_chapter_dock')), findsOneWidget);
@@ -175,11 +189,15 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
 
       // Verify chapter pills are rendered
-      expect(find.byKey(const Key('case_study_chapter_problem')), findsOneWidget);
+      expect(
+          find.byKey(const Key('case_study_chapter_problem')), findsOneWidget);
       expect(find.byKey(const Key('case_study_chapter_role')), findsOneWidget);
-      expect(find.byKey(const Key('case_study_chapter_architecture')), findsOneWidget);
-      expect(find.byKey(const Key('case_study_chapter_outcomes')), findsOneWidget);
-      expect(find.byKey(const Key('case_study_chapter_lessons')), findsOneWidget);
+      expect(find.byKey(const Key('case_study_chapter_architecture')),
+          findsOneWidget);
+      expect(
+          find.byKey(const Key('case_study_chapter_outcomes')), findsOneWidget);
+      expect(
+          find.byKey(const Key('case_study_chapter_lessons')), findsOneWidget);
 
       // Tap chapter pill '07 OUTCOMES'
       await tester.tap(find.byKey(const Key('case_study_chapter_outcomes')));
@@ -197,10 +215,12 @@ void main() {
     testWidgets('CaseStudyReadingCompanion adapts cleanly to mobile viewport',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
-      await tester.pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(390, 844)));
+      await tester
+          .pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.byKey(const Key('case_study_reading_progress_bar')), findsOneWidget);
+      expect(find.byKey(const Key('case_study_reading_progress_bar')),
+          findsOneWidget);
       expect(find.byKey(const Key('case_study_chapter_dock')), findsOneWidget);
 
       // Scroll down on mobile
@@ -213,7 +233,8 @@ void main() {
       expect(find.text('ARCH'), findsOneWidget);
 
       // Tap compact chapter chip
-      await tester.tap(find.byKey(const Key('case_study_chapter_architecture')));
+      await tester
+          .tap(find.byKey(const Key('case_study_chapter_architecture')));
       await tester.pump(const Duration(milliseconds: 600));
 
       expect(tester.takeException(), isNull);

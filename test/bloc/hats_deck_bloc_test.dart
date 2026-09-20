@@ -15,15 +15,15 @@ void main() {
       expect(bloc.state.isInitialized, isFalse);
     });
 
-    test('HatRoleSelected updates selectedHatIndex and brings card to front', () async {
+    test('HatRoleSelected updates selectedHatIndex and brings card to front',
+        () async {
       final bloc = HatsDeckBloc(hatCount: 6);
 
       bloc.add(const HatRoleSelected(2));
       await expectLater(
         bloc.stream,
         emits(predicate<HatsDeckState>((state) =>
-            state.selectedHatIndex == 2 &&
-            state.renderOrder.last == 2)),
+            state.selectedHatIndex == 2 && state.renderOrder.last == 2)),
       );
 
       await bloc.close();
@@ -54,7 +54,8 @@ void main() {
       await bloc.close();
     });
 
-    test('HatLayoutInitialized sets fan positions and initializes deck', () async {
+    test('HatLayoutInitialized sets fan positions and initializes deck',
+        () async {
       final bloc = HatsDeckBloc(hatCount: 6);
 
       bloc.add(const HatLayoutInitialized(Size(1200, 800)));
@@ -74,8 +75,8 @@ void main() {
       bloc.add(const HatCardPositionSet(3, Offset(150, 220)));
       await expectLater(
         bloc.stream,
-        emits(predicate<HatsDeckState>((state) =>
-            state.cardPositions[3] == const Offset(150, 220))),
+        emits(predicate<HatsDeckState>(
+            (state) => state.cardPositions[3] == const Offset(150, 220))),
       );
 
       await bloc.close();

@@ -28,7 +28,8 @@ abstract class UrlSyncService {
     return sectionHashes[0];
   }
 
-  static const String baseTitle = 'Abdallah Alhyari — Senior Flutter & Android Engineer';
+  static const String baseTitle =
+      'Abdallah Alhyari — Senior Flutter & Android Engineer';
 
   String titleForHash(String hash) {
     final clean = hash.replaceAll('#', '').toLowerCase();

@@ -90,7 +90,8 @@ class ProjectDomainFilters extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadius.xs),
                   child: Padding(
                     padding: const EdgeInsets.all(2),
-                    child: Icon(Icons.close_rounded, size: 14, color: scheme.primary),
+                    child: Icon(Icons.close_rounded,
+                        size: 14, color: scheme.primary),
                   ),
                 ),
               ],
@@ -141,19 +142,25 @@ class _DomainChipState extends State<_DomainChip> {
         ? scheme.primary.withValues(alpha: isDark ? 0.22 : 0.15)
         : (isInteractive
             ? scheme.primary.withValues(alpha: isDark ? 0.08 : 0.05)
-            : (isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100));
+            : (isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : AppColors.slate100));
 
     final activeBorder = isSelected
         ? scheme.primary.withValues(alpha: isDark ? 0.7 : 0.6)
         : (isInteractive
             ? scheme.primary.withValues(alpha: isDark ? 0.45 : 0.35)
-            : (isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200));
+            : (isDark
+                ? Colors.white.withValues(alpha: 0.12)
+                : AppColors.slate200));
 
     final textColor = isSelected
         ? scheme.primary
         : (isInteractive
             ? (isDark ? Colors.white : AppColors.slate900)
-            : (isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700));
+            : (isDark
+                ? Colors.white.withValues(alpha: 0.85)
+                : AppColors.slate700));
 
     return Semantics(
       button: true,
@@ -190,7 +197,8 @@ class _DomainChipState extends State<_DomainChip> {
                   boxShadow: isSelected
                       ? [
                           BoxShadow(
-                            color: scheme.primary.withValues(alpha: isDark ? 0.2 : 0.1),
+                            color: scheme.primary
+                                .withValues(alpha: isDark ? 0.2 : 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),
@@ -198,7 +206,8 @@ class _DomainChipState extends State<_DomainChip> {
                       : (isInteractive && !isSelected
                           ? [
                               BoxShadow(
-                                color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.04),
+                                color: scheme.primary
+                                    .withValues(alpha: isDark ? 0.08 : 0.04),
                                 blurRadius: 4,
                                 offset: const Offset(0, 1),
                               ),
@@ -214,20 +223,25 @@ class _DomainChipState extends State<_DomainChip> {
                         fontFamily: AppTypography.monoFont,
                         color: textColor,
                         fontSize: isDesktop ? AppTypography.micro : 10,
-                        fontWeight: isSelected ? FontWeight.w900 : FontWeight.w700,
+                        fontWeight:
+                            isSelected ? FontWeight.w900 : FontWeight.w700,
                         letterSpacing: 1.0,
                       ),
                     ),
                     const SizedBox(width: 6),
                     AnimatedContainer(
                       duration: AppMotion.snap,
-                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 1.5),
                       decoration: BoxDecoration(
                         color: isSelected
                             ? scheme.primary.withValues(alpha: 0.25)
                             : (isInteractive
-                                ? scheme.primary.withValues(alpha: isDark ? 0.15 : 0.1)
-                                : (isDark ? Colors.white12 : AppColors.slate200)),
+                                ? scheme.primary
+                                    .withValues(alpha: isDark ? 0.15 : 0.1)
+                                : (isDark
+                                    ? Colors.white12
+                                    : AppColors.slate200)),
                         borderRadius: BorderRadius.circular(AppRadius.chip),
                       ),
                       child: Text(

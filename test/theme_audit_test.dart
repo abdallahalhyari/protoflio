@@ -39,7 +39,8 @@ Widget createThemedTestApp({
 void main() {
   group('Light & Dark Mode Theme Audit', () {
     for (final brightness in [Brightness.dark, Brightness.light]) {
-      final modeName = brightness == Brightness.dark ? 'Dark Mode' : 'Light Mode';
+      final modeName =
+          brightness == Brightness.dark ? 'Dark Mode' : 'Light Mode';
 
       testWidgets('$modeName - IntroPage renders cleanly', (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
@@ -57,7 +58,8 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets('$modeName - ProjectsPage desktop & mobile render adaptively', (tester) async {
+      testWidgets('$modeName - ProjectsPage desktop & mobile render adaptively',
+          (tester) async {
         // Desktop
         await tester.binding.setSurfaceSize(const Size(1200, 900));
         await tester.pumpWidget(createThemedTestApp(
@@ -83,7 +85,8 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets('$modeName - EngineeringPage renders architecture blueprints', (tester) async {
+      testWidgets('$modeName - EngineeringPage renders architecture blueprints',
+          (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
         await tester.pumpWidget(createThemedTestApp(
           child: const EngineeringPage(),
@@ -96,7 +99,9 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets('$modeName - ExperiencePage renders timeline and academic annex', (tester) async {
+      testWidgets(
+          '$modeName - ExperiencePage renders timeline and academic annex',
+          (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
         final ctrl = PageController();
         await tester.pumpWidget(createThemedTestApp(
@@ -110,7 +115,9 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets('$modeName - SkillsPage renders category chips and collectible skills', (tester) async {
+      testWidgets(
+          '$modeName - SkillsPage renders category chips and collectible skills',
+          (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
         await tester.pumpWidget(createThemedTestApp(
           child: const SkillsPage(),
@@ -123,7 +130,9 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets('$modeName - HatsGridPage renders perspectives and action buttons', (tester) async {
+      testWidgets(
+          '$modeName - HatsGridPage renders perspectives and action buttons',
+          (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
         await tester.pumpWidget(createThemedTestApp(
           child: const HatsGridPage(),
@@ -137,7 +146,9 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets('$modeName - ContactPage renders availability and communication channels', (tester) async {
+      testWidgets(
+          '$modeName - ContactPage renders availability and communication channels',
+          (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
         await tester.pumpWidget(createThemedTestApp(
           child: const ContactPage(),
@@ -150,7 +161,9 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets('$modeName - PortfolioNav TopNav and MobileAppBar adapt to theme', (tester) async {
+      testWidgets(
+          '$modeName - PortfolioNav TopNav and MobileAppBar adapt to theme',
+          (tester) async {
         await tester.binding.setSurfaceSize(const Size(1200, 900));
         final stubController = HomeController(
           pageIndex: ValueNotifier<int>(0),
@@ -183,7 +196,9 @@ void main() {
       });
     }
 
-    testWidgets('Theme toggle does not navigate to contact page on various viewports', (tester) async {
+    testWidgets(
+        'Theme toggle does not navigate to contact page on various viewports',
+        (tester) async {
       for (final size in [
         const Size(1440, 900),
         const Size(1280, 800),
@@ -207,7 +222,8 @@ void main() {
                         (w.icon as Icon).icon == Icons.light_mode_outlined ||
                         (w.icon as Icon).icon == Icons.dark_mode_outlined)));
 
-        expect(themeBtnFinder, findsOneWidget, reason: 'Theme button must exist for size $size');
+        expect(themeBtnFinder, findsOneWidget,
+            reason: 'Theme button must exist for size $size');
 
         // Tap theme button
         await tester.tap(themeBtnFinder);
@@ -219,7 +235,9 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    testWidgets('Mobile theme toggle preserves scroll position and does not jump to contact', (tester) async {
+    testWidgets(
+        'Mobile theme toggle preserves scroll position and does not jump to contact',
+        (tester) async {
       tester.view.devicePixelRatio = 1.0;
       tester.view.physicalSize = const Size(400, 800);
 
@@ -264,25 +282,38 @@ void main() {
       expect(AppColors.linkedIn, const Color(0xFF0A66C2));
     });
 
-    test('toAccessibleLightText maps saturated dark-mode tones to high-contrast light tones', () {
-      expect(AppColors.toAccessibleLightText(AppColors.accentAmber), AppColors.accentAmberDeep);
-      expect(AppColors.toAccessibleLightText(const Color(0xFFFBBF24)), AppColors.accentAmberDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentGreen), AppColors.accentGreenDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentSky), AppColors.accentSkyDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentCyan), AppColors.accentCyanDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentRose), AppColors.accentRoseDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentViolet), AppColors.accentVioletDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentIndigo), AppColors.accentIndigoDeepText);
+    test(
+        'toAccessibleLightText maps saturated dark-mode tones to high-contrast light tones',
+        () {
+      expect(AppColors.toAccessibleLightText(AppColors.accentAmber),
+          AppColors.accentAmberDeep);
+      expect(AppColors.toAccessibleLightText(const Color(0xFFFBBF24)),
+          AppColors.accentAmberDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentGreen),
+          AppColors.accentGreenDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentSky),
+          AppColors.accentSkyDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentCyan),
+          AppColors.accentCyanDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentRose),
+          AppColors.accentRoseDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentViolet),
+          AppColors.accentVioletDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.accentIndigo),
+          AppColors.accentIndigoDeepText);
     });
 
-    testWidgets('SurfaceTone.adaptiveAccentText adapts according to theme brightness', (tester) async {
+    testWidgets(
+        'SurfaceTone.adaptiveAccentText adapts according to theme brightness',
+        (tester) async {
       await tester.pumpWidget(
         Theme(
           data: ThemeData.light(),
           child: Builder(
             builder: (context) {
               expect(context.isDarkMode, isFalse);
-              expect(context.adaptiveAccentText(AppColors.accentAmber), AppColors.accentAmberDeep);
+              expect(context.adaptiveAccentText(AppColors.accentAmber),
+                  AppColors.accentAmberDeep);
               return const SizedBox.shrink();
             },
           ),
@@ -295,7 +326,8 @@ void main() {
           child: Builder(
             builder: (context) {
               expect(context.isDarkMode, isTrue);
-              expect(context.adaptiveAccentText(AppColors.accentAmber), AppColors.accentAmber);
+              expect(context.adaptiveAccentText(AppColors.accentAmber),
+                  AppColors.accentAmber);
               return const SizedBox.shrink();
             },
           ),

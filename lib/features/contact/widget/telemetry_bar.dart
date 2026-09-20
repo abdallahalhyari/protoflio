@@ -67,11 +67,15 @@ class _TelemetryBarState extends State<TelemetryBar> {
         runSpacing: 8,
         children: [
           pill(
-            border: (isDark ? AppColors.accentGreen : AppColors.accentGreenDeep).withValues(alpha: 0.45),
+            border: (isDark ? AppColors.accentGreen : AppColors.accentGreenDeep)
+                .withValues(alpha: 0.45),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                PulsingDot(color: isDark ? AppColors.accentGreen : AppColors.accentGreenDeep),
+                PulsingDot(
+                    color: isDark
+                        ? AppColors.accentGreen
+                        : AppColors.accentGreenDeep),
                 const SizedBox(width: 6),
                 Flexible(
                   child: FittedBox(

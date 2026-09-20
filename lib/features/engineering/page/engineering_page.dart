@@ -171,8 +171,8 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                     if (details.primaryVelocity != null) {
                       if (details.primaryVelocity! < -200) {
                         SoundService.instance.playClick();
-                        final nextIndex =
-                            (selectedTopicIndex + 1) % kArchitectureTopics.length;
+                        final nextIndex = (selectedTopicIndex + 1) %
+                            kArchitectureTopics.length;
                         context
                             .read<ArchitectureSimulatorBloc>()
                             .add(SimulatorTopicSelected(nextIndex));

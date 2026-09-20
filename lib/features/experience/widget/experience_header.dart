@@ -79,14 +79,16 @@ class ExperienceHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: scheme.primary.withValues(alpha: 0.10),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                      color: scheme.primary.withValues(alpha: 0.4)),
+                  border:
+                      Border.all(color: scheme.primary.withValues(alpha: 0.4)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text('✦',
-                        style: TextStyle(color: scheme.primary, fontSize: AppTypography.caption)),
+                        style: TextStyle(
+                            color: scheme.primary,
+                            fontSize: AppTypography.caption)),
                     const SizedBox(width: 6),
                     Text(
                       '4 ROLES · ENTERPRISE IMPACT',

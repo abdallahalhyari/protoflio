@@ -47,7 +47,8 @@ class NavigationMobileSectionScrolled extends NavigationEvent {
   final int sectionIndex;
   final bool syncUrl;
 
-  const NavigationMobileSectionScrolled(this.sectionIndex, {this.syncUrl = true});
+  const NavigationMobileSectionScrolled(this.sectionIndex,
+      {this.syncUrl = true});
 
   @override
   List<Object?> get props => [sectionIndex, syncUrl];

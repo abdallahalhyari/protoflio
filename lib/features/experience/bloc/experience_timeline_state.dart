@@ -24,11 +24,13 @@ class ExperienceTimelineState extends Equatable {
     return ExperienceTimelineState(
       isVisible: isVisible ?? this.isVisible,
       hoveredIndex: hoveredIndex != null ? hoveredIndex() : this.hoveredIndex,
-      selectedIndex: selectedIndex != null ? selectedIndex() : this.selectedIndex,
+      selectedIndex:
+          selectedIndex != null ? selectedIndex() : this.selectedIndex,
       experiences: experiences ?? this.experiences,
     );
   }
 
   @override
-  List<Object?> get props => [isVisible, hoveredIndex, selectedIndex, experiences];
+  List<Object?> get props =>
+      [isVisible, hoveredIndex, selectedIndex, experiences];
 }

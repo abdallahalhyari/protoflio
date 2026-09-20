@@ -22,8 +22,9 @@ class _CustomCursorState extends State<CustomCursor> {
   @override
   Widget build(BuildContext context) {
     final platform = Theme.of(context).platform;
-    final isTouch = platform == TargetPlatform.iOS || platform == TargetPlatform.android;
-    
+    final isTouch =
+        platform == TargetPlatform.iOS || platform == TargetPlatform.android;
+
     if (MediaQuery.sizeOf(context).width < AppBreakpoints.tablet || isTouch) {
       // Don't show custom cursor on mobile/tablet screens
       return widget.child;

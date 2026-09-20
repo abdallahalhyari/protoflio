@@ -79,16 +79,16 @@ class EditorialChip extends StatelessWidget {
         bg = isDark
             ? Colors.white.withValues(alpha: 0.05)
             : Colors.white.withValues(alpha: 0.85);
-        border = isDark
-            ? Colors.white.withValues(alpha: 0.12)
-            : AppColors.slate200;
+        border =
+            isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200;
         fg = isDark ? Colors.white : AppColors.slate900;
         break;
     }
 
     final hPad = dense ? 8.0 : 10.0;
     final vPad = dense ? 3.0 : 5.0;
-    final fontSize = dense ? AppTypography.editorialSm : AppTypography.editorial;
+    final fontSize =
+        dense ? AppTypography.editorialSm : AppTypography.editorial;
 
     final row = Row(
       mainAxisSize: MainAxisSize.min,

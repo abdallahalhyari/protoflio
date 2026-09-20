@@ -5,7 +5,8 @@ import 'package:profile/theme/tokens.dart';
 /// Bouncing chevron + "SCROLL TO EXPLORE" label. Auto-loops when motion is
 /// allowed; renders static when the user prefers reduced motion.
 class ScrollExploreHint extends StatefulWidget {
-  const ScrollExploreHint({super.key, required this.isDark, required this.onTap});
+  const ScrollExploreHint(
+      {super.key, required this.isDark, required this.onTap});
 
   final bool isDark;
   final VoidCallback onTap;

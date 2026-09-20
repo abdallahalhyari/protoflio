@@ -24,7 +24,8 @@ Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   group('Projects Widgets Test Suite', () {
-    testWidgets('PipelineTopologyDiagram renders pipeline topology stages', (tester) async {
+    testWidgets('PipelineTopologyDiagram renders pipeline topology stages',
+        (tester) async {
       final project = kProjects.first; // NatHealth
       await tester.pumpWidget(_wrap(
         PipelineTopologyDiagram(
@@ -40,7 +41,8 @@ void main() {
       expect(find.text('OFFLINE SQLITE'), findsOneWidget);
     });
 
-    testWidgets('NfcArchitectureDiagram renders full node topology', (tester) async {
+    testWidgets('NfcArchitectureDiagram renders full node topology',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         const NfcArchitectureDiagram(
           isDesktop: true,
@@ -70,7 +72,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('CORE PROBLEM'), findsOneWidget);
-      expect(find.text('Offline medical sync failure under low network bandwidth.'), findsOneWidget);
+      expect(
+          find.text(
+              'Offline medical sync failure under low network bandwidth.'),
+          findsOneWidget);
       expect(find.byIcon(Icons.api_rounded), findsOneWidget);
     });
 
@@ -85,11 +90,14 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('SECURITY:'), findsOneWidget);
-      expect(find.textContaining('Keystore backed JWT encryption'), findsOneWidget);
+      expect(find.textContaining('Keystore backed JWT encryption'),
+          findsOneWidget);
       expect(find.textContaining('§'), findsOneWidget);
     });
 
-    testWidgets('InteractiveProjectCard renders company website and linkedin quick-link buttons', (tester) async {
+    testWidgets(
+        'InteractiveProjectCard renders company website and linkedin quick-link buttons',
+        (tester) async {
       final project = kProjects.first;
       await tester.pumpWidget(_wrap(
         InteractiveProjectCard(
@@ -101,13 +109,15 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.byTooltip('Visit NatHealth official website'), findsOneWidget);
+      expect(
+          find.byTooltip('Visit NatHealth official website'), findsOneWidget);
       expect(find.byTooltip('View NatHealth on LinkedIn'), findsOneWidget);
       expect(find.text('in'), findsOneWidget);
       expect(find.text('100% OFFLINE SLA'), findsOneWidget);
     });
 
-    testWidgets('InteractiveProjectCard renders interactive tech stack chips', (tester) async {
+    testWidgets('InteractiveProjectCard renders interactive tech stack chips',
+        (tester) async {
       final project = kProjects.first;
       String? tappedTech;
       await tester.pumpWidget(_wrap(
@@ -127,7 +137,8 @@ void main() {
       expect(tappedTech, equals('Flutter'));
     });
 
-    testWidgets('ProjectsPage domain filtering narrows cards and can be reset', (tester) async {
+    testWidgets('ProjectsPage domain filtering narrows cards and can be reset',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         const ProjectsPage(),
         const Size(1200, 900),
@@ -136,7 +147,8 @@ void main() {
 
       // Initially all 4 projects
       expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsOneWidget);
+      expect(find.text('E-Learning & Healthcare Enterprise Suite'),
+          findsOneWidget);
 
       // Tap domain filter for Healthcare & Smart Cards
       final healthcareChip = find.text('HEALTHCARE & SMART CARDS');
@@ -146,17 +158,21 @@ void main() {
 
       // Only NatHealth should be visible
       expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
+      expect(
+          find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
 
       // Tap ALL to reset
       await tester.tap(find.text('ALL'));
       await tester.pumpAndSettle();
 
       expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsOneWidget);
+      expect(find.text('E-Learning & Healthcare Enterprise Suite'),
+          findsOneWidget);
     });
 
-    testWidgets('InteractiveProjectCard activates focus styling when keyboard focused', (tester) async {
+    testWidgets(
+        'InteractiveProjectCard activates focus styling when keyboard focused',
+        (tester) async {
       final project = kProjects.first;
       await tester.pumpWidget(_wrap(
         InteractiveProjectCard(
@@ -182,7 +198,8 @@ void main() {
       expect(shape.side.width, equals(1.5));
     });
 
-    testWidgets('ProjectsPage arrow key navigation changes domain filter', (tester) async {
+    testWidgets('ProjectsPage arrow key navigation changes domain filter',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         const ProjectsPage(),
         const Size(1200, 900),
@@ -195,7 +212,8 @@ void main() {
 
       // Should have switched to the next domain (Healthcare & Smart Cards)
       expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
+      expect(
+          find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
     });
   });
 }

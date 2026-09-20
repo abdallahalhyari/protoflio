@@ -27,8 +27,7 @@ void main() {
     // Semantic node reports enabled: false — Tristate.isFalse indicates
     // the enabled flag was explicitly set to false (not just absent).
     final semantics = tester.getSemantics(find.text('OFF'));
-    expect(semantics.flagsCollection.isEnabled.toString(),
-        contains('isFalse'));
+    expect(semantics.flagsCollection.isEnabled.toString(), contains('isFalse'));
   });
 
   testWidgets('loading state shows CircularProgressIndicator', (tester) async {

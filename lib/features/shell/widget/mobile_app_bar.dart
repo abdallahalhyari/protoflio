@@ -37,43 +37,43 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: ConditionalBlur(
         sigma: 18,
         child: Container(
-            height: 60 + MediaQuery.paddingOf(context).top,
-            padding: EdgeInsets.only(
-              top: MediaQuery.paddingOf(context).top,
-              left: ultraTight ? AppSpacing.sm : AppSpacing.md,
-              right: ultraTight ? AppSpacing.sm : AppSpacing.md,
-            ),
-            decoration: BoxDecoration(
-              color: context.glassSurface,
-              border: Border(
-                bottom: BorderSide(
-                  color: primary.withValues(alpha: isDark ? 0.28 : 0.16),
-                  width: 1.0,
-                ),
+          height: 60 + MediaQuery.paddingOf(context).top,
+          padding: EdgeInsets.only(
+            top: MediaQuery.paddingOf(context).top,
+            left: ultraTight ? AppSpacing.sm : AppSpacing.md,
+            right: ultraTight ? AppSpacing.sm : AppSpacing.md,
+          ),
+          decoration: BoxDecoration(
+            color: context.glassSurface,
+            border: Border(
+              bottom: BorderSide(
+                color: primary.withValues(alpha: isDark ? 0.28 : 0.16),
+                width: 1.0,
               ),
-              boxShadow: [
-                BoxShadow(
-                  color:
-                      isDark ? AppColors.shadowMedium : AppColors.shadowSoft,
-                  blurRadius: 16,
-                  offset: const Offset(0, 4),
-                ),
-              ],
             ),
-            child: Row(
-              children: [
-                // Brand signature
-                Semantics(
-                  button: true,
-                  label: 'Abdallah Alhyari — return to top',
-                  child: InkWell(
+            boxShadow: [
+              BoxShadow(
+                color: isDark ? AppColors.shadowMedium : AppColors.shadowSoft,
+                blurRadius: 16,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              // Brand signature
+              Semantics(
+                button: true,
+                label: 'Abdallah Alhyari — return to top',
+                child: InkWell(
                   onTap: () {
                     SoundService.instance.playClick();
                     onLogoPressed?.call();
                   },
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -116,138 +116,155 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                               'ABDALLAH',
                               style: TextStyle(
                                 fontFamily: AppTypography.displayFont,
-                                color: isDark ? Colors.white : AppColors.slate900,
+                                color:
+                                    isDark ? Colors.white : AppColors.slate900,
                                 fontSize: AppTypography.small,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.4,
                                 height: 1.1,
                               ),
                             ),
-                            if (!tight)
-                              _buildSubBadge(context, isDark),
+                            if (!tight) _buildSubBadge(context, isDark),
                           ],
                         ),
                       ],
                     ),
                   ),
                 ),
-                ),
+              ),
 
-                const Spacer(),
+              const Spacer(),
 
-                // Quick Controls
-                // Language (hidden under 400px — reachable via slide-out menu)
-                if (!tight) ...[
-                  ValueListenableBuilder<Locale>(
-                    valueListenable: LocaleController.locale,
-                    builder: (_, loc, __) {
-                      final code = loc.languageCode.toUpperCase();
-                      return Semantics(
-                        button: true,
-                        label: 'Change language. Current: $code',
-                        child: Tooltip(
-                          message: 'Change language ($code)',
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(AppRadius.chip),
-                            onTap: () {
-                              SoundService.instance.playClick();
-                              LocaleController.nextLocale();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-                              decoration: BoxDecoration(
+              // Quick Controls
+              // Language (hidden under 400px — reachable via slide-out menu)
+              if (!tight) ...[
+                ValueListenableBuilder<Locale>(
+                  valueListenable: LocaleController.locale,
+                  builder: (_, loc, __) {
+                    final code = loc.languageCode.toUpperCase();
+                    return Semantics(
+                      button: true,
+                      label: 'Change language. Current: $code',
+                      child: Tooltip(
+                        message: 'Change language ($code)',
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(AppRadius.chip),
+                          onTap: () {
+                            SoundService.instance.playClick();
+                            LocaleController.nextLocale();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 7, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? Colors.white.withValues(alpha: 0.08)
+                                  : AppColors.slate100,
+                              borderRadius:
+                                  BorderRadius.circular(AppRadius.chip),
+                              border: Border.all(
                                 color: isDark
-                                    ? Colors.white.withValues(alpha: 0.08)
-                                    : AppColors.slate100,
-                                borderRadius: BorderRadius.circular(AppRadius.chip),
-                                border: Border.all(
-                                  color: isDark ? Colors.white12 : AppColors.slate200,
-                                ),
+                                    ? Colors.white12
+                                    : AppColors.slate200,
                               ),
-                              child: Text(
-                                code,
-                                style: TextStyle(
-                                  color: isDark ? Colors.white : AppColors.slate900,
-                                  fontSize: AppTypography.editorial,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 0.8,
-                                ),
+                            ),
+                            child: Text(
+                              code,
+                              style: TextStyle(
+                                color:
+                                    isDark ? Colors.white : AppColors.slate900,
+                                fontSize: AppTypography.editorial,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 0.8,
                               ),
                             ),
                           ),
                         ),
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 6),
-                ],
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(width: 6),
+              ],
 
-                // Theme
-                ValueListenableBuilder<ThemeMode>(
-                  valueListenable: ThemeController.mode,
-                  builder: (_, mode, __) {
-                    final dark = mode == ThemeMode.dark;
+              // Theme
+              ValueListenableBuilder<ThemeMode>(
+                valueListenable: ThemeController.mode,
+                builder: (_, mode, __) {
+                  final dark = mode == ThemeMode.dark;
+                  return Semantics(
+                    button: true,
+                    toggled: dark,
+                    label:
+                        dark ? 'Switch to light mode' : 'Switch to dark mode',
+                    child: IconButton(
+                      tooltip:
+                          dark ? 'Switch to light mode' : 'Switch to dark mode',
+                      iconSize: 18,
+                      padding: EdgeInsets.zero,
+                      constraints:
+                          const BoxConstraints(minWidth: 32, minHeight: 32),
+                      icon: Icon(
+                        dark
+                            ? Icons.light_mode_outlined
+                            : Icons.dark_mode_outlined,
+                        color: isDark ? Colors.white70 : AppColors.slate600,
+                      ),
+                      onPressed: () {
+                        SoundService.instance.playClick();
+                        ThemeController.toggle();
+                      },
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(width: 6),
+
+              // Audio (omitted on ultra-compact < 360px screens to prevent header overflow)
+              if (!ultraTight) ...[
+                const SizedBox(width: 6),
+                ValueListenableBuilder<bool>(
+                  valueListenable: SoundService.instance.isEnabled,
+                  builder: (_, enabled, __) {
                     return Semantics(
                       button: true,
-                      toggled: dark,
-                      label: dark ? 'Switch to light mode' : 'Switch to dark mode',
+                      toggled: enabled,
+                      label: enabled
+                          ? 'Mute ambient audio'
+                          : 'Enable ambient audio',
                       child: IconButton(
-                        tooltip: dark ? 'Switch to light mode' : 'Switch to dark mode',
+                        tooltip: enabled
+                            ? 'Mute ambient audio'
+                            : 'Enable ambient audio',
                         iconSize: 18,
                         padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                        constraints:
+                            const BoxConstraints(minWidth: 32, minHeight: 32),
                         icon: Icon(
-                          dark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
-                          color: isDark ? Colors.white70 : AppColors.slate600,
+                          enabled
+                              ? Icons.volume_up_outlined
+                              : Icons.volume_off_outlined,
+                          color: enabled
+                              ? AppColors.accentAmber
+                              : (isDark ? Colors.white38 : AppColors.slate400),
                         ),
                         onPressed: () {
-                          SoundService.instance.playClick();
-                          ThemeController.toggle();
+                          SoundService.instance.toggle();
                         },
                       ),
                     );
                   },
                 ),
+              ],
 
-                const SizedBox(width: 6),
+              const SizedBox(width: 6),
 
-                // Audio (omitted on ultra-compact < 360px screens to prevent header overflow)
-                if (!ultraTight) ...[
-                  const SizedBox(width: 6),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: SoundService.instance.isEnabled,
-                    builder: (_, enabled, __) {
-                      return Semantics(
-                        button: true,
-                        toggled: enabled,
-                        label: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
-                        child: IconButton(
-                          tooltip: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
-                          iconSize: 18,
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                          icon: Icon(
-                            enabled ? Icons.volume_up_outlined : Icons.volume_off_outlined,
-                            color: enabled
-                                ? AppColors.accentAmber
-                                : (isDark ? Colors.white38 : AppColors.slate400),
-                          ),
-                          onPressed: () {
-                            SoundService.instance.toggle();
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ],
-
-                const SizedBox(width: 6),
-
-                // Menu Pill
-                Semantics(
-                  button: true,
-                  label: 'Open navigation menu',
-                  child: InkWell(
+              // Menu Pill
+              Semantics(
+                button: true,
+                label: 'Open navigation menu',
+                child: InkWell(
                   onTap: () {
                     SoundService.instance.playClick();
                     onMenuPressed();
@@ -290,11 +307,11 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                 ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 

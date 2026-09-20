@@ -46,7 +46,9 @@ class HatBioStrip extends StatelessWidget {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            color: isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.slate700,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.9)
+                : AppColors.slate700,
             fontSize: AppTypography.captionSm,
             height: 1.45,
             letterSpacing: 0.2,

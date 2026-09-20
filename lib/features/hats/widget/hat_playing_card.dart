@@ -34,7 +34,8 @@ class HatPlayingCard extends StatefulWidget {
   State<HatPlayingCard> createState() => _HatPlayingCardState();
 }
 
-class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProviderStateMixin {
+class _HatPlayingCardState extends State<HatPlayingCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _flipController;
   late Animation<double> _flipAnimation;
   bool _isFlipped = false;
@@ -123,7 +124,8 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
   Widget build(BuildContext context) {
     final reduce = MediaQuery.disableAnimationsOf(context);
     final cardContent = GestureDetector(
-      onPanStart: widget.isStandalone ? null : (_) => widget.onDragStart?.call(),
+      onPanStart:
+          widget.isStandalone ? null : (_) => widget.onDragStart?.call(),
       onPanUpdate: widget.isStandalone
           ? null
           : (details) {
@@ -160,7 +162,8 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
         },
         child: HolographicCardPhysics(
           borderRadius: AppRadius.card,
-          enableGlare: false, // HatPlayingCard uses its own custom gold specular gleam
+          enableGlare:
+              false, // HatPlayingCard uses its own custom gold specular gleam
           maxTiltAngle: 0.25, // Exaggerated tilt for the poker cards
           child: Builder(
             builder: (context) {
@@ -181,7 +184,8 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                   final isUnder = angle > math.pi / 2;
                   // reduce-motion strips the hover lift + parallax tilt so the
                   // card sits flat when the user requests less motion.
-                  final double hoverLift = (_isHovered && !reduce) ? -10.0 : 0.0;
+                  final double hoverLift =
+                      (_isHovered && !reduce) ? -10.0 : 0.0;
                   return RepaintBoundary(
                     child: Transform(
                       alignment: Alignment.center,
@@ -266,8 +270,8 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black
-                      .withValues(alpha: _isHovered ? 0.72 : 0.55),
+                  color:
+                      Colors.black.withValues(alpha: _isHovered ? 0.72 : 0.55),
                   blurRadius: _isHovered ? 30 : 18,
                   offset: Offset(0, _isHovered ? 14 : 8),
                 ),
@@ -426,7 +430,8 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
               // Border now uses the hat's own accent instead of the
               // universal yellow — makes the back read as the "same
               // card" flipped rather than a different card entirely.
-              border: Border.all(color: accent.withValues(alpha: 0.65), width: 1.4),
+              border:
+                  Border.all(color: accent.withValues(alpha: 0.65), width: 1.4),
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -483,8 +488,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                       ),
                     ),
                     Icon(Icons.autorenew,
-                        size: 14,
-                        color: Colors.white.withValues(alpha: 0.6)),
+                        size: 14, color: Colors.white.withValues(alpha: 0.6)),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -505,8 +509,8 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                 // Tagline block — subtle left-border accent, no amber
                 // battle with the body text below.
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.04),
                     borderRadius: BorderRadius.circular(AppRadius.chip),
@@ -544,8 +548,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(Icons.autorenew,
-                        size: 12,
-                        color: Colors.white.withValues(alpha: 0.55)),
+                        size: 12, color: Colors.white.withValues(alpha: 0.55)),
                     Text(
                       'TAP TO RETURN',
                       style: TextStyle(
@@ -556,8 +559,7 @@ class _HatPlayingCardState extends State<HatPlayingCard> with SingleTickerProvid
                       ),
                     ),
                     Icon(Icons.touch_app_outlined,
-                        size: 12,
-                        color: Colors.white.withValues(alpha: 0.55)),
+                        size: 12, color: Colors.white.withValues(alpha: 0.55)),
                   ],
                 ),
               ],

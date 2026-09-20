@@ -83,28 +83,54 @@ void main() {
     });
 
     test('Contains standard crawler directives and canonical link', () {
-      expect(indexHtml.contains('<meta name="robots" content="index, follow'), isTrue);
-      expect(indexHtml.contains('<meta name="googlebot" content="index, follow">'), isTrue);
-      expect(indexHtml.contains('<meta name="referrer" content="strict-origin-when-cross-origin">'), isTrue);
-      expect(indexHtml.contains('<link rel="canonical" href="https://alhyari.web.app/">'), isTrue);
+      expect(indexHtml.contains('<meta name="robots" content="index, follow'),
+          isTrue);
+      expect(
+          indexHtml.contains('<meta name="googlebot" content="index, follow">'),
+          isTrue);
+      expect(
+          indexHtml.contains(
+              '<meta name="referrer" content="strict-origin-when-cross-origin">'),
+          isTrue);
+      expect(
+          indexHtml.contains(
+              '<link rel="canonical" href="https://alhyari.web.app/">'),
+          isTrue);
       expect(indexHtml.contains('<link rel="alternate" hreflang="en"'), isTrue);
     });
 
     test('Contains rich Open Graph protocol tags for social previews', () {
-      expect(indexHtml.contains('<meta property="og:type" content="website">'), isTrue);
+      expect(indexHtml.contains('<meta property="og:type" content="website">'),
+          isTrue);
       expect(indexHtml.contains('<meta property="og:site_name"'), isTrue);
       expect(indexHtml.contains('<meta property="og:title"'), isTrue);
       expect(indexHtml.contains('<meta property="og:description"'), isTrue);
-      expect(indexHtml.contains('<meta property="og:image" content="https://alhyari.web.app/og-image.png">'), isTrue);
-      expect(indexHtml.contains('<meta property="og:image:secure_url"'), isTrue);
-      expect(indexHtml.contains('<meta property="og:image:type" content="image/png">'), isTrue);
-      expect(indexHtml.contains('<meta property="og:image:width" content="1200">'), isTrue);
-      expect(indexHtml.contains('<meta property="og:image:height" content="630">'), isTrue);
+      expect(
+          indexHtml.contains(
+              '<meta property="og:image" content="https://alhyari.web.app/og-image.png">'),
+          isTrue);
+      expect(
+          indexHtml.contains('<meta property="og:image:secure_url"'), isTrue);
+      expect(
+          indexHtml
+              .contains('<meta property="og:image:type" content="image/png">'),
+          isTrue);
+      expect(
+          indexHtml.contains('<meta property="og:image:width" content="1200">'),
+          isTrue);
+      expect(
+          indexHtml.contains('<meta property="og:image:height" content="630">'),
+          isTrue);
       expect(indexHtml.contains('<meta property="og:image:alt"'), isTrue);
-      expect(indexHtml.contains('<meta property="og:url" content="https://alhyari.web.app/">'), isTrue);
+      expect(
+          indexHtml.contains(
+              '<meta property="og:url" content="https://alhyari.web.app/">'),
+          isTrue);
     });
 
-    test('Strictly contains zero Twitter/X tags or handles per user requirement', () {
+    test(
+        'Strictly contains zero Twitter/X tags or handles per user requirement',
+        () {
       // The user explicitly stated: "i dont have Twitter" and "remove Twitter"
       final lower = indexHtml.toLowerCase();
       expect(lower.contains('name="twitter:'), isFalse,
@@ -116,8 +142,9 @@ void main() {
     });
 
     test('Contains valid JSON-LD structured data graph', () {
-      final jsonLdMatch = RegExp(r'<script type="application/ld\+json">([\s\S]*?)</script>')
-          .firstMatch(indexHtml);
+      final jsonLdMatch =
+          RegExp(r'<script type="application/ld\+json">([\s\S]*?)</script>')
+              .firstMatch(indexHtml);
       expect(jsonLdMatch, isNotNull, reason: 'Must contain JSON-LD script tag');
 
       final rawJson = jsonLdMatch!.group(1)!.trim();
@@ -156,20 +183,29 @@ void main() {
       expect(person['hasOccupation']?['occupationalCategory'], '15-1252.00');
 
       // Verify SoftwareApplications
-      final softwareApps = graph.where((node) => node['@type'] == 'SoftwareApplication').toList();
-      expect(softwareApps.length, 4, reason: 'Must document all 4 featured production apps');
-      final appNames = softwareApps.map((app) => app['name'].toString()).toList();
+      final softwareApps = graph
+          .where((node) => node['@type'] == 'SoftwareApplication')
+          .toList();
+      expect(softwareApps.length, 4,
+          reason: 'Must document all 4 featured production apps');
+      final appNames =
+          softwareApps.map((app) => app['name'].toString()).toList();
       expect(appNames.any((n) => n.contains('NatHealth')), isTrue);
       expect(appNames.any((n) => n.contains('ESKADENIA')), isTrue);
       expect(appNames.any((n) => n.contains('Solutions Now')), isTrue);
       expect(appNames.any((n) => n.contains('FAIS')), isTrue);
     });
 
-    test('Semantic skip target and crawler main does not block accessibility tree', () {
+    test(
+        'Semantic skip target and crawler main does not block accessibility tree',
+        () {
       // Must not have aria-hidden="true" so screen readers and search bots can traverse it
-      expect(indexHtml.contains('id="main-content" aria-hidden="true"'), isFalse);
-      expect(indexHtml.contains('aria-hidden="true" id="main-content"'), isFalse);
-      expect(indexHtml.contains('<main class="sr-only" id="main-content">'), isTrue);
+      expect(
+          indexHtml.contains('id="main-content" aria-hidden="true"'), isFalse);
+      expect(
+          indexHtml.contains('aria-hidden="true" id="main-content"'), isFalse);
+      expect(indexHtml.contains('<main class="sr-only" id="main-content">'),
+          isTrue);
     });
   });
 

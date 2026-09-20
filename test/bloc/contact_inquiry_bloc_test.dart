@@ -5,7 +5,8 @@ import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
 
 void main() {
   group('ContactInquiryBloc Test Suite', () {
-    test('initial state is configured with default track and empty details', () {
+    test('initial state is configured with default track and empty details',
+        () {
       final bloc = ContactInquiryBloc();
       expect(bloc.state.selectedTrackIndex, equals(0));
       expect(bloc.state.name, isEmpty);
@@ -33,13 +34,16 @@ void main() {
 
       bloc.add(const InquiryNameChanged('Sarah Connor'));
       bloc.add(const InquiryCompanyChanged('Cyberdyne Systems'));
-      bloc.add(const InquiryBodyChanged('We need urgent mobile security audit.'));
+      bloc.add(
+          const InquiryBodyChanged('We need urgent mobile security audit.'));
 
       await expectLater(
         bloc.stream.skip(2),
         emits(predicate<ContactInquiryState>((state) =>
-            state.formattedMessage.contains('FROM: Sarah Connor (Cyberdyne Systems)') &&
-            state.formattedMessage.contains('We need urgent mobile security audit.'))),
+            state.formattedMessage
+                .contains('FROM: Sarah Connor (Cyberdyne Systems)') &&
+            state.formattedMessage
+                .contains('We need urgent mobile security audit.'))),
       );
 
       await bloc.close();
@@ -51,7 +55,8 @@ void main() {
       bloc.add(const InquiryCopiedEvent());
       await expectLater(
         bloc.stream,
-        emits(predicate<ContactInquiryState>((state) => state.isCopied == true)),
+        emits(
+            predicate<ContactInquiryState>((state) => state.isCopied == true)),
       );
 
       await bloc.close();

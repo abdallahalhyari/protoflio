@@ -21,8 +21,7 @@ TextDirection _dirFor(WidgetTester tester, Finder root) {
 }
 
 void main() {
-  testWidgets('Arabic locale forces rtl on the intro subtree',
-      (tester) async {
+  testWidgets('Arabic locale forces rtl on the intro subtree', (tester) async {
     // Use a moderate viewport so Intro's desktop wordmark path lays out
     // without hitting the height guard for the scroll hint.
     tester.view.physicalSize = const Size(1200, 900);

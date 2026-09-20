@@ -99,7 +99,8 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                     color: t.accent.withValues(alpha: isDark ? 0.14 : 0.10),
                     borderRadius: BorderRadius.circular(AppRadius.sm),
                     border: Border.all(
-                      color: (isDark ? t.accent : accentText).withValues(alpha: isDark ? 0.35 : 0.4),
+                      color: (isDark ? t.accent : accentText)
+                          .withValues(alpha: isDark ? 0.35 : 0.4),
                       width: 1,
                     ),
                   ),

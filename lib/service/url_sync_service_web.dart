@@ -49,7 +49,8 @@ class UrlSyncServiceWeb extends UrlSyncService {
       if (_window.has('history')) {
         final history = _window.getProperty('history'.toJS) as JSObject;
         if (history.has('replaceState')) {
-          final replaceState = history.getProperty('replaceState'.toJS) as JSFunction;
+          final replaceState =
+              history.getProperty('replaceState'.toJS) as JSFunction;
           final newHash = '#$hash'.toJS;
           replaceState.callAsFunction(history, null, ''.toJS, newHash);
           return;
@@ -72,8 +73,7 @@ class UrlSyncServiceWeb extends UrlSyncService {
           final hash = getInitialHash() ?? 'home';
           onHashChange(hash);
         }).toJS;
-        addEventListener.callAsFunction(
-            _window, 'hashchange'.toJS, callback);
+        addEventListener.callAsFunction(_window, 'hashchange'.toJS, callback);
         addEventListener.callAsFunction(_window, 'popstate'.toJS, callback);
         return () {
           try {

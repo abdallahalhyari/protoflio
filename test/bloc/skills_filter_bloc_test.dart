@@ -16,7 +16,8 @@ void main() {
       expect(bloc.state.hasActiveFilter, isFalse);
     });
 
-    test('SkillCategorySelected narrows skills to specified category', () async {
+    test('SkillCategorySelected narrows skills to specified category',
+        () async {
       final bloc = SkillsFilterBloc();
 
       bloc.add(const SkillCategorySelected('Mobile Systems'));
@@ -31,7 +32,8 @@ void main() {
       await bloc.close();
     });
 
-    test('SkillSearchQueryChanged filters skills across name and tags', () async {
+    test('SkillSearchQueryChanged filters skills across name and tags',
+        () async {
       final bloc = SkillsFilterBloc();
 
       bloc.add(const SkillSearchQueryChanged('NFC'));
@@ -52,8 +54,8 @@ void main() {
       bloc.add(const SkillCategorySelected('Security & Protocols'));
       await expectLater(
         bloc.stream,
-        emits(predicate<SkillsFilterState>((state) =>
-            state.selectedCategory == 'Security & Protocols')),
+        emits(predicate<SkillsFilterState>(
+            (state) => state.selectedCategory == 'Security & Protocols')),
       );
 
       bloc.add(const SkillsFilterReset());

@@ -268,19 +268,36 @@ class AppColors {
   /// deep tone (>4.5:1, typical >5.5:1) for text/icons on white/slate50 in light mode.
   static Color toAccessibleLightText(Color color) {
     final argb = color.toARGB32();
-    if (color == accentAmber || argb == 0xFFFBBF24 || argb == 0xFFF59E0B || argb == 0xFFFDE68A) {
+    if (color == accentAmber ||
+        argb == 0xFFFBBF24 ||
+        argb == 0xFFF59E0B ||
+        argb == 0xFFFDE68A) {
       return accentAmberDeep;
     }
-    if (color == accentGreen || color == accentGreenLight || argb == 0xFF10B981 || argb == 0xFF34D399) {
+    if (color == accentGreen ||
+        color == accentGreenLight ||
+        argb == 0xFF10B981 ||
+        argb == 0xFF34D399) {
       return accentGreenDeep;
     }
-    if (color == accentSky || color == accentSkySoft || argb == 0xFF38BDF8 || argb == 0xFF7DD3FC) {
+    if (color == accentSky ||
+        color == accentSkySoft ||
+        argb == 0xFF38BDF8 ||
+        argb == 0xFF7DD3FC) {
       return accentSkyDeep;
     }
-    if (color == accentCyan || color == accentCyanLight || argb == 0xFF06B6D4 || argb == 0xFF22D3EE) {
+    if (color == accentCyan ||
+        color == accentCyanLight ||
+        argb == 0xFF06B6D4 ||
+        argb == 0xFF22D3EE) {
       return accentCyanDeep;
     }
-    if (color == accentRose || color == accentRoseLight || color == accentRoseSoft || argb == 0xFFF43F5E || argb == 0xFFFB7185 || argb == 0xFFF87171) {
+    if (color == accentRose ||
+        color == accentRoseLight ||
+        color == accentRoseSoft ||
+        argb == 0xFFF43F5E ||
+        argb == 0xFFFB7185 ||
+        argb == 0xFFF87171) {
       return accentRoseDeep;
     }
     if (color == accentViolet || argb == 0xFF8B5CF6) {
@@ -292,7 +309,10 @@ class AppColors {
     if (argb == 0xFFF472B6 || argb == 0xFFEC4899) {
       return accentPinkDeep;
     }
-    if (color == accentIndigo || color == accentIndigoSoft || argb == 0xFF818CF8 || argb == 0xFFA5B4FC) {
+    if (color == accentIndigo ||
+        color == accentIndigoSoft ||
+        argb == 0xFF818CF8 ||
+        argb == 0xFFA5B4FC) {
       return accentIndigoDeepText;
     }
     return color;

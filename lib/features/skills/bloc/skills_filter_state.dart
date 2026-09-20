@@ -16,7 +16,8 @@ class SkillsFilterState extends Equatable {
     required this.categoryCounts,
   });
 
-  bool get hasActiveFilter => selectedCategory != 'ALL' || searchQuery.isNotEmpty;
+  bool get hasActiveFilter =>
+      selectedCategory != 'ALL' || searchQuery.isNotEmpty;
 
   SkillsFilterState copyWith({
     List<Skill>? allSkills,

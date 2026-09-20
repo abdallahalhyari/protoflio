@@ -10,7 +10,9 @@ import 'package:profile/features/projects/widget/interactive_project_card.dart';
 
 void main() {
   group('Asset Size Budget & Format Audit', () {
-    test('All bundled raster images are in WebP format and within strict size budgets', () {
+    test(
+        'All bundled raster images are in WebP format and within strict size budgets',
+        () {
       final assets = <String, int>{
         'assets/my_image.webp': 64 * 1024,
         'assets/hat.webp': 32 * 1024,
@@ -23,19 +25,22 @@ void main() {
       int totalBytes = 0;
       for (final entry in assets.entries) {
         final file = File(entry.key);
-        expect(file.existsSync(), isTrue, reason: 'Asset ${entry.key} must exist on disk');
+        expect(file.existsSync(), isTrue,
+            reason: 'Asset ${entry.key} must exist on disk');
         final bytes = file.lengthSync();
         totalBytes += bytes;
         expect(
           bytes,
           lessThanOrEqualTo(entry.value),
-          reason: 'Asset ${entry.key} ($bytes bytes) exceeds budget of ${entry.value} bytes',
+          reason:
+              'Asset ${entry.key} ($bytes bytes) exceeds budget of ${entry.value} bytes',
         );
       }
 
       // Total portfolio image asset payload must be under 350 KB
       expect(totalBytes, lessThanOrEqualTo(350 * 1024),
-          reason: 'Total image payload must be less than 350 KB for instant load');
+          reason:
+              'Total image payload must be less than 350 KB for instant load');
     });
 
     test('Subsetted Tenada display font is within 32 KB budget', () {
@@ -46,7 +51,8 @@ void main() {
   });
 
   group('RepaintBoundary Isolation & Rendering Efficiency Audit', () {
-    testWidgets('InteractiveProjectCard is wrapped in RepaintBoundary to isolate spotlight updates',
+    testWidgets(
+        'InteractiveProjectCard is wrapped in RepaintBoundary to isolate spotlight updates',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 800));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -104,7 +110,8 @@ void main() {
       expect(find.byType(DesktopToolbar), findsOneWidget);
     });
 
-    testWidgets('MagazinePageTransformer culls distant offstage pages via Offstage and TickerMode',
+    testWidgets(
+        'MagazinePageTransformer culls distant offstage pages via Offstage and TickerMode',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 800));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -169,15 +176,29 @@ void main() {
     });
 
     test('Contains critical preloads and prefetch resource hints', () {
-      expect(indexHtml.contains('rel="preload" href="assets/fonts/Tenada.ttf" as="font"'), isTrue);
-      expect(indexHtml.contains('rel="preload" href="main.dart.wasm" as="fetch"'), isTrue);
-      expect(indexHtml.contains('rel="modulepreload" href="main.dart.mjs"'), isTrue);
-      expect(indexHtml.contains('rel="preload" href="assets/assets/my_image.webp" as="image"'), isTrue);
-      expect(indexHtml.contains('rel="prefetch" href="assets/assets/hat.webp" as="image"'), isTrue);
+      expect(
+          indexHtml.contains(
+              'rel="preload" href="assets/fonts/Tenada.ttf" as="font"'),
+          isTrue);
+      expect(
+          indexHtml.contains('rel="preload" href="main.dart.wasm" as="fetch"'),
+          isTrue);
+      expect(indexHtml.contains('rel="modulepreload" href="main.dart.mjs"'),
+          isTrue);
+      expect(
+          indexHtml.contains(
+              'rel="preload" href="assets/assets/my_image.webp" as="image"'),
+          isTrue);
+      expect(
+          indexHtml.contains(
+              'rel="prefetch" href="assets/assets/hat.webp" as="image"'),
+          isTrue);
     });
 
     test('Maintains boot-loader dismissal on flutter-first-frame event', () {
-      expect(indexHtml.contains("window.addEventListener('flutter-first-frame'"), isTrue);
+      expect(
+          indexHtml.contains("window.addEventListener('flutter-first-frame'"),
+          isTrue);
     });
   });
 }

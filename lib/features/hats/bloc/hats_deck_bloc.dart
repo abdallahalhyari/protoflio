@@ -72,8 +72,11 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
     add(HatRoleSelected(prevIdx));
   }
 
-  void _onCardBroughtToFront(HatCardBroughtToFront event, Emitter<HatsDeckState> emit) {
-    if (state.renderOrder.isNotEmpty && state.renderOrder.last == event.index) return;
+  void _onCardBroughtToFront(
+      HatCardBroughtToFront event, Emitter<HatsDeckState> emit) {
+    if (state.renderOrder.isNotEmpty && state.renderOrder.last == event.index) {
+      return;
+    }
     final newOrder = List<int>.from(state.renderOrder);
     newOrder.remove(event.index);
     newOrder.add(event.index);
@@ -86,13 +89,15 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
     emit(state.copyWith(cardPositions: positions));
   }
 
-  void _onCardPositionSet(HatCardPositionSet event, Emitter<HatsDeckState> emit) {
+  void _onCardPositionSet(
+      HatCardPositionSet event, Emitter<HatsDeckState> emit) {
     final positions = List<Offset>.from(state.cardPositions);
     positions[event.index] = event.position;
     emit(state.copyWith(cardPositions: positions));
   }
 
-  void _onLayoutInitialized(HatLayoutInitialized event, Emitter<HatsDeckState> emit) {
+  void _onLayoutInitialized(
+      HatLayoutInitialized event, Emitter<HatsDeckState> emit) {
     final positions = _calculateFanPositions(event.size, count);
     emit(state.copyWith(
       cardPositions: positions,
@@ -125,7 +130,8 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
     ));
   }
 
-  void _onDeckSpreadReset(HatDeckSpreadReset event, Emitter<HatsDeckState> emit) {
+  void _onDeckSpreadReset(
+      HatDeckSpreadReset event, Emitter<HatsDeckState> emit) {
     final positions = _calculateFanPositions(event.size, count);
     emit(state.copyWith(
       renderOrder: List.generate(count, (i) => i),

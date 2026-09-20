@@ -7,7 +7,8 @@ class ContactInquiryBloc
   ContactInquiryBloc({
     int initialTrackIndex = 0,
     List<InquiryTrackInfo>? tracks,
-  }) : super(_createInitialState(initialTrackIndex, tracks ?? kDefaultInquiryTracks)) {
+  }) : super(_createInitialState(
+            initialTrackIndex, tracks ?? kDefaultInquiryTracks)) {
     on<InquiryTrackChanged>(_onTrackChanged);
     on<InquiryNameChanged>(_onNameChanged);
     on<InquiryCompanyChanged>(_onCompanyChanged);

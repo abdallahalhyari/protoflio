@@ -36,7 +36,12 @@ class _DeferredPageState extends State<DeferredPage> {
 
   void _startLoad() {
     widget.loader().then((_) {
-      if (mounted) setState(() { _loaded = true; _loadError = null; });
+      if (mounted) {
+        setState(() {
+          _loaded = true;
+          _loadError = null;
+        });
+      }
     }).catchError((Object err) {
       if (mounted) setState(() => _loadError = err);
     });

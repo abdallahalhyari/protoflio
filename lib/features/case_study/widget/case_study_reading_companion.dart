@@ -55,7 +55,8 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
   void initState() {
     super.initState();
     _bloc = CaseStudyReaderBloc(
-      initialChapterId: widget.chapters.isNotEmpty ? widget.chapters.first.id : null,
+      initialChapterId:
+          widget.chapters.isNotEmpty ? widget.chapters.first.id : null,
     );
     widget.scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -104,7 +105,8 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
 
     activeId ??= widget.chapters.isNotEmpty ? widget.chapters.first.id : null;
 
-    _bloc.add(CaseStudyScrollProgressUpdated(progress: progress, showDock: showDock));
+    _bloc.add(
+        CaseStudyScrollProgressUpdated(progress: progress, showDock: showDock));
     if (activeId != null && activeId != _bloc.state.activeChapterId) {
       _bloc.add(CaseStudyChapterDetected(activeId));
     }
@@ -315,8 +317,8 @@ class _FloatingChapterDock extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            Colors.black.withValues(alpha: isDark ? 0.55 : 0.16),
+                        color: Colors.black
+                            .withValues(alpha: isDark ? 0.55 : 0.16),
                         blurRadius: 28,
                         offset: const Offset(0, 10),
                       ),
@@ -596,7 +598,8 @@ class _ChapterPillState extends State<_ChapterPill> {
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
                         fontSize: AppTypography.micro,
-                        fontWeight: isActive ? FontWeight.w900 : FontWeight.w700,
+                        fontWeight:
+                            isActive ? FontWeight.w900 : FontWeight.w700,
                         letterSpacing: 1.0,
                         color: isActive
                             ? (isDark
@@ -604,7 +607,9 @@ class _ChapterPillState extends State<_ChapterPill> {
                                 : AppColors.accentCyanDeep)
                             : (_hovered
                                 ? (isDark ? Colors.white : AppColors.slate900)
-                                : (isDark ? Colors.white70 : AppColors.slate600)),
+                                : (isDark
+                                    ? Colors.white70
+                                    : AppColors.slate600)),
                       ),
                     ),
                   ],

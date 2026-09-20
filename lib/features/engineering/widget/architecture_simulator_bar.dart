@@ -45,7 +45,8 @@ class ArchitectureSimulatorBar extends StatelessWidget {
         vertical: isDesktop ? 10 : 8,
       ),
       decoration: BoxDecoration(
-        color: isDark ? Colors.black.withValues(alpha: 0.45) : AppColors.slate50,
+        color:
+            isDark ? Colors.black.withValues(alpha: 0.45) : AppColors.slate50,
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(
           color: accentColor.withValues(alpha: isDark ? 0.35 : 0.25),
@@ -131,7 +132,9 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                       visualDensity: VisualDensity.compact,
                     ),
                     icon: const DirIcon(Icons.chevron_left_rounded, size: 16),
-                    label: const Text('BACK', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800)),
+                    label: const Text('BACK',
+                        style: TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.w800)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -153,7 +156,9 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                           visualDensity: VisualDensity.compact,
                         ),
                         icon: Icon(
-                          isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                          isPlaying
+                              ? Icons.pause_rounded
+                              : Icons.play_arrow_rounded,
                           size: 16,
                           color: accentColor,
                         ),
@@ -198,7 +203,9 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                       visualDensity: VisualDensity.compact,
                     ),
                     icon: const DirIcon(Icons.chevron_right_rounded, size: 16),
-                    label: const Text('NEXT', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800)),
+                    label: const Text('NEXT',
+                        style: TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.w800)),
                   ),
                 ),
               ],

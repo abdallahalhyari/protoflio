@@ -16,7 +16,8 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       DiagramStep(
         layer: 'PRESENTATION LAYER',
         title: 'Flutter UI & State Controllers',
-        details: 'Declarative widgets, BLoC / ValueNotifiers, input validation & 60fps view rendering.',
+        details:
+            'Declarative widgets, BLoC / ValueNotifiers, input validation & 60fps view rendering.',
         icon: Icons.layers_outlined,
         color: AppColors.accentSky,
         telemetryPayload: 'UI.dispatch(ProcessClaimEvent(claimId: 7842))',
@@ -26,17 +27,20 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       DiagramStep(
         layer: 'DOMAIN LAYER (CORE)',
         title: 'Use Cases & Business Entities',
-        details: 'Pure Dart entities, business rules, repository contracts. Zero external framework dependencies.',
+        details:
+            'Pure Dart entities, business rules, repository contracts. Zero external framework dependencies.',
         icon: Icons.account_tree_outlined,
         color: AppColors.accentSky,
-        telemetryPayload: 'ExecuteUseCase.call(ClaimValidationParams(id: 7842))',
+        telemetryPayload:
+            'ExecuteUseCase.call(ClaimValidationParams(id: 7842))',
         telemetryStatus: 'DOMAIN_RULES_PASSED',
         latencyBudget: '< 2ms',
       ),
       DiagramStep(
         layer: 'DATA LAYER',
         title: 'Repository Implementations & DTOs',
-        details: 'Coordination between local cache and remote sources, serialization, and error translation.',
+        details:
+            'Coordination between local cache and remote sources, serialization, and error translation.',
         icon: Icons.storage_outlined,
         color: AppColors.accentGreenLight,
         telemetryPayload: 'ClaimRepositoryImpl.mapToDto(pureEntity)',
@@ -46,7 +50,8 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       DiagramStep(
         layer: 'DATA SOURCES / HARDWARE',
         title: 'SQLite Cache & REST / NFC APIs',
-        details: 'Native Android NFC Adapter, SQLite persistent storage, and secure HTTPS REST endpoints.',
+        details:
+            'Native Android NFC Adapter, SQLite persistent storage, and secure HTTPS REST endpoints.',
         icon: Icons.settings_ethernet_outlined,
         color: AppColors.accentAmber,
         telemetryPayload: 'SqliteAdapter.insert("claims", payload_bytes)',
@@ -72,40 +77,48 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       DiagramStep(
         layer: 'STEP 1: USER ACTION',
         title: 'Optimistic UI Dispatch',
-        details: 'Immediate user feedback with transactional state marked as PENDING_SYNC.',
+        details:
+            'Immediate user feedback with transactional state marked as PENDING_SYNC.',
         icon: Icons.touch_app_outlined,
         color: AppColors.accentSky,
-        telemetryPayload: 'TransactionState = PENDING_SYNC (UI updated instantly)',
+        telemetryPayload:
+            'TransactionState = PENDING_SYNC (UI updated instantly)',
         telemetryStatus: 'LOCAL_OPTIMISTIC',
         latencyBudget: '< 1ms',
       ),
       DiagramStep(
         layer: 'STEP 2: LOCAL ATOMIC COMMIT',
         title: 'SQLite / Encrypted Database',
-        details: 'Record stored locally within an ACID database transaction. Never held in volatile memory.',
+        details:
+            'Record stored locally within an ACID database transaction. Never held in volatile memory.',
         icon: Icons.save_outlined,
         color: AppColors.accentGreen,
-        telemetryPayload: 'BEGIN TRANSACTION; INSERT INTO outbox_claims VALUES (...); COMMIT;',
+        telemetryPayload:
+            'BEGIN TRANSACTION; INSERT INTO outbox_claims VALUES (...); COMMIT;',
         telemetryStatus: 'ACID_PERSISTED',
         latencyBudget: '< 8ms',
       ),
       DiagramStep(
         layer: 'STEP 3: JOB SCHEDULER',
         title: 'Android WorkManager Pipeline',
-        details: 'OS-managed background worker triggered with NETWORK_CONNECTED constraints & exponential backoff.',
+        details:
+            'OS-managed background worker triggered with NETWORK_CONNECTED constraints & exponential backoff.',
         icon: Icons.schedule_outlined,
         color: AppColors.accentAmberMid,
-        telemetryPayload: 'WorkManager.enqueueUnique(SyncWorker, Constraints(CONNECTED))',
+        telemetryPayload:
+            'WorkManager.enqueueUnique(SyncWorker, Constraints(CONNECTED))',
         telemetryStatus: 'WORKER_ENQUEUED',
         latencyBudget: '< 15ms',
       ),
       DiagramStep(
         layer: 'STEP 4: REMOTE RECONCILIATION',
         title: 'Server ACK & Conflict Resolution',
-        details: 'Idempotency keys prevent duplicate transactions; server timestamp updates local state to SYNCED.',
+        details:
+            'Idempotency keys prevent duplicate transactions; server timestamp updates local state to SYNCED.',
         icon: Icons.cloud_done_outlined,
         color: AppColors.accentVioletLight,
-        telemetryPayload: 'POST /api/v2/sync/claims (Idempotency-Key: 8FA2) -> 200 OK',
+        telemetryPayload:
+            'POST /api/v2/sync/claims (Idempotency-Key: 8FA2) -> 200 OK',
         telemetryStatus: 'STATE_SYNCED_200',
         latencyBudget: '< 120ms',
       ),
@@ -128,37 +141,44 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       DiagramStep(
         layer: 'DISCOVERY',
         title: 'NFC Adapter & Tag Dispatch',
-        details: 'Foreground dispatch filter captures IsoDep / Mifare smart-cards within milliseconds.',
+        details:
+            'Foreground dispatch filter captures IsoDep / Mifare smart-cards within milliseconds.',
         icon: Icons.nfc_outlined,
         color: AppColors.accentSky,
-        telemetryPayload: 'IsoDep.get(tag).connect(); RF carrier frequency 13.56 MHz',
+        telemetryPayload:
+            'IsoDep.get(tag).connect(); RF carrier frequency 13.56 MHz',
         telemetryStatus: 'TAG_CONNECTED_106KBPS',
         latencyBudget: '< 24ms',
       ),
       DiagramStep(
         layer: 'NATIVE CHANNEL',
         title: 'Kotlin MethodChannel Bridge',
-        details: 'High-speed binary transport bridging Flutter runtime to native Android IsoDep transceive buffer.',
+        details:
+            'High-speed binary transport bridging Flutter runtime to native Android IsoDep transceive buffer.',
         icon: Icons.cable_outlined,
         color: AppColors.accentSky,
-        telemetryPayload: 'MethodChannel("nfc").invokeMethod("transceive", commandBytes)',
+        telemetryPayload:
+            'MethodChannel("nfc").invokeMethod("transceive", commandBytes)',
         telemetryStatus: 'BINARY_CHANNEL_OK',
         latencyBudget: '< 4ms',
       ),
       DiagramStep(
         layer: 'COMMAND CHAIN',
         title: 'ISO-7816 APDU Handshake',
-        details: 'Select Application (AID), Mutual Authentication, and encrypted binary block read.',
+        details:
+            'Select Application (AID), Mutual Authentication, and encrypted binary block read.',
         icon: Icons.security_outlined,
         color: AppColors.accentAmber,
-        telemetryPayload: 'CLA:00 INS:A4 P1:04 P2:00 LC:08 [A0 00 00 00 03 ...] LE:00',
+        telemetryPayload:
+            'CLA:00 INS:A4 P1:04 P2:00 LC:08 [A0 00 00 00 03 ...] LE:00',
         telemetryStatus: 'SW_9000_NO_ERROR',
         latencyBudget: '< 32ms',
       ),
       DiagramStep(
         layer: 'VERIFICATION',
         title: 'Cryptographic Claim Verification',
-        details: 'Card payload parsed and cryptographically validated against digital certificate authorities.',
+        details:
+            'Card payload parsed and cryptographically validated against digital certificate authorities.',
         icon: Icons.verified_user_outlined,
         color: AppColors.accentGreen,
         telemetryPayload: 'VerifyX509Signature(cardPayload, RootCertAuthority)',
@@ -184,27 +204,32 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       DiagramStep(
         layer: 'AUTHENTICATION',
         title: 'Biometric + Hardware Challenge',
-        details: 'Fingerprint / Face Unlock verified via Android BiometricPrompt with StrongBox / TEE backing.',
+        details:
+            'Fingerprint / Face Unlock verified via Android BiometricPrompt with StrongBox / TEE backing.',
         icon: Icons.fingerprint_outlined,
         color: AppColors.accentSky,
-        telemetryPayload: 'BiometricPrompt.authenticate(CryptoObject) -> TEE Key Unlocked',
+        telemetryPayload:
+            'BiometricPrompt.authenticate(CryptoObject) -> TEE Key Unlocked',
         telemetryStatus: 'HARDWARE_AUTHENTICATED',
         latencyBudget: '< 50ms',
       ),
       DiagramStep(
         layer: 'STORAGE',
         title: 'Android Keystore / iOS Keychain',
-        details: 'Hardware-backed AES-256 GCM key encryption. Private keys never leave secure hardware enclave.',
+        details:
+            'Hardware-backed AES-256 GCM key encryption. Private keys never leave secure hardware enclave.',
         icon: Icons.lock_outlined,
         color: AppColors.accentAmberMid,
-        telemetryPayload: 'KeyStore.getKey("rsa_auth_token_key", masterPassword)',
+        telemetryPayload:
+            'KeyStore.getKey("rsa_auth_token_key", masterPassword)',
         telemetryStatus: 'KEY_RESOLVED_SECURE',
         latencyBudget: '< 8ms',
       ),
       DiagramStep(
         layer: 'EXCHANGE',
         title: 'Two-Tier JWT Token Protocol',
-        details: 'Short-lived access token (15 min) + hardware GUID-bound refresh token stored securely.',
+        details:
+            'Short-lived access token (15 min) + hardware GUID-bound refresh token stored securely.',
         icon: Icons.vpn_key_outlined,
         color: AppColors.accentSky,
         telemetryPayload: 'SignWithKeystore(DeviceGuid + Nonce + RefreshToken)',
@@ -214,10 +239,12 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       DiagramStep(
         layer: 'ROTATION',
         title: 'Atomic Silent Refresh & Revocation',
-        details: 'Automatic token refresh on HTTP 401 with immediate local cache purge upon revocation.',
+        details:
+            'Automatic token refresh on HTTP 401 with immediate local cache purge upon revocation.',
         icon: Icons.sync_lock_outlined,
         color: AppColors.accentGreen,
-        telemetryPayload: 'HTTP 401 -> POST /auth/refresh -> AccessToken.reset(15m)',
+        telemetryPayload:
+            'HTTP 401 -> POST /auth/refresh -> AccessToken.reset(15m)',
         telemetryStatus: 'TOKEN_ROTATED_200',
         latencyBudget: '< 70ms',
       ),
@@ -240,40 +267,48 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       DiagramStep(
         layer: 'UI / PRESENTATION',
         title: 'BlocBuilder & BlocListener',
-        details: 'Widget tree reacts instantly to state emissions while handling side-effects (navigation, dialogs) through listeners.',
+        details:
+            'Widget tree reacts instantly to state emissions while handling side-effects (navigation, dialogs) through listeners.',
         icon: Icons.view_quilt_outlined,
         color: AppColors.accentSky,
-        telemetryPayload: 'BlocBuilder<ClaimBloc, ClaimState>.build(context, state)',
+        telemetryPayload:
+            'BlocBuilder<ClaimBloc, ClaimState>.build(context, state)',
         telemetryStatus: 'FRAME_RENDERED_60FPS',
         latencyBudget: '< 16ms',
       ),
       DiagramStep(
         layer: 'EVENT DISPATCH',
         title: 'Unidirectional Data Flow',
-        details: 'User actions are transformed into strictly typed Events pushed into the BLoC sink.',
+        details:
+            'User actions are transformed into strictly typed Events pushed into the BLoC sink.',
         icon: Icons.alt_route_outlined,
         color: AppColors.accentAmberMid,
-        telemetryPayload: 'claimBloc.add(FetchMedicalDossierEvent(patientId: 104))',
+        telemetryPayload:
+            'claimBloc.add(FetchMedicalDossierEvent(patientId: 104))',
         telemetryStatus: 'EVENT_ENQUEUED_SINK',
         latencyBudget: '< 1ms',
       ),
       DiagramStep(
         layer: 'BUSINESS LOGIC COMPONENT',
         title: 'Event-to-State Mapping',
-        details: 'Asynchronous generators process events, interact with Domain use-cases, and yield immutable State objects.',
+        details:
+            'Asynchronous generators process events, interact with Domain use-cases, and yield immutable State objects.',
         icon: Icons.memory_outlined,
         color: AppColors.accentSky,
-        telemetryPayload: 'on<FetchMedicalDossierEvent>((event, emit) async* { ... })',
+        telemetryPayload:
+            'on<FetchMedicalDossierEvent>((event, emit) async* { ... })',
         telemetryStatus: 'STREAM_TRANSFORMING',
         latencyBudget: '< 14ms',
       ),
       DiagramStep(
         layer: 'STATE / EMISSION',
         title: 'Immutable State Classes',
-        details: 'Data classes with strictly defined properties and value equality (Equatable) preventing unnecessary widget rebuilds.',
+        details:
+            'Data classes with strictly defined properties and value equality (Equatable) preventing unnecessary widget rebuilds.',
         icon: Icons.stream_outlined,
         color: AppColors.accentGreen,
-        telemetryPayload: 'emit(ClaimDossierLoadedState(dossier: ImmutableDossier))',
+        telemetryPayload:
+            'emit(ClaimDossierLoadedState(dossier: ImmutableDossier))',
         telemetryStatus: 'STATE_DIFF_EMITTED',
         latencyBudget: '< 2ms',
       ),

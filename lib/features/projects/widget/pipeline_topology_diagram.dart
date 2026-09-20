@@ -22,27 +22,55 @@ class PipelineTopologyDiagram extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     List<String> pipeline;
     if (project.name.contains('NatHealth')) {
-      pipeline = const ['NFC APDU', 'Keystore JWT', 'Offline SQLite', 'WorkManager', 'HTTPS TPA'];
+      pipeline = const [
+        'NFC APDU',
+        'Keystore JWT',
+        'Offline SQLite',
+        'WorkManager',
+        'HTTPS TPA'
+      ];
     } else if (project.name.contains('ESKADENIA')) {
-      pipeline = const ['Feature PKG', 'MVVM Models', 'Service Locator', 'Cache Store', 'Hospital REST'];
+      pipeline = const [
+        'Feature PKG',
+        'MVVM Models',
+        'Service Locator',
+        'Cache Store',
+        'Hospital REST'
+      ];
     } else if (project.name.contains('FAIS')) {
-      pipeline = const ['Onboarding UI', 'Inspection Form', 'Blob Storage', 'WorkManager Sync', 'Core ERP'];
+      pipeline = const [
+        'Onboarding UI',
+        'Inspection Form',
+        'Blob Storage',
+        'WorkManager Sync',
+        'Core ERP'
+      ];
     } else if (project.name.contains('Solutions Now')) {
-      pipeline = const ['GPS Stream', 'Native Service', 'Local DB', 'Batch Sync', 'Fleet Command'];
+      pipeline = const [
+        'GPS Stream',
+        'Native Service',
+        'Local DB',
+        'Batch Sync',
+        'Fleet Command'
+      ];
     } else {
       pipeline = project.stack.take(5).toList();
     }
 
     return Semantics(
       container: true,
-      label: 'Pipeline architecture for ${project.name}: stages: ${pipeline.join(" to ")}',
+      label:
+          'Pipeline architecture for ${project.name}: stages: ${pipeline.join(" to ")}',
       child: Container(
         margin: const EdgeInsets.only(bottom: 8),
-        padding: EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
+        padding:
+            EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
         decoration: BoxDecoration(
-          color: isDark ? Colors.black.withValues(alpha: 0.35) : AppColors.slate50,
+          color:
+              isDark ? Colors.black.withValues(alpha: 0.35) : AppColors.slate50,
           borderRadius: BorderRadius.circular(AppRadius.chip),
-          border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
+          border: Border.all(
+              color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,17 +108,23 @@ class PipelineTopologyDiagram extends StatelessWidget {
                 children: [
                   for (int i = 0; i < pipeline.length; i++) ...[
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2.5),
                       decoration: BoxDecoration(
-                        color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.06),
+                        color: scheme.primary
+                            .withValues(alpha: isDark ? 0.08 : 0.06),
                         borderRadius: BorderRadius.circular(3),
-                        border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.3 : 0.25)),
+                        border: Border.all(
+                            color: scheme.primary
+                                .withValues(alpha: isDark ? 0.3 : 0.25)),
                       ),
                       child: Text(
                         pipeline[i].toUpperCase(),
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
-                          color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate900,
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.95)
+                              : AppColors.slate900,
                           fontSize: isDesktop
                               ? AppTypography.editorialSm
                               : AppTypography.nano,

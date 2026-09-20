@@ -25,9 +25,8 @@ class MobileSectionDivider extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.08)
-                  : Colors.white,
+              color:
+                  isDark ? Colors.white.withValues(alpha: 0.08) : Colors.white,
               borderRadius: BorderRadius.circular(AppRadius.xs),
               border: Border.all(color: context.glassBorder),
               boxShadow: isDark

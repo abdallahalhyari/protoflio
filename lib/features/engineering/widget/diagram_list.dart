@@ -28,8 +28,12 @@ class DiagramList extends StatelessWidget {
     if (val == 0xFF38BDF8) return AppColors.accentSkyDeep;
     if (val == 0xFF34D399) return AppColors.accentGreenDeep;
     if (val == 0xFF818CF8) return AppColors.accentIndigoDeepText;
-    if (val == 0xFF8B5CF6 || val == 0xFFA78BFA) return AppColors.accentVioletDeep;
-    if (val == 0xFFF59E0B || val == 0xFFFBBF24) return AppColors.accentAmberDeep;
+    if (val == 0xFF8B5CF6 || val == 0xFFA78BFA) {
+      return AppColors.accentVioletDeep;
+    }
+    if (val == 0xFFF59E0B || val == 0xFFFBBF24) {
+      return AppColors.accentAmberDeep;
+    }
     return color;
   }
 
@@ -44,7 +48,8 @@ class DiagramList extends StatelessWidget {
           : const ClampingScrollPhysics(),
       itemCount: topic.diagramSteps.length,
       separatorBuilder: (context, index) {
-        final isConnectorActive = activeStepIndex != null && activeStepIndex == index;
+        final isConnectorActive =
+            activeStepIndex != null && activeStepIndex == index;
         final connColor = isConnectorActive
             ? scheme.primary
             : scheme.primary.withValues(alpha: 0.5);
@@ -93,7 +98,8 @@ class DiagramList extends StatelessWidget {
 
         final borderColor = isActive
             ? (isDark ? step.color : accent)
-            : (isDark ? step.color : accent).withValues(alpha: isDark ? 0.35 : 0.45);
+            : (isDark ? step.color : accent)
+                .withValues(alpha: isDark ? 0.35 : 0.45);
 
         return InkWell(
           onTap: onSelectStep != null ? () => onSelectStep!(index) : null,
@@ -114,7 +120,9 @@ class DiagramList extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: (isDark ? step.color : accent).withValues(
-                    alpha: isActive ? (isDark ? 0.25 : 0.15) : (isDark ? 0.08 : 0.04),
+                    alpha: isActive
+                        ? (isDark ? 0.25 : 0.15)
+                        : (isDark ? 0.08 : 0.04),
                   ),
                   blurRadius: isActive ? 16 : 10,
                   spreadRadius: isActive ? 1 : 0,
@@ -126,13 +134,17 @@ class DiagramList extends StatelessWidget {
               children: [
                 AnimatedContainer(
                   duration: AppMotion.snap,
-                  padding: EdgeInsets.all(isDesktop ? (isActive ? 9 : 8) : (isActive ? 7 : 6)),
+                  padding: EdgeInsets.all(
+                      isDesktop ? (isActive ? 9 : 8) : (isActive ? 7 : 6)),
                   decoration: BoxDecoration(
-                    color: step.color.withValues(alpha: isActive ? 0.3 : (isDark ? 0.15 : 0.12)),
+                    color: step.color.withValues(
+                        alpha: isActive ? 0.3 : (isDark ? 0.15 : 0.12)),
                     shape: BoxShape.circle,
-                    border: isActive ? Border.all(color: accent, width: 1.5) : null,
+                    border:
+                        isActive ? Border.all(color: accent, width: 1.5) : null,
                   ),
-                  child: Icon(step.icon, color: accent, size: isDesktop ? 18 : 16),
+                  child:
+                      Icon(step.icon, color: accent, size: isDesktop ? 18 : 16),
                 ),
                 SizedBox(width: isDesktop ? 12 : 8),
                 Expanded(
@@ -156,10 +168,12 @@ class DiagramList extends StatelessWidget {
                           if (isActive) ...[
                             const SizedBox(width: 8),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 1.5),
                               decoration: BoxDecoration(
                                 color: accent.withValues(alpha: 0.25),
-                                borderRadius: BorderRadius.circular(AppRadius.chip),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadius.chip),
                               ),
                               child: Text(
                                 'ACTIVE TRACE',
@@ -188,7 +202,9 @@ class DiagramList extends StatelessWidget {
                       Text(
                         step.details,
                         style: TextStyle(
-                          color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate600,
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.7)
+                              : AppColors.slate600,
                           fontSize: isDesktop ? 11 : 9.5,
                           height: 1.3,
                         ),

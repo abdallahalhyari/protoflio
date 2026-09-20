@@ -16,7 +16,8 @@ import 'package:profile/features/skills/page/skills_page.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Widget _buildLocalizedHarness(Widget child, Locale locale, {Size size = const Size(1200, 800)}) {
+Widget _buildLocalizedHarness(Widget child, Locale locale,
+    {Size size = const Size(1200, 800)}) {
   return MediaQuery(
     data: MediaQueryData(size: size),
     child: MaterialApp(
@@ -43,7 +44,9 @@ void main() {
   });
 
   group('ARB Localization Files Completeness Audit', () {
-    test('All non-metadata keys in app_en.arb are translated in app_ar.arb and app_cs.arb', () {
+    test(
+        'All non-metadata keys in app_en.arb are translated in app_ar.arb and app_cs.arb',
+        () {
       final enFile = File('lib/l10n/app_en.arb');
       final arFile = File('lib/l10n/app_ar.arb');
       final csFile = File('lib/l10n/app_cs.arb');
@@ -67,9 +70,11 @@ void main() {
       final missingInCs = enKeys.difference(csKeys);
 
       expect(missingInAr, isEmpty,
-          reason: 'Arabic ARB must contain all English keys. Missing: $missingInAr');
+          reason:
+              'Arabic ARB must contain all English keys. Missing: $missingInAr');
       expect(missingInCs, isEmpty,
-          reason: 'Czech ARB must contain all English keys. Missing: $missingInCs');
+          reason:
+              'Czech ARB must contain all English keys. Missing: $missingInCs');
     });
   });
 
@@ -90,7 +95,9 @@ void main() {
   });
 
   group('Directionality Resolution & DirIcon Inversion Audit', () {
-    testWidgets('Arabic locale resolves to TextDirection.rtl and English to ltr', (tester) async {
+    testWidgets(
+        'Arabic locale resolves to TextDirection.rtl and English to ltr',
+        (tester) async {
       await tester.pumpWidget(_buildLocalizedHarness(
         Builder(
           builder: (context) {
@@ -114,7 +121,9 @@ void main() {
       expect(find.text('Dir: TextDirection.ltr'), findsOneWidget);
     });
 
-    testWidgets('DirIcon inverts horizontal scale under RTL and preserves it under LTR', (tester) async {
+    testWidgets(
+        'DirIcon inverts horizontal scale under RTL and preserves it under LTR',
+        (tester) async {
       // Under RTL
       await tester.pumpWidget(_buildLocalizedHarness(
         const DirIcon(Icons.chevron_right, size: 24),
@@ -141,12 +150,16 @@ void main() {
         matching: find.byType(Transform),
       );
       expect(ltrTransformFinder, findsNothing);
-      expect(find.descendant(of: find.byType(DirIcon), matching: find.byType(Icon)), findsOneWidget);
+      expect(
+          find.descendant(
+              of: find.byType(DirIcon), matching: find.byType(Icon)),
+          findsOneWidget);
     });
   });
 
   group('Multi-Locale Layout & Rendering Completeness Audit', () {
-    testWidgets('IntroPage renders cleanly in Arabic (RTL) and Czech (LTR) without overflow',
+    testWidgets(
+        'IntroPage renders cleanly in Arabic (RTL) and Czech (LTR) without overflow',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 900));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -168,7 +181,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('ExperiencePage renders cleanly in Arabic (RTL) and Czech (LTR)',
+    testWidgets(
+        'ExperiencePage renders cleanly in Arabic (RTL) and Czech (LTR)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 900));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -188,7 +202,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('ProjectsPage renders cleanly in Arabic (RTL) with localized mobile controls',
+    testWidgets(
+        'ProjectsPage renders cleanly in Arabic (RTL) with localized mobile controls',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -206,7 +221,8 @@ void main() {
       expect(find.text('التالي'), findsOneWidget);
     });
 
-    testWidgets('SkillsPage renders cleanly in Arabic (RTL) with directional padding',
+    testWidgets(
+        'SkillsPage renders cleanly in Arabic (RTL) with directional padding',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 800));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -219,7 +235,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('EngineeringPage renders cleanly in Arabic (RTL) and Czech (LTR)',
+    testWidgets(
+        'EngineeringPage renders cleanly in Arabic (RTL) and Czech (LTR)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 900));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -245,7 +262,8 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('ContactPage renders cleanly in Arabic (RTL) with localized feedback toast',
+    testWidgets(
+        'ContactPage renders cleanly in Arabic (RTL) with localized feedback toast',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 900));
       addTearDown(() => tester.binding.setSurfaceSize(null));

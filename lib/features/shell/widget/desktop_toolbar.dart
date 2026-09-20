@@ -70,7 +70,8 @@ class _LanguagePickerPuck extends StatelessWidget {
         builder: (context, locale, _) {
           return Semantics(
             button: true,
-            label: 'Change language. Current: ${locale.languageCode.toUpperCase()}',
+            label:
+                'Change language. Current: ${locale.languageCode.toUpperCase()}',
             child: PopupMenuButton<String>(
               tooltip: 'Change Language',
               icon: Icon(Icons.language,

@@ -24,7 +24,10 @@ class KeyboardHintChip extends StatelessWidget {
       child: Tooltip(
         preferBelow: false,
         richMessage: TextSpan(
-          style: const TextStyle(fontSize: AppTypography.overline, height: 1.5, color: Colors.white),
+          style: const TextStyle(
+              fontSize: AppTypography.overline,
+              height: 1.5,
+              color: Colors.white),
           children: [
             TextSpan(
                 text: '${l10n.keyboardHintTitle}\n',

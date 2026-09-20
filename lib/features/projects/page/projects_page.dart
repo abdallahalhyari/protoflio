@@ -87,16 +87,21 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             if (event is KeyDownEvent) {
               if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
                 final curIdx = _domains.indexOf(selectedDomain);
-                final nextIdx = (curIdx - 1 + _domains.length) % _domains.length;
+                final nextIdx =
+                    (curIdx - 1 + _domains.length) % _domains.length;
                 SoundService.instance.playSelection();
-                context.read<ProjectsFilterBloc>().add(DomainFilterSelected(_domains[nextIdx]));
+                context
+                    .read<ProjectsFilterBloc>()
+                    .add(DomainFilterSelected(_domains[nextIdx]));
                 setState(() => _mobileSelectedIndex = 0);
                 return KeyEventResult.handled;
               } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
                 final curIdx = _domains.indexOf(selectedDomain);
                 final nextIdx = (curIdx + 1) % _domains.length;
                 SoundService.instance.playSelection();
-                context.read<ProjectsFilterBloc>().add(DomainFilterSelected(_domains[nextIdx]));
+                context
+                    .read<ProjectsFilterBloc>()
+                    .add(DomainFilterSelected(_domains[nextIdx]));
                 setState(() => _mobileSelectedIndex = 0);
                 return KeyEventResult.handled;
               }
@@ -161,7 +166,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                       return FadeTransition(
                         opacity: CurvedAnimation(
                           parent: animation,
-                          curve: const Interval(0.15, 1.0, curve: Curves.easeOut),
+                          curve:
+                              const Interval(0.15, 1.0, curve: Curves.easeOut),
                         ),
                         child: SlideTransition(
                           position: Tween<Offset>(
@@ -176,7 +182,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                       );
                     },
                     child: KeyedSubtree(
-                      key: ValueKey('grid_${selectedDomain}_${selectedTech ?? "none"}'),
+                      key: ValueKey(
+                          'grid_${selectedDomain}_${selectedTech ?? "none"}'),
                       child: SizedBox(
                         width: double.infinity,
                         child: filteredProjects.isEmpty
@@ -184,23 +191,29 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                             : isDesktop
                                 ? Column(
                                     children: [
-                                      for (int i = 0; i < filteredProjects.length; i += 2) ...[
+                                      for (int i = 0;
+                                          i < filteredProjects.length;
+                                          i += 2) ...[
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Expanded(
                                               child: SizedBox(
                                                 height: 380,
                                                 child: InteractiveProjectCard(
                                                   project: filteredProjects[i],
-                                                  index: kProjects.indexOf(filteredProjects[i]),
+                                                  index: kProjects.indexOf(
+                                                      filteredProjects[i]),
                                                   scheme: scheme,
                                                   isDesktop: isDesktop,
                                                   selectedTech: selectedTech,
                                                   onSelectTech: (tech) {
                                                     context
-                                                        .read<ProjectsFilterBloc>()
-                                                        .add(TechFilterToggled(tech));
+                                                        .read<
+                                                            ProjectsFilterBloc>()
+                                                        .add(TechFilterToggled(
+                                                            tech));
                                                     setState(() {
                                                       _mobileSelectedIndex = 0;
                                                     });
@@ -208,24 +221,31 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(width: AppSpacing.lg),
+                                            const SizedBox(
+                                                width: AppSpacing.lg),
                                             if (i + 1 < filteredProjects.length)
                                               Expanded(
                                                 child: SizedBox(
                                                   height: 380,
                                                   child: InteractiveProjectCard(
-                                                    project: filteredProjects[i + 1],
-                                                    index: kProjects
-                                                        .indexOf(filteredProjects[i + 1]),
+                                                    project:
+                                                        filteredProjects[i + 1],
+                                                    index: kProjects.indexOf(
+                                                        filteredProjects[
+                                                            i + 1]),
                                                     scheme: scheme,
                                                     isDesktop: isDesktop,
                                                     selectedTech: selectedTech,
                                                     onSelectTech: (tech) {
                                                       context
-                                                          .read<ProjectsFilterBloc>()
-                                                          .add(TechFilterToggled(tech));
+                                                          .read<
+                                                              ProjectsFilterBloc>()
+                                                          .add(
+                                                              TechFilterToggled(
+                                                                  tech));
                                                       setState(() {
-                                                        _mobileSelectedIndex = 0;
+                                                        _mobileSelectedIndex =
+                                                            0;
                                                       });
                                                     },
                                                   ),
@@ -241,24 +261,30 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                                     ],
                                   )
                                 : Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
                                     children: [
-                                      for (int i = 0; i < filteredProjects.length; i++) ...[
+                                      for (int i = 0;
+                                          i < filteredProjects.length;
+                                          i++) ...[
                                         Container(
                                           decoration: i == _mobileSelectedIndex
                                               ? BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(AppRadius.md),
+                                                      BorderRadius.circular(
+                                                          AppRadius.md),
                                                   border: Border.all(
-                                                    color:
-                                                        scheme.primary.withValues(alpha: 0.35),
+                                                    color: scheme.primary
+                                                        .withValues(
+                                                            alpha: 0.35),
                                                     width: 1,
                                                   ),
                                                 )
                                               : null,
                                           child: InteractiveProjectCard(
                                             project: filteredProjects[i],
-                                            index: kProjects.indexOf(filteredProjects[i]),
+                                            index: kProjects
+                                                .indexOf(filteredProjects[i]),
                                             scheme: scheme,
                                             isDesktop: isDesktop,
                                             selectedTech: selectedTech,
@@ -278,37 +304,47 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                                       if (filteredProjects.length > 1) ...[
                                         const SizedBox(height: AppSpacing.md),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             OutlinedButton.icon(
                                               onPressed: () => setState(() {
-                                                _mobileSelectedIndex = (_mobileSelectedIndex -
-                                                        1 +
-                                                        filteredProjects.length) %
-                                                    filteredProjects.length;
+                                                _mobileSelectedIndex =
+                                                    (_mobileSelectedIndex -
+                                                            1 +
+                                                            filteredProjects
+                                                                .length) %
+                                                        filteredProjects.length;
                                               }),
                                               style: OutlinedButton.styleFrom(
                                                 minimumSize: const Size(88, 36),
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: AppSpacing.md),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            AppSpacing.md),
                                               ),
-                                              icon: const DirIcon(Icons.chevron_left_rounded,
+                                              icon: const DirIcon(
+                                                  Icons.chevron_left_rounded,
                                                   size: 16),
                                               label: Text(loc.previousAction),
                                             ),
                                             Flexible(
                                               child: Padding(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: AppSpacing.sm),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            AppSpacing.sm),
                                                 child: Text(
                                                   'CASE ${(_mobileSelectedIndex + 1).clamp(1, filteredProjects.length)}/${filteredProjects.length}',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     color: scheme.primary,
-                                                    fontFamily: AppTypography.monoFont,
+                                                    fontFamily:
+                                                        AppTypography.monoFont,
                                                     fontWeight: FontWeight.w900,
                                                     letterSpacing: 1.2,
-                                                    fontSize: AppTypography.micro,
+                                                    fontSize:
+                                                        AppTypography.micro,
                                                   ),
                                                 ),
                                               ),
@@ -321,10 +357,13 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                                               }),
                                               style: OutlinedButton.styleFrom(
                                                 minimumSize: const Size(88, 36),
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: AppSpacing.md),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            AppSpacing.md),
                                               ),
-                                              icon: const DirIcon(Icons.chevron_right_rounded,
+                                              icon: const DirIcon(
+                                                  Icons.chevron_right_rounded,
                                                   size: 16),
                                               label: Text(loc.nextAction),
                                             ),

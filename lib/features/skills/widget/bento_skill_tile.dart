@@ -26,13 +26,15 @@ class BentoSkillTile extends StatefulWidget {
   State<BentoSkillTile> createState() => _BentoSkillTileState();
 }
 
-class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProviderStateMixin {
+class _BentoSkillTileState extends State<BentoSkillTile>
+    with SingleTickerProviderStateMixin {
   bool _isHovered = false;
   late final AnimationController _c = AnimationController(
     vsync: this,
     duration: AppMotion.cardFlip,
   );
-  late final Animation<double> _flipAnim = CurvedAnimation(parent: _c, curve: Curves.easeOutBack);
+  late final Animation<double> _flipAnim =
+      CurvedAnimation(parent: _c, curve: Curves.easeOutBack);
 
   @override
   void dispose() {
@@ -68,7 +70,8 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
 
     return Semantics(
       button: true,
-      label: '${widget.skill.name} skill, ${_masteryLabel(widget.skill.level)} mastery level. Tap to flip and view details.',
+      label:
+          '${widget.skill.name} skill, ${_masteryLabel(widget.skill.level)} mastery level. Tap to flip and view details.',
       child: HolographicCardPhysics(
         borderRadius: 14,
         child: MouseRegion(
@@ -142,17 +145,22 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.center,
                   child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
                         padding: EdgeInsets.all(widget.isDesktop ? 12 : 6),
                         decoration: BoxDecoration(
-                          color: widget.categoryColor.withValues(alpha: isDark ? 0.15 : 0.10),
+                          color: widget.categoryColor
+                              .withValues(alpha: isDark ? 0.15 : 0.10),
                           shape: BoxShape.circle,
-                          border: Border.all(color: widget.categoryColor.withValues(alpha: isDark ? 0.3 : 0.4)),
+                          border: Border.all(
+                              color: widget.categoryColor
+                                  .withValues(alpha: isDark ? 0.3 : 0.4)),
                         ),
-                        child: Icon(widget.skill.icon, color: accentText, size: widget.isDesktop ? 36 : 20),
+                        child: Icon(widget.skill.icon,
+                            color: accentText,
+                            size: widget.isDesktop ? 36 : 20),
                       ),
                       SizedBox(height: widget.isDesktop ? 16 : 8),
                       Text(
@@ -170,9 +178,11 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                       ),
                       SizedBox(height: widget.isDesktop ? 8 : 4),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: widget.categoryColor.withValues(alpha: isDark ? 0.2 : 0.12),
+                          color: widget.categoryColor
+                              .withValues(alpha: isDark ? 0.2 : 0.12),
                           borderRadius: BorderRadius.circular(AppRadius.xs),
                         ),
                         child: Text(
@@ -188,7 +198,8 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                       ),
                       SizedBox(height: widget.isDesktop ? 10 : 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 7, vertical: 3),
                         decoration: BoxDecoration(
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.05)
@@ -230,8 +241,8 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                           ),
                         ),
                       ),
-                  ],
-                ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -278,7 +289,9 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                   children: [
                     Row(
                       children: [
-                        Icon(widget.skill.icon, color: accentText, size: widget.isDesktop ? 20 : 16),
+                        Icon(widget.skill.icon,
+                            color: accentText,
+                            size: widget.isDesktop ? 20 : 16),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
@@ -295,15 +308,18 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                         ),
                         const SizedBox(width: 4),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
-                            color: widget.categoryColor.withValues(alpha: isDark ? 0.12 : 0.10),
+                            color: widget.categoryColor
+                                .withValues(alpha: isDark ? 0.12 : 0.10),
                             borderRadius: BorderRadius.circular(AppRadius.xs),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.flip_to_front_rounded, size: 10, color: accentText),
+                              Icon(Icons.flip_to_front_rounded,
+                                  size: 10, color: accentText),
                               const SizedBox(width: 3),
                               Text(
                                 'FLIP',
@@ -325,7 +341,9 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                         child: Text(
                           widget.skill.description,
                           style: TextStyle(
-                            color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700,
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.85)
+                                : AppColors.slate700,
                             fontSize: widget.isDesktop ? 12 : 10.5,
                             height: 1.4,
                           ),
@@ -340,17 +358,28 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
                         children: [
                           for (final tag in widget.skill.tags)
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 2.5),
                               decoration: BoxDecoration(
-                                color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate100,
-                                borderRadius: BorderRadius.circular(AppRadius.xs),
-                                border: Border.all(color: isDark ? Colors.white24 : AppColors.slate200),
+                                color: isDark
+                                    ? Colors.white.withValues(alpha: 0.08)
+                                    : AppColors.slate100,
+                                borderRadius:
+                                    BorderRadius.circular(AppRadius.xs),
+                                border: Border.all(
+                                    color: isDark
+                                        ? Colors.white24
+                                        : AppColors.slate200),
                               ),
                               child: Text(
                                 tag,
                                 style: TextStyle(
                                   fontFamily: AppTypography.monoFont,
-                                  color: isDark ? widget.categoryColor.withValues(alpha: 0.9) : context.adaptiveAccentText(widget.categoryColor),
+                                  color: isDark
+                                      ? widget.categoryColor
+                                          .withValues(alpha: 0.9)
+                                      : context.adaptiveAccentText(
+                                          widget.categoryColor),
                                   fontSize: widget.isDesktop ? 9.5 : 8.0,
                                   fontWeight: FontWeight.w700,
                                 ),

@@ -14,12 +14,18 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/service/url_sync_service.dart';
 import 'package:profile/features/case_study/case_study_router.dart';
 import 'package:profile/features/intro/page/intro_page.dart';
-import 'package:profile/features/hats/page/hats_grid_page.dart' deferred as hats_lib;
-import 'package:profile/features/skills/page/skills_page.dart' deferred as skills_lib;
-import 'package:profile/features/projects/page/projects_page.dart' deferred as projects_lib;
-import 'package:profile/features/engineering/page/engineering_page.dart' deferred as engineering_lib;
-import 'package:profile/features/experience/page/experience_page.dart' deferred as experience_lib;
-import 'package:profile/features/contact/page/contact_page.dart' deferred as contact_lib;
+import 'package:profile/features/hats/page/hats_grid_page.dart'
+    deferred as hats_lib;
+import 'package:profile/features/skills/page/skills_page.dart'
+    deferred as skills_lib;
+import 'package:profile/features/projects/page/projects_page.dart'
+    deferred as projects_lib;
+import 'package:profile/features/engineering/page/engineering_page.dart'
+    deferred as engineering_lib;
+import 'package:profile/features/experience/page/experience_page.dart'
+    deferred as experience_lib;
+import 'package:profile/features/contact/page/contact_page.dart'
+    deferred as contact_lib;
 
 import 'home_controller.dart';
 import 'widget/custom_cursor.dart';
@@ -94,8 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final initialSlug = _slugFromHash(initialHash);
 
     if (initialSection != null) {
-      _pageIndex.value =
-          UrlSyncService.instance.hashToIndex(initialSection);
+      _pageIndex.value = UrlSyncService.instance.hashToIndex(initialSection);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ThemeController.updateSeedFromHash(initialSection);
         UrlSyncService.instance.updateTitle(
@@ -143,7 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (_pageIndex.value > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted && MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
+        if (mounted &&
+            MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
           _scrollToMobileSection(_pageIndex.value, syncUrl: false);
         }
       });
@@ -169,8 +175,8 @@ class _HomeScreenState extends State<HomeScreen> {
         (4, engineering_lib.loadLibrary),
         (5, hats_lib.loadLibrary),
         (6, contact_lib.loadLibrary),
-      ]..sort((a, b) =>
-          (a.$1 - current).abs().compareTo((b.$1 - current).abs()));
+      ]..sort(
+          (a, b) => (a.$1 - current).abs().compareTo((b.$1 - current).abs()));
       for (final entry in loaders) {
         if (!mounted) return;
         try {
@@ -285,7 +291,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (visibleIndex != null && visibleIndex != _pageIndex.value) {
       _pageIndex.value = visibleIndex;
-      _navBloc?.add(NavigationMobileSectionScrolled(visibleIndex, syncUrl: false));
+      _navBloc
+          ?.add(NavigationMobileSectionScrolled(visibleIndex, syncUrl: false));
       ThemeController.updateSeedFromIndex(visibleIndex);
       _scheduleSettle(visibleIndex);
     }
@@ -333,8 +340,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // Section top in viewport coordinates.
     final topInViewport = box.localToGlobal(Offset.zero).dy;
     // Bar clearance = app bar (60) + top safe-area inset.
-    final barClearance = MobileAppBar.kBarHeight +
-        MediaQuery.paddingOf(context).top;
+    final barClearance =
+        MobileAppBar.kBarHeight + MediaQuery.paddingOf(context).top;
     final delta = topInViewport - barClearance;
     final targetOffset = (currentOffset + delta).clamp(
       _mobileScrollController.position.minScrollExtent,
@@ -373,11 +380,13 @@ class _HomeScreenState extends State<HomeScreen> {
         _controller.jumpToPage(preStep);
       }
       _isPageTransitioning = true;
-      _controller.animateToPage(
+      _controller
+          .animateToPage(
         target,
         duration: AppMotion.pageTurn,
         curve: AppMotion.emphasized,
-      ).then((_) {
+      )
+          .then((_) {
         if (mounted) {
           _isPageTransitioning = false;
           _lastPageTurnCompletedAt = DateTime.now();
@@ -574,7 +583,9 @@ class _HomeScreenState extends State<HomeScreen> {
             onKeyEvent: _handleKey,
             child: PageBackground(
               overlay: AppColors.scrimMedium,
-              child: isDesktop ? _buildDesktopLayout(context) : _buildMobileLayout(context),
+              child: isDesktop
+                  ? _buildDesktopLayout(context)
+                  : _buildMobileLayout(context),
             ),
           ),
         ),

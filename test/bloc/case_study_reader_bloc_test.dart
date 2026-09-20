@@ -25,12 +25,16 @@ void main() {
       'updates progress, dock visibility, and completion flag',
       build: () => CaseStudyReaderBloc(),
       act: (b) {
-        b.add(const CaseStudyScrollProgressUpdated(progress: 0.5, showDock: true));
-        b.add(const CaseStudyScrollProgressUpdated(progress: 0.98, showDock: true));
+        b.add(const CaseStudyScrollProgressUpdated(
+            progress: 0.5, showDock: true));
+        b.add(const CaseStudyScrollProgressUpdated(
+            progress: 0.98, showDock: true));
       },
       expect: () => [
-        const CaseStudyReaderState(progress: 0.5, showDock: true, isCompleted: false),
-        const CaseStudyReaderState(progress: 0.98, showDock: true, isCompleted: true),
+        const CaseStudyReaderState(
+            progress: 0.5, showDock: true, isCompleted: false),
+        const CaseStudyReaderState(
+            progress: 0.98, showDock: true, isCompleted: true),
       ],
     );
 

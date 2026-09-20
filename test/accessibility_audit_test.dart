@@ -66,30 +66,43 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('Accessibility & Screen Reader Audit — Interactive Controls', () {
-    testWidgets('DesktopToolbar buttons declare button and toggled semantics', (tester) async {
+    testWidgets('DesktopToolbar buttons declare button and toggled semantics',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(child: const DesktopToolbar()));
       await tester.pumpAndSettle();
 
       // Language picker puck
       final langSemantics = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('Change language') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('Change language') ?? false),
       );
       expect(langSemantics, findsOneWidget);
 
       // Theme toggle puck
       final themeSemantics = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && w.properties.toggled != null && (w.properties.label?.contains('mode') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            w.properties.toggled != null &&
+            (w.properties.label?.contains('mode') ?? false),
       );
       expect(themeSemantics, findsOneWidget);
 
       // Audio toggle puck
       final audioSemantics = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && w.properties.toggled != null && (w.properties.label?.contains('sound effects') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            w.properties.toggled != null &&
+            (w.properties.label?.contains('sound effects') ?? false),
       );
       expect(audioSemantics, findsOneWidget);
     });
 
-    testWidgets('MobileAppBar declares semantics for quick controls and menu', (tester) async {
+    testWidgets('MobileAppBar declares semantics for quick controls and menu',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(
         size: const Size(500, 800),
         child: MobileAppBar(onMenuPressed: () {}),
@@ -98,36 +111,53 @@ void main() {
 
       // Brand logo
       expect(
-        find.byWidgetPredicate((w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('Abdallah') ?? false)),
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('Abdallah') ?? false)),
         findsOneWidget,
       );
 
       // Language quick control
       expect(
-        find.byWidgetPredicate((w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('Change language') ?? false)),
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('Change language') ?? false)),
         findsOneWidget,
       );
 
       // Theme quick control
       expect(
-        find.byWidgetPredicate((w) => w is Semantics && w.properties.button == true && w.properties.toggled != null && (w.properties.label?.contains('mode') ?? false)),
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            w.properties.toggled != null &&
+            (w.properties.label?.contains('mode') ?? false)),
         findsOneWidget,
       );
 
       // Audio quick control
       expect(
-        find.byWidgetPredicate((w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('ambient audio') ?? false)),
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('ambient audio') ?? false)),
         findsOneWidget,
       );
 
       // Menu button
       expect(
-        find.byWidgetPredicate((w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('navigation menu') ?? false)),
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('navigation menu') ?? false)),
         findsOneWidget,
       );
     });
 
-    testWidgets('HatRolePills announces role position and selected state', (tester) async {
+    testWidgets('HatRolePills announces role position and selected state',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(
         child: HatRolePills(
           selectedIndex: 1,
@@ -139,18 +169,28 @@ void main() {
 
       // Active pill (index 1)
       final selectedPill = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && w.properties.selected == true && (w.properties.label?.contains('Role 2 of') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            w.properties.selected == true &&
+            (w.properties.label?.contains('Role 2 of') ?? false),
       );
       expect(selectedPill, findsOneWidget);
 
       // Unselected pill (index 0)
       final unselectedPill = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && w.properties.selected == false && (w.properties.label?.contains('Role 1 of') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            w.properties.selected == false &&
+            (w.properties.label?.contains('Role 1 of') ?? false),
       );
       expect(unselectedPill, findsOneWidget);
     });
 
-    testWidgets('BentoSkillTile announces skill name, mastery level, and flip hint', (tester) async {
+    testWidgets(
+        'BentoSkillTile announces skill name, mastery level, and flip hint',
+        (tester) async {
       final skill = kSkills.first;
       await tester.pumpWidget(_wrapWithHarness(
         child: BentoSkillTile(
@@ -163,12 +203,18 @@ void main() {
       await tester.pumpAndSettle();
 
       final skillSemantics = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains(skill.name) ?? false) && (w.properties.label?.contains('flip') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains(skill.name) ?? false) &&
+            (w.properties.label?.contains('flip') ?? false),
       );
       expect(skillSemantics, findsOneWidget);
     });
 
-    testWidgets('ExperienceCard declares container semantics and action buttons', (tester) async {
+    testWidgets(
+        'ExperienceCard declares container semantics and action buttons',
+        (tester) async {
       final exp = kExperience.first;
       await tester.pumpWidget(_wrapWithHarness(
         child: ExperienceCard(
@@ -181,20 +227,27 @@ void main() {
 
       // Card container semantics
       final cardSemantics = find.byWidgetPredicate(
-        (w) => w is Semantics && w.container == true && (w.properties.label?.contains(exp.company) ?? false),
+        (w) =>
+            w is Semantics &&
+            w.container == true &&
+            (w.properties.label?.contains(exp.company) ?? false),
       );
       expect(cardSemantics, findsOneWidget);
 
       // Company action pills (e.g. Website or LinkedIn)
       if (exp.websiteUrl != null || exp.linkedinUrl != null) {
         final actionPillSemantics = find.byWidgetPredicate(
-          (w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains(exp.company) ?? false),
+          (w) =>
+              w is Semantics &&
+              w.properties.button == true &&
+              (w.properties.label?.contains(exp.company) ?? false),
         );
         expect(actionPillSemantics, findsWidgets);
       }
     });
 
-    testWidgets('BentoTrackCard declares button semantics on inquire action', (tester) async {
+    testWidgets('BentoTrackCard declares button semantics on inquire action',
+        (tester) async {
       final track = ConsultingTrack(
         tag: 'ARCHITECTURE',
         title: 'Full Engine Audit',
@@ -205,16 +258,23 @@ void main() {
         onInquire: (_) {},
       );
 
-      await tester.pumpWidget(_wrapWithHarness(child: BentoTrackCard(track: track)));
+      await tester
+          .pumpWidget(_wrapWithHarness(child: BentoTrackCard(track: track)));
       await tester.pumpAndSettle();
 
       final inquireSemantics = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('Inquire about Full Engine Audit') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('Inquire about Full Engine Audit') ??
+                false),
       );
       expect(inquireSemantics, findsOneWidget);
     });
 
-    testWidgets('ChannelTile declares button semantics for primary and secondary actions', (tester) async {
+    testWidgets(
+        'ChannelTile declares button semantics for primary and secondary actions',
+        (tester) async {
       final data = ChannelData(
         badge: 'PRIMARY',
         badgeColor: Colors.blue,
@@ -232,12 +292,18 @@ void main() {
       await tester.pumpAndSettle();
 
       final primaryBtn = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('TELEGRAM: Message') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('TELEGRAM: Message') ?? false),
       );
       expect(primaryBtn, findsOneWidget);
 
       final secondaryBtn = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('TELEGRAM: Copy') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('TELEGRAM: Copy') ?? false),
       );
       expect(secondaryBtn, findsOneWidget);
     });
@@ -249,12 +315,16 @@ void main() {
       await tester.pumpAndSettle();
 
       final chipSemantics = find.byWidgetPredicate(
-        (w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('keyboard shortcuts') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('keyboard shortcuts') ?? false),
       );
       expect(chipSemantics, findsOneWidget);
     });
 
-    testWidgets('IntroCtaRow ghost buttons declare button semantics', (tester) async {
+    testWidgets('IntroCtaRow ghost buttons declare button semantics',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(
         child: IntroCtaRow(
           isDark: true,
@@ -266,22 +336,34 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.byWidgetPredicate((w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('DOWNLOAD RESUME') ?? false)),
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('DOWNLOAD RESUME') ?? false)),
         findsOneWidget,
       );
       expect(
-        find.byWidgetPredicate((w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('CONTACT ME') ?? false)),
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('CONTACT ME') ?? false)),
         findsOneWidget,
       );
       expect(
-        find.byWidgetPredicate((w) => w is Semantics && w.properties.button == true && (w.properties.label?.contains('COPY EMAIL') ?? false)),
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('COPY EMAIL') ?? false)),
         findsOneWidget,
       );
     });
   });
 
-  group('Accessibility & Screen Reader Audit — Heading Landmarks (header: true)', () {
-    testWidgets('ProjectsPage declares header landmark on section title', (tester) async {
+  group(
+      'Accessibility & Screen Reader Audit — Heading Landmarks (header: true)',
+      () {
+    testWidgets('ProjectsPage declares header landmark on section title',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(child: const ProjectsPage()));
       await tester.pumpAndSettle();
 
@@ -340,8 +422,12 @@ void main() {
     });
   });
 
-  group('Accessibility & Screen Reader Audit — Diagrams, Metric Cards, Folio & Shell', () {
-    testWidgets('ArchitectureDiagramCard declares container semantics with tier count', (tester) async {
+  group(
+      'Accessibility & Screen Reader Audit — Diagrams, Metric Cards, Folio & Shell',
+      () {
+    testWidgets(
+        'ArchitectureDiagramCard declares container semantics with tier count',
+        (tester) async {
       final topic = kArchitectureTopics.first;
       await tester.pumpWidget(_wrapWithHarness(
         child: ArchitectureDiagramCard(topic: topic, isDesktop: true),
@@ -349,12 +435,18 @@ void main() {
       await tester.pumpAndSettle();
 
       final diagramFinder = find.byWidgetPredicate(
-        (w) => w is Semantics && w.container == true && (w.properties.label?.contains('Architecture flowchart diagram') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.container == true &&
+            (w.properties.label?.contains('Architecture flowchart diagram') ??
+                false),
       );
       expect(diagramFinder, findsOneWidget);
     });
 
-    testWidgets('PipelineTopologyDiagram declares container semantics with stage flow', (tester) async {
+    testWidgets(
+        'PipelineTopologyDiagram declares container semantics with stage flow',
+        (tester) async {
       final project = kProjects.first;
       await tester.pumpWidget(_wrapWithHarness(
         child: PipelineTopologyDiagram(
@@ -366,28 +458,40 @@ void main() {
       await tester.pumpAndSettle();
 
       final pipelineFinder = find.byWidgetPredicate(
-        (w) => w is Semantics && w.container == true && (w.properties.label?.contains('Pipeline architecture') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.container == true &&
+            (w.properties.label?.contains('Pipeline architecture') ?? false),
       );
       expect(pipelineFinder, findsOneWidget);
     });
 
-    testWidgets('OutcomeCard declares container semantics describing key metrics', (tester) async {
+    testWidgets(
+        'OutcomeCard declares container semantics describing key metrics',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(
         child: const SizedBox(
           width: 250,
           height: 180,
-          child: OutcomeCard(headline: '99.98%', body: 'Production uptime across cluster'),
+          child: OutcomeCard(
+              headline: '99.98%', body: 'Production uptime across cluster'),
         ),
       ));
       await tester.pumpAndSettle();
 
       final outcomeFinder = find.byWidgetPredicate(
-        (w) => w is Semantics && w.container == true && (w.properties.label?.contains('Key outcome metric: 99.98%') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.container == true &&
+            (w.properties.label?.contains('Key outcome metric: 99.98%') ??
+                false),
       );
       expect(outcomeFinder, findsOneWidget);
     });
 
-    testWidgets('FolioBar declares container semantics with current section and page position', (tester) async {
+    testWidgets(
+        'FolioBar declares container semantics with current section and page position',
+        (tester) async {
       final controller = _mockController(initialPage: 2);
       await tester.pumpWidget(_wrapWithHarness(
         controller: controller,
@@ -396,12 +500,17 @@ void main() {
       await tester.pumpAndSettle();
 
       final folioFinder = find.byWidgetPredicate(
-        (w) => w is Semantics && w.container == true && (w.properties.label?.contains('Current section:') ?? false) && (w.properties.label?.contains('page 3 of 7') ?? false),
+        (w) =>
+            w is Semantics &&
+            w.container == true &&
+            (w.properties.label?.contains('Current section:') ?? false) &&
+            (w.properties.label?.contains('page 3 of 7') ?? false),
       );
       expect(folioFinder, findsOneWidget);
     });
 
-    testWidgets('AppScreenShell wraps page content in Semantics container', (tester) async {
+    testWidgets('AppScreenShell wraps page content in Semantics container',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(
         child: const AppScreenShell(
           child: Text('Screen Shell Content'),

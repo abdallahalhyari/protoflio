@@ -113,7 +113,8 @@ class _InquiryComposerDialogViewState
   void _onTrackChanged(int index, ContactInquiryState state) {
     SoundService.instance.playSelection();
     context.read<ContactInquiryBloc>().add(InquiryTrackChanged(index));
-    final newDefaultBody = state.tracks[index.clamp(0, state.tracks.length - 1)].defaultBody;
+    final newDefaultBody =
+        state.tracks[index.clamp(0, state.tracks.length - 1)].defaultBody;
     _bodyController.text = newDefaultBody;
   }
 
@@ -188,7 +189,8 @@ class _InquiryComposerDialogViewState
 
         return Dialog(
           backgroundColor: isDark ? const Color(0xFF0F1422) : Colors.white,
-          insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          insetPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.lg),
             side: BorderSide(
@@ -216,7 +218,8 @@ class _InquiryComposerDialogViewState
                           color: scheme.primary.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.send_rounded, color: scheme.primary, size: 20),
+                        child: Icon(Icons.send_rounded,
+                            color: scheme.primary, size: 20),
                       ),
                       const SizedBox(width: AppSpacing.sm),
                       Expanded(
@@ -237,7 +240,8 @@ class _InquiryComposerDialogViewState
                               'Reach Abdallah Alhyari',
                               style: TextStyle(
                                 fontFamily: AppTypography.displayFont,
-                                color: isDark ? Colors.white : AppColors.slate900,
+                                color:
+                                    isDark ? Colors.white : AppColors.slate900,
                                 fontSize: isDesktop ? 20 : 18,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -258,12 +262,17 @@ class _InquiryComposerDialogViewState
                   const SizedBox(height: AppSpacing.md),
                   // Timezone Overlap Banner
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.black.withValues(alpha: 0.3) : AppColors.slate50,
+                      color: isDark
+                          ? Colors.black.withValues(alpha: 0.3)
+                          : AppColors.slate50,
                       borderRadius: BorderRadius.circular(AppRadius.md),
                       border: Border.all(
-                        color: (isAmmanActive ? AppColors.accentGreen : AppColors.accentAmber)
+                        color: (isAmmanActive
+                                ? AppColors.accentGreen
+                                : AppColors.accentAmber)
                             .withValues(alpha: 0.3),
                         width: 1,
                       ),
@@ -274,7 +283,9 @@ class _InquiryComposerDialogViewState
                           width: 8,
                           height: 8,
                           decoration: BoxDecoration(
-                            color: isAmmanActive ? AppColors.accentGreen : AppColors.accentAmber,
+                            color: isAmmanActive
+                                ? AppColors.accentGreen
+                                : AppColors.accentAmber,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -284,7 +295,8 @@ class _InquiryComposerDialogViewState
                             'AMMAN (UTC+3): $ammanFormatted · YOUR TIME: $localFormatted — ${isAmmanActive ? "ACTIVE RESPONSE WINDOW" : "ASYNC INQUIRY (REPLY WITHIN 24H)"}',
                             style: TextStyle(
                               fontFamily: AppTypography.monoFont,
-                              color: isDark ? Colors.white70 : AppColors.slate700,
+                              color:
+                                  isDark ? Colors.white70 : AppColors.slate700,
                               fontSize: AppTypography.micro,
                               fontWeight: FontWeight.w800,
                             ),
@@ -319,7 +331,9 @@ class _InquiryComposerDialogViewState
                           side: BorderSide(
                             color: selectedTrack == i
                                 ? scheme.primary
-                                : (isDark ? Colors.white12 : AppColors.slate200),
+                                : (isDark
+                                    ? Colors.white12
+                                    : AppColors.slate200),
                           ),
                         ),
                     ],

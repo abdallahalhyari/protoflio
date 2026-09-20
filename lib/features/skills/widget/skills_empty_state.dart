@@ -23,9 +23,8 @@ class SkillsEmptyState extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         decoration: BoxDecoration(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.03)
-              : AppColors.slate50,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.03) : AppColors.slate50,
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
             color: isDark

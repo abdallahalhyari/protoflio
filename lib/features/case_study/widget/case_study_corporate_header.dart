@@ -222,7 +222,8 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
               duration: AppMotion.snap,
               child: AnimatedContainer(
                 duration: AppMotion.snap,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: _hovered
                       ? (isDark
@@ -361,7 +362,8 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
               duration: AppMotion.snap,
               child: AnimatedContainer(
                 duration: AppMotion.snap,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: _hovered
                       ? (isDark
@@ -382,7 +384,8 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
                   boxShadow: _hovered
                       ? [
                           BoxShadow(
-                            color: accent.withValues(alpha: isDark ? 0.35 : 0.22),
+                            color:
+                                accent.withValues(alpha: isDark ? 0.35 : 0.22),
                             blurRadius: 10,
                             spreadRadius: 0.5,
                           ),
@@ -408,7 +411,9 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
                         color: _hovered
-                            ? (isDark ? Colors.white : AppColors.accentGreenDeep)
+                            ? (isDark
+                                ? Colors.white
+                                : AppColors.accentGreenDeep)
                             : (isDark
                                 ? Colors.white.withValues(alpha: 0.88)
                                 : AppColors.slate800),

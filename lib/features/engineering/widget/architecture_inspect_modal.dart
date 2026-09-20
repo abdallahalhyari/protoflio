@@ -36,13 +36,16 @@ class _ArchitectureInspectDialog extends StatefulWidget {
   });
 
   @override
-  State<_ArchitectureInspectDialog> createState() => _ArchitectureInspectDialogState();
+  State<_ArchitectureInspectDialog> createState() =>
+      _ArchitectureInspectDialogState();
 }
 
-class _ArchitectureInspectDialogState extends State<_ArchitectureInspectDialog> {
+class _ArchitectureInspectDialogState
+    extends State<_ArchitectureInspectDialog> {
   late int _step;
   bool _isPlaying = false;
-  final TransformationController _transformController = TransformationController();
+  final TransformationController _transformController =
+      TransformationController();
 
   @override
   void initState() {
@@ -98,7 +101,8 @@ class _ArchitectureInspectDialogState extends State<_ArchitectureInspectDialog> 
                       color: scheme.primary.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.zoom_in_rounded, color: scheme.primary, size: 20),
+                    child: Icon(Icons.zoom_in_rounded,
+                        color: scheme.primary, size: 20),
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
@@ -187,7 +191,8 @@ class _ArchitectureInspectDialogState extends State<_ArchitectureInspectDialog> 
                     isDesktop: true,
                     onPrevious: () => _updateStep(_step - 1),
                     onNext: () => _updateStep(_step + 1),
-                    onTogglePlay: () => setState(() => _isPlaying = !_isPlaying),
+                    onTogglePlay: () =>
+                        setState(() => _isPlaying = !_isPlaying),
                     onReset: () => _updateStep(0),
                   ),
                   const SizedBox(height: 8),

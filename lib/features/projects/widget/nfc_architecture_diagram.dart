@@ -25,7 +25,8 @@ class NfcArchitectureDiagram extends StatelessWidget {
       decoration: BoxDecoration(
         color: scheme.primary.withValues(alpha: isDark ? 0.05 : 0.02),
         borderRadius: BorderRadius.circular(AppRadius.smd),
-        border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.2)),
+        border: Border.all(
+            color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,21 +59,27 @@ class NfcArchitectureDiagram extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildArchNode('NFC Hardware\n(ISO-7816)', Icons.nfc_rounded, scheme),
+                _buildArchNode(
+                    'NFC Hardware\n(ISO-7816)', Icons.nfc_rounded, scheme),
                 _buildArchArrow(scheme),
-                _buildArchNode('Native Kotlin\nAPDU Channel', Icons.android_rounded, scheme),
+                _buildArchNode('Native Kotlin\nAPDU Channel',
+                    Icons.android_rounded, scheme),
                 _buildArchArrow(scheme),
-                _buildArchNode('Flutter UI\n(Clean Arch)', Icons.layers_rounded, scheme),
+                _buildArchNode(
+                    'Flutter UI\n(Clean Arch)', Icons.layers_rounded, scheme),
                 _buildArchArrow(scheme),
                 Column(
                   children: [
-                    _buildArchNode('WorkManager\n(Offline Queue)', Icons.sync_rounded, scheme),
+                    _buildArchNode('WorkManager\n(Offline Queue)',
+                        Icons.sync_rounded, scheme),
                     const SizedBox(height: 6),
-                    _buildArchNode('SQLite DB\n(Encrypted Cache)', Icons.storage_rounded, scheme),
+                    _buildArchNode('SQLite DB\n(Encrypted Cache)',
+                        Icons.storage_rounded, scheme),
                   ],
                 ),
                 _buildArchArrow(scheme),
-                _buildArchNode('TPA Backend\n(REST API)', Icons.cloud_done_rounded, scheme),
+                _buildArchNode('TPA Backend\n(REST API)',
+                    Icons.cloud_done_rounded, scheme),
               ],
             ),
           ),

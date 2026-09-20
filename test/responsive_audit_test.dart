@@ -19,7 +19,8 @@ import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Widget _buildViewportHarness(Widget child, Size size, {bool isDark = true, bool scrollable = false}) {
+Widget _buildViewportHarness(Widget child, Size size,
+    {bool isDark = true, bool scrollable = false}) {
   return MediaQuery(
     data: MediaQueryData(size: size),
     child: MaterialApp(
@@ -57,7 +58,8 @@ void main() {
   });
 
   group('AppBreakpoints Architecture & Classification Audit', () {
-    testWidgets('Classifies compact smartphone (320x568) accurately', (tester) async {
+    testWidgets('Classifies compact smartphone (320x568) accurately',
+        (tester) async {
       _setViewport(tester, const Size(320, 568));
       late BuildContext capturedContext;
       await tester.pumpWidget(_buildViewportHarness(
@@ -76,7 +78,8 @@ void main() {
       expect(AppBreakpoints.isUltraWide(capturedContext), isFalse);
     });
 
-    testWidgets('Classifies standard phone (390x844) accurately', (tester) async {
+    testWidgets('Classifies standard phone (390x844) accurately',
+        (tester) async {
       _setViewport(tester, const Size(390, 844));
       late BuildContext capturedContext;
       await tester.pumpWidget(_buildViewportHarness(
@@ -93,7 +96,8 @@ void main() {
       expect(AppBreakpoints.isDesktop(capturedContext), isFalse);
     });
 
-    testWidgets('Classifies tablet portrait (768x1024) accurately', (tester) async {
+    testWidgets('Classifies tablet portrait (768x1024) accurately',
+        (tester) async {
       _setViewport(tester, const Size(768, 1024));
       late BuildContext capturedContext;
       await tester.pumpWidget(_buildViewportHarness(
@@ -110,7 +114,8 @@ void main() {
       expect(AppBreakpoints.isDesktop(capturedContext), isFalse);
     });
 
-    testWidgets('Classifies tablet landscape mid-split (950x700) accurately', (tester) async {
+    testWidgets('Classifies tablet landscape mid-split (950x700) accurately',
+        (tester) async {
       _setViewport(tester, const Size(950, 700));
       late BuildContext capturedContext;
       await tester.pumpWidget(_buildViewportHarness(
@@ -128,7 +133,8 @@ void main() {
       expect(AppBreakpoints.isWideDesktop(capturedContext), isFalse);
     });
 
-    testWidgets('Classifies wide desktop (1440x900) accurately', (tester) async {
+    testWidgets('Classifies wide desktop (1440x900) accurately',
+        (tester) async {
       _setViewport(tester, const Size(1440, 900));
       late BuildContext capturedContext;
       await tester.pumpWidget(_buildViewportHarness(
@@ -144,7 +150,8 @@ void main() {
       expect(AppBreakpoints.isUltraWide(capturedContext), isFalse);
     });
 
-    testWidgets('Classifies 4K ultrawide monitor (3840x2160) accurately', (tester) async {
+    testWidgets('Classifies 4K ultrawide monitor (3840x2160) accurately',
+        (tester) async {
       _setViewport(tester, const Size(3840, 2160));
       late BuildContext capturedContext;
       await tester.pumpWidget(_buildViewportHarness(
@@ -162,10 +169,22 @@ void main() {
   });
 
   group('ScreenShell Horizontal Padding Monotonicity Audit', () {
-    testWidgets('Scales padding smoothly from compact to 4K ultra-wide', (tester) async {
+    testWidgets('Scales padding smoothly from compact to 4K ultra-wide',
+        (tester) async {
       final measurements = <double, double>{};
 
-      for (final width in [320.0, 350.0, 360.0, 500.0, 600.0, 800.0, 1024.0, 1300.0, 1440.0, 3840.0]) {
+      for (final width in [
+        320.0,
+        350.0,
+        360.0,
+        500.0,
+        600.0,
+        800.0,
+        1024.0,
+        1300.0,
+        1440.0,
+        3840.0
+      ]) {
         _setViewport(tester, Size(width, 800));
         await tester.pumpWidget(_buildViewportHarness(
           Builder(builder: (ctx) {
@@ -217,7 +236,8 @@ void main() {
       expect(find.text('ABDALLAH'), findsWidgets);
     });
 
-    testWidgets('ExperiencePage renders cleanly on compact 320x568', (tester) async {
+    testWidgets('ExperiencePage renders cleanly on compact 320x568',
+        (tester) async {
       _setViewport(tester, compactSize);
       await tester.pumpWidget(_buildViewportHarness(
         const ExperiencePage(isContinuousMobile: true),
@@ -230,7 +250,8 @@ void main() {
       expect(find.text('CAREER TRAJECTORY'), findsOneWidget);
     });
 
-    testWidgets('ProjectsPage renders cleanly on compact 320x568', (tester) async {
+    testWidgets('ProjectsPage renders cleanly on compact 320x568',
+        (tester) async {
       _setViewport(tester, compactSize);
       await tester.pumpWidget(_buildViewportHarness(
         const ProjectsPage(isContinuousMobile: true),
@@ -243,7 +264,8 @@ void main() {
       expect(find.text('CASE STUDIES'), findsOneWidget);
     });
 
-    testWidgets('SkillsPage renders cleanly on compact 320x568', (tester) async {
+    testWidgets('SkillsPage renders cleanly on compact 320x568',
+        (tester) async {
       _setViewport(tester, compactSize);
       await tester.pumpWidget(_buildViewportHarness(
         const SkillsPage(isContinuousMobile: true),
@@ -256,7 +278,8 @@ void main() {
       expect(find.text('SKILLS'), findsOneWidget);
     });
 
-    testWidgets('EngineeringPage renders cleanly on compact 320x568', (tester) async {
+    testWidgets('EngineeringPage renders cleanly on compact 320x568',
+        (tester) async {
       _setViewport(tester, compactSize);
       await tester.pumpWidget(_buildViewportHarness(
         const EngineeringPage(isContinuousMobile: true),
@@ -269,7 +292,8 @@ void main() {
       expect(find.text('ENGINEERING EXPERTISE'), findsOneWidget);
     });
 
-    testWidgets('HatsGridPage renders cleanly on compact 320x568', (tester) async {
+    testWidgets('HatsGridPage renders cleanly on compact 320x568',
+        (tester) async {
       _setViewport(tester, compactSize);
       await tester.pumpWidget(_buildViewportHarness(
         const HatsGridPage(isContinuousMobile: true),
@@ -282,7 +306,8 @@ void main() {
       expect(find.text('ARCHITECTURAL PERSPECTIVES'), findsOneWidget);
     });
 
-    testWidgets('ContactPage renders cleanly on compact 320x568', (tester) async {
+    testWidgets('ContactPage renders cleanly on compact 320x568',
+        (tester) async {
       _setViewport(tester, compactSize);
       await tester.pumpWidget(_buildViewportHarness(
         const ContactPage(isContinuousMobile: true),
@@ -299,7 +324,8 @@ void main() {
   group('4K Ultra-Wide Viewport (3840x2160) Content Containment Audit', () {
     const ultraWideSize = Size(3840, 2160);
 
-    testWidgets('IntroPage centers and constrains maxWidth on 4K display', (tester) async {
+    testWidgets('IntroPage centers and constrains maxWidth on 4K display',
+        (tester) async {
       _setViewport(tester, ultraWideSize);
       await tester.pumpWidget(_buildViewportHarness(
         IntroPage(onScrollDown: () {}),
@@ -309,16 +335,25 @@ void main() {
 
       expect(tester.takeException(), isNull);
       final constrainedBox = tester.widget<ConstrainedBox>(
-        find.descendant(of: find.byType(AppScreenShell), matching: find.byType(ConstrainedBox)).first,
+        find
+            .descendant(
+                of: find.byType(AppScreenShell),
+                matching: find.byType(ConstrainedBox))
+            .first,
       );
       expect(constrainedBox.constraints.maxWidth, equals(1200.0));
       final renderBox = tester.renderObject<RenderBox>(
-        find.descendant(of: find.byType(AppScreenShell), matching: find.byType(ConstrainedBox)).first,
+        find
+            .descendant(
+                of: find.byType(AppScreenShell),
+                matching: find.byType(ConstrainedBox))
+            .first,
       );
       expect(renderBox.size.width, lessThanOrEqualTo(1200.0));
     });
 
-    testWidgets('ProjectsPage centers and constrains maxWidth on 4K display', (tester) async {
+    testWidgets('ProjectsPage centers and constrains maxWidth on 4K display',
+        (tester) async {
       _setViewport(tester, ultraWideSize);
       await tester.pumpWidget(_buildViewportHarness(
         const ProjectsPage(),
@@ -328,16 +363,25 @@ void main() {
 
       expect(tester.takeException(), isNull);
       final constrainedBox = tester.widget<ConstrainedBox>(
-        find.descendant(of: find.byType(AppScreenShell), matching: find.byType(ConstrainedBox)).first,
+        find
+            .descendant(
+                of: find.byType(AppScreenShell),
+                matching: find.byType(ConstrainedBox))
+            .first,
       );
       expect(constrainedBox.constraints.maxWidth, equals(1200.0));
       final renderBox = tester.renderObject<RenderBox>(
-        find.descendant(of: find.byType(AppScreenShell), matching: find.byType(ConstrainedBox)).first,
+        find
+            .descendant(
+                of: find.byType(AppScreenShell),
+                matching: find.byType(ConstrainedBox))
+            .first,
       );
       expect(renderBox.size.width, lessThanOrEqualTo(1200.0));
     });
 
-    testWidgets('ExperiencePage centers and constrains maxWidth on 4K display', (tester) async {
+    testWidgets('ExperiencePage centers and constrains maxWidth on 4K display',
+        (tester) async {
       _setViewport(tester, ultraWideSize);
       await tester.pumpWidget(_buildViewportHarness(
         const ExperiencePage(),
@@ -347,18 +391,28 @@ void main() {
 
       expect(tester.takeException(), isNull);
       final constrainedBox = tester.widget<ConstrainedBox>(
-        find.descendant(of: find.byType(AppScreenShell), matching: find.byType(ConstrainedBox)).first,
+        find
+            .descendant(
+                of: find.byType(AppScreenShell),
+                matching: find.byType(ConstrainedBox))
+            .first,
       );
       expect(constrainedBox.constraints.maxWidth, equals(1600.0));
       final renderBox = tester.renderObject<RenderBox>(
-        find.descendant(of: find.byType(AppScreenShell), matching: find.byType(ConstrainedBox)).first,
+        find
+            .descendant(
+                of: find.byType(AppScreenShell),
+                matching: find.byType(ConstrainedBox))
+            .first,
       );
       expect(renderBox.size.width, lessThanOrEqualTo(1600.0));
     });
   });
 
   group('Dialog & Modal Responsive Clamping Audit', () {
-    testWidgets('ShortcutHelpDialog fits and is interactive on compact 320x568 screen', (tester) async {
+    testWidgets(
+        'ShortcutHelpDialog fits and is interactive on compact 320x568 screen',
+        (tester) async {
       _setViewport(tester, const Size(320, 568));
       late BuildContext rootCtx;
       await tester.pumpWidget(_buildViewportHarness(
@@ -382,7 +436,9 @@ void main() {
       expect(find.byType(Dialog), findsNothing);
     });
 
-    testWidgets('showProjectCaseStudy opens and renders without overflow on 320x568 screen', (tester) async {
+    testWidgets(
+        'showProjectCaseStudy opens and renders without overflow on 320x568 screen',
+        (tester) async {
       _setViewport(tester, const Size(320, 568));
       final project = kProjects.first;
       late BuildContext rootCtx;
@@ -404,7 +460,8 @@ void main() {
   });
 
   group('MobileAppBar Viewport Adaptation Audit', () {
-    testWidgets('Switches to tight mode on 320px width without sub-badge', (tester) async {
+    testWidgets('Switches to tight mode on 320px width without sub-badge',
+        (tester) async {
       _setViewport(tester, const Size(320, 568));
       await tester.pumpWidget(_buildViewportHarness(
         MobileAppBar(onMenuPressed: () {}),

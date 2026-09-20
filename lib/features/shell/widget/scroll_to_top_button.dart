@@ -41,9 +41,8 @@ class ScrollToTopButton extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: isDark
-                        ? AppColors.shadowMedium
-                        : AppColors.shadowSoft,
+                    color:
+                        isDark ? AppColors.shadowMedium : AppColors.shadowSoft,
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),

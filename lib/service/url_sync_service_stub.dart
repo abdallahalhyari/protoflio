@@ -22,6 +22,7 @@ class UrlSyncServiceStub extends UrlSyncService {
   String? getInitialHash() => null;
 
   @override
-  void Function() listenToHashChanges(void Function(String hash) onHashChange) =>
+  void Function() listenToHashChanges(
+          void Function(String hash) onHashChange) =>
       () {};
 }

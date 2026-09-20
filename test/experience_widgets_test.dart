@@ -21,7 +21,8 @@ Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   group('Experience Widgets Test Suite', () {
-    testWidgets('ExperienceHeader renders title and enterprise impact badge', (tester) async {
+    testWidgets('ExperienceHeader renders title and enterprise impact badge',
+        (tester) async {
       await tester.pumpWidget(_wrap(const ExperienceHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
@@ -30,7 +31,8 @@ void main() {
       expect(find.text('4 ROLES · ENTERPRISE IMPACT'), findsOneWidget);
     });
 
-    testWidgets('CredentialsBentoCard renders Academic Annex & Certifications', (tester) async {
+    testWidgets('CredentialsBentoCard renders Academic Annex & Certifications',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         const CredentialsBentoCard(
           isVisible: true,
@@ -41,11 +43,13 @@ void main() {
 
       expect(find.text('ACADEMIC ANNEX'), findsOneWidget);
       expect(find.text('CERTIFICATION STAMPS'), findsOneWidget);
-      expect(find.textContaining('Al-Hussein Bin Talal University'), findsOneWidget);
+      expect(find.textContaining('Al-Hussein Bin Talal University'),
+          findsOneWidget);
       expect(find.textContaining('Udemy'), findsWidgets);
     });
 
-    testWidgets('AnimatedExperienceNode renders experience card content', (tester) async {
+    testWidgets('AnimatedExperienceNode renders experience card content',
+        (tester) async {
       final exp = kExperience.first;
       await tester.pumpWidget(_wrap(
         AnimatedExperienceNode(
@@ -61,7 +65,9 @@ void main() {
       expect(find.text(exp.role.toUpperCase()), findsOneWidget);
     });
 
-    testWidgets('AnimatedExperienceNode renders company website and linkedin action pills', (tester) async {
+    testWidgets(
+        'AnimatedExperienceNode renders company website and linkedin action pills',
+        (tester) async {
       final exp = kExperience.first;
       await tester.pumpWidget(_wrap(
         AnimatedExperienceNode(

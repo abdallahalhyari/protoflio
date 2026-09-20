@@ -49,7 +49,8 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               color: Colors.black.withValues(alpha: 0.4),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.md)),
+              borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(AppRadius.md)),
               border: Border(
                 bottom: BorderSide(
                   color: Colors.white.withValues(alpha: 0.08),
@@ -62,11 +63,23 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFFEF4444), shape: BoxShape.circle)),
+                    Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                            color: Color(0xFFEF4444), shape: BoxShape.circle)),
                     const SizedBox(width: 5),
-                    Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFFF59E0B), shape: BoxShape.circle)),
+                    Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                            color: Color(0xFFF59E0B), shape: BoxShape.circle)),
                     const SizedBox(width: 5),
-                    Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFF10B981), shape: BoxShape.circle)),
+                    Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                            color: Color(0xFF10B981), shape: BoxShape.circle)),
                   ],
                 ),
                 const SizedBox(width: 10),
@@ -100,7 +113,8 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(2),
-                      child: Icon(Icons.copy_rounded, size: 13, color: Colors.white.withValues(alpha: 0.6)),
+                      child: Icon(Icons.copy_rounded,
+                          size: 13, color: Colors.white.withValues(alpha: 0.6)),
                     ),
                   ),
                 ),

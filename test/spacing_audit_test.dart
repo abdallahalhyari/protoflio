@@ -44,10 +44,12 @@ Widget _wrap(Widget child, {Size? size, EdgeInsets? padding}) {
 
 void main() {
   group('Page Padding & Spacing Audit Regression Tests', () {
-    testWidgets('ExperiencePage does not double-pad horizontally inside AppScreenShell',
+    testWidgets(
+        'ExperiencePage does not double-pad horizontally inside AppScreenShell',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 900));
-      await tester.pumpWidget(_wrap(const ExperiencePage(isContinuousMobile: false)));
+      await tester
+          .pumpWidget(_wrap(const ExperiencePage(isContinuousMobile: false)));
       await tester.pumpAndSettle();
 
       final shellFinder = find.byType(AppScreenShell);
@@ -58,24 +60,31 @@ void main() {
       expect(headerFinder, findsOneWidget);
 
       // Header is a direct child of Column inside AppScreenShell without an extra Padding wrapper.
-      final directParent = tester.widget<Column>(find.ancestor(
-        of: headerFinder,
-        matching: find.byType(Column),
-      ).first);
+      final directParent = tester.widget<Column>(find
+          .ancestor(
+            of: headerFinder,
+            matching: find.byType(Column),
+          )
+          .first);
       expect(directParent.children.any((w) => w is ExperienceHeader), isTrue);
 
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('TopNav reserves clearance for DesktopToolbar on desktop viewports',
+    testWidgets(
+        'TopNav reserves clearance for DesktopToolbar on desktop viewports',
         (tester) async {
       // 960px desktop viewport
       await tester.binding.setSurfaceSize(const Size(960, 800));
-      await tester.pumpWidget(_wrap(const TopNav(), size: const Size(960, 800)));
+      await tester
+          .pumpWidget(_wrap(const TopNav(), size: const Size(960, 800)));
       await tester.pumpAndSettle();
 
       final constrainedBox = tester.widget<ConstrainedBox>(
-        find.descendant(of: find.byType(TopNav), matching: find.byType(ConstrainedBox)).first,
+        find
+            .descendant(
+                of: find.byType(TopNav), matching: find.byType(ConstrainedBox))
+            .first,
       );
 
       // Width 960 - 320 reserve = 640 max width
@@ -88,11 +97,15 @@ void main() {
         (tester) async {
       // 400px mobile viewport
       await tester.binding.setSurfaceSize(const Size(400, 800));
-      await tester.pumpWidget(_wrap(const TopNav(), size: const Size(400, 800)));
+      await tester
+          .pumpWidget(_wrap(const TopNav(), size: const Size(400, 800)));
       await tester.pumpAndSettle();
 
       final constrainedBox = tester.widget<ConstrainedBox>(
-        find.descendant(of: find.byType(TopNav), matching: find.byType(ConstrainedBox)).first,
+        find
+            .descendant(
+                of: find.byType(TopNav), matching: find.byType(ConstrainedBox))
+            .first,
       );
 
       // Width 400 - AppSpacing.xl (32) = 368 max width
@@ -101,7 +114,8 @@ void main() {
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('MobileHomeLayout SingleChildScrollView clears floating MobilePager and safe area',
+    testWidgets(
+        'MobileHomeLayout SingleChildScrollView clears floating MobilePager and safe area',
         (tester) async {
       final keys = List.generate(7, (_) => GlobalKey());
       final scrollController = ScrollController();

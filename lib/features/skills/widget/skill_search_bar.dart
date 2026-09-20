@@ -30,7 +30,8 @@ class SkillSearchBar extends StatelessWidget {
     final scheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
-    final isFiltered = controller.text.trim().isNotEmpty || filteredCount < totalCount;
+    final isFiltered =
+        controller.text.trim().isNotEmpty || filteredCount < totalCount;
 
     return Container(
       height: 44,
@@ -43,7 +44,9 @@ class SkillSearchBar extends StatelessWidget {
         border: Border.all(
           color: isFiltered
               ? scheme.primary.withValues(alpha: 0.5)
-              : (isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate200),
+              : (isDark
+                  ? Colors.white.withValues(alpha: 0.08)
+                  : AppColors.slate200),
           width: isFiltered ? 1.2 : 1.0,
         ),
       ),
@@ -54,7 +57,9 @@ class SkillSearchBar extends StatelessWidget {
             child: Icon(
               Icons.search_rounded,
               size: 18,
-              color: isFiltered ? scheme.primary : scheme.onSurface.withValues(alpha: 0.45),
+              color: isFiltered
+                  ? scheme.primary
+                  : scheme.onSurface.withValues(alpha: 0.45),
             ),
           ),
           Expanded(
@@ -70,7 +75,8 @@ class SkillSearchBar extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: l10n.skillsSearchHint,
                 hintStyle: TextStyle(
-                  fontSize: isDesktop ? AppTypography.small : AppTypography.caption,
+                  fontSize:
+                      isDesktop ? AppTypography.small : AppTypography.caption,
                   color: scheme.onSurface.withValues(alpha: 0.4),
                   fontWeight: FontWeight.w500,
                 ),
@@ -99,7 +105,9 @@ class SkillSearchBar extends StatelessWidget {
             decoration: BoxDecoration(
               color: isFiltered
                   ? scheme.primary.withValues(alpha: isDark ? 0.16 : 0.12)
-                  : (isDark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.05)),
+                  : (isDark
+                      ? Colors.white.withValues(alpha: 0.06)
+                      : Colors.black.withValues(alpha: 0.05)),
               borderRadius: BorderRadius.circular(AppRadius.pill),
               border: Border.all(
                 color: isFiltered

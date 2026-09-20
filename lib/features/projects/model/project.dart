@@ -6,7 +6,7 @@ class Project {
   final List<String> stack;
   final String? url;
   final String? linkedinUrl;
-  
+
   // Senior Case Study Fields
   final String? problem;
   final String? context;
@@ -49,4 +49,3 @@ class Project {
     this.hasArchitectureDiagram = false,
   });
 }
-

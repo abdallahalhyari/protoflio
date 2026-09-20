@@ -117,8 +117,8 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                       skill: skill,
                       categoryColor:
                           SkillCategoryStyle.getColor(skill.category, scheme),
-                      categoryGradient:
-                          SkillCategoryStyle.getGradient(skill.category, scheme),
+                      categoryGradient: SkillCategoryStyle.getGradient(
+                          skill.category, scheme),
                       isDesktop: isDesktop,
                     ),
                   );
@@ -186,8 +186,9 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                                 skill: skill,
                                 categoryColor: SkillCategoryStyle.getColor(
                                     skill.category, scheme),
-                                categoryGradient: SkillCategoryStyle.getGradient(
-                                    skill.category, scheme),
+                                categoryGradient:
+                                    SkillCategoryStyle.getGradient(
+                                        skill.category, scheme),
                                 isDesktop: false,
                               ),
                             ),

@@ -55,9 +55,8 @@ class IntroCtaRow extends StatelessWidget {
   }) {
     final effectiveColor =
         color ?? (isDark ? Colors.white70 : AppColors.slate700);
-    final borderColor = isDark
-        ? (color ?? Colors.white24)
-        : (color ?? AppColors.slate300);
+    final borderColor =
+        isDark ? (color ?? Colors.white24) : (color ?? AppColors.slate300);
 
     return Semantics(
       button: true,

@@ -175,7 +175,8 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
         }
 
         // Recompute the fan layout when the viewport size changes
-        if (!isMobile && (!deckState.isInitialized || _lastLayoutSize != size)) {
+        if (!isMobile &&
+            (!deckState.isInitialized || _lastLayoutSize != size)) {
           _lastLayoutSize = size;
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!mounted) return;
@@ -220,12 +221,17 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
                           key: ValueKey('hat_card_${kHats[i].title}'),
                           hat: kHats[i],
                           index: i,
-                          position: i < cardPositions.length ? cardPositions[i] : Offset.zero,
-                          rotation: i < cardRotations.length ? cardRotations[i] : 0.0,
+                          position: i < cardPositions.length
+                              ? cardPositions[i]
+                              : Offset.zero,
+                          rotation:
+                              i < cardRotations.length ? cardRotations[i] : 0.0,
                           onCardTap: () => _selectRole(i, size, false),
                           onDragStart: () => _bringToFront(i),
                           onDragEnd: (newPos) {
-                            context.read<HatsDeckBloc>().add(HatCardPositionSet(i, newPos));
+                            context
+                                .read<HatsDeckBloc>()
+                                .add(HatCardPositionSet(i, newPos));
                           },
                         ),
                     ],
@@ -280,7 +286,8 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
                     child: HatConsoleDock(
                       selectedIndex: selectedHatIndex,
                       totalCount: kHats.length,
-                      currentHat: kHats[selectedHatIndex.clamp(0, kHats.length - 1)],
+                      currentHat:
+                          kHats[selectedHatIndex.clamp(0, kHats.length - 1)],
                       onPrev: () => _prevRole(size, false),
                       onNext: () => _nextRole(size, false),
                       onShuffle: () => _shuffleDeck(size),

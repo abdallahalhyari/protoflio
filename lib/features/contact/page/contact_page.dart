@@ -82,8 +82,9 @@ class _ContactPageState extends State<ContactPage>
     if (!context.mounted) return;
 
     // Announce to screen readers for accessibility
-    final announcement = AppLocalizations.of(context)?.copiedToClipboard(value) ??
-        'Copied $value to clipboard';
+    final announcement =
+        AppLocalizations.of(context)?.copiedToClipboard(value) ??
+            'Copied $value to clipboard';
     unawaited(
       SemanticsService.sendAnnouncement(
         View.of(context),
@@ -108,7 +109,8 @@ class _ContactPageState extends State<ContactPage>
               color: isDark ? AppColors.slate900 : Colors.white,
               borderRadius: BorderRadius.circular(AppRadius.pill),
               border: Border.all(
-                color: (isDark ? _availabilityGreen : AppColors.accentGreenDeep).withValues(alpha: 0.65),
+                color: (isDark ? _availabilityGreen : AppColors.accentGreenDeep)
+                    .withValues(alpha: 0.65),
                 width: 1.2,
               ),
               boxShadow: [
@@ -123,7 +125,9 @@ class _ContactPageState extends State<ContactPage>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.check_circle_rounded,
-                    color: isDark ? _availabilityGreen : AppColors.accentGreenDeep, size: 18),
+                    color:
+                        isDark ? _availabilityGreen : AppColors.accentGreenDeep,
+                    size: 18),
                 const SizedBox(width: 10),
                 Flexible(
                   child: Text(
@@ -181,8 +185,8 @@ class _ContactPageState extends State<ContactPage>
         // 2. Fast pre-filled subject lines beneath the primary CTA.
         ExpressPresetsBar(
           onSelectPreset: (subject, body) {
-            final index = ExpressPresetsBar.presets
-                .indexWhere((p) => p.$2 == subject);
+            final index =
+                ExpressPresetsBar.presets.indexWhere((p) => p.$2 == subject);
             unawaited(
               showInquiryComposerDialog(
                 context,

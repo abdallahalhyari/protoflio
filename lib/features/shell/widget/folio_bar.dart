@@ -25,7 +25,8 @@ class FolioBar extends StatelessWidget {
             : '';
         return Semantics(
           container: true,
-          label: 'Current section: $currentLabel, page ${page + 1} of ${controller.pageCount}',
+          label:
+              'Current section: $currentLabel, page ${page + 1} of ${controller.pageCount}',
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
@@ -74,7 +75,10 @@ class FolioBar extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.7),
                         blurRadius: 6,
                         spreadRadius: 0.5,
                       ),

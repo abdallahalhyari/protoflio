@@ -30,7 +30,8 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     return super.close();
   }
 
-  Future<void> _onStarted(LocaleStarted event, Emitter<LocaleState> emit) async {
+  Future<void> _onStarted(
+      LocaleStarted event, Emitter<LocaleState> emit) async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_prefsKey);
     if (raw != null && supportedLanguages.contains(raw)) {
@@ -40,7 +41,8 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     }
   }
 
-  Future<void> _onChanged(LocaleChanged event, Emitter<LocaleState> emit) async {
+  Future<void> _onChanged(
+      LocaleChanged event, Emitter<LocaleState> emit) async {
     if (!supportedLanguages.contains(event.languageCode)) return;
     final loc = Locale(event.languageCode);
     emit(state.copyWith(locale: loc));
@@ -48,7 +50,8 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     unawaited(_persist(event.languageCode));
   }
 
-  Future<void> _onNextRequested(NextLocaleRequested event, Emitter<LocaleState> emit) async {
+  Future<void> _onNextRequested(
+      NextLocaleRequested event, Emitter<LocaleState> emit) async {
     final currentCode = state.locale.languageCode;
     final currentIndex = supportedLanguages.indexOf(currentCode);
     final nextIndex = (currentIndex + 1) % supportedLanguages.length;

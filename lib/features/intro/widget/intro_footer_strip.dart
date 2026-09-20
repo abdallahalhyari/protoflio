@@ -60,8 +60,7 @@ class IntroFooterStrip extends StatelessWidget {
           Text(
             value,
             style: TextStyle(
-              color: valueColor ??
-                  (isDark ? Colors.white : AppColors.slate900),
+              color: valueColor ?? (isDark ? Colors.white : AppColors.slate900),
               fontSize: AppTypography.captionSm,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.4,
@@ -89,9 +88,8 @@ class IntroFooterStrip extends StatelessWidget {
           width: 1,
           height: 32,
           margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.2)
-              : AppColors.slate300,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.2) : AppColors.slate300,
         );
 
     final blocks = [

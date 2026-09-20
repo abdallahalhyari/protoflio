@@ -21,7 +21,8 @@ Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   group('Skills Widgets Test Suite', () {
-    testWidgets('SkillsHeader renders title, disciplines text, and badge', (tester) async {
+    testWidgets('SkillsHeader renders title, disciplines text, and badge',
+        (tester) async {
       await tester.pumpWidget(_wrap(const SkillsHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
@@ -29,7 +30,9 @@ void main() {
       expect(find.text('12 CORE DISCIPLINES'), findsOneWidget);
     });
 
-    testWidgets('SkillCategoryFilters renders categories and triggers selection', (tester) async {
+    testWidgets(
+        'SkillCategoryFilters renders categories and triggers selection',
+        (tester) async {
       String selected = 'ALL';
       const categories = ['ALL', 'Mobile Systems', 'Security & Protocols'];
 
@@ -54,7 +57,8 @@ void main() {
       expect(selected, 'Mobile Systems');
     });
 
-    testWidgets('SkillsEmptyState renders and triggers onShowAll', (tester) async {
+    testWidgets('SkillsEmptyState renders and triggers onShowAll',
+        (tester) async {
       bool resetTriggered = false;
       await tester.pumpWidget(_wrap(
         SkillsEmptyState(onShowAll: () => resetTriggered = true),
@@ -68,7 +72,9 @@ void main() {
       expect(resetTriggered, isTrue);
     });
 
-    testWidgets('SkillSearchBar renders search input, count badge, and clears text', (tester) async {
+    testWidgets(
+        'SkillSearchBar renders search input, count badge, and clears text',
+        (tester) async {
       final controller = TextEditingController(text: 'flutter');
       addTearDown(controller.dispose);
       bool cleared = false;
@@ -99,12 +105,14 @@ void main() {
       expect(cleared, isTrue);
     });
 
-    test('SkillCategoryStyle returns color and gradient for known categories', () {
+    test('SkillCategoryStyle returns color and gradient for known categories',
+        () {
       const scheme = ColorScheme.dark();
       final color = SkillCategoryStyle.getColor('Mobile Systems', scheme);
       expect(color, const Color(0xFF38BDF8));
 
-      final gradient = SkillCategoryStyle.getGradient('Security & Protocols', scheme);
+      final gradient =
+          SkillCategoryStyle.getGradient('Security & Protocols', scheme);
       expect(gradient.length, 2);
       expect(gradient.first, const Color(0xFFFBBF24));
     });

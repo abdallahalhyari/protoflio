@@ -22,9 +22,14 @@ class ArchitectureDetailsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: isDark ? scheme.surface.withValues(alpha: 0.5) : Colors.white.withValues(alpha: 0.90),
+        color: isDark
+            ? scheme.surface.withValues(alpha: 0.5)
+            : Colors.white.withValues(alpha: 0.90),
         borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200),
+        border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.14)
+                : AppColors.slate200),
         boxShadow: isDark
             ? []
             : [
@@ -58,7 +63,9 @@ class ArchitectureDetailsCard extends StatelessWidget {
             topic.summary,
             style: TextStyle(
               fontSize: AppTypography.small,
-              color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700,
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.85)
+                  : AppColors.slate700,
               height: 1.45,
             ),
           ),
@@ -79,7 +86,8 @@ class ArchitectureDetailsCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.psychology_outlined, color: scheme.primary, size: 16),
+                    Icon(Icons.psychology_outlined,
+                        color: scheme.primary, size: 16),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
@@ -130,13 +138,16 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 children: [
                   Text(
                     '❖ ',
-                    style: TextStyle(color: scheme.primary, fontSize: AppTypography.caption),
+                    style: TextStyle(
+                        color: scheme.primary, fontSize: AppTypography.caption),
                   ),
                   Expanded(
                     child: Text(
                       item,
                       style: TextStyle(
-                        color: isDark ? Colors.white.withValues(alpha: 0.8) : AppColors.slate700,
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.8)
+                            : AppColors.slate700,
                         fontSize: AppTypography.captionSm,
                         height: 1.35,
                       ),

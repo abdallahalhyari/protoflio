@@ -23,7 +23,8 @@ Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   group('Engineering Widgets Test Suite', () {
-    testWidgets('EngineeringHeader renders title, subtitle, and badge', (tester) async {
+    testWidgets('EngineeringHeader renders title, subtitle, and badge',
+        (tester) async {
       await tester.pumpWidget(_wrap(const EngineeringHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
@@ -32,7 +33,9 @@ void main() {
       expect(find.text('4 ARCHITECTURES'), findsOneWidget);
     });
 
-    testWidgets('ArchitectureTopicTabs renders all topics and triggers selection', (tester) async {
+    testWidgets(
+        'ArchitectureTopicTabs renders all topics and triggers selection',
+        (tester) async {
       int selected = 0;
       await tester.pumpWidget(_wrap(
         StatefulBuilder(
@@ -49,7 +52,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('CLEAN MOBILE ARCHITECTURE'), findsOneWidget);
-      expect(find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'), findsOneWidget);
+      expect(
+          find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'), findsOneWidget);
 
       await tester.tap(find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'));
       await tester.pumpAndSettle();
@@ -57,7 +61,8 @@ void main() {
       expect(selected, 1);
     });
 
-    testWidgets('ArchitectureDiagramCard renders flowchart tiers', (tester) async {
+    testWidgets('ArchitectureDiagramCard renders flowchart tiers',
+        (tester) async {
       final topic = kArchitectureTopics.first;
       await tester.pumpWidget(_wrap(
         SizedBox(
@@ -72,7 +77,8 @@ void main() {
       expect(find.text(topic.diagramSteps.first.title), findsWidgets);
     });
 
-    testWidgets('ArchitectureDetailsCard renders summary and safeguards', (tester) async {
+    testWidgets('ArchitectureDetailsCard renders summary and safeguards',
+        (tester) async {
       final topic = kArchitectureTopics[1]; // Offline-First
       await tester.pumpWidget(_wrap(
         SizedBox(
@@ -83,12 +89,15 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(topic.title), findsOneWidget);
-      expect(find.text('ARCHITECTURAL RATIONALE (WHY THIS CHOICE)'), findsOneWidget);
+      expect(find.text('ARCHITECTURAL RATIONALE (WHY THIS CHOICE)'),
+          findsOneWidget);
       expect(find.text('KEY IMPLEMENTATION SAFEGUARDS'), findsOneWidget);
       expect(find.text(topic.summary), findsOneWidget);
     });
 
-    testWidgets('ArchitectureDiagramCard renders simulator bar and telemetry strip when callbacks provided', (tester) async {
+    testWidgets(
+        'ArchitectureDiagramCard renders simulator bar and telemetry strip when callbacks provided',
+        (tester) async {
       tester.view.physicalSize = const Size(1200, 1000);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(() {
@@ -110,8 +119,10 @@ void main() {
                 isDesktop: true,
                 activeStepIndex: activeStep,
                 isPlaying: false,
-                onPreviousStep: () => setState(() => activeStep = (activeStep - 1).clamp(0, topic.diagramSteps.length - 1)),
-                onNextStep: () => setState(() => activeStep = (activeStep + 1).clamp(0, topic.diagramSteps.length - 1)),
+                onPreviousStep: () => setState(() => activeStep =
+                    (activeStep - 1).clamp(0, topic.diagramSteps.length - 1)),
+                onNextStep: () => setState(() => activeStep =
+                    (activeStep + 1).clamp(0, topic.diagramSteps.length - 1)),
                 onTogglePlay: () => playToggled = true,
                 onResetStep: () => setState(() => activeStep = 0),
                 onSelectStep: (s) => setState(() => activeStep = s),
@@ -147,7 +158,9 @@ void main() {
       expect(playToggled, isTrue);
     });
 
-    testWidgets('showArchitectureInspectModal opens dialog and renders InteractiveViewer', (tester) async {
+    testWidgets(
+        'showArchitectureInspectModal opens dialog and renders InteractiveViewer',
+        (tester) async {
       tester.view.physicalSize = const Size(1200, 1000);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(() {

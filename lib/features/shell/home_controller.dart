@@ -40,8 +40,8 @@ class HomeController {
   /// Lookup the nearest [HomeController] in the widget tree. Returns
   /// `null` outside the `HomeScreen` subtree.
   static HomeController? maybeOf(BuildContext context) {
-    final scope = context
-        .dependOnInheritedWidgetOfExactType<HomeControllerScope>();
+    final scope =
+        context.dependOnInheritedWidgetOfExactType<HomeControllerScope>();
     return scope?.controller;
   }
 

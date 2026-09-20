@@ -87,14 +87,17 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     _syncLegacyController(resolvedMode, state.seedColor);
   }
 
-  Future<void> _onModeToggled(ThemeModeToggled event, Emitter<ThemeState> emit) async {
-    final nextMode = state.mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+  Future<void> _onModeToggled(
+      ThemeModeToggled event, Emitter<ThemeState> emit) async {
+    final nextMode =
+        state.mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     emit(state.copyWith(mode: nextMode));
     _syncLegacyController(nextMode, state.seedColor);
     unawaited(_persistMode(nextMode));
   }
 
-  Future<void> _onModeChanged(ThemeModeChanged event, Emitter<ThemeState> emit) async {
+  Future<void> _onModeChanged(
+      ThemeModeChanged event, Emitter<ThemeState> emit) async {
     emit(state.copyWith(mode: event.mode));
     _syncLegacyController(event.mode, state.seedColor);
     unawaited(_persistMode(event.mode));
@@ -109,7 +112,8 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     _syncLegacyController(state.mode, newColor);
   }
 
-  void _onAccentUpdatedFromHash(ThemeAccentUpdatedFromHash event, Emitter<ThemeState> emit) {
+  void _onAccentUpdatedFromHash(
+      ThemeAccentUpdatedFromHash event, Emitter<ThemeState> emit) {
     final clean = event.hash.replaceAll('#', '').split('/').first.toLowerCase();
     int sectionIndex = 0;
     switch (clean) {

@@ -57,7 +57,8 @@ class ProjectsFilterBloc
     Emitter<ProjectsFilterState> emit,
   ) {
     if (state.selectedDomain == event.domain) return;
-    final filtered = _filter(state.allProjects, event.domain, state.selectedTech);
+    final filtered =
+        _filter(state.allProjects, event.domain, state.selectedTech);
     emit(state.copyWith(
       selectedDomain: event.domain,
       filteredProjects: filtered,

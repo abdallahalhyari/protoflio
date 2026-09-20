@@ -7,7 +7,8 @@ class LocaleController {
 
   static const String _prefsKey = 'localeCode';
 
-  static final ValueNotifier<Locale> locale = ValueNotifier<Locale>(const Locale('en'));
+  static final ValueNotifier<Locale> locale =
+      ValueNotifier<Locale>(const Locale('en'));
 
   static void syncFromBloc(Locale nextLocale) {
     if (locale.value != nextLocale) {

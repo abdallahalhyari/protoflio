@@ -56,7 +56,8 @@ class MobileNavSheet extends StatelessWidget {
         index: 1,
         number: '02',
         title: l?.navSectionExperience ?? 'CAREER & EXPERIENCE',
-        subtitle: l?.navSubExperience ?? '4+ Years Enterprise Engineering & Impact',
+        subtitle:
+            l?.navSubExperience ?? '4+ Years Enterprise Engineering & Impact',
         icon: Icons.timeline_rounded,
         accentColor: AppColors.accentGreen,
       ),
@@ -80,7 +81,8 @@ class MobileNavSheet extends StatelessWidget {
         index: 4,
         number: '05',
         title: l?.navSectionEngineering ?? 'SYSTEM ARCHITECTURES',
-        subtitle: l?.navSubEngineering ?? 'Enterprise Blueprints & Offline-First',
+        subtitle:
+            l?.navSubEngineering ?? 'Enterprise Blueprints & Offline-First',
         icon: Icons.hub_rounded,
         accentColor: AppColors.accentRose,
       ),

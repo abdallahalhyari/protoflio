@@ -51,7 +51,9 @@ void main() {
       await bloc.close();
     });
 
-    test('NextLocaleRequested cycles supported languages [en -> ar -> cs -> en]', () async {
+    test(
+        'NextLocaleRequested cycles supported languages [en -> ar -> cs -> en]',
+        () async {
       final bloc = LocaleBloc(initialLocale: const Locale('en'));
 
       bloc.add(const NextLocaleRequested());
@@ -75,7 +77,8 @@ void main() {
       await bloc.close();
     });
 
-    test('LocaleBloc bi-directionally synchronizes with LocaleController', () async {
+    test('LocaleBloc bi-directionally synchronizes with LocaleController',
+        () async {
       final bloc = LocaleBloc();
 
       LocaleController.changeLocale('ar');

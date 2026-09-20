@@ -50,16 +50,19 @@ void main() {
       expect(reset, isTrue);
     });
 
-    testWidgets('HatBioStrip renders avatar, credentials, and bio copy', (tester) async {
+    testWidgets('HatBioStrip renders avatar, credentials, and bio copy',
+        (tester) async {
       await tester.pumpWidget(_wrap(const HatBioStrip(isMobile: false)));
       await tester.pumpAndSettle();
 
       expect(find.textContaining('AMMAN · JORDAN'), findsOneWidget);
-      expect(find.textContaining('BRNO · CZECH REPUBLIC · 2027'), findsOneWidget);
+      expect(
+          find.textContaining('BRNO · CZECH REPUBLIC · 2027'), findsOneWidget);
       expect(find.textContaining('Senior mobile engineer'), findsOneWidget);
     });
 
-    testWidgets('HatRolePills renders roles and triggers selection', (tester) async {
+    testWidgets('HatRolePills renders roles and triggers selection',
+        (tester) async {
       int selected = 0;
       await tester.pumpWidget(_wrap(
         StatefulBuilder(
@@ -82,7 +85,8 @@ void main() {
       expect(selected, 1);
     });
 
-    testWidgets('HatPaginationRow renders index and triggers prev/next', (tester) async {
+    testWidgets('HatPaginationRow renders index and triggers prev/next',
+        (tester) async {
       bool prev = false;
       bool next = false;
       await tester.pumpWidget(_wrap(
@@ -113,7 +117,8 @@ void main() {
       expect(find.textContaining('DRAG THE CARDS'), findsOneWidget);
     });
 
-    testWidgets('ContinuousMobileHatColumn renders mobile card showcase', (tester) async {
+    testWidgets('ContinuousMobileHatColumn renders mobile card showcase',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         ContinuousMobileHatColumn(
           selectedHatIndex: 0,
@@ -132,7 +137,9 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('HatConsoleDock renders active role pill, navigation buttons, and actions', (tester) async {
+    testWidgets(
+        'HatConsoleDock renders active role pill, navigation buttons, and actions',
+        (tester) async {
       bool prev = false;
       bool next = false;
       bool shuffle = false;

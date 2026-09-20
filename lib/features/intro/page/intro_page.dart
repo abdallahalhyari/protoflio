@@ -58,22 +58,34 @@ class _IntroPageState extends State<IntroPage>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _issueStrip(size, isDark),
-        SizedBox(height: isCompactH ? 8.0 : (isWide ? AppSpacing.md : AppSpacing.sm)),
+        SizedBox(
+            height:
+                isCompactH ? 8.0 : (isWide ? AppSpacing.md : AppSpacing.sm)),
         _wordmark(size, isDark, isCompactH, isWide),
-        SizedBox(height: isCompactH ? 8.0 : (isWide ? AppSpacing.smd : AppSpacing.xs)),
+        SizedBox(
+            height:
+                isCompactH ? 8.0 : (isWide ? AppSpacing.smd : AppSpacing.xs)),
         _subline(size, isWide, isDark, isCompactH),
-        SizedBox(height: isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        SizedBox(
+            height:
+                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
         _roleBlock(size, isDark, isCompactH),
-        SizedBox(height: isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        SizedBox(
+            height:
+                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
         IntroAvailabilityBanner(isDark: isDark, isWide: isWide),
-        SizedBox(height: isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        SizedBox(
+            height:
+                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
         IntroCtaRow(
           isDark: isDark,
           onViewWork: widget.onViewWork ?? widget.onScrollDown,
           onDownloadResume: widget.onDownloadResume ?? widget.onScrollDown,
           onContactMe: widget.onContactMe ?? widget.onScrollDown,
         ),
-        SizedBox(height: isCompactH ? 16.0 : (isWide ? AppSpacing.xxl : AppSpacing.xl)),
+        SizedBox(
+            height:
+                isCompactH ? 16.0 : (isWide ? AppSpacing.xxl : AppSpacing.xl)),
         IntroFooterStrip(
           isDark: isDark,
           onContactMe: widget.onContactMe,
@@ -121,7 +133,9 @@ class _IntroPageState extends State<IntroPage>
             child: Text(
               AppLocalizations.of(context)!.introIssueStrip,
               style: TextStyle(
-                color: isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate600,
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.85)
+                    : AppColors.slate600,
                 fontSize: fs,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 4,
@@ -159,7 +173,9 @@ class _IntroPageState extends State<IntroPage>
   Widget _wordmark(Size size, bool isDark, bool isCompactH, bool isWide) {
     final wordmarkHeight = isCompactH
         ? (size.height * 0.17).clamp(95.0, 165.0)
-        : (isWide ? (size.height * 0.21).clamp(120.0, 240.0) : (size.height * 0.16).clamp(85.0, 160.0));
+        : (isWide
+            ? (size.height * 0.21).clamp(120.0, 240.0)
+            : (size.height * 0.16).clamp(85.0, 160.0));
     return SnappyEntrance(
       delayMs: 0,
       child: Semantics(
@@ -200,7 +216,9 @@ class _IntroPageState extends State<IntroPage>
         : (size.width * 0.035).clamp(20.0, 40.0);
     final portraitSize = isCompactH
         ? (size.height * 0.082).clamp(52.0, 78.0)
-        : (isWide ? (size.height * 0.095).clamp(60.0, 96.0) : (size.width * 0.12).clamp(56.0, 80.0));
+        : (isWide
+            ? (size.height * 0.095).clamp(60.0, 96.0)
+            : (size.width * 0.12).clamp(56.0, 80.0));
 
     final content = isWide
         ? Row(
@@ -316,7 +334,8 @@ class _IntroPageState extends State<IntroPage>
                 isDark: isDark,
                 child: Text(
                   '❖',
-                  style: TextStyle(color: _accent, fontSize: AppTypography.small),
+                  style:
+                      TextStyle(color: _accent, fontSize: AppTypography.small),
                 ),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
@@ -354,7 +373,9 @@ class _IntroPageState extends State<IntroPage>
                       ? (size.width * 0.01).clamp(11.0, 12.5)
                       : (size.width * 0.011).clamp(11.5, 13.5),
                   fontWeight: FontWeight.w600,
-                  color: isDark ? Colors.white.withValues(alpha: 0.82) : AppColors.slate600,
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.82)
+                      : AppColors.slate600,
                   height: 1.45,
                   letterSpacing: 0.8,
                 ),
@@ -371,11 +392,10 @@ class _IntroPageState extends State<IntroPage>
     return Row(
       children: [
         Expanded(child: Container(height: 1, color: ruleColor)),
-        Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: child),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12), child: child),
         Expanded(child: Container(height: 1, color: ruleColor)),
       ],
     );
   }
-
-
 }

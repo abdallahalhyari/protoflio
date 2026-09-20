@@ -9,16 +9,21 @@ class AppTheme {
   /// Base themes seeded with [AppColors.seed]. The live section-accent
   /// override is applied by `_AccentTheme` in `main.dart` so callers
   /// never need to pass a dynamic seed here.
-  static final ThemeData _defaultLight = _base(Brightness.light, AppColors.seed);
+  static final ThemeData _defaultLight =
+      _base(Brightness.light, AppColors.seed);
   static final ThemeData _defaultDark = _base(Brightness.dark, AppColors.seed);
 
   /// Base themes seeded with [AppColors.seed]. The live section-accent
   /// override is applied by `_AccentTheme` in `main.dart` so callers
   /// never need to pass a dynamic seed here.
   static ThemeData light([Color seedColor = AppColors.seed]) =>
-      seedColor == AppColors.seed ? _defaultLight : _base(Brightness.light, seedColor);
+      seedColor == AppColors.seed
+          ? _defaultLight
+          : _base(Brightness.light, seedColor);
   static ThemeData dark([Color seedColor = AppColors.seed]) =>
-      seedColor == AppColors.seed ? _defaultDark : _base(Brightness.dark, seedColor);
+      seedColor == AppColors.seed
+          ? _defaultDark
+          : _base(Brightness.dark, seedColor);
 
   static ThemeData _base(Brightness brightness, Color seedColor) {
     final isDark = brightness == Brightness.dark;
@@ -55,7 +60,9 @@ class AppTheme {
       return null;
     });
 
-    final baseText = isDark ? Typography.material2021().white : Typography.material2021().black;
+    final baseText = isDark
+        ? Typography.material2021().white
+        : Typography.material2021().black;
 
     return ThemeData(
       useMaterial3: true,
@@ -69,7 +76,9 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.card),
           side: BorderSide(
-            color: isDark ? Colors.white.withValues(alpha: 0.10) : AppColors.slate200,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.10)
+                : AppColors.slate200,
             width: 1,
           ),
         ),

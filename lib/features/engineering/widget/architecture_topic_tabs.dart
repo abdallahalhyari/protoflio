@@ -78,7 +78,8 @@ class ArchitectureTopicTabs extends StatelessWidget {
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.15),
+                      color: scheme.primary
+                          .withValues(alpha: isDark ? 0.25 : 0.15),
                       blurRadius: 16,
                     ),
                   ]

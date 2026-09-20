@@ -30,7 +30,8 @@ class MagazinePageTransformer extends StatelessWidget {
         if (controller.hasClients &&
             controller.positions.length == 1 &&
             controller.position.haveDimensions) {
-          position = (controller.page ?? controller.initialPage.toDouble()) - index;
+          position =
+              (controller.page ?? controller.initialPage.toDouble()) - index;
         }
 
         // Pages fully outside the viewport (1 or more screens away):

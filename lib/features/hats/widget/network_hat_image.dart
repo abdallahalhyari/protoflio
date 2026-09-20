@@ -16,7 +16,8 @@ class HatImage extends StatefulWidget {
   State<HatImage> createState() => _HatImageState();
 }
 
-class _HatImageState extends State<HatImage> with SingleTickerProviderStateMixin {
+class _HatImageState extends State<HatImage>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _c;
   late final Animation<double> _anim;
 
@@ -24,7 +25,8 @@ class _HatImageState extends State<HatImage> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     _c = AnimationController(vsync: this, duration: const Duration(seconds: 3));
-    _anim = Tween<double>(begin: -0.02, end: 0.02).animate(CurvedAnimation(parent: _c, curve: Curves.easeInOutSine));
+    _anim = Tween<double>(begin: -0.02, end: 0.02)
+        .animate(CurvedAnimation(parent: _c, curve: Curves.easeInOutSine));
   }
 
   @override
@@ -79,7 +81,8 @@ class _HatImageState extends State<HatImage> with SingleTickerProviderStateMixin
       errorBuilder: (context, error, stack) => SizedBox(
         height: widget.height,
         child: const Center(
-          child: Icon(Icons.broken_image_outlined, color: Colors.white70, size: 40),
+          child: Icon(Icons.broken_image_outlined,
+              color: Colors.white70, size: 40),
         ),
       ),
     );

@@ -25,16 +25,20 @@ Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   group('Contact Widgets Test Suite', () {
-    testWidgets('ContactHeader renders feature strip, headline, and lede', (tester) async {
+    testWidgets('ContactHeader renders feature strip, headline, and lede',
+        (tester) async {
       await tester.pumpWidget(_wrap(const ContactHeader()));
       await tester.pumpAndSettle();
 
       expect(find.text('FEATURE 07 · DIRECT LINE & REACH OUT'), findsOneWidget);
       expect(find.text("LET'S BUILD SOMETHING EXTRAORDINARY"), findsOneWidget);
-      expect(find.textContaining('Principal & Senior Mobile Software Architect'), findsOneWidget);
+      expect(
+          find.textContaining('Principal & Senior Mobile Software Architect'),
+          findsOneWidget);
     });
 
-    testWidgets('HeroEmailCard renders email and triggers action callbacks', (tester) async {
+    testWidgets('HeroEmailCard renders email and triggers action callbacks',
+        (tester) async {
       bool sent = false;
       bool copied = false;
       await tester.pumpWidget(_wrap(
@@ -60,7 +64,8 @@ void main() {
       expect(copied, isTrue);
     });
 
-    testWidgets('ExpressPresetsBar renders chips and triggers preset', (tester) async {
+    testWidgets('ExpressPresetsBar renders chips and triggers preset',
+        (tester) async {
       String? selectedSubject;
       await tester.pumpWidget(_wrap(
         ExpressPresetsBar(
@@ -78,17 +83,20 @@ void main() {
       expect(selectedSubject, contains('Senior Mobile Architect'));
     });
 
-    testWidgets('CvDossierCard renders ATS badge and CV download triggers', (tester) async {
+    testWidgets('CvDossierCard renders ATS badge and CV download triggers',
+        (tester) async {
       await tester.pumpWidget(_wrap(const CvDossierCard()));
       await tester.pumpAndSettle();
 
       expect(find.text('ATS-VERIFIED · 2026 EDITION'), findsOneWidget);
-      expect(find.text('Executive Curriculum Vitae & Portfolio Dossier'), findsOneWidget);
+      expect(find.text('Executive Curriculum Vitae & Portfolio Dossier'),
+          findsOneWidget);
       expect(find.text('DOWNLOAD CV · PDF'), findsOneWidget);
       expect(find.text('PREVIEW'), findsOneWidget);
     });
 
-    testWidgets('ContactChannelsGrid renders all 4 direct channels', (tester) async {
+    testWidgets('ContactChannelsGrid renders all 4 direct channels',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         ContactChannelsGrid(
           phone: '+962-787032264',
@@ -112,7 +120,8 @@ void main() {
       expect(find.text('@abdallahalhyari'), findsOneWidget);
     });
 
-    testWidgets('EngagementMatrixSection renders tracks and invokes inquiry', (tester) async {
+    testWidgets('EngagementMatrixSection renders tracks and invokes inquiry',
+        (tester) async {
       String? inquiredSubject;
       await tester.pumpWidget(_wrap(
         EngagementMatrixSection(
@@ -132,7 +141,8 @@ void main() {
       expect(inquiredSubject, contains('Mobile System Audit'));
     });
 
-    testWidgets('ContactMastheadFooter renders brand and handle links', (tester) async {
+    testWidgets('ContactMastheadFooter renders brand and handle links',
+        (tester) async {
       bool linkedInOpened = false;
       bool githubOpened = false;
       await tester.pumpWidget(_wrap(
@@ -159,7 +169,9 @@ void main() {
       expect(githubOpened, isTrue);
     });
 
-    testWidgets('HeroEmailCard renders compose button and triggers onComposeInquiry', (tester) async {
+    testWidgets(
+        'HeroEmailCard renders compose button and triggers onComposeInquiry',
+        (tester) async {
       bool composed = false;
       await tester.pumpWidget(_wrap(
         HeroEmailCard(
@@ -178,8 +190,11 @@ void main() {
       expect(composed, isTrue);
     });
 
-    testWidgets('InquiryComposerDialog renders header, tracks, and switches templates', (tester) async {
-      await tester.pumpWidget(_wrap(const InquiryComposerDialog(initialTrackIndex: 0)));
+    testWidgets(
+        'InquiryComposerDialog renders header, tracks, and switches templates',
+        (tester) async {
+      await tester
+          .pumpWidget(_wrap(const InquiryComposerDialog(initialTrackIndex: 0)));
       await tester.pumpAndSettle();
 
       expect(find.text('DIRECT INQUIRY COMPOSER'), findsOneWidget);
@@ -193,7 +208,9 @@ void main() {
       expect(find.text('OPEN IN EMAIL CLIENT'), findsOneWidget);
 
       // Verify initial body contains Role Opportunity template
-      expect(find.textContaining('Senior Mobile Architect / Flutter Engineering'), findsOneWidget);
+      expect(
+          find.textContaining('Senior Mobile Architect / Flutter Engineering'),
+          findsOneWidget);
 
       // Tap Architecture Audit track
       await tester.tap(find.text('📐 Architecture Audit'));
@@ -202,7 +219,9 @@ void main() {
       expect(find.textContaining('expert architectural audit'), findsOneWidget);
     });
 
-    testWidgets('InquiryComposerDialog accepts name and company inputs and copies draft', (tester) async {
+    testWidgets(
+        'InquiryComposerDialog accepts name and company inputs and copies draft',
+        (tester) async {
       tester.view.physicalSize = const Size(1200, 1000);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(() {
@@ -220,8 +239,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // Enter name and company
-      await tester.enterText(find.widgetWithText(TextField, 'Your Name (Optional)'), 'Sarah Connor');
-      await tester.enterText(find.widgetWithText(TextField, 'Company / Org (Optional)'), 'Cyberdyne');
+      await tester.enterText(
+          find.widgetWithText(TextField, 'Your Name (Optional)'),
+          'Sarah Connor');
+      await tester.enterText(
+          find.widgetWithText(TextField, 'Company / Org (Optional)'),
+          'Cyberdyne');
       await tester.pumpAndSettle();
 
       // Tap COPY DRAFT
@@ -234,7 +257,8 @@ void main() {
       expect(copiedMessage, contains('high-performance cross-platform system'));
     });
 
-    testWidgets('InquiryComposerDialog triggers onSend with subject and body', (tester) async {
+    testWidgets('InquiryComposerDialog triggers onSend with subject and body',
+        (tester) async {
       tester.view.physicalSize = const Size(1200, 1000);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(() {
@@ -263,11 +287,14 @@ void main() {
       expect(sentBody, contains('expert architectural audit'));
     });
 
-    testWidgets('showInquiryComposerDialog opens modal and closes on close button', (tester) async {
+    testWidgets(
+        'showInquiryComposerDialog opens modal and closes on close button',
+        (tester) async {
       await tester.pumpWidget(_wrap(
         Builder(
           builder: (context) => ElevatedButton(
-            onPressed: () => showInquiryComposerDialog(context, initialTrackIndex: 1),
+            onPressed: () =>
+                showInquiryComposerDialog(context, initialTrackIndex: 1),
             child: const Text('OPEN COMPOSER'),
           ),
         ),
