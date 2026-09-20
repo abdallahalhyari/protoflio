@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../service/analytics_service.dart';
-import '../../theme/tokens.dart';
+import 'package:profile/service/analytics_service.dart';
+import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/editorial_chip.dart';
 import 'package:profile/shared/widget/primary_button.dart';
 import 'package:profile/features/projects/widget/nfc_architecture_diagram.dart';

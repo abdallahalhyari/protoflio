@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../theme/tokens.dart';
-import '../data/experience_data.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/experience/bloc/experience_timeline_bloc.dart';
 import 'package:profile/features/experience/widget/animated_experience_node.dart';
 import 'package:profile/features/experience/widget/credentials_bento_card.dart';
 import 'package:profile/features/experience/widget/experience_header.dart';
@@ -28,15 +31,16 @@ class _ExperiencePageState extends State<ExperiencePage>
   @override
   bool get wantKeepAlive => true;
 
-  // Stagger animation state
-  bool _isVisible = false;
+  late final ExperienceTimelineBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    if (widget.isContinuousMobile) {
-      _isVisible = true;
-    } else {
+    _bloc = ExperienceTimelineBloc(
+      initialVisibility: widget.isContinuousMobile,
+    );
+
+    if (!widget.isContinuousMobile) {
       _checkVisibility();
       widget.controller?.addListener(_checkVisibility);
     }
@@ -45,6 +49,7 @@ class _ExperiencePageState extends State<ExperiencePage>
   @override
   void dispose() {
     widget.controller?.removeListener(_checkVisibility);
+    _bloc.close();
     super.dispose();
   }
 
@@ -53,7 +58,9 @@ class _ExperiencePageState extends State<ExperiencePage>
     if (widget.controller == null ||
         !widget.controller!.hasClients ||
         widget.controller!.positions.length != 1) {
-      if (!_isVisible) setState(() => _isVisible = true);
+      if (!_bloc.state.isVisible) {
+        _bloc.add(const ExperienceVisibilityChanged(true));
+      }
       return;
     }
 
@@ -62,10 +69,27 @@ class _ExperiencePageState extends State<ExperiencePage>
         widget.controller!.page ?? widget.controller!.initialPage.toDouble();
     final isFocused = (page - (widget.pageIndex ?? 0)).abs() < 0.3;
 
-    if (isFocused && !_isVisible) {
-      setState(() => _isVisible = true);
+    if (isFocused && !_bloc.state.isVisible) {
+      _bloc.add(const ExperienceVisibilityChanged(true));
       widget.controller?.removeListener(_checkVisibility);
     }
+  }
+
+  KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
+    if (event is! KeyDownEvent) return KeyEventResult.ignored;
+
+    if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
+        event.logicalKey == LogicalKeyboardKey.arrowRight) {
+      SoundService.instance.playSelection();
+      _bloc.add(const ExperienceKeyboardNavigated(1));
+      return KeyEventResult.handled;
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowUp ||
+        event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+      SoundService.instance.playSelection();
+      _bloc.add(const ExperienceKeyboardNavigated(-1));
+      return KeyEventResult.handled;
+    }
+    return KeyEventResult.ignored;
   }
 
   @override
@@ -74,64 +98,85 @@ class _ExperiencePageState extends State<ExperiencePage>
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
 
-    return AppScreenShell(
-      maxWidth: 1600, // Wider for horizontal scroll
-      verticalPadding: AppSpacing.md,
-      reserveBottomNav: !widget.isContinuousMobile,
-      reserveMobileTop: !widget.isContinuousMobile,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Header
-          ExperienceHeader(isDesktop: isDesktop),
-          const SizedBox(height: AppSpacing.sm),
+    return BlocProvider.value(
+      value: _bloc,
+      child: BlocBuilder<ExperienceTimelineBloc, ExperienceTimelineState>(
+        builder: (context, state) {
+          return Focus(
+            autofocus: false,
+            onKeyEvent: _handleKeyEvent,
+            child: AppScreenShell(
+              maxWidth: 1600, // Wider for horizontal scroll
+              verticalPadding: AppSpacing.md,
+              reserveBottomNav: !widget.isContinuousMobile,
+              reserveMobileTop: !widget.isContinuousMobile,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Header
+                  ExperienceHeader(isDesktop: isDesktop),
+                  const SizedBox(height: AppSpacing.sm),
 
-          // Timeline Grid
-          if (widget.isContinuousMobile)
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: AppSpacing.sm,
-              ),
-              child: _buildContinuousMobileList(),
-            )
-          else
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppSpacing.sm,
-                ),
-                child: isDesktop
-                    ? _buildDesktopGrid()
-                    : _buildMobileList(),
+                  // Timeline Grid
+                  if (widget.isContinuousMobile)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppSpacing.sm,
+                      ),
+                      child: _buildContinuousMobileList(context, state),
+                    )
+                  else
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.sm,
+                        ),
+                        child: isDesktop
+                            ? _buildDesktopGrid(context, state)
+                            : _buildMobileList(context, state),
+                      ),
+                    ),
+                ],
               ),
             ),
-        ],
+          );
+        },
       ),
     );
   }
 
-  Widget _buildContinuousMobileList() {
+  Widget _buildContinuousMobileList(
+    BuildContext context,
+    ExperienceTimelineState state,
+  ) {
+    final experiences = state.experiences;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (int i = 0; i < kExperience.length; i++) ...[
+        for (int i = 0; i < experiences.length; i++) ...[
           AnimatedExperienceNode(
-            exp: kExperience[i],
+            exp: experiences[i],
             index: i,
-            isVisible: _isVisible,
+            isVisible: state.isVisible,
+            isSelected: state.selectedIndex == i,
+            onSelect: () => _bloc.add(ExperienceNodeSelected(i)),
             isDesktop: false,
           ),
           const SizedBox(height: AppSpacing.md),
         ],
         CredentialsBentoCard(
-          isVisible: _isVisible,
+          isVisible: state.isVisible,
           isDesktop: false,
         ),
       ],
     );
   }
 
-  Widget _buildDesktopGrid() {
+  Widget _buildDesktopGrid(
+    BuildContext context,
+    ExperienceTimelineState state,
+  ) {
+    final experiences = state.experiences;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -141,25 +186,31 @@ class _ExperiencePageState extends State<ExperiencePage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                flex: 5,
-                child: AnimatedExperienceNode(
-                  exp: kExperience[0],
-                  index: 0,
-                  isVisible: _isVisible,
-                  isDesktop: true,
+              if (experiences.isNotEmpty)
+                Expanded(
+                  flex: 5,
+                  child: AnimatedExperienceNode(
+                    exp: experiences[0],
+                    index: 0,
+                    isVisible: state.isVisible,
+                    isSelected: state.selectedIndex == 0,
+                    onSelect: () => _bloc.add(const ExperienceNodeSelected(0)),
+                    isDesktop: true,
+                  ),
                 ),
-              ),
               const SizedBox(height: AppSpacing.lg),
-              Expanded(
-                flex: 4,
-                child: AnimatedExperienceNode(
-                  exp: kExperience[1],
-                  index: 1,
-                  isVisible: _isVisible,
-                  isDesktop: true,
+              if (experiences.length > 1)
+                Expanded(
+                  flex: 4,
+                  child: AnimatedExperienceNode(
+                    exp: experiences[1],
+                    index: 1,
+                    isVisible: state.isVisible,
+                    isSelected: state.selectedIndex == 1,
+                    onSelect: () => _bloc.add(const ExperienceNodeSelected(1)),
+                    isDesktop: true,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
@@ -171,25 +222,31 @@ class _ExperiencePageState extends State<ExperiencePage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                flex: 5,
-                child: AnimatedExperienceNode(
-                  exp: kExperience[2],
-                  index: 2,
-                  isVisible: _isVisible,
-                  isDesktop: true,
+              if (experiences.length > 2)
+                Expanded(
+                  flex: 5,
+                  child: AnimatedExperienceNode(
+                    exp: experiences[2],
+                    index: 2,
+                    isVisible: state.isVisible,
+                    isSelected: state.selectedIndex == 2,
+                    onSelect: () => _bloc.add(const ExperienceNodeSelected(2)),
+                    isDesktop: true,
+                  ),
                 ),
-              ),
               const SizedBox(height: AppSpacing.lg),
-              Expanded(
-                flex: 4,
-                child: AnimatedExperienceNode(
-                  exp: kExperience[3],
-                  index: 3,
-                  isVisible: _isVisible,
-                  isDesktop: true,
+              if (experiences.length > 3)
+                Expanded(
+                  flex: 4,
+                  child: AnimatedExperienceNode(
+                    exp: experiences[3],
+                    index: 3,
+                    isVisible: state.isVisible,
+                    isSelected: state.selectedIndex == 3,
+                    onSelect: () => _bloc.add(const ExperienceNodeSelected(3)),
+                    isDesktop: true,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
@@ -199,7 +256,7 @@ class _ExperiencePageState extends State<ExperiencePage>
         Expanded(
           flex: 4,
           child: CredentialsBentoCard(
-            isVisible: _isVisible,
+            isVisible: state.isVisible,
             isDesktop: true,
           ),
         ),
@@ -207,23 +264,29 @@ class _ExperiencePageState extends State<ExperiencePage>
     );
   }
 
-  Widget _buildMobileList() {
+  Widget _buildMobileList(
+    BuildContext context,
+    ExperienceTimelineState state,
+  ) {
+    final experiences = state.experiences;
     return ListView.builder(
       padding: EdgeInsets.zero,
       primary: false,
       physics: const ClampingScrollPhysics(),
-      itemCount: kExperience.length + 1,
+      itemCount: experiences.length + 1,
       itemBuilder: (context, index) {
-        if (index == kExperience.length) {
+        if (index == experiences.length) {
           return CredentialsBentoCard(
-            isVisible: _isVisible,
+            isVisible: state.isVisible,
             isDesktop: false,
           );
         }
         return AnimatedExperienceNode(
-          exp: kExperience[index],
+          exp: experiences[index],
           index: index,
-          isVisible: _isVisible,
+          isVisible: state.isVisible,
+          isSelected: state.selectedIndex == index,
+          onSelect: () => _bloc.add(ExperienceNodeSelected(index)),
           isDesktop: false,
         );
       },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Bottom-of-scroll wordmark + rights strip shown on the mobile
 /// continuous scroll layout. Pure presentation — no controller or

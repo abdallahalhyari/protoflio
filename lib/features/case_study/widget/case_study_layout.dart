@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Responsive layout metrics for case studies.
 class CaseStudyLayout {

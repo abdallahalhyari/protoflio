@@ -13,12 +13,16 @@ class ExperienceCard extends StatefulWidget {
   final Experience exp;
   final ColorScheme scheme;
   final bool isDesktop;
+  final bool isSelected;
+  final VoidCallback? onSelect;
 
   const ExperienceCard({
     super.key,
     required this.exp,
     required this.scheme,
     required this.isDesktop,
+    this.isSelected = false,
+    this.onSelect,
   });
 
   @override
@@ -46,26 +50,24 @@ class _ExperienceCardState extends State<ExperienceCard> {
     final scheme = widget.scheme;
     final isDark = context.isDarkMode;
     final reduce = MediaQuery.disableAnimationsOf(context);
-    final hovered = _hover && !reduce;
+    final active = (widget.isSelected || _hover) && !reduce;
 
     return Semantics(
       container: true,
       label: '${widget.exp.role} at ${widget.exp.company}, ${widget.exp.period}',
       child: GestureDetector(
-        // Tap toggle is only useful on touch — on desktop, MouseRegion
-        // already drives the hover state, so a click while hovered would
-        // otherwise flip _hover to false right under the cursor.
-        onTap: widget.isDesktop
-            ? null
-            : () {
-                SoundService.instance.playClick();
-                setState(() => _hover = !_hover);
-              },
+        onTap: () {
+          SoundService.instance.playClick();
+          widget.onSelect?.call();
+          if (!widget.isDesktop) {
+            setState(() => _hover = !_hover);
+          }
+        },
       child: MouseRegion(
         onEnter: (_) => setState(() => _hover = true),
         onExit: (_) => setState(() => _hover = false),
         child: AnimatedScale(
-          scale: hovered ? 1.02 : 1.0,
+          scale: active ? 1.02 : 1.0,
           duration: AppMotion.cardHover,
           curve: AppMotion.emphasized,
           child: Container(
@@ -73,18 +75,23 @@ class _ExperienceCardState extends State<ExperienceCard> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.lg),
             border: Border.all(
-              color: hovered
-                  ? scheme.primary.withValues(alpha: isDark ? 0.6 : 0.8)
+              color: active
+                  ? scheme.primary.withValues(alpha: isDark ? (widget.isSelected ? 0.9 : 0.6) : (widget.isSelected ? 1.0 : 0.8))
                   : (isDark ? context.glassBorderStrong : AppColors.slate200),
-              width: hovered ? 1.5 : 1.0,
+              width: active ? (widget.isSelected ? 2.0 : 1.5) : 1.0,
             ),
-            boxShadow: hovered
+            boxShadow: active
                 ? [
-                    // Colored inner glow tinted with the section accent
-                    // — reads as "lit from within" instead of a flat
-                    // grey drop shadow.
-                    BoxShadow(color: scheme.primary.withValues(alpha: isDark ? 0.22 : 0.16), blurRadius: 24, spreadRadius: 2),
-                    BoxShadow(color: isDark ? AppColors.shadowMedium : AppColors.shadowSoft, blurRadius: 12, offset: const Offset(0, 10)),
+                    BoxShadow(
+                      color: scheme.primary.withValues(alpha: isDark ? (widget.isSelected ? 0.35 : 0.22) : (widget.isSelected ? 0.25 : 0.16)),
+                      blurRadius: widget.isSelected ? 32 : 24,
+                      spreadRadius: widget.isSelected ? 3 : 2,
+                    ),
+                    BoxShadow(
+                      color: isDark ? AppColors.shadowMedium : AppColors.shadowSoft,
+                      blurRadius: 12,
+                      offset: const Offset(0, 10),
+                    ),
                   ]
                 : [
                     BoxShadow(color: isDark ? AppColors.shadowSoft : AppColors.slate900.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 4)),
@@ -101,8 +108,8 @@ class _ExperienceCardState extends State<ExperienceCard> {
                         duration: AppMotion.cardHover,
                         curve: AppMotion.emphasized,
                         color: isDark
-                            ? (hovered ? scheme.surface.withValues(alpha: 0.35) : scheme.surface.withValues(alpha: 0.2))
-                            : (hovered ? Colors.white.withValues(alpha: 0.95) : Colors.white.withValues(alpha: 0.88)),
+                            ? (active ? scheme.surface.withValues(alpha: 0.35) : scheme.surface.withValues(alpha: 0.2))
+                            : (active ? Colors.white.withValues(alpha: 0.95) : Colors.white.withValues(alpha: 0.88)),
                       ),
                     ),
                   ),

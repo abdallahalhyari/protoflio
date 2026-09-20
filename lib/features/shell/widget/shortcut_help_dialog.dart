@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import '../../../service/sound_service.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Modal listing keyboard shortcuts (digits, arrows, Home/End, ?).
 /// Called from `KeyboardHintChip` and the `?` key handler.

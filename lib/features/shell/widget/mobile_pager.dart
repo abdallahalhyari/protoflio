@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../service/sound_service.dart';
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
 import '../home_controller.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
 

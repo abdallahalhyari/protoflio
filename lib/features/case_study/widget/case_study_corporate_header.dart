@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../service/analytics_service.dart';
-import '../../../service/sound_service.dart';
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/service/analytics_service.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Share / copy case study link helper with custom haptic toast.
 Future<void> shareCaseStudy(

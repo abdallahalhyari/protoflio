@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../service/analytics_service.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/service/analytics_service.dart';
+import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/shell/widget/page_background.dart';
 import 'case_study_corporate_header.dart';
 import 'case_study_layout.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Wraps a page whose Dart code is behind a `deferred as` import.
 /// Invokes [loader] (which should call `libname.loadLibrary()`), then

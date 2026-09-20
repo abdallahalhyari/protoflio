@@ -5,11 +5,11 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
 
-import '../../../service/analytics_service.dart';
-import '../../../service/sound_service.dart';
+import 'package:profile/service/analytics_service.dart';
+import 'package:profile/service/sound_service.dart';
 
 import 'package:profile/features/contact/widget/contact_channels_grid.dart';
 import 'package:profile/features/contact/widget/contact_header.dart';

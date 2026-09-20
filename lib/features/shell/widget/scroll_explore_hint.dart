@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Bouncing chevron + "SCROLL TO EXPLORE" label. Auto-loops when motion is
 /// allowed; renders static when the user prefers reduced motion.

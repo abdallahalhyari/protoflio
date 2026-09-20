@@ -11,12 +11,17 @@ class AnimatedExperienceNode extends StatelessWidget {
   final bool isVisible;
   final bool isDesktop;
 
+  final bool isSelected;
+  final VoidCallback? onSelect;
+
   const AnimatedExperienceNode({
     super.key,
     required this.exp,
     required this.index,
     required this.isVisible,
     required this.isDesktop,
+    this.isSelected = false,
+    this.onSelect,
   });
 
   @override
@@ -26,7 +31,13 @@ class AnimatedExperienceNode extends StatelessWidget {
       padding: EdgeInsets.only(
         bottom: isDesktop ? 0 : AppSpacing.lg,
       ),
-      child: ExperienceCard(exp: exp, scheme: scheme, isDesktop: isDesktop),
+      child: ExperienceCard(
+        exp: exp,
+        scheme: scheme,
+        isDesktop: isDesktop,
+        isSelected: isSelected,
+        onSelect: onSelect,
+      ),
     );
 
     if (MediaQuery.disableAnimationsOf(context)) {

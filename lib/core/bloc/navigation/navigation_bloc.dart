@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../service/url_sync_service.dart';
+import 'package:profile/service/url_sync_service.dart';
 import 'navigation_event.dart';
 import 'navigation_state.dart';
 

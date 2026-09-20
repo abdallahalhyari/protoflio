@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/locale_controller.dart';
 
-import '../../../service/sound_service.dart';
-import '../../../theme/tokens.dart';
-import '../../../theme_controller.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/theme_controller.dart';
 
 /// Top-right desktop toolbar — language picker, theme toggle, audio
 /// mute. Self-contained: reads its own state from

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 class ThemeState extends Equatable {
   final ThemeMode mode;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../service/analytics_service.dart';
-import '../../service/url_sync_service.dart';
-import '../../theme/tokens.dart';
+import 'package:profile/service/analytics_service.dart';
+import 'package:profile/service/url_sync_service.dart';
+import 'package:profile/theme/tokens.dart';
 import 'case_study_eskadenia.dart';
 import 'case_study_fais.dart';
 import 'case_study_nathealth.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../theme/tokens.dart';
-import '../../../service/sound_service.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/service/sound_service.dart';
 
 import 'package:profile/features/engineering/bloc/architecture_simulator_bloc.dart';
 import 'package:profile/features/engineering/bloc/architecture_simulator_event.dart';

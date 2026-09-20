@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import '../../../service/sound_service.dart';
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Desktop bottom-right keyboard-hint chip. Renders a small kbd-icon
 /// puck with a rich tooltip listing all keyboard shortcuts. Tapping

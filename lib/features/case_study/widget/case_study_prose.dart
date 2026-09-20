@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Section kicker: numeric label + uppercase title + rule.
 class SectionKicker extends StatelessWidget {

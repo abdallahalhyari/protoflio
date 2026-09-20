@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../../../service/sound_service.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/tokens.dart';
 import 'network_hat_image.dart';
 import 'package:profile/shared/widget/holographic_physics.dart';
 

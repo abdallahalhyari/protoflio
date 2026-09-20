@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 class MagazinePageTransformer extends StatelessWidget {
   final Widget child;

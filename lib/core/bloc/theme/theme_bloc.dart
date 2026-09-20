@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../theme/tokens.dart';
-import '../../../theme_controller.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/theme_controller.dart';
 import 'theme_event.dart';
 import 'theme_state.dart';
 

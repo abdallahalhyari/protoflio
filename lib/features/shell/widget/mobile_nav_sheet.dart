@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import '../../../service/cv_service.dart';
-import '../../../service/sound_service.dart';
-import '../../../service/url_sync_service.dart';
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/service/cv_service.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/service/url_sync_service.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
 

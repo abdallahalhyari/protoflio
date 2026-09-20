@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
-import '../../../service/sound_service.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/service/sound_service.dart';
 import 'package:profile/features/intro/widget/intro_availability_banner.dart';
 import 'package:profile/features/intro/widget/intro_cta_row.dart';
 import 'package:profile/features/intro/widget/intro_footer_strip.dart';

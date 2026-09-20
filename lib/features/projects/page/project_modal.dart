@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import '../../../theme/tokens.dart';
-import '../../../service/analytics_service.dart';
-import '../../../service/sound_service.dart';
-import '../../case_study/case_study_router.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/service/analytics_service.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/features/case_study/case_study_router.dart';
 import '../model/project.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
 import 'package:profile/features/projects/widget/nfc_architecture_diagram.dart';

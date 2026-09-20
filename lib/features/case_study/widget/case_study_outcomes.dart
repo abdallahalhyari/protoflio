@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// A single outcome metric — big number + short caption.
 class OutcomeCard extends StatelessWidget {

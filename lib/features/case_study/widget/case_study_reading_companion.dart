@@ -1,10 +1,12 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../service/analytics_service.dart';
-import '../../../service/sound_service.dart';
-import '../../../theme/surface_tone.dart';
-import '../../../theme/tokens.dart';
+import 'package:profile/service/analytics_service.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/case_study/bloc/case_study_reader_bloc.dart';
 
 /// Representation of a chapter / section anchor in a case study.
 class CaseStudyChapter {
@@ -47,17 +49,15 @@ class CaseStudyReadingCompanion extends StatefulWidget {
 }
 
 class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
-  double _progress = 0.0;
-  bool _showDock = false;
-  String? _activeChapterId;
+  late final CaseStudyReaderBloc _bloc;
 
   @override
   void initState() {
     super.initState();
+    _bloc = CaseStudyReaderBloc(
+      initialChapterId: widget.chapters.isNotEmpty ? widget.chapters.first.id : null,
+    );
     widget.scrollController.addListener(_onScroll);
-    if (widget.chapters.isNotEmpty) {
-      _activeChapterId = widget.chapters.first.id;
-    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _onScroll();
     });
@@ -75,6 +75,7 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
   @override
   void dispose() {
     widget.scrollController.removeListener(_onScroll);
+    _bloc.close();
     super.dispose();
   }
 
@@ -103,18 +104,14 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
 
     activeId ??= widget.chapters.isNotEmpty ? widget.chapters.first.id : null;
 
-    if (activeId != _activeChapterId ||
-        showDock != _showDock ||
-        (progress - _progress).abs() > 0.005) {
-      setState(() {
-        _progress = progress;
-        _showDock = showDock;
-        _activeChapterId = activeId;
-      });
+    _bloc.add(CaseStudyScrollProgressUpdated(progress: progress, showDock: showDock));
+    if (activeId != null && activeId != _bloc.state.activeChapterId) {
+      _bloc.add(CaseStudyChapterDetected(activeId));
     }
   }
 
   void _scrollToChapter(CaseStudyChapter chapter) {
+    _bloc.add(CaseStudyChapterJumpRequested(chapter.id));
     SoundService.instance.playClick();
     Analytics.event('case_study_chapter_click',
         params: {'chapter': chapter.id});
@@ -130,6 +127,7 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
   }
 
   void _scrollToTop() {
+    _bloc.add(const CaseStudyBackToTopRequested());
     SoundService.instance.playClick();
     Analytics.event('case_study_back_to_top');
     widget.scrollController.animateTo(
@@ -143,31 +141,38 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
 
-    return NotificationListener<ScrollNotification>(
-      onNotification: (notification) {
-        if (notification is ScrollUpdateNotification ||
-            notification is OverscrollNotification) {
-          _onScroll();
-        }
-        return false;
-      },
-      child: Stack(
-        children: [
-          widget.child,
-          _TopReadingProgressBar(
-            progress: _progress,
-            isDark: isDark,
-          ),
-          _FloatingChapterDock(
-            visible: _showDock,
-            progress: _progress,
-            chapters: widget.chapters,
-            activeChapterId: _activeChapterId,
-            onChapterTap: _scrollToChapter,
-            onBackToTop: _scrollToTop,
-            isDark: isDark,
-          ),
-        ],
+    return BlocProvider.value(
+      value: _bloc,
+      child: BlocBuilder<CaseStudyReaderBloc, CaseStudyReaderState>(
+        builder: (context, state) {
+          return NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification is ScrollUpdateNotification ||
+                  notification is OverscrollNotification) {
+                _onScroll();
+              }
+              return false;
+            },
+            child: Stack(
+              children: [
+                widget.child,
+                _TopReadingProgressBar(
+                  progress: state.progress,
+                  isDark: isDark,
+                ),
+                _FloatingChapterDock(
+                  visible: state.showDock,
+                  progress: state.progress,
+                  chapters: widget.chapters,
+                  activeChapterId: state.activeChapterId,
+                  onChapterTap: _scrollToChapter,
+                  onBackToTop: _scrollToTop,
+                  isDark: isDark,
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
