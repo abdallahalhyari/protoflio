@@ -102,7 +102,7 @@ class ProjectDomainFilters extends StatelessWidget {
   }
 }
 
-class _DomainChip extends StatelessWidget {
+class _DomainChip extends StatefulWidget {
   final String label;
   final int count;
   final bool isSelected;
@@ -122,82 +122,127 @@ class _DomainChip extends StatelessWidget {
   });
 
   @override
+  State<_DomainChip> createState() => _DomainChipState();
+}
+
+class _DomainChipState extends State<_DomainChip> {
+  bool _isHovered = false;
+  bool _isFocused = false;
+
+  @override
   Widget build(BuildContext context) {
+    final isSelected = widget.isSelected;
+    final isDark = widget.isDark;
+    final scheme = widget.scheme;
+    final isDesktop = widget.isDesktop;
+    final isInteractive = _isHovered || _isFocused;
+
     final activeBg = isSelected
         ? scheme.primary.withValues(alpha: isDark ? 0.22 : 0.15)
-        : (isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100);
+        : (isInteractive
+            ? scheme.primary.withValues(alpha: isDark ? 0.08 : 0.05)
+            : (isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100));
 
     final activeBorder = isSelected
         ? scheme.primary.withValues(alpha: isDark ? 0.7 : 0.6)
-        : (isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200);
+        : (isInteractive
+            ? scheme.primary.withValues(alpha: isDark ? 0.45 : 0.35)
+            : (isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200));
 
     final textColor = isSelected
         ? scheme.primary
-        : (isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700);
+        : (isInteractive
+            ? (isDark ? Colors.white : AppColors.slate900)
+            : (isDark ? Colors.white.withValues(alpha: 0.85) : AppColors.slate700));
 
     return Semantics(
       button: true,
       selected: isSelected,
-      label: '$label filter, $count items',
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          child: AnimatedContainer(
-            duration: AppMotion.snap,
-            curve: AppMotion.standard,
-            padding: EdgeInsets.symmetric(
-              horizontal: isDesktop ? 12 : 10,
-              vertical: isDesktop ? 7 : 6,
-            ),
-            decoration: BoxDecoration(
-              color: activeBg,
+      label: '${widget.label} filter, ${widget.count} items',
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        cursor: SystemMouseCursors.click,
+        child: AnimatedScale(
+          scale: isInteractive && !isSelected && isDesktop ? 1.03 : 1.0,
+          duration: AppMotion.snap,
+          curve: AppMotion.emphasized,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: widget.onTap,
+              onFocusChange: (focused) => setState(() => _isFocused = focused),
               borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: Border.all(color: activeBorder, width: isSelected ? 1.5 : 1.0),
-              boxShadow: isSelected
-                  ? [
-                      BoxShadow(
-                        color: scheme.primary.withValues(alpha: isDark ? 0.2 : 0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
+              child: AnimatedContainer(
+                duration: AppMotion.snap,
+                curve: AppMotion.standard,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isDesktop ? 12 : 10,
+                  vertical: isDesktop ? 7 : 6,
+                ),
+                decoration: BoxDecoration(
+                  color: activeBg,
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  border: Border.all(
+                    color: activeBorder,
+                    width: isSelected || _isFocused ? 1.5 : 1.0,
+                  ),
+                  boxShadow: isSelected
+                      ? [
+                          BoxShadow(
+                            color: scheme.primary.withValues(alpha: isDark ? 0.2 : 0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ]
+                      : (isInteractive && !isSelected
+                          ? [
+                              BoxShadow(
+                                color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.04),
+                                blurRadius: 4,
+                                offset: const Offset(0, 1),
+                              ),
+                            ]
+                          : null),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      widget.label.toUpperCase(),
+                      style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
+                        color: textColor,
+                        fontSize: isDesktop ? AppTypography.micro : 10,
+                        fontWeight: isSelected ? FontWeight.w900 : FontWeight.w700,
+                        letterSpacing: 1.0,
                       ),
-                    ]
-                  : null,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  label.toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
-                    color: textColor,
-                    fontSize: isDesktop ? AppTypography.micro : 10,
-                    fontWeight: isSelected ? FontWeight.w900 : FontWeight.w700,
-                    letterSpacing: 1.0,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? scheme.primary.withValues(alpha: 0.25)
-                        : (isDark ? Colors.white12 : AppColors.slate200),
-                    borderRadius: BorderRadius.circular(AppRadius.chip),
-                  ),
-                  child: Text(
-                    '$count',
-                    style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
-                      color: textColor,
-                      fontSize: 9,
-                      fontWeight: FontWeight.w900,
                     ),
-                  ),
+                    const SizedBox(width: 6),
+                    AnimatedContainer(
+                      duration: AppMotion.snap,
+                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? scheme.primary.withValues(alpha: 0.25)
+                            : (isInteractive
+                                ? scheme.primary.withValues(alpha: isDark ? 0.15 : 0.1)
+                                : (isDark ? Colors.white12 : AppColors.slate200)),
+                        borderRadius: BorderRadius.circular(AppRadius.chip),
+                      ),
+                      child: Text(
+                        '${widget.count}',
+                        style: TextStyle(
+                          fontFamily: AppTypography.monoFont,
+                          color: textColor,
+                          fontSize: 9,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

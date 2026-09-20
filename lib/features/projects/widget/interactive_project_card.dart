@@ -36,6 +36,7 @@ class InteractiveProjectCard extends StatefulWidget {
 
 class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
   bool _isHovered = false;
+  bool _isFocused = false;
   final ValueNotifier<Offset> _mousePos = ValueNotifier<Offset>(Offset.zero);
 
   @override
@@ -49,6 +50,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
     final isDark = context.isDarkMode;
     final reduceMotion = AppMedia.reduceMotion(context);
     final hovered = _isHovered && widget.isDesktop && !reduceMotion;
+    final isInteractive = (hovered || _isFocused) && !reduceMotion;
     final caseStudySlug = CaseStudyRouter.slugForCompany(widget.project.company);
     return RepaintBoundary(
       child: Semantics(
@@ -62,27 +64,28 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
             opacity: widget.isDimmed ? 0.35 : 1.0,
             duration: AppMotion.snap,
             child: AnimatedScale(
-              scale: hovered ? 1.02 : 1.0,
+              scale: isInteractive ? 1.02 : 1.0,
               duration: AppMotion.cardHover,
               curve: AppMotion.emphasized,
             child: Card(
               margin: EdgeInsets.zero,
               clipBehavior: Clip.antiAlias,
-              elevation: isDark ? 0 : (hovered ? 12 : 4),
+              elevation: isDark ? 0 : (isInteractive ? 12 : 4),
               shadowColor: isDark ? Colors.transparent : Colors.black.withValues(alpha: 0.15),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppRadius.md),
                 side: BorderSide(
-                  color: hovered
-                      ? widget.scheme.primary.withValues(alpha: isDark ? 0.55 : 0.45)
+                  color: isInteractive
+                      ? widget.scheme.primary.withValues(alpha: isDark ? 0.7 : 0.6)
                       : (isDark
                           ? Colors.white.withValues(alpha: 0.10)
                           : AppColors.slate200),
-                  width: hovered ? 1.5 : 1.0,
+                  width: isInteractive ? 1.5 : 1.0,
                 ),
               ),
               color: isDark ? AppColors.darkCard : Colors.white,
               child: InkWell(
+                onFocusChange: (focused) => setState(() => _isFocused = focused),
                 onTap: () {
                   SoundService.instance.playClick();
                   if (caseStudySlug != null) {
@@ -141,24 +144,30 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               // Spotlight
                               if (hovered)
                                 Positioned.fill(
-                                  child: ValueListenableBuilder<Offset>(
-                                    valueListenable: _mousePos,
-                                    builder: (context, pos, _) => Container(
-                                      decoration: BoxDecoration(
-                                        gradient: RadialGradient(
-                                          center: FractionalOffset(
-                                            (pos.dx / 400).clamp(0.0, 1.0),
-                                            (pos.dy / 200).clamp(0.0, 1.0),
+                                  child: LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      final w = constraints.maxWidth > 0 ? constraints.maxWidth : 400.0;
+                                      final h = constraints.maxHeight > 0 ? constraints.maxHeight : 200.0;
+                                      return ValueListenableBuilder<Offset>(
+                                        valueListenable: _mousePos,
+                                        builder: (context, pos, _) => Container(
+                                          decoration: BoxDecoration(
+                                            gradient: RadialGradient(
+                                              center: FractionalOffset(
+                                                (pos.dx / w).clamp(0.0, 1.0),
+                                                (pos.dy / h).clamp(0.0, 1.0),
+                                              ),
+                                              radius: 0.65,
+                                              colors: [
+                                                widget.scheme.primary.withValues(alpha: isDark ? 0.32 : 0.22),
+                                                Colors.transparent,
+                                              ],
+                                              stops: const [0.0, 1.0],
+                                            ),
                                           ),
-                                          radius: 0.6,
-                                          colors: [
-                                            widget.scheme.primary.withValues(alpha: 0.3),
-                                            Colors.transparent,
-                                          ],
-                                          stops: const [0.0, 1.0],
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    },
                                   ),
                                 ),
                                // Metric Badge

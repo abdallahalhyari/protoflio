@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/module/home/data/projects_data.dart';
-import 'package:profile/module/home/widget/projects/interactive_project_card.dart';
-import 'package:profile/module/home/widget/projects/nfc_architecture_diagram.dart';
-import 'package:profile/module/home/widget/projects/pipeline_topology_diagram.dart';
-import 'package:profile/module/home/page/projects_page.dart';
-import 'package:profile/module/home/widget/projects/project_dossier_card.dart';
+import 'package:profile/features/projects/data/projects_data.dart';
+import 'package:profile/features/projects/widget/interactive_project_card.dart';
+import 'package:profile/features/projects/widget/nfc_architecture_diagram.dart';
+import 'package:profile/features/projects/widget/pipeline_topology_diagram.dart';
+import 'package:profile/features/projects/page/projects_page.dart';
+import 'package:profile/features/projects/widget/project_dossier_card.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
@@ -153,6 +154,48 @@ void main() {
 
       expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
       expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsOneWidget);
+    });
+
+    testWidgets('InteractiveProjectCard activates focus styling when keyboard focused', (tester) async {
+      final project = kProjects.first;
+      await tester.pumpWidget(_wrap(
+        InteractiveProjectCard(
+          project: project,
+          index: 0,
+          scheme: AppTheme.dark().colorScheme,
+          isDesktop: true,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      final inkWellFinder = find.byType(InkWell);
+      expect(inkWellFinder, findsWidgets);
+
+      // Focus the InkWell
+      final inkWell = tester.widget<InkWell>(inkWellFinder.first);
+      inkWell.onFocusChange?.call(true);
+      await tester.pump();
+
+      // Card elevation and border should be highlighted
+      final card = tester.widget<Card>(find.byType(Card));
+      final shape = card.shape as RoundedRectangleBorder;
+      expect(shape.side.width, equals(1.5));
+    });
+
+    testWidgets('ProjectsPage arrow key navigation changes domain filter', (tester) async {
+      await tester.pumpWidget(_wrap(
+        const ProjectsPage(),
+        const Size(1200, 900),
+      ));
+      await tester.pumpAndSettle();
+
+      // Send arrow right event
+      await tester.sendKeyEvent(LogicalKeyboardKey.arrowRight);
+      await tester.pumpAndSettle();
+
+      // Should have switched to the next domain (Healthcare & Smart Cards)
+      expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
+      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
     });
   });
 }
