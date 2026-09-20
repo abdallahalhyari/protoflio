@@ -48,16 +48,19 @@ class _ExperienceCardState extends State<ExperienceCard> {
     final reduce = MediaQuery.disableAnimationsOf(context);
     final hovered = _hover && !reduce;
 
-    return GestureDetector(
-      // Tap toggle is only useful on touch — on desktop, MouseRegion
-      // already drives the hover state, so a click while hovered would
-      // otherwise flip _hover to false right under the cursor.
-      onTap: widget.isDesktop
-          ? null
-          : () {
-              SoundService.instance.playClick();
-              setState(() => _hover = !_hover);
-            },
+    return Semantics(
+      container: true,
+      label: '${widget.exp.role} at ${widget.exp.company}, ${widget.exp.period}',
+      child: GestureDetector(
+        // Tap toggle is only useful on touch — on desktop, MouseRegion
+        // already drives the hover state, so a click while hovered would
+        // otherwise flip _hover to false right under the cursor.
+        onTap: widget.isDesktop
+            ? null
+            : () {
+                SoundService.instance.playClick();
+                setState(() => _hover = !_hover);
+              },
       child: MouseRegion(
         onEnter: (_) => setState(() => _hover = true),
         onExit: (_) => setState(() => _hover = false),
@@ -249,8 +252,9 @@ class _ExperienceCardState extends State<ExperienceCard> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildHighlight(String highlight, ColorScheme scheme) {
     final isDark = context.isDarkMode;
@@ -364,103 +368,107 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
     final scheme = widget.scheme;
     final primary = widget.isLinkedIn ? AppColors.linkedIn : scheme.primary;
 
-    return Tooltip(
-      message: widget.tooltip,
-      waitDuration: const Duration(milliseconds: 300),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit: (_) => setState(() => _hovered = false),
-        child: GestureDetector(
-          onTap: _handleTap,
-          behavior: HitTestBehavior.opaque,
-          child: AnimatedScale(
-            scale: _hovered ? 1.05 : 1.0,
-            duration: AppMotion.snap,
-            child: AnimatedContainer(
+    return Semantics(
+      button: true,
+      label: '${widget.company} ${widget.label}: ${widget.tooltip}',
+      child: Tooltip(
+        message: widget.tooltip,
+        waitDuration: const Duration(milliseconds: 300),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => setState(() => _hovered = true),
+          onExit: (_) => setState(() => _hovered = false),
+          child: GestureDetector(
+            onTap: _handleTap,
+            behavior: HitTestBehavior.opaque,
+            child: AnimatedScale(
+              scale: _hovered ? 1.05 : 1.0,
               duration: AppMotion.snap,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: _hovered
-                    ? (isDark
-                        ? primary.withValues(alpha: 0.22)
-                        : primary.withValues(alpha: 0.12))
-                    : (isDark
-                        ? Colors.white.withValues(alpha: 0.06)
-                        : AppColors.slate100),
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-                border: Border.all(
+              child: AnimatedContainer(
+                duration: AppMotion.snap,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
                   color: _hovered
-                      ? primary.withValues(alpha: isDark ? 0.9 : 0.8)
+                      ? (isDark
+                          ? primary.withValues(alpha: 0.22)
+                          : primary.withValues(alpha: 0.12))
                       : (isDark
-                          ? Colors.white.withValues(alpha: 0.2)
-                          : AppColors.slate300),
-                  width: _hovered ? 1.4 : 1.0,
+                          ? Colors.white.withValues(alpha: 0.06)
+                          : AppColors.slate100),
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  border: Border.all(
+                    color: _hovered
+                        ? primary.withValues(alpha: isDark ? 0.9 : 0.8)
+                        : (isDark
+                            ? Colors.white.withValues(alpha: 0.2)
+                            : AppColors.slate300),
+                    width: _hovered ? 1.4 : 1.0,
+                  ),
+                  boxShadow: _hovered
+                      ? [
+                          BoxShadow(
+                            color: primary.withValues(alpha: isDark ? 0.35 : 0.22),
+                            blurRadius: 10,
+                            spreadRadius: 0.5,
+                          ),
+                        ]
+                      : null,
                 ),
-                boxShadow: _hovered
-                    ? [
-                        BoxShadow(
-                          color: primary.withValues(alpha: isDark ? 0.35 : 0.22),
-                          blurRadius: 10,
-                          spreadRadius: 0.5,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.isLinkedIn) ...[
+                      Container(
+                        width: 13,
+                        height: 13,
+                        decoration: BoxDecoration(
+                          color: AppColors.linkedIn,
+                          borderRadius: BorderRadius.circular(2),
                         ),
-                      ]
-                    : null,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (widget.isLinkedIn) ...[
-                    Container(
-                      width: 13,
-                      height: 13,
-                      decoration: BoxDecoration(
-                        color: AppColors.linkedIn,
-                        borderRadius: BorderRadius.circular(2),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'in',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: AppTypography.nano,
+                            fontWeight: FontWeight.w900,
+                            fontFamily: 'sans-serif',
+                            height: 1.0,
+                          ),
+                        ),
                       ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'in',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: AppTypography.nano,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'sans-serif',
-                          height: 1.0,
-                        ),
+                    ] else if (widget.icon != null) ...[
+                      Icon(
+                        widget.icon,
+                        size: 13,
+                        color: _hovered
+                            ? (isDark ? Colors.white : primary)
+                            : (isDark ? Colors.white70 : AppColors.slate600),
+                      ),
+                    ],
+                    const SizedBox(width: 5),
+                    Text(
+                      widget.label,
+                      style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
+                        fontSize: AppTypography.micro,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.2,
+                        color: _hovered
+                            ? (isDark ? Colors.white : primary)
+                            : (isDark ? Colors.white.withValues(alpha: 0.88) : AppColors.slate800),
                       ),
                     ),
-                  ] else if (widget.icon != null) ...[
+                    const SizedBox(width: 3),
                     Icon(
-                      widget.icon,
-                      size: 13,
+                      Icons.arrow_outward_rounded,
+                      size: 10,
                       color: _hovered
-                          ? (isDark ? Colors.white : primary)
-                          : (isDark ? Colors.white70 : AppColors.slate600),
+                          ? (isDark ? primary : primary)
+                          : (isDark ? Colors.white38 : AppColors.slate400),
                     ),
                   ],
-                  const SizedBox(width: 5),
-                  Text(
-                    widget.label,
-                    style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
-                      fontSize: AppTypography.micro,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.2,
-                      color: _hovered
-                          ? (isDark ? Colors.white : primary)
-                          : (isDark ? Colors.white.withValues(alpha: 0.88) : AppColors.slate800),
-                    ),
-                  ),
-                  const SizedBox(width: 3),
-                  Icon(
-                    Icons.arrow_outward_rounded,
-                    size: 10,
-                    color: _hovered
-                        ? (isDark ? primary : primary)
-                        : (isDark ? Colors.white38 : AppColors.slate400),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

@@ -1,21 +1,37 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/service/sound_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+  });
 
   group('SoundService', () {
     test('starts enabled', () {
       expect(SoundService.instance.isEnabled.value, isTrue);
     });
 
-    test('toggle flips isEnabled', () {
+    test('toggle flips isEnabled', () async {
       final start = SoundService.instance.isEnabled.value;
       SoundService.instance.toggle();
       expect(SoundService.instance.isEnabled.value, !start);
       SoundService.instance.toggle();
       expect(SoundService.instance.isEnabled.value, start);
+    });
+
+    test('load restores persisted preference', () async {
+      SharedPreferences.setMockInitialValues({'soundEnabled': false});
+      await SoundService.instance.load();
+      expect(SoundService.instance.isEnabled.value, isFalse);
+
+      // Restore
+      SharedPreferences.setMockInitialValues({'soundEnabled': true});
+      await SoundService.instance.load();
+      expect(SoundService.instance.isEnabled.value, isTrue);
     });
 
     test('playClick is a no-op when disabled', () {

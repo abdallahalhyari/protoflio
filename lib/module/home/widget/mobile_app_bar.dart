@@ -28,7 +28,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
-    final tight = MediaQuery.sizeOf(context).width < 460;
+    final tight = AppBreakpoints.isCompact(context);
+    final ultraTight = MediaQuery.sizeOf(context).width < 360;
     final primary = Theme.of(context).colorScheme.primary;
     final secondary = Theme.of(context).colorScheme.secondary;
 
@@ -39,8 +40,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
             height: 60 + MediaQuery.paddingOf(context).top,
             padding: EdgeInsets.only(
               top: MediaQuery.paddingOf(context).top,
-              left: AppSpacing.md,
-              right: AppSpacing.md,
+              left: ultraTight ? AppSpacing.sm : AppSpacing.md,
+              right: ultraTight ? AppSpacing.sm : AppSpacing.md,
             ),
             decoration: BoxDecoration(
               color: context.glassSurface,
@@ -141,30 +142,37 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                     valueListenable: LocaleController.locale,
                     builder: (_, loc, __) {
                       final code = loc.languageCode.toUpperCase();
-                      return InkWell(
-                        borderRadius: BorderRadius.circular(AppRadius.chip),
-                        onTap: () {
-                          SoundService.instance.playClick();
-                          LocaleController.nextLocale();
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.08)
-                                : AppColors.slate100,
+                      return Semantics(
+                        button: true,
+                        label: 'Change language. Current: $code',
+                        child: Tooltip(
+                          message: 'Change language ($code)',
+                          child: InkWell(
                             borderRadius: BorderRadius.circular(AppRadius.chip),
-                            border: Border.all(
-                              color: isDark ? Colors.white12 : AppColors.slate200,
-                            ),
-                          ),
-                          child: Text(
-                            code,
-                            style: TextStyle(
-                              color: isDark ? Colors.white : AppColors.slate900,
-                              fontSize: AppTypography.editorial,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 0.8,
+                            onTap: () {
+                              SoundService.instance.playClick();
+                              LocaleController.nextLocale();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: isDark
+                                    ? Colors.white.withValues(alpha: 0.08)
+                                    : AppColors.slate100,
+                                borderRadius: BorderRadius.circular(AppRadius.chip),
+                                border: Border.all(
+                                  color: isDark ? Colors.white12 : AppColors.slate200,
+                                ),
+                              ),
+                              child: Text(
+                                code,
+                                style: TextStyle(
+                                  color: isDark ? Colors.white : AppColors.slate900,
+                                  fontSize: AppTypography.editorial,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.8,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -179,44 +187,59 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   valueListenable: ThemeController.mode,
                   builder: (_, mode, __) {
                     final dark = mode == ThemeMode.dark;
-                    return IconButton(
-                      iconSize: 18,
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                      icon: Icon(
-                        dark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
-                        color: isDark ? Colors.white70 : AppColors.slate600,
+                    return Semantics(
+                      button: true,
+                      toggled: dark,
+                      label: dark ? 'Switch to light mode' : 'Switch to dark mode',
+                      child: IconButton(
+                        tooltip: dark ? 'Switch to light mode' : 'Switch to dark mode',
+                        iconSize: 18,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                        icon: Icon(
+                          dark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+                          color: isDark ? Colors.white70 : AppColors.slate600,
+                        ),
+                        onPressed: () {
+                          SoundService.instance.playClick();
+                          ThemeController.toggle();
+                        },
                       ),
-                      onPressed: () {
-                        SoundService.instance.playClick();
-                        ThemeController.toggle();
-                      },
                     );
                   },
                 ),
 
                 const SizedBox(width: 6),
 
-                // Audio
-                ValueListenableBuilder<bool>(
-                  valueListenable: SoundService.instance.isEnabled,
-                  builder: (_, enabled, __) {
-                    return IconButton(
-                      iconSize: 18,
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                      icon: Icon(
-                        enabled ? Icons.volume_up_outlined : Icons.volume_off_outlined,
-                        color: enabled
-                            ? AppColors.accentAmber
-                            : (isDark ? Colors.white38 : AppColors.slate400),
-                      ),
-                      onPressed: () {
-                        SoundService.instance.toggle();
-                      },
-                    );
-                  },
-                ),
+                // Audio (omitted on ultra-compact < 360px screens to prevent header overflow)
+                if (!ultraTight) ...[
+                  const SizedBox(width: 6),
+                  ValueListenableBuilder<bool>(
+                    valueListenable: SoundService.instance.isEnabled,
+                    builder: (_, enabled, __) {
+                      return Semantics(
+                        button: true,
+                        toggled: enabled,
+                        label: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
+                        child: IconButton(
+                          tooltip: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
+                          iconSize: 18,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                          icon: Icon(
+                            enabled ? Icons.volume_up_outlined : Icons.volume_off_outlined,
+                            color: enabled
+                                ? AppColors.accentAmber
+                                : (isDark ? Colors.white38 : AppColors.slate400),
+                          ),
+                          onPressed: () {
+                            SoundService.instance.toggle();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
 
                 const SizedBox(width: 6),
 
@@ -231,7 +254,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: ultraTight ? 8 : 11,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: primary.withValues(alpha: isDark ? 0.22 : 0.15),
                       borderRadius: BorderRadius.circular(AppRadius.pill),

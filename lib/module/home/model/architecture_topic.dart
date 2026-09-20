@@ -26,6 +26,9 @@ class DiagramStep {
   final String details;
   final IconData icon;
   final Color color;
+  final String? telemetryPayload;
+  final String? telemetryStatus;
+  final String? latencyBudget;
 
   const DiagramStep({
     required this.layer,
@@ -33,5 +36,8 @@ class DiagramStep {
     required this.details,
     required this.icon,
     required this.color,
+    this.telemetryPayload,
+    this.telemetryStatus,
+    this.latencyBudget,
   });
 }

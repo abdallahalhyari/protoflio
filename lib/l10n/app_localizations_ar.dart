@@ -264,4 +264,82 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introMasthead => '// الترويسة';
+
+  @override
+  String get navSectionCover => 'الغلاف والملف الشخصي';
+
+  @override
+  String get navSubCover => 'مهندس ومعماري تطبيقات فلاتر وأندرويد أول';
+
+  @override
+  String get navSectionExperience => 'المسيرة المهنية والخبرات';
+
+  @override
+  String get navSubExperience => '+4 سنوات من هندسة الأنظمة المؤسسية';
+
+  @override
+  String get navSectionWork => 'أبرز الأعمال والمشاريع';
+
+  @override
+  String get navSubWork => 'أنظمة الإنتاج ودراسات الحالة المتعمقة';
+
+  @override
+  String get navSectionStack => 'المهارات والتقنيات';
+
+  @override
+  String get navSubStack => 'مصفوفة الكفاءة الهندسية والتقنية';
+
+  @override
+  String get navSectionEngineering => 'بنية وهندسة الأنظمة';
+
+  @override
+  String get navSubEngineering => 'مخططات معمارية وأنظمة تدعم وضع عدم الاتصال';
+
+  @override
+  String get navSectionAbout => 'رؤى وأدوار قيادية';
+
+  @override
+  String get navSubAbout => 'وجهات نظر معمارية وأدوار قيادية';
+
+  @override
+  String get navSectionContact => 'التواصل والاستفسارات';
+
+  @override
+  String get navSubContact => 'القنوات المباشرة وحالة التوفر';
+
+  @override
+  String selectedRoleAnnouncement(String role) {
+    return 'تم تحديد الدور: $role';
+  }
+
+  @override
+  String copiedToClipboard(String value) {
+    return 'تم نسخ $value إلى الحافظة';
+  }
+
+  @override
+  String get skillsSearchHint => 'ابحث في 24 مهارة وتقنية وهندسة أنظمة...';
+
+  @override
+  String skillsCountAll(int count) {
+    return '$count مهارة';
+  }
+
+  @override
+  String skillsCountFiltered(int filtered, int total) {
+    return '$filtered من أصل $total مهارة';
+  }
+
+  @override
+  String get skillsClearSearch => 'مسح البحث';
+
+  @override
+  String get perspectivePrev => 'الدور السابق';
+
+  @override
+  String get perspectiveNext => 'الدور التالي';
+
+  @override
+  String get perspectiveShortcutsHint =>
+      '← / → أو A / D للتنقل · S خلط · R محاذاة';
 }

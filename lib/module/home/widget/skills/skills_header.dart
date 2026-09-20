@@ -43,18 +43,21 @@ class SkillsHeader extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      loc.navSkills.toUpperCase(),
-                      style: TextStyle(
-                        fontFamily: AppTypography.displayFont,
-                        color: scheme.onSurface,
-                        fontSize: (size.width * 0.05).clamp(24.0, 48.0),
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 4,
-                        height: 1,
+                  Semantics(
+                    header: true,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        loc.navSkills.toUpperCase(),
+                        style: TextStyle(
+                          fontFamily: AppTypography.displayFont,
+                          color: scheme.onSurface,
+                          fontSize: (size.width * 0.05).clamp(24.0, 48.0),
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 4,
+                          height: 1,
+                        ),
                       ),
                     ),
                   ),

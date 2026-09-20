@@ -15,6 +15,9 @@ class InteractiveProjectCard extends StatefulWidget {
   final int index;
   final ColorScheme scheme;
   final bool isDesktop;
+  final String? selectedTech;
+  final ValueChanged<String>? onSelectTech;
+  final bool isDimmed;
 
   const InteractiveProjectCard({
     super.key,
@@ -22,6 +25,9 @@ class InteractiveProjectCard extends StatefulWidget {
     required this.index,
     required this.scheme,
     required this.isDesktop,
+    this.selectedTech,
+    this.onSelectTech,
+    this.isDimmed = false,
   });
 
   @override
@@ -41,62 +47,82 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final reduceMotion = AppMedia.reduceMotion(context);
+    final hovered = _isHovered && widget.isDesktop && !reduceMotion;
     final caseStudySlug = CaseStudyRouter.slugForCompany(widget.project.company);
-    return Semantics(
-      button: true,
-      label: 'Read case study for ${widget.project.name}',
-      child: MouseRegion(
-        onEnter: (_) => setState(() => _isHovered = true),
-        onExit: (_) => setState(() => _isHovered = false),
-        onHover: (e) => _mousePos.value = e.localPosition,
-        child: AnimatedScale(
-          scale: _isHovered && widget.isDesktop ? 1.02 : 1.0,
-          duration: AppMotion.cardHover,
-          curve: AppMotion.emphasized,
-          child: Card(
-            margin: EdgeInsets.zero,
-            clipBehavior: Clip.antiAlias,
-            elevation: isDark ? 0 : (_isHovered ? 12 : 4),
-            shadowColor: isDark ? Colors.transparent : Colors.black.withValues(alpha: 0.15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(
-                color: isDark
-                    ? (_isHovered ? widget.scheme.primary.withValues(alpha: 0.5) : Colors.white.withValues(alpha: 0.12))
-                    : (_isHovered ? widget.scheme.primary.withValues(alpha: 0.45) : AppColors.slate200),
-                width: 1,
-              ),
-            ),
-            color: isDark ? AppColors.darkCard : Colors.white,
-            child: InkWell(
-              onTap: () => showProjectCaseStudy(context, project: widget.project, index: widget.index),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: widget.isDesktop ? 300 : 270,
+    return RepaintBoundary(
+      child: Semantics(
+        button: true,
+        label: 'Read case study for ${widget.project.name}',
+        child: MouseRegion(
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          onHover: (e) => _mousePos.value = e.localPosition,
+          child: AnimatedOpacity(
+            opacity: widget.isDimmed ? 0.35 : 1.0,
+            duration: AppMotion.snap,
+            child: AnimatedScale(
+              scale: hovered ? 1.02 : 1.0,
+              duration: AppMotion.cardHover,
+              curve: AppMotion.emphasized,
+            child: Card(
+              margin: EdgeInsets.zero,
+              clipBehavior: Clip.antiAlias,
+              elevation: isDark ? 0 : (hovered ? 12 : 4),
+              shadowColor: isDark ? Colors.transparent : Colors.black.withValues(alpha: 0.15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppRadius.md),
+                side: BorderSide(
+                  color: hovered
+                      ? widget.scheme.primary.withValues(alpha: isDark ? 0.55 : 0.45)
+                      : (isDark
+                          ? Colors.white.withValues(alpha: 0.10)
+                          : AppColors.slate200),
+                  width: hovered ? 1.5 : 1.0,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Image Header with Parallax & Spotlight
-                    if (widget.project.heroImagePath != null)
-                      SizedBox(
-                        height: widget.isDesktop ? 220 : 180,
-                        child: ClipRect(
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              AnimatedScale(
-                                scale: _isHovered && widget.isDesktop ? 1.08 : 1.0,
-                                duration: AppMotion.lg,
-                                curve: AppMotion.emphasizedDecel,
-                                child: Image.asset(
-                                  widget.project.heroImagePath!,
-                                  fit: BoxFit.cover,
+              ),
+              color: isDark ? AppColors.darkCard : Colors.white,
+              child: InkWell(
+                onTap: () {
+                  SoundService.instance.playClick();
+                  if (caseStudySlug != null) {
+                    CaseStudyRouter.push(context, caseStudySlug);
+                  } else {
+                    showProjectCaseStudy(
+                      context,
+                      project: widget.project,
+                      index: widget.index,
+                    );
+                  }
+                },
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: widget.isDesktop ? 300 : 270,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Image Header with Parallax & Spotlight
+                      if (widget.project.heroImagePath != null)
+                        SizedBox(
+                          height: widget.isDesktop ? 175 : 155,
+                          child: ClipRect(
+                            child: Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                AnimatedScale(
+                                  scale: hovered ? 1.08 : 1.0,
+                                  duration: AppMotion.lg,
+                                  curve: AppMotion.emphasizedDecel,
+                                  child: Image.asset(
+                                    widget.project.heroImagePath!,
+                                    fit: BoxFit.cover,
+                                    gaplessPlayback: true,
+                                  ),
                                 ),
-                              ),
                               // Gradient Overlay
                               AnimatedOpacity(
-                                opacity: _isHovered ? 1.0 : 0.8,
+                                opacity: hovered ? 1.0 : 0.8,
                                 duration: AppMotion.cardHover,
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
@@ -113,7 +139,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                 ),
                               ),
                               // Spotlight
-                              if (_isHovered && widget.isDesktop)
+                              if (hovered)
                                 Positioned.fill(
                                   child: ValueListenableBuilder<Offset>(
                                     valueListenable: _mousePos,
@@ -132,6 +158,40 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                           stops: const [0.0, 1.0],
                                         ),
                                       ),
+                                    ),
+                                  ),
+                                ),
+                               // Metric Badge
+                              if (widget.project.metricBadge != null)
+                                Positioned(
+                                  top: AppSpacing.sm,
+                                  left: AppSpacing.sm,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withValues(alpha: 0.75),
+                                      borderRadius: BorderRadius.circular(AppRadius.xs),
+                                      border: Border.all(
+                                        color: widget.scheme.primary.withValues(alpha: 0.6),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.verified_rounded, size: 12, color: widget.scheme.primary),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          widget.project.metricBadge!.toUpperCase(),
+                                          style: const TextStyle(
+                                            fontFamily: AppTypography.monoFont,
+                                            color: Colors.white,
+                                            fontSize: 9,
+                                            fontWeight: FontWeight.w900,
+                                            letterSpacing: 0.8,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -204,7 +264,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                       )
                     else
                       SizedBox(
-                        height: widget.isDesktop ? 220 : 180,
+                        height: widget.isDesktop ? 175 : 155,
                         child: Container(
                           color: widget.scheme.primary.withValues(alpha: 0.1),
                           padding: const EdgeInsets.all(AppSpacing.md),
@@ -309,6 +369,27 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               ),
                             ],
                           ),
+                          const SizedBox(height: AppSpacing.xs),
+                          Wrap(
+                            spacing: 6,
+                            runSpacing: 4,
+                            children: [
+                              for (final tag in widget.project.stack.take(widget.isDesktop ? 4 : 3))
+                                _TechTagChip(
+                                  tag: tag,
+                                  isSelected: widget.selectedTech == tag,
+                                  scheme: widget.scheme,
+                                  isDark: isDark,
+                                  onTap: widget.onSelectTech != null
+                                      ? () {
+                                          SoundService.instance.playSelection();
+                                          widget.onSelectTech!(tag);
+                                        }
+                                      : null,
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.xs),
                           AnimatedSlide(
                             offset: _isHovered && widget.isDesktop ? const Offset(0.05, 0) : Offset.zero,
                             duration: AppMotion.cardHover,
@@ -342,6 +423,61 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                 ),
               ),
             ),
+          ),
+        ),
+      ),
+    ),
+  ),
+  );
+  }
+}
+
+class _TechTagChip extends StatelessWidget {
+  final String tag;
+  final bool isSelected;
+  final ColorScheme scheme;
+  final bool isDark;
+  final VoidCallback? onTap;
+
+  const _TechTagChip({
+    required this.tag,
+    required this.isSelected,
+    required this.scheme,
+    required this.isDark,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = isSelected
+        ? scheme.primary.withValues(alpha: isDark ? 0.25 : 0.15)
+        : (isDark ? Colors.white.withValues(alpha: 0.06) : AppColors.slate100);
+
+    final border = isSelected
+        ? scheme.primary
+        : (isDark ? Colors.white12 : AppColors.slate200);
+
+    final text = isSelected
+        ? scheme.primary
+        : (isDark ? Colors.white70 : AppColors.slate700);
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppRadius.xs),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(AppRadius.xs),
+          border: Border.all(color: border, width: isSelected ? 1.2 : 0.8),
+        ),
+        child: Text(
+          tag,
+          style: TextStyle(
+            fontFamily: AppTypography.monoFont,
+            color: text,
+            fontSize: 9.5,
+            fontWeight: isSelected ? FontWeight.w900 : FontWeight.w600,
           ),
         ),
       ),

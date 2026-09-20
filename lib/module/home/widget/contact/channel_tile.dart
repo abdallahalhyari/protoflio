@@ -145,49 +145,57 @@ class _ChannelTileState extends State<ChannelTile> {
             Row(
               children: [
                 Expanded(
-                  child: FilledButton(
-                    onPressed: d.primaryAction,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: d.accent,
-                      foregroundColor: buttonTextColor,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                  child: Semantics(
+                    button: true,
+                    label: '${d.label}: ${d.primaryLabel}',
+                    child: FilledButton(
+                      onPressed: d.primaryAction,
+                      style: FilledButton.styleFrom(
+                        backgroundColor: d.accent,
+                        foregroundColor: buttonTextColor,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.pill),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      d.primaryLabel.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: AppTypography.caption,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.2,
+                      child: Text(
+                        d.primaryLabel.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: AppTypography.caption,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.2,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
-                OutlinedButton(
-                  onPressed: d.secondaryAction,
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor:
-                        isDark ? Colors.white : AppColors.slate900,
-                    side: BorderSide(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.28)
-                          : AppColors.slate300,
+                Semantics(
+                  button: true,
+                  label: '${d.label}: ${d.secondaryLabel}',
+                  child: OutlinedButton(
+                    onPressed: d.secondaryAction,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor:
+                          isDark ? Colors.white : AppColors.slate900,
+                      side: BorderSide(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.28)
+                            : AppColors.slate300,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadius.pill),
-                    ),
-                  ),
-                  child: Text(
-                    d.secondaryLabel.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: AppTypography.caption,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.2,
+                    child: Text(
+                      d.secondaryLabel.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: AppTypography.caption,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1.2,
+                      ),
                     ),
                   ),
                 ),

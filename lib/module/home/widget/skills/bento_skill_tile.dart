@@ -66,34 +66,38 @@ class _BentoSkillTileState extends State<BentoSkillTile> with SingleTickerProvid
       child: _buildBack(),
     );
 
-    return HolographicCardPhysics(
-      borderRadius: 14,
-      child: MouseRegion(
-      onEnter: (_) => _onHover(true),
-      onExit: (_) => _onHover(false),
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          SoundService.instance.playClick();
-          _onHover(!_isHovered);
-        },
-        child: AnimatedBuilder(
-          animation: _flipAnim,
-          builder: (context, child) {
-            final isBack = _flipAnim.value >= 0.5;
-            final angle = _flipAnim.value * math.pi;
+    return Semantics(
+      button: true,
+      label: '${widget.skill.name} skill, ${_masteryLabel(widget.skill.level)} mastery level. Tap to flip and view details.',
+      child: HolographicCardPhysics(
+        borderRadius: 14,
+        child: MouseRegion(
+          onEnter: (_) => _onHover(true),
+          onExit: (_) => _onHover(false),
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              SoundService.instance.playClick();
+              _onHover(!_isHovered);
+            },
+            child: AnimatedBuilder(
+              animation: _flipAnim,
+              builder: (context, child) {
+                final isBack = _flipAnim.value >= 0.5;
+                final angle = _flipAnim.value * math.pi;
 
-            final transform = Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(angle);
+                final transform = Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..rotateY(angle);
 
-            return Transform(
-              alignment: Alignment.center,
-              transform: transform,
-              child: isBack ? backCard : frontCard,
-            );
-          },
-        ),
+                return Transform(
+                  alignment: Alignment.center,
+                  transform: transform,
+                  child: isBack ? backCard : frontCard,
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

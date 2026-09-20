@@ -585,6 +585,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'// MASTHEAD'**
   String get introMasthead;
+
+  /// No description provided for @navSectionCover.
+  ///
+  /// In en, this message translates to:
+  /// **'COVER & PROFILE'**
+  String get navSectionCover;
+
+  /// No description provided for @navSubCover.
+  ///
+  /// In en, this message translates to:
+  /// **'Senior Flutter & Android Architect'**
+  String get navSubCover;
+
+  /// No description provided for @navSectionExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'CAREER & EXPERIENCE'**
+  String get navSectionExperience;
+
+  /// No description provided for @navSubExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'4+ Years Enterprise Engineering & Impact'**
+  String get navSubExperience;
+
+  /// No description provided for @navSectionWork.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURED WORK'**
+  String get navSectionWork;
+
+  /// No description provided for @navSubWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Production Systems & Case Studies'**
+  String get navSubWork;
+
+  /// No description provided for @navSectionStack.
+  ///
+  /// In en, this message translates to:
+  /// **'SKILLS & STACK'**
+  String get navSectionStack;
+
+  /// No description provided for @navSubStack.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical Proficiency Matrix'**
+  String get navSubStack;
+
+  /// No description provided for @navSectionEngineering.
+  ///
+  /// In en, this message translates to:
+  /// **'SYSTEM ARCHITECTURES'**
+  String get navSectionEngineering;
+
+  /// No description provided for @navSubEngineering.
+  ///
+  /// In en, this message translates to:
+  /// **'Enterprise Blueprints & Offline-First'**
+  String get navSubEngineering;
+
+  /// No description provided for @navSectionAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'LEADERSHIP PERSPECTIVES'**
+  String get navSectionAbout;
+
+  /// No description provided for @navSubAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Architectural Perspectives & Hats'**
+  String get navSubAbout;
+
+  /// No description provided for @navSectionContact.
+  ///
+  /// In en, this message translates to:
+  /// **'CONTACT & INQUIRIES'**
+  String get navSectionContact;
+
+  /// No description provided for @navSubContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Channels & Availability'**
+  String get navSubContact;
+
+  /// Screen reader announcement when selecting a role card in the engineering perspectives section
+  ///
+  /// In en, this message translates to:
+  /// **'Selected role: {role}'**
+  String selectedRoleAnnouncement(String role);
+
+  /// Screen reader announcement when copying text to clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Copied {value} to clipboard'**
+  String copiedToClipboard(String value);
+
+  /// No description provided for @skillsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search 24 skills, tools, or architectures...'**
+  String get skillsSearchHint;
+
+  /// No description provided for @skillsCountAll.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} SKILLS'**
+  String skillsCountAll(int count);
+
+  /// No description provided for @skillsCountFiltered.
+  ///
+  /// In en, this message translates to:
+  /// **'{filtered} OF {total} SKILLS'**
+  String skillsCountFiltered(int filtered, int total);
+
+  /// No description provided for @skillsClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'CLEAR SEARCH'**
+  String get skillsClearSearch;
+
+  /// No description provided for @perspectivePrev.
+  ///
+  /// In en, this message translates to:
+  /// **'PREV ROLE'**
+  String get perspectivePrev;
+
+  /// No description provided for @perspectiveNext.
+  ///
+  /// In en, this message translates to:
+  /// **'NEXT ROLE'**
+  String get perspectiveNext;
+
+  /// No description provided for @perspectiveShortcutsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'← / → or A / D to cycle · S shuffle · R align'**
+  String get perspectiveShortcutsHint;
 }
 
 class _AppLocalizationsDelegate

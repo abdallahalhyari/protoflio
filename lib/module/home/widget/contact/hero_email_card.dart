@@ -9,6 +9,7 @@ class HeroEmailCard extends StatelessWidget {
   final bool isDesktop;
   final VoidCallback onSendEmail;
   final VoidCallback onCopyEmail;
+  final VoidCallback? onComposeInquiry;
 
   const HeroEmailCard({
     super.key,
@@ -16,6 +17,7 @@ class HeroEmailCard extends StatelessWidget {
     required this.isDesktop,
     required this.onSendEmail,
     required this.onCopyEmail,
+    this.onComposeInquiry,
   });
 
   @override
@@ -69,7 +71,34 @@ class HeroEmailCard extends StatelessWidget {
       ),
     );
 
-    final actionRow = Wrap(spacing: 10, runSpacing: 8, children: [ctaSend, ctaCopy]);
+    final ctaCompose = onComposeInquiry != null
+        ? FilledButton.tonalIcon(
+            onPressed: onComposeInquiry,
+            icon: const Icon(Icons.edit_note_rounded, size: 16),
+            label: const Text('COMPOSE INQUIRY'),
+            style: FilledButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+              textStyle: const TextStyle(
+                fontSize: AppTypography.captionSm,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+              ),
+            ),
+          )
+        : null;
+
+    final actionRow = Wrap(
+      spacing: 10,
+      runSpacing: 8,
+      children: [
+        ctaSend,
+        if (ctaCompose != null) ctaCompose,
+        ctaCopy,
+      ],
+    );
 
     final emailBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +116,7 @@ class HeroEmailCard extends StatelessWidget {
         const SizedBox(height: 8),
         FittedBox(
           fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
+          alignment: AlignmentDirectional.centerStart,
           child: SelectableText(
             email,
             style: TextStyle(

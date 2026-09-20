@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../service/analytics_service.dart';
-import '../../theme/surface_tone.dart';
 import '../../theme/tokens.dart';
 import '../home/data/projects_data.dart';
 import '../home/widget/editorial_chip.dart';
-import '../home/widget/page_background.dart';
 import '../home/widget/primary_button.dart';
 import '../home/widget/projects/pipeline_topology_diagram.dart';
 import '../home/widget/pulsing_dot.dart';
@@ -15,129 +13,26 @@ import 'related_case_studies.dart';
 /// Deep-dive case study on Solutions Now IT's Loyalty Rewards & Ephemeral
 /// Social Media Apps.
 /// Full-screen scrollable narrative matching the NatHealth case-study pattern.
-class SolutionsCaseStudy extends StatefulWidget {
+class SolutionsCaseStudy extends StatelessWidget {
   const SolutionsCaseStudy({super.key});
 
   static const String routePath = '/work/solutions';
 
   @override
-  State<SolutionsCaseStudy> createState() => _SolutionsCaseStudyState();
-}
-
-class _SolutionsCaseStudyState extends State<SolutionsCaseStudy> {
-  late final ScrollController _scrollController;
-  final GlobalKey _problemKey = GlobalKey();
-  final GlobalKey _roleKey = GlobalKey();
-  final GlobalKey _archKey = GlobalKey();
-  final GlobalKey _outcomesKey = GlobalKey();
-  final GlobalKey _lessonsKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final isDark = context.isDarkMode;
-    final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
-    final hPad = CaseStudyLayout.horizontalPadding(context);
-
-    final chapters = [
-      CaseStudyChapter(
-        id: 'problem',
-        label: '01 PROBLEM',
-        shortLabel: 'PROB',
-        key: _problemKey,
-      ),
-      CaseStudyChapter(
-        id: 'role',
-        label: '02 ROLE',
-        shortLabel: 'ROLE',
-        key: _roleKey,
-      ),
-      CaseStudyChapter(
-        id: 'architecture',
-        label: '03 ARCH',
-        shortLabel: 'ARCH',
-        key: _archKey,
-      ),
-      CaseStudyChapter(
-        id: 'outcomes',
-        label: '07 OUTCOMES',
-        shortLabel: 'RESULTS',
-        key: _outcomesKey,
-      ),
-      CaseStudyChapter(
-        id: 'lessons',
-        label: '08 LESSONS',
-        shortLabel: 'LESSONS',
-        key: _lessonsKey,
-      ),
-    ];
-
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: PageBackground(
-        child: CaseStudyReadingCompanion(
-          scrollController: _scrollController,
-          chapters: chapters,
-          child: CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverAppBar(
-                pinned: true,
-                backgroundColor: isDark
-                    ? AppColors.darkSurface.withValues(alpha: 0.94)
-                    : Colors.white.withValues(alpha: 0.94),
-                elevation: 0,
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded),
-                  tooltip: 'Back to portfolio',
-                  onPressed: () {
-                    Analytics.event('case_study_back',
-                        params: {'study': 'solutions'});
-                    Navigator.of(context).maybePop();
-                  },
-                ),
-                title: Text(
-                  'SOLUTIONS NOW · CASE STUDY',
-                  style: TextStyle(
-                    fontSize: AppTypography.overline,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 2.4,
-                    color: scheme.onSurface.withValues(alpha: 0.8),
-                  ),
-                ),
-                actions: const [
-                  CaseStudyToolbarShareButton(
-                    slug: 'solutions',
-                    title: 'Loyalty Rewards & Ephemeral Social Media Apps',
-                  ),
-                  SizedBox(width: AppSpacing.sm),
-                ],
-              ),
-              SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: hPad,
-                  vertical: AppSpacing.xl,
-                ),
-                sliver: SliverList.list(children: [
-                  _Masthead(isDesktop: isDesktop),
-                  const SizedBox(height: AppSpacing.xxl),
-                  KeyedSubtree(
-                    key: _problemKey,
-                    child:
-                        const SectionKicker(number: '01', label: 'THE PROBLEM'),
-                  ),
+    return CaseStudyScaffold(
+      slug: 'solutions',
+      appBarTitle: 'SOLUTIONS NOW · CASE STUDY',
+      shareTitle: 'Loyalty Rewards & Ephemeral Social Media Apps',
+      sliversBuilder: (context, keys, isDesktop) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return [
+          _Masthead(isDesktop: isDesktop),
+          const SizedBox(height: AppSpacing.xxl),
+          KeyedSubtree(
+            key: keys.problemKey,
+            child: const SectionKicker(number: '01', label: 'THE PROBLEM'),
+          ),
                   const SizedBox(height: AppSpacing.md),
                   const Prose(
                     'As a fast-paced technology consultancy, Solutions Now IT needed to '
@@ -157,7 +52,7 @@ class _SolutionsCaseStudyState extends State<SolutionsCaseStudy> {
                   ),
                   const SizedBox(height: AppSpacing.xxl),
                   KeyedSubtree(
-                    key: _roleKey,
+                    key: keys.roleKey,
                     child: const SectionKicker(number: '02', label: 'MY ROLE'),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -169,7 +64,7 @@ class _SolutionsCaseStudyState extends State<SolutionsCaseStudy> {
                   ]),
                   const SizedBox(height: AppSpacing.xxl),
                   KeyedSubtree(
-                    key: _archKey,
+                    key: keys.archKey,
                     child: const SectionKicker(
                         number: '03', label: 'SYSTEM ARCHITECTURE'),
                   ),
@@ -265,7 +160,7 @@ class _SolutionsCaseStudyState extends State<SolutionsCaseStudy> {
                   ),
                   const SizedBox(height: AppSpacing.xxl),
                   KeyedSubtree(
-                    key: _outcomesKey,
+                    key: keys.outcomesKey,
                     child: const SectionKicker(number: '07', label: 'OUTCOMES'),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -292,7 +187,7 @@ class _SolutionsCaseStudyState extends State<SolutionsCaseStudy> {
                   ),
                   const SizedBox(height: AppSpacing.xxl),
                   KeyedSubtree(
-                    key: _lessonsKey,
+                    key: keys.lessonsKey,
                     child: const SectionKicker(number: '08', label: 'LESSONS'),
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -330,12 +225,8 @@ class _SolutionsCaseStudyState extends State<SolutionsCaseStudy> {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
-                ]),
-              ),
-            ],
-          ),
-        ),
-      ),
+        ];
+      },
     );
   }
 }

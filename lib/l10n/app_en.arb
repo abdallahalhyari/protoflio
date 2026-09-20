@@ -86,5 +86,62 @@
   "introOpenForRoles": "OPEN FOR SENIOR ROLES",
   "introDiscipline": "DISCIPLINE",
   "introMobileArch": "MOBILE ARCHITECTURE",
-  "introMasthead": "// MASTHEAD"
+  "introMasthead": "// MASTHEAD",
+  "navSectionCover": "COVER & PROFILE",
+  "navSubCover": "Senior Flutter & Android Architect",
+  "navSectionExperience": "CAREER & EXPERIENCE",
+  "navSubExperience": "4+ Years Enterprise Engineering & Impact",
+  "navSectionWork": "FEATURED WORK",
+  "navSubWork": "Production Systems & Case Studies",
+  "navSectionStack": "SKILLS & STACK",
+  "navSubStack": "Technical Proficiency Matrix",
+  "navSectionEngineering": "SYSTEM ARCHITECTURES",
+  "navSubEngineering": "Enterprise Blueprints & Offline-First",
+  "navSectionAbout": "LEADERSHIP PERSPECTIVES",
+  "navSubAbout": "Architectural Perspectives & Hats",
+  "navSectionContact": "CONTACT & INQUIRIES",
+  "navSubContact": "Direct Channels & Availability",
+  "selectedRoleAnnouncement": "Selected role: {role}",
+  "@selectedRoleAnnouncement": {
+    "description": "Screen reader announcement when selecting a role card in the engineering perspectives section",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedToClipboard": "Copied {value} to clipboard",
+  "@copiedToClipboard": {
+    "description": "Screen reader announcement when copying text to clipboard",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "skillsSearchHint": "Search 24 skills, tools, or architectures...",
+  "skillsCountAll": "{count} SKILLS",
+  "@skillsCountAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "skillsCountFiltered": "{filtered} OF {total} SKILLS",
+  "@skillsCountFiltered": {
+    "placeholders": {
+      "filtered": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "skillsClearSearch": "CLEAR SEARCH",
+  "perspectivePrev": "PREV ROLE",
+  "perspectiveNext": "NEXT ROLE",
+  "perspectiveShortcutsHint": "← / → or A / D to cycle · S shuffle · R align"
 }
+

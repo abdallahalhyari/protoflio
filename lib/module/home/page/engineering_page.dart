@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 
 import '../data/architecture_data.dart';
+import '../model/architecture_topic.dart';
 import '../widget/engineering/architecture_details_card.dart';
 import '../widget/engineering/architecture_diagram_card.dart';
+import '../widget/engineering/architecture_inspect_modal.dart';
 import '../widget/engineering/architecture_topic_tabs.dart';
 import '../widget/engineering/engineering_header.dart';
 import '../widget/screen_shell.dart';
@@ -25,27 +28,92 @@ class EngineeringPage extends StatefulWidget {
 class _EngineeringPageState extends State<EngineeringPage>
     with AutomaticKeepAliveClientMixin {
   int _selectedTopicIndex = 0;
+  int _currentStepIndex = 0;
+  bool _isPlaying = false;
+  Timer? _simulatorTimer;
 
   @override
   bool get wantKeepAlive => true;
 
+  @override
+  void dispose() {
+    _simulatorTimer?.cancel();
+    super.dispose();
+  }
+
+  void _stopPlayback() {
+    _simulatorTimer?.cancel();
+    _isPlaying = false;
+  }
+
   void _selectTopic(int index) {
     if (_selectedTopicIndex == index) return;
     SoundService.instance.playClick();
-    setState(() => _selectedTopicIndex = index);
+    _stopPlayback();
+    setState(() {
+      _selectedTopicIndex = index;
+      _currentStepIndex = 0;
+    });
   }
 
   void _nextTopic() {
     SoundService.instance.playClick();
-    setState(() => _selectedTopicIndex =
-        (_selectedTopicIndex + 1) % kArchitectureTopics.length);
+    _stopPlayback();
+    setState(() {
+      _selectedTopicIndex =
+          (_selectedTopicIndex + 1) % kArchitectureTopics.length;
+      _currentStepIndex = 0;
+    });
   }
 
   void _prevTopic() {
     SoundService.instance.playClick();
-    setState(() => _selectedTopicIndex =
-        (_selectedTopicIndex - 1 + kArchitectureTopics.length) %
-            kArchitectureTopics.length);
+    _stopPlayback();
+    setState(() {
+      _selectedTopicIndex =
+          (_selectedTopicIndex - 1 + kArchitectureTopics.length) %
+              kArchitectureTopics.length;
+      _currentStepIndex = 0;
+    });
+  }
+
+  void _togglePlay(int maxSteps) {
+    if (_isPlaying) {
+      _stopPlayback();
+      setState(() {});
+    } else {
+      _isPlaying = true;
+      _simulatorTimer?.cancel();
+      _simulatorTimer = Timer.periodic(const Duration(milliseconds: 2200), (_) {
+        if (!mounted) return;
+        setState(() {
+          _currentStepIndex = (_currentStepIndex + 1) % maxSteps;
+        });
+        SoundService.instance.playSelection();
+      });
+      setState(() {});
+    }
+  }
+
+  void _stepNext(int maxSteps) {
+    _stopPlayback();
+    setState(() {
+      _currentStepIndex = (_currentStepIndex + 1).clamp(0, maxSteps - 1);
+    });
+  }
+
+  void _stepPrev(int maxSteps) {
+    _stopPlayback();
+    setState(() {
+      _currentStepIndex = (_currentStepIndex - 1).clamp(0, maxSteps - 1);
+    });
+  }
+
+  void _resetStep() {
+    _stopPlayback();
+    setState(() {
+      _currentStepIndex = 0;
+    });
   }
 
   Widget _buildSwipeAffordance() {
@@ -53,6 +121,33 @@ class _EngineeringPageState extends State<EngineeringPage>
       margin: const EdgeInsets.only(top: 6),
       label:
           'SWIPE OR TAP TO SWITCH ARCHITECTURAL BLUEPRINTS (${_selectedTopicIndex + 1}/${kArchitectureTopics.length})',
+    );
+  }
+
+  Widget _buildDiagramCard(ArchitectureTopic topic, bool isDesktop) {
+    final maxSteps = topic.diagramSteps.length;
+    return ArchitectureDiagramCard(
+      topic: topic,
+      isDesktop: isDesktop,
+      activeStepIndex: _currentStepIndex,
+      isPlaying: _isPlaying,
+      onSelectStep: (step) {
+        _stopPlayback();
+        setState(() => _currentStepIndex = step);
+        SoundService.instance.playSelection();
+      },
+      onPreviousStep: () => _stepPrev(maxSteps),
+      onNextStep: () => _stepNext(maxSteps),
+      onTogglePlay: () => _togglePlay(maxSteps),
+      onResetStep: _resetStep,
+      onInspect: () {
+        showArchitectureInspectModal(
+          context,
+          topic: topic,
+          currentStep: _currentStepIndex,
+          onStepChanged: (step) => setState(() => _currentStepIndex = step),
+        );
+      },
     );
   }
 
@@ -112,10 +207,7 @@ class _EngineeringPageState extends State<EngineeringPage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ArchitectureDiagramCard(
-                        topic: activeTopic,
-                        isDesktop: isDesktop,
-                      ),
+                      _buildDiagramCard(activeTopic, isDesktop),
                       const SizedBox(height: AppSpacing.md),
                       ArchitectureDetailsCard(
                         topic: activeTopic,
@@ -134,10 +226,7 @@ class _EngineeringPageState extends State<EngineeringPage>
                       children: [
                         Expanded(
                           flex: 6,
-                          child: ArchitectureDiagramCard(
-                            topic: activeTopic,
-                            isDesktop: isDesktop,
-                          ),
+                          child: _buildDiagramCard(activeTopic, isDesktop),
                         ),
                         const SizedBox(width: AppSpacing.lg),
                         Expanded(
@@ -154,10 +243,7 @@ class _EngineeringPageState extends State<EngineeringPage>
                       padding: EdgeInsets.zero,
                       physics: const ClampingScrollPhysics(),
                       children: [
-                        ArchitectureDiagramCard(
-                          topic: activeTopic,
-                          isDesktop: isDesktop,
-                        ),
+                        _buildDiagramCard(activeTopic, isDesktop),
                         const SizedBox(height: AppSpacing.md),
                         ArchitectureDetailsCard(
                           topic: activeTopic,

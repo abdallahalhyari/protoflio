@@ -18,6 +18,7 @@ class PrimaryButton extends StatefulWidget {
   final PrimaryButtonVariant variant;
   final bool loading;
   final IconData? icon;
+  final bool isPill;
 
   const PrimaryButton({
     super.key,
@@ -27,6 +28,7 @@ class PrimaryButton extends StatefulWidget {
     this.variant = PrimaryButtonVariant.primary,
     this.loading = false,
     this.icon,
+    this.isPill = false,
   });
 
   @override
@@ -207,7 +209,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                 ),
               transformAlignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.sm),
+                borderRadius: BorderRadius.circular(widget.isPill ? AppRadius.pill : AppRadius.sm),
                 boxShadow: [
                   BoxShadow(
                     color: base.withValues(alpha: hover ? 0.55 : 0.28),

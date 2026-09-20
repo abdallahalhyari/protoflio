@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../service/sound_service.dart';
 import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme_controller.dart';
@@ -41,11 +42,15 @@ class MobileProgressRail extends StatelessWidget {
                   radius: 14,
                   onTap: i == page
                       ? null
-                      : () => controller.scrollToMobileSection(i),
+                      : () {
+                          SoundService.instance.playSelection();
+                          controller.scrollToMobileSection(i);
+                        },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 3),
                     child: AnimatedContainer(
                       duration: AppMotion.sm,
+                      curve: AppMotion.emphasized,
                       width: i == page ? 8 : 5,
                       height: i == page ? 8 : 5,
                       decoration: BoxDecoration(

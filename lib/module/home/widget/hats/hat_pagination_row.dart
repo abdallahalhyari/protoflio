@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import '../../../../theme/tokens.dart';
+import '../directional_icon.dart';
 
 class HatPaginationRow extends StatelessWidget {
   final int selectedIndex;
@@ -19,6 +21,7 @@ class HatPaginationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
+    final l10n = AppLocalizations.of(context);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,10 +36,10 @@ class HatPaginationRow extends StatelessWidget {
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
-          icon: const Icon(Icons.chevron_left, size: 14),
-          label: const Text(
-            'PREV',
-            style: TextStyle(
+          icon: const DirIcon(Icons.chevron_left, size: 14),
+          label: Text(
+            l10n?.previousAction ?? 'PREV',
+            style: const TextStyle(
               fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w800,
@@ -71,10 +74,10 @@ class HatPaginationRow extends StatelessWidget {
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
-          icon: const Icon(Icons.chevron_right, size: 14),
-          label: const Text(
-            'NEXT',
-            style: TextStyle(
+          icon: const DirIcon(Icons.chevron_right, size: 14),
+          label: Text(
+            l10n?.nextAction ?? 'NEXT',
+            style: const TextStyle(
               fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w800,

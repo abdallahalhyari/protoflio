@@ -71,7 +71,7 @@ class ExpressPresetsBar extends StatelessWidget {
                 Expanded(
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
+                    alignment: AlignmentDirectional.centerStart,
                     child: Text(
                       'ONE-TAP EXPRESS REACH-OUT PRESETS',
                       style: TextStyle(

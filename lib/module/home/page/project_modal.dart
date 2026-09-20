@@ -44,10 +44,13 @@ Future<void> showProjectCaseStudy(
       );
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
+      if (AppMedia.reduceMotion(context)) {
+        return FadeTransition(opacity: animation, child: child);
+      }
       final curvedAnimation = CurvedAnimation(
         parent: animation,
-        curve: Curves.easeOutCubic,
-        reverseCurve: Curves.easeInCubic,
+        curve: AppMotion.emphasizedDecel,
+        reverseCurve: AppMotion.emphasizedAccel,
       );
       return FadeTransition(
         opacity: curvedAnimation,

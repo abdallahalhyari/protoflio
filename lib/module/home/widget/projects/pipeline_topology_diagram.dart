@@ -33,82 +33,86 @@ class PipelineTopologyDiagram extends StatelessWidget {
       pipeline = project.stack.take(5).toList();
     }
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
-      decoration: BoxDecoration(
-        color: isDark ? Colors.black.withValues(alpha: 0.35) : AppColors.slate50,
-        borderRadius: BorderRadius.circular(AppRadius.chip),
-        border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 6,
-                height: 6,
-                decoration: const BoxDecoration(
-                  color: AppColors.accentGreenLight,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  'PRODUCTION PIPELINE TOPOLOGY',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
-                    color: scheme.primary,
-                    fontSize: isDesktop ? 9.0 : 8.0,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
+    return Semantics(
+      container: true,
+      label: 'Pipeline architecture for ${project.name}: stages: ${pipeline.join(" to ")}',
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        padding: EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
+        decoration: BoxDecoration(
+          color: isDark ? Colors.black.withValues(alpha: 0.35) : AppColors.slate50,
+          borderRadius: BorderRadius.circular(AppRadius.chip),
+          border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                for (int i = 0; i < pipeline.length; i++) ...[
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
-                    decoration: BoxDecoration(
-                      color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.06),
-                      borderRadius: BorderRadius.circular(3),
-                      border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.3 : 0.25)),
-                    ),
-                    child: Text(
-                      pipeline[i].toUpperCase(),
-                      style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate900,
-                        fontSize: isDesktop
-                            ? AppTypography.editorialSm
-                            : AppTypography.nano,
-                        fontWeight: FontWeight.w700,
-                      ),
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: const BoxDecoration(
+                    color: AppColors.accentGreenLight,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'PRODUCTION PIPELINE TOPOLOGY',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: AppTypography.monoFont,
+                      color: scheme.primary,
+                      fontSize: isDesktop ? 9.0 : 8.0,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.8,
                     ),
                   ),
-                  if (i < pipeline.length - 1)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Icon(
-                        Icons.arrow_forward_rounded,
-                        size: isDesktop ? 11 : 9.5,
-                        color: scheme.primary.withValues(alpha: 0.7),
-                      ),
-                    ),
-                ],
+                ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 5),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  for (int i = 0; i < pipeline.length; i++) ...[
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
+                      decoration: BoxDecoration(
+                        color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.06),
+                        borderRadius: BorderRadius.circular(3),
+                        border: Border.all(color: scheme.primary.withValues(alpha: isDark ? 0.3 : 0.25)),
+                      ),
+                      child: Text(
+                        pipeline[i].toUpperCase(),
+                        style: TextStyle(
+                          fontFamily: AppTypography.monoFont,
+                          color: isDark ? Colors.white.withValues(alpha: 0.95) : AppColors.slate900,
+                          fontSize: isDesktop
+                              ? AppTypography.editorialSm
+                              : AppTypography.nano,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    if (i < pipeline.length - 1)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Icon(
+                          Icons.arrow_forward_rounded,
+                          size: isDesktop ? 11 : 9.5,
+                          color: scheme.primary.withValues(alpha: 0.7),
+                        ),
+                      ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

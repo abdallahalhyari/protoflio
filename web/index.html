@@ -14,31 +14,32 @@
   <meta name="theme-color" content="#0E0E10">
   <meta name="color-scheme" content="dark light">
 
+  <!-- Search Engine Directives -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <link rel="canonical" href="https://alhyari.web.app/">
   <link rel="alternate" hreflang="en" href="https://alhyari.web.app/">
   <link rel="alternate" hreflang="ar" href="https://alhyari.web.app/">
   <link rel="alternate" hreflang="cs" href="https://alhyari.web.app/">
   <link rel="alternate" hreflang="x-default" href="https://alhyari.web.app/">
 
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph / Social Sharing Previews (LinkedIn, Telegram, Slack, WhatsApp, Discord, iMessage) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Abdallah Alhyari — Senior Flutter & Android Engineer">
   <meta property="og:title" content="Abdallah Alhyari — Senior Flutter & Android Engineer">
   <meta property="og:description" content="Senior Flutter and Android Engineer specializing in enterprise mobile applications, offline-first architecture, NFC, security, performance, and scalable mobile systems.">
   <meta property="og:image" content="https://alhyari.web.app/og-image.png">
+  <meta property="og:image:secure_url" content="https://alhyari.web.app/og-image.png">
+  <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Abdallah Alhyari — Senior Flutter & Android Engineer">
+  <meta property="og:image:alt" content="Abdallah Alhyari — Senior Flutter & Android Engineer Portfolio Preview">
   <meta property="og:url" content="https://alhyari.web.app/">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="ar_JO">
   <meta property="og:locale:alternate" content="cs_CZ">
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Abdallah Alhyari — Senior Flutter & Android Engineer">
-  <meta name="twitter:description" content="Senior Flutter and Android Engineer specializing in enterprise mobile applications, offline-first architecture, NFC, security, performance, and scalable mobile systems.">
-  <meta name="twitter:image" content="https://alhyari.web.app/og-image.png">
 
   <!-- iOS & PWA -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -52,21 +53,44 @@
   <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="modulepreload" href="main.dart.mjs" crossorigin>
   <link rel="preload" href="assets/assets/my_image.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="prefetch" href="assets/assets/hat.webp" as="image">
 
   <!-- Favicon & Manifest -->
   <link rel="icon" type="image/png" href="favicon.png"/>
   <link rel="manifest" href="manifest.json">
 
-  <!-- JSON-LD Structured Data: Person & SoftwareApplication -->
+  <!-- JSON-LD Structured Data: ProfilePage, Person, Occupation, SoftwareApplication & WebSite -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "ProfilePage",
+        "@id": "https://alhyari.web.app/#webpage",
+        "url": "https://alhyari.web.app/",
+        "name": "Abdallah Alhyari — Senior Flutter & Android Engineer Portfolio",
+        "description": "Portfolio of Abdallah Alhyari, Senior Mobile Engineer specializing in Flutter, Android, offline-first architectures, and smart-card security.",
+        "inLanguage": ["en", "ar", "cs"],
+        "mainEntity": {"@id": "https://alhyari.web.app/#person"}
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://alhyari.web.app/#website",
+        "url": "https://alhyari.web.app/",
+        "name": "Abdallah Alhyari Portfolio",
+        "publisher": {"@id": "https://alhyari.web.app/#person"}
+      },
+      {
         "@type": "Person",
         "@id": "https://alhyari.web.app/#person",
         "name": "Abdallah Alhyari",
         "jobTitle": "Senior Flutter & Android Engineer",
+        "hasOccupation": {
+          "@type": "Occupation",
+          "name": "Senior Mobile Engineer",
+          "occupationalCategory": "15-1252.00",
+          "skills": "Flutter, Android, Dart, Kotlin, ISO-7816 APDU NFC, Offline-First Architecture, WorkManager, JWT Security, SQLite"
+        },
         "description": "Senior Flutter and Android Engineer specializing in enterprise mobile applications, offline-first architecture, NFC, security, performance, and scalable mobile systems.",
         "email": "mailto:alhyariabdallh@gmail.com",
         "telephone": "+962-78-703-2264",
@@ -89,6 +113,7 @@
           {"@type": "CollegeOrUniversity", "name": "Al-Hussein Bin Talal University"},
           {"@type": "CollegeOrUniversity", "name": "Mendel University in Brno"}
         ],
+        "knowsLanguage": ["en", "ar", "cs"],
         "knowsAbout": [
           "Flutter", "Android", "Dart", "Kotlin", "ISO-7816 APDU NFC",
           "Offline-First Architecture", "WorkManager", "JWT Security",
@@ -111,6 +136,22 @@
         "operatingSystem": "Android, iOS",
         "author": {"@id": "https://alhyari.web.app/#person"},
         "description": "High-performance modular enterprise Flutter clients for Hospital Information Systems and Education Management."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Solutions Now Fleet & Loyalty Suite",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Android, iOS",
+        "author": {"@id": "https://alhyari.web.app/#person"},
+        "description": "Modular cross-platform loyalty rewards and real-time fleet telematics system with persistent offline queues."
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "FAIS M-Commerce & Media Streaming",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Android, iOS",
+        "author": {"@id": "https://alhyari.web.app/#person"},
+        "description": "High-throughput m-commerce and live media streaming application with resilient playback and checkout funnel telemetry."
       }
     ]
   }
@@ -322,7 +363,7 @@
   </div>
 
   <!-- Accessible semantic DOM representation for search engines & web crawlers -->
-  <main class="sr-only" id="main-content" aria-hidden="true">
+  <main class="sr-only" id="main-content">
     <h1>Abdallah Alhyari — Senior Flutter & Android Engineer</h1>
     <p>I build reliable, scalable mobile applications and complex digital products, with expertise in Flutter, Android, offline-first systems, NFC smart-cards, security, real-time communication, and enterprise architectures.</p>
     

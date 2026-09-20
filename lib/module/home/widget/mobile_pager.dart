@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../service/sound_service.dart';
 import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import '../home_controller.dart';
@@ -75,7 +76,10 @@ class MobilePager extends StatelessWidget {
                   icon: Icons.chevron_left_rounded,
                   label: 'Previous section',
                   onTap: canPrev
-                      ? () => controller.scrollToMobileSection(page - 1)
+                      ? () {
+                          SoundService.instance.playPageTurn();
+                          controller.scrollToMobileSection(page - 1);
+                        }
                       : null,
                 ),
                 const SizedBox(width: 6),
@@ -95,7 +99,10 @@ class MobilePager extends StatelessWidget {
                   icon: Icons.chevron_right_rounded,
                   label: 'Next section',
                   onTap: canNext
-                      ? () => controller.scrollToMobileSection(page + 1)
+                      ? () {
+                          SoundService.instance.playPageTurn();
+                          controller.scrollToMobileSection(page + 1);
+                        }
                       : null,
                 ),
               ],

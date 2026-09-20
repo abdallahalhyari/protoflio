@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../service/sound_service.dart';
 import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
 
@@ -58,7 +59,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
       onExit: (_) => setState(() => _hover = false),
       child: AnimatedContainer(
         duration: AppMotion.snap,
-        curve: Curves.easeOut,
+        curve: AppMotion.emphasized,
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
           color: isDark
@@ -151,25 +152,32 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
               ),
             ),
             const SizedBox(height: AppSpacing.md),
-            InkWell(
-              onTap: () => t.onInquire(t.inquirySubject),
-              borderRadius: BorderRadius.circular(AppRadius.xs),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'INQUIRE TRACK',
-                    style: TextStyle(
-                      color: accentText,
-                      fontSize: AppTypography.micro,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.4,
+            Semantics(
+              button: true,
+              label: 'Inquire about ${t.title} consulting track',
+              child: InkWell(
+                onTap: () {
+                  SoundService.instance.playClick();
+                  t.onInquire(t.inquirySubject);
+                },
+                borderRadius: BorderRadius.circular(AppRadius.xs),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'INQUIRE TRACK',
+                      style: TextStyle(
+                        color: accentText,
+                        fontSize: AppTypography.micro,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.4,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_rounded,
-                      size: 12, color: accentText),
-                ],
+                    const SizedBox(width: 4),
+                    Icon(Icons.arrow_forward_rounded,
+                        size: 12, color: accentText),
+                  ],
+                ),
               ),
             ),
           ],

@@ -174,6 +174,7 @@ class NavItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.pill),
         child: AnimatedContainer(
           duration: AppMotion.sm,
+          curve: AppMotion.emphasized,
           padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.smd, vertical: AppSpacing.sm),
           decoration: BoxDecoration(
@@ -358,6 +359,7 @@ class PageIndicator extends StatelessWidget {
                 child: Center(
                   child: AnimatedContainer(
                     duration: AppMotion.sm,
+                    curve: AppMotion.emphasized,
                     width: active ? 12 : 8,
                     height: active ? 12 : 8,
                     decoration: BoxDecoration(

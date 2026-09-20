@@ -44,19 +44,22 @@ class ContactHeader extends StatelessWidget {
   Widget _headline(Size size, BuildContext context) {
     final isDark = context.isDarkMode;
     final fs = (size.width * 0.055).clamp(32.0, 68.0);
-    return Text(
-      "LET'S BUILD SOMETHING EXTRAORDINARY",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontFamily: AppTypography.displayFont,
-        fontSize: fs,
-        fontWeight: FontWeight.w900,
-        letterSpacing: 2.5,
-        color: context.onSurface,
-        height: 1.05,
-        shadows: isDark
-            ? const [Shadow(color: Colors.black, blurRadius: 20)]
-            : const [Shadow(color: Colors.black12, blurRadius: 6)],
+    return Semantics(
+      header: true,
+      child: Text(
+        "LET'S BUILD SOMETHING EXTRAORDINARY",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: AppTypography.displayFont,
+          fontSize: fs,
+          fontWeight: FontWeight.w900,
+          letterSpacing: 2.5,
+          color: context.onSurface,
+          height: 1.05,
+          shadows: isDark
+              ? const [Shadow(color: Colors.black, blurRadius: 20)]
+              : const [Shadow(color: Colors.black12, blurRadius: 6)],
+        ),
       ),
     );
   }

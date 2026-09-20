@@ -88,7 +88,7 @@ class EngagementMatrixSection extends StatelessWidget {
               Expanded(
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
+                  alignment: AlignmentDirectional.centerStart,
                   child: Text(
                     l10n.contactEngagementScopes,
                     style: TextStyle(

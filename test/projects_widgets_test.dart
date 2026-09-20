@@ -5,6 +5,7 @@ import 'package:profile/module/home/data/projects_data.dart';
 import 'package:profile/module/home/widget/projects/interactive_project_card.dart';
 import 'package:profile/module/home/widget/projects/nfc_architecture_diagram.dart';
 import 'package:profile/module/home/widget/projects/pipeline_topology_diagram.dart';
+import 'package:profile/module/home/page/projects_page.dart';
 import 'package:profile/module/home/widget/projects/project_dossier_card.dart';
 import 'package:profile/theme/app_theme.dart';
 
@@ -102,6 +103,56 @@ void main() {
       expect(find.byTooltip('Visit NatHealth official website'), findsOneWidget);
       expect(find.byTooltip('View NatHealth on LinkedIn'), findsOneWidget);
       expect(find.text('in'), findsOneWidget);
+      expect(find.text('100% OFFLINE SLA'), findsOneWidget);
+    });
+
+    testWidgets('InteractiveProjectCard renders interactive tech stack chips', (tester) async {
+      final project = kProjects.first;
+      String? tappedTech;
+      await tester.pumpWidget(_wrap(
+        InteractiveProjectCard(
+          project: project,
+          index: 0,
+          scheme: AppTheme.dark().colorScheme,
+          isDesktop: true,
+          onSelectTech: (t) => tappedTech = t,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Flutter'), findsOneWidget);
+      await tester.tap(find.text('Flutter'));
+      await tester.pumpAndSettle();
+      expect(tappedTech, equals('Flutter'));
+    });
+
+    testWidgets('ProjectsPage domain filtering narrows cards and can be reset', (tester) async {
+      await tester.pumpWidget(_wrap(
+        const ProjectsPage(),
+        const Size(1200, 900),
+      ));
+      await tester.pumpAndSettle();
+
+      // Initially all 4 projects
+      expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
+      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsOneWidget);
+
+      // Tap domain filter for Healthcare & Smart Cards
+      final healthcareChip = find.text('HEALTHCARE & SMART CARDS');
+      expect(healthcareChip, findsOneWidget);
+      await tester.tap(healthcareChip);
+      await tester.pumpAndSettle();
+
+      // Only NatHealth should be visible
+      expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
+      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
+
+      // Tap ALL to reset
+      await tester.tap(find.text('ALL'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
+      expect(find.text('E-Learning & Healthcare Enterprise Suite'), findsOneWidget);
     });
   });
 }

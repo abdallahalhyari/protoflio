@@ -126,6 +126,7 @@ class SkillCategoryFilters extends StatelessWidget {
         focusColor: color.withValues(alpha: 0.25),
         child: AnimatedContainer(
           duration: AppMotion.chipHover,
+          curve: AppMotion.emphasized,
           padding: EdgeInsets.symmetric(
             horizontal: isDesktop ? 16 : 10,
             vertical: isDesktop ? 10 : 7,

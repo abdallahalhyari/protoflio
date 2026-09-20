@@ -20,12 +20,20 @@ class Project {
   final String? heroImagePath;
   final bool hasArchitectureDiagram;
 
+  // Domain & Production Metrics
+  final String domain;
+  final String? metricBadge;
+  final String? metricLabel;
+
   const Project({
     required this.name,
     required this.company,
     required this.tagline,
     required this.highlights,
     required this.stack,
+    this.domain = 'Enterprise Mobile',
+    this.metricBadge,
+    this.metricLabel,
     this.url,
     this.linkedinUrl,
     this.problem,

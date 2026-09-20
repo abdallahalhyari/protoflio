@@ -45,18 +45,21 @@ class EngineeringHeader extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'ENGINEERING EXPERTISE',
-                            style: TextStyle(
-                              fontFamily: AppTypography.displayFont,
-                              color: scheme.onSurface,
-                              fontSize: isDesktop ? 42 : 26,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 4,
-                              height: 1,
+                        Semantics(
+                          header: true,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: AlignmentDirectional.centerStart,
+                            child: Text(
+                              'ENGINEERING EXPERTISE',
+                              style: TextStyle(
+                                fontFamily: AppTypography.displayFont,
+                                color: scheme.onSurface,
+                                fontSize: isDesktop ? 42 : 26,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 4,
+                                height: 1,
+                              ),
                             ),
                           ),
                         ),

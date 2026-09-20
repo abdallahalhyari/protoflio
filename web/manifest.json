@@ -33,5 +33,35 @@
             "type": "image/png",
             "purpose": "maskable"
         }
+    ],
+    "shortcuts": [
+        {
+            "name": "Selected Work & Case Studies",
+            "short_name": "Work",
+            "description": "Production case studies in enterprise mobile architecture",
+            "url": "./#work",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Engineering Systems Architecture",
+            "short_name": "Engineering",
+            "description": "NFC, offline-first sync, and security blueprints",
+            "url": "./#engineering",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Contact & Reach Out",
+            "short_name": "Contact",
+            "description": "Direct communication lines and inquiries",
+            "url": "./#contact",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Download Resume (PDF)",
+            "short_name": "Resume",
+            "description": "Curriculum Vitae of Abdallah Alhyari",
+            "url": "./cv.pdf",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+        }
     ]
 }

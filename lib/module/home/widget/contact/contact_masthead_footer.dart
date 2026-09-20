@@ -21,7 +21,7 @@ class ContactMastheadFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final availabilityGreen = context.greenText;
-    final isMobile = MediaQuery.sizeOf(context).width < 640;
+    final isMobile = AppBreakpoints.isMobile(context);
     final isDark = context.isDarkMode;
 
     Widget rule() => Expanded(

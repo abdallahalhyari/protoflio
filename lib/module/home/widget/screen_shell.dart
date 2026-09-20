@@ -54,9 +54,10 @@ class AppScreenShell extends StatelessWidget {
 
   static double horizontalPadding(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    if (width >= 1440) return 48;
-    if (width >= 1024) return 32;
-    if (width >= 600) return 24;
+    if (width >= AppBreakpoints.desktopWide) return 48;
+    if (width >= AppBreakpoints.desktop) return 32;
+    if (width >= AppBreakpoints.mobile) return 24;
+    if (width < 360) return 12; // Extra breathability for compact displays (e.g. 320px iPhone SE)
     return 16;
   }
 
@@ -88,6 +89,9 @@ class AppScreenShell extends StatelessWidget {
     );
 
     if (safeArea) content = SafeArea(child: content);
-    return content;
+    return Semantics(
+      container: true,
+      child: content,
+    );
   }
 }

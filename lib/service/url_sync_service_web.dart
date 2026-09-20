@@ -1,5 +1,6 @@
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
+import 'package:flutter/services.dart';
 import 'url_sync_service.dart';
 
 UrlSyncService createUrlSyncService() => UrlSyncServiceWeb();
@@ -27,7 +28,21 @@ class UrlSyncServiceWeb extends UrlSyncService {
   }
 
   @override
+  void updateTitle(String title) {
+    try {
+      SystemChrome.setApplicationSwitcherDescription(
+        ApplicationSwitcherDescription(label: title),
+      );
+      if (_window.has('document')) {
+        final document = _window.getProperty('document'.toJS) as JSObject;
+        document.setProperty('title'.toJS, title.toJS);
+      }
+    } catch (_) {}
+  }
+
+  @override
   void updateHash(String hash) {
+    updateTitle(titleForHash(hash));
     if (hash == _lastReportedHash) return;
     _lastReportedHash = hash;
     try {

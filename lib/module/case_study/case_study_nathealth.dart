@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../service/analytics_service.dart';
-import '../../theme/surface_tone.dart';
 import '../../theme/tokens.dart';
 import '../home/widget/editorial_chip.dart';
-import '../home/widget/page_background.dart';
 import '../home/widget/primary_button.dart';
 import '../home/widget/projects/nfc_architecture_diagram.dart';
 import '../home/widget/pulsing_dot.dart';
@@ -17,131 +15,29 @@ import 'related_case_studies.dart';
 ///
 /// Routed at hash `#work/nathealth` by the URL sync service (see
 /// `HomeScreen`).
-class NatHealthCaseStudy extends StatefulWidget {
+class NatHealthCaseStudy extends StatelessWidget {
   const NatHealthCaseStudy({super.key});
 
   static const String routePath = '/work/nathealth';
 
   @override
-  State<NatHealthCaseStudy> createState() => _NatHealthCaseStudyState();
-}
-
-class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
-  late final ScrollController _scrollController;
-  final GlobalKey _problemKey = GlobalKey();
-  final GlobalKey _roleKey = GlobalKey();
-  final GlobalKey _archKey = GlobalKey();
-  final GlobalKey _outcomesKey = GlobalKey();
-  final GlobalKey _lessonsKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final isDark = context.isDarkMode;
-    final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
-    final hPad = CaseStudyLayout.horizontalPadding(context);
-
-    final chapters = [
-      CaseStudyChapter(
-        id: 'problem',
-        label: '01 PROBLEM',
-        shortLabel: 'PROB',
-        key: _problemKey,
-      ),
-      CaseStudyChapter(
-        id: 'role',
-        label: '02 ROLE',
-        shortLabel: 'ROLE',
-        key: _roleKey,
-      ),
-      CaseStudyChapter(
-        id: 'architecture',
-        label: '03 ARCH',
-        shortLabel: 'ARCH',
-        key: _archKey,
-      ),
-      CaseStudyChapter(
-        id: 'outcomes',
-        label: '07 OUTCOMES',
-        shortLabel: 'RESULTS',
-        key: _outcomesKey,
-      ),
-      CaseStudyChapter(
-        id: 'lessons',
-        label: '08 LESSONS',
-        shortLabel: 'LESSONS',
-        key: _lessonsKey,
-      ),
-    ];
-
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: PageBackground(
-        child: CaseStudyReadingCompanion(
-          scrollController: _scrollController,
-          chapters: chapters,
-          child: CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverAppBar(
-                pinned: true,
-                backgroundColor: isDark
-                    ? AppColors.darkSurface.withValues(alpha: 0.94)
-                    : Colors.white.withValues(alpha: 0.94),
-                elevation: 0,
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded),
-                  tooltip: 'Back to portfolio',
-                  onPressed: () {
-                    Analytics.event('case_study_back',
-                        params: {'study': 'nathealth'});
-                    Navigator.of(context).maybePop();
-                  },
-                ),
-                title: Text(
-                  'NATHEALTH · CASE STUDY',
-                  style: TextStyle(
-                    fontSize: AppTypography.overline,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 2.4,
-                    color: scheme.onSurface.withValues(alpha: 0.8),
-                  ),
-                ),
-                actions: const [
-                  CaseStudyToolbarShareButton(
-                    slug: 'nathealth',
-                    title: 'NatHealth Mobile Suite',
-                  ),
-                  SizedBox(width: AppSpacing.sm),
-                ],
-              ),
-              SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: hPad,
-                  vertical: AppSpacing.xl,
-                ),
-                sliver: SliverList.list(children: [
-                  _Masthead(isDesktop: isDesktop),
-                  const SizedBox(height: AppSpacing.xxl),
-                  KeyedSubtree(
-                    key: _problemKey,
-                    child: const _SectionKicker(
-                        number: '01', label: 'THE PROBLEM'),
-                  ),
+    return CaseStudyScaffold(
+      slug: 'nathealth',
+      appBarTitle: 'NATHEALTH · CASE STUDY',
+      shareTitle: 'NatHealth Mobile Suite',
+      sliversBuilder: (context, keys, isDesktop) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return [
+          _Masthead(isDesktop: isDesktop),
+          const SizedBox(height: AppSpacing.xxl),
+          KeyedSubtree(
+            key: keys.problemKey,
+            child: const SectionKicker(
+                number: '01', label: 'THE PROBLEM'),
+          ),
                   const SizedBox(height: AppSpacing.md),
-                  _Prose(
+                  const Prose(
                     'Jordan\'s largest health-insurance TPA processes millions of '
                     'claims across hospitals, clinics, and pharmacies. Paper '
                     'submissions were the bottleneck: fraud exposure, days-long '
@@ -150,7 +46,7 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                     'phone-in verification.',
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  _Prose(
+                  const Prose(
                     'The mobile suite needed to (a) verify a member\'s smart-card '
                     'contactlessly in under a second, (b) survive the network '
                     'dropping mid-transaction without ever losing a claim, and '
@@ -160,11 +56,11 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                   ),
                   const SizedBox(height: AppSpacing.xxl),
                   KeyedSubtree(
-                    key: _roleKey,
-                    child: const _SectionKicker(number: '02', label: 'MY ROLE'),
+                    key: keys.roleKey,
+                    child: const SectionKicker(number: '02', label: 'MY ROLE'),
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  _BulletList(items: const [
+                  const BulletList(items: [
                     'Senior Mobile Engineer leading mobile architecture across three shipped clients (Ring App, E-Health Gate, Compliance System).',
                     'Owned native Kotlin bridging to Android NFC / IsoDep transceive buffers.',
                     'Designed the two-tier JWT + hardware-GUID token protocol implemented across the suite.',
@@ -172,14 +68,14 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                   ]),
                   const SizedBox(height: AppSpacing.xxl),
                   KeyedSubtree(
-                    key: _archKey,
-                    child: const _SectionKicker(
+                    key: keys.archKey,
+                    child: const SectionKicker(
                         number: '03', label: 'SYSTEM ARCHITECTURE'),
                   ),
                   const SizedBox(height: AppSpacing.md),
                   NfcArchitectureDiagram(isDesktop: isDesktop, isDark: isDark),
                   const SizedBox(height: AppSpacing.md),
-                  _Prose(
+                  const Prose(
                     'Clean Architecture with strict boundary isolation. '
                     'Presentation widgets never touch NFC or JWT primitives; '
                     'they consume a Repository interface backed by a Data layer '
@@ -189,29 +85,29 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                     'under `dart test` without a Flutter harness.',
                   ),
                   const SizedBox(height: AppSpacing.xxl),
-                  _TechnicalChapter(
+                  const TechnicalChapter(
                     number: '04',
                     title: 'ISO-7816 APDU PIPELINE',
-                    steps: const [
-                      _TechStep(
+                    steps: [
+                      TechStep(
                         layer: 'DISCOVERY',
                         title: 'NFC adapter + tag dispatch',
                         body:
                             'Foreground dispatch filter latches onto IsoDep-compatible smart-cards within ~30ms of tap. Non-matching tags are ignored so misfires don\'t interrupt the user.',
                       ),
-                      _TechStep(
+                      TechStep(
                         layer: 'BRIDGE',
                         title: 'Kotlin MethodChannel',
                         body:
                             'A binary transceive channel bridges Flutter to the Android IsoDep buffer. Payloads move as raw `ByteBuffer` to avoid JSON encode/decode round-trips inside the APDU timeout envelope.',
                       ),
-                      _TechStep(
+                      TechStep(
                         layer: 'COMMAND CHAIN',
                         title: 'AID select → auth → binary read',
                         body:
                             'Application selection (AID), mutual authentication with the card\'s embedded certificate, then encrypted binary block reads. Each command has a strict per-step timeout; a defensive state machine unwinds cleanly if the card is displaced mid-chain.',
                       ),
-                      _TechStep(
+                      TechStep(
                         layer: 'VERIFY',
                         title: 'Cryptographic validation',
                         body:
@@ -220,23 +116,23 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                     ],
                   ),
                   const SizedBox(height: AppSpacing.xxl),
-                  _TechnicalChapter(
+                  const TechnicalChapter(
                     number: '05',
                     title: 'HARDWARE-BOUND TOKEN LIFECYCLE',
-                    steps: const [
-                      _TechStep(
+                    steps: [
+                      TechStep(
                         layer: 'AUTHENTICATION',
                         title: 'Biometric + hardware challenge',
                         body:
                             'BiometricPrompt gated by Android Keystore StrongBox / TEE where available; falls back to the standard TEE elsewhere. The keystore challenge is bound to a hardware GUID so cloned APKs on a different device fail immediately.',
                       ),
-                      _TechStep(
+                      TechStep(
                         layer: 'STORAGE',
                         title: 'AES-256 GCM in Keystore',
                         body:
                             'Refresh token encrypted with a hardware-backed key that never leaves the secure enclave. Even a fully rooted phone can\'t exfiltrate the key material — only the plaintext token after biometric approval.',
                       ),
-                      _TechStep(
+                      TechStep(
                         layer: 'EXCHANGE',
                         title: 'Two-tier JWT rotation',
                         body:
@@ -245,23 +141,23 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                     ],
                   ),
                   const SizedBox(height: AppSpacing.xxl),
-                  _TechnicalChapter(
+                  const TechnicalChapter(
                     number: '06',
                     title: 'OFFLINE-FIRST SYNC PIPELINE',
-                    steps: const [
-                      _TechStep(
+                    steps: [
+                      TechStep(
                         layer: 'DISPATCH',
                         title: 'Optimistic UI + local ACID commit',
                         body:
                             'Every submission writes to SQLite inside a transaction, marked `PENDING_SYNC`, before the UI acknowledges. Nothing lives only in RAM.',
                       ),
-                      _TechStep(
+                      TechStep(
                         layer: 'SCHEDULE',
                         title: 'Android WorkManager',
                         body:
                             'A NETWORK_CONNECTED-constrained worker takes over — survives process death, doze mode, and app force-quit. Retries use exponential backoff with jitter to protect the backend during recovery storms.',
                       ),
-                      _TechStep(
+                      TechStep(
                         layer: 'RECONCILE',
                         title: 'Idempotent server ACK',
                         body:
@@ -271,9 +167,9 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                   ),
                   const SizedBox(height: AppSpacing.xxl),
                   KeyedSubtree(
-                    key: _outcomesKey,
+                    key: keys.outcomesKey,
                     child:
-                        const _SectionKicker(number: '07', label: 'OUTCOMES'),
+                        const SectionKicker(number: '07', label: 'OUTCOMES'),
                   ),
                   OutcomeGrid(
                     isDesktop: isDesktop,
@@ -286,11 +182,11 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                   ),
                   const SizedBox(height: AppSpacing.xxl),
                   KeyedSubtree(
-                    key: _lessonsKey,
-                    child: const _SectionKicker(number: '08', label: 'LESSONS'),
+                    key: keys.lessonsKey,
+                    child: const SectionKicker(number: '08', label: 'LESSONS'),
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  _Prose(
+                  const Prose(
                     'NFC APDU timing envelopes are unforgiving and vary by handset. '
                     'Different antenna coil geometries across OEMs meant our '
                     'end-to-end read budget had to account for a ~2× variance in '
@@ -327,12 +223,8 @@ class _NatHealthCaseStudyState extends State<NatHealthCaseStudy> {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
-                ]),
-              ),
-            ],
-          ),
-        ),
-      ),
+        ];
+      },
     );
   }
 }
@@ -412,231 +304,3 @@ class _Masthead extends StatelessWidget {
     );
   }
 }
-
-class _SectionKicker extends StatelessWidget {
-  const _SectionKicker({required this.number, required this.label});
-
-  final String number;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Row(children: [
-      Text(
-        number,
-        style: TextStyle(
-          fontFamily: AppTypography.displayFont,
-          fontSize: AppTypography.heading,
-          fontWeight: FontWeight.w900,
-          color: scheme.primary,
-        ),
-      ),
-      const SizedBox(width: AppSpacing.md),
-      Expanded(
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: AppTypography.overline,
-            letterSpacing: 3,
-            fontWeight: FontWeight.w800,
-            color: scheme.onSurface.withValues(alpha: 0.9),
-          ),
-        ),
-      ),
-      Container(
-        height: 1,
-        width: 80,
-        color: scheme.onSurface.withValues(alpha: 0.15),
-      ),
-    ]);
-  }
-}
-
-class _Prose extends StatelessWidget {
-  const _Prose(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: AppTypography.body + 1,
-        height: 1.65,
-        color: scheme.onSurface.withValues(alpha: 0.85),
-      ),
-    );
-  }
-}
-
-class _BulletList extends StatelessWidget {
-  const _BulletList({required this.items});
-
-  final List<String> items;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: items
-          .map((t) => Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.smd),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Container(
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: scheme.primary,
-                          borderRadius: BorderRadius.circular(AppRadius.xxs),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.smd),
-                    Expanded(
-                      child: Text(
-                        t,
-                        style: TextStyle(
-                          fontSize: AppTypography.body,
-                          height: 1.55,
-                          color: scheme.onSurface.withValues(alpha: 0.82),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ))
-          .toList(),
-    );
-  }
-}
-
-class _TechStep {
-  const _TechStep(
-      {required this.layer, required this.title, required this.body});
-  final String layer;
-  final String title;
-  final String body;
-}
-
-class _TechnicalChapter extends StatelessWidget {
-  const _TechnicalChapter({
-    required this.number,
-    required this.title,
-    required this.steps,
-  });
-
-  final String number;
-  final String title;
-  final List<_TechStep> steps;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _SectionKicker(number: number, label: title),
-        const SizedBox(height: AppSpacing.md),
-        ...List.generate(steps.length, (i) {
-          final s = steps[i];
-          return Padding(
-            padding: EdgeInsets.only(
-                bottom: i == steps.length - 1 ? 0 : AppSpacing.md),
-            child: _TechStepCard(index: i + 1, step: s),
-          );
-        }),
-      ],
-    );
-  }
-}
-
-class _TechStepCard extends StatelessWidget {
-  const _TechStepCard({required this.index, required this.step});
-
-  final int index;
-  final _TechStep step;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final isDark = context.isDarkMode;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.03)
-            : Colors.white.withValues(alpha: 0.7),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.18),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: scheme.primary.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-            ),
-            child: Text(
-              index.toString().padLeft(2, '0'),
-              style: TextStyle(
-                fontFamily: AppTypography.displayFont,
-                fontSize: AppTypography.subtitle,
-                fontWeight: FontWeight.w900,
-                color: scheme.primary,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  step.layer,
-                  style: TextStyle(
-                    fontSize: AppTypography.editorial,
-                    letterSpacing: 2.4,
-                    fontWeight: FontWeight.w800,
-                    color: scheme.primary,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  step.title,
-                  style: TextStyle(
-                    fontSize: AppTypography.subtitle,
-                    fontWeight: FontWeight.w800,
-                    color: scheme.onSurface,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  step.body,
-                  style: TextStyle(
-                    fontSize: AppTypography.body,
-                    height: 1.55,
-                    color: scheme.onSurface.withValues(alpha: 0.82),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-

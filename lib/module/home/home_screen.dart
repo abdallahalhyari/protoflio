@@ -94,10 +94,14 @@ class _HomeScreenState extends State<HomeScreen> {
           UrlSyncService.instance.hashToIndex(initialSection);
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ThemeController.updateSeedFromHash(initialSection);
+        UrlSyncService.instance.updateTitle(
+          UrlSyncService.instance.titleForHash(initialHash ?? initialSection),
+        );
       });
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ThemeController.updateSeedFromHash('home');
+        UrlSyncService.instance.updateTitle(UrlSyncService.baseTitle);
       });
     }
 
@@ -179,11 +183,19 @@ class _HomeScreenState extends State<HomeScreen> {
     _imagesPrecached = true;
     // Defer non-critical decodes until after first frame so they don't
     // fight with Dart VM boot for main-thread time. The raster cache is
-    // warm by the time IntroPage / HatsGrid actually request them.
+    // warm by the time IntroPage / HatsGrid / Projects actually request them.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       precacheImage(const AssetImage('assets/my_image.webp'), context);
       precacheImage(const AssetImage('assets/hat.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/projects/nathealth.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/projects/eskadenia.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/projects/solutions.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/projects/fais.webp'), context);
     });
   }
 
@@ -355,10 +367,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ).then((_) {
         if (mounted) {
           _isPageTransitioning = false;
+          _lastPageTurnCompletedAt = DateTime.now();
           _wheelAccum = 0;
         }
       }).catchError((_) {
-        if (mounted) _isPageTransitioning = false;
+        if (mounted) {
+          _isPageTransitioning = false;
+          _lastPageTurnCompletedAt = DateTime.now();
+          _wheelAccum = 0;
+        }
       });
     }
   }
@@ -376,6 +393,8 @@ class _HomeScreenState extends State<HomeScreen> {
   // exactly one page per _kWheelThreshold pixels of intent, but only when
   // inner scrollable viewports (e.g. project dossier, contact page) are at their edges.
   static const double _kWheelThreshold = 80;
+  static const Duration _kWheelCooldown = Duration(milliseconds: 320);
+  DateTime _lastPageTurnCompletedAt = DateTime.fromMillisecondsSinceEpoch(0);
   double _wheelAccum = 0;
   DateTime _lastWheelAt = DateTime.fromMillisecondsSinceEpoch(0);
 
@@ -445,8 +464,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onPointerSignal(PointerSignalEvent event) {
     if (event is! PointerScrollEvent) return;
 
+    final now = DateTime.now();
+
     // Drop further wheel events while a transition animation is actively in flight
-    if (_isPageTransitioning) return;
+    // or within the post-turn cooldown window to discard trackpad fling inertia.
+    if (_isPageTransitioning ||
+        now.difference(_lastPageTurnCompletedAt) < _kWheelCooldown) {
+      _wheelAccum = 0;
+      return;
+    }
 
     final dy = event.scrollDelta.dy;
     if (dy.abs() < 1.0) return;
@@ -456,7 +482,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    final now = DateTime.now();
     if (now.difference(_lastWheelAt) > AppMotion.wheelResetGap) {
       _wheelAccum = 0;
     }
@@ -632,7 +657,9 @@ class _HomeScreenState extends State<HomeScreen> {
           const Positioned(
             top: 12,
             right: 12,
-            child: SafeArea(child: DesktopToolbar()),
+            child: SafeArea(
+              child: RepaintBoundary(child: DesktopToolbar()),
+            ),
           ),
           const Positioned(
             bottom: 12,

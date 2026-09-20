@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/module/home/widget/skills/skill_category_filters.dart';
+import 'package:profile/module/home/widget/skills/skill_search_bar.dart';
 import 'package:profile/module/home/widget/skills/skills_empty_state.dart';
 import 'package:profile/module/home/widget/skills/skills_header.dart';
 import 'package:profile/theme/app_theme.dart';
@@ -65,6 +66,37 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(resetTriggered, isTrue);
+    });
+
+    testWidgets('SkillSearchBar renders search input, count badge, and clears text', (tester) async {
+      final controller = TextEditingController(text: 'flutter');
+      addTearDown(controller.dispose);
+      bool cleared = false;
+      await tester.pumpWidget(_wrap(
+        SkillSearchBar(
+          controller: controller,
+          onChanged: (_) {},
+          onClear: () {
+            controller.clear();
+            cleared = true;
+          },
+          totalCount: 24,
+          filteredCount: 5,
+          isDesktop: true,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(TextField), findsOneWidget);
+      expect(find.text('5 OF 24 SKILLS'), findsOneWidget);
+
+      // Tap clear button
+      expect(find.byIcon(Icons.close_rounded), findsOneWidget);
+      await tester.tap(find.byIcon(Icons.close_rounded));
+      await tester.pumpAndSettle();
+
+      expect(controller.text, '');
+      expect(cleared, isTrue);
     });
 
     test('SkillCategoryStyle returns color and gradient for known categories', () {

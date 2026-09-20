@@ -59,23 +59,27 @@ class IntroCtaRow extends StatelessWidget {
         ? (color ?? Colors.white24)
         : (color ?? AppColors.slate300);
 
-    return OutlinedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, size: 16),
-      label: Text(
-        label,
-        style: const TextStyle(
-          fontSize: AppTypography.small,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 1.2,
+    return Semantics(
+      button: true,
+      label: label,
+      child: OutlinedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: 16),
+        label: Text(
+          label,
+          style: const TextStyle(
+            fontSize: AppTypography.small,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.2,
+          ),
         ),
-      ),
-      style: OutlinedButton.styleFrom(
-        foregroundColor: effectiveColor,
-        side: BorderSide(color: borderColor, width: 1.5),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.pill),
+        style: OutlinedButton.styleFrom(
+          foregroundColor: effectiveColor,
+          side: BorderSide(color: borderColor, width: 1.5),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+          ),
         ),
       ),
     );
@@ -93,6 +97,7 @@ class IntroCtaRow extends StatelessWidget {
       children: [
         PrimaryButton(
           label: loc.viewMyWork,
+          isPill: true,
           onPressed: () {
             SoundService.instance.playClick();
             onViewWork();

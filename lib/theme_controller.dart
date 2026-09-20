@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'theme/tokens.dart';
@@ -112,6 +113,6 @@ class ThemeController {
   static void toggle() {
     mode.value =
         mode.value == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-    _persist();
+    unawaited(_persist());
   }
 }

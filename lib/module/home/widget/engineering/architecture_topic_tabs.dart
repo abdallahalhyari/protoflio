@@ -58,6 +58,7 @@ class ArchitectureTopicTabs extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.sm),
         child: AnimatedContainer(
           duration: AppMotion.sm,
+          curve: AppMotion.emphasized,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
             color: isSelected

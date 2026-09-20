@@ -68,19 +68,24 @@ class _LanguagePickerPuck extends StatelessWidget {
       child: ValueListenableBuilder<Locale>(
         valueListenable: LocaleController.locale,
         builder: (context, locale, _) {
-          return PopupMenuButton<String>(
-            tooltip: 'Change Language',
-            icon: Icon(Icons.language,
-                color: dark ? Colors.white : AppColors.slate900),
-            onSelected: (val) {
-              HapticFeedback.lightImpact();
-              LocaleController.changeLocale(val);
-            },
-            itemBuilder: (context) => const [
-              PopupMenuItem(value: 'en', child: Text('English')),
-              PopupMenuItem(value: 'ar', child: Text('العربية')),
-              PopupMenuItem(value: 'cs', child: Text('Čeština')),
-            ],
+          return Semantics(
+            button: true,
+            label: 'Change language. Current: ${locale.languageCode.toUpperCase()}',
+            child: PopupMenuButton<String>(
+              tooltip: 'Change Language',
+              icon: Icon(Icons.language,
+                  color: dark ? Colors.white : AppColors.slate900),
+              onSelected: (val) {
+                HapticFeedback.lightImpact();
+                SoundService.instance.playClick();
+                LocaleController.changeLocale(val);
+              },
+              itemBuilder: (context) => const [
+                PopupMenuItem(value: 'en', child: Text('English')),
+                PopupMenuItem(value: 'ar', child: Text('العربية')),
+                PopupMenuItem(value: 'cs', child: Text('Čeština')),
+              ],
+            ),
           );
         },
       ),
@@ -95,8 +100,9 @@ class _ThemeTogglePuck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      button: true,
       toggled: dark,
-      label: 'Dark mode',
+      label: dark ? 'Switch to light mode' : 'Switch to dark mode',
       child: _Puck(
         dark: dark,
         child: IconButton(
@@ -125,22 +131,48 @@ class _AudioTogglePuck extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: SoundService.instance.isEnabled,
       builder: (context, enabled, _) {
-        return _Puck(
-          dark: dark,
-          child: IconButton(
-            tooltip: enabled ? 'Mute ambient audio' : 'Enable ambient audio',
-            icon: Icon(
-              enabled ? Icons.volume_up : Icons.volume_off,
-              color: enabled
-                  ? (dark ? Colors.white : AppColors.slate900)
-                  : (dark
-                      ? Colors.white.withValues(alpha: 0.60)
-                      : AppColors.slate400),
-              size: 18,
+        return Semantics(
+          button: true,
+          toggled: enabled,
+          label: enabled ? 'Mute sound effects' : 'Enable sound effects',
+          child: _Puck(
+            dark: dark,
+            child: IconButton(
+              tooltip: enabled
+                  ? 'Sound Effects: ON (Click to mute)'
+                  : 'Sound Effects: MUTED (Click to enable)',
+              icon: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Icon(
+                    enabled ? Icons.volume_up : Icons.volume_off,
+                    color: enabled
+                        ? (dark ? Colors.white : AppColors.slate900)
+                        : (dark
+                            ? Colors.white.withValues(alpha: 0.60)
+                            : AppColors.slate400),
+                    size: 18,
+                  ),
+                  if (enabled)
+                    Positioned(
+                      right: -1,
+                      top: -1,
+                      child: Container(
+                        width: 5,
+                        height: 5,
+                        decoration: const BoxDecoration(
+                          color: AppColors.accentGreen,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                SoundService.instance.toggle();
+              },
             ),
-            onPressed: () {
-              SoundService.instance.toggle();
-            },
           ),
         );
       },

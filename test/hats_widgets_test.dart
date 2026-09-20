@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/module/home/data/hats_data.dart';
 import 'package:profile/module/home/widget/hats/continuous_mobile_hat_column.dart';
 import 'package:profile/module/home/widget/hats/hat_bio_strip.dart';
+import 'package:profile/module/home/widget/hats/hat_console_dock.dart';
 import 'package:profile/module/home/widget/hats/hat_deck_header.dart';
 import 'package:profile/module/home/widget/hats/hat_drag_hint.dart';
 import 'package:profile/module/home/widget/hats/hat_pagination_row.dart';
@@ -128,6 +130,49 @@ void main() {
       expect(find.text('ARCHITECTURAL PERSPECTIVES'), findsOneWidget);
       expect(find.textContaining('TAP CARD TO FLIP'), findsOneWidget);
       expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('HatConsoleDock renders active role pill, navigation buttons, and actions', (tester) async {
+      bool prev = false;
+      bool next = false;
+      bool shuffle = false;
+      bool reset = false;
+
+      await tester.pumpWidget(_wrap(
+        HatConsoleDock(
+          selectedIndex: 0,
+          totalCount: kHats.length,
+          currentHat: kHats[0],
+          onPrev: () => prev = true,
+          onNext: () => next = true,
+          onShuffle: () => shuffle = true,
+          onReset: () => reset = true,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('01 / 06'), findsOneWidget);
+      expect(find.text('THINKING'), findsOneWidget);
+      expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.arrow_forward_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.auto_awesome_motion_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.layers_clear_outlined), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.arrow_back_rounded));
+      await tester.pumpAndSettle();
+      expect(prev, isTrue);
+
+      await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
+      await tester.pumpAndSettle();
+      expect(next, isTrue);
+
+      await tester.tap(find.byIcon(Icons.auto_awesome_motion_rounded));
+      await tester.pumpAndSettle();
+      expect(shuffle, isTrue);
+
+      await tester.tap(find.byIcon(Icons.layers_clear_outlined));
+      await tester.pumpAndSettle();
+      expect(reset, isTrue);
     });
   });
 }

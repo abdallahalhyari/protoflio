@@ -7,6 +7,7 @@ import '../widget/skills/bento_skill_tile.dart';
 import '../widget/skills/skill_category_filters.dart';
 import '../widget/skills/skills_empty_state.dart';
 import '../widget/skills/skills_header.dart';
+import '../widget/skills/skill_search_bar.dart';
 
 class SkillsPage extends StatefulWidget {
   final bool isContinuousMobile;
@@ -22,7 +23,9 @@ class SkillsPage extends StatefulWidget {
 
 class _SkillsPageState extends State<SkillsPage>
     with AutomaticKeepAliveClientMixin {
+  late final TextEditingController _searchController;
   String _selectedCategory = 'ALL';
+  String _searchQuery = '';
 
   @override
   bool get wantKeepAlive => true;
@@ -38,23 +41,58 @@ class _SkillsPageState extends State<SkillsPage>
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final scheme = Theme.of(context).colorScheme;
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
 
-    final displayedSkills = _selectedCategory == 'ALL'
+    final filteredByCategory = _selectedCategory == 'ALL'
         ? kSkills
         : kSkills.where((s) => s.category == _selectedCategory).toList();
 
+    final query = _searchQuery.trim().toLowerCase();
+    final displayedSkills = query.isEmpty
+        ? filteredByCategory
+        : filteredByCategory.where((s) {
+            final nameMatch = s.name.toLowerCase().contains(query);
+            final catMatch = s.category.toLowerCase().contains(query);
+            final descMatch = s.description.toLowerCase().contains(query);
+            final provenMatch = s.provenIn.toLowerCase().contains(query);
+            final tagsMatch =
+                s.tags.any((t) => t.toLowerCase().contains(query));
+            return nameMatch ||
+                catMatch ||
+                descMatch ||
+                provenMatch ||
+                tagsMatch;
+          }).toList();
+
     final grid = displayedSkills.isEmpty
         ? SkillsEmptyState(
-            onShowAll: () => setState(() => _selectedCategory = 'ALL'),
+            onShowAll: () {
+              setState(() {
+                _selectedCategory = 'ALL';
+                _searchQuery = '';
+                _searchController.clear();
+              });
+            },
           )
         : GridView.builder(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(right: 20),
+            padding: const EdgeInsetsDirectional.only(end: 20),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: isDesktop ? 2 : 1, // Number of rows
               childAspectRatio: isDesktop ? 1.1 : 1.28, // Height / Width
@@ -86,6 +124,20 @@ class _SkillsPageState extends State<SkillsPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SkillsHeader(isDesktop: isDesktop),
+          const SizedBox(height: AppSpacing.smd),
+          SkillSearchBar(
+            controller: _searchController,
+            onChanged: (val) => setState(() => _searchQuery = val),
+            onClear: () {
+              setState(() {
+                _searchQuery = '';
+                _searchController.clear();
+              });
+            },
+            totalCount: kSkills.length,
+            filteredCount: displayedSkills.length,
+            isDesktop: isDesktop,
+          ),
           const SizedBox(height: AppSpacing.smd),
           SkillCategoryFilters(
             categories: _categories,

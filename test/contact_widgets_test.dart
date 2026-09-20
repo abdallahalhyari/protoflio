@@ -8,6 +8,7 @@ import 'package:profile/module/home/widget/contact/cv_dossier_card.dart';
 import 'package:profile/module/home/widget/contact/engagement_matrix_section.dart';
 import 'package:profile/module/home/widget/contact/express_presets_bar.dart';
 import 'package:profile/module/home/widget/contact/hero_email_card.dart';
+import 'package:profile/module/home/widget/contact/inquiry_composer_dialog.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
@@ -156,6 +157,133 @@ void main() {
       await tester.tap(find.text('GITHUB · abdallahalhyari'));
       await tester.pumpAndSettle();
       expect(githubOpened, isTrue);
+    });
+
+    testWidgets('HeroEmailCard renders compose button and triggers onComposeInquiry', (tester) async {
+      bool composed = false;
+      await tester.pumpWidget(_wrap(
+        HeroEmailCard(
+          email: 'alhyariabdallh@gmail.com',
+          isDesktop: true,
+          onSendEmail: () {},
+          onCopyEmail: () {},
+          onComposeInquiry: () => composed = true,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('COMPOSE INQUIRY'), findsOneWidget);
+      await tester.tap(find.text('COMPOSE INQUIRY'));
+      await tester.pumpAndSettle();
+      expect(composed, isTrue);
+    });
+
+    testWidgets('InquiryComposerDialog renders header, tracks, and switches templates', (tester) async {
+      await tester.pumpWidget(_wrap(const InquiryComposerDialog(initialTrackIndex: 0)));
+      await tester.pumpAndSettle();
+
+      expect(find.text('DIRECT INQUIRY COMPOSER'), findsOneWidget);
+      expect(find.text('Reach Abdallah Alhyari'), findsOneWidget);
+      expect(find.textContaining('AMMAN (UTC+3)'), findsOneWidget);
+      expect(find.text('💼 Role Opportunity'), findsOneWidget);
+      expect(find.text('📐 Architecture Audit'), findsOneWidget);
+      expect(find.text('⚡ Production App'), findsOneWidget);
+      expect(find.text('☕ Tech Advisory'), findsOneWidget);
+      expect(find.text('COPY DRAFT'), findsOneWidget);
+      expect(find.text('OPEN IN EMAIL CLIENT'), findsOneWidget);
+
+      // Verify initial body contains Role Opportunity template
+      expect(find.textContaining('Senior Mobile Architect / Flutter Engineering'), findsOneWidget);
+
+      // Tap Architecture Audit track
+      await tester.tap(find.text('📐 Architecture Audit'));
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('expert architectural audit'), findsOneWidget);
+    });
+
+    testWidgets('InquiryComposerDialog accepts name and company inputs and copies draft', (tester) async {
+      tester.view.physicalSize = const Size(1200, 1000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      String? copiedMessage;
+      await tester.pumpWidget(_wrap(
+        InquiryComposerDialog(
+          initialTrackIndex: 2,
+          onCopy: (msg) => copiedMessage = msg,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      // Enter name and company
+      await tester.enterText(find.widgetWithText(TextField, 'Your Name (Optional)'), 'Sarah Connor');
+      await tester.enterText(find.widgetWithText(TextField, 'Company / Org (Optional)'), 'Cyberdyne');
+      await tester.pumpAndSettle();
+
+      // Tap COPY DRAFT
+      await tester.ensureVisible(find.text('COPY DRAFT'));
+      await tester.tap(find.text('COPY DRAFT'));
+      await tester.pumpAndSettle();
+
+      expect(copiedMessage, isNotNull);
+      expect(copiedMessage, contains('FROM: Sarah Connor (Cyberdyne)'));
+      expect(copiedMessage, contains('high-performance cross-platform system'));
+    });
+
+    testWidgets('InquiryComposerDialog triggers onSend with subject and body', (tester) async {
+      tester.view.physicalSize = const Size(1200, 1000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      String? sentSubject;
+      String? sentBody;
+      await tester.pumpWidget(_wrap(
+        InquiryComposerDialog(
+          initialTrackIndex: 1,
+          onSend: (subj, body) {
+            sentSubject = subj;
+            sentBody = body;
+          },
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.text('OPEN IN EMAIL CLIENT'));
+      await tester.tap(find.text('OPEN IN EMAIL CLIENT'));
+      await tester.pumpAndSettle();
+
+      expect(sentSubject, contains('Architecture Review'));
+      expect(sentBody, contains('expert architectural audit'));
+    });
+
+    testWidgets('showInquiryComposerDialog opens modal and closes on close button', (tester) async {
+      await tester.pumpWidget(_wrap(
+        Builder(
+          builder: (context) => ElevatedButton(
+            onPressed: () => showInquiryComposerDialog(context, initialTrackIndex: 1),
+            child: const Text('OPEN COMPOSER'),
+          ),
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('OPEN COMPOSER'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('DIRECT INQUIRY COMPOSER'), findsOneWidget);
+      expect(find.byTooltip('Close'), findsOneWidget);
+
+      await tester.tap(find.byTooltip('Close'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('DIRECT INQUIRY COMPOSER'), findsNothing);
     });
   });
 }

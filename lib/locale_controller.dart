@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,7 +24,7 @@ class LocaleController {
 
   static void changeLocale(String code) {
     locale.value = Locale(code);
-    _persist(code);
+    unawaited(_persist(code));
   }
 
   static void nextLocale() {

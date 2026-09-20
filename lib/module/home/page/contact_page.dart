@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
@@ -17,6 +18,7 @@ import '../widget/contact/cv_dossier_card.dart';
 import '../widget/contact/engagement_matrix_section.dart';
 import '../widget/contact/express_presets_bar.dart';
 import '../widget/contact/hero_email_card.dart';
+import '../widget/contact/inquiry_composer_dialog.dart';
 import '../widget/contact/telemetry_bar.dart';
 import '../widget/scrollable_screen_shell.dart';
 
@@ -80,10 +82,14 @@ class _ContactPageState extends State<ContactPage>
     if (!context.mounted) return;
 
     // Announce to screen readers for accessibility
-    // ignore: deprecated_member_use
-    SemanticsService.announce(
-      'Copied $value to clipboard',
-      Directionality.of(context),
+    final announcement = AppLocalizations.of(context)?.copiedToClipboard(value) ??
+        'Copied $value to clipboard';
+    unawaited(
+      SemanticsService.sendAnnouncement(
+        View.of(context),
+        announcement,
+        Directionality.of(context),
+      ),
     );
 
     // Elevated floating glass toast
@@ -121,7 +127,8 @@ class _ContactPageState extends State<ContactPage>
                 const SizedBox(width: 10),
                 Flexible(
                   child: Text(
-                    'Copied: $value',
+                    AppLocalizations.of(context)?.emailCopied(value) ??
+                        'Copied: $value',
                     style: TextStyle(
                       color: isDark ? Colors.white : AppColors.slate900,
                       fontSize: AppTypography.overlineTight,
@@ -166,12 +173,23 @@ class _ContactPageState extends State<ContactPage>
             subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
           ),
           onCopyEmail: () => _copy(context, _email, isDark: isDark),
+          onComposeInquiry: () => unawaited(
+            showInquiryComposerDialog(context, initialTrackIndex: 0),
+          ),
         ),
         const SizedBox(height: AppSpacing.lg),
         // 2. Fast pre-filled subject lines beneath the primary CTA.
         ExpressPresetsBar(
-          onSelectPreset: (subject, body) =>
-              _openMail(subject: subject, body: body),
+          onSelectPreset: (subject, body) {
+            final index = ExpressPresetsBar.presets
+                .indexWhere((p) => p.$2 == subject);
+            unawaited(
+              showInquiryComposerDialog(
+                context,
+                initialTrackIndex: index >= 0 ? index : 0,
+              ),
+            );
+          },
         ),
         const SizedBox(height: AppSpacing.xl),
         // 3. Compact 2×2 channel grid (phone / whatsapp / linkedin / github).
@@ -194,7 +212,24 @@ class _ContactPageState extends State<ContactPage>
         // 5. Deep dive — engagement scopes for hiring managers who want more.
         EngagementMatrixSection(
           isDesktop: isDesktop,
-          onInquire: (subject, body) => _openMail(subject: subject, body: body),
+          onInquire: (subject, body) {
+            int trackIndex = 1;
+            if (subject.contains('Audit')) {
+              trackIndex = 1;
+            } else if (subject.contains('Production') ||
+                subject.contains('Engineering')) {
+              trackIndex = 2;
+            } else if (subject.contains('Leadership') ||
+                subject.contains('Advisory')) {
+              trackIndex = 3;
+            }
+            unawaited(
+              showInquiryComposerDialog(
+                context,
+                initialTrackIndex: trackIndex,
+              ),
+            );
+          },
         ),
         const SizedBox(height: AppSpacing.xl),
         ContactMastheadFooter(

@@ -8,11 +8,15 @@ import 'package:profile/theme_controller.dart';
 import 'package:profile/locale_controller.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/service/sound_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await ThemeController.load();
-  await LocaleController.load();
+  await Future.wait([
+    ThemeController.load(),
+    LocaleController.load(),
+    SoundService.instance.load(),
+  ]);
 
   runApp(const PortfolioApp());
 

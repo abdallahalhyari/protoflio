@@ -23,71 +23,76 @@ class FolioBar extends StatelessWidget {
         final currentLabel = (page >= 0 && page < labels.length)
             ? labels[page].toUpperCase()
             : '';
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(
-            color: context.glassSurface,
-            borderRadius: BorderRadius.circular(AppRadius.xs),
-            border: Border.all(color: context.glassBorder),
-            boxShadow: context.isDarkMode
-                ? null
-                : [
-                    BoxShadow(
-                      color: AppColors.shadowSoft,
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.folioIndicator(
-                  (page + 1).toString().padLeft(2, '0'),
-                  controller.pageCount.toString().padLeft(2, '0'),
+        return Semantics(
+          container: true,
+          label: 'Current section: $currentLabel, page ${page + 1} of ${controller.pageCount}',
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: context.glassSurface,
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+              border: Border.all(color: context.glassBorder),
+              boxShadow: context.isDarkMode
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: AppColors.shadowSoft,
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.folioIndicator(
+                    (page + 1).toString().padLeft(2, '0'),
+                    controller.pageCount.toString().padLeft(2, '0'),
+                  ),
+                  style: TextStyle(
+                    color: context.subtleText,
+                    fontSize: AppTypography.micro,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.5,
+                  ),
                 ),
-                style: TextStyle(
-                  color: context.subtleText,
-                  fontSize: AppTypography.micro,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 1.5,
+                const SizedBox(width: 8),
+                Container(
+                  width: 1,
+                  height: 10,
+                  color: context.glassBorderStrong,
                 ),
-              ),
-              const SizedBox(width: 8),
-              Container(
-                width: 1,
-                height: 10,
-                color: context.glassBorderStrong,
-              ),
-              const SizedBox(width: 8),
-              AnimatedContainer(
-                duration: AppMotion.sm,
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).colorScheme.primary,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
-                      blurRadius: 6,
-                      spreadRadius: 0.5,
-                    ),
-                  ],
+                const SizedBox(width: 8),
+                AnimatedContainer(
+                  duration: AppMotion.sm,
+                  curve: AppMotion.emphasized,
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).colorScheme.primary,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+                        blurRadius: 6,
+                        spreadRadius: 0.5,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 6),
-              Text(
-                currentLabel,
-                style: TextStyle(
-                  color: context.onSurface,
-                  fontSize: AppTypography.micro,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
+                const SizedBox(width: 6),
+                Text(
+                  currentLabel,
+                  style: TextStyle(
+                    color: context.onSurface,
+                    fontSize: AppTypography.micro,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
+import '../../../service/sound_service.dart';
 import '../../../theme/tokens.dart';
 
 /// Modal listing keyboard shortcuts (digits, arrows, Home/End, ?).
@@ -13,6 +14,7 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
     barrierColor: Colors.black.withValues(alpha: 0.55),
     builder: (ctx) {
       return Dialog(
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.card),
         ),
@@ -42,7 +44,10 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                     IconButton(
                       icon: const Icon(Icons.close_rounded, size: 20),
                       tooltip: l10n.closeTooltip,
-                      onPressed: () => Navigator.of(ctx).pop(),
+                      onPressed: () {
+                        SoundService.instance.playClick();
+                        Navigator.of(ctx).pop();
+                      },
                     ),
                   ],
                 ),

@@ -1,12 +1,16 @@
+import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import '../../../theme/tokens.dart';
 import '../../../service/sound_service.dart';
 import '../data/hats_data.dart';
 import '../widget/hat_playing_card.dart';
 import '../widget/hats/continuous_mobile_hat_column.dart';
 import '../widget/hats/hat_bio_strip.dart';
+import '../widget/hats/hat_console_dock.dart';
 import '../widget/hats/hat_deck_header.dart';
 import '../widget/hats/hat_drag_hint.dart';
 import '../widget/hats/hat_role_pills.dart';
@@ -41,6 +45,7 @@ class _HatsGridPageState extends State<HatsGridPage>
   @override
   bool get wantKeepAlive => true;
 
+  late final FocusNode _focusNode;
   late List<Offset> _cardPositions;
   late List<double> _cardRotations;
   late List<int> _renderOrder;
@@ -51,9 +56,38 @@ class _HatsGridPageState extends State<HatsGridPage>
   @override
   void initState() {
     super.initState();
+    _focusNode = FocusNode(debugLabel: 'HatsGridFocus');
     _cardPositions = List.filled(kHats.length, Offset.zero);
     _cardRotations = _fanRotations(kHats.length);
     _renderOrder = List.generate(kHats.length, (i) => i);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event, Size size) {
+    if (event is! KeyDownEvent) return KeyEventResult.ignored;
+    final k = event.logicalKey;
+    if (k == LogicalKeyboardKey.arrowLeft || k == LogicalKeyboardKey.keyA) {
+      _prevRole(size, false);
+      return KeyEventResult.handled;
+    }
+    if (k == LogicalKeyboardKey.arrowRight || k == LogicalKeyboardKey.keyD) {
+      _nextRole(size, false);
+      return KeyEventResult.handled;
+    }
+    if (k == LogicalKeyboardKey.keyS) {
+      _shuffleDeck(size);
+      return KeyEventResult.handled;
+    }
+    if (k == LogicalKeyboardKey.keyR) {
+      _resetSpread(size);
+      return KeyEventResult.handled;
+    }
+    return KeyEventResult.ignored;
   }
 
   /// Even spread from -0.14 to 0.14 radians so the fan stays symmetric
@@ -88,10 +122,16 @@ class _HatsGridPageState extends State<HatsGridPage>
     });
     // Announce the selection to screen readers so keyboard / SR users
     // hear the role change instead of getting only visual feedback.
-    // ignore: deprecated_member_use
-    SemanticsService.announce(
-      'Selected role: ${kHats[index].title}',
-      Directionality.of(context),
+    final roleTitle = kHats[index].title;
+    final announcement =
+        AppLocalizations.of(context)?.selectedRoleAnnouncement(roleTitle) ??
+            'Selected role: $roleTitle';
+    unawaited(
+      SemanticsService.sendAnnouncement(
+        View.of(context),
+        announcement,
+        Directionality.of(context),
+      ),
     );
   }
 
@@ -197,92 +237,116 @@ class _HatsGridPageState extends State<HatsGridPage>
       });
     }
 
-    return SizedBox.expand(
-      child: Stack(
-        children: [
-          // Enterprise Architectural Inlay Border
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppRadius.lg),
-                  border: Border.all(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primary
-                        .withValues(alpha: 0.18),
-                    width: 1.5,
+    return Focus(
+      focusNode: _focusNode,
+      autofocus: true,
+      onKeyEvent: (node, event) => _handleKeyEvent(node, event, size),
+      child: SizedBox.expand(
+        child: Stack(
+          children: [
+            // Enterprise Architectural Inlay Border
+            Positioned.fill(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppRadius.lg),
+                    border: Border.all(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.18),
+                      width: 1.5,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
-          // Cards Surface (Rendered first on felt)
-          Positioned.fill(
-            top: 130,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                for (final i in _renderOrder)
-                  HatPlayingCard(
-                    key: ValueKey('hat_card_${kHats[i].title}'),
-                    hat: kHats[i],
-                    index: i,
-                    position: _cardPositions[i],
-                    rotation: _cardRotations[i],
-                    onCardTap: () => _selectRole(i, size, false),
-                    onDragStart: () => _bringToFront(i),
-                    onDragEnd: (newPos) {
-                      setState(() {
-                        _cardPositions[i] = newPos;
-                      });
-                    },
-                  ),
-              ],
+            // Cards Surface (Rendered first on felt)
+            Positioned.fill(
+              top: 130,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  for (final i in _renderOrder)
+                    HatPlayingCard(
+                      key: ValueKey('hat_card_${kHats[i].title}'),
+                      hat: kHats[i],
+                      index: i,
+                      position: _cardPositions[i],
+                      rotation: _cardRotations[i],
+                      onCardTap: () => _selectRole(i, size, false),
+                      onDragStart: () => _bringToFront(i),
+                      onDragEnd: (newPos) {
+                        setState(() {
+                          _cardPositions[i] = newPos;
+                        });
+                      },
+                    ),
+                ],
+              ),
             ),
-          ),
 
-          // Header Toolbar & Role Selector (Rendered on top so pills/buttons are interactive).
-          Positioned(
-            top: isMobile ? 14 : (14 + kTopNavReserve),
-            left: isMobile ? 14 : 24,
-            right: isMobile ? 14 : 24,
-            child: SafeArea(
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      HatDeckHeader(
-                        isMobile: isMobile,
-                        onShuffle: () => _shuffleDeck(size),
-                        onReset: () => _resetSpread(size),
-                      ),
-                      const SizedBox(height: AppSpacing.smd),
-                      if (!isMobile) ...[
-                        HatBioStrip(isMobile: isMobile),
+            // Header Toolbar & Role Selector (Rendered on top so pills/buttons are interactive).
+            Positioned(
+              top: isMobile ? 14 : (14 + kTopNavReserve),
+              left: isMobile ? 14 : 24,
+              right: isMobile ? 14 : 24,
+              child: SafeArea(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1200),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        HatDeckHeader(
+                          isMobile: isMobile,
+                          onShuffle: () => _shuffleDeck(size),
+                          onReset: () => _resetSpread(size),
+                        ),
                         const SizedBox(height: AppSpacing.smd),
-                        const HatDragHint(),
-                        const SizedBox(height: AppSpacing.sm),
+                        if (!isMobile) ...[
+                          HatBioStrip(isMobile: isMobile),
+                          const SizedBox(height: AppSpacing.smd),
+                          const HatDragHint(),
+                          const SizedBox(height: AppSpacing.sm),
+                        ],
+                        // Role Selector Pills (Zero inner scroll!)
+                        HatRolePills(
+                          selectedIndex: _selectedHatIndex,
+                          isDesktop: !isMobile,
+                          onSelectRole: (index) =>
+                              _selectRole(index, size, isMobile),
+                        ),
                       ],
-                      // Role Selector Pills (Zero inner scroll!)
-                      HatRolePills(
-                        selectedIndex: _selectedHatIndex,
-                        isDesktop: !isMobile,
-                        onSelectRole: (index) =>
-                            _selectRole(index, size, isMobile),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+
+            // Interactive Bottom Console Dock (Desktop)
+            Positioned(
+              left: 24,
+              right: 24,
+              bottom: 24,
+              child: SafeArea(
+                top: false,
+                child: HatConsoleDock(
+                  selectedIndex: _selectedHatIndex,
+                  totalCount: kHats.length,
+                  currentHat: kHats[_selectedHatIndex],
+                  onPrev: () => _prevRole(size, false),
+                  onNext: () => _nextRole(size, false),
+                  onShuffle: () => _shuffleDeck(size),
+                  onReset: () => _resetSpread(size),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

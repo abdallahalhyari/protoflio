@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import '../../../service/cv_service.dart';
 import '../../../service/sound_service.dart';
 import '../../../service/url_sync_service.dart';
 import '../../../theme/surface_tone.dart';
 import '../../../theme/tokens.dart';
 import 'conditional_blur.dart';
+import 'directional_icon.dart';
 
 class NavSectionItem {
   final int index;
@@ -37,6 +39,69 @@ class MobileNavSheet extends StatelessWidget {
     required this.onSelectSection,
     required this.onDownloadResume,
   });
+
+  /// Resolves localized section titles and subtitles based on the current [BuildContext].
+  static List<NavSectionItem> getSections(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return [
+      NavSectionItem(
+        index: 0,
+        number: '01',
+        title: l?.navSectionCover ?? 'COVER & PROFILE',
+        subtitle: l?.navSubCover ?? 'Senior Flutter & Android Architect',
+        icon: Icons.home_rounded,
+        accentColor: AppColors.seed,
+      ),
+      NavSectionItem(
+        index: 1,
+        number: '02',
+        title: l?.navSectionExperience ?? 'CAREER & EXPERIENCE',
+        subtitle: l?.navSubExperience ?? '4+ Years Enterprise Engineering & Impact',
+        icon: Icons.timeline_rounded,
+        accentColor: AppColors.accentGreen,
+      ),
+      NavSectionItem(
+        index: 2,
+        number: '03',
+        title: l?.navSectionWork ?? 'FEATURED WORK',
+        subtitle: l?.navSubWork ?? 'Production Systems & Case Studies',
+        icon: Icons.rocket_launch_rounded,
+        accentColor: AppColors.accentViolet,
+      ),
+      NavSectionItem(
+        index: 3,
+        number: '04',
+        title: l?.navSectionStack ?? 'SKILLS & STACK',
+        subtitle: l?.navSubStack ?? 'Technical Proficiency Matrix',
+        icon: Icons.code_rounded,
+        accentColor: AppColors.accentAmber,
+      ),
+      NavSectionItem(
+        index: 4,
+        number: '05',
+        title: l?.navSectionEngineering ?? 'SYSTEM ARCHITECTURES',
+        subtitle: l?.navSubEngineering ?? 'Enterprise Blueprints & Offline-First',
+        icon: Icons.hub_rounded,
+        accentColor: AppColors.accentRose,
+      ),
+      NavSectionItem(
+        index: 5,
+        number: '06',
+        title: l?.navSectionAbout ?? 'LEADERSHIP PERSPECTIVES',
+        subtitle: l?.navSubAbout ?? 'Architectural Perspectives & Hats',
+        icon: Icons.style_rounded,
+        accentColor: AppColors.accentCyan,
+      ),
+      NavSectionItem(
+        index: 6,
+        number: '07',
+        title: l?.navSectionContact ?? 'CONTACT & INQUIRIES',
+        subtitle: l?.navSubContact ?? 'Direct Channels & Availability',
+        icon: Icons.mail_rounded,
+        accentColor: AppColors.accentIndigoDeep,
+      ),
+    ];
+  }
 
   static const List<NavSectionItem> sections = [
     NavSectionItem(
@@ -120,6 +185,7 @@ class MobileNavSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final navItems = getSections(context);
 
     return RepaintBoundary(
       child: Container(
@@ -240,10 +306,10 @@ class MobileNavSheet extends StatelessWidget {
                       vertical: AppSpacing.md,
                     ),
                     shrinkWrap: true,
-                    itemCount: sections.length,
+                    itemCount: navItems.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 8),
                     itemBuilder: (context, index) {
-                      final item = sections[index];
+                      final item = navItems[index];
                       final isActive = activeIndex == item.index;
                       final activeColor = isDark
                           ? item.accentColor
@@ -414,7 +480,7 @@ class MobileNavSheet extends StatelessWidget {
                                   ),
                                 )
                               else
-                                Icon(
+                                DirIcon(
                                   Icons.chevron_right,
                                   size: 16,
                                   color: isDark

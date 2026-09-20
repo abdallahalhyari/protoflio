@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import '../../../../theme/surface_tone.dart';
 import '../../../../theme/tokens.dart';
@@ -78,12 +79,28 @@ class CredentialsBentoCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.lg),
               child: Builder(
                 builder: (context) {
+                  final lang = Localizations.maybeLocaleOf(context)?.languageCode;
+                  final l10n = AppLocalizations.of(context);
+                  final eduTitle = lang == 'ar'
+                      ? (l10n?.sectionEducation ?? 'التعليم')
+                      : (lang == 'cs'
+                          ? (l10n?.sectionEducation ?? 'VZDĚLÁNÍ')
+                          : 'ACADEMIC ANNEX');
+                  final certTitle = lang == 'ar'
+                      ? (l10n?.sectionCertifications ?? 'الشهادات')
+                      : (lang == 'cs'
+                          ? (l10n?.sectionCertifications ?? 'CERTIFIKACE')
+                          : 'CERTIFICATION STAMPS');
+
                   final content = Padding(
                     padding: const EdgeInsets.all(AppSpacing.md),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildSectionHeader('ACADEMIC ANNEX', scheme),
+                        _buildSectionHeader(
+                          eduTitle,
+                          scheme,
+                        ),
                         const SizedBox(height: 12),
                         ...kEducation.map((edu) => Padding(
                               padding: const EdgeInsets.only(bottom: 12),
@@ -119,7 +136,10 @@ class CredentialsBentoCard extends StatelessWidget {
                               ),
                             )),
                         const SizedBox(height: AppSpacing.md),
-                        _buildSectionHeader('CERTIFICATION STAMPS', scheme),
+                        _buildSectionHeader(
+                          certTitle,
+                          scheme,
+                        ),
                         const SizedBox(height: 12),
                         ...kCertifications.map((cert) => Padding(
                               padding: const EdgeInsets.only(bottom: 8),

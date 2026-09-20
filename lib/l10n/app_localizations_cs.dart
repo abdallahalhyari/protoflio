@@ -266,4 +266,84 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introMasthead => '// HLAVIČKA';
+
+  @override
+  String get navSectionCover => 'ÚVOD & PROFIL';
+
+  @override
+  String get navSubCover => 'Senior Flutter & Android Architekt';
+
+  @override
+  String get navSectionExperience => 'KARIÉRA & ZKUŠENOSTI';
+
+  @override
+  String get navSubExperience => '4+ roky vývoje a dopadu na podnikové systémy';
+
+  @override
+  String get navSectionWork => 'VYBRANÉ PROJEKTY';
+
+  @override
+  String get navSubWork => 'Produkční systémy a případové studie';
+
+  @override
+  String get navSectionStack => 'DOVEDNOSTI & TECHNOLOGIE';
+
+  @override
+  String get navSubStack => 'Matice technických kompetencí';
+
+  @override
+  String get navSectionEngineering => 'SYSTÉMOVÁ ARCHITEKTURA';
+
+  @override
+  String get navSubEngineering =>
+      'Podnikové modely & offline-first architektura';
+
+  @override
+  String get navSectionAbout => 'PERSPEKTIVY & ROLE';
+
+  @override
+  String get navSubAbout => 'Architektonické úhly pohledu a role';
+
+  @override
+  String get navSectionContact => 'KONTAKT & DOTAZY';
+
+  @override
+  String get navSubContact => 'Přímé komunikační kanály a dostupnost';
+
+  @override
+  String selectedRoleAnnouncement(String role) {
+    return 'Vybraná role: $role';
+  }
+
+  @override
+  String copiedToClipboard(String value) {
+    return 'Zkopírováno $value do schránky';
+  }
+
+  @override
+  String get skillsSearchHint =>
+      'Hledat v 24 dovednostech, nástrojích nebo architekturách...';
+
+  @override
+  String skillsCountAll(int count) {
+    return '$count DOVEDNOSTÍ';
+  }
+
+  @override
+  String skillsCountFiltered(int filtered, int total) {
+    return '$filtered Z $total DOVEDNOSTÍ';
+  }
+
+  @override
+  String get skillsClearSearch => 'VYMAZAT HLEDÁNÍ';
+
+  @override
+  String get perspectivePrev => 'PŘEDCHOZÍ ROLE';
+
+  @override
+  String get perspectiveNext => 'DALŠÍ ROLE';
+
+  @override
+  String get perspectiveShortcutsHint =>
+      '← / → nebo A / D k procházení · S zamíchat · R zarovnat';
 }

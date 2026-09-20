@@ -52,6 +52,9 @@ const List<Project> kProjects = [
     linkedinUrl: 'https://www.linkedin.com/company/nathealth',
     heroImagePath: 'assets/images/projects/nathealth.webp',
     hasArchitectureDiagram: true,
+    domain: 'Healthcare & Smart Cards',
+    metricBadge: '100% Offline SLA',
+    metricLabel: 'Zero Medical Data Loss',
   ),
   Project(
     name: 'E-Learning & Healthcare Enterprise Suite',
@@ -91,6 +94,9 @@ const List<Project> kProjects = [
     url: 'https://www.eskadenia.com',
     linkedinUrl: 'https://www.linkedin.com/company/eskadenia-software',
     heroImagePath: 'assets/images/projects/eskadenia.webp',
+    domain: 'Enterprise HIS & LMS',
+    metricBadge: 'Sustained 60 FPS',
+    metricLabel: 'Zero UI Frame Drops',
   ),
   Project(
     name: 'Loyalty Rewards & Ephemeral Social Media Apps',
@@ -130,6 +136,9 @@ const List<Project> kProjects = [
     url: 'https://itsolutions-now.com',
     linkedinUrl: 'https://www.linkedin.com/company/solutionsnowit',
     heroImagePath: 'assets/images/projects/solutions.webp',
+    domain: 'Fleet & Telematics',
+    metricBadge: 'Real-Time Queues',
+    metricLabel: 'Atomic Dispatch',
   ),
   Project(
     name: 'M-Commerce & Media-Streaming Clients',
@@ -166,5 +175,8 @@ const List<Project> kProjects = [
     url: 'http://www.fuais.com/',
     linkedinUrl: 'https://www.linkedin.com/company/futureadvnced',
     heroImagePath: 'assets/images/projects/fais.webp',
+    domain: 'M-Commerce & Streaming',
+    metricBadge: 'High-Throughput',
+    metricLabel: 'Idempotent Checkout',
   ),
 ];

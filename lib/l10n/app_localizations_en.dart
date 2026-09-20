@@ -268,4 +268,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introMasthead => '// MASTHEAD';
+
+  @override
+  String get navSectionCover => 'COVER & PROFILE';
+
+  @override
+  String get navSubCover => 'Senior Flutter & Android Architect';
+
+  @override
+  String get navSectionExperience => 'CAREER & EXPERIENCE';
+
+  @override
+  String get navSubExperience => '4+ Years Enterprise Engineering & Impact';
+
+  @override
+  String get navSectionWork => 'FEATURED WORK';
+
+  @override
+  String get navSubWork => 'Production Systems & Case Studies';
+
+  @override
+  String get navSectionStack => 'SKILLS & STACK';
+
+  @override
+  String get navSubStack => 'Technical Proficiency Matrix';
+
+  @override
+  String get navSectionEngineering => 'SYSTEM ARCHITECTURES';
+
+  @override
+  String get navSubEngineering => 'Enterprise Blueprints & Offline-First';
+
+  @override
+  String get navSectionAbout => 'LEADERSHIP PERSPECTIVES';
+
+  @override
+  String get navSubAbout => 'Architectural Perspectives & Hats';
+
+  @override
+  String get navSectionContact => 'CONTACT & INQUIRIES';
+
+  @override
+  String get navSubContact => 'Direct Channels & Availability';
+
+  @override
+  String selectedRoleAnnouncement(String role) {
+    return 'Selected role: $role';
+  }
+
+  @override
+  String copiedToClipboard(String value) {
+    return 'Copied $value to clipboard';
+  }
+
+  @override
+  String get skillsSearchHint => 'Search 24 skills, tools, or architectures...';
+
+  @override
+  String skillsCountAll(int count) {
+    return '$count SKILLS';
+  }
+
+  @override
+  String skillsCountFiltered(int filtered, int total) {
+    return '$filtered OF $total SKILLS';
+  }
+
+  @override
+  String get skillsClearSearch => 'CLEAR SEARCH';
+
+  @override
+  String get perspectivePrev => 'PREV ROLE';
+
+  @override
+  String get perspectiveNext => 'NEXT ROLE';
+
+  @override
+  String get perspectiveShortcutsHint =>
+      '← / → or A / D to cycle · S shuffle · R align';
 }
