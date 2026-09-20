@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import '../../../service/sound_service.dart';
 import '../../../theme/tokens.dart';
+import '../bloc/projects/projects_filter_bloc.dart';
+import '../bloc/projects/projects_filter_event.dart';
+import '../bloc/projects/projects_filter_state.dart';
 import '../data/projects_data.dart';
 import '../widget/directional_icon.dart';
 import '../widget/projects/interactive_project_card.dart';
 import '../widget/projects/project_domain_filters.dart';
 import '../widget/screen_shell.dart';
 
-class ProjectsPage extends StatefulWidget {
+class ProjectsPage extends StatelessWidget {
   final bool isContinuousMobile;
 
   const ProjectsPage({
@@ -17,14 +21,38 @@ class ProjectsPage extends StatefulWidget {
   });
 
   @override
-  State<ProjectsPage> createState() => _ProjectsPageState();
+  Widget build(BuildContext context) {
+    // If an external ProjectsFilterBloc is already provided (e.g. in tests), reuse it.
+    ProjectsFilterBloc? bloc;
+    try {
+      bloc = context.read<ProjectsFilterBloc>();
+    } catch (_) {
+      bloc = null;
+    }
+
+    if (bloc != null) {
+      return _ProjectsPageView(isContinuousMobile: isContinuousMobile);
+    }
+
+    return BlocProvider<ProjectsFilterBloc>(
+      create: (_) => ProjectsFilterBloc(),
+      child: _ProjectsPageView(isContinuousMobile: isContinuousMobile),
+    );
+  }
 }
 
-class _ProjectsPageState extends State<ProjectsPage>
+class _ProjectsPageView extends StatefulWidget {
+  final bool isContinuousMobile;
+
+  const _ProjectsPageView({required this.isContinuousMobile});
+
+  @override
+  State<_ProjectsPageView> createState() => _ProjectsPageViewState();
+}
+
+class _ProjectsPageViewState extends State<_ProjectsPageView>
     with AutomaticKeepAliveClientMixin {
   int _mobileSelectedIndex = 0;
-  String _selectedDomain = 'ALL';
-  String? _selectedTech;
 
   static const List<String> _domains = [
     'ALL',
@@ -33,14 +61,6 @@ class _ProjectsPageState extends State<ProjectsPage>
     'Fleet & Telematics',
     'M-Commerce & Streaming',
   ];
-
-  Map<String, int> get _domainCounts {
-    final counts = <String, int>{'ALL': kProjects.length};
-    for (final p in kProjects) {
-      counts[p.domain] = (counts[p.domain] ?? 0) + 1;
-    }
-    return counts;
-  }
 
   @override
   bool get wantKeepAlive => true;
@@ -54,200 +74,219 @@ class _ProjectsPageState extends State<ProjectsPage>
     final isDesktop = size.width >= AppBreakpoints.tablet;
     final loc = AppLocalizations.of(context)!;
 
-    final filteredProjects = kProjects.where((p) {
-      final domainMatch = _selectedDomain == 'ALL' || p.domain == _selectedDomain;
-      final techMatch = _selectedTech == null || p.stack.contains(_selectedTech);
-      return domainMatch && techMatch;
-    }).toList();
+    return BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
+      builder: (context, filterState) {
+        final filteredProjects = filterState.filteredProjects;
+        final selectedDomain = filterState.selectedDomain;
+        final selectedTech = filterState.selectedTech;
 
-    return AppScreenShell(
-     maxWidth: 1200,
-     verticalPadding: AppSpacing.xl,
-     reserveBottomNav: !widget.isContinuousMobile,
-     reserveMobileTop: !widget.isContinuousMobile,
-     child: SingleChildScrollView(
-       padding: EdgeInsets.zero,
-       physics: widget.isContinuousMobile ? const NeverScrollableScrollPhysics() : null,
-       child: Column(
-         crossAxisAlignment: CrossAxisAlignment.stretch,
-         children: [
-           _buildHeader(scheme, loc, size, isDesktop),
-           const SizedBox(height: AppSpacing.md),
-           ProjectDomainFilters(
-             domains: _domains,
-             selectedDomain: _selectedDomain,
-             selectedTech: _selectedTech,
-             domainCounts: _domainCounts,
-             isDesktop: isDesktop,
-             onSelectDomain: (domain) {
-               setState(() {
-                 _selectedDomain = domain;
-                 _mobileSelectedIndex = 0;
-               });
-             },
-             onClearTech: () {
-               setState(() {
-                 _selectedTech = null;
-                 _mobileSelectedIndex = 0;
-               });
-             },
-           ),
-           const SizedBox(height: AppSpacing.lg),
-           if (filteredProjects.isEmpty)
-             _buildEmptyState(scheme, isDesktop)
-           else if (isDesktop)
-             Column(
-               children: [
-                 for (int i = 0; i < filteredProjects.length; i += 2) ...[
-                   Row(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       Expanded(
-                         child: SizedBox(
-                           height: 380,
-                           child: InteractiveProjectCard(
-                             project: filteredProjects[i],
-                             index: kProjects.indexOf(filteredProjects[i]),
-                             scheme: scheme,
-                             isDesktop: isDesktop,
-                             selectedTech: _selectedTech,
-                             onSelectTech: (tech) {
-                               setState(() {
-                                 if (_selectedTech == tech) {
-                                   _selectedTech = null;
-                                 } else {
-                                   _selectedTech = tech;
-                                   _selectedDomain = 'ALL';
-                                 }
-                               });
-                             },
-                           ),
-                         ),
-                       ),
-                       const SizedBox(width: AppSpacing.lg),
-                       if (i + 1 < filteredProjects.length)
-                         Expanded(
-                           child: SizedBox(
-                             height: 380,
-                             child: InteractiveProjectCard(
-                               project: filteredProjects[i + 1],
-                               index: kProjects.indexOf(filteredProjects[i + 1]),
-                               scheme: scheme,
-                               isDesktop: isDesktop,
-                               selectedTech: _selectedTech,
-                               onSelectTech: (tech) {
-                                 setState(() {
-                                   if (_selectedTech == tech) {
-                                     _selectedTech = null;
-                                   } else {
-                                     _selectedTech = tech;
-                                     _selectedDomain = 'ALL';
-                                   }
-                                 });
-                               },
-                             ),
-                           ),
-                         )
-                       else
-                         const Spacer(),
-                     ],
-                   ),
-                   if (i + 2 < filteredProjects.length) const SizedBox(height: AppSpacing.lg),
-                 ],
-               ],
-             )
-           else
-             Column(
-               crossAxisAlignment: CrossAxisAlignment.stretch,
-               children: [
-                 for (int i = 0; i < filteredProjects.length; i++) ...[
-                   Container(
-                     decoration: i == _mobileSelectedIndex
-                         ? BoxDecoration(
-                             borderRadius: BorderRadius.circular(AppRadius.md),
-                             border: Border.all(
-                               color: scheme.primary.withValues(alpha: 0.35),
-                               width: 1,
-                             ),
-                           )
-                         : null,
-                     child: InteractiveProjectCard(
-                       project: filteredProjects[i],
-                       index: kProjects.indexOf(filteredProjects[i]),
-                       scheme: scheme,
-                       isDesktop: isDesktop,
-                       selectedTech: _selectedTech,
-                       onSelectTech: (tech) {
-                         setState(() {
-                           if (_selectedTech == tech) {
-                             _selectedTech = null;
-                           } else {
-                             _selectedTech = tech;
-                             _selectedDomain = 'ALL';
-                           }
-                         });
-                       },
-                     ),
-                   ),
-                   if (i < filteredProjects.length - 1) const SizedBox(height: AppSpacing.md),
-                 ],
-                 if (filteredProjects.length > 1) ...[
-                   const SizedBox(height: AppSpacing.md),
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       OutlinedButton.icon(
-                         onPressed: () => setState(() {
-                           _mobileSelectedIndex = (_mobileSelectedIndex - 1 + filteredProjects.length) % filteredProjects.length;
-                         }),
-                         style: OutlinedButton.styleFrom(
-                           minimumSize: const Size(88, 36),
-                           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                         ),
-                         icon: const DirIcon(Icons.chevron_left_rounded, size: 16),
-                         label: Text(loc.previousAction),
-                       ),
-                       Flexible(
-                         child: Padding(
-                           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                           child: Text(
-                             'CASE ${(_mobileSelectedIndex + 1).clamp(1, filteredProjects.length)}/${filteredProjects.length}',
-                             textAlign: TextAlign.center,
-                             style: TextStyle(
-                               color: scheme.primary,
-                               fontFamily: AppTypography.monoFont,
-                               fontWeight: FontWeight.w900,
-                               letterSpacing: 1.2,
-                               fontSize: AppTypography.micro,
-                             ),
-                           ),
-                         ),
-                       ),
-                       OutlinedButton.icon(
-                         onPressed: () => setState(() {
-                           _mobileSelectedIndex = (_mobileSelectedIndex + 1) % filteredProjects.length;
-                         }),
-                         style: OutlinedButton.styleFrom(
-                           minimumSize: const Size(88, 36),
-                           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                         ),
-                         icon: const DirIcon(Icons.chevron_right_rounded, size: 16),
-                         label: Text(loc.nextAction),
-                       ),
-                     ],
-                   ),
-                 ],
-               ],
-             ),
-         ],
-       ),
-     ),
+        return AppScreenShell(
+          maxWidth: 1200,
+          verticalPadding: AppSpacing.xl,
+          reserveBottomNav: !widget.isContinuousMobile,
+          reserveMobileTop: !widget.isContinuousMobile,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            physics: widget.isContinuousMobile
+                ? const NeverScrollableScrollPhysics()
+                : null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildHeader(scheme, loc, size, isDesktop),
+                const SizedBox(height: AppSpacing.md),
+                ProjectDomainFilters(
+                  domains: _domains,
+                  selectedDomain: selectedDomain,
+                  selectedTech: selectedTech,
+                  domainCounts: filterState.domainCounts,
+                  isDesktop: isDesktop,
+                  onSelectDomain: (domain) {
+                    context
+                        .read<ProjectsFilterBloc>()
+                        .add(DomainFilterSelected(domain));
+                    setState(() {
+                      _mobileSelectedIndex = 0;
+                    });
+                  },
+                  onClearTech: () {
+                    context
+                        .read<ProjectsFilterBloc>()
+                        .add(const ProjectsFilterReset());
+                    setState(() {
+                      _mobileSelectedIndex = 0;
+                    });
+                  },
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                if (filteredProjects.isEmpty)
+                  _buildEmptyState(context, scheme, isDesktop)
+                else if (isDesktop)
+                  Column(
+                    children: [
+                      for (int i = 0; i < filteredProjects.length; i += 2) ...[
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: SizedBox(
+                                height: 380,
+                                child: InteractiveProjectCard(
+                                  project: filteredProjects[i],
+                                  index: kProjects.indexOf(filteredProjects[i]),
+                                  scheme: scheme,
+                                  isDesktop: isDesktop,
+                                  selectedTech: selectedTech,
+                                  onSelectTech: (tech) {
+                                    context
+                                        .read<ProjectsFilterBloc>()
+                                        .add(TechFilterToggled(tech));
+                                    setState(() {
+                                      _mobileSelectedIndex = 0;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: AppSpacing.lg),
+                            if (i + 1 < filteredProjects.length)
+                              Expanded(
+                                child: SizedBox(
+                                  height: 380,
+                                  child: InteractiveProjectCard(
+                                    project: filteredProjects[i + 1],
+                                    index: kProjects
+                                        .indexOf(filteredProjects[i + 1]),
+                                    scheme: scheme,
+                                    isDesktop: isDesktop,
+                                    selectedTech: selectedTech,
+                                    onSelectTech: (tech) {
+                                      context
+                                          .read<ProjectsFilterBloc>()
+                                          .add(TechFilterToggled(tech));
+                                      setState(() {
+                                        _mobileSelectedIndex = 0;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )
+                            else
+                              const Spacer(),
+                          ],
+                        ),
+                        if (i + 2 < filteredProjects.length)
+                          const SizedBox(height: AppSpacing.lg),
+                      ],
+                    ],
+                  )
+                else
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (int i = 0; i < filteredProjects.length; i++) ...[
+                        Container(
+                          decoration: i == _mobileSelectedIndex
+                              ? BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(AppRadius.md),
+                                  border: Border.all(
+                                    color:
+                                        scheme.primary.withValues(alpha: 0.35),
+                                    width: 1,
+                                  ),
+                                )
+                              : null,
+                          child: InteractiveProjectCard(
+                            project: filteredProjects[i],
+                            index: kProjects.indexOf(filteredProjects[i]),
+                            scheme: scheme,
+                            isDesktop: isDesktop,
+                            selectedTech: selectedTech,
+                            onSelectTech: (tech) {
+                              context
+                                  .read<ProjectsFilterBloc>()
+                                  .add(TechFilterToggled(tech));
+                              setState(() {
+                                _mobileSelectedIndex = 0;
+                              });
+                            },
+                          ),
+                        ),
+                        if (i < filteredProjects.length - 1)
+                          const SizedBox(height: AppSpacing.md),
+                      ],
+                      if (filteredProjects.length > 1) ...[
+                        const SizedBox(height: AppSpacing.md),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            OutlinedButton.icon(
+                              onPressed: () => setState(() {
+                                _mobileSelectedIndex = (_mobileSelectedIndex -
+                                        1 +
+                                        filteredProjects.length) %
+                                    filteredProjects.length;
+                              }),
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size(88, 36),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.md),
+                              ),
+                              icon: const DirIcon(Icons.chevron_left_rounded,
+                                  size: 16),
+                              label: Text(loc.previousAction),
+                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.sm),
+                                child: Text(
+                                  'CASE ${(_mobileSelectedIndex + 1).clamp(1, filteredProjects.length)}/${filteredProjects.length}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: scheme.primary,
+                                    fontFamily: AppTypography.monoFont,
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: 1.2,
+                                    fontSize: AppTypography.micro,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            OutlinedButton.icon(
+                              onPressed: () => setState(() {
+                                _mobileSelectedIndex =
+                                    (_mobileSelectedIndex + 1) %
+                                        filteredProjects.length;
+                              }),
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size(88, 36),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.md),
+                              ),
+                              icon: const DirIcon(Icons.chevron_right_rounded,
+                                  size: 16),
+                              label: Text(loc.nextAction),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ],
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildEmptyState(ColorScheme scheme, bool isDesktop) {
+  Widget _buildEmptyState(
+      BuildContext context, ColorScheme scheme, bool isDesktop) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl, horizontal: AppSpacing.lg),
+      padding: const EdgeInsets.symmetric(
+          vertical: AppSpacing.xxl, horizontal: AppSpacing.lg),
       decoration: BoxDecoration(
         color: scheme.surface.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -255,7 +294,8 @@ class _ProjectsPageState extends State<ProjectsPage>
       ),
       child: Column(
         children: [
-          Icon(Icons.search_off_rounded, size: 48, color: scheme.primary.withValues(alpha: 0.6)),
+          Icon(Icons.search_off_rounded,
+              size: 48, color: scheme.primary.withValues(alpha: 0.6)),
           const SizedBox(height: AppSpacing.md),
           Text(
             'NO CASE STUDIES MATCHED',
@@ -279,9 +319,10 @@ class _ProjectsPageState extends State<ProjectsPage>
           FilledButton.icon(
             onPressed: () {
               SoundService.instance.playClick();
+              context
+                  .read<ProjectsFilterBloc>()
+                  .add(const ProjectsFilterReset());
               setState(() {
-                _selectedDomain = 'ALL';
-                _selectedTech = null;
                 _mobileSelectedIndex = 0;
               });
             },
@@ -293,7 +334,8 @@ class _ProjectsPageState extends State<ProjectsPage>
     );
   }
 
-  Widget _buildHeader(ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
+  Widget _buildHeader(
+      ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
     final isDark = scheme.brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,7 +347,8 @@ class _ProjectsPageState extends State<ProjectsPage>
               decoration: BoxDecoration(
                 color: scheme.primary.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(AppRadius.sm),
-                border: Border.all(color: scheme.primary.withValues(alpha: 0.3)),
+                border:
+                    Border.all(color: scheme.primary.withValues(alpha: 0.3)),
               ),
               child: Text(
                 'CASE STUDIES',
@@ -320,7 +363,9 @@ class _ProjectsPageState extends State<ProjectsPage>
             ),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
-              child: Container(height: 1, color: isDark ? Colors.white24 : AppColors.slate300),
+              child: Container(
+                  height: 1,
+                  color: isDark ? Colors.white24 : AppColors.slate300),
             ),
           ],
         ),
@@ -354,7 +399,9 @@ class _ProjectsPageState extends State<ProjectsPage>
         Text(
           'In-depth looks at architecture, implementation, and measurable outcomes.',
           style: TextStyle(
-            color: isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.slate600,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.7)
+                : AppColors.slate600,
             fontSize: isDesktop ? 16 : 14,
             height: 1.5,
           ),
@@ -362,5 +409,4 @@ class _ProjectsPageState extends State<ProjectsPage>
       ],
     );
   }
-
 }

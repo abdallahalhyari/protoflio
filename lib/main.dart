@@ -1,6 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:profile/core/bloc/locale/locale_bloc.dart';
+import 'package:profile/core/bloc/locale/locale_event.dart';
+import 'package:profile/core/bloc/locale/locale_state.dart';
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_event.dart';
+import 'package:profile/core/bloc/theme/theme_state.dart';
 import 'package:profile/module/home/home_screen.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
@@ -58,55 +66,62 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // MaterialApp is rebuilt only for locale + mode changes — those
-    // require a full theme reconstruction. The per-section accent
-    // (seed) color is applied lower in the tree via `_AccentTheme` so
-    // page navigation doesn't tear down + re-inherit the whole
-    // widget subtree. AnimatedTheme inside `_AccentTheme` lerps the
-    // primary color smoothly instead of snapping on every section.
-    final shellListenable = Listenable.merge([
-      LocaleController.locale,
-      ThemeController.mode,
-    ]);
-    return ListenableBuilder(
-      listenable: shellListenable,
-      builder: (context, _) {
-        final locale = LocaleController.locale.value;
-        final mode = ThemeController.mode.value;
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          scrollBehavior: const _SmoothScrollBehavior(),
-          title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
-          themeMode: mode,
-          theme: AppTheme.light(),
-          darkTheme: AppTheme.dark(),
-          locale: locale,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en'),
-            Locale('ar'),
-            Locale('cs'),
-          ],
-          builder: (context, child) {
-            final media = MediaQuery.of(context);
-            return MediaQuery(
-              data: media.copyWith(
-                textScaler: media.textScaler.clamp(
-                  minScaleFactor: 0.85,
-                  maxScaleFactor: 1.35,
-                ),
-              ),
-              child: child!,
-            );
-          },
-          home: const _AccentTheme(child: HomeScreen()),
-        );
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ThemeBloc>(
+          create: (_) => ThemeBloc(initialMode: ThemeController.mode.value)
+            ..add(const ThemeStarted()),
+        ),
+        BlocProvider<LocaleBloc>(
+          create: (_) => LocaleBloc(initialLocale: LocaleController.locale.value)
+            ..add(const LocaleStarted()),
+        ),
+        BlocProvider<NavigationBloc>(
+          create: (_) => NavigationBloc(),
+        ),
+      ],
+      child: BlocBuilder<LocaleBloc, LocaleState>(
+        builder: (context, localeState) {
+          return BlocBuilder<ThemeBloc, ThemeState>(
+            buildWhen: (previous, current) => previous.mode != current.mode,
+            builder: (context, themeState) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                scrollBehavior: const _SmoothScrollBehavior(),
+                title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
+                themeMode: themeState.mode,
+                theme: AppTheme.light(),
+                darkTheme: AppTheme.dark(),
+                locale: localeState.locale,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale('en'),
+                  Locale('ar'),
+                  Locale('cs'),
+                ],
+                builder: (context, child) {
+                  final media = MediaQuery.of(context);
+                  return MediaQuery(
+                    data: media.copyWith(
+                      textScaler: media.textScaler.clamp(
+                        minScaleFactor: 0.85,
+                        maxScaleFactor: 1.35,
+                      ),
+                    ),
+                    child: child!,
+                  );
+                },
+                home: const _AccentTheme(child: HomeScreen()),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
@@ -116,9 +131,6 @@ class PortfolioApp extends StatelessWidget {
 /// seed change, and the color transition is lerped over 260ms — no
 /// visible refresh flash on section navigation.
 ///
-/// The override propagates the seed to the full family of accent slots
-/// (primary + secondary + tertiary + surfaceTint) so gradient-driven
-/// widgets that read `secondary` also shift with the section.
 /// Reduced-motion users get an instant snap instead of the lerp.
 class _AccentTheme extends StatelessWidget {
   const _AccentTheme({required this.child});
@@ -133,36 +145,53 @@ class _AccentTheme extends StatelessWidget {
         .toColor();
   }
 
+  Widget _buildThemed(BuildContext context, Color seed, Widget staticChild) {
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final base = Theme.of(context);
+    final onPrimary = base.brightness == Brightness.dark
+        ? Colors.white
+        : base.colorScheme.onPrimary;
+
+    final scheme = base.colorScheme.copyWith(
+      primary: seed,
+      onPrimary: onPrimary,
+      secondary: _shift(seed, 24),
+      onSecondary: onPrimary,
+      tertiary: _shift(seed, -24),
+      onTertiary: onPrimary,
+      surfaceTint: seed,
+    );
+
+    return AnimatedTheme(
+      data: base.copyWith(colorScheme: scheme),
+      duration: reduceMotion ? Duration.zero : AppMotion.heroEntry,
+      curve: AppMotion.standard,
+      child: staticChild,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    // If ThemeBloc is available in context, drive via BlocBuilder.
+    // Otherwise fallback smoothly to ThemeController.seedColor for standalone tests.
+    ThemeBloc? bloc;
+    try {
+      bloc = context.read<ThemeBloc>();
+    } catch (_) {
+      bloc = null;
+    }
+
+    if (bloc != null) {
+      return BlocBuilder<ThemeBloc, ThemeState>(
+        buildWhen: (prev, curr) => prev.seedColor != curr.seedColor,
+        builder: (context, state) => _buildThemed(context, state.seedColor, child),
+      );
+    }
+
     return ValueListenableBuilder<Color>(
       valueListenable: ThemeController.seedColor,
-      builder: (context, seed, staticChild) {
-        final base = Theme.of(context);
-        final onPrimary = base.brightness == Brightness.dark
-            ? Colors.white
-            : base.colorScheme.onPrimary;
-        // Derive an analogous pair via hue shift so the secondary/tertiary
-        // slots read as "family of the current section", not "leftover from
-        // the base theme". Widgets that pull `secondary` for gradient
-        // stops now animate in sync with `primary`.
-        final scheme = base.colorScheme.copyWith(
-          primary: seed,
-          onPrimary: onPrimary,
-          secondary: _shift(seed, 24),
-          onSecondary: onPrimary,
-          tertiary: _shift(seed, -24),
-          onTertiary: onPrimary,
-          surfaceTint: seed,
-        );
-        return AnimatedTheme(
-          data: base.copyWith(colorScheme: scheme),
-          duration: reduceMotion ? Duration.zero : AppMotion.heroEntry,
-          curve: AppMotion.standard,
-          child: staticChild!,
-        );
-      },
+      builder: (context, seed, staticChild) =>
+          _buildThemed(context, seed, staticChild!),
       child: child,
     );
   }

@@ -3,6 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../core/bloc/navigation/navigation_bloc.dart';
+import '../../core/bloc/navigation/navigation_event.dart';
 import '../../theme/tokens.dart';
 import '../../theme_controller.dart';
 import '../../service/analytics_service.dart';
@@ -70,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Timer? _settleTimer;
   bool _isPageTransitioning = false;
   void Function()? _cancelHashListener;
+  NavigationBloc? _navBloc;
 
   late final HomeController _homeController = HomeController(
     pageIndex: _pageIndex,
@@ -179,6 +183,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    try {
+      _navBloc = context.read<NavigationBloc>();
+    } catch (_) {
+      _navBloc = null;
+    }
+
     if (_imagesPrecached) return;
     _imagesPrecached = true;
     // Defer non-critical decodes until after first frame so they don't
@@ -218,6 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final page = _controller.page?.round() ?? 0;
     if (page != _pageIndex.value) {
       _pageIndex.value = page;
+      _navBloc?.add(NavigationPageSelected(page, syncUrl: false));
       ThemeController.updateSeedFromIndex(page);
       SoundService.instance.playPageTurn();
       _scheduleSettle(page);
@@ -246,6 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final showTop = offset > 400;
     if (showTop != _showScrollToTop.value) {
       _showScrollToTop.value = showTop;
+      _navBloc?.add(NavigationScrollToTopToggled(showTop));
     }
 
     // Section-sweep is O(N) findRenderObject + localToGlobal per call.
@@ -273,6 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (visibleIndex != null && visibleIndex != _pageIndex.value) {
       _pageIndex.value = visibleIndex;
+      _navBloc?.add(NavigationMobileSectionScrolled(visibleIndex, syncUrl: false));
       ThemeController.updateSeedFromIndex(visibleIndex);
       _scheduleSettle(visibleIndex);
     }

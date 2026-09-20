@@ -9,6 +9,12 @@ class LocaleController {
 
   static final ValueNotifier<Locale> locale = ValueNotifier<Locale>(const Locale('en'));
 
+  static void syncFromBloc(Locale nextLocale) {
+    if (locale.value != nextLocale) {
+      locale.value = nextLocale;
+    }
+  }
+
   static Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_prefsKey);
@@ -22,9 +28,12 @@ class LocaleController {
     await prefs.setString(_prefsKey, code);
   }
 
+  static void Function(String code)? onLocaleChanged;
+
   static void changeLocale(String code) {
     locale.value = Locale(code);
     unawaited(_persist(code));
+    onLocaleChanged?.call(code);
   }
 
   static void nextLocale() {

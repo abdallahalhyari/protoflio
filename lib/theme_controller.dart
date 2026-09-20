@@ -14,6 +14,18 @@ class ThemeController {
   static final ValueNotifier<Color> seedColor =
       ValueNotifier<Color>(AppColors.seed);
 
+  static void Function(int index)? onAccentChanged;
+  static void Function(ThemeMode mode)? onModeChanged;
+
+  static void syncFromBloc(ThemeMode nextMode, Color nextSeed) {
+    if (mode.value != nextMode) {
+      mode.value = nextMode;
+    }
+    if (seedColor.value != nextSeed) {
+      seedColor.value = nextSeed;
+    }
+  }
+
   static Color get activeAccent => seedColor.value;
 
   /// Canonical mapping of section indices to chromatic accent identities.
@@ -47,6 +59,7 @@ class ThemeController {
   /// Immediately updates seed color from section index.
   static void updateSeedFromIndex(int index) {
     seedColor.value = colorForIndex(index);
+    onAccentChanged?.call(index);
   }
 
   static void updateSeedFromHash(String hash) {
@@ -114,5 +127,6 @@ class ThemeController {
     mode.value =
         mode.value == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     unawaited(_persist());
+    onModeChanged?.call(mode.value);
   }
 }
