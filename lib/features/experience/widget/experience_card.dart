@@ -125,13 +125,9 @@ class _ExperienceCardState extends State<ExperienceCard> {
                         child: AnimatedContainer(
                           duration: AppMotion.cardHover,
                           curve: AppMotion.emphasized,
-                          color: isDark
-                              ? (active
-                                  ? scheme.surface.withValues(alpha: 0.35)
-                                  : scheme.surface.withValues(alpha: 0.2))
-                              : (active
-                                  ? Colors.white.withValues(alpha: 0.95)
-                                  : Colors.white.withValues(alpha: 0.88)),
+                          color: active
+                              ? context.cardGlassHover
+                              : context.cardGlass,
                         ),
                       ),
                     ),

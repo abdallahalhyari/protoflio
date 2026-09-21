@@ -24,9 +24,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: isDark
-            ? scheme.surface.withValues(alpha: 0.5)
-            : Colors.white.withValues(alpha: 0.90),
+        color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(
             color: isDark

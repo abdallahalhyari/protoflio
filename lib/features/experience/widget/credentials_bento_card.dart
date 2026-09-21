@@ -63,9 +63,7 @@ class CredentialsBentoCard extends StatelessWidget {
                   : AppColors.slate300,
               width: isDark ? 1.5 : 1.0,
             ),
-            color: isDark
-                ? scheme.surface.withValues(alpha: 0.3)
-                : Colors.white.withValues(alpha: 0.90),
+            color: context.cardGlass,
             boxShadow: isDark
                 ? []
                 : [

@@ -71,7 +71,9 @@ class AppTheme {
           isDark ? AppColors.darkSurface : AppColors.lightSurface,
       focusColor: scheme.primary.withValues(alpha: 0.24),
       cardTheme: CardThemeData(
-        color: isDark ? AppColors.darkCard : Colors.white,
+        color: isDark
+            ? AppColors.darkCard.withValues(alpha: 0.88)
+            : Colors.white.withValues(alpha: 0.92),
         elevation: isDark ? 0 : 1,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.card),

@@ -39,6 +39,18 @@ extension SurfaceTone on BuildContext {
   /// than [glassSurface] to sit "below" the floating chrome.
   Color get raisedCard => isDarkMode ? AppColors.darkCard : Colors.white;
 
+  /// Dense frosted glass fill for content cards across all sections.
+  /// Balanced at 88% in Dark and 92% in Light so background orbs
+  /// peek through without compromising text legibility or WCAG contrast.
+  Color get cardGlass => isDarkMode
+      ? AppColors.darkCard.withValues(alpha: 0.88)
+      : Colors.white.withValues(alpha: 0.92);
+
+  /// Hover / active state for [cardGlass] — slightly denser for focus.
+  Color get cardGlassHover => isDarkMode
+      ? AppColors.darkSurfaceElevated.withValues(alpha: 0.95)
+      : Colors.white.withValues(alpha: 0.96);
+
   /// Primary body text on the current canvas.
   Color get onSurface => isDarkMode ? Colors.white : AppColors.slate900;
 

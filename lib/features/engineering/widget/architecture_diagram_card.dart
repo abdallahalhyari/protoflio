@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
 import 'architecture_simulator_bar.dart';
@@ -48,9 +49,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          color: isDark
-              ? scheme.surface.withValues(alpha: 0.5)
-              : Colors.white.withValues(alpha: 0.90),
+          color: context.cardGlass,
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
               color: isDark

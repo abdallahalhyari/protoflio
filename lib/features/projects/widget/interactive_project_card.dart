@@ -87,7 +87,9 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                     width: isInteractive ? 1.5 : 1.0,
                   ),
                 ),
-                color: isDark ? AppColors.darkCard : Colors.white,
+                color: isInteractive
+                    ? context.cardGlassHover
+                    : context.cardGlass,
                 child: InkWell(
                   onFocusChange: (focused) =>
                       setState(() => _isFocused = focused),

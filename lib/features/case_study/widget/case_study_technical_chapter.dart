@@ -63,9 +63,7 @@ class TechStepCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.03)
-            : Colors.white.withValues(alpha: 0.7),
+        color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(
           color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.18),

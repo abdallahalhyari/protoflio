@@ -111,7 +111,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
     final accentText = context.adaptiveAccentText(widget.categoryColor);
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.darkSurfaceElevated : Colors.white,
+        color: _isHovered ? context.cardGlassHover : context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(
           color: widget.categoryColor.withValues(alpha: isDark ? 0.3 : 0.4),
@@ -257,7 +257,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
     final accentText = context.adaptiveAccentText(widget.categoryColor);
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.darkCard : Colors.white,
+        color: context.cardGlassHover,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(color: widget.categoryColor, width: 2),
         boxShadow: [
