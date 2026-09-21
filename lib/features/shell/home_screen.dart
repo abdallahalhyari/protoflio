@@ -423,11 +423,11 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _canInnerScroll(Offset globalPosition, double dy) {
     if (!mounted) return false;
 
-    // Fast-path: On desktop, Experience (1), Skills (3), Engineering (4),
-    // and Hats (5) have no vertical inner scrollables. Bypass expensive
+    // Fast-path: On desktop, Experience (1), Skills (3), and Hats (5)
+    // have no vertical inner scrollables. Bypass expensive
     // hit-testing and parent ascension completely.
     final current = _pageIndex.value;
-    if (current == 1 || current == 3 || current == 4 || current == 5) {
+    if (current == 1 || current == 3 || current == 5) {
       return false;
     }
 
@@ -486,6 +486,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onPointerSignal(PointerSignalEvent event) {
     if (event is! PointerScrollEvent) return;
 
+    if (!mounted) return;
+    final modalRoute = ModalRoute.of(context);
+    if (modalRoute != null && !modalRoute.isCurrent) {
+      _wheelAccum = 0;
+      return;
+    }
+
     final now = DateTime.now();
 
     // Drop further wheel events while a transition animation is actively in flight
@@ -507,6 +514,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (now.difference(_lastWheelAt) > AppMotion.wheelResetGap) {
       _wheelAccum = 0;
     }
+    // If direction changed, reset accumulator immediately so opposite scroll is responsive
+    if ((_wheelAccum > 0 && dy < 0) || (_wheelAccum < 0 && dy > 0)) {
+      _wheelAccum = 0;
+    }
     _lastWheelAt = now;
     _wheelAccum += dy;
 
@@ -521,6 +532,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   KeyEventResult _handleKey(FocusNode _, KeyEvent event) {
     if (event is! KeyDownEvent) return KeyEventResult.ignored;
+    final modalRoute = ModalRoute.of(context);
+    if (modalRoute != null && !modalRoute.isCurrent) {
+      return KeyEventResult.ignored;
+    }
     final k = event.logicalKey;
     if (k == LogicalKeyboardKey.arrowDown ||
         k == LogicalKeyboardKey.pageDown ||

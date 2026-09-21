@@ -27,16 +27,18 @@ class AnimatedExperienceNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final card = Padding(
-      padding: EdgeInsets.only(
-        bottom: isDesktop ? 0 : AppSpacing.lg,
-      ),
-      child: ExperienceCard(
-        exp: exp,
-        scheme: scheme,
-        isDesktop: isDesktop,
-        isSelected: isSelected,
-        onSelect: onSelect,
+    final card = RepaintBoundary(
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: isDesktop ? 0 : AppSpacing.lg,
+        ),
+        child: ExperienceCard(
+          exp: exp,
+          scheme: scheme,
+          isDesktop: isDesktop,
+          isSelected: isSelected,
+          onSelect: onSelect,
+        ),
       ),
     );
 

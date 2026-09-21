@@ -55,7 +55,7 @@ class _SmoothScrollBehavior extends MaterialScrollBehavior {
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
     return const BouncingScrollPhysics(
-      decelerationRate: ScrollDecelerationRate.fast,
+      decelerationRate: ScrollDecelerationRate.normal,
       parent: AlwaysScrollableScrollPhysics(),
     );
   }
