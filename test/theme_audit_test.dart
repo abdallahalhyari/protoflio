@@ -334,5 +334,34 @@ void main() {
         ),
       );
     });
+
+    testWidgets('SurfaceTone.cardGlass and cardGlassHover provide hybrid dense glass opacities',
+        (tester) async {
+      await tester.pumpWidget(
+        Theme(
+          data: ThemeData.dark(),
+          child: Builder(
+            builder: (context) {
+              expect(context.cardGlass.a, closeTo(0.88, 0.01));
+              expect(context.cardGlassHover.a, closeTo(0.95, 0.01));
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+
+      await tester.pumpWidget(
+        Theme(
+          data: ThemeData.light(),
+          child: Builder(
+            builder: (context) {
+              expect(context.cardGlass.a, closeTo(0.92, 0.01));
+              expect(context.cardGlassHover.a, closeTo(0.96, 0.01));
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+    });
   });
 }
