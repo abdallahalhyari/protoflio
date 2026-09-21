@@ -1,0 +1,18 @@
+{
+  "name": "profile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Abdallah Alhyari portfolio — Flutter Web & Mobile Application",
+  "scripts": {
+    "analyze": "flutter analyze",
+    "test": "flutter test",
+    "format": "dart format lib/ test/",
+    "format:check": "dart format --output=none --set-exit-if-changed lib/ test/",
+    "build:web": "flutter build web --wasm --release --tree-shake-icons --no-source-maps",
+    "patch": "node patch_flutter_js.js",
+    "build": "npm run build:web && npm run patch",
+    "deploy": "npm run test && npm run analyze && npm run build && firebase deploy --only hosting",
+    "deploy:fast": "npm run build && firebase deploy --only hosting",
+    "clean": "flutter clean && flutter pub get"
+  }
+}
