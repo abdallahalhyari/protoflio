@@ -27,7 +27,7 @@ class ContactHeader extends StatelessWidget {
             child: Text(
               'FEATURE 07 · DIRECT LINE & REACH OUT',
               style: TextStyle(
-                color: isDark ? _accentSoft : _accent,
+                color: isDark ? _accentSoft : AppColors.accentVioletDeep,
                 fontSize: AppTypography.caption,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 4,

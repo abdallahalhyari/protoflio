@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// The top editorial header for the Systems Architecture / Engineering Expertise section.
@@ -14,6 +15,7 @@ class EngineeringHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final accentText = context.adaptiveAccentText(scheme.primary);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -38,7 +40,7 @@ class EngineeringHeader extends StatelessWidget {
                         Text(
                           'FEATURE 03 · SYSTEMS ARCHITECTURE',
                           style: TextStyle(
-                            color: scheme.primary,
+                            color: accentText,
                             fontSize: isDesktop ? 11 : 10,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 3,
@@ -93,12 +95,12 @@ class EngineeringHeader extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(Icons.hub_outlined,
-                              color: scheme.primary, size: 13),
+                              color: accentText, size: 13),
                           const SizedBox(width: 6),
                           Text(
                             '4 ARCHITECTURES',
                             style: TextStyle(
-                              color: scheme.primary,
+                              color: accentText,
                               fontSize: AppTypography.editorial,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.4,

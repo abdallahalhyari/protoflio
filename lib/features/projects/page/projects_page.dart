@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/projects/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/bloc/projects_filter_event.dart';
@@ -439,6 +440,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
   Widget _buildHeader(
       ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
     final isDark = scheme.brightness == Brightness.dark;
+    final accentText = context.adaptiveAccentText(scheme.primary);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -456,7 +458,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                 'CASE STUDIES',
                 style: TextStyle(
                   fontFamily: AppTypography.monoFont,
-                  color: scheme.primary,
+                  color: accentText,
                   fontWeight: FontWeight.w900,
                   fontSize: AppTypography.micro,
                   letterSpacing: 1.2,
@@ -476,7 +478,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
           'SELECTED WORK',
           style: TextStyle(
             fontFamily: AppTypography.monoFont,
-            color: scheme.primary,
+            color: accentText,
             fontWeight: FontWeight.w900,
             fontSize: AppTypography.micro,
             letterSpacing: 1.2,

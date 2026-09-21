@@ -59,6 +59,7 @@ class TechStepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = context.isDarkMode;
+    final accentText = context.adaptiveAccentText(scheme.primary);
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
@@ -87,7 +88,7 @@ class TechStepCard extends StatelessWidget {
                 fontFamily: AppTypography.displayFont,
                 fontSize: AppTypography.subtitle,
                 fontWeight: FontWeight.w900,
-                color: scheme.primary,
+                color: accentText,
               ),
             ),
           ),
@@ -102,7 +103,7 @@ class TechStepCard extends StatelessWidget {
                     fontSize: AppTypography.editorial,
                     letterSpacing: 2.4,
                     fontWeight: FontWeight.w800,
-                    color: scheme.primary,
+                    color: accentText,
                   ),
                 ),
                 const SizedBox(height: 3),

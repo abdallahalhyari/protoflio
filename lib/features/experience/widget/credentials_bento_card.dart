@@ -17,11 +17,12 @@ class CredentialsBentoCard extends StatelessWidget {
     required this.isDesktop,
   });
 
-  Widget _buildSectionHeader(String title, ColorScheme scheme) {
+  Widget _buildSectionHeader(
+      String title, ColorScheme scheme, Color accentColor) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: scheme.primary, width: 2)),
+        border: Border(bottom: BorderSide(color: accentColor, width: 2)),
       ),
       child: Text(
         title,
@@ -39,6 +40,7 @@ class CredentialsBentoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
+    final accentText = context.adaptiveAccentText(scheme.primary);
 
     return AnimatedOpacity(
       duration: AppMotion.entry,
@@ -101,6 +103,7 @@ class CredentialsBentoCard extends StatelessWidget {
                         _buildSectionHeader(
                           eduTitle,
                           scheme,
+                          accentText,
                         ),
                         const SizedBox(height: 12),
                         ...kEducation.map((edu) => Padding(
@@ -119,7 +122,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                   Text(
                                     '${edu.institution} · ${edu.period}',
                                     style: TextStyle(
-                                      color: scheme.primary,
+                                      color: accentText,
                                       fontSize: AppTypography.overlineTight,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -140,6 +143,7 @@ class CredentialsBentoCard extends StatelessWidget {
                         _buildSectionHeader(
                           certTitle,
                           scheme,
+                          accentText,
                         ),
                         const SizedBox(height: 12),
                         ...kCertifications.map((cert) => Padding(

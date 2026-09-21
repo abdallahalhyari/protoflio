@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// Top header for the Hats & Perspectives section, including title, subtitle,
@@ -42,7 +43,7 @@ class HatDeckHeader extends StatelessWidget {
                     ? 'FEATURE 06 · 6 ROLES'
                     : 'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP',
                 style: TextStyle(
-                  color: scheme.primary,
+                  color: context.adaptiveAccentText(scheme.primary),
                   fontSize: AppTypography.editorial,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 3,

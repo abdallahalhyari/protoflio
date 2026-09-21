@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// Section kicker: numeric label + uppercase title + rule.
@@ -19,7 +20,7 @@ class SectionKicker extends StatelessWidget {
           fontFamily: AppTypography.displayFont,
           fontSize: AppTypography.heading,
           fontWeight: FontWeight.w900,
-          color: scheme.primary,
+          color: context.adaptiveAccentText(scheme.primary),
         ),
       ),
       const SizedBox(width: AppSpacing.md),
@@ -85,7 +86,7 @@ class BulletList extends StatelessWidget {
                         width: 6,
                         height: 6,
                         decoration: BoxDecoration(
-                          color: scheme.primary,
+                          color: context.adaptiveAccentText(scheme.primary),
                           borderRadius: BorderRadius.circular(AppRadius.xxs),
                         ),
                       ),

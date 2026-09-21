@@ -25,7 +25,6 @@ class IntroFooterStrip extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
-    final accentSoft = accent.withValues(alpha: 0.35);
 
     Widget block(String label, String value,
         {Color? valueColor, VoidCallback? onTap, String? tooltip}) {
@@ -101,7 +100,7 @@ class IntroFooterStrip extends StatelessWidget {
       block(
         l10n.introStatus,
         l10n.introOpenForRoles,
-        valueColor: isDark ? accentSoft : accent,
+        valueColor: isDark ? accent : AppColors.toAccessibleLightText(accent),
         onTap: onContactMe,
         tooltip: 'Jump to Contact',
       ),

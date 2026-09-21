@@ -41,7 +41,7 @@ class SkillCategoryStyle {
       case 'Languages & Comm':
         return AppColors.accentPinkDeep;
       default:
-        return scheme.primary;
+        return AppColors.toAccessibleLightText(scheme.primary);
     }
   }
 
@@ -113,7 +113,9 @@ class SkillCategoryFilters extends StatelessWidget {
         ? scheme.primary
         : SkillCategoryStyle.getColor(cat, scheme);
     final textColor = cat == 'ALL'
-        ? scheme.primary
+        ? (isDark
+            ? scheme.primary
+            : AppColors.toAccessibleLightText(scheme.primary))
         : SkillCategoryStyle.getTextColor(cat, scheme, isDark);
     final count = cat == 'ALL'
         ? kSkills.length

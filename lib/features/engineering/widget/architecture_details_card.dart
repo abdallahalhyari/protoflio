@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
 
@@ -18,6 +19,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
+    final accentText = context.adaptiveAccentText(scheme.primary);
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -87,14 +89,14 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 Row(
                   children: [
                     Icon(Icons.psychology_outlined,
-                        color: scheme.primary, size: 16),
+                        color: accentText, size: 16),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
                         'ARCHITECTURAL RATIONALE (WHY THIS CHOICE)',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: scheme.primary,
+                          color: accentText,
                           fontSize: AppTypography.micro,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1.0,
@@ -123,7 +125,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
             'KEY IMPLEMENTATION SAFEGUARDS',
             style: TextStyle(
               fontFamily: AppTypography.monoFont,
-              color: scheme.primary,
+              color: accentText,
               fontSize: AppTypography.editorial,
               fontWeight: FontWeight.w800,
               letterSpacing: 1.2,
@@ -139,7 +141,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                   Text(
                     '❖ ',
                     style: TextStyle(
-                        color: scheme.primary, fontSize: AppTypography.caption),
+                        color: accentText, fontSize: AppTypography.caption),
                   ),
                   Expanded(
                     child: Text(

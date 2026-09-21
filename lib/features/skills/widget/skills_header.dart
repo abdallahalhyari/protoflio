@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// Top editorial header for the Skills & Disciplines section.
@@ -17,6 +18,7 @@ class SkillsHeader extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final size = MediaQuery.sizeOf(context);
     final loc = AppLocalizations.of(context)!;
+    final accentText = context.adaptiveAccentText(scheme.primary);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -36,7 +38,7 @@ class SkillsHeader extends StatelessWidget {
                         ? 'FEATURE 05 · ARCHITECTURAL MASTERY'
                         : 'FEATURE 05 · CORE SKILLS',
                     style: TextStyle(
-                      color: scheme.primary,
+                      color: accentText,
                       fontSize: isDesktop ? 11 : 10,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 3,
@@ -87,15 +89,15 @@ class SkillsHeader extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('✦',
+                    Text('✦',
                         style: TextStyle(
-                            color: AppColors.accentAmber,
+                            color: context.amberText,
                             fontSize: AppTypography.caption)),
                     const SizedBox(width: 6),
                     Text(
                       '12 CORE DISCIPLINES',
                       style: TextStyle(
-                        color: scheme.primary,
+                        color: accentText,
                         fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.4,

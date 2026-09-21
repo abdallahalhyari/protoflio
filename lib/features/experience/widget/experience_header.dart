@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// Top editorial header for the Career Trajectory / Experience section.
@@ -15,6 +16,7 @@ class ExperienceHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final size = MediaQuery.sizeOf(context);
+    final accentText = context.adaptiveAccentText(scheme.primary);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -34,7 +36,7 @@ class ExperienceHeader extends StatelessWidget {
                         ? 'FEATURE 04 · CAREER TRAJECTORY'
                         : 'FEATURE 04 · EXPERIENCE',
                     style: TextStyle(
-                      color: scheme.primary,
+                      color: accentText,
                       fontSize: isDesktop ? 11 : 10,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 3,
@@ -87,13 +89,13 @@ class ExperienceHeader extends StatelessWidget {
                   children: [
                     Text('✦',
                         style: TextStyle(
-                            color: scheme.primary,
+                            color: accentText,
                             fontSize: AppTypography.caption)),
                     const SizedBox(width: 6),
                     Text(
                       '4 ROLES · ENTERPRISE IMPACT',
                       style: TextStyle(
-                        color: scheme.primary,
+                        color: accentText,
                         fontSize: AppTypography.editorial,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.4,

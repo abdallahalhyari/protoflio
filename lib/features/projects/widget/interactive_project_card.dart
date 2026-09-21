@@ -315,13 +315,16 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                 children: [
                                   Text(
                                     widget.project.company.toUpperCase(),
-                                    style: TextStyle(
-                                      fontFamily: AppTypography.monoFont,
-                                      color: widget.scheme.primary,
-                                      fontSize: AppTypography.micro,
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: 1.5,
-                                    ),
+                                      style: TextStyle(
+                                        fontFamily: AppTypography.monoFont,
+                                        color: isDark
+                                            ? widget.scheme.primary
+                                            : AppColors.toAccessibleLightText(
+                                                widget.scheme.primary),
+                                        fontSize: AppTypography.micro,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 1.5,
+                                      ),
                                   ),
                                   if (widget.project.url != null ||
                                       widget.project.linkedinUrl != null ||
@@ -386,15 +389,18 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                 children: [
                                   AnimatedDefaultTextStyle(
                                     duration: AppMotion.snap,
-                                    style: TextStyle(
-                                      fontFamily: AppTypography.displayFont,
-                                      color: _isHovered
-                                          ? widget.scheme.primary
-                                          : (isDark
-                                              ? Colors.white
-                                              : AppColors.slate900),
-                                      fontSize: widget.isDesktop ? 22 : 18,
-                                      fontWeight: FontWeight.w900,
+                                      style: TextStyle(
+                                        fontFamily: AppTypography.displayFont,
+                                        color: _isHovered
+                                            ? (isDark
+                                                ? widget.scheme.primary
+                                                : AppColors.toAccessibleLightText(
+                                                    widget.scheme.primary))
+                                            : (isDark
+                                                ? Colors.white
+                                                : AppColors.slate900),
+                                        fontSize: widget.isDesktop ? 22 : 18,
+                                        fontWeight: FontWeight.w900,
                                       height: 1.1,
                                     ),
                                     child: Text(
@@ -514,7 +520,9 @@ class _TechTagChip extends StatelessWidget {
         : (isDark ? Colors.white12 : AppColors.slate200);
 
     final text = isSelected
-        ? scheme.primary
+        ? (isDark
+            ? scheme.primary
+            : AppColors.toAccessibleLightText(scheme.primary))
         : (isDark ? Colors.white70 : AppColors.slate700);
 
     return InkWell(

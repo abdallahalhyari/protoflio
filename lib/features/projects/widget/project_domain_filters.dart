@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 class ProjectDomainFilters extends StatelessWidget {
@@ -27,6 +28,7 @@ class ProjectDomainFilters extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
+    final accentText = context.adaptiveAccentText(scheme.primary);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,13 +71,13 @@ class ProjectDomainFilters extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.filter_alt_rounded, size: 14, color: scheme.primary),
+                Icon(Icons.filter_alt_rounded, size: 14, color: accentText),
                 const SizedBox(width: 6),
                 Text(
                   'TECH FILTER: ${selectedTech!.toUpperCase()}',
                   style: TextStyle(
                     fontFamily: AppTypography.monoFont,
-                    color: scheme.primary,
+                    color: accentText,
                     fontSize: AppTypography.micro,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.0,
@@ -91,7 +93,7 @@ class ProjectDomainFilters extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(2),
                     child: Icon(Icons.close_rounded,
-                        size: 14, color: scheme.primary),
+                        size: 14, color: accentText),
                   ),
                 ),
               ],
@@ -155,7 +157,7 @@ class _DomainChipState extends State<_DomainChip> {
                 : AppColors.slate200));
 
     final textColor = isSelected
-        ? scheme.primary
+        ? context.adaptiveAccentText(scheme.primary)
         : (isInteractive
             ? (isDark ? Colors.white : AppColors.slate900)
             : (isDark

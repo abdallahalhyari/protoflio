@@ -177,7 +177,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                     child: Text(
                                       widget.exp.period.toUpperCase(),
                                       style: TextStyle(
-                                          color: scheme.primary,
+                                          color: context.adaptiveAccentText(scheme.primary),
                                           fontSize: AppTypography.micro,
                                           fontWeight: FontWeight.w800,
                                           letterSpacing: 1),
@@ -235,7 +235,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                               Text(
                                 widget.exp.role.toUpperCase(),
                                 style: TextStyle(
-                                  color: scheme.primary,
+                                  color: context.adaptiveAccentText(scheme.primary),
                                   fontSize: widget.isDesktop ? 14 : 12.5,
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 1.5,
@@ -323,7 +323,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
               width: 6,
               height: 6,
               decoration: BoxDecoration(
-                color: scheme.primary,
+                color: context.adaptiveAccentText(scheme.primary),
                 shape: BoxShape.circle,
               ),
             ),
