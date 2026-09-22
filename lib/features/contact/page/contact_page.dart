@@ -53,7 +53,6 @@ class _ContactPageState extends State<ContactPage>
   static const _githubUrl = 'https://github.com/abdallahalhyari';
   static const _githubHandle = 'abdallahalhyari';
 
-
   Future<void> _open(String url) async {
     SoundService.instance.playClick();
     final uri = Uri.parse(url);
@@ -93,8 +92,8 @@ class _ContactPageState extends State<ContactPage>
 
     AppToast.showGlass(
       context,
-      message: AppLocalizations.of(context)?.emailCopied(value) ??
-          'Copied: $value',
+      message:
+          AppLocalizations.of(context)?.emailCopied(value) ?? 'Copied: $value',
       status: ToastStatus.ok,
     );
   }

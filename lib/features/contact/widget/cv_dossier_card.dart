@@ -83,7 +83,7 @@ class CvDossierCard extends StatelessWidget {
                 Text(
                   l10n.contactCvDossierTitle,
                   style: TextStyle(
-                    color: isDark ? Colors.white : AppColors.slate900,
+                    color: context.onSurface,
                     fontSize: AppTypography.subtitle,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0.3,
@@ -147,7 +147,7 @@ class CvDossierCard extends StatelessWidget {
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: isDark ? Colors.white : AppColors.slate900,
+                    foregroundColor: context.onSurface,
                     side: BorderSide(
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.3)

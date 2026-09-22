@@ -221,7 +221,10 @@ void main() {
       ]) {
         tester.view.devicePixelRatio = 1.0;
         tester.view.physicalSize = size;
-        await tester.pumpWidget(PortfolioApp(key: ValueKey(size), initialTheme: ThemeMode.dark, initialLocale: const Locale('en')));
+        await tester.pumpWidget(PortfolioApp(
+            key: ValueKey(size),
+            initialTheme: ThemeMode.dark,
+            initialLocale: const Locale('en')));
         await tester.pump(const Duration(milliseconds: 300));
 
         final themeBtnFinder = find.byWidgetPredicate((w) =>
@@ -253,7 +256,8 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
       tester.view.physicalSize = const Size(400, 800);
 
-      await tester.pumpWidget(const PortfolioApp(initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
+      await tester.pumpWidget(const PortfolioApp(
+          initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
       await tester.pump(const Duration(milliseconds: 300));
 
       final scrollable = find.byWidgetPredicate((w) =>
@@ -347,7 +351,8 @@ void main() {
       );
     });
 
-    testWidgets('SurfaceTone.cardGlass and cardGlassHover provide hybrid dense glass opacities',
+    testWidgets(
+        'SurfaceTone.cardGlass and cardGlassHover provide hybrid dense glass opacities',
         (tester) async {
       await tester.pumpWidget(
         Theme(

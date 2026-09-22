@@ -142,9 +142,14 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
                                               norm.dx * 0.8, norm.dy * 0.8),
                                           radius: 1.2,
                                           colors: [
-                                            Colors.white
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
                                                 .withValues(alpha: 0.15),
-                                            Colors.white.withValues(alpha: 0.0),
+                                            Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withValues(alpha: 0.0),
                                           ],
                                           stops: const [0.0, 1.0],
                                         ),

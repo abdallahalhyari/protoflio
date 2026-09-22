@@ -4,7 +4,8 @@ import '../tokens.dart';
 class AppSurfaceTheme {
   AppSurfaceTheme._();
 
-  static CardThemeData card(Color cardGlassColor, Color glassBorderColor, bool isDark) {
+  static CardThemeData card(
+      Color cardGlassColor, Color glassBorderColor, bool isDark) {
     return CardThemeData(
       color: cardGlassColor,
       elevation: isDark ? 0 : 1,
@@ -16,7 +17,8 @@ class AppSurfaceTheme {
     );
   }
 
-  static DialogThemeData dialog(Color cardGlassColor, Color glassBorderColor, bool isDark) {
+  static DialogThemeData dialog(
+      Color cardGlassColor, Color glassBorderColor, bool isDark) {
     return DialogThemeData(
       backgroundColor: cardGlassColor,
       elevation: isDark ? 0 : 8,
@@ -37,11 +39,15 @@ class AppSurfaceTheme {
     );
   }
 
-  static ChipThemeData chip(TextTheme textTheme, Color glassBorderColor, bool isDark) {
+  static ChipThemeData chip(
+      TextTheme textTheme, Color glassBorderColor, bool isDark) {
     return ChipThemeData(
-      backgroundColor: isDark ? Colors.white.withValues(alpha: 0.06) : Colors.black.withValues(alpha: 0.04),
+      backgroundColor: isDark
+          ? Colors.white.withValues(alpha: 0.06)
+          : Colors.black.withValues(alpha: 0.04),
       side: BorderSide(color: glassBorderColor, width: 1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.chip)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.chip)),
       labelStyle: textTheme.labelMedium,
     );
   }
@@ -52,8 +58,10 @@ class AppSurfaceTheme {
         color: isDark ? AppColors.slate900 : AppColors.slate800,
         borderRadius: BorderRadius.circular(AppRadius.sm),
       ),
-      textStyle: const TextStyle(color: Colors.white, fontSize: AppTypography.captionSm),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+      textStyle: const TextStyle(
+          color: Colors.white, fontSize: AppTypography.captionSm),
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
     );
   }
 }

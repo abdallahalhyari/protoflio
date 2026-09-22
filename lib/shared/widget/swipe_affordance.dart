@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// Pill-shaped hint telling touch users a horizontal switcher is available.
@@ -19,20 +20,15 @@ class SwipeAffordance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final isDark = scheme.brightness == Brightness.dark;
 
     return Container(
       margin: margin,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.03)
-            : Colors.white.withValues(alpha: 0.85),
+        color: context.glassSurface,
         borderRadius: BorderRadius.circular(AppRadius.sm),
         border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.06)
-              : AppColors.slate200,
+          color: context.divider,
         ),
       ),
       child: Row(
@@ -46,9 +42,7 @@ class SwipeAffordance extends StatelessWidget {
               child: Text(
                 label,
                 style: TextStyle(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.72)
-                      : AppColors.slate600,
+                  color: context.mutedText,
                   fontSize: AppTypography.micro,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.2,

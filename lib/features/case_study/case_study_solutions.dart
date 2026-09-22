@@ -281,10 +281,10 @@ class _Masthead extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        Wrap(
+        const Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
-          children: const [
+          children: [
             EditorialChip(label: 'Flutter', tone: ChipTone.indigo),
             EditorialChip(label: 'Camera Engine', tone: ChipTone.amber),
             EditorialChip(label: 'AWS S3', tone: ChipTone.sky),

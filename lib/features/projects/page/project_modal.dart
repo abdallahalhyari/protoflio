@@ -136,7 +136,8 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                       BoxShadow(
                         color: isDark
                             ? Colors.black.withValues(alpha: 0.5)
-                            : AppColors.slate900.withValues(alpha: AppAlpha.whisper),
+                            : AppColors.slate900
+                                .withValues(alpha: AppAlpha.whisper),
                         blurRadius: 22,
                         offset: const Offset(0, 6),
                       ),
@@ -489,9 +490,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                               ),
 
                             const SizedBox(height: AppSpacing.sm),
-                            Container(
-                                height: 1,
-                                color: context.divider),
+                            Container(height: 1, color: context.divider),
                             const SizedBox(height: AppSpacing.md),
 
                             // 3. Key Highlights & Measurable Results
@@ -564,12 +563,13 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                         horizontal: 7, vertical: 2.5),
                                     decoration: BoxDecoration(
                                       color: isDark
-                                          ? Colors.white.withValues(alpha: AppAlpha.whisper)
+                                          ? Colors.white.withValues(
+                                              alpha: AppAlpha.whisper)
                                           : AppColors.slate100,
                                       borderRadius:
                                           BorderRadius.circular(AppRadius.xs),
-                                      border: Border.all(
-                                          color: context.divider),
+                                      border:
+                                          Border.all(color: context.divider),
                                     ),
                                     child: Text(
                                       tech.toUpperCase(),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:profile/locale_controller.dart';
 import 'locale_event.dart';
 import 'locale_state.dart';
 
@@ -13,21 +12,9 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
 
   LocaleBloc({Locale initialLocale = const Locale('en')})
       : super(LocaleState(locale: initialLocale)) {
-    LocaleController.onLocaleChanged = (code) {
-      if (!isClosed && state.locale.languageCode != code) {
-        add(LocaleChanged(code));
-      }
-    };
-
     on<LocaleStarted>(_onStarted);
     on<LocaleChanged>(_onChanged);
     on<NextLocaleRequested>(_onNextRequested);
-  }
-
-  @override
-  Future<void> close() {
-    LocaleController.onLocaleChanged = null;
-    return super.close();
   }
 
   Future<void> _onStarted(
@@ -37,7 +24,6 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     if (raw != null && supportedLanguages.contains(raw)) {
       final loc = Locale(raw);
       emit(state.copyWith(locale: loc));
-      _syncLegacyController(loc);
     }
   }
 
@@ -46,7 +32,6 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     if (!supportedLanguages.contains(event.languageCode)) return;
     final loc = Locale(event.languageCode);
     emit(state.copyWith(locale: loc));
-    _syncLegacyController(loc);
     unawaited(_persist(event.languageCode));
   }
 
@@ -59,12 +44,7 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
     final nextLoc = Locale(nextCode);
 
     emit(state.copyWith(locale: nextLoc));
-    _syncLegacyController(nextLoc);
     unawaited(_persist(nextCode));
-  }
-
-  void _syncLegacyController(Locale locale) {
-    LocaleController.syncFromBloc(locale);
   }
 
   Future<void> _persist(String code) async {

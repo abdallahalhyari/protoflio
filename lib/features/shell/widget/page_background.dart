@@ -99,30 +99,42 @@ class _PageBackgroundState extends State<PageBackground> {
     );
   }
 
-  Widget _buildLightBaseCanvas(bool showDecoLayers) {
+  Widget _buildLightBaseCanvas(
+      bool showDecoLayers, Color primary, Color surface) {
     return Stack(
       children: [
-        // Base editorial light gradient
-        const Positioned.fill(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.lightMist,
-                  AppColors.slate100,
-                  AppColors.slate200,
-                ],
-                stops: [0.0, 0.55, 1.0],
-              ),
-            ),
-          ),
+        // Base flat solid surface for Unified Tint
+        Positioned.fill(
+          child: ColoredBox(color: surface),
         ),
 
         // Optional overlay tint
         if (widget.overlay != null)
           Positioned.fill(child: ColoredBox(color: widget.overlay!)),
+
+        // Subtle warm accent wash — barely-perceptible color breath
+        // that shifts per section, mirroring dark mode orb behavior.
+        if (showDecoLayers)
+          Positioned(
+            top: -120,
+            left: 0,
+            right: 0,
+            height: 500,
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: Alignment.topCenter,
+                    radius: 1.2,
+                    colors: [
+                      primary.withValues(alpha: 0.05),
+                      primary.withValues(alpha: 0.0),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
 
         // Tactile micro-dot architectural pattern (desktop only)
         if (showDecoLayers)
@@ -169,7 +181,7 @@ class _PageBackgroundState extends State<PageBackground> {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  secondary.withValues(alpha: 0.12),
+                  secondary.withValues(alpha: AppAlpha.hover),
                   secondary.withValues(alpha: 0.0),
                 ],
               ),
@@ -212,7 +224,7 @@ class _PageBackgroundState extends State<PageBackground> {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  primary.withValues(alpha: 0.12),
+                  primary.withValues(alpha: AppAlpha.hover),
                   primary.withValues(alpha: 0.0),
                 ],
               ),
@@ -266,6 +278,7 @@ class _PageBackgroundState extends State<PageBackground> {
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final primary = Theme.of(context).colorScheme.primary;
     final secondary = Theme.of(context).colorScheme.secondary;
+    final surface = Theme.of(context).scaffoldBackgroundColor;
     final showDecoLayers = size.width >= AppBreakpoints.tablet;
 
     return MouseRegion(
@@ -300,41 +313,61 @@ class _PageBackgroundState extends State<PageBackground> {
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,
                 firstChild: _buildDarkBaseCanvas(showDecoLayers),
-                secondChild: _buildLightBaseCanvas(showDecoLayers),
+                secondChild:
+                    _buildLightBaseCanvas(showDecoLayers, primary, surface),
                 layoutBuilder: _crossFadeLayout,
               ),
             ),
           ),
 
           // 2. Parallax floating ambient glow orbs.
-          // Wrapped in RepaintBoundary and driven via ValueListenableBuilder
-          // with static child so orbs are never rebuilt on mouse hover.
+          // Colors lerp smoothly via TweenAnimationBuilder so section
+          // transitions produce a graceful hue shift, not a snap.
           Positioned.fill(
             child: RepaintBoundary(
-              child: ValueListenableBuilder<Offset>(
-                valueListenable: _mouseOffset,
-                child: RepaintBoundary(
-                  child: AnimatedCrossFade(
-                    duration: AppMotion.sm,
-                    crossFadeState: isDark
-                        ? CrossFadeState.showFirst
-                        : CrossFadeState.showSecond,
-                    firstChild: _buildDarkGlowOrbs(size, primary, secondary),
-                    secondChild: _buildLightGlowOrbs(size, primary, secondary),
-                    layoutBuilder: _crossFadeLayout,
-                  ),
-                ),
-                builder: (context, mouseOffset, staticOrbs) {
-                  final maxShift = isDark ? 24.0 : 20.0;
-                  final shiftX = reduceMotion
-                      ? 0.0
-                      : (mouseOffset.dx / size.width * maxShift);
-                  final shiftY = reduceMotion
-                      ? 0.0
-                      : (mouseOffset.dy / size.height * maxShift);
-                  return Transform.translate(
-                    offset: Offset(shiftX, shiftY),
-                    child: staticOrbs,
+              child: TweenAnimationBuilder<Color?>(
+                tween: ColorTween(end: primary),
+                duration: AppMotion.heroEntry,
+                curve: AppMotion.standard,
+                builder: (context, lerpedPrimary, _) {
+                  final safePrimary = lerpedPrimary ?? primary;
+                  return TweenAnimationBuilder<Color?>(
+                    tween: ColorTween(end: secondary),
+                    duration: AppMotion.heroEntry,
+                    curve: AppMotion.standard,
+                    builder: (context, lerpedSecondary, _) {
+                      final safeSecondary = lerpedSecondary ?? secondary;
+                      final orbsWidget = RepaintBoundary(
+                        child: AnimatedCrossFade(
+                          duration: AppMotion.sm,
+                          crossFadeState: isDark
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
+                          firstChild: _buildDarkGlowOrbs(
+                              size, safePrimary, safeSecondary),
+                          secondChild: _buildLightGlowOrbs(
+                              size, safePrimary, safeSecondary),
+                          layoutBuilder: _crossFadeLayout,
+                        ),
+                      );
+                      return ValueListenableBuilder<Offset>(
+                        valueListenable: _mouseOffset,
+                        child: orbsWidget,
+                        builder: (context, mouseOffset, staticOrbs) {
+                          final maxShift = isDark ? 24.0 : 20.0;
+                          final shiftX = reduceMotion
+                              ? 0.0
+                              : (mouseOffset.dx / size.width * maxShift);
+                          final shiftY = reduceMotion
+                              ? 0.0
+                              : (mouseOffset.dy / size.height * maxShift);
+                          return Transform.translate(
+                            offset: Offset(shiftX, shiftY),
+                            child: staticOrbs,
+                          );
+                        },
+                      );
+                    },
                   );
                 },
               ),

@@ -37,7 +37,8 @@ extension SurfaceTone on BuildContext {
 
   /// Card fill used for resting cards on the canvas — slightly warmer
   /// than [glassSurface] to sit "below" the floating chrome.
-  Color get raisedCard => isDarkMode ? AppColors.darkCard : Theme.of(this).scaffoldBackgroundColor;
+  Color get raisedCard =>
+      isDarkMode ? AppColors.darkCard : Theme.of(this).scaffoldBackgroundColor;
 
   /// Dense frosted glass fill for content cards across all sections.
   /// Balanced at 88% in Dark and 92% in Light so background orbs
@@ -54,8 +55,7 @@ extension SurfaceTone on BuildContext {
   /// Solid modal / dialog fill. Denser than [cardGlass] because full-screen
   /// dialogs should not let the canvas show through. Use on `Dialog`,
   /// full-page modals, floating dock panels.
-  Color get modalSurface =>
-      isDarkMode ? AppColors.darkModal : Colors.white;
+  Color get modalSurface => isDarkMode ? AppColors.darkModal : Colors.white;
 
   /// Near-black terminal chrome for CLI-styled panels (telemetry strips,
   /// code readouts). Denser than [modalSurface] to feel like a headless
@@ -108,4 +108,94 @@ extension SurfaceTone on BuildContext {
   /// Returns [color] in dark mode, or its accessible high-contrast counterpart in light mode.
   Color adaptiveAccentText(Color color) =>
       isDarkMode ? color : AppColors.toAccessibleLightText(color);
+
+  // ---------------------------------------------------------------------------
+  // Top Nav & Chip Helpers (Migrated from inline `isDark` checks)
+  // ---------------------------------------------------------------------------
+
+  Color get navDivider => isDarkMode
+      ? Colors.white.withValues(alpha: 0.24)
+      : Colors.black.withValues(alpha: 0.12);
+
+  Color navSurfaceBorder(Color accent) =>
+      accent.withValues(alpha: isDarkMode ? 0.35 : 0.22);
+
+  List<BoxShadow> ambientGlow(Color accent) => isDarkMode
+      ? [
+          BoxShadow(
+            color: accent.withValues(alpha: 0.15),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          )
+        ]
+      : [
+          BoxShadow(
+            color: AppColors.shadowSoft,
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          )
+        ];
+
+  Color activeChipSurface(Color accent) =>
+      accent.withValues(alpha: isDarkMode ? 0.24 : 0.14);
+
+  Color hoverChipSurface(Color accent) =>
+      accent.withValues(alpha: isDarkMode ? 0.08 : 0.06);
+
+  Color activeChipBorder(Color accent) =>
+      accent.withValues(alpha: isDarkMode ? 0.55 : 0.40);
+
+  List<BoxShadow> activeChipShadow(Color accent) => [
+        BoxShadow(
+          color: accent.withValues(alpha: isDarkMode ? 0.22 : 0.12),
+          blurRadius: 10,
+          spreadRadius: 0.5,
+        ),
+      ];
+
+  List<BoxShadow> hoverChipShadow(Color accent) => [
+        BoxShadow(
+          color: accent.withValues(alpha: isDarkMode ? 0.10 : 0.06),
+          blurRadius: 8,
+        ),
+      ];
+
+  // ---------------------------------------------------------------------------
+  // Case Study Companion & Progress Indicators
+  // ---------------------------------------------------------------------------
+
+  Color get progressTrack => isDarkMode
+      ? Colors.white.withValues(alpha: AppAlpha.whisper)
+      : Colors.black.withValues(alpha: 0.05);
+
+  Color glowAccent(Color accent) =>
+      accent.withValues(alpha: isDarkMode ? 0.8 : 0.6);
+
+  Color glowSecondary(Color accent) =>
+      accent.withValues(alpha: isDarkMode ? 0.6 : 0.4);
+
+  Color get dockSurface => isDarkMode
+      ? AppColors.darkCanvas.withValues(alpha: 0.91)
+      : Colors.white.withValues(alpha: 0.94);
+
+  Color get dockBorder => isDarkMode
+      ? AppColors.accentCyan.withValues(alpha: 0.28)
+      : AppColors.slate300.withValues(alpha: 0.9);
+
+  List<BoxShadow> get dockShadows => [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: isDarkMode ? 0.55 : 0.16),
+          blurRadius: 28,
+          offset: const Offset(0, 10),
+        ),
+        BoxShadow(
+          color:
+              AppColors.accentCyan.withValues(alpha: isDarkMode ? 0.16 : 0.08),
+          blurRadius: 14,
+          spreadRadius: -2,
+        ),
+      ];
+
+  Color railDot(Color color) =>
+      color.withValues(alpha: isDarkMode ? 0.35 : 0.45);
 }

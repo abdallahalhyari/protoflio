@@ -38,12 +38,39 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   Color get _accent => Theme.of(context).colorScheme.primary;
   static const _gold = AppColors.accentAmberSoft;
 
+  late final AnimationController _rimController;
+
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    _rimController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 6),
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (AppMedia.reduceMotion(context)) {
+      _rimController.stop();
+    } else {
+      _rimController.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _rimController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +261,7 @@ class _IntroPageState extends State<IntroPage>
                   fontSize: letterSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 12,
-                  color: isDark ? Colors.white : AppColors.slate900,
+                  color: context.onSurface,
                   shadows: isDark
                       ? [
                           const Shadow(color: Colors.black, blurRadius: 16),
@@ -257,7 +284,7 @@ class _IntroPageState extends State<IntroPage>
                   fontSize: letterSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 10,
-                  color: isDark ? Colors.white : AppColors.slate900,
+                  color: context.onSurface,
                   shadows: isDark
                       ? [
                           const Shadow(color: Colors.black, blurRadius: 16),
@@ -276,46 +303,61 @@ class _IntroPageState extends State<IntroPage>
   }
 
   Widget _portrait(double size) {
+    final image = ClipRRect(
+      borderRadius: BorderRadius.circular(13.5),
+      child: Container(
+        color: Colors.black.withValues(alpha: 0.4),
+        child: Image.asset(
+          'assets/my_image.webp',
+          fit: BoxFit.cover,
+          cacheWidth: 280,
+          cacheHeight: 280,
+          filterQuality: FilterQuality.high,
+          semanticLabel: AppLocalizations.of(context)!.semanticPortrait,
+        ),
+      ),
+    );
+
     return Semantics(
       label: AppLocalizations.of(context)!.semanticPortrait,
       image: true,
-      child: Container(
-        width: size,
-        height: size,
-        padding: const EdgeInsets.all(2.5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              _accent,
-              _gold.withValues(alpha: 0.8),
-              _accent.withValues(alpha: 0.4),
-            ],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: _accent.withValues(alpha: 0.40),
-              blurRadius: 28,
-              spreadRadius: 2,
+      child: AnimatedBuilder(
+        animation: _rimController,
+        child: image,
+        builder: (context, child) {
+          final angle = _rimController.value * 2 * 3.14159265;
+          return Container(
+            width: size,
+            height: size,
+            padding: const EdgeInsets.all(2.5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              gradient: SweepGradient(
+                transform: GradientRotation(angle),
+                colors: [
+                  _accent,
+                  _gold.withValues(alpha: 0.9),
+                  AppColors.accentVioletLight,
+                  _accent,
+                ],
+                stops: const [0.0, 0.3, 0.65, 1.0],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: _accent.withValues(alpha: 0.40),
+                  blurRadius: 36,
+                  spreadRadius: 2,
+                ),
+                BoxShadow(
+                  color: AppColors.accentViolet.withValues(alpha: 0.18),
+                  blurRadius: 48,
+                  spreadRadius: 4,
+                ),
+              ],
             ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(13.5),
-          child: Container(
-            color: Colors.black.withValues(alpha: 0.4),
-            child: Image.asset(
-              'assets/my_image.webp',
-              fit: BoxFit.cover,
-              cacheWidth: 280,
-              cacheHeight: 280,
-              filterQuality: FilterQuality.high,
-              semanticLabel: AppLocalizations.of(context)!.semanticPortrait,
-            ),
-          ),
-        ),
+            child: child,
+          );
+        },
       ),
     );
   }
@@ -348,7 +390,7 @@ class _IntroPageState extends State<IntroPage>
                       : (size.width * 0.018).clamp(16.0, 22.0),
                   fontWeight: FontWeight.w900,
                   letterSpacing: 3,
-                  color: isDark ? Colors.white : AppColors.slate900,
+                  color: context.onSurface,
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
@@ -388,7 +430,7 @@ class _IntroPageState extends State<IntroPage>
   }
 
   Widget _hairlineRow({required Widget child, required bool isDark}) {
-    final ruleColor = isDark ? Colors.white24 : AppColors.slate300;
+    final ruleColor = context.glassBorderStrong;
     return Row(
       children: [
         Expanded(child: Container(height: 1, color: ruleColor)),

@@ -8,7 +8,8 @@ class AppButtonTheme {
       if (states.contains(WidgetState.pressed)) {
         return scheme.primary.withValues(alpha: 0.24);
       }
-      if (states.contains(WidgetState.hovered) || states.contains(WidgetState.focused)) {
+      if (states.contains(WidgetState.hovered) ||
+          states.contains(WidgetState.focused)) {
         return scheme.primary.withValues(alpha: 0.12);
       }
       return null;

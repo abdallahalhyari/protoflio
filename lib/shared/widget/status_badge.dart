@@ -59,9 +59,8 @@ class StatusBadge extends StatelessWidget {
   final _Variant _variant;
 
   double get _dotDiameter => size == BadgeSize.sm ? 8 : 10;
-  double get _fontSize => size == BadgeSize.sm
-      ? AppTypography.micro
-      : AppTypography.caption;
+  double get _fontSize =>
+      size == BadgeSize.sm ? AppTypography.micro : AppTypography.caption;
 
   @override
   Widget build(BuildContext context) {

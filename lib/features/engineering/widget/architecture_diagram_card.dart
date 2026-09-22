@@ -51,10 +51,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: context.cardGlass,
           borderRadius: BorderRadius.circular(AppRadius.md),
-          border: Border.all(
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.14)
-                  : AppColors.slate200),
+          border: Border.all(color: context.glassBorder),
           boxShadow: isDark
               ? []
               : [
@@ -117,7 +114,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
                       '${topic.diagramSteps.length} TIERS',
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
-                        color: isDark ? Colors.white70 : AppColors.slate600,
+                        color: context.mutedText,
                         fontSize: AppTypography.editorialSm,
                         fontWeight: FontWeight.w700,
                       ),

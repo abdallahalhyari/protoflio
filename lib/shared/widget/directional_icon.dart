@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Mirrors a directional icon (e.g. `arrow_forward_rounded`,
 /// `chevron_right_rounded`) horizontally when the ambient text direction
-/// is RTL. Use for **navigational** arrows — prev/next chevrons, "go to"
+/// is RTL. Use for **navigational** arrows — prev/next carets, "go to"
 /// carets, page-turn glyphs. **Don't** wrap semantic arrows like the
 /// "open external link" out-arrow, which should point in a fixed
 /// direction regardless of locale.

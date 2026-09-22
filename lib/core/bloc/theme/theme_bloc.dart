@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/theme_controller.dart';
 import 'theme_event.dart';
 import 'theme_state.dart';
 
@@ -13,29 +12,11 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
 
   ThemeBloc({ThemeMode initialMode = ThemeMode.dark})
       : super(ThemeState(mode: initialMode, seedColor: AppColors.seed)) {
-    ThemeController.onAccentChanged = (index) {
-      if (!isClosed && state.activeSectionIndex != index) {
-        add(ThemeAccentUpdated(index));
-      }
-    };
-    ThemeController.onModeChanged = (mode) {
-      if (!isClosed && state.mode != mode) {
-        add(ThemeModeChanged(mode));
-      }
-    };
-
     on<ThemeStarted>(_onStarted);
     on<ThemeModeToggled>(_onModeToggled);
     on<ThemeModeChanged>(_onModeChanged);
     on<ThemeAccentUpdated>(_onAccentUpdated);
     on<ThemeAccentUpdatedFromHash>(_onAccentUpdatedFromHash);
-  }
-
-  @override
-  Future<void> close() {
-    ThemeController.onAccentChanged = null;
-    ThemeController.onModeChanged = null;
-    return super.close();
   }
 
   static Color colorForIndex(int index) {
@@ -84,7 +65,6 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     }
 
     emit(state.copyWith(mode: resolvedMode));
-    _syncLegacyController(resolvedMode, state.seedColor);
   }
 
   Future<void> _onModeToggled(
@@ -92,14 +72,12 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     final nextMode =
         state.mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     emit(state.copyWith(mode: nextMode));
-    _syncLegacyController(nextMode, state.seedColor);
     unawaited(_persistMode(nextMode));
   }
 
   Future<void> _onModeChanged(
       ThemeModeChanged event, Emitter<ThemeState> emit) async {
     emit(state.copyWith(mode: event.mode));
-    _syncLegacyController(event.mode, state.seedColor);
     unawaited(_persistMode(event.mode));
   }
 
@@ -109,7 +87,6 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       seedColor: newColor,
       activeSectionIndex: event.sectionIndex,
     ));
-    _syncLegacyController(state.mode, newColor);
   }
 
   void _onAccentUpdatedFromHash(
@@ -145,11 +122,6 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       seedColor: newColor,
       activeSectionIndex: sectionIndex,
     ));
-    _syncLegacyController(state.mode, newColor);
-  }
-
-  void _syncLegacyController(ThemeMode mode, Color seed) {
-    ThemeController.syncFromBloc(mode, seed);
   }
 
   Future<void> _persistMode(ThemeMode mode) async {

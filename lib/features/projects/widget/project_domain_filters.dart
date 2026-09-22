@@ -92,8 +92,8 @@ class ProjectDomainFilters extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadius.xs),
                   child: Padding(
                     padding: const EdgeInsets.all(2),
-                    child: Icon(Icons.close_rounded,
-                        size: 14, color: accentText),
+                    child:
+                        Icon(Icons.close_rounded, size: 14, color: accentText),
                   ),
                 ),
               ],

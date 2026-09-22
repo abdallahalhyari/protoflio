@@ -61,8 +61,8 @@ void main() {
 
       await _tapAndShow(tester);
 
-      expect(find.bySemanticsLabel(RegExp('Error: send failed')),
-          findsOneWidget);
+      expect(
+          find.bySemanticsLabel(RegExp('Error: send failed')), findsOneWidget);
 
       await tester.pumpAndSettle(AppMotion.toast + const Duration(seconds: 1));
     });

@@ -26,10 +26,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.14)
-                : AppColors.slate200),
+        border: Border.all(color: context.glassBorder),
         boxShadow: isDark
             ? []
             : [
@@ -54,7 +51,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
             style: TextStyle(
               fontSize: AppTypography.titleSm,
               fontWeight: FontWeight.w800,
-              color: isDark ? Colors.white : AppColors.slate900,
+              color: context.onSurface,
               letterSpacing: 0.5,
             ),
           ),

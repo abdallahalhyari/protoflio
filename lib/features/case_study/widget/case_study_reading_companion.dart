@@ -1,4 +1,3 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +6,7 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/case_study/bloc/case_study_reader_bloc.dart';
+import 'package:profile/shared/widget/conditional_blur.dart';
 
 /// Representation of a chapter / section anchor in a case study.
 class CaseStudyChapter {
@@ -200,9 +200,7 @@ class _TopReadingProgressBar extends StatelessWidget {
       right: 0,
       height: 3.5,
       child: Container(
-        color: isDark
-            ? Colors.white.withValues(alpha: AppAlpha.whisper)
-            : Colors.black.withValues(alpha: 0.05),
+        color: context.progressTrack,
         child: LayoutBuilder(
           builder: (context, constraints) {
             final filledWidth = constraints.maxWidth * progress;
@@ -224,14 +222,12 @@ class _TopReadingProgressBar extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.accentCyan
-                            .withValues(alpha: isDark ? 0.8 : 0.6),
+                        color: context.glowAccent(AppColors.accentCyan),
                         blurRadius: 8,
                         spreadRadius: 1,
                       ),
                       BoxShadow(
-                        color: AppColors.accentGreen
-                            .withValues(alpha: isDark ? 0.6 : 0.4),
+                        color: context.glowSecondary(AppColors.accentGreen),
                         blurRadius: 12,
                         spreadRadius: -1,
                       ),
@@ -246,10 +242,10 @@ class _TopReadingProgressBar extends StatelessWidget {
                     child: Container(
                       width: 6,
                       height: 6,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
                             color: AppColors.accentCyan,
                             blurRadius: 6,
@@ -315,80 +311,61 @@ class _FloatingChapterDock extends StatelessWidget {
                       : null,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppRadius.pill),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black
-                            .withValues(alpha: isDark ? 0.55 : 0.16),
-                        blurRadius: 28,
-                        offset: const Offset(0, 10),
-                      ),
-                      BoxShadow(
-                        color: AppColors.accentCyan
-                            .withValues(alpha: isDark ? 0.16 : 0.08),
-                        blurRadius: 14,
-                        spreadRadius: -2,
-                      ),
-                    ],
+                    boxShadow: context.dockShadows,
                   ),
-                  child: ClipRRect(
+                  child: ConditionalBlur(
+                    sigma: 20,
                     borderRadius: BorderRadius.circular(AppRadius.pill),
-                    child: BackdropFilter(
-                      filter: ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 6,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: context.dockSurface,
+                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                        border: Border.all(
+                          color: context.dockBorder,
+                          width: 1.2,
                         ),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? AppColors.darkCanvas.withValues(alpha: 0.91)
-                              : Colors.white.withValues(alpha: 0.94),
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
-                          border: Border.all(
-                            color: isDark
-                                ? AppColors.accentCyan.withValues(alpha: 0.28)
-                                : AppColors.slate300.withValues(alpha: 0.9),
-                            width: 1.2,
+                      ),
+                      child: Row(
+                        mainAxisSize:
+                            isCompact ? MainAxisSize.max : MainAxisSize.min,
+                        children: [
+                          _ReadingPercentPill(
+                            progress: progress,
+                            isDark: isDark,
+                            isCompact: isCompact,
                           ),
-                        ),
-                        child: Row(
-                          mainAxisSize:
-                              isCompact ? MainAxisSize.max : MainAxisSize.min,
-                          children: [
-                            _ReadingPercentPill(
-                              progress: progress,
-                              isDark: isDark,
-                              isCompact: isCompact,
-                            ),
-                            const SizedBox(width: 8),
-                            _DockDivider(isDark: isDark),
-                            const SizedBox(width: 8),
-                            if (isCompact)
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  physics: const BouncingScrollPhysics(),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: _buildChapters(isCompact: true),
-                                  ),
+                          const SizedBox(width: 8),
+                          _DockDivider(isDark: isDark),
+                          const SizedBox(width: 8),
+                          if (isCompact)
+                            Expanded(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: _buildChapters(isCompact: true),
                                 ),
-                              )
-                            else
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: _buildChapters(isCompact: false),
                               ),
-                            const SizedBox(width: 8),
-                            _DockDivider(isDark: isDark),
-                            const SizedBox(width: 8),
-                            _BackToTopPill(
-                              onTap: onBackToTop,
-                              isDark: isDark,
-                              isCompact: isCompact,
+                            )
+                          else
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: _buildChapters(isCompact: false),
                             ),
-                          ],
-                        ),
+                          const SizedBox(width: 8),
+                          _DockDivider(isDark: isDark),
+                          const SizedBox(width: 8),
+                          _BackToTopPill(
+                            onTap: onBackToTop,
+                            isDark: isDark,
+                            isCompact: isCompact,
+                          ),
+                        ],
                       ),
                     ),
                   ),

@@ -152,8 +152,7 @@ class _GlassToastContent extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color:
-                      Colors.black.withValues(alpha: isDark ? 0.45 : 0.12),
+                  color: Colors.black.withValues(alpha: isDark ? 0.45 : 0.12),
                   blurRadius: 24,
                   offset: const Offset(0, 8),
                 ),
@@ -210,8 +209,7 @@ class _ToastContent extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (accent != null)
-                Container(width: 4, color: accent),
+              if (accent != null) Container(width: 4, color: accent),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.md,

@@ -66,8 +66,9 @@ class PipelineTopologyDiagram extends StatelessWidget {
         padding:
             EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
         decoration: BoxDecoration(
-          color:
-              isDark ? Colors.black.withValues(alpha: AppAlpha.border) : AppColors.slate50,
+          color: isDark
+              ? Colors.black.withValues(alpha: AppAlpha.border)
+              : AppColors.slate50,
           borderRadius: BorderRadius.circular(AppRadius.chip),
           border: Border.all(
               color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
@@ -113,7 +114,8 @@ class PipelineTopologyDiagram extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: scheme.primary
                             .withValues(alpha: isDark ? 0.08 : 0.06),
-                        borderRadius: BorderRadius.circular(AppRadius.hairlineWide),
+                        borderRadius:
+                            BorderRadius.circular(AppRadius.hairlineWide),
                         border: Border.all(
                             color: scheme.primary
                                 .withValues(alpha: isDark ? 0.3 : 0.25)),

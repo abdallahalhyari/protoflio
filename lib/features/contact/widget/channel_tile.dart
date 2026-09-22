@@ -177,8 +177,7 @@ class _ChannelTileState extends State<ChannelTile> {
                   child: OutlinedButton(
                     onPressed: d.secondaryAction,
                     style: OutlinedButton.styleFrom(
-                      foregroundColor:
-                          context.onSurface,
+                      foregroundColor: context.onSurface,
                       side: BorderSide(
                         color: isDark
                             ? Colors.white.withValues(alpha: 0.28)

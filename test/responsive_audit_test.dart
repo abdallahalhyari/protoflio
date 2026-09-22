@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/core/bloc/locale/locale_bloc.dart';
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/projects/data/projects_data.dart';
 import 'package:profile/features/contact/page/contact_page.dart';
@@ -21,23 +25,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Widget _buildViewportHarness(Widget child, Size size,
     {bool isDark = true, bool scrollable = false}) {
-  return MediaQuery(
-    data: MediaQueryData(size: size),
-    child: MaterialApp(
-      theme: isDark ? AppTheme.dark() : AppTheme.light(),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-        Locale('cs'),
-      ],
-      home: Scaffold(
-        body: scrollable ? SingleChildScrollView(child: child) : child,
+  return MultiBlocProvider(
+    providers: [
+      BlocProvider<ThemeBloc>(
+          create: (_) => ThemeBloc(
+              initialMode: isDark ? ThemeMode.dark : ThemeMode.light)),
+      BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
+      BlocProvider<NavigationBloc>(
+          create: (_) => NavigationBloc(initialPage: -1)),
+    ],
+    child: MediaQuery(
+      data: MediaQueryData(size: size),
+      child: MaterialApp(
+        theme: isDark ? AppTheme.dark() : AppTheme.light(),
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ar'),
+          Locale('cs'),
+        ],
+        home: Scaffold(
+          body: scrollable ? SingleChildScrollView(child: child) : child,
+        ),
       ),
     ),
   );

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/locale_controller.dart';
 import 'package:profile/features/contact/page/contact_page.dart';
 import 'package:profile/features/engineering/page/engineering_page.dart';
 import 'package:profile/features/experience/page/experience_page.dart';
@@ -75,22 +74,6 @@ void main() {
       expect(missingInCs, isEmpty,
           reason:
               'Czech ARB must contain all English keys. Missing: $missingInCs');
-    });
-  });
-
-  group('LocaleController Lifecycle & Cycling Audit', () {
-    test('LocaleController cycles through en -> ar -> cs -> en', () {
-      LocaleController.changeLocale('en');
-      expect(LocaleController.locale.value.languageCode, 'en');
-
-      LocaleController.nextLocale();
-      expect(LocaleController.locale.value.languageCode, 'ar');
-
-      LocaleController.nextLocale();
-      expect(LocaleController.locale.value.languageCode, 'cs');
-
-      LocaleController.nextLocale();
-      expect(LocaleController.locale.value.languageCode, 'en');
     });
   });
 
@@ -209,8 +192,8 @@ void main() {
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
       await tester.pumpWidget(_buildLocalizedHarness(
-        SingleChildScrollView(
-          child: const ProjectsPage(isContinuousMobile: true),
+        const SingleChildScrollView(
+          child: ProjectsPage(isContinuousMobile: true),
         ),
         const Locale('ar'),
         size: const Size(390, 844),

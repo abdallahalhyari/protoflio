@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/sound_service.dart';
@@ -59,7 +60,7 @@ class IntroFooterStrip extends StatelessWidget {
           Text(
             value,
             style: TextStyle(
-              color: valueColor ?? (isDark ? Colors.white : AppColors.slate900),
+              color: valueColor ?? (context.onSurface),
               fontSize: AppTypography.captionSm,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.4,
@@ -116,9 +117,7 @@ class IntroFooterStrip extends StatelessWidget {
       children: [
         Row(children: [
           Expanded(
-              child: Container(
-                  height: 1,
-                  color: isDark ? Colors.white24 : AppColors.slate300)),
+              child: Container(height: 1, color: context.glassBorderStrong)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
@@ -134,9 +133,7 @@ class IntroFooterStrip extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: Container(
-                  height: 1,
-                  color: isDark ? Colors.white24 : AppColors.slate300)),
+              child: Container(height: 1, color: context.glassBorderStrong)),
         ]),
         const SizedBox(height: AppSpacing.md),
         if (isMobile)

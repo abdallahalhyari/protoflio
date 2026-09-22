@@ -15,16 +15,15 @@ class FolioBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final page = context.select((NavigationBloc bloc) => bloc.state.pageIndex);
-    final pageCount = context.select((NavigationBloc bloc) => bloc.state.pageCount);
+    final pageCount =
+        context.select((NavigationBloc bloc) => bloc.state.pageCount);
     final labels = TopNav.getLabels(context);
 
-    final currentLabel = (page >= 0 && page < labels.length)
-        ? labels[page].toUpperCase()
-        : '';
+    final currentLabel =
+        (page >= 0 && page < labels.length) ? labels[page].toUpperCase() : '';
     return Semantics(
       container: true,
-      label:
-          'Current section: $currentLabel, page ${page + 1} of $pageCount',
+      label: 'Current section: $currentLabel, page ${page + 1} of $pageCount',
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(

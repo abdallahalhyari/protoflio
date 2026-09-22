@@ -76,12 +76,9 @@ class EditorialChip extends StatelessWidget {
         fg = tint;
         break;
       case ChipVariant.glass:
-        bg = isDark
-            ? Colors.white.withValues(alpha: 0.05)
-            : Colors.white.withValues(alpha: 0.85);
-        border =
-            isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200;
-        fg = isDark ? Colors.white : AppColors.slate900;
+        bg = context.cardGlass;
+        border = context.divider;
+        fg = context.onSurface;
         break;
     }
 

@@ -54,7 +54,7 @@ class HatDeckHeader extends StatelessWidget {
                 'ARCHITECTURAL PERSPECTIVES',
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
-                  color: isDark ? Colors.white : AppColors.slate900,
+                  color: context.onSurface,
                   fontSize: isMobile ? 24 : 40,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 4,
@@ -100,9 +100,8 @@ class HatDeckHeader extends StatelessWidget {
               OutlinedButton(
                 onPressed: onReset,
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: isDark ? Colors.white70 : AppColors.slate600,
-                  side: BorderSide(
-                      color: isDark ? Colors.white24 : AppColors.slate300),
+                  foregroundColor: context.mutedText,
+                  side: BorderSide(color: context.glassBorderStrong),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 ),

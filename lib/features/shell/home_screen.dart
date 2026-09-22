@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/core/bloc/navigation/navigation_event.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/theme_controller.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/service/sound_service.dart';
@@ -40,6 +38,8 @@ import 'widget/magazine_page_transformer.dart';
 import 'widget/portfolio_nav.dart';
 import 'widget/page_background.dart';
 import 'widget/mobile_app_bar.dart';
+import 'widget/desktop_keyboard_nav.dart';
+import 'widget/desktop_scroll_interceptor.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -102,14 +102,16 @@ class _HomeScreenState extends State<HomeScreen> {
     if (initialSection != null) {
       _pageIndex.value = UrlSyncService.instance.hashToIndex(initialSection);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ThemeController.updateSeedFromHash(initialSection);
+        context
+            .read<ThemeBloc>()
+            .add(ThemeAccentUpdatedFromHash(initialSection));
         UrlSyncService.instance.updateTitle(
           UrlSyncService.instance.titleForHash(initialHash ?? initialSection),
         );
       });
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ThemeController.updateSeedFromHash('home');
+        context.read<ThemeBloc>().add(const ThemeAccentUpdatedFromHash('home'));
         UrlSyncService.instance.updateTitle(UrlSyncService.baseTitle);
       });
     }
@@ -221,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!mounted) return;
       final hash = UrlSyncService.instance.indexToHash(page);
       UrlSyncService.instance.updateHash(hash);
-      ThemeController.updateSeedFromHash(hash);
+      context.read<ThemeBloc>().add(ThemeAccentUpdatedFromHash(hash));
       final labels = TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {
         Analytics.screen(labels[page], className: 'HomeScreen');
@@ -235,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (page != _pageIndex.value) {
       _pageIndex.value = page;
       _navBloc?.add(NavigationPageSelected(page, syncUrl: false));
-      ThemeController.updateSeedFromIndex(page);
+      context.read<ThemeBloc>().add(ThemeAccentUpdated(page));
       SoundService.instance.playPageTurn();
       _scheduleSettle(page);
     }
@@ -293,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _pageIndex.value = visibleIndex;
       _navBloc
           ?.add(NavigationMobileSectionScrolled(visibleIndex, syncUrl: false));
-      ThemeController.updateSeedFromIndex(visibleIndex);
+      context.read<ThemeBloc>().add(ThemeAccentUpdated(visibleIndex));
       _scheduleSettle(visibleIndex);
     }
   }
@@ -301,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _scrollToMobileSection(int index, {bool syncUrl = true}) {
     final target = index.clamp(0, _pageCount - 1);
     _pageIndex.value = target;
-    ThemeController.updateSeedFromIndex(target);
+    context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
     if (syncUrl) {
       _scheduleSettle(target);
     }
@@ -358,7 +360,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _goTo(int page, {bool syncUrl = true}) {
     final target = page.clamp(0, _pageCount - 1);
     if (target == _pageIndex.value && !_isPageTransitioning) return;
-    ThemeController.updateSeedFromIndex(target);
+    context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
+    _navBloc?.add(NavigationPageSelected(target));
     if (syncUrl) {
       _scheduleSettle(target);
     }
@@ -390,13 +393,11 @@ class _HomeScreenState extends State<HomeScreen> {
         if (mounted) {
           _isPageTransitioning = false;
           _lastPageTurnCompletedAt = DateTime.now();
-          _wheelAccum = 0;
         }
       }).catchError((_) {
         if (mounted) {
           _isPageTransitioning = false;
           _lastPageTurnCompletedAt = DateTime.now();
-          _wheelAccum = 0;
         }
       });
     }
@@ -414,173 +415,11 @@ class _HomeScreenState extends State<HomeScreen> {
   // Wheel scroll — accumulate delta so a smooth trackpad flick advances
   // exactly one page per _kWheelThreshold pixels of intent, but only when
   // inner scrollable viewports (e.g. project dossier, contact page) are at their edges.
-  static const double _kWheelThreshold = 80;
-  static const Duration _kWheelCooldown = Duration(milliseconds: 320);
   DateTime _lastPageTurnCompletedAt = DateTime.fromMillisecondsSinceEpoch(0);
-  double _wheelAccum = 0;
-  DateTime _lastWheelAt = DateTime.fromMillisecondsSinceEpoch(0);
-
-  bool _canInnerScroll(Offset globalPosition, double dy) {
-    if (!mounted) return false;
-
-    // Fast-path: On desktop, Experience (1), Skills (3), and Hats (5)
-    // have no vertical inner scrollables. Bypass expensive
-    // hit-testing and parent ascension completely.
-    final current = _pageIndex.value;
-    if (current == 1 || current == 3 || current == 5) {
-      return false;
-    }
-
-    final result = HitTestResult();
-    final viewId = View.of(context).viewId;
-    RendererBinding.instance.hitTestInView(result, globalPosition, viewId);
-
-    for (final entry in result.path) {
-      final target = entry.target;
-      if (target is! RenderObject) continue;
-
-      RenderObject? current = target;
-      while (current != null) {
-        if (current is RenderAbstractViewport) {
-          ViewportOffset? offset;
-          if (current is RenderViewportBase) {
-            offset = current.offset;
-          } else {
-            try {
-              offset = (current as dynamic).offset as ViewportOffset?;
-            } catch (_) {}
-          }
-
-          if (offset != null) {
-            // If this viewport is the outer PageView, stop ascending this branch
-            if (_controller.hasClients && offset == _controller.position) {
-              break;
-            }
-
-            if (offset is ScrollPosition) {
-              final pos = offset;
-              if (pos.axis == Axis.vertical &&
-                  pos.hasContentDimensions &&
-                  pos.maxScrollExtent > 0) {
-                if (dy > 0) {
-                  // Scrolling down: can inner scroll further down?
-                  if (pos.pixels < pos.maxScrollExtent - 2.0) {
-                    return true;
-                  }
-                } else if (dy < 0) {
-                  // Scrolling up: can inner scroll further up?
-                  if (pos.pixels > pos.minScrollExtent + 2.0) {
-                    return true;
-                  }
-                }
-              }
-            }
-          }
-        }
-        current = current.parent;
-      }
-    }
-    return false;
-  }
-
-  void _onPointerSignal(PointerSignalEvent event) {
-    if (event is! PointerScrollEvent) return;
-
-    if (!mounted) return;
-    final modalRoute = ModalRoute.of(context);
-    if (modalRoute != null && !modalRoute.isCurrent) {
-      _wheelAccum = 0;
-      return;
-    }
-
-    final now = DateTime.now();
-
-    // Drop further wheel events while a transition animation is actively in flight
-    // or within the post-turn cooldown window to discard trackpad fling inertia.
-    if (_isPageTransitioning ||
-        now.difference(_lastPageTurnCompletedAt) < _kWheelCooldown) {
-      _wheelAccum = 0;
-      return;
-    }
-
-    final dy = event.scrollDelta.dy;
-    if (dy.abs() < 1.0) return;
-
-    if (_canInnerScroll(event.position, dy)) {
-      _wheelAccum = 0;
-      return;
-    }
-
-    if (now.difference(_lastWheelAt) > AppMotion.wheelResetGap) {
-      _wheelAccum = 0;
-    }
-    // If direction changed, reset accumulator immediately so opposite scroll is responsive
-    if ((_wheelAccum > 0 && dy < 0) || (_wheelAccum < 0 && dy > 0)) {
-      _wheelAccum = 0;
-    }
-    _lastWheelAt = now;
-    _wheelAccum += dy;
-
-    if (_wheelAccum >= _kWheelThreshold) {
-      _wheelAccum = 0;
-      _next();
-    } else if (_wheelAccum <= -_kWheelThreshold) {
-      _wheelAccum = 0;
-      _prev();
-    }
-  }
-
-  KeyEventResult _handleKey(FocusNode _, KeyEvent event) {
-    if (event is! KeyDownEvent) return KeyEventResult.ignored;
-    final modalRoute = ModalRoute.of(context);
-    if (modalRoute != null && !modalRoute.isCurrent) {
-      return KeyEventResult.ignored;
-    }
-    final k = event.logicalKey;
-    if (k == LogicalKeyboardKey.arrowDown ||
-        k == LogicalKeyboardKey.pageDown ||
-        k == LogicalKeyboardKey.space) {
-      _next();
-      return KeyEventResult.handled;
-    }
-    if (k == LogicalKeyboardKey.arrowUp || k == LogicalKeyboardKey.pageUp) {
-      _prev();
-      return KeyEventResult.handled;
-    }
-    if (k == LogicalKeyboardKey.home) {
-      _goTo(0);
-      return KeyEventResult.handled;
-    }
-    if (k == LogicalKeyboardKey.end) {
-      _goTo(_pageCount - 1);
-      return KeyEventResult.handled;
-    }
-    final digit = _digitKeyToIndex(k);
-    if (digit != null) {
-      _goTo(digit);
-      return KeyEventResult.handled;
-    }
-    // "?" (Shift+/) or Slash — open the keyboard shortcut modal so
-    // discoverability isn't limited to the tiny bottom-right hint chip.
-    if (k == LogicalKeyboardKey.question || k == LogicalKeyboardKey.slash) {
-      _showShortcutHelp();
-      return KeyEventResult.handled;
-    }
-    return KeyEventResult.ignored;
-  }
 
   void _showShortcutHelp() {
     if (!mounted) return;
     showShortcutHelpDialog(context);
-  }
-
-  int? _digitKeyToIndex(LogicalKeyboardKey k) {
-    final id = k.keyId;
-    final digitBase = LogicalKeyboardKey.digit1.keyId;
-    if (id >= digitBase && id < digitBase + _pageCount) return id - digitBase;
-    final numBase = LogicalKeyboardKey.numpad1.keyId;
-    if (id >= numBase && id < numBase + _pageCount) return id - numBase;
-    return null;
   }
 
   @override
@@ -592,12 +431,14 @@ class _HomeScreenState extends State<HomeScreen> {
       child: CustomCursor(
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: Focus(
+          body: DesktopKeyboardNav(
             focusNode: _focusNode,
-            autofocus: true,
-            onKeyEvent: _handleKey,
+            pageCount: _pageCount,
+            onNext: _next,
+            onPrev: _prev,
+            onGoTo: (page) => _goTo(page),
+            onShowHelp: _showShortcutHelp,
             child: PageBackground(
-              overlay: AppColors.scrimMedium,
               child: isDesktop
                   ? _buildDesktopLayout(context)
                   : _buildMobileLayout(context),
@@ -656,14 +497,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildDesktopLayout(BuildContext context) {
-    return Listener(
-      behavior: HitTestBehavior.translucent,
-      onPointerSignal: _onPointerSignal,
+    return DesktopScrollInterceptor(
+      pageController: _controller,
+      pageIndex: _pageIndex,
+      onNext: _next,
+      onPrev: _prev,
+      isPageTransitioning: _isPageTransitioning,
+      lastPageTurnCompletedAt: _lastPageTurnCompletedAt,
       child: Stack(
         children: [
           PageView.builder(
             key: const PageStorageKey<String>('desktop_pageview'),
             physics: const NeverScrollableScrollPhysics(),
+            allowImplicitScrolling: true,
             controller: _controller,
             scrollDirection: Axis.vertical,
             itemCount: _pageCount,

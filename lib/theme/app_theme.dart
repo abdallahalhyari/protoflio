@@ -64,24 +64,28 @@ class AppTheme {
         ? AppColors.darkCard.withValues(alpha: 0.88)
         : dynamicLightSurface;
 
-    final dividerColor = isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200;
-    final glassBorderColor = isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200;
+    final dividerColor =
+        isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200;
+    final glassBorderColor =
+        isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200;
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: scheme,
-      scaffoldBackgroundColor: isDark ? AppColors.darkSurface : dynamicLightSurface,
+      scaffoldBackgroundColor:
+          isDark ? AppColors.darkSurface : dynamicLightSurface,
       focusColor: scheme.primary.withValues(alpha: 0.24),
       textTheme: textTheme,
-      
+
       // Delegated to components
       cardTheme: AppSurfaceTheme.card(cardGlassColor, glassBorderColor, isDark),
-      dialogTheme: AppSurfaceTheme.dialog(cardGlassColor, glassBorderColor, isDark),
+      dialogTheme:
+          AppSurfaceTheme.dialog(cardGlassColor, glassBorderColor, isDark),
       bottomSheetTheme: AppSurfaceTheme.bottomSheet(cardGlassColor, isDark),
       inputDecorationTheme: AppInputTheme.build(scheme, isDark),
       chipTheme: AppSurfaceTheme.chip(textTheme, glassBorderColor, isDark),
       tooltipTheme: AppSurfaceTheme.tooltip(isDark),
-      
+
       dividerTheme: DividerThemeData(
         color: dividerColor,
         thickness: 1,
@@ -92,7 +96,7 @@ class AppTheme {
       textButtonTheme: TextButtonThemeData(style: buttonStyle),
       elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
       iconButtonTheme: AppButtonTheme.iconTheme(scheme),
-      
+
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         backgroundColor: scheme.inverseSurface,
@@ -101,7 +105,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(AppRadius.sm),
         ),
       ),
-      
+
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),

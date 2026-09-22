@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/tokens.dart';
@@ -39,7 +40,7 @@ class IntroAvailabilityBanner extends StatelessWidget {
                 child: Text(
                   loc.introEuEligibility,
                   style: TextStyle(
-                    color: isDark ? Colors.white : AppColors.slate900,
+                    color: context.onSurface,
                     fontSize: isWide ? 13 : 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.5,

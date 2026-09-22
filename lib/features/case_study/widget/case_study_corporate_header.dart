@@ -213,7 +213,8 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                         height: 13,
                         decoration: BoxDecoration(
                           color: AppColors.linkedIn,
-                          borderRadius: BorderRadius.circular(AppRadius.hairline),
+                          borderRadius:
+                              BorderRadius.circular(AppRadius.hairline),
                         ),
                         alignment: Alignment.center,
                         child: const Text(

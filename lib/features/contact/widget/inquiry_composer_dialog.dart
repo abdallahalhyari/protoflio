@@ -241,8 +241,7 @@ class _InquiryComposerDialogViewState
                               'Reach Abdallah Alhyari',
                               style: TextStyle(
                                 fontFamily: AppTypography.displayFont,
-                                color:
-                                    context.onSurface,
+                                color: context.onSurface,
                                 fontSize: isDesktop ? 20 : 18,
                                 fontWeight: FontWeight.w800,
                               ),

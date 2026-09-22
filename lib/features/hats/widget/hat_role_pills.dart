@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -84,7 +85,7 @@ class HatRolePills extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
                         color: selectedIndex == i
-                            ? (isDark ? Colors.white : AppColors.slate900)
+                            ? (context.onSurface)
                             : (isDark ? Colors.white70 : AppColors.slate700),
                         fontSize: isDesktop
                             ? AppTypography.micro

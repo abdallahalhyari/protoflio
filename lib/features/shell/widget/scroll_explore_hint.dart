@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
 
@@ -46,9 +47,7 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
 
   @override
   Widget build(BuildContext context) {
-    final tint = widget.isDark
-        ? Colors.white.withValues(alpha: 0.72)
-        : AppColors.slate600;
+    final tint = context.mutedText;
     return Semantics(
       button: true,
       label: 'Scroll to explore the portfolio',

@@ -16,7 +16,8 @@ class MobilePager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final page = context.select((NavigationBloc bloc) => bloc.state.pageIndex);
-    final pageCount = context.select((NavigationBloc bloc) => bloc.state.pageCount);
+    final pageCount =
+        context.select((NavigationBloc bloc) => bloc.state.pageCount);
     final isDark = context.isDarkMode;
 
     final canPrev = page > 0;
@@ -76,14 +77,17 @@ class MobilePager extends StatelessWidget {
               onTap: canPrev
                   ? () {
                       SoundService.instance.playPageTurn();
-                      context.read<NavigationBloc>().add(NavigationPageSelected(page - 1));
+                      context
+                          .read<NavigationBloc>()
+                          .add(NavigationPageSelected(page - 1));
                     }
                   : null,
             ),
             const SizedBox(width: 6),
             AnimatedSwitcher(
               duration: AppMotion.switcher,
-              transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child),
+              transitionBuilder: (child, animation) =>
+                  FadeTransition(opacity: animation, child: child),
               child: Text(
                 '${(page + 1).toString().padLeft(2, '0')} / '
                 '${pageCount.toString().padLeft(2, '0')}',
@@ -104,7 +108,9 @@ class MobilePager extends StatelessWidget {
               onTap: canNext
                   ? () {
                       SoundService.instance.playPageTurn();
-                      context.read<NavigationBloc>().add(NavigationPageSelected(page + 1));
+                      context
+                          .read<NavigationBloc>()
+                          .add(NavigationPageSelected(page + 1));
                     }
                   : null,
             ),

@@ -363,7 +363,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                 Text(
                   widget.hat.title.toUpperCase(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: AppTypography.displayFont,
                     color: Colors.white,
                     fontSize: AppTypography.title + 1,

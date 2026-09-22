@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/core/bloc/locale/locale_bloc.dart';
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/features/projects/data/projects_data.dart';
 import 'package:profile/features/shell/widget/custom_cursor.dart';
 import 'package:profile/features/shell/widget/desktop_toolbar.dart';
@@ -100,9 +104,16 @@ void main() {
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: DesktopToolbar(),
+        MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
+            BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
+            BlocProvider<NavigationBloc>(create: (_) => NavigationBloc()),
+          ],
+          child: const MaterialApp(
+            home: Scaffold(
+              body: DesktopToolbar(),
+            ),
           ),
         ),
       );

@@ -52,7 +52,7 @@ class ContactMastheadFooter extends StatelessWidget {
             Text(
               value,
               style: TextStyle(
-                color: isDark ? Colors.white : AppColors.slate900,
+                color: context.onSurface,
                 fontSize: AppTypography.captionSm,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.0,
@@ -116,7 +116,7 @@ class ContactMastheadFooter extends StatelessWidget {
                   'VERIFIED SENIOR MOBILE ARCHITECT · DIRECT COMMUNICATION',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: isDark ? Colors.white70 : AppColors.slate600,
+                    color: context.mutedText,
                     fontSize: AppTypography.editorialSm,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,

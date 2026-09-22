@@ -15,8 +15,8 @@ class AppRadius {
   static const double pill = 999;
 
   // Intent tokens — decorative geometry pinned by design, not tiered.
-  static const double hairline = 2;      // thin accent bars, progress rules
-  static const double hairlineWide = 3;  // 3-4px accent bars
-  static const double tile = 14;         // bento skill tiles, medium cards
-  static const double playingCard = 18;  // hat / persona playing cards
+  static const double hairline = 2; // thin accent bars, progress rules
+  static const double hairlineWide = 3; // 3-4px accent bars
+  static const double tile = 14; // bento skill tiles, medium cards
+  static const double playingCard = 18; // hat / persona playing cards
 }

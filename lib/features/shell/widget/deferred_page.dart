@@ -5,9 +5,9 @@ import 'package:profile/theme/tokens.dart';
 /// Invokes [loader] (which should call `libname.loadLibrary()`), then
 /// swaps in [builder]'s widget once the library chunk arrives.
 ///
-/// While loading, a placeholder of [placeholderHeight] pixels is shown
-/// so continuous-scroll extents don't jump. On error the placeholder
-/// stays put — deferred bundle failures shouldn't crash the shell.
+/// While loading, a shimmer skeleton placeholder is shown so
+/// continuous-scroll extents don't jump and perceived performance
+/// feels premium. On error a retry button stays put.
 class DeferredPage extends StatefulWidget {
   const DeferredPage({
     super.key,
@@ -70,19 +70,11 @@ class _DeferredPageState extends State<DeferredPage> {
         ),
       );
     } else {
-      final accent = Theme.of(context).colorScheme.primary;
       content = SizedBox(
         key: const ValueKey('load_placeholder'),
         height: widget.placeholderHeight,
-        child: Center(
-          child: SizedBox(
-            width: 28,
-            height: 28,
-            child: CircularProgressIndicator(
-              strokeWidth: 2.5,
-              valueColor: AlwaysStoppedAnimation<Color>(accent),
-            ),
-          ),
+        child: const Center(
+          child: CircularProgressIndicator(),
         ),
       );
     }

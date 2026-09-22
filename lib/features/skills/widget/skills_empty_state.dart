@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/tokens.dart';
@@ -44,7 +45,7 @@ class SkillsEmptyState extends StatelessWidget {
             Text(
               l10n.skillsEmptyTitle,
               style: TextStyle(
-                color: isDark ? Colors.white : AppColors.slate900,
+                color: context.onSurface,
                 fontSize: AppTypography.small,
                 fontWeight: FontWeight.w800,
               ),

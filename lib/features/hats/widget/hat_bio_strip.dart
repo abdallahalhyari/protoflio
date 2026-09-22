@@ -30,9 +30,7 @@ class HatBioStrip extends StatelessWidget {
               : Colors.white.withValues(alpha: 0.88),
           borderRadius: BorderRadius.circular(AppRadius.smd),
           border: Border.all(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.12)
-                : AppColors.slate200,
+            color: context.divider,
           ),
           boxShadow: [
             BoxShadow(
@@ -95,11 +93,13 @@ class HatBioStrip extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _bioMetaBlock('BASED', 'AMMAN · JORDAN', isDark),
-              const SizedBox(height: 8),
-              _bioMetaBlock('NEXT', 'BRNO · CZECH REPUBLIC · 2027', isDark),
-              const SizedBox(height: 8),
-              _bioMetaBlock('OPEN FOR', 'SENIOR ROLES · CONSULTING', isDark),
+              _bioMetaBlock(context, 'BASED', 'AMMAN · JORDAN', isDark),
+              const SizedBox(height: AppSpacing.lg),
+              _bioMetaBlock(
+                  context, 'NEXT', 'BRNO · CZECH REPUBLIC · 2027', isDark),
+              const SizedBox(height: AppSpacing.lg),
+              _bioMetaBlock(
+                  context, 'OPEN FOR', 'SENIOR ROLES · CONSULTING', isDark),
             ],
           ),
         ),
@@ -107,7 +107,8 @@ class HatBioStrip extends StatelessWidget {
     );
   }
 
-  Widget _bioMetaBlock(String label, String value, bool isDark) {
+  Widget _bioMetaBlock(
+      BuildContext context, String label, String value, bool isDark) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -126,7 +127,7 @@ class HatBioStrip extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            color: isDark ? Colors.white : AppColors.slate900,
+            color: context.onSurface,
             fontSize: AppTypography.captionSm,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.2,

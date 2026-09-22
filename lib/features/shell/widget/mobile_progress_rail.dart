@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
+import 'package:profile/core/bloc/navigation/navigation_event.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/theme_controller.dart';
-import '../home_controller.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'portfolio_nav.dart' show TopNav;
 
 /// Vertical dot column pinned to the right edge on mobile. Each dot
-/// jumps to its section. Reads page + count from the ambient
-/// [HomeController].
+/// jumps to its section.
 class MobileProgressRail extends StatelessWidget {
   const MobileProgressRail({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = HomeController.of(context);
+    final page = context.select((NavigationBloc bloc) => bloc.state.pageIndex);
+    final pageCount =
+        context.select((NavigationBloc bloc) => bloc.state.pageCount);
     final labels = TopNav.getLabels(context);
-    final isDark = context.isDarkMode;
-
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
       decoration: BoxDecoration(
@@ -26,28 +27,29 @@ class MobileProgressRail extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.pill),
         border: Border.all(color: context.glassBorder),
       ),
-      child: ValueListenableBuilder<int>(
-        valueListenable: controller.pageIndex,
-        builder: (context, page, _) => Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            for (int i = 0; i < controller.pageCount; i++)
-              Semantics(
-                button: true,
-                selected: i == page,
-                label: i < labels.length
-                    ? 'Go to ${labels[i]}'
-                    : 'Go to page ${i + 1}',
-                child: InkResponse(
-                  radius: 14,
-                  onTap: i == page
-                      ? null
-                      : () {
-                          SoundService.instance.playSelection();
-                          controller.scrollToMobileSection(i);
-                        },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (int i = 0; i < pageCount; i++)
+            Semantics(
+              button: true,
+              selected: i == page,
+              label: i < labels.length
+                  ? 'Go to ${labels[i]}'
+                  : 'Go to page ${i + 1}',
+              child: InkResponse(
+                radius: 14,
+                onTap: i == page
+                    ? null
+                    : () {
+                        SoundService.instance.playSelection();
+                        context
+                            .read<NavigationBloc>()
+                            .add(NavigationPageSelected(i));
+                      },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: _HoverScale(
                     child: AnimatedContainer(
                       duration: AppMotion.sm,
                       curve: AppMotion.emphasized,
@@ -56,8 +58,7 @@ class MobileProgressRail extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: i == page
                             ? Theme.of(context).colorScheme.primary
-                            : ThemeController.colorForIndex(i)
-                                .withValues(alpha: isDark ? 0.35 : 0.45),
+                            : context.railDot(ThemeBloc.colorForIndex(i)),
                         shape: BoxShape.circle,
                         boxShadow: i == page
                             ? [
@@ -76,8 +77,34 @@ class MobileProgressRail extends StatelessWidget {
                   ),
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HoverScale extends StatefulWidget {
+  final Widget child;
+  const _HoverScale({required this.child});
+
+  @override
+  State<_HoverScale> createState() => _HoverScaleState();
+}
+
+class _HoverScaleState extends State<_HoverScale> {
+  bool _hovering = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovering = true),
+      onExit: (_) => setState(() => _hovering = false),
+      child: AnimatedScale(
+        scale: _hovering ? 1.3 : 1.0,
+        duration: AppMotion.sm,
+        curve: AppMotion.emphasized,
+        child: widget.child,
       ),
     );
   }

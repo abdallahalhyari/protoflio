@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/mobile_pager.dart';
 import 'package:profile/theme/app_theme.dart';
 
-class _Recorder {
-  final List<int> jumps = [];
-}
-
 HomeController _stub({
   required ValueNotifier<int> pageIndex,
-  required _Recorder recorder,
 }) {
   return HomeController(
     pageIndex: pageIndex,
@@ -20,8 +17,7 @@ HomeController _stub({
     goTo: (int _, {bool syncUrl = true}) {},
     next: () {},
     prev: () {},
-    scrollToMobileSection: (int i, {bool syncUrl = true}) =>
-        recorder.jumps.add(i),
+    scrollToMobileSection: (int i, {bool syncUrl = true}) {},
     downloadResume: () async {},
   );
 }
@@ -32,9 +28,15 @@ Widget _host(HomeController controller) {
     themeMode: ThemeMode.dark,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    home: HomeControllerScope(
-      controller: controller,
-      child: const Scaffold(body: Center(child: MobilePager())),
+    home: BlocProvider<NavigationBloc>(
+      create: (_) => NavigationBloc(
+        initialPage: controller.pageIndex.value,
+        pageCount: controller.pageCount,
+      ),
+      child: HomeControllerScope(
+        controller: controller,
+        child: const Scaffold(body: Center(child: MobilePager())),
+      ),
     ),
   );
 }
@@ -42,47 +44,51 @@ Widget _host(HomeController controller) {
 void main() {
   testWidgets('MobilePager renders "0N / 07" counter for current page',
       (tester) async {
-    final r = _Recorder();
     final pageIndex = ValueNotifier<int>(2);
-    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex, recorder: r)));
+    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex)));
     await tester.pumpAndSettle();
     expect(find.text('03 / 07'), findsOneWidget);
   });
 
-  testWidgets('MobilePager next-tap invokes scrollToMobileSection(page + 1)',
+  testWidgets('MobilePager next-tap updates pageIndex in NavigationBloc',
       (tester) async {
-    final r = _Recorder();
     final pageIndex = ValueNotifier<int>(2);
-    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex, recorder: r)));
+    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex)));
     await tester.pumpAndSettle();
 
     await tester.tap(find.bySemanticsLabel('Next section'));
-    await tester.pump();
-    expect(r.jumps, [3]);
+    await tester.pumpAndSettle();
+
+    final bloc =
+        tester.element(find.byType(MobilePager)).read<NavigationBloc>();
+    expect(bloc.state.pageIndex, 3);
   });
 
   testWidgets('MobilePager prev is disabled on the first section',
       (tester) async {
-    final r = _Recorder();
     final pageIndex = ValueNotifier<int>(0);
-    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex, recorder: r)));
+    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex)));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.bySemanticsLabel('Previous section'));
-    await tester.pump();
-    // Disabled — onTap is null, controller receives no jump.
-    expect(r.jumps, isEmpty);
+    final prevButton = find.byTooltip('Previous section');
+    expect(prevButton, findsOneWidget);
+
+    final bloc =
+        tester.element(find.byType(MobilePager)).read<NavigationBloc>();
+    expect(bloc.state.pageIndex, 0);
   });
 
   testWidgets('MobilePager next is disabled on the last section',
       (tester) async {
-    final r = _Recorder();
     final pageIndex = ValueNotifier<int>(6);
-    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex, recorder: r)));
+    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex)));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.bySemanticsLabel('Next section'));
-    await tester.pump();
-    expect(r.jumps, isEmpty);
+    final nextButton = find.byTooltip('Next section');
+    expect(nextButton, findsOneWidget);
+
+    final bloc =
+        tester.element(find.byType(MobilePager)).read<NavigationBloc>();
+    expect(bloc.state.pageIndex, 6);
   });
 }

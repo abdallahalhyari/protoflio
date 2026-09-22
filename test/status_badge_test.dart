@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/shared/widget/status_badge.dart';
 import 'package:profile/theme/tokens.dart';
 
-Widget _host(Widget child) => MaterialApp(home: Scaffold(body: Center(child: child)));
+Widget _host(Widget child) =>
+    MaterialApp(home: Scaffold(body: Center(child: child)));
 
 void main() {
   group('StatusBadge', () {
@@ -47,7 +48,8 @@ void main() {
 
       final container = tester
           .widgetList<Container>(find.byType(Container))
-          .firstWhere((c) => c.decoration is BoxDecoration &&
+          .firstWhere((c) =>
+              c.decoration is BoxDecoration &&
               (c.decoration as BoxDecoration).border != null);
       final decoration = container.decoration as BoxDecoration;
       expect(decoration.color?.a, closeTo(0.14, 0.01));

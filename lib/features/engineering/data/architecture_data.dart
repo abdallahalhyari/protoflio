@@ -4,7 +4,7 @@ import 'package:profile/theme/tokens.dart';
 import '../model/architecture_topic.dart';
 
 final List<ArchitectureTopic> kArchitectureTopics = [
-  ArchitectureTopic(
+  const ArchitectureTopic(
     id: 'clean_arch',
     title: 'Clean Mobile Architecture',
     category: 'SYSTEM DESIGN',
@@ -65,7 +65,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       'Immutable Data Transfer Objects (DTOs) with defensive parsing prevent runtime crashes from unexpected null payloads.',
     ],
   ),
-  ArchitectureTopic(
+  const ArchitectureTopic(
     id: 'offline_first',
     title: 'Offline-First Synchronization',
     category: 'DATA PERSISTENCE',
@@ -129,7 +129,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       'Client-side error protocols implement exponential backoff with jitter to protect backend infrastructure.',
     ],
   ),
-  ArchitectureTopic(
+  const ArchitectureTopic(
     id: 'nfc_apdu',
     title: 'ISO-7816 Smart-Card & NFC Pipeline',
     category: 'HARDWARE INTEGRATION',
@@ -192,7 +192,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       'Optimized transceive buffers achieve complete contactless card verification in under 750ms.',
     ],
   ),
-  ArchitectureTopic(
+  const ArchitectureTopic(
     id: 'security_jwt',
     title: 'Hardware-Backed Keystore & JWT Lifecycle',
     category: 'APPLICATION SECURITY',
@@ -255,7 +255,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       'Proactive SSL Pinning protects network transport against rogue proxy or man-in-the-middle attacks.',
     ],
   ),
-  ArchitectureTopic(
+  const ArchitectureTopic(
     id: 'state_management_bloc',
     title: 'Reactive State Management (BLoC)',
     category: 'STATE ARCHITECTURE',

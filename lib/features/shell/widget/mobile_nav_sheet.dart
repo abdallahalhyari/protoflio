@@ -245,7 +245,7 @@ class MobileNavSheet extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             '// DIRECTORY',
                             style: TextStyle(
                               color: AppColors.accentIndigo,
@@ -536,7 +536,7 @@ class MobileNavSheet extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           _SocialButton(
@@ -544,7 +544,7 @@ class MobileNavSheet extends StatelessWidget {
                             icon: Icons.link_rounded,
                             url: 'https://linkedin.com/in/abdallah-alhyari',
                           ),
-                          const SizedBox(width: 12),
+                          SizedBox(width: 12),
                           _SocialButton(
                             label: 'GitHub',
                             icon: Icons.code_rounded,

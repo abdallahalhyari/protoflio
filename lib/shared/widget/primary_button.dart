@@ -105,7 +105,9 @@ class _PrimaryButtonState extends State<PrimaryButton> {
       widget.label,
       style: TextStyle(
         fontSize: dims.fontSize,
-        color: _enabled ? Colors.white : Colors.white70,
+        color: _enabled
+            ? scheme.onPrimary
+            : scheme.onPrimary.withValues(alpha: 0.7),
         fontWeight: FontWeight.bold,
       ),
     );
@@ -116,7 +118,9 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         children: [
           Icon(widget.icon,
               size: dims.iconSize,
-              color: _enabled ? Colors.white : Colors.white70),
+              color: _enabled
+                  ? scheme.onPrimary
+                  : scheme.onPrimary.withValues(alpha: 0.7)),
           const SizedBox(width: AppSpacing.sm),
           content,
         ],
@@ -130,9 +134,9 @@ class _PrimaryButtonState extends State<PrimaryButton> {
           SizedBox(
             width: dims.iconSize,
             height: dims.iconSize,
-            child: const CircularProgressIndicator(
+            child: CircularProgressIndicator(
               strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor: AlwaysStoppedAnimation<Color>(scheme.onPrimary),
             ),
           ),
           const SizedBox(width: AppSpacing.sm + 2),
@@ -227,25 +231,25 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                     end: Alignment.bottomRight,
                     colors: !_enabled
                         ? [
-                            base.withValues(alpha: 0.35),
-                            base.withValues(alpha: 0.25),
+                            base.withValues(alpha: AppAlpha.border),
+                            base.withValues(alpha: AppAlpha.fill),
                           ]
                         : hover
                             ? [
-                                Color.lerp(base, Colors.white, 0.15)!,
+                                Color.lerp(base, scheme.onPrimary, 0.15)!,
                                 base,
                               ]
                             : [
-                                Color.lerp(base, Colors.white, 0.08)!,
-                                Color.lerp(base, Colors.black, 0.12)!,
+                                Color.lerp(base, scheme.onPrimary, 0.08)!,
+                                Color.lerp(base, scheme.shadow, 0.12)!,
                               ],
                   ),
                   border: Border.all(
                     color: _isFocused
-                        ? Colors.white
+                        ? scheme.onPrimary
                         : hover
-                            ? Color.lerp(base, Colors.white, 0.40)!
-                            : Colors.white.withValues(alpha: 0.22),
+                            ? Color.lerp(base, scheme.onPrimary, 0.40)!
+                            : scheme.onPrimary.withValues(alpha: 0.22),
                     width: _isFocused ? 2 : (hover ? 1.5 : 1),
                   ),
                 ),

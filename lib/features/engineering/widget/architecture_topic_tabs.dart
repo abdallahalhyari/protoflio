@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
@@ -112,7 +113,7 @@ class ArchitectureTopicTabs extends StatelessWidget {
                 style: TextStyle(
                   color: isSelected
                       ? (isDark ? Colors.white : scheme.primary)
-                      : (isDark ? Colors.white70 : AppColors.slate600),
+                      : (context.mutedText),
                   fontSize: AppTypography.captionSm,
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                   letterSpacing: 0.8,

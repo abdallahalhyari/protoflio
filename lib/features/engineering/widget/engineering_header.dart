@@ -94,8 +94,7 @@ class EngineeringHeader extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.hub_outlined,
-                              color: accentText, size: 13),
+                          Icon(Icons.hub_outlined, color: accentText, size: 13),
                           const SizedBox(width: 6),
                           Text(
                             '4 ARCHITECTURES',

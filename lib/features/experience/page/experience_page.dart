@@ -9,6 +9,7 @@ import 'package:profile/features/experience/widget/animated_experience_node.dart
 import 'package:profile/features/experience/widget/credentials_bento_card.dart';
 import 'package:profile/features/experience/widget/experience_header.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
+import 'package:profile/shared/widget/staggered_entrance.dart';
 
 class ExperiencePage extends StatefulWidget {
   final PageController? controller;
@@ -183,35 +184,41 @@ class _ExperiencePageState extends State<ExperiencePage>
         // Column 1: Experiences 0 and 1
         Expanded(
           flex: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (experiences.isNotEmpty)
-                Expanded(
-                  flex: 5,
-                  child: AnimatedExperienceNode(
-                    exp: experiences[0],
-                    index: 0,
-                    isVisible: state.isVisible,
-                    isSelected: state.selectedIndex == 0,
-                    onSelect: () => _bloc.add(const ExperienceNodeSelected(0)),
-                    isDesktop: true,
+          child: StaggeredEntrance(
+            isVisible: state.isVisible,
+            delayMs: 0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (experiences.isNotEmpty)
+                  Expanded(
+                    flex: 5,
+                    child: AnimatedExperienceNode(
+                      exp: experiences[0],
+                      index: 0,
+                      isVisible: state.isVisible,
+                      isSelected: state.selectedIndex == 0,
+                      onSelect: () =>
+                          _bloc.add(const ExperienceNodeSelected(0)),
+                      isDesktop: true,
+                    ),
                   ),
-                ),
-              const SizedBox(height: AppSpacing.lg),
-              if (experiences.length > 1)
-                Expanded(
-                  flex: 4,
-                  child: AnimatedExperienceNode(
-                    exp: experiences[1],
-                    index: 1,
-                    isVisible: state.isVisible,
-                    isSelected: state.selectedIndex == 1,
-                    onSelect: () => _bloc.add(const ExperienceNodeSelected(1)),
-                    isDesktop: true,
+                const SizedBox(height: AppSpacing.lg),
+                if (experiences.length > 1)
+                  Expanded(
+                    flex: 4,
+                    child: AnimatedExperienceNode(
+                      exp: experiences[1],
+                      index: 1,
+                      isVisible: state.isVisible,
+                      isSelected: state.selectedIndex == 1,
+                      onSelect: () =>
+                          _bloc.add(const ExperienceNodeSelected(1)),
+                      isDesktop: true,
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.lg),
@@ -219,35 +226,41 @@ class _ExperiencePageState extends State<ExperiencePage>
         // Column 2: Experiences 2 and 3
         Expanded(
           flex: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (experiences.length > 2)
-                Expanded(
-                  flex: 5,
-                  child: AnimatedExperienceNode(
-                    exp: experiences[2],
-                    index: 2,
-                    isVisible: state.isVisible,
-                    isSelected: state.selectedIndex == 2,
-                    onSelect: () => _bloc.add(const ExperienceNodeSelected(2)),
-                    isDesktop: true,
+          child: StaggeredEntrance(
+            isVisible: state.isVisible,
+            delayMs: 80,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (experiences.length > 2)
+                  Expanded(
+                    flex: 5,
+                    child: AnimatedExperienceNode(
+                      exp: experiences[2],
+                      index: 2,
+                      isVisible: state.isVisible,
+                      isSelected: state.selectedIndex == 2,
+                      onSelect: () =>
+                          _bloc.add(const ExperienceNodeSelected(2)),
+                      isDesktop: true,
+                    ),
                   ),
-                ),
-              const SizedBox(height: AppSpacing.lg),
-              if (experiences.length > 3)
-                Expanded(
-                  flex: 4,
-                  child: AnimatedExperienceNode(
-                    exp: experiences[3],
-                    index: 3,
-                    isVisible: state.isVisible,
-                    isSelected: state.selectedIndex == 3,
-                    onSelect: () => _bloc.add(const ExperienceNodeSelected(3)),
-                    isDesktop: true,
+                const SizedBox(height: AppSpacing.lg),
+                if (experiences.length > 3)
+                  Expanded(
+                    flex: 4,
+                    child: AnimatedExperienceNode(
+                      exp: experiences[3],
+                      index: 3,
+                      isVisible: state.isVisible,
+                      isSelected: state.selectedIndex == 3,
+                      onSelect: () =>
+                          _bloc.add(const ExperienceNodeSelected(3)),
+                      isDesktop: true,
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
         const SizedBox(width: AppSpacing.lg),
@@ -255,9 +268,13 @@ class _ExperiencePageState extends State<ExperiencePage>
         // Column 3: Credentials Bento
         Expanded(
           flex: 4,
-          child: CredentialsBentoCard(
+          child: StaggeredEntrance(
             isVisible: state.isVisible,
-            isDesktop: true,
+            delayMs: 160,
+            child: CredentialsBentoCard(
+              isVisible: state.isVisible,
+              isDesktop: true,
+            ),
           ),
         ),
       ],

@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:profile/locale_controller.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/core/bloc/locale/locale_bloc.dart';
+import 'package:profile/core/bloc/locale/locale_event.dart';
+import 'package:profile/core/bloc/locale/locale_state.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_event.dart';
+import 'package:profile/core/bloc/theme/theme_state.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/theme_controller.dart';
 
 /// Top-right desktop toolbar — language picker, theme toggle, audio
 /// mute. Self-contained: reads its own state from
-/// [ThemeController.mode], [LocaleController.locale], and
+/// mute. Self-contained: reads its own state from ThemeBloc,
+/// LocaleBloc, and
 /// [SoundService.instance.isEnabled].
 class DesktopToolbar extends StatelessWidget {
   const DesktopToolbar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: ThemeController.mode,
-      builder: (_, mode, __) {
-        final dark = mode == ThemeMode.dark;
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      buildWhen: (prev, curr) => prev.mode != curr.mode,
+      builder: (_, themeState) {
+        final dark = themeState.isDark;
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -65,9 +70,9 @@ class _LanguagePickerPuck extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Puck(
       dark: dark,
-      child: ValueListenableBuilder<Locale>(
-        valueListenable: LocaleController.locale,
-        builder: (context, locale, _) {
+      child: BlocBuilder<LocaleBloc, LocaleState>(
+        builder: (context, localeState) {
+          final locale = localeState.locale;
           return Semantics(
             button: true,
             label:
@@ -79,7 +84,7 @@ class _LanguagePickerPuck extends StatelessWidget {
               onSelected: (val) {
                 HapticFeedback.lightImpact();
                 SoundService.instance.playClick();
-                LocaleController.changeLocale(val);
+                context.read<LocaleBloc>().add(LocaleChanged(val));
               },
               itemBuilder: (context) => const [
                 PopupMenuItem(value: 'en', child: Text('English')),
@@ -115,7 +120,7 @@ class _ThemeTogglePuck extends StatelessWidget {
           onPressed: () {
             HapticFeedback.lightImpact();
             SoundService.instance.playClick();
-            ThemeController.toggle();
+            context.read<ThemeBloc>().add(const ThemeModeToggled());
           },
         ),
       ),

@@ -90,10 +90,10 @@ class AppColors {
   // existing accent hues so a rebrand cascades. Use these for indicators
   // (health dots, badges, telemetry chips) instead of raw accents.
   static const Color statusCritical = Color(0xFFEF4444); // red 500
-  static const Color statusWarn = accentAmberMid;         // amber 500
-  static const Color statusOk = accentGreen;              // emerald 500
-  static const Color statusOkLight = accentGreenLight;    // emerald 400
-  static const Color statusInfo = accentSky;              // sky 400
+  static const Color statusWarn = accentAmberMid; // amber 500
+  static const Color statusOk = accentGreen; // emerald 500
+  static const Color statusOkLight = accentGreenLight; // emerald 400
+  static const Color statusInfo = accentSky; // sky 400
 
   // Accessible high-contrast Light Mode accent counterparts (>4.5:1 on white/slate50)
   static const Color accentAmberDeep = Color(0xFFB45309); // Amber 700 (5.8:1)

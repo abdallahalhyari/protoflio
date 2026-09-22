@@ -155,7 +155,7 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
                       value: latency,
                       color: accentColor,
                     ),
-                    _TelemetryBadge(
+                    const _TelemetryBadge(
                       label: 'GATE',
                       value: 'STRICT_PASS',
                       color: AppColors.statusInfo,

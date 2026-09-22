@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/portfolio_nav.dart';
@@ -30,9 +32,15 @@ Widget _wrap(Widget child, HomeController controller) {
     themeMode: ThemeMode.dark,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    home: HomeControllerScope(
-      controller: controller,
-      child: Scaffold(body: child),
+    home: BlocProvider<NavigationBloc>(
+      create: (_) => NavigationBloc(
+        initialPage: controller.pageIndex.value,
+        pageCount: controller.pageCount,
+      ),
+      child: HomeControllerScope(
+        controller: controller,
+        child: Scaffold(body: child),
+      ),
     ),
   );
 }
@@ -59,27 +67,21 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
 
-    var tapped = 0;
     // Start on section 0 so tapping the last NavItem is not a no-op.
     await tester.pumpWidget(_wrap(
       const TopNav(),
-      _stub(
-        pageIndex: ValueNotifier<int>(0),
-        onGoTo: () {
-          tapped++;
-          return 0;
-        },
-      ),
+      _stub(pageIndex: ValueNotifier<int>(0)),
     ));
     await tester.pumpAndSettle();
 
+    final bloc = tester.element(find.byType(TopNav)).read<NavigationBloc>();
     final items = find.byType(NavItem);
     expect(items, findsWidgets);
-    // Tap a non-active NavItem (index != 0) — active-index guard would
-    // otherwise swallow the tap.
+
+    // Tap a non-active NavItem (index != 0)
     await tester.tap(items.last);
-    await tester.pump();
-    expect(tapped, greaterThan(0));
+    await tester.pumpAndSettle();
+    expect(bloc.state.pageIndex, 6);
   });
 
   testWidgets('TopNav swallows tap on the already-active nav item',
@@ -88,23 +90,18 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
 
-    var tapped = 0;
     await tester.pumpWidget(_wrap(
       const TopNav(),
-      _stub(
-        pageIndex: ValueNotifier<int>(0),
-        onGoTo: () {
-          tapped++;
-          return 0;
-        },
-      ),
+      _stub(pageIndex: ValueNotifier<int>(0)),
     ));
     await tester.pumpAndSettle();
 
-    // items.first == active section 0 — guard should prevent goTo.
+    final bloc = tester.element(find.byType(TopNav)).read<NavigationBloc>();
+
+    // items.first == active section 0 — guard should prevent navigation event
     await tester.tap(find.byType(NavItem).first);
-    await tester.pump();
-    expect(tapped, 0);
+    await tester.pumpAndSettle();
+    expect(bloc.state.pageIndex, 0);
   });
 
   testWidgets('PageIndicator dot count matches controller.pageCount',

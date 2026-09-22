@@ -124,7 +124,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                 SliverToBoxAdapter(
                   child: _buildHeader(scheme, loc, size, isDesktop),
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
+                const SliverToBoxAdapter(
+                    child: SizedBox(height: AppSpacing.md)),
                 SliverToBoxAdapter(
                   child: ProjectDomainFilters(
                     domains: _domains,
@@ -150,7 +151,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                     },
                   ),
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
+                const SliverToBoxAdapter(
+                    child: SizedBox(height: AppSpacing.lg)),
                 SliverToBoxAdapter(
                   child: LayoutBuilder(
                     builder: (context, constraints) {
@@ -260,9 +262,9 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                           label: Text(loc.nextAction),
                         ),
                       ],
-                                        ),
-                                      ),
-                                    ],
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
@@ -353,9 +355,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             ),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
-              child: Container(
-                  height: 1,
-                  color: context.glassBorderStrong),
+              child: Container(height: 1, color: context.glassBorderStrong),
             ),
           ],
         ),

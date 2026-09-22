@@ -135,7 +135,8 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                     icon: const DirIcon(Icons.chevron_left_rounded, size: 16),
                     label: const Text('BACK',
                         style: TextStyle(
-                            fontSize: AppTypography.caption, fontWeight: FontWeight.w800)),
+                            fontSize: AppTypography.caption,
+                            fontWeight: FontWeight.w800)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -206,7 +207,8 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                     icon: const DirIcon(Icons.chevron_right_rounded, size: 16),
                     label: const Text('NEXT',
                         style: TextStyle(
-                            fontSize: AppTypography.caption, fontWeight: FontWeight.w800)),
+                            fontSize: AppTypography.caption,
+                            fontWeight: FontWeight.w800)),
                   ),
                 ),
               ],

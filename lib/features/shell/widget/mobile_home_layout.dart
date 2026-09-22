@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
+import 'package:profile/core/bloc/navigation/navigation_event.dart';
+import 'package:profile/service/cv_service.dart';
 import 'package:profile/theme/tokens.dart';
-import '../home_controller.dart';
 import 'package:profile/features/contact/page/contact_page.dart'
     deferred as contact_lib;
 import 'package:profile/features/engineering/page/engineering_page.dart'
@@ -29,12 +32,7 @@ import 'scroll_to_top_button.dart';
 /// Mobile continuous-scroll layout for the portfolio. Owns the Stack
 /// with the scrollable section column + 5 positioned overlay layers
 /// (app bar, scroll-to-top, progress rail, pager). Reads
-/// `pageIndex`, `showScrollToTop`, and nav intents from the ambient
-/// [HomeController].
-///
-/// `_HomeScreenState` retains ownership of the [ScrollController] and
-/// [GlobalKey] list so the section-sweep in `_onMobileScroll` and the
-/// jump animator can measure section positions.
+/// `pageIndex`, `showScrollToTop`, and nav intents from NavigationBloc.
 class MobileHomeLayout extends StatelessWidget {
   const MobileHomeLayout({
     super.key,
@@ -52,12 +50,14 @@ class MobileHomeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = HomeController.of(context);
+    final page = context.select((NavigationBloc bloc) => bloc.state.pageIndex);
+    final showScrollToTop =
+        context.select((NavigationBloc bloc) => bloc.state.showScrollToTop);
     final labels = TopNav.getLabels(context);
     return Stack(
       children: [
         // Layer 1: Continuous scrollable column containing all 7 sections
-        SingleChildScrollView(
+        ListView(
           key: const PageStorageKey<String>('mobile_scrollview'),
           controller: scrollController,
           physics: const BouncingScrollPhysics(),
@@ -65,121 +65,118 @@ class MobileHomeLayout extends StatelessWidget {
             top: 60 + MediaQuery.paddingOf(context).top,
             bottom: 80 + MediaQuery.paddingOf(context).bottom,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              RepaintBoundary(
+          children: [
+            RepaintBoundary(
+              child: KeyedSubtree(
+                key: sectionKeys[0],
+                child: IntroPage(
+                  onScrollDown: () => context
+                      .read<NavigationBloc>()
+                      .add(const NavigationPageSelected(1)),
+                  onViewWork: () => context
+                      .read<NavigationBloc>()
+                      .add(const NavigationPageSelected(2)),
+                  onDownloadResume: () => CvService.open(context),
+                  onContactMe: () => context
+                      .read<NavigationBloc>()
+                      .add(const NavigationPageSelected(6)),
+                  isContinuousMobile: true,
+                ),
+              ),
+            ),
+            MobileSectionDivider(number: '02', title: _dividerLabel(labels, 1)),
+            DeferredMount(
+              sectionIndex: 1,
+              placeholderHeight: 720,
+              child: RepaintBoundary(
                 child: KeyedSubtree(
-                  key: sectionKeys[0],
-                  child: IntroPage(
-                    onScrollDown: () => controller.scrollToMobileSection(1),
-                    onViewWork: () => controller.scrollToMobileSection(2),
-                    onDownloadResume: controller.downloadResume,
-                    onContactMe: () => controller.scrollToMobileSection(6),
-                    isContinuousMobile: true,
+                  key: sectionKeys[1],
+                  child: DeferredPage(
+                    loader: experience_lib.loadLibrary,
+                    builder: () =>
+                        experience_lib.ExperiencePage(isContinuousMobile: true),
                   ),
                 ),
               ),
-              MobileSectionDivider(
-                  number: '02', title: _dividerLabel(labels, 1)),
-              DeferredMount(
-                sectionIndex: 1,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: sectionKeys[1],
-                    child: DeferredPage(
-                      loader: experience_lib.loadLibrary,
-                      builder: () => experience_lib.ExperiencePage(
-                          isContinuousMobile: true),
-                    ),
+            ),
+            MobileSectionDivider(number: '03', title: _dividerLabel(labels, 2)),
+            DeferredMount(
+              sectionIndex: 2,
+              placeholderHeight: 720,
+              child: RepaintBoundary(
+                child: KeyedSubtree(
+                  key: sectionKeys[2],
+                  child: DeferredPage(
+                    loader: projects_lib.loadLibrary,
+                    builder: () =>
+                        projects_lib.ProjectsPage(isContinuousMobile: true),
                   ),
                 ),
               ),
-              MobileSectionDivider(
-                  number: '03', title: _dividerLabel(labels, 2)),
-              DeferredMount(
-                sectionIndex: 2,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: sectionKeys[2],
-                    child: DeferredPage(
-                      loader: projects_lib.loadLibrary,
-                      builder: () =>
-                          projects_lib.ProjectsPage(isContinuousMobile: true),
-                    ),
+            ),
+            MobileSectionDivider(number: '04', title: _dividerLabel(labels, 3)),
+            DeferredMount(
+              sectionIndex: 3,
+              placeholderHeight: 720,
+              child: RepaintBoundary(
+                child: KeyedSubtree(
+                  key: sectionKeys[3],
+                  child: DeferredPage(
+                    loader: skills_lib.loadLibrary,
+                    builder: () =>
+                        skills_lib.SkillsPage(isContinuousMobile: true),
                   ),
                 ),
               ),
-              MobileSectionDivider(
-                  number: '04', title: _dividerLabel(labels, 3)),
-              DeferredMount(
-                sectionIndex: 3,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: sectionKeys[3],
-                    child: DeferredPage(
-                      loader: skills_lib.loadLibrary,
-                      builder: () =>
-                          skills_lib.SkillsPage(isContinuousMobile: true),
-                    ),
+            ),
+            MobileSectionDivider(number: '05', title: _dividerLabel(labels, 4)),
+            DeferredMount(
+              sectionIndex: 4,
+              placeholderHeight: 720,
+              child: RepaintBoundary(
+                child: KeyedSubtree(
+                  key: sectionKeys[4],
+                  child: DeferredPage(
+                    loader: engineering_lib.loadLibrary,
+                    builder: () => engineering_lib.EngineeringPage(
+                        isContinuousMobile: true),
                   ),
                 ),
               ),
-              MobileSectionDivider(
-                  number: '05', title: _dividerLabel(labels, 4)),
-              DeferredMount(
-                sectionIndex: 4,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: sectionKeys[4],
-                    child: DeferredPage(
-                      loader: engineering_lib.loadLibrary,
-                      builder: () => engineering_lib.EngineeringPage(
-                          isContinuousMobile: true),
-                    ),
+            ),
+            MobileSectionDivider(number: '06', title: _dividerLabel(labels, 5)),
+            DeferredMount(
+              sectionIndex: 5,
+              placeholderHeight: 720,
+              child: RepaintBoundary(
+                child: KeyedSubtree(
+                  key: sectionKeys[5],
+                  child: DeferredPage(
+                    loader: hats_lib.loadLibrary,
+                    builder: () =>
+                        hats_lib.HatsGridPage(isContinuousMobile: true),
                   ),
                 ),
               ),
-              MobileSectionDivider(
-                  number: '06', title: _dividerLabel(labels, 5)),
-              DeferredMount(
-                sectionIndex: 5,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: sectionKeys[5],
-                    child: DeferredPage(
-                      loader: hats_lib.loadLibrary,
-                      builder: () =>
-                          hats_lib.HatsGridPage(isContinuousMobile: true),
-                    ),
+            ),
+            MobileSectionDivider(number: '07', title: _dividerLabel(labels, 6)),
+            DeferredMount(
+              sectionIndex: 6,
+              placeholderHeight: 720,
+              child: RepaintBoundary(
+                child: KeyedSubtree(
+                  key: sectionKeys[6],
+                  child: DeferredPage(
+                    loader: contact_lib.loadLibrary,
+                    builder: () =>
+                        contact_lib.ContactPage(isContinuousMobile: true),
                   ),
                 ),
               ),
-              MobileSectionDivider(
-                  number: '07', title: _dividerLabel(labels, 6)),
-              DeferredMount(
-                sectionIndex: 6,
-                placeholderHeight: 720,
-                child: RepaintBoundary(
-                  child: KeyedSubtree(
-                    key: sectionKeys[6],
-                    child: DeferredPage(
-                      loader: contact_lib.loadLibrary,
-                      builder: () =>
-                          contact_lib.ContactPage(isContinuousMobile: true),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 48),
-              const MobileFooter(),
-            ],
-          ),
+            ),
+            const SizedBox(height: 48),
+            const MobileFooter(),
+          ],
         ),
 
         // Layer 2: Sticky frosted-glass MobileAppBar
@@ -191,12 +188,16 @@ class MobileHomeLayout extends StatelessWidget {
             onMenuPressed: () {
               MobileNavSheet.show(
                 context,
-                activeIndex: controller.pageIndex.value,
-                onSelectSection: controller.scrollToMobileSection,
-                onDownloadResume: controller.downloadResume,
+                activeIndex: page,
+                onSelectSection: (idx) => context
+                    .read<NavigationBloc>()
+                    .add(NavigationPageSelected(idx)),
+                onDownloadResume: () => CvService.open(context),
               );
             },
-            onLogoPressed: () => controller.scrollToMobileSection(0),
+            onLogoPressed: () => context
+                .read<NavigationBloc>()
+                .add(const NavigationPageSelected(0)),
           ),
         ),
 
@@ -204,10 +205,9 @@ class MobileHomeLayout extends StatelessWidget {
         Positioned(
           bottom: 24,
           right: 18,
-          child: ValueListenableBuilder<bool>(
-            valueListenable: controller.showScrollToTop,
-            builder: (context, show, child) {
-              if (!show) return const SizedBox.shrink();
+          child: Builder(
+            builder: (context) {
+              if (!showScrollToTop) return const SizedBox.shrink();
               return ScrollToTopButton(
                 onPressed: () => scrollController.animateTo(
                   0,

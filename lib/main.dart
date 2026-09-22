@@ -12,21 +12,32 @@ import 'package:profile/core/bloc/theme/theme_state.dart';
 import 'package:profile/features/shell/home_screen.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/theme_controller.dart';
-import 'package:profile/locale_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+
+  final themeStr = prefs.getString('themeMode');
+  ThemeMode initTheme = ThemeMode.dark;
+  if (themeStr == 'light') initTheme = ThemeMode.light;
+  if (themeStr == 'system') initTheme = ThemeMode.system;
+
+  final localeStr = prefs.getString('localeCode');
+  final Locale initLocale =
+      localeStr != null ? Locale(localeStr) : const Locale('en');
+
   await Future.wait([
-    ThemeController.load(),
-    LocaleController.load(),
     SoundService.instance.load(),
   ]);
 
-  runApp(const PortfolioApp());
+  runApp(PortfolioApp(
+    initialTheme: initTheme,
+    initialLocale: initLocale,
+  ));
 
   // Analytics: `web/index.html` sets up `window.gtag` synchronously and
   // lazy-loads `gtag.js` on first user interaction. No Dart-side init is
@@ -62,20 +73,26 @@ class _SmoothScrollBehavior extends MaterialScrollBehavior {
 }
 
 class PortfolioApp extends StatelessWidget {
-  const PortfolioApp({super.key});
+  const PortfolioApp({
+    super.key,
+    this.initialTheme = ThemeMode.dark,
+    this.initialLocale = const Locale('en'),
+  });
+
+  final ThemeMode initialTheme;
+  final Locale initialLocale;
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ThemeBloc>(
-          create: (_) => ThemeBloc(initialMode: ThemeController.mode.value)
-            ..add(const ThemeStarted()),
+          create: (_) =>
+              ThemeBloc(initialMode: initialTheme)..add(const ThemeStarted()),
         ),
         BlocProvider<LocaleBloc>(
-          create: (_) =>
-              LocaleBloc(initialLocale: LocaleController.locale.value)
-                ..add(const LocaleStarted()),
+          create: (_) => LocaleBloc(initialLocale: initialLocale)
+            ..add(const LocaleStarted()),
         ),
         BlocProvider<NavigationBloc>(
           create: (_) => NavigationBloc(),
@@ -173,28 +190,10 @@ class _AccentTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // If ThemeBloc is available in context, drive via BlocBuilder.
-    // Otherwise fallback smoothly to ThemeController.seedColor for standalone tests.
-    ThemeBloc? bloc;
-    try {
-      bloc = context.read<ThemeBloc>();
-    } catch (_) {
-      bloc = null;
-    }
-
-    if (bloc != null) {
-      return BlocBuilder<ThemeBloc, ThemeState>(
-        buildWhen: (prev, curr) => prev.seedColor != curr.seedColor,
-        builder: (context, state) =>
-            _buildThemed(context, state.seedColor, child),
-      );
-    }
-
-    return ValueListenableBuilder<Color>(
-      valueListenable: ThemeController.seedColor,
-      builder: (context, seed, staticChild) =>
-          _buildThemed(context, seed, staticChild!),
-      child: child,
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      buildWhen: (prev, curr) => prev.seedColor != curr.seedColor,
+      builder: (context, state) =>
+          _buildThemed(context, state.seedColor, child),
     );
   }
 }
