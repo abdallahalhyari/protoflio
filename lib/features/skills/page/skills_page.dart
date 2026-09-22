@@ -165,7 +165,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
               ),
               const SizedBox(height: AppSpacing.smd),
               Container(
-                  height: 1, color: scheme.onSurface.withValues(alpha: 0.12)),
+                  height: 1, color: scheme.onSurface.withValues(alpha: AppAlpha.hover)),
               const SizedBox(height: AppSpacing.md),
               if (widget.isContinuousMobile)
                 LayoutBuilder(

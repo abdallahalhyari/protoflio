@@ -187,7 +187,7 @@ class _TelemetryBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
+        color: color.withValues(alpha: AppAlpha.hover),
         borderRadius: BorderRadius.circular(AppRadius.xs),
         border: Border.all(color: color.withValues(alpha: 0.3), width: 0.8),
       ),

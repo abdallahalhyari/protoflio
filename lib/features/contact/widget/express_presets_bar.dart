@@ -39,7 +39,7 @@ class ExpressPresetsBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
-    final accentSoft = accent.withValues(alpha: 0.35);
+    final accentSoft = accent.withValues(alpha: AppAlpha.border);
     final isDark = context.isDarkMode;
 
     return RepaintBoundary(

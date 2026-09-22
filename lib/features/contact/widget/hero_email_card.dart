@@ -25,7 +25,7 @@ class HeroEmailCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
     final isDark = context.isDarkMode;
-    final accentSoft = accent.withValues(alpha: 0.35);
+    final accentSoft = accent.withValues(alpha: AppAlpha.border);
     const availabilityGreen = AppColors.accentGreen;
     final l10n = AppLocalizations.of(context)!;
 
@@ -53,10 +53,10 @@ class HeroEmailCard extends StatelessWidget {
       icon: const Icon(Icons.content_copy_rounded, size: 14),
       label: Text(l10n.contactCopyAddressBtn),
       style: OutlinedButton.styleFrom(
-        foregroundColor: isDark ? Colors.white : AppColors.slate900,
+        foregroundColor: context.onSurface,
         side: BorderSide(
           color: isDark
-              ? Colors.white.withValues(alpha: 0.35)
+              ? Colors.white.withValues(alpha: AppAlpha.border)
               : AppColors.slate300,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
@@ -120,7 +120,7 @@ class HeroEmailCard extends StatelessWidget {
           child: SelectableText(
             email,
             style: TextStyle(
-              color: isDark ? Colors.white : AppColors.slate900,
+              color: context.onSurface,
               fontSize: isDesktop ? 22 : 16,
               fontWeight: FontWeight.w800,
               letterSpacing: 0.3,

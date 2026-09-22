@@ -201,7 +201,7 @@ class _TopReadingProgressBar extends StatelessWidget {
       height: 3.5,
       child: Container(
         color: isDark
-            ? Colors.white.withValues(alpha: 0.06)
+            ? Colors.white.withValues(alpha: AppAlpha.whisper)
             : Colors.black.withValues(alpha: 0.05),
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -455,7 +455,7 @@ class _ReadingPercentPill extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.pill),
         border: Border.all(
           color: isDark
-              ? Colors.white.withValues(alpha: 0.12)
+              ? Colors.white.withValues(alpha: AppAlpha.hover)
               : AppColors.slate300,
           width: 0.8,
         ),
@@ -672,7 +672,7 @@ class _BackToTopPillState extends State<_BackToTopPill> {
                           ? AppColors.accentGreen.withValues(alpha: 0.22)
                           : AppColors.accentGreen.withValues(alpha: 0.14))
                       : (isDark
-                          ? Colors.white.withValues(alpha: 0.06)
+                          ? Colors.white.withValues(alpha: AppAlpha.whisper)
                           : AppColors.slate100),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(

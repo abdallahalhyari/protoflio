@@ -207,7 +207,7 @@ class MobileNavSheet extends StatelessWidget {
             BoxShadow(
               color: isDark
                   ? Colors.black.withValues(alpha: 0.6)
-                  : Colors.black.withValues(alpha: 0.12),
+                  : Colors.black.withValues(alpha: AppAlpha.hover),
               blurRadius: 30,
               offset: const Offset(0, -8),
             ),

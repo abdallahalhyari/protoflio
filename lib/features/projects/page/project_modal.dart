@@ -136,7 +136,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                       BoxShadow(
                         color: isDark
                             ? Colors.black.withValues(alpha: 0.5)
-                            : AppColors.slate900.withValues(alpha: 0.06),
+                            : AppColors.slate900.withValues(alpha: AppAlpha.whisper),
                         blurRadius: 22,
                         offset: const Offset(0, 6),
                       ),
@@ -564,7 +564,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                         horizontal: 7, vertical: 2.5),
                                     decoration: BoxDecoration(
                                       color: isDark
-                                          ? Colors.white.withValues(alpha: 0.06)
+                                          ? Colors.white.withValues(alpha: AppAlpha.whisper)
                                           : AppColors.slate100,
                                       borderRadius:
                                           BorderRadius.circular(AppRadius.xs),

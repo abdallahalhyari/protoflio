@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/sound_service.dart';
@@ -69,7 +70,7 @@ class SkillSearchBar extends StatelessWidget {
               style: TextStyle(
                 fontSize: AppTypography.small,
                 fontWeight: FontWeight.w600,
-                color: isDark ? Colors.white : AppColors.slate900,
+                color: context.onSurface,
               ),
               cursorColor: scheme.primary,
               decoration: InputDecoration(
@@ -106,12 +107,12 @@ class SkillSearchBar extends StatelessWidget {
               color: isFiltered
                   ? scheme.primary.withValues(alpha: isDark ? 0.16 : 0.12)
                   : (isDark
-                      ? Colors.white.withValues(alpha: 0.06)
+                      ? Colors.white.withValues(alpha: AppAlpha.whisper)
                       : Colors.black.withValues(alpha: 0.05)),
               borderRadius: BorderRadius.circular(AppRadius.pill),
               border: Border.all(
                 color: isFiltered
-                    ? scheme.primary.withValues(alpha: 0.35)
+                    ? scheme.primary.withValues(alpha: AppAlpha.border)
                     : Colors.transparent,
                 width: 1,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/hats/data/hats_data.dart';
@@ -46,7 +47,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
           Text(
             'FEATURE 06 · 6 ROLES',
             style: TextStyle(
-              color: theme.colorScheme.primary.withValues(alpha: 0.35),
+              color: theme.colorScheme.primary.withValues(alpha: AppAlpha.border),
               fontSize: AppTypography.editorial,
               fontWeight: FontWeight.w900,
               letterSpacing: 3,
@@ -57,7 +58,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
             'ARCHITECTURAL PERSPECTIVES',
             style: TextStyle(
               fontFamily: AppTypography.displayFont,
-              color: isDark ? Colors.white : AppColors.slate900,
+              color: context.onSurface,
               fontSize: AppTypography.titleMid,
               fontWeight: FontWeight.w900,
               letterSpacing: 3,

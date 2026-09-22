@@ -207,7 +207,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                           borderRadius: BorderRadius.circular(AppRadius.pill),
                           border: Border.all(
                             color: isDark
-                                ? Colors.white.withValues(alpha: 0.12)
+                                ? Colors.white.withValues(alpha: AppAlpha.hover)
                                 : AppColors.slate300,
                             width: 0.8,
                           ),

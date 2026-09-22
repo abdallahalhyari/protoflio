@@ -61,10 +61,10 @@ class ProjectDomainFilters extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              color: scheme.primary.withValues(alpha: 0.12),
+              color: scheme.primary.withValues(alpha: AppAlpha.hover),
               borderRadius: BorderRadius.circular(AppRadius.sm),
               border: Border.all(
-                color: scheme.primary.withValues(alpha: 0.35),
+                color: scheme.primary.withValues(alpha: AppAlpha.border),
                 width: 1,
               ),
             ),
@@ -235,7 +235,7 @@ class _DomainChipState extends State<_DomainChip> {
                           horizontal: 5, vertical: 1.5),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? scheme.primary.withValues(alpha: 0.25)
+                            ? scheme.primary.withValues(alpha: AppAlpha.fill)
                             : (isInteractive
                                 ? scheme.primary
                                     .withValues(alpha: isDark ? 0.15 : 0.1)

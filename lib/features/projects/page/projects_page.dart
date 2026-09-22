@@ -412,7 +412,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
           ? BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadius.md),
               border: Border.all(
-                color: scheme.primary.withValues(alpha: 0.35),
+                color: scheme.primary.withValues(alpha: AppAlpha.border),
                 width: 1,
               ),
             )

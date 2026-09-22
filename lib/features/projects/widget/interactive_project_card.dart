@@ -524,7 +524,7 @@ class _TechTagChipState extends State<_TechTagChip> {
   Widget build(BuildContext context) {
     final bg = widget.isSelected
         ? widget.scheme.primary.withValues(alpha: widget.isDark ? 0.25 : 0.15)
-        : (widget.isDark ? Colors.white.withValues(alpha: 0.06) : AppColors.slate100);
+        : (widget.isDark ? Colors.white.withValues(alpha: AppAlpha.whisper) : AppColors.slate100);
 
     final border = widget.isSelected
         ? widget.scheme.primary
@@ -651,7 +651,7 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
                 border: Border.all(
                   color: _hovered
                       ? Colors.white
-                      : Colors.white.withValues(alpha: 0.25),
+                      : Colors.white.withValues(alpha: AppAlpha.fill),
                   width: 1.0,
                 ),
                 boxShadow: _hovered

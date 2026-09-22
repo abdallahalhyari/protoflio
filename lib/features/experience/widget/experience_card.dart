@@ -445,9 +445,9 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
                   color: _hovered
                       ? (isDark
                           ? primary.withValues(alpha: 0.22)
-                          : primary.withValues(alpha: 0.12))
+                          : primary.withValues(alpha: AppAlpha.hover))
                       : (isDark
-                          ? Colors.white.withValues(alpha: 0.06)
+                          ? Colors.white.withValues(alpha: AppAlpha.whisper)
                           : AppColors.slate100),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(

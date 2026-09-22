@@ -75,10 +75,10 @@ Widget _shortcutRow(ColorScheme scheme, String key, String label) {
           width: 56,
           padding: const EdgeInsets.symmetric(vertical: 4),
           decoration: BoxDecoration(
-            color: scheme.primary.withValues(alpha: 0.12),
+            color: scheme.primary.withValues(alpha: AppAlpha.hover),
             borderRadius: BorderRadius.circular(AppRadius.chip),
             border: Border.all(
-              color: scheme.primary.withValues(alpha: 0.35),
+              color: scheme.primary.withValues(alpha: AppAlpha.border),
             ),
           ),
           alignment: Alignment.center,

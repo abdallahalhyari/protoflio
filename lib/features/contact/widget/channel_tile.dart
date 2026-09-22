@@ -71,7 +71,7 @@ class _ChannelTileState extends State<ChannelTile> {
         decoration: BoxDecoration(
           color: isDark
               ? (_hover
-                  ? Colors.white.withValues(alpha: 0.06)
+                  ? Colors.white.withValues(alpha: AppAlpha.whisper)
                   : Colors.white.withValues(alpha: 0.03))
               : (_hover ? Colors.white : AppColors.slate50),
           borderRadius: BorderRadius.circular(AppRadius.card),
@@ -131,7 +131,7 @@ class _ChannelTileState extends State<ChannelTile> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: isDark ? Colors.white : AppColors.slate900,
+                          color: context.onSurface,
                           fontSize: AppTypography.smallLoose,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.2,
@@ -178,7 +178,7 @@ class _ChannelTileState extends State<ChannelTile> {
                     onPressed: d.secondaryAction,
                     style: OutlinedButton.styleFrom(
                       foregroundColor:
-                          isDark ? Colors.white : AppColors.slate900,
+                          context.onSurface,
                       side: BorderSide(
                         color: isDark
                             ? Colors.white.withValues(alpha: 0.28)

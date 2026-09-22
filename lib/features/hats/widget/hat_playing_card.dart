@@ -107,7 +107,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                   radius: 0.9,
                   colors: [
                     AppColors.accentAmber.withValues(alpha: 0.2),
-                    Colors.white.withValues(alpha: 0.06),
+                    Colors.white.withValues(alpha: AppAlpha.whisper),
                     Colors.transparent,
                   ],
                   stops: const [0.0, 0.45, 1.0],

@@ -195,7 +195,7 @@ class _InquiryComposerDialogViewState
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.lg),
             side: BorderSide(
-              color: scheme.primary.withValues(alpha: 0.35),
+              color: scheme.primary.withValues(alpha: AppAlpha.border),
               width: 1.5,
             ),
           ),

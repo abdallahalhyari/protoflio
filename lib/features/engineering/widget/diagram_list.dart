@@ -93,7 +93,7 @@ class DiagramList extends StatelessWidget {
                 ? step.color.withValues(alpha: 0.18)
                 : step.color.withValues(alpha: 0.10))
             : (isDark
-                ? Colors.black.withValues(alpha: 0.35)
+                ? Colors.black.withValues(alpha: AppAlpha.border)
                 : AppColors.slate50);
 
         final borderColor = isActive
@@ -171,7 +171,7 @@ class DiagramList extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 5, vertical: 1.5),
                               decoration: BoxDecoration(
-                                color: accent.withValues(alpha: 0.25),
+                                color: accent.withValues(alpha: AppAlpha.fill),
                                 borderRadius:
                                     BorderRadius.circular(AppRadius.chip),
                               ),

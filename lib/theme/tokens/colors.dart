@@ -198,7 +198,36 @@ class AppColors {
 
   // Neutral shadow tokens — use `shadowSoft` for resting cards,
   // `shadowMedium` under hovered / lifted surfaces.
-  static Color shadowSoft = Colors.black.withValues(alpha: 0.14);
-  static Color shadowMedium = Colors.black.withValues(alpha: 0.28);
+  static Color shadowSoft = Colors.black.withValues(alpha: AppAlpha.hover);
+  static Color shadowMedium = Colors.black.withValues(alpha: AppAlpha.fill);
   static Color shadowDeep = Colors.black.withValues(alpha: 0.42);
+}
+
+/// Semantic alpha tiers for tinted overlays on any color. Names encode
+/// *what the overlay is for*, not the numeric value — so a rebrand can
+/// tune the ramp centrally.
+///
+/// Use as `myColor.withValues(alpha: AppAlpha.hover)`. Fine-tuned outlier
+/// values (0.045, 0.72, etc.) that the design deliberately calls for
+/// stay inline — the scale is for the common case, not every leaf.
+class AppAlpha {
+  AppAlpha._();
+
+  /// 0.06 — barely-there rim / hairline fill on a canvas.
+  static const double whisper = 0.06;
+
+  /// 0.12 — hover state tint / subtle overlay.
+  static const double hover = 0.12;
+
+  /// 0.25 — visible fill / backdrop tint / soft shadow layer.
+  static const double fill = 0.25;
+
+  /// 0.35 — border tint / focus ring / mid overlay.
+  static const double border = 0.35;
+
+  /// 0.65 — prominent text/icon opacity on a matched surface.
+  static const double prominent = 0.65;
+
+  /// 0.88 — near-solid overlay for hero fills / opaque glass.
+  static const double solid = 0.88;
 }

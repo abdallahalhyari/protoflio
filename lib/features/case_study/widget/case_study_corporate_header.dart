@@ -180,9 +180,9 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                   color: _hovered
                       ? (isDark
                           ? primary.withValues(alpha: 0.22)
-                          : primary.withValues(alpha: 0.12))
+                          : primary.withValues(alpha: AppAlpha.hover))
                       : (isDark
-                          ? Colors.white.withValues(alpha: 0.06)
+                          ? Colors.white.withValues(alpha: AppAlpha.whisper)
                           : AppColors.slate100),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(
@@ -320,9 +320,9 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
                   color: _hovered
                       ? (isDark
                           ? accent.withValues(alpha: 0.22)
-                          : accent.withValues(alpha: 0.12))
+                          : accent.withValues(alpha: AppAlpha.hover))
                       : (isDark
-                          ? Colors.white.withValues(alpha: 0.06)
+                          ? Colors.white.withValues(alpha: AppAlpha.whisper)
                           : AppColors.slate100),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(

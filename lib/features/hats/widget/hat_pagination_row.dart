@@ -29,7 +29,7 @@ class HatPaginationRow extends StatelessWidget {
         OutlinedButton.icon(
           onPressed: onPrev,
           style: OutlinedButton.styleFrom(
-            foregroundColor: primary.withValues(alpha: 0.35),
+            foregroundColor: primary.withValues(alpha: AppAlpha.border),
             side: const BorderSide(color: AppColors.hatGold),
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
             visualDensity: VisualDensity.compact,
@@ -67,7 +67,7 @@ class HatPaginationRow extends StatelessWidget {
         OutlinedButton.icon(
           onPressed: onNext,
           style: OutlinedButton.styleFrom(
-            foregroundColor: primary.withValues(alpha: 0.35),
+            foregroundColor: primary.withValues(alpha: AppAlpha.border),
             side: const BorderSide(color: AppColors.hatGold),
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
             visualDensity: VisualDensity.compact,

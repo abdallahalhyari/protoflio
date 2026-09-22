@@ -131,7 +131,7 @@ class SkillCategoryFilters extends StatelessWidget {
           onSelectCategory(cat);
         },
         borderRadius: BorderRadius.circular(AppRadius.sm),
-        focusColor: color.withValues(alpha: 0.25),
+        focusColor: color.withValues(alpha: AppAlpha.fill),
         child: AnimatedContainer(
           duration: AppMotion.chipHover,
           curve: AppMotion.emphasized,

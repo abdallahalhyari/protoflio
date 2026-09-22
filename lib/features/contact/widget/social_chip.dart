@@ -30,10 +30,10 @@ class SocialChip extends StatelessWidget {
         ),
       ),
       style: OutlinedButton.styleFrom(
-        foregroundColor: isDark ? Colors.white : AppColors.slate900,
+        foregroundColor: context.onSurface,
         side: BorderSide(
           color: isDark
-              ? Colors.white.withValues(alpha: 0.35)
+              ? Colors.white.withValues(alpha: AppAlpha.border)
               : AppColors.slate300,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
