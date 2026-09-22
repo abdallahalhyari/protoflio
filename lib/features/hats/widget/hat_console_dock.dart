@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/tokens.dart';
@@ -44,13 +45,10 @@ class HatConsoleDock extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: (isDark ? const Color(0xFF0F172A) : Colors.white)
-                  .withValues(alpha: 0.85),
+              color: context.modalSurface.withValues(alpha: 0.85),
               borderRadius: BorderRadius.circular(AppRadius.lg),
               border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.12)
-                    : AppColors.slate200,
+                color: context.divider,
                 width: 1.2,
               ),
               boxShadow: [
@@ -151,7 +149,7 @@ class HatConsoleDock extends StatelessWidget {
                           currentHat.title.toUpperCase(),
                           style: TextStyle(
                             fontFamily: AppTypography.monoFont,
-                            color: isDark ? Colors.white : AppColors.slate900,
+                            color: context.onSurface,
                             fontSize: AppTypography.editorialSm,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 1.0,
@@ -197,7 +195,7 @@ class HatConsoleDock extends StatelessWidget {
                   Container(
                     width: 1,
                     height: 18,
-                    color: isDark ? Colors.white24 : AppColors.slate300,
+                    color: context.glassBorderStrong,
                   ),
                   const SizedBox(width: AppSpacing.sm),
 
@@ -238,7 +236,7 @@ class HatConsoleDock extends StatelessWidget {
                   Container(
                     width: 1,
                     height: 18,
-                    color: isDark ? Colors.white24 : AppColors.slate300,
+                    color: context.glassBorderStrong,
                   ),
                   const SizedBox(width: AppSpacing.sm),
 
@@ -263,15 +261,15 @@ class HatConsoleDock extends StatelessWidget {
                         Icon(
                           Icons.keyboard_outlined,
                           size: 13,
-                          color: isDark ? Colors.white54 : AppColors.slate500,
+                          color: context.subtleText,
                         ),
                         const SizedBox(width: 5),
                         Text(
                           loc.perspectiveShortcutsHint,
                           style: TextStyle(
                             fontFamily: AppTypography.monoFont,
-                            fontSize: 10,
-                            color: isDark ? Colors.white54 : AppColors.slate500,
+                            fontSize: AppTypography.micro,
+                            color: context.subtleText,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

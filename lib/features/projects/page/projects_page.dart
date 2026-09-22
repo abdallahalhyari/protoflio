@@ -11,6 +11,7 @@ import 'package:profile/features/projects/bloc/projects_filter_state.dart';
 import 'package:profile/features/projects/data/projects_data.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
 import 'package:profile/features/projects/widget/interactive_project_card.dart';
+import 'package:profile/features/projects/model/project.dart';
 import 'package:profile/features/projects/widget/project_domain_filters.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
 
@@ -114,17 +115,18 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             verticalPadding: AppSpacing.xl,
             reserveBottomNav: !widget.isContinuousMobile,
             reserveMobileTop: !widget.isContinuousMobile,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.zero,
+            child: CustomScrollView(
+              shrinkWrap: widget.isContinuousMobile,
               physics: widget.isContinuousMobile
                   ? const NeverScrollableScrollPhysics()
                   : null,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildHeader(scheme, loc, size, isDesktop),
-                  const SizedBox(height: AppSpacing.md),
-                  ProjectDomainFilters(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: _buildHeader(scheme, loc, size, isDesktop),
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
+                SliverToBoxAdapter(
+                  child: ProjectDomainFilters(
                     domains: _domains,
                     selectedDomain: selectedDomain,
                     selectedTech: selectedTech,
@@ -147,237 +149,121 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                       });
                     },
                   ),
-                  const SizedBox(height: AppSpacing.lg),
-                  AnimatedSwitcher(
-                    duration: AppMotion.cardHover,
-                    switchInCurve: AppMotion.emphasized,
-                    switchOutCurve: AppMotion.standard,
-                    layoutBuilder: (currentChild, previousChildren) => Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        ...previousChildren,
-                        if (currentChild != null) currentChild,
-                      ],
-                    ),
-                    transitionBuilder: (child, animation) {
-                      final reduceMotion = AppMedia.reduceMotion(context);
-                      if (reduceMotion) {
-                        return FadeTransition(opacity: animation, child: child);
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
+                SliverToBoxAdapter(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (filteredProjects.isEmpty) {
+                        return _buildEmptyState(context, scheme, isDesktop);
                       }
-                      return FadeTransition(
-                        opacity: CurvedAnimation(
-                          parent: animation,
-                          curve:
-                              const Interval(0.15, 1.0, curve: Curves.easeOut),
-                        ),
-                        child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0, 0.02),
-                            end: Offset.zero,
-                          ).animate(CurvedAnimation(
-                            parent: animation,
-                            curve: AppMotion.emphasized,
-                          )),
-                          child: child,
-                        ),
+
+                      if (isDesktop) {
+                        const double spacing = AppSpacing.lg;
+                        final double itemWidth =
+                            (constraints.maxWidth - spacing) / 2;
+
+                        return Wrap(
+                          spacing: spacing,
+                          runSpacing: spacing,
+                          children: [
+                            for (int i = 0; i < filteredProjects.length; i++)
+                              SizedBox(
+                                width: itemWidth,
+                                height: 380,
+                                child: _buildProjectItem(
+                                  project: filteredProjects[i],
+                                  scheme: scheme,
+                                  isDesktop: isDesktop,
+                                  selectedTech: selectedTech,
+                                  isMobileSelected: false,
+                                ),
+                              ),
+                          ],
+                        );
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          for (int i = 0; i < filteredProjects.length; i++) ...[
+                            _buildProjectItem(
+                              project: filteredProjects[i],
+                              scheme: scheme,
+                              isDesktop: isDesktop,
+                              selectedTech: selectedTech,
+                              isMobileSelected: i == _mobileSelectedIndex,
+                            ),
+                            if (i < filteredProjects.length - 1)
+                              const SizedBox(height: AppSpacing.md),
+                          ],
+                        ],
                       );
                     },
-                    child: KeyedSubtree(
-                      key: ValueKey(
-                          'grid_${selectedDomain}_${selectedTech ?? "none"}'),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: filteredProjects.isEmpty
-                            ? _buildEmptyState(context, scheme, isDesktop)
-                            : isDesktop
-                                ? Column(
-                                    children: [
-                                      for (int i = 0;
-                                          i < filteredProjects.length;
-                                          i += 2) ...[
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: SizedBox(
-                                                height: 380,
-                                                child: InteractiveProjectCard(
-                                                  project: filteredProjects[i],
-                                                  index: kProjects.indexOf(
-                                                      filteredProjects[i]),
-                                                  scheme: scheme,
-                                                  isDesktop: isDesktop,
-                                                  selectedTech: selectedTech,
-                                                  onSelectTech: (tech) {
-                                                    context
-                                                        .read<
-                                                            ProjectsFilterBloc>()
-                                                        .add(TechFilterToggled(
-                                                            tech));
-                                                    setState(() {
-                                                      _mobileSelectedIndex = 0;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                                width: AppSpacing.lg),
-                                            if (i + 1 < filteredProjects.length)
-                                              Expanded(
-                                                child: SizedBox(
-                                                  height: 380,
-                                                  child: InteractiveProjectCard(
-                                                    project:
-                                                        filteredProjects[i + 1],
-                                                    index: kProjects.indexOf(
-                                                        filteredProjects[
-                                                            i + 1]),
-                                                    scheme: scheme,
-                                                    isDesktop: isDesktop,
-                                                    selectedTech: selectedTech,
-                                                    onSelectTech: (tech) {
-                                                      context
-                                                          .read<
-                                                              ProjectsFilterBloc>()
-                                                          .add(
-                                                              TechFilterToggled(
-                                                                  tech));
-                                                      setState(() {
-                                                        _mobileSelectedIndex =
-                                                            0;
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              )
-                                            else
-                                              const Spacer(),
-                                          ],
-                                        ),
-                                        if (i + 2 < filteredProjects.length)
-                                          const SizedBox(height: AppSpacing.lg),
-                                      ],
-                                    ],
-                                  )
-                                : Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      for (int i = 0;
-                                          i < filteredProjects.length;
-                                          i++) ...[
-                                        Container(
-                                          decoration: i == _mobileSelectedIndex
-                                              ? BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppRadius.md),
-                                                  border: Border.all(
-                                                    color: scheme.primary
-                                                        .withValues(
-                                                            alpha: 0.35),
-                                                    width: 1,
-                                                  ),
-                                                )
-                                              : null,
-                                          child: InteractiveProjectCard(
-                                            project: filteredProjects[i],
-                                            index: kProjects
-                                                .indexOf(filteredProjects[i]),
-                                            scheme: scheme,
-                                            isDesktop: isDesktop,
-                                            selectedTech: selectedTech,
-                                            onSelectTech: (tech) {
-                                              context
-                                                  .read<ProjectsFilterBloc>()
-                                                  .add(TechFilterToggled(tech));
-                                              setState(() {
-                                                _mobileSelectedIndex = 0;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        if (i < filteredProjects.length - 1)
-                                          const SizedBox(height: AppSpacing.md),
-                                      ],
-                                      if (filteredProjects.length > 1) ...[
-                                        const SizedBox(height: AppSpacing.md),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            OutlinedButton.icon(
-                                              onPressed: () => setState(() {
-                                                _mobileSelectedIndex =
-                                                    (_mobileSelectedIndex -
-                                                            1 +
-                                                            filteredProjects
-                                                                .length) %
-                                                        filteredProjects.length;
-                                              }),
-                                              style: OutlinedButton.styleFrom(
-                                                minimumSize: const Size(88, 36),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal:
-                                                            AppSpacing.md),
-                                              ),
-                                              icon: const DirIcon(
-                                                  Icons.chevron_left_rounded,
-                                                  size: 16),
-                                              label: Text(loc.previousAction),
-                                            ),
-                                            Flexible(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal:
-                                                            AppSpacing.sm),
-                                                child: Text(
-                                                  'CASE ${(_mobileSelectedIndex + 1).clamp(1, filteredProjects.length)}/${filteredProjects.length}',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: scheme.primary,
-                                                    fontFamily:
-                                                        AppTypography.monoFont,
-                                                    fontWeight: FontWeight.w900,
-                                                    letterSpacing: 1.2,
-                                                    fontSize:
-                                                        AppTypography.micro,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            OutlinedButton.icon(
-                                              onPressed: () => setState(() {
-                                                _mobileSelectedIndex =
-                                                    (_mobileSelectedIndex + 1) %
-                                                        filteredProjects.length;
-                                              }),
-                                              style: OutlinedButton.styleFrom(
-                                                minimumSize: const Size(88, 36),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal:
-                                                            AppSpacing.md),
-                                              ),
-                                              icon: const DirIcon(
-                                                  Icons.chevron_right_rounded,
-                                                  size: 16),
-                                              label: Text(loc.nextAction),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ],
-                                  ),
-                      ),
-                    ),
                   ),
-                ],
-              ),
+                ),
+                if (!isDesktop && filteredProjects.length > 1) ...[
+                  const SliverToBoxAdapter(
+                      child: SizedBox(height: AppSpacing.md)),
+                  SliverToBoxAdapter(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        OutlinedButton.icon(
+                          onPressed: () => setState(() {
+                            _mobileSelectedIndex = (_mobileSelectedIndex -
+                                    1 +
+                                    filteredProjects.length) %
+                                filteredProjects.length;
+                          }),
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(88, 36),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.md,
+                            ),
+                          ),
+                          icon: const DirIcon(Icons.chevron_left_rounded,
+                              size: 16),
+                          label: Text(loc.previousAction),
+                        ),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.sm,
+                            ),
+                            child: Text(
+                              'CASE ${(_mobileSelectedIndex + 1).clamp(1, filteredProjects.length)}/${filteredProjects.length}',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: scheme.primary,
+                                fontFamily: AppTypography.monoFont,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 1.2,
+                                fontSize: AppTypography.micro,
+                              ),
+                            ),
+                          ),
+                        ),
+                        OutlinedButton.icon(
+                          onPressed: () => setState(() {
+                            _mobileSelectedIndex = (_mobileSelectedIndex + 1) %
+                                filteredProjects.length;
+                          }),
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(88, 36),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.md,
+                            ),
+                          ),
+                          icon: const DirIcon(Icons.chevron_right_rounded,
+                              size: 16),
+                          label: Text(loc.nextAction),
+                        ),
+                      ],
+                                        ),
+                                      ),
+                                    ],
+              ],
             ),
           ),
         );
@@ -415,7 +301,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             textAlign: TextAlign.center,
             style: TextStyle(
               color: scheme.onSurface.withValues(alpha: 0.7),
-              fontSize: 13,
+              fontSize: AppTypography.small,
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -469,7 +355,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             Expanded(
               child: Container(
                   height: 1,
-                  color: isDark ? Colors.white24 : AppColors.slate300),
+                  color: context.glassBorderStrong),
             ),
           ],
         ),
@@ -491,7 +377,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             loc.navProjects,
             style: TextStyle(
               fontFamily: AppTypography.displayFont,
-              color: isDark ? Colors.white : AppColors.slate900,
+              color: context.onSurface,
               fontSize: isDesktop ? 48 : 36,
               fontWeight: FontWeight.w900,
               letterSpacing: -0.5,
@@ -511,6 +397,39 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildProjectItem({
+    required Project project,
+    required ColorScheme scheme,
+    required bool isDesktop,
+    required String? selectedTech,
+    required bool isMobileSelected,
+  }) {
+    return Container(
+      decoration: isMobileSelected
+          ? BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              border: Border.all(
+                color: scheme.primary.withValues(alpha: 0.35),
+                width: 1,
+              ),
+            )
+          : null,
+      child: InteractiveProjectCard(
+        project: project,
+        index: kProjects.indexOf(project),
+        scheme: scheme,
+        isDesktop: isDesktop,
+        selectedTech: selectedTech,
+        onSelectTech: (tech) {
+          context.read<ProjectsFilterBloc>().add(TechFilterToggled(tech));
+          setState(() {
+            _mobileSelectedIndex = 0;
+          });
+        },
+      ),
     );
   }
 }

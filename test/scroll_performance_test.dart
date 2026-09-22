@@ -12,7 +12,7 @@ void main() {
     testWidgets(
         'MaterialApp uses SmoothScrollBehavior with normal deceleration',
         (tester) async {
-      await tester.pumpWidget(const PortfolioApp());
+      await tester.pumpWidget(const PortfolioApp(initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
       await tester.pump(const Duration(milliseconds: 100));
 
       final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
@@ -115,27 +115,27 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
 
-      await tester.pumpWidget(const PortfolioApp());
+      await tester.pumpWidget(const PortfolioApp(initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
       await tester.pump(const Duration(milliseconds: 300));
 
       final pageView = tester.widget<PageView>(find.byType(PageView));
       expect(pageView.controller!.page!.round(), 0);
 
-      // Scroll down partially (50px, below threshold 80px)
+      // Scroll down partially (80px, below threshold 140px)
       await tester.sendEventToBinding(
         const PointerScrollEvent(
           position: Offset(600, 400),
-          scrollDelta: Offset(0, 50),
+          scrollDelta: Offset(0, 80),
         ),
       );
       await tester.pump(const Duration(milliseconds: 50));
       expect(pageView.controller!.page!.round(), 0);
 
-      // Scroll down another 50px to exceed 80px threshold -> should advance to page 1
+      // Scroll down another 80px to exceed 140px threshold -> should advance to page 1
       await tester.sendEventToBinding(
         const PointerScrollEvent(
           position: Offset(600, 400),
-          scrollDelta: Offset(0, 50),
+          scrollDelta: Offset(0, 80),
         ),
       );
       for (int i = 0; i < 15; i++) {

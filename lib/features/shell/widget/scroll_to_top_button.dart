@@ -27,13 +27,13 @@ class ScrollToTopButton extends StatelessWidget {
               SoundService.instance.playClick();
               onPressed();
             },
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
             child: Container(
               width: 44,
               height: 44,
               decoration: BoxDecoration(
                 color: context.glassRaised,
-                borderRadius: BorderRadius.circular(22),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: Border.all(
                   color: AppColors.accentIndigo
                       .withValues(alpha: isDark ? 0.5 : 0.4),

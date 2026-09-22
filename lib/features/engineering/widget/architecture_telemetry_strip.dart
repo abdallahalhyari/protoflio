@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:profile/service/sound_service.dart';
+import 'package:profile/shared/widget/app_toast.dart';
+import 'package:profile/shared/widget/status_badge.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
 
@@ -19,15 +22,13 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final payload = step.telemetryPayload ?? 'NO PAYLOAD DATA';
     final status = step.telemetryStatus ?? 'OK';
     final latency = step.latencyBudget ?? '< 10ms';
 
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF090D16) : AppColors.slate900,
+        color: context.terminalSurface,
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(
           color: accentColor.withValues(alpha: 0.3),
@@ -60,26 +61,14 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Row(
+                const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                            color: Color(0xFFEF4444), shape: BoxShape.circle)),
-                    const SizedBox(width: 5),
-                    Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                            color: Color(0xFFF59E0B), shape: BoxShape.circle)),
-                    const SizedBox(width: 5),
-                    Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                            color: Color(0xFF10B981), shape: BoxShape.circle)),
+                    StatusBadge.dot(status: BadgeStatus.critical),
+                    SizedBox(width: 5),
+                    StatusBadge.dot(status: BadgeStatus.warn),
+                    SizedBox(width: 5),
+                    StatusBadge.dot(status: BadgeStatus.ok),
                   ],
                 ),
                 const SizedBox(width: 10),
@@ -90,7 +79,7 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontFamily: AppTypography.monoFont,
-                      fontSize: 10,
+                      fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w800,
                       color: accentColor,
                       letterSpacing: 0.8,
@@ -103,12 +92,11 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
                     onTap: () {
                       SoundService.instance.playClick();
                       Clipboard.setData(ClipboardData(text: payload));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Copied telemetry: $payload'),
-                          duration: const Duration(seconds: 2),
-                          behavior: SnackBarBehavior.floating,
-                        ),
+                      AppToast.show(
+                        context,
+                        message: 'Copied telemetry: $payload',
+                        status: ToastStatus.ok,
+                        duration: const Duration(seconds: 2),
                       );
                     },
                     child: Padding(
@@ -143,7 +131,7 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
                         payload,
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
-                          color: const Color(0xFFE2E8F0),
+                          color: AppColors.slate200,
                           fontSize: isDesktop ? 12 : 10.5,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 0.5,
@@ -160,7 +148,7 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
                     _TelemetryBadge(
                       label: 'STATUS',
                       value: status,
-                      color: const Color(0xFF34D399),
+                      color: AppColors.statusOkLight,
                     ),
                     _TelemetryBadge(
                       label: 'LATENCY',
@@ -170,7 +158,7 @@ class ArchitectureTelemetryStrip extends StatelessWidget {
                     _TelemetryBadge(
                       label: 'GATE',
                       value: 'STRICT_PASS',
-                      color: const Color(0xFF38BDF8),
+                      color: AppColors.statusInfo,
                     ),
                   ],
                 ),
@@ -211,17 +199,21 @@ class _TelemetryBadge extends StatelessWidget {
             style: TextStyle(
               fontFamily: AppTypography.monoFont,
               color: Colors.white.withValues(alpha: 0.6),
-              fontSize: 9,
+              fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w700,
             ),
           ),
-          Text(
-            value,
-            style: TextStyle(
-              fontFamily: AppTypography.monoFont,
-              color: color,
-              fontSize: 9,
-              fontWeight: FontWeight.w900,
+          Flexible(
+            child: Text(
+              value,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(
+                fontFamily: AppTypography.monoFont,
+                color: color,
+                fontSize: AppTypography.editorialSm,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
         ],

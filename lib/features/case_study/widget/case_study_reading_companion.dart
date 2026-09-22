@@ -427,7 +427,7 @@ class _DockDivider extends StatelessWidget {
     return Container(
       width: 1,
       height: 18,
-      color: isDark ? Colors.white24 : AppColors.slate300,
+      color: context.glassBorderStrong,
     );
   }
 }
@@ -523,7 +523,7 @@ class _ChapterPillState extends State<_ChapterPill> {
       label: 'Chapter ${widget.chapter.label}',
       child: Tooltip(
         message: 'Jump to ${widget.chapter.label}',
-        waitDuration: const Duration(milliseconds: 300),
+        waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => setState(() => _hovered = true),
@@ -606,10 +606,8 @@ class _ChapterPillState extends State<_ChapterPill> {
                                 ? AppColors.accentCyan
                                 : AppColors.accentCyanDeep)
                             : (_hovered
-                                ? (isDark ? Colors.white : AppColors.slate900)
-                                : (isDark
-                                    ? Colors.white70
-                                    : AppColors.slate600)),
+                                ? (context.onSurface)
+                                : (context.mutedText)),
                       ),
                     ),
                   ],
@@ -650,7 +648,7 @@ class _BackToTopPillState extends State<_BackToTopPill> {
       label: 'Back to top',
       child: Tooltip(
         message: 'Back to top',
-        waitDuration: const Duration(milliseconds: 300),
+        waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => setState(() => _hovered = true),
@@ -704,7 +702,7 @@ class _BackToTopPillState extends State<_BackToTopPill> {
                       size: 13,
                       color: _hovered
                           ? (isDark ? Colors.white : AppColors.accentGreenDeep)
-                          : (isDark ? Colors.white70 : AppColors.slate600),
+                          : (context.mutedText),
                     ),
                     if (!widget.isCompact) ...[
                       const SizedBox(width: 4),
@@ -719,7 +717,7 @@ class _BackToTopPillState extends State<_BackToTopPill> {
                               ? (isDark
                                   ? Colors.white
                                   : AppColors.accentGreenDeep)
-                              : (isDark ? Colors.white70 : AppColors.slate600),
+                              : (context.mutedText),
                         ),
                       ),
                     ],

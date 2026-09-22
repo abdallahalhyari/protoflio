@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
@@ -7,6 +8,7 @@ import 'package:profile/service/analytics_service.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/features/case_study/case_study_router.dart';
 import '../model/project.dart';
+import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
 import 'package:profile/features/projects/widget/nfc_architecture_diagram.dart';
 import 'package:profile/features/projects/widget/pipeline_topology_diagram.dart';
@@ -80,11 +82,10 @@ class _ProjectCaseStudyModal extends StatelessWidget {
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok && context.mounted) {
       final loc = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(loc.projectOpenError(url)),
-          behavior: SnackBarBehavior.floating,
-        ),
+      AppToast.show(
+        context,
+        message: loc.projectOpenError(url),
+        status: ToastStatus.critical,
       );
     }
   }
@@ -391,9 +392,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                 project.name.toUpperCase(),
                                 style: TextStyle(
                                   fontFamily: AppTypography.displayFont,
-                                  color: isDark
-                                      ? Colors.white
-                                      : AppColors.slate900,
+                                  color: context.onSurface,
                                   fontSize: isDesktop ? 38 : 28,
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 2.5,
@@ -492,9 +491,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                             const SizedBox(height: AppSpacing.sm),
                             Container(
                                 height: 1,
-                                color: isDark
-                                    ? Colors.white12
-                                    : AppColors.slate200),
+                                color: context.divider),
                             const SizedBox(height: AppSpacing.md),
 
                             // 3. Key Highlights & Measurable Results
@@ -572,9 +569,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                       borderRadius:
                                           BorderRadius.circular(AppRadius.xs),
                                       border: Border.all(
-                                          color: isDark
-                                              ? Colors.white12
-                                              : AppColors.slate200),
+                                          color: context.divider),
                                     ),
                                     child: Text(
                                       tech.toUpperCase(),

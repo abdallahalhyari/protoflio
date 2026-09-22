@@ -152,14 +152,12 @@ class _DomainChipState extends State<_DomainChip> {
         ? scheme.primary.withValues(alpha: isDark ? 0.7 : 0.6)
         : (isInteractive
             ? scheme.primary.withValues(alpha: isDark ? 0.45 : 0.35)
-            : (isDark
-                ? Colors.white.withValues(alpha: 0.12)
-                : AppColors.slate200));
+            : (context.divider));
 
     final textColor = isSelected
         ? context.adaptiveAccentText(scheme.primary)
         : (isInteractive
-            ? (isDark ? Colors.white : AppColors.slate900)
+            ? (context.onSurface)
             : (isDark
                 ? Colors.white.withValues(alpha: 0.85)
                 : AppColors.slate700));
@@ -241,9 +239,7 @@ class _DomainChipState extends State<_DomainChip> {
                             : (isInteractive
                                 ? scheme.primary
                                     .withValues(alpha: isDark ? 0.15 : 0.1)
-                                : (isDark
-                                    ? Colors.white12
-                                    : AppColors.slate200)),
+                                : (context.divider)),
                         borderRadius: BorderRadius.circular(AppRadius.chip),
                       ),
                       child: Text(
@@ -251,7 +247,7 @@ class _DomainChipState extends State<_DomainChip> {
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
                           color: textColor,
-                          fontSize: 9,
+                          fontSize: AppTypography.editorialSm,
                           fontWeight: FontWeight.w900,
                         ),
                       ),

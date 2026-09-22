@@ -77,7 +77,7 @@ class KeyboardHintChip extends StatelessWidget {
                     'SHORTCUTS [?]',
                     style: TextStyle(
                       fontFamily: AppTypography.monoFont,
-                      fontSize: 10,
+                      fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0.8,
                       color: context.mutedText,

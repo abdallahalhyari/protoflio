@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/core/bloc/locale/locale_bloc.dart';
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/main.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/intro/page/intro_page.dart';
@@ -21,16 +25,24 @@ Widget createThemedTestApp({
   required Brightness brightness,
   Size size = const Size(1200, 900),
 }) {
-  return MaterialApp(
-    theme: AppTheme.light(),
-    darkTheme: AppTheme.dark(),
-    themeMode: brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light,
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    home: MediaQuery(
-      data: MediaQueryData(size: size),
-      child: Scaffold(
-        body: child,
+  final mode = brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+  return MultiBlocProvider(
+    providers: [
+      BlocProvider<ThemeBloc>(create: (_) => ThemeBloc(initialMode: mode)),
+      BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
+      BlocProvider<NavigationBloc>(create: (_) => NavigationBloc()),
+    ],
+    child: MaterialApp(
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
+      themeMode: mode,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: MediaQuery(
+        data: MediaQueryData(size: size),
+        child: Scaffold(
+          body: child,
+        ),
       ),
     ),
   );
@@ -209,7 +221,7 @@ void main() {
       ]) {
         tester.view.devicePixelRatio = 1.0;
         tester.view.physicalSize = size;
-        await tester.pumpWidget(const PortfolioApp());
+        await tester.pumpWidget(PortfolioApp(key: ValueKey(size), initialTheme: ThemeMode.dark, initialLocale: const Locale('en')));
         await tester.pump(const Duration(milliseconds: 300));
 
         final themeBtnFinder = find.byWidgetPredicate((w) =>
@@ -241,11 +253,11 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
       tester.view.physicalSize = const Size(400, 800);
 
-      await tester.pumpWidget(const PortfolioApp());
+      await tester.pumpWidget(const PortfolioApp(initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
       await tester.pump(const Duration(milliseconds: 300));
 
       final scrollable = find.byWidgetPredicate((w) =>
-          w is SingleChildScrollView &&
+          w is ScrollView &&
           w.controller != null &&
           w.scrollDirection == Axis.vertical);
       expect(scrollable, findsOneWidget);
@@ -254,7 +266,7 @@ void main() {
       await tester.drag(scrollable, const Offset(0, -1200));
       await tester.pump(const Duration(milliseconds: 300));
 
-      final scrollableWidget = tester.widget<SingleChildScrollView>(scrollable);
+      final scrollableWidget = tester.widget<ScrollView>(scrollable);
       final offsetBefore = scrollableWidget.controller!.offset;
       expect(offsetBefore, greaterThan(800));
 

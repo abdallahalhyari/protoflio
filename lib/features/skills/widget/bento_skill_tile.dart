@@ -128,7 +128,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(AppRadius.tile),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -170,7 +170,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontFamily: AppTypography.displayFont,
-                          color: isDark ? Colors.white : AppColors.slate900,
+                          color: context.onSurface,
                           fontSize: widget.isDesktop ? 22 : 14,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.2,
@@ -271,7 +271,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(AppRadius.tile),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -300,7 +300,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontFamily: AppTypography.displayFont,
-                              color: isDark ? Colors.white : AppColors.slate900,
+                              color: context.onSurface,
                               fontSize: widget.isDesktop ? 16 : 13,
                               fontWeight: FontWeight.w900,
                             ),

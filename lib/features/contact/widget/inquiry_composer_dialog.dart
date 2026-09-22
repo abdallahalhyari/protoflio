@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/widget/app_toast.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -153,12 +155,11 @@ class _InquiryComposerDialogViewState
     await Clipboard.setData(ClipboardData(text: body));
 
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Inquiry draft copied to clipboard!'),
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(seconds: 2),
-      ),
+    AppToast.show(
+      context,
+      message: 'Inquiry draft copied to clipboard!',
+      status: ToastStatus.ok,
+      duration: const Duration(seconds: 2),
     );
   }
 
@@ -188,7 +189,7 @@ class _InquiryComposerDialogViewState
         final selectedTrack = state.selectedTrackIndex;
 
         return Dialog(
-          backgroundColor: isDark ? const Color(0xFF0F1422) : Colors.white,
+          backgroundColor: context.modalSurface,
           insetPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           shape: RoundedRectangleBorder(
@@ -241,7 +242,7 @@ class _InquiryComposerDialogViewState
                               style: TextStyle(
                                 fontFamily: AppTypography.displayFont,
                                 color:
-                                    isDark ? Colors.white : AppColors.slate900,
+                                    context.onSurface,
                                 fontSize: isDesktop ? 20 : 18,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -331,9 +332,7 @@ class _InquiryComposerDialogViewState
                           side: BorderSide(
                             color: selectedTrack == i
                                 ? scheme.primary
-                                : (isDark
-                                    ? Colors.white12
-                                    : AppColors.slate200),
+                                : (context.divider),
                           ),
                         ),
                     ],

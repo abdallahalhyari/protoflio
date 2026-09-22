@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -101,7 +102,7 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: isDark ? Colors.white : AppColors.slate900,
+                    color: context.onSurface,
                     fontSize: isDesktop ? 13 : 11.5,
                     fontWeight: FontWeight.w700,
                   ),
@@ -134,7 +135,7 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                     icon: const DirIcon(Icons.chevron_left_rounded, size: 16),
                     label: const Text('BACK',
                         style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.w800)),
+                            fontSize: AppTypography.caption, fontWeight: FontWeight.w800)),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -165,7 +166,7 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                         label: Text(
                           isPlaying ? 'PAUSE' : 'AUTO',
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: AppTypography.caption,
                             fontWeight: FontWeight.w900,
                             color: accentColor,
                           ),
@@ -205,7 +206,7 @@ class ArchitectureSimulatorBar extends StatelessWidget {
                     icon: const DirIcon(Icons.chevron_right_rounded, size: 16),
                     label: const Text('NEXT',
                         style: TextStyle(
-                            fontSize: 11, fontWeight: FontWeight.w800)),
+                            fontSize: AppTypography.caption, fontWeight: FontWeight.w800)),
                   ),
                 ),
               ],

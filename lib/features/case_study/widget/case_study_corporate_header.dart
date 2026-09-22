@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/service/sound_service.dart';
+import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
@@ -19,59 +20,10 @@ Future<void> shareCaseStudy(
   await Clipboard.setData(ClipboardData(text: url));
 
   if (!context.mounted) return;
-  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      duration: AppMotion.toast,
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      content: Center(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: AppColors.slate900,
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            border: Border.all(
-              color: AppColors.accentGreen.withValues(alpha: 0.7),
-              width: 1.2,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.5),
-                blurRadius: 20,
-                offset: const Offset(0, 6),
-              ),
-              BoxShadow(
-                color: AppColors.accentGreen.withValues(alpha: 0.25),
-                blurRadius: 14,
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.check_circle_rounded,
-                  color: AppColors.accentGreen, size: 18),
-              const SizedBox(width: 10),
-              Flexible(
-                child: Text(
-                  'Case study link copied: $url',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: AppTypography.small,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
+  AppToast.showGlass(
+    context,
+    message: 'Case study link copied: $url',
+    status: ToastStatus.ok,
   );
 }
 
@@ -209,7 +161,7 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
       label: '${widget.label}: ${widget.tooltip}',
       child: Tooltip(
         message: widget.tooltip,
-        waitDuration: const Duration(milliseconds: 300),
+        waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => setState(() => _hovered = true),
@@ -261,7 +213,7 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                         height: 13,
                         decoration: BoxDecoration(
                           color: AppColors.linkedIn,
-                          borderRadius: BorderRadius.circular(2),
+                          borderRadius: BorderRadius.circular(AppRadius.hairline),
                         ),
                         alignment: Alignment.center,
                         child: const Text(
@@ -281,7 +233,7 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                         size: 13,
                         color: _hovered
                             ? (isDark ? Colors.white : primary)
-                            : (isDark ? Colors.white70 : AppColors.slate600),
+                            : (context.mutedText),
                       ),
                     ],
                     const SizedBox(width: 5),
@@ -348,7 +300,7 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
       label: 'Share direct link to ${widget.title} case study',
       child: Tooltip(
         message: 'Copy direct link to this case study',
-        waitDuration: const Duration(milliseconds: 300),
+        waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => setState(() => _hovered = true),
@@ -400,7 +352,7 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
                       size: 13,
                       color: _hovered
                           ? (isDark ? Colors.white : AppColors.accentGreenDeep)
-                          : (isDark ? Colors.white70 : AppColors.slate600),
+                          : (context.mutedText),
                     ),
                     const SizedBox(width: 5),
                     Text(

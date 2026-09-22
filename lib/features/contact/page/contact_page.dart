@@ -5,7 +5,6 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 import 'package:profile/service/analytics_service.dart';
@@ -20,6 +19,7 @@ import 'package:profile/features/contact/widget/express_presets_bar.dart';
 import 'package:profile/features/contact/widget/hero_email_card.dart';
 import 'package:profile/features/contact/widget/inquiry_composer_dialog.dart';
 import 'package:profile/features/contact/widget/telemetry_bar.dart';
+import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/shared/widget/scrollable_screen_shell.dart';
 
 /// Executive-grade editorial contact dossier and consulting portal.
@@ -53,7 +53,6 @@ class _ContactPageState extends State<ContactPage>
   static const _githubUrl = 'https://github.com/abdallahalhyari';
   static const _githubHandle = 'abdallahalhyari';
 
-  static const _availabilityGreen = AppColors.accentGreen;
 
   Future<void> _open(String url) async {
     SoundService.instance.playClick();
@@ -75,8 +74,7 @@ class _ContactPageState extends State<ContactPage>
     await launchUrl(mailUri, mode: LaunchMode.externalApplication);
   }
 
-  Future<void> _copy(BuildContext context, String value,
-      {bool isDark = true}) async {
+  Future<void> _copy(BuildContext context, String value) async {
     SoundService.instance.playClick();
     await Clipboard.setData(ClipboardData(text: value));
     if (!context.mounted) return;
@@ -93,61 +91,11 @@ class _ContactPageState extends State<ContactPage>
       ),
     );
 
-    // Elevated floating glass toast
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        duration: AppMotion.toast,
-        margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
-        content: Center(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            decoration: BoxDecoration(
-              color: isDark ? AppColors.slate900 : Colors.white,
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              border: Border.all(
-                color: (isDark ? _availabilityGreen : AppColors.accentGreenDeep)
-                    .withValues(alpha: 0.65),
-                width: 1.2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: isDark ? 0.45 : 0.12),
-                  blurRadius: 24,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.check_circle_rounded,
-                    color:
-                        isDark ? _availabilityGreen : AppColors.accentGreenDeep,
-                    size: 18),
-                const SizedBox(width: 10),
-                Flexible(
-                  child: Text(
-                    AppLocalizations.of(context)?.emailCopied(value) ??
-                        'Copied: $value',
-                    style: TextStyle(
-                      color: isDark ? Colors.white : AppColors.slate900,
-                      fontSize: AppTypography.overlineTight,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.3,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    AppToast.showGlass(
+      context,
+      message: AppLocalizations.of(context)?.emailCopied(value) ??
+          'Copied: $value',
+      status: ToastStatus.ok,
     );
   }
 
@@ -156,7 +104,6 @@ class _ContactPageState extends State<ContactPage>
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
-    final isDark = context.isDarkMode;
 
     // Redesigned flow — hero above the fold, recruiter-friendly path
     // (email + CV) prioritized, dense sections regrouped into a
@@ -176,7 +123,7 @@ class _ContactPageState extends State<ContactPage>
           onSendEmail: () => _openMail(
             subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
           ),
-          onCopyEmail: () => _copy(context, _email, isDark: isDark),
+          onCopyEmail: () => _copy(context, _email),
           onComposeInquiry: () => unawaited(
             showInquiryComposerDialog(context, initialTrackIndex: 0),
           ),
@@ -207,7 +154,7 @@ class _ContactPageState extends State<ContactPage>
           githubUrl: _githubUrl,
           isDesktop: isDesktop,
           onOpenUrl: (url) => unawaited(_open(url)),
-          onCopy: (value) => _copy(context, value, isDark: isDark),
+          onCopy: (value) => _copy(context, value),
         ),
         const SizedBox(height: AppSpacing.xl),
         // 4. Recruiter-priority CV download.

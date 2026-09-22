@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -69,12 +70,11 @@ class _ArchitectureInspectDialogState
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final isDark = scheme.brightness == Brightness.dark;
     final size = MediaQuery.sizeOf(context);
     final currentStepObj = widget.topic.diagramSteps[_step];
 
     return Dialog(
-      backgroundColor: isDark ? const Color(0xFF0C101B) : Colors.white,
+      backgroundColor: context.modalSurface,
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -123,8 +123,8 @@ class _ArchitectureInspectDialogState
                           widget.topic.title,
                           style: TextStyle(
                             fontFamily: AppTypography.displayFont,
-                            color: isDark ? Colors.white : AppColors.slate900,
-                            fontSize: 18,
+                            color: context.onSurface,
+                            fontSize: AppTypography.titleSm,
                             fontWeight: FontWeight.w800,
                           ),
                         ),

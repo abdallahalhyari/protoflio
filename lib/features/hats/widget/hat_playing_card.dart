@@ -249,7 +249,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
             width: 255,
             height: 370,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(AppRadius.playingCard),
               border: Border.all(
                 color: _isHovered
                     ? accent.withValues(alpha: 1)
@@ -426,7 +426,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
             width: 255,
             height: 370,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(AppRadius.playingCard),
               // Border now uses the hat's own accent instead of the
               // universal yellow — makes the back read as the "same
               // card" flipped rather than a different card entirely.

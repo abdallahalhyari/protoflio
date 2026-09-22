@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 import 'tokens.dart';
+import 'components/button_theme.dart';
+import 'components/input_theme.dart';
+import 'components/surface_theme.dart';
+import 'components/text_theme.dart';
 
 /// App-wide light + dark ThemeData composed from tokens in [tokens.dart].
 class AppTheme {
@@ -27,10 +30,15 @@ class AppTheme {
 
   static ThemeData _base(Brightness brightness, Color seedColor) {
     final isDark = brightness == Brightness.dark;
+    final dynamicLightSurface = Color.alphaBlend(
+      seedColor.withValues(alpha: 0.03),
+      Colors.white,
+    );
+
     final baseScheme = ColorScheme.fromSeed(
       seedColor: seedColor,
       brightness: brightness,
-      surface: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+      surface: isDark ? AppColors.darkSurface : dynamicLightSurface,
     );
 
     // In dark mode, ColorScheme.fromSeed washes out the primary into a muted tone-80 pastel.
@@ -45,62 +53,46 @@ class AppTheme {
             surfaceContainerHigh: AppColors.darkSurfaceElevated,
           )
         : baseScheme.copyWith(
-            surface: AppColors.lightSurface,
+            surface: dynamicLightSurface,
             onSurface: AppColors.slate900,
           );
 
-    // Focus-visible ring: shows a 2px seed-tinted outline whenever an
-    // interactive element gains keyboard focus. Uses WidgetStateProperty
-    // so the border only appears in the focused state — mouse/touch users
-    // never see it.
-    final focusBorder = WidgetStateProperty.resolveWith<BorderSide?>((states) {
-      if (states.contains(WidgetState.focused)) {
-        return BorderSide(color: scheme.primary, width: 2);
-      }
-      return null;
-    });
+    final textTheme = AppTextTheme.build(scheme, isDark);
+    final buttonStyle = AppButtonTheme.style(scheme);
 
-    final baseText = isDark
-        ? Typography.material2021().white
-        : Typography.material2021().black;
+    final cardGlassColor = isDark
+        ? AppColors.darkCard.withValues(alpha: 0.88)
+        : dynamicLightSurface;
+
+    final dividerColor = isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200;
+    final glassBorderColor = isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200;
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: scheme,
-      scaffoldBackgroundColor:
-          isDark ? AppColors.darkSurface : AppColors.lightSurface,
+      scaffoldBackgroundColor: isDark ? AppColors.darkSurface : dynamicLightSurface,
       focusColor: scheme.primary.withValues(alpha: 0.24),
-      cardTheme: CardThemeData(
-        color: isDark
-            ? AppColors.darkCard.withValues(alpha: 0.88)
-            : Colors.white.withValues(alpha: 0.92),
-        elevation: isDark ? 0 : 1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          side: BorderSide(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.10)
-                : AppColors.slate200,
-            width: 1,
-          ),
-        ),
+      textTheme: textTheme,
+      
+      // Delegated to components
+      cardTheme: AppSurfaceTheme.card(cardGlassColor, glassBorderColor, isDark),
+      dialogTheme: AppSurfaceTheme.dialog(cardGlassColor, glassBorderColor, isDark),
+      bottomSheetTheme: AppSurfaceTheme.bottomSheet(cardGlassColor, isDark),
+      inputDecorationTheme: AppInputTheme.build(scheme, isDark),
+      chipTheme: AppSurfaceTheme.chip(textTheme, glassBorderColor, isDark),
+      tooltipTheme: AppSurfaceTheme.tooltip(isDark),
+      
+      dividerTheme: DividerThemeData(
+        color: dividerColor,
+        thickness: 1,
+        space: 1,
       ),
-      textTheme: baseText.copyWith(
-        bodyMedium: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.body,
-        ),
-        titleMedium: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.title,
-          fontWeight: FontWeight.w700,
-        ),
-        headlineMedium: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.heading,
-          fontWeight: FontWeight.w900,
-        ),
-      ),
+
+      outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
+      textButtonTheme: TextButtonThemeData(style: buttonStyle),
+      elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
+      iconButtonTheme: AppButtonTheme.iconTheme(scheme),
+      
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         backgroundColor: scheme.inverseSurface,
@@ -109,29 +101,14 @@ class AppTheme {
           borderRadius: BorderRadius.circular(AppRadius.sm),
         ),
       ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: ButtonStyle(side: focusBorder),
-      ),
-      textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(side: focusBorder),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(side: focusBorder),
-      ),
-      iconButtonTheme: IconButtonThemeData(
-        style: ButtonStyle(
-          overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
-            if (states.contains(WidgetState.focused)) {
-              return scheme.primary.withValues(alpha: 0.24);
-            }
-            return null;
-          }),
-        ),
-      ),
+      
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.macOS: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
+          TargetPlatform.linux: FadeUpwardsPageTransitionsBuilder(),
         },
       ),
     );

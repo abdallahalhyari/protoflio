@@ -9,6 +9,7 @@ import 'package:profile/features/case_study/case_study_router.dart';
 import 'package:profile/features/case_study/case_study_widgets.dart';
 import 'package:profile/features/projects/model/project.dart';
 import 'package:profile/features/projects/page/project_modal.dart';
+import 'package:profile/shared/widget/holographic_physics.dart';
 
 class InteractiveProjectCard extends StatefulWidget {
   final Project project;
@@ -68,25 +69,27 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
               scale: isInteractive ? 1.02 : 1.0,
               duration: AppMotion.cardHover,
               curve: AppMotion.emphasized,
-              child: Card(
-                margin: EdgeInsets.zero,
-                clipBehavior: Clip.antiAlias,
-                elevation: isDark ? 0 : (isInteractive ? 12 : 4),
-                shadowColor: isDark
-                    ? Colors.transparent
-                    : Colors.black.withValues(alpha: 0.15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                  side: BorderSide(
-                    color: isInteractive
-                        ? widget.scheme.primary
-                            .withValues(alpha: isDark ? 0.7 : 0.6)
-                        : (isDark
-                            ? Colors.white.withValues(alpha: 0.10)
-                            : AppColors.slate200),
-                    width: isInteractive ? 1.5 : 1.0,
+              child: HolographicCardPhysics(
+                enableGlare: false,
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  clipBehavior: Clip.antiAlias,
+                  elevation: isDark ? 0 : (isInteractive ? 16 : 8),
+                  shadowColor: isDark
+                      ? Colors.transparent
+                      : (isInteractive ? AppColors.shadowMedium : AppColors.shadowSoft),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    side: BorderSide(
+                      color: isInteractive
+                          ? widget.scheme.primary
+                              .withValues(alpha: isDark ? 0.7 : 0.6)
+                          : (isDark
+                              ? Colors.white.withValues(alpha: 0.10)
+                              : AppColors.slate200),
+                      width: isInteractive ? 1.5 : 1.0,
+                    ),
                   ),
-                ),
                 color: isInteractive
                     ? context.cardGlassHover
                     : context.cardGlass,
@@ -223,7 +226,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                                 fontFamily:
                                                     AppTypography.monoFont,
                                                 color: Colors.white,
-                                                fontSize: 9,
+                                                fontSize: AppTypography.editorialSm,
                                                 fontWeight: FontWeight.w900,
                                                 letterSpacing: 0.8,
                                               ),
@@ -398,9 +401,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                                 ? widget.scheme.primary
                                                 : AppColors.toAccessibleLightText(
                                                     widget.scheme.primary))
-                                            : (isDark
-                                                ? Colors.white
-                                                : AppColors.slate900),
+                                            : (context.onSurface),
                                         fontSize: widget.isDesktop ? 22 : 18,
                                         fontWeight: FontWeight.w900,
                                       height: 1.1,
@@ -491,12 +492,13 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
             ),
           ),
         ),
+        ),
       ),
     );
   }
 }
 
-class _TechTagChip extends StatelessWidget {
+class _TechTagChip extends StatefulWidget {
   final String tag;
   final bool isSelected;
   final ColorScheme scheme;
@@ -512,38 +514,61 @@ class _TechTagChip extends StatelessWidget {
   });
 
   @override
+  State<_TechTagChip> createState() => _TechTagChipState();
+}
+
+class _TechTagChipState extends State<_TechTagChip> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    final bg = isSelected
-        ? scheme.primary.withValues(alpha: isDark ? 0.25 : 0.15)
-        : (isDark ? Colors.white.withValues(alpha: 0.06) : AppColors.slate100);
+    final bg = widget.isSelected
+        ? widget.scheme.primary.withValues(alpha: widget.isDark ? 0.25 : 0.15)
+        : (widget.isDark ? Colors.white.withValues(alpha: 0.06) : AppColors.slate100);
 
-    final border = isSelected
-        ? scheme.primary
-        : (isDark ? Colors.white12 : AppColors.slate200);
+    final border = widget.isSelected
+        ? widget.scheme.primary
+        : (context.divider);
 
-    final text = isSelected
-        ? (isDark
-            ? scheme.primary
-            : AppColors.toAccessibleLightText(scheme.primary))
-        : (isDark ? Colors.white70 : AppColors.slate700);
+    final text = widget.isSelected
+        ? (widget.isDark
+            ? widget.scheme.primary
+            : AppColors.toAccessibleLightText(widget.scheme.primary))
+        : (widget.isDark ? Colors.white70 : AppColors.slate700);
 
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(AppRadius.xs),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
-        decoration: BoxDecoration(
-          color: bg,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedScale(
+        scale: _isHovered && widget.onTap != null ? 1.05 : 1.0,
+        duration: AppMotion.snap,
+        child: InkWell(
+          onTap: widget.onTap,
           borderRadius: BorderRadius.circular(AppRadius.xs),
-          border: Border.all(color: border, width: isSelected ? 1.2 : 0.8),
-        ),
-        child: Text(
-          tag,
-          style: TextStyle(
-            fontFamily: AppTypography.monoFont,
-            color: text,
-            fontSize: 9.5,
-            fontWeight: isSelected ? FontWeight.w900 : FontWeight.w600,
+          child: AnimatedContainer(
+            duration: AppMotion.snap,
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
+            decoration: BoxDecoration(
+              color: _isHovered && widget.onTap != null
+                  ? widget.scheme.primary.withValues(alpha: widget.isDark ? 0.35 : 0.25)
+                  : bg,
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+              border: Border.all(
+                color: _isHovered && widget.onTap != null ? widget.scheme.primary : border,
+                width: widget.isSelected ? 1.2 : 0.8,
+              ),
+            ),
+            child: Text(
+              widget.tag,
+              style: TextStyle(
+                fontFamily: AppTypography.monoFont,
+                color: _isHovered && widget.onTap != null && !widget.isDark
+                    ? AppColors.toAccessibleLightText(widget.scheme.primary)
+                    : text,
+                fontSize: AppTypography.editorialSm,
+                fontWeight: widget.isSelected || _isHovered ? FontWeight.w900 : FontWeight.w600,
+              ),
+            ),
           ),
         ),
       ),
@@ -603,7 +628,7 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
 
     return Tooltip(
       message: widget.tooltip,
-      waitDuration: const Duration(milliseconds: 250),
+      waitDuration: AppMotion.tooltipWait,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => _hovered = true),
@@ -647,7 +672,7 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: _hovered ? Colors.white : AppColors.linkedIn,
-                        borderRadius: BorderRadius.circular(2.5),
+                        borderRadius: BorderRadius.circular(AppRadius.hairline),
                       ),
                       child: Text(
                         'in',

@@ -7,6 +7,7 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/service/url_sync_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
 
@@ -258,7 +259,7 @@ class MobileNavSheet extends StatelessWidget {
                             'PORTFOLIO SECTIONS',
                             style: TextStyle(
                               fontFamily: AppTypography.displayFont,
-                              color: isDark ? Colors.white : AppColors.slate900,
+                              color: context.onSurface,
                               fontSize: AppTypography.subtitle,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.5,
@@ -294,7 +295,7 @@ class MobileNavSheet extends StatelessWidget {
                 const SizedBox(height: 14),
                 Container(
                   height: 1,
-                  color: isDark ? Colors.white12 : AppColors.slate200,
+                  color: context.divider,
                 ),
 
                 // Section items
@@ -377,9 +378,7 @@ class MobileNavSheet extends StatelessWidget {
                                     style: TextStyle(
                                       color: isActive
                                           ? Colors.black
-                                          : (isDark
-                                              ? Colors.white70
-                                              : AppColors.slate600),
+                                          : (context.mutedText),
                                       fontSize: AppTypography.caption,
                                       fontWeight: FontWeight.w900,
                                       fontFamily: AppTypography.monoFont,
@@ -407,9 +406,7 @@ class MobileNavSheet extends StatelessWidget {
                                       item.title,
                                       style: TextStyle(
                                         color: isActive
-                                            ? (isDark
-                                                ? Colors.white
-                                                : AppColors.slate900)
+                                            ? (context.onSurface)
                                             : (isDark
                                                 ? Colors.white
                                                     .withValues(alpha: 0.85)
@@ -499,7 +496,7 @@ class MobileNavSheet extends StatelessWidget {
 
                 Container(
                   height: 1,
-                  color: isDark ? Colors.white12 : AppColors.slate200,
+                  color: context.divider,
                 ),
                 const SizedBox(height: 12),
 
@@ -580,27 +577,10 @@ class MobileNavSheet extends StatelessWidget {
     final link = '${CvService.siteRoot}/#$hash';
     await Clipboard.setData(ClipboardData(text: link));
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        duration: AppMotion.toast,
-        margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
-        content: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.check_circle_rounded,
-                color: AppColors.accentGreen, size: 16),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                'Link copied · $link',
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
-      ),
+    AppToast.showGlass(
+      context,
+      message: 'Link copied · $link',
+      status: ToastStatus.ok,
     );
   }
 }
@@ -643,7 +623,7 @@ class _SocialButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isDark ? Colors.white70 : AppColors.slate600,
+                color: context.mutedText,
                 fontSize: AppTypography.caption,
                 fontWeight: FontWeight.w700,
               ),

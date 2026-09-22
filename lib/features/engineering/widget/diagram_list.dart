@@ -179,7 +179,7 @@ class DiagramList extends StatelessWidget {
                                 'ACTIVE TRACE',
                                 style: TextStyle(
                                   fontFamily: AppTypography.monoFont,
-                                  fontSize: 8,
+                                  fontSize: AppTypography.nano,
                                   fontWeight: FontWeight.w900,
                                   color: accent,
                                   letterSpacing: 0.8,
@@ -193,7 +193,7 @@ class DiagramList extends StatelessWidget {
                       Text(
                         step.title,
                         style: TextStyle(
-                          color: isDark ? Colors.white : AppColors.slate900,
+                          color: context.onSurface,
                           fontSize: isDesktop ? 13 : 11.5,
                           fontWeight: FontWeight.w700,
                         ),

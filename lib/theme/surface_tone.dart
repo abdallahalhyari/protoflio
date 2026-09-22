@@ -19,13 +19,13 @@ extension SurfaceTone on BuildContext {
   /// stays legible over any canvas.
   Color get glassSurface => isDarkMode
       ? AppColors.darkSurface.withValues(alpha: 0.78)
-      : Colors.white.withValues(alpha: 0.92);
+      : Theme.of(this).scaffoldBackgroundColor.withValues(alpha: 0.92);
 
   /// Slightly denser glass — used for raised toggles (theme puck,
   /// audio puck) that sit on top of `glassSurface` panels.
   Color get glassRaised => isDarkMode
       ? AppColors.darkSurfaceElevated.withValues(alpha: 0.92)
-      : Colors.white.withValues(alpha: 0.98);
+      : Theme.of(this).scaffoldBackgroundColor.withValues(alpha: 0.98);
 
   /// Rest-state hairline border on any glass surface.
   Color get glassBorder =>
@@ -37,19 +37,31 @@ extension SurfaceTone on BuildContext {
 
   /// Card fill used for resting cards on the canvas — slightly warmer
   /// than [glassSurface] to sit "below" the floating chrome.
-  Color get raisedCard => isDarkMode ? AppColors.darkCard : Colors.white;
+  Color get raisedCard => isDarkMode ? AppColors.darkCard : Theme.of(this).scaffoldBackgroundColor;
 
   /// Dense frosted glass fill for content cards across all sections.
   /// Balanced at 88% in Dark and 92% in Light so background orbs
   /// peek through without compromising text legibility or WCAG contrast.
   Color get cardGlass => isDarkMode
       ? AppColors.darkCard.withValues(alpha: 0.88)
-      : Colors.white.withValues(alpha: 0.92);
+      : Theme.of(this).scaffoldBackgroundColor.withValues(alpha: 0.92);
 
   /// Hover / active state for [cardGlass] — slightly denser for focus.
   Color get cardGlassHover => isDarkMode
       ? AppColors.darkSurfaceElevated.withValues(alpha: 0.95)
-      : Colors.white.withValues(alpha: 0.96);
+      : Theme.of(this).scaffoldBackgroundColor.withValues(alpha: 0.96);
+
+  /// Solid modal / dialog fill. Denser than [cardGlass] because full-screen
+  /// dialogs should not let the canvas show through. Use on `Dialog`,
+  /// full-page modals, floating dock panels.
+  Color get modalSurface =>
+      isDarkMode ? AppColors.darkModal : Colors.white;
+
+  /// Near-black terminal chrome for CLI-styled panels (telemetry strips,
+  /// code readouts). Denser than [modalSurface] to feel like a headless
+  /// shell.
+  Color get terminalSurface =>
+      isDarkMode ? AppColors.darkTerminal : AppColors.slate900;
 
   /// Primary body text on the current canvas.
   Color get onSurface => isDarkMode ? Colors.white : AppColors.slate900;

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/core/bloc/locale/locale_bloc.dart';
+import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/case_study/case_study_widgets.dart';
 import 'package:profile/features/shell/home_controller.dart';
@@ -25,18 +29,25 @@ HomeController _mockController() {
 }
 
 Widget _wrap(Widget child, {Size? size, EdgeInsets? padding}) {
-  return MaterialApp(
-    theme: AppTheme.dark(),
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    home: HomeControllerScope(
-      controller: _mockController(),
-      child: MediaQuery(
-        data: MediaQueryData(
-          size: size ?? const Size(1200, 900),
-          padding: padding ?? EdgeInsets.zero,
+  return MultiBlocProvider(
+    providers: [
+      BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
+      BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
+      BlocProvider<NavigationBloc>(create: (_) => NavigationBloc()),
+    ],
+    child: MaterialApp(
+      theme: AppTheme.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: HomeControllerScope(
+        controller: _mockController(),
+        child: MediaQuery(
+          data: MediaQueryData(
+            size: size ?? const Size(1200, 900),
+            padding: padding ?? EdgeInsets.zero,
+          ),
+          child: Scaffold(body: child),
         ),
-        child: Scaffold(body: child),
       ),
     ),
   );
@@ -132,7 +143,7 @@ void main() {
       ));
       await tester.pump(const Duration(milliseconds: 300));
 
-      final scrollView = tester.widget<SingleChildScrollView>(
+      final scrollView = tester.widget<ListView>(
         find.byKey(const PageStorageKey<String>('mobile_scrollview')),
       );
 

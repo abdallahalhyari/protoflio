@@ -21,7 +21,7 @@ Widget createTestApp(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   testWidgets('Portfolio smoke test - renders intro', (tester) async {
-    await tester.pumpWidget(const PortfolioApp());
+    await tester.pumpWidget(const PortfolioApp(initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);
@@ -78,12 +78,15 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(400, 800));
     await tester
         .pumpWidget(createTestApp(const ProjectsPage(), const Size(400, 800)));
-    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pumpAndSettle();
+
+    // PREV/NEXT sit below the fold on mobile — scroll them in first.
+    await tester.scrollUntilVisible(find.text('PREV'), 200,
+        scrollable: find.byType(Scrollable).first);
 
     expect(find.text('PREV'), findsOneWidget);
     expect(find.text('NEXT'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('NEXT'));
     await tester.tap(find.text('NEXT'));
     await tester.pump(const Duration(milliseconds: 200));
 
@@ -130,16 +133,16 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await tester.pumpWidget(const PortfolioApp());
+    await tester.pumpWidget(const PortfolioApp(initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);
 
-    // Send pointer scroll event downwards (dy: 100) to advance from Intro to Projects
+    // Send pointer scroll event downwards (dy: 150) to advance from Intro to Projects
     await tester.sendEventToBinding(
       const PointerScrollEvent(
         position: Offset(600, 450),
-        scrollDelta: Offset(0, 100),
+        scrollDelta: Offset(0, 150),
       ),
     );
     for (int i = 0; i < 15; i++) {

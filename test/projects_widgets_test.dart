@@ -10,14 +10,17 @@ import 'package:profile/features/projects/page/projects_page.dart';
 import 'package:profile/features/projects/widget/project_dossier_card.dart';
 import 'package:profile/theme/app_theme.dart';
 
-Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
+Widget _wrap(Widget child,
+    [Size size = const Size(1200, 900), bool scrollable = true]) {
   return MaterialApp(
     theme: AppTheme.dark(),
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     home: MediaQuery(
       data: MediaQueryData(size: size),
-      child: Scaffold(body: SingleChildScrollView(child: child)),
+      child: Scaffold(
+        body: scrollable ? SingleChildScrollView(child: child) : child,
+      ),
     ),
   );
 }
@@ -142,6 +145,7 @@ void main() {
       await tester.pumpWidget(_wrap(
         const ProjectsPage(),
         const Size(1200, 900),
+        false,
       ));
       await tester.pumpAndSettle();
 
@@ -203,6 +207,7 @@ void main() {
       await tester.pumpWidget(_wrap(
         const ProjectsPage(),
         const Size(1200, 900),
+        false,
       ));
       await tester.pumpAndSettle();
 

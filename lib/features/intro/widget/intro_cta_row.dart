@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/shared/widget/primary_button.dart';
+import 'package:profile/theme/tokens.dart';
 
 class IntroCtaRow extends StatelessWidget {
   final bool isDark;
@@ -27,22 +28,10 @@ class IntroCtaRow extends StatelessWidget {
     await Clipboard.setData(const ClipboardData(text: _kEmail));
     if (!context.mounted) return;
     final loc = AppLocalizations.of(context)!;
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        behavior: SnackBarBehavior.floating,
-        duration: AppMotion.toast,
-        margin: const EdgeInsets.only(bottom: 24, left: 16, right: 16),
-        content: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.check_circle_rounded,
-                color: AppColors.accentGreen, size: 16),
-            const SizedBox(width: 8),
-            Text(loc.emailCopied(_kEmail)),
-          ],
-        ),
-      ),
+    AppToast.showGlass(
+      context,
+      message: loc.emailCopied(_kEmail),
+      status: ToastStatus.ok,
     );
   }
 

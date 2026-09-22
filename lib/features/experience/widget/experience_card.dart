@@ -6,6 +6,7 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/experience/model/experience.dart';
+import 'package:profile/shared/widget/holographic_physics.dart';
 
 const _kNowAccent = AppColors.accentGreen; // Emerald green for "Present"
 
@@ -73,10 +74,11 @@ class _ExperienceCardState extends State<ExperienceCard> {
             scale: active ? 1.02 : 1.0,
             duration: AppMotion.cardHover,
             curve: AppMotion.emphasized,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.lg),
+            child: HolographicCardPhysics(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppRadius.lg),
                 border: Border.all(
                   color: active
                       ? scheme.primary.withValues(
@@ -141,7 +143,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                         style: TextStyle(
                           fontFamily: AppTypography.displayFont,
                           fontSize: widget.isDesktop ? 160 : 90,
-                          color: scheme.onSurface.withValues(alpha: 0.04),
+                          color: scheme.onSurface.withValues(alpha: isDark ? 0.04 : 0.02),
                           height: 1.0,
                         ),
                       ),
@@ -296,6 +298,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
           ),
         ),
       ),
+      ),
     );
   }
 
@@ -333,21 +336,20 @@ class _ExperienceCardState extends State<ExperienceCard> {
                         TextSpan(
                           text: prefix,
                           style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color:
-                                isDark ? scheme.onSurface : AppColors.slate900,
-                            fontSize: AppTypography.smallLoose,
+                            fontWeight: FontWeight.w900,
+                            color: context.adaptiveAccentText(scheme.primary),
+                            fontSize: AppTypography.editorial,
                             height: 1.5,
                           ),
                         ),
                         TextSpan(
                           text: rest,
                           style: TextStyle(
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w500,
                             color: isDark
                                 ? scheme.onSurface.withValues(alpha: 0.85)
                                 : AppColors.slate700,
-                            fontSize: AppTypography.smallLoose,
+                            fontSize: AppTypography.editorial,
                             height: 1.5,
                           ),
                         ),
@@ -360,7 +362,8 @@ class _ExperienceCardState extends State<ExperienceCard> {
                       color: isDark
                           ? scheme.onSurface.withValues(alpha: 0.85)
                           : AppColors.slate700,
-                      fontSize: AppTypography.smallLoose,
+                      fontSize: AppTypography.editorial,
+                      fontWeight: FontWeight.w500,
                       height: 1.5,
                     ),
                   ),
@@ -423,7 +426,7 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
       label: '${widget.company} ${widget.label}: ${widget.tooltip}',
       child: Tooltip(
         message: widget.tooltip,
-        waitDuration: const Duration(milliseconds: 300),
+        waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => setState(() => _hovered = true),
@@ -432,7 +435,7 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
             onTap: _handleTap,
             behavior: HitTestBehavior.opaque,
             child: AnimatedScale(
-              scale: _hovered ? 1.05 : 1.0,
+              scale: _hovered ? 1.08 : 1.0,
               duration: AppMotion.snap,
               child: AnimatedContainer(
                 duration: AppMotion.snap,
@@ -475,7 +478,7 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
                         height: 13,
                         decoration: BoxDecoration(
                           color: AppColors.linkedIn,
-                          borderRadius: BorderRadius.circular(2),
+                          borderRadius: BorderRadius.circular(AppRadius.hairline),
                         ),
                         alignment: Alignment.center,
                         child: const Text(
@@ -495,7 +498,7 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
                         size: 13,
                         color: _hovered
                             ? (isDark ? Colors.white : primary)
-                            : (isDark ? Colors.white70 : AppColors.slate600),
+                            : (context.mutedText),
                       ),
                     ],
                     const SizedBox(width: 5),
