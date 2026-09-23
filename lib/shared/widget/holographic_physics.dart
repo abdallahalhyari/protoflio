@@ -39,6 +39,13 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
       vsync: this,
       duration: AppMotion.sm,
     );
+    // One persistent listener reading the current _resetAnimation, rather
+    // than a fresh listener per _onExit call — this widget is reused across
+    // every card grid (experience/projects/hats/skills), so a per-call leak
+    // here compounds fast with normal mouse movement over a session.
+    _resetCtrl.addListener(() {
+      _norm.value = _resetAnimation.value;
+    });
   }
 
   @override
@@ -81,9 +88,6 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
     );
 
     _resetCtrl.reset();
-    _resetAnimation.addListener(() {
-      _norm.value = _resetAnimation.value;
-    });
     _resetCtrl.forward();
   }
 
