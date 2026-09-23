@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_event.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
+import '../home_controller.dart';
 
 /// Bottom-of-screen prev/next pager pill for the mobile continuous
 /// scroll layout. Reads page state from NavigationBloc.
@@ -77,9 +77,8 @@ class MobilePager extends StatelessWidget {
               onTap: canPrev
                   ? () {
                       SoundService.instance.playPageTurn();
-                      context
-                          .read<NavigationBloc>()
-                          .add(NavigationPageSelected(page - 1));
+                      HomeController.of(context)
+                          .scrollToMobileSection(page - 1);
                     }
                   : null,
             ),
@@ -108,9 +107,8 @@ class MobilePager extends StatelessWidget {
               onTap: canNext
                   ? () {
                       SoundService.instance.playPageTurn();
-                      context
-                          .read<NavigationBloc>()
-                          .add(NavigationPageSelected(page + 1));
+                      HomeController.of(context)
+                          .scrollToMobileSection(page + 1);
                     }
                   : null,
             ),

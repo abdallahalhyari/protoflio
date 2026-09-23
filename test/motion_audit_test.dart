@@ -233,24 +233,26 @@ void main() {
 
       expect(find.text('02 / 07'), findsOneWidget);
 
-      final navBloc =
-          tester.element(find.byType(MobilePager)).read<NavigationBloc>();
-
-      // Tap next
+      // Tap next — MobilePager calls HomeController.scrollToMobileSection,
+      // not NavigationBloc directly (that bloc only mirrors real page
+      // scroll, which this mock controller doesn't perform).
       final nextButton = find.byTooltip('Next section');
       expect(nextButton, findsOneWidget);
       await tester.tap(nextButton);
       await tester.pumpAndSettle();
 
-      expect(navBloc.state.pageIndex, 2);
+      expect(controller.pageIndex.value, 2);
 
-      // Tap previous
+      // Tap previous — MobilePager reads its "page" from NavigationBloc
+      // (unchanged by the mock controller above), so this computes
+      // page - 1 off the original bloc pageIndex (1), not off the value
+      // scrollToMobileSection just wrote.
       final prevButton = find.byTooltip('Previous section');
       expect(prevButton, findsOneWidget);
       await tester.tap(prevButton);
       await tester.pumpAndSettle();
 
-      expect(navBloc.state.pageIndex, 1);
+      expect(controller.pageIndex.value, 0);
       expect(tester.takeException(), isNull);
     });
 
@@ -274,10 +276,9 @@ void main() {
       await tester.tap(dots.at(1));
       await tester.pumpAndSettle();
 
-      final navBloc = tester
-          .element(find.byType(MobileProgressRail))
-          .read<NavigationBloc>();
-      expect(navBloc.state.pageIndex, 1);
+      // MobileProgressRail calls HomeController.scrollToMobileSection, not
+      // NavigationBloc directly.
+      expect(controller.pageIndex.value, 1);
       expect(tester.takeException(), isNull);
     });
 

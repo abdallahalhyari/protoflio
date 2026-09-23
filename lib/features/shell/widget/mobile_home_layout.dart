@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_event.dart';
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/contact/page/contact_page.dart'
@@ -18,6 +17,7 @@ import 'package:profile/features/projects/page/projects_page.dart'
     deferred as projects_lib;
 import 'package:profile/features/skills/page/skills_page.dart'
     deferred as skills_lib;
+import '../home_controller.dart';
 import 'deferred_mount.dart';
 import 'deferred_page.dart';
 import 'mobile_app_bar.dart';
@@ -70,16 +70,13 @@ class MobileHomeLayout extends StatelessWidget {
               child: KeyedSubtree(
                 key: sectionKeys[0],
                 child: IntroPage(
-                  onScrollDown: () => context
-                      .read<NavigationBloc>()
-                      .add(const NavigationPageSelected(1)),
-                  onViewWork: () => context
-                      .read<NavigationBloc>()
-                      .add(const NavigationPageSelected(2)),
+                  onScrollDown: () =>
+                      HomeController.of(context).scrollToMobileSection(1),
+                  onViewWork: () =>
+                      HomeController.of(context).scrollToMobileSection(2),
                   onDownloadResume: () => CvService.open(context),
-                  onContactMe: () => context
-                      .read<NavigationBloc>()
-                      .add(const NavigationPageSelected(6)),
+                  onContactMe: () =>
+                      HomeController.of(context).scrollToMobileSection(6),
                   isContinuousMobile: true,
                 ),
               ),
@@ -189,15 +186,13 @@ class MobileHomeLayout extends StatelessWidget {
               MobileNavSheet.show(
                 context,
                 activeIndex: page,
-                onSelectSection: (idx) => context
-                    .read<NavigationBloc>()
-                    .add(NavigationPageSelected(idx)),
+                onSelectSection: (idx) =>
+                    HomeController.of(context).scrollToMobileSection(idx),
                 onDownloadResume: () => CvService.open(context),
               );
             },
-            onLogoPressed: () => context
-                .read<NavigationBloc>()
-                .add(const NavigationPageSelected(0)),
+            onLogoPressed: () =>
+                HomeController.of(context).scrollToMobileSection(0),
           ),
         ),
 

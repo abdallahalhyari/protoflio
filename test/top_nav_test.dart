@@ -9,7 +9,7 @@ import 'package:profile/theme/app_theme.dart';
 
 HomeController _stub({
   ValueNotifier<int>? pageIndex,
-  int Function()? onGoTo,
+  void Function(int page)? onGoTo,
   Future<void> Function()? onResume,
 }) {
   return HomeController(
@@ -17,7 +17,7 @@ HomeController _stub({
     showScrollToTop: ValueNotifier<bool>(false),
     pageCount: 7,
     goTo: (int page, {bool syncUrl = true}) {
-      onGoTo?.call();
+      onGoTo?.call(page);
     },
     next: () {},
     prev: () {},
@@ -67,21 +67,26 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
 
+    int? goToArg;
     // Start on section 0 so tapping the last NavItem is not a no-op.
     await tester.pumpWidget(_wrap(
       const TopNav(),
-      _stub(pageIndex: ValueNotifier<int>(0)),
+      _stub(
+        pageIndex: ValueNotifier<int>(0),
+        onGoTo: (page) => goToArg = page,
+      ),
     ));
     await tester.pumpAndSettle();
 
-    final bloc = tester.element(find.byType(TopNav)).read<NavigationBloc>();
     final items = find.byType(NavItem);
     expect(items, findsWidgets);
 
-    // Tap a non-active NavItem (index != 0)
+    // Tap a non-active NavItem (index != 0) — should call HomeController.goTo,
+    // not mutate NavigationBloc directly (that's driven by the real page
+    // scroll, which this stub doesn't perform).
     await tester.tap(items.last);
     await tester.pumpAndSettle();
-    expect(bloc.state.pageIndex, 6);
+    expect(goToArg, 6);
   });
 
   testWidgets('TopNav swallows tap on the already-active nav item',
@@ -90,18 +95,20 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
 
+    int? goToArg;
     await tester.pumpWidget(_wrap(
       const TopNav(),
-      _stub(pageIndex: ValueNotifier<int>(0)),
+      _stub(
+        pageIndex: ValueNotifier<int>(0),
+        onGoTo: (page) => goToArg = page,
+      ),
     ));
     await tester.pumpAndSettle();
 
-    final bloc = tester.element(find.byType(TopNav)).read<NavigationBloc>();
-
-    // items.first == active section 0 — guard should prevent navigation event
+    // items.first == active section 0 — guard should prevent goTo call.
     await tester.tap(find.byType(NavItem).first);
     await tester.pumpAndSettle();
-    expect(bloc.state.pageIndex, 0);
+    expect(goToArg, isNull);
   });
 
   testWidgets('PageIndicator dot count matches controller.pageCount',

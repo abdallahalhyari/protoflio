@@ -126,6 +126,13 @@ class _HeroParallaxState extends State<HeroParallax>
       vsync: this,
       duration: AppMotion.cardHover,
     );
+    // One persistent listener reading the current _resetAnimation, rather
+    // than a fresh listener per _onExit call — that used to leak one
+    // listener per hover/exit cycle onto _resetCtrl for the widget's
+    // lifetime.
+    _resetCtrl.addListener(() {
+      _normOffset.value = _resetAnimation.value;
+    });
   }
 
   @override
@@ -157,9 +164,6 @@ class _HeroParallaxState extends State<HeroParallax>
     );
 
     _resetCtrl.reset();
-    _resetAnimation.addListener(() {
-      _normOffset.value = _resetAnimation.value;
-    });
     _resetCtrl.forward();
   }
 

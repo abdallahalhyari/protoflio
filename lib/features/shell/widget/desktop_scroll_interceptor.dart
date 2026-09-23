@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -9,8 +10,12 @@ class DesktopScrollInterceptor extends StatefulWidget {
   final ValueNotifier<int> pageIndex;
   final VoidCallback onNext;
   final VoidCallback onPrev;
-  final bool isPageTransitioning;
-  final DateTime lastPageTurnCompletedAt;
+  // ValueListenables, not plain bool/DateTime — read via `.value` at the
+  // moment a wheel event arrives, so this always sees HomeScreen's live
+  // transition state instead of whatever was current the last time this
+  // widget happened to be rebuilt.
+  final ValueListenable<bool> isPageTransitioning;
+  final ValueListenable<DateTime> lastPageTurnCompletedAt;
 
   const DesktopScrollInterceptor({
     super.key,
@@ -119,8 +124,9 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
 
     // Drop further wheel events while a transition animation is actively in flight
     // or within the post-turn cooldown window.
-    if (widget.isPageTransitioning ||
-        now.difference(widget.lastPageTurnCompletedAt) < _kWheelCooldown) {
+    if (widget.isPageTransitioning.value ||
+        now.difference(widget.lastPageTurnCompletedAt.value) <
+            _kWheelCooldown) {
       _wheelAccum = 0;
       // We are in a transition/cooldown, so any ongoing scroll burst MUST be
       // ignored entirely, even after the cooldown finishes, until the user pauses.

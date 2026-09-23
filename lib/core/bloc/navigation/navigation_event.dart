@@ -9,12 +9,11 @@ sealed class NavigationEvent extends Equatable {
 
 class NavigationPageSelected extends NavigationEvent {
   final int pageIndex;
-  final bool syncUrl;
 
-  const NavigationPageSelected(this.pageIndex, {this.syncUrl = true});
+  const NavigationPageSelected(this.pageIndex);
 
   @override
-  List<Object?> get props => [pageIndex, syncUrl];
+  List<Object?> get props => [pageIndex];
 }
 
 class NavigationNextPageRequested extends NavigationEvent {
@@ -45,11 +44,9 @@ class NavigationScrollToTopToggled extends NavigationEvent {
 
 class NavigationMobileSectionScrolled extends NavigationEvent {
   final int sectionIndex;
-  final bool syncUrl;
 
-  const NavigationMobileSectionScrolled(this.sectionIndex,
-      {this.syncUrl = true});
+  const NavigationMobileSectionScrolled(this.sectionIndex);
 
   @override
-  List<Object?> get props => [sectionIndex, syncUrl];
+  List<Object?> get props => [sectionIndex];
 }

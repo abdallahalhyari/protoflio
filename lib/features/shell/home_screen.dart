@@ -77,7 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final ValueNotifier<int> _pageIndex = ValueNotifier<int>(0);
   bool _imagesPrecached = false;
   Timer? _settleTimer;
-  bool _isPageTransitioning = false;
+  // ValueNotifiers (not plain fields) so DesktopScrollInterceptor reads the
+  // live value from its event handler — HomeScreen itself never calls
+  // setState, so a plain field would freeze at whatever it was when
+  // DesktopScrollInterceptor was last constructed.
+  final ValueNotifier<bool> _isPageTransitioning = ValueNotifier<bool>(false);
   void Function()? _cancelHashListener;
   NavigationBloc? _navBloc;
 
@@ -236,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final page = _controller.page?.round() ?? 0;
     if (page != _pageIndex.value) {
       _pageIndex.value = page;
-      _navBloc?.add(NavigationPageSelected(page, syncUrl: false));
+      _navBloc?.add(NavigationPageSelected(page));
       context.read<ThemeBloc>().add(ThemeAccentUpdated(page));
       SoundService.instance.playPageTurn();
       _scheduleSettle(page);
@@ -254,6 +258,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _showScrollToTop.dispose();
     _focusNode.dispose();
     _pageIndex.dispose();
+    _isPageTransitioning.dispose();
+    _lastPageTurnCompletedAt.dispose();
     super.dispose();
   }
 
@@ -294,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (visibleIndex != null && visibleIndex != _pageIndex.value) {
       _pageIndex.value = visibleIndex;
       _navBloc
-          ?.add(NavigationMobileSectionScrolled(visibleIndex, syncUrl: false));
+          ?.add(NavigationMobileSectionScrolled(visibleIndex));
       context.read<ThemeBloc>().add(ThemeAccentUpdated(visibleIndex));
       _scheduleSettle(visibleIndex);
     }
@@ -359,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _goTo(int page, {bool syncUrl = true}) {
     final target = page.clamp(0, _pageCount - 1);
-    if (target == _pageIndex.value && !_isPageTransitioning) return;
+    if (target == _pageIndex.value && !_isPageTransitioning.value) return;
     context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
     _navBloc?.add(NavigationPageSelected(target));
     if (syncUrl) {
@@ -382,7 +388,7 @@ class _HomeScreenState extends State<HomeScreen> {
         final preStep = target > current ? target - 1 : target + 1;
         _controller.jumpToPage(preStep);
       }
-      _isPageTransitioning = true;
+      _isPageTransitioning.value = true;
       _controller
           .animateToPage(
         target,
@@ -391,13 +397,13 @@ class _HomeScreenState extends State<HomeScreen> {
       )
           .then((_) {
         if (mounted) {
-          _isPageTransitioning = false;
-          _lastPageTurnCompletedAt = DateTime.now();
+          _isPageTransitioning.value = false;
+          _lastPageTurnCompletedAt.value = DateTime.now();
         }
       }).catchError((_) {
         if (mounted) {
-          _isPageTransitioning = false;
-          _lastPageTurnCompletedAt = DateTime.now();
+          _isPageTransitioning.value = false;
+          _lastPageTurnCompletedAt.value = DateTime.now();
         }
       });
     }
@@ -415,7 +421,8 @@ class _HomeScreenState extends State<HomeScreen> {
   // Wheel scroll — accumulate delta so a smooth trackpad flick advances
   // exactly one page per _kWheelThreshold pixels of intent, but only when
   // inner scrollable viewports (e.g. project dossier, contact page) are at their edges.
-  DateTime _lastPageTurnCompletedAt = DateTime.fromMillisecondsSinceEpoch(0);
+  final ValueNotifier<DateTime> _lastPageTurnCompletedAt =
+      ValueNotifier<DateTime>(DateTime.fromMillisecondsSinceEpoch(0));
 
   void _showShortcutHelp() {
     if (!mounted) return;

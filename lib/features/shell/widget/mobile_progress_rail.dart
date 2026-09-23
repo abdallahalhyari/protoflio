@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_event.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
+import '../home_controller.dart';
 import 'portfolio_nav.dart' show TopNav;
 
 /// Vertical dot column pinned to the right edge on mobile. Each dot
@@ -43,9 +43,7 @@ class MobileProgressRail extends StatelessWidget {
                     ? null
                     : () {
                         SoundService.instance.playSelection();
-                        context
-                            .read<NavigationBloc>()
-                            .add(NavigationPageSelected(i));
+                        HomeController.of(context).scrollToMobileSection(i);
                       },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 3),

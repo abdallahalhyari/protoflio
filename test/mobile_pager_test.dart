@@ -9,6 +9,7 @@ import 'package:profile/theme/app_theme.dart';
 
 HomeController _stub({
   required ValueNotifier<int> pageIndex,
+  void Function(int index)? onScrollToMobileSection,
 }) {
   return HomeController(
     pageIndex: pageIndex,
@@ -17,7 +18,9 @@ HomeController _stub({
     goTo: (int _, {bool syncUrl = true}) {},
     next: () {},
     prev: () {},
-    scrollToMobileSection: (int i, {bool syncUrl = true}) {},
+    scrollToMobileSection: (int i, {bool syncUrl = true}) {
+      onScrollToMobileSection?.call(i);
+    },
     downloadResume: () async {},
   );
 }
@@ -50,18 +53,20 @@ void main() {
     expect(find.text('03 / 07'), findsOneWidget);
   });
 
-  testWidgets('MobilePager next-tap updates pageIndex in NavigationBloc',
+  testWidgets('MobilePager next-tap calls scrollToMobileSection',
       (tester) async {
     final pageIndex = ValueNotifier<int>(2);
-    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex)));
+    int? scrolledTo;
+    await tester.pumpWidget(_host(_stub(
+      pageIndex: pageIndex,
+      onScrollToMobileSection: (i) => scrolledTo = i,
+    )));
     await tester.pumpAndSettle();
 
     await tester.tap(find.bySemanticsLabel('Next section'));
     await tester.pumpAndSettle();
 
-    final bloc =
-        tester.element(find.byType(MobilePager)).read<NavigationBloc>();
-    expect(bloc.state.pageIndex, 3);
+    expect(scrolledTo, 3);
   });
 
   testWidgets('MobilePager prev is disabled on the first section',

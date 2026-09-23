@@ -6,9 +6,9 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_event.dart';
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
+import '../home_controller.dart';
 
 class TopNav extends StatelessWidget {
   static List<String> getLabels(BuildContext context) {
@@ -82,9 +82,7 @@ class TopNav extends StatelessWidget {
                                   onTap: () {
                                     if (i == current) return;
                                     HapticFeedback.selectionClick();
-                                    context
-                                        .read<NavigationBloc>()
-                                        .add(NavigationPageSelected(i));
+                                    HomeController.of(context).goTo(i);
                                   },
                                 ),
                             ],
@@ -370,9 +368,7 @@ class PageIndicator extends StatelessWidget {
                   onTap: () {
                     if (active) return;
                     HapticFeedback.selectionClick();
-                    context
-                        .read<NavigationBloc>()
-                        .add(NavigationPageSelected(i));
+                    HomeController.of(context).goTo(i);
                   },
                   radius: 22,
                   child: Center(

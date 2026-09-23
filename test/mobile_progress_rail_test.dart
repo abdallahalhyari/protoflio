@@ -9,6 +9,7 @@ import 'package:profile/theme/app_theme.dart';
 
 HomeController _stub({
   required ValueNotifier<int> pageIndex,
+  void Function(int index)? onScrollToMobileSection,
 }) {
   return HomeController(
     pageIndex: pageIndex,
@@ -17,7 +18,9 @@ HomeController _stub({
     goTo: (int _, {bool syncUrl = true}) {},
     next: () {},
     prev: () {},
-    scrollToMobileSection: (int i, {bool syncUrl = true}) {},
+    scrollToMobileSection: (int i, {bool syncUrl = true}) {
+      onScrollToMobileSection?.call(i);
+    },
     downloadResume: () async {},
   );
 }
@@ -50,34 +53,36 @@ void main() {
     expect(find.byType(InkResponse), findsNWidgets(7));
   });
 
-  testWidgets('MobileProgressRail dot tap updates pageIndex in NavigationBloc',
+  testWidgets('MobileProgressRail dot tap calls scrollToMobileSection',
       (tester) async {
     final pageIndex = ValueNotifier<int>(0);
-    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex)));
+    int? scrolledTo;
+    await tester.pumpWidget(_host(_stub(
+      pageIndex: pageIndex,
+      onScrollToMobileSection: (i) => scrolledTo = i,
+    )));
     await tester.pumpAndSettle();
 
     // Tap the fourth dot (index 3).
     await tester.tap(find.byType(InkResponse).at(3));
     await tester.pumpAndSettle();
 
-    final bloc =
-        tester.element(find.byType(MobileProgressRail)).read<NavigationBloc>();
-    expect(bloc.state.pageIndex, 3);
+    expect(scrolledTo, 3);
   });
 
   testWidgets('MobileProgressRail swallows tap on the active dot',
       (tester) async {
     final pageIndex = ValueNotifier<int>(2);
-    await tester.pumpWidget(_host(_stub(pageIndex: pageIndex)));
+    int? scrolledTo;
+    await tester.pumpWidget(_host(_stub(
+      pageIndex: pageIndex,
+      onScrollToMobileSection: (i) => scrolledTo = i,
+    )));
     await tester.pumpAndSettle();
-
-    final bloc =
-        tester.element(find.byType(MobileProgressRail)).read<NavigationBloc>();
-    expect(bloc.state.pageIndex, 2);
 
     // Third dot (index 2) is the active one — onTap is null, tap is a no-op.
     await tester.tap(find.byType(InkResponse).at(2), warnIfMissed: false);
     await tester.pumpAndSettle();
-    expect(bloc.state.pageIndex, 2);
+    expect(scrolledTo, isNull);
   });
 }
