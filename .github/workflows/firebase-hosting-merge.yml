@@ -1,0 +1,49 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: ⚙️ Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.47.4'
+
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      - name: ✨ Check Formatting
+        run: dart format --output=none --set-exit-if-changed lib/ test/
+        
+      - name: 🔍 Run Static Analysis
+        run: flutter analyze
+        
+      - name: 🧪 Run Tests
+        run: flutter test
+
+      - name: 🏗️ Build WebAssembly Bundle
+        run: |
+          flutter build web --wasm --release --tree-shake-icons --no-source-maps
+          node patch_flutter_js.js
+
+      - name: 🚀 Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          channelId: live
+          projectId: testfirestore-9b0b0
