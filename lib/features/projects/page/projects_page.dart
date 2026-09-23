@@ -56,6 +56,7 @@ class _ProjectsPageView extends StatefulWidget {
 class _ProjectsPageViewState extends State<_ProjectsPageView>
     with AutomaticKeepAliveClientMixin {
   int _mobileSelectedIndex = 0;
+  final FocusNode _keyboardFocusNode = FocusNode(debugLabel: 'ProjectsPage');
 
   static const List<String> _domains = [
     'ALL',
@@ -67,6 +68,24 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    // `autofocus` only wins when nothing in the enclosing scope already has
+    // focus — DesktopKeyboardNav's app-wide Focus claims it first, so this
+    // page's arrow-key filter shortcut would otherwise never fire. Request
+    // focus explicitly once mounted instead.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _keyboardFocusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _keyboardFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +103,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
         final selectedTech = filterState.selectedTech;
 
         return Focus(
-          autofocus: true,
+          focusNode: _keyboardFocusNode,
           onKeyEvent: (node, event) {
             if (event is KeyDownEvent) {
               if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {

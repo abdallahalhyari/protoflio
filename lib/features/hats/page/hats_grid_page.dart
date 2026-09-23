@@ -68,6 +68,13 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
   void initState() {
     super.initState();
     _focusNode = FocusNode(debugLabel: 'HatsGridFocus');
+    // `autofocus` only wins when nothing in the enclosing scope already has
+    // focus — DesktopKeyboardNav's app-wide Focus claims it first, so this
+    // page's arrow/A-D/S/R shortcuts would otherwise never fire. Request
+    // focus explicitly once mounted instead.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _focusNode.requestFocus();
+    });
   }
 
   @override
@@ -186,7 +193,6 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
 
         return Focus(
           focusNode: _focusNode,
-          autofocus: true,
           onKeyEvent: (node, event) => _handleKeyEvent(node, event, size),
           child: SizedBox.expand(
             child: Stack(
