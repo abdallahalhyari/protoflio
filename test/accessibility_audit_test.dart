@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/case_study/case_study_widgets.dart';
@@ -57,12 +56,6 @@ Widget _wrapWithHarness({
     providers: [
       BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
       BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
-      BlocProvider<NavigationBloc>(
-        create: (_) => NavigationBloc(
-          initialPage: ctrl.pageIndex.value,
-          pageCount: ctrl.pageCount,
-        ),
-      ),
     ],
     child: MaterialApp(
       theme: AppTheme.dark(),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -9,15 +7,32 @@ import 'package:profile/shared/widget/directional_icon.dart';
 import '../home_controller.dart';
 
 /// Bottom-of-screen prev/next pager pill for the mobile continuous
-/// scroll layout. Reads page state from NavigationBloc.
+/// scroll layout. Reads page state from [HomeController].
 class MobilePager extends StatelessWidget {
   const MobilePager({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final page = context.select((NavigationBloc bloc) => bloc.state.pageIndex);
-    final pageCount =
-        context.select((NavigationBloc bloc) => bloc.state.pageCount);
+    final controller = HomeController.of(context);
+    return ValueListenableBuilder<int>(
+      valueListenable: controller.pageIndex,
+      builder: (context, page, _) => _MobilePagerContent(
+        controller: controller,
+        page: page,
+      ),
+    );
+  }
+}
+
+class _MobilePagerContent extends StatelessWidget {
+  const _MobilePagerContent({required this.controller, required this.page});
+
+  final HomeController controller;
+  final int page;
+
+  @override
+  Widget build(BuildContext context) {
+    final pageCount = controller.pageCount;
     final isDark = context.isDarkMode;
 
     final canPrev = page > 0;
@@ -77,8 +92,7 @@ class MobilePager extends StatelessWidget {
               onTap: canPrev
                   ? () {
                       SoundService.instance.playPageTurn();
-                      HomeController.of(context)
-                          .scrollToMobileSection(page - 1);
+                      controller.scrollToMobileSection(page - 1);
                     }
                   : null,
             ),
@@ -107,8 +121,7 @@ class MobilePager extends StatelessWidget {
               onTap: canNext
                   ? () {
                       SoundService.instance.playPageTurn();
-                      HomeController.of(context)
-                          .scrollToMobileSection(page + 1);
+                      controller.scrollToMobileSection(page + 1);
                     }
                   : null,
             ),

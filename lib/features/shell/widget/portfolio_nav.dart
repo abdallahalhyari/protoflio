@@ -1,11 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
 import '../home_controller.dart';
@@ -28,9 +26,14 @@ class TopNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ValueListenableBuilder<int>(
+      valueListenable: HomeController.of(context).pageIndex,
+      builder: (context, current, _) => _build(context, current),
+    );
+  }
+
+  Widget _build(BuildContext context, int current) {
     final accent = Theme.of(context).colorScheme.primary;
-    final current =
-        context.select((NavigationBloc bloc) => bloc.state.pageIndex);
 
     final width = MediaQuery.sizeOf(context).width;
     // On desktop viewports (>= tablet), reserve clearance for the top-right
@@ -340,12 +343,17 @@ class PageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = HomeController.of(context);
+    return ValueListenableBuilder<int>(
+      valueListenable: controller.pageIndex,
+      builder: (context, current, _) =>
+          _build(context, current, controller.pageCount),
+    );
+  }
+
+  Widget _build(BuildContext context, int current, int pageCount) {
     final isDark = context.isDarkMode;
     final labels = TopNav.getLabels(context);
-    final current =
-        context.select((NavigationBloc bloc) => bloc.state.pageIndex);
-    final pageCount =
-        context.select((NavigationBloc bloc) => bloc.state.pageCount);
 
     return FittedBox(
       fit: BoxFit.scaleDown,

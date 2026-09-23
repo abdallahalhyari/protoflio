@@ -2,8 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_event.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_event.dart';
@@ -84,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // DesktopScrollInterceptor was last constructed.
   final ValueNotifier<bool> _isPageTransitioning = ValueNotifier<bool>(false);
   void Function()? _cancelHashListener;
-  NavigationBloc? _navBloc;
 
   late final HomeController _homeController = HomeController(
     pageIndex: _pageIndex,
@@ -196,11 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    try {
-      _navBloc = context.read<NavigationBloc>();
-    } catch (_) {
-      _navBloc = null;
-    }
 
     if (_imagesPrecached) return;
     _imagesPrecached = true;
@@ -249,7 +241,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final page = _controller.page?.round() ?? 0;
     if (page != _pageIndex.value) {
       _pageIndex.value = page;
-      _navBloc?.add(NavigationPageSelected(page));
       context.read<ThemeBloc>().add(ThemeAccentUpdated(page));
       SoundService.instance.playPageTurn();
       _scheduleSettle(page);
@@ -280,7 +271,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final showTop = offset > 400;
     if (showTop != _showScrollToTop.value) {
       _showScrollToTop.value = showTop;
-      _navBloc?.add(NavigationScrollToTopToggled(showTop));
     }
 
     // Section-sweep is O(N) findRenderObject + localToGlobal per call.
@@ -308,7 +298,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (visibleIndex != null && visibleIndex != _pageIndex.value) {
       _pageIndex.value = visibleIndex;
-      _navBloc?.add(NavigationMobileSectionScrolled(visibleIndex));
       context.read<ThemeBloc>().add(ThemeAccentUpdated(visibleIndex));
       _scheduleSettle(visibleIndex);
     }
@@ -375,7 +364,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final target = page.clamp(0, _pageCount - 1);
     if (target == _pageIndex.value && !_isPageTransitioning.value) return;
     context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
-    _navBloc?.add(NavigationPageSelected(target));
     if (syncUrl) {
       _scheduleSettle(target);
     }

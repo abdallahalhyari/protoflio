@@ -6,7 +6,7 @@ import 'package:profile/core/bloc/locale/locale_state.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
+import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -324,63 +324,64 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// live "03 · Engineering" chip so mobile users always see where they
   /// are without opening the menu.
   Widget _buildSubBadge(BuildContext context, bool isDark) {
-    try {
-      final page =
-          context.select((NavigationBloc bloc) => bloc.state.pageIndex);
-      final pageCount =
-          context.select((NavigationBloc bloc) => bloc.state.pageCount);
-      if (page < 0) return _availableBadge(isDark);
-      final labels = TopNav.getLabels(context);
-      if (page >= labels.length) return _availableBadge(isDark);
+    final controller = HomeController.maybeOf(context);
+    if (controller == null) return _availableBadge(isDark);
 
-      final ordinal = (page + 1).toString().padLeft(2, '0');
-      final denom = ' / ${pageCount.toString().padLeft(2, '0')}';
-      final label = labels[page].toUpperCase();
+    return ValueListenableBuilder<int>(
+      valueListenable: controller.pageIndex,
+      builder: (context, page, _) {
+        final pageCount = controller.pageCount;
+        if (page < 0) return _availableBadge(isDark);
+        final labels = TopNav.getLabels(context);
+        if (page >= labels.length) return _availableBadge(isDark);
 
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '$ordinal$denom',
-            style: const TextStyle(
-              fontFamily: AppTypography.monoFont,
-              color: AppColors.accentIndigo,
-              fontSize: AppTypography.editorialSm,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 1.2,
+        final ordinal = (page + 1).toString().padLeft(2, '0');
+        final denom = ' / ${pageCount.toString().padLeft(2, '0')}';
+        final label = labels[page].toUpperCase();
+
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '$ordinal$denom',
+              style: const TextStyle(
+                fontFamily: AppTypography.monoFont,
+                color: AppColors.accentIndigo,
+                fontSize: AppTypography.editorialSm,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.2,
+              ),
             ),
-          ),
-          const SizedBox(width: 6),
-          Container(
-            width: 1,
-            height: 8,
-            color: context.glassBorderStrong,
-          ),
-          const SizedBox(width: 6),
-          Flexible(
-            child: AnimatedSwitcher(
-              duration: AppMotion.chipHover,
-              child: Text(
-                label,
-                key: ValueKey(label),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.8)
-                      : AppColors.slate600,
-                  fontSize: AppTypography.micro,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.4,
+            const SizedBox(width: 6),
+            Container(
+              width: 1,
+              height: 8,
+              color: context.glassBorderStrong,
+            ),
+            const SizedBox(width: 6),
+            Flexible(
+              child: AnimatedSwitcher(
+                duration: AppMotion.chipHover,
+                child: Text(
+                  label,
+                  key: ValueKey(label),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.8)
+                        : AppColors.slate600,
+                    fontSize: AppTypography.micro,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.4,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      );
-    } catch (_) {
-      return _availableBadge(isDark);
-    }
+          ],
+        );
+      },
+    );
   }
 
   Widget _availableBadge(bool isDark) => Row(

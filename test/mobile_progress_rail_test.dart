@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/mobile_progress_rail.dart';
@@ -31,15 +29,9 @@ Widget _host(HomeController controller) {
     themeMode: ThemeMode.dark,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    home: BlocProvider<NavigationBloc>(
-      create: (_) => NavigationBloc(
-        initialPage: controller.pageIndex.value,
-        pageCount: controller.pageCount,
-      ),
-      child: HomeControllerScope(
-        controller: controller,
-        child: const Scaffold(body: Center(child: MobileProgressRail())),
-      ),
+    home: HomeControllerScope(
+      controller: controller,
+      child: const Scaffold(body: Center(child: MobileProgressRail())),
     ),
   );
 }

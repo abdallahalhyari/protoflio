@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/contact/page/contact_page.dart'
@@ -32,7 +30,7 @@ import 'scroll_to_top_button.dart';
 /// Mobile continuous-scroll layout for the portfolio. Owns the Stack
 /// with the scrollable section column + 5 positioned overlay layers
 /// (app bar, scroll-to-top, progress rail, pager). Reads
-/// `pageIndex`, `showScrollToTop`, and nav intents from NavigationBloc.
+/// `pageIndex`, `showScrollToTop`, and nav intents from [HomeController].
 class MobileHomeLayout extends StatelessWidget {
   const MobileHomeLayout({
     super.key,
@@ -50,9 +48,7 @@ class MobileHomeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final page = context.select((NavigationBloc bloc) => bloc.state.pageIndex);
-    final showScrollToTop =
-        context.select((NavigationBloc bloc) => bloc.state.showScrollToTop);
+    final controller = HomeController.of(context);
     final labels = TopNav.getLabels(context);
     return Stack(
       children: [
@@ -70,13 +66,10 @@ class MobileHomeLayout extends StatelessWidget {
               child: KeyedSubtree(
                 key: sectionKeys[0],
                 child: IntroPage(
-                  onScrollDown: () =>
-                      HomeController.of(context).scrollToMobileSection(1),
-                  onViewWork: () =>
-                      HomeController.of(context).scrollToMobileSection(2),
+                  onScrollDown: () => controller.scrollToMobileSection(1),
+                  onViewWork: () => controller.scrollToMobileSection(2),
                   onDownloadResume: () => CvService.open(context),
-                  onContactMe: () =>
-                      HomeController.of(context).scrollToMobileSection(6),
+                  onContactMe: () => controller.scrollToMobileSection(6),
                   isContinuousMobile: true,
                 ),
               ),
@@ -185,14 +178,12 @@ class MobileHomeLayout extends StatelessWidget {
             onMenuPressed: () {
               MobileNavSheet.show(
                 context,
-                activeIndex: page,
-                onSelectSection: (idx) =>
-                    HomeController.of(context).scrollToMobileSection(idx),
+                activeIndex: controller.pageIndex.value,
+                onSelectSection: (idx) => controller.scrollToMobileSection(idx),
                 onDownloadResume: () => CvService.open(context),
               );
             },
-            onLogoPressed: () =>
-                HomeController.of(context).scrollToMobileSection(0),
+            onLogoPressed: () => controller.scrollToMobileSection(0),
           ),
         ),
 
@@ -200,8 +191,9 @@ class MobileHomeLayout extends StatelessWidget {
         Positioned(
           bottom: 24,
           right: 18,
-          child: Builder(
-            builder: (context) {
+          child: ValueListenableBuilder<bool>(
+            valueListenable: controller.showScrollToTop,
+            builder: (context, showScrollToTop, _) {
               if (!showScrollToTop) return const SizedBox.shrink();
               return ScrollToTopButton(
                 onPressed: () => scrollController.animateTo(

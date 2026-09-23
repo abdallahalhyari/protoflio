@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/projects/data/projects_data.dart';
@@ -31,8 +30,6 @@ Widget _buildViewportHarness(Widget child, Size size,
           create: (_) => ThemeBloc(
               initialMode: isDark ? ThemeMode.dark : ThemeMode.light)),
       BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
-      BlocProvider<NavigationBloc>(
-          create: (_) => NavigationBloc(initialPage: -1)),
     ],
     child: MediaQuery(
       data: MediaQueryData(size: size),

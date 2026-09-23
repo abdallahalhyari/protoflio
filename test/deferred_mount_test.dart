@@ -1,17 +1,14 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_event.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/deferred_mount.dart';
 
 Widget _wrap({
-  required NavigationBloc bloc,
+  required ValueNotifier<int> pageIndex,
   required Widget child,
 }) {
   final controller = HomeController(
-    pageIndex: ValueNotifier<int>(bloc.state.pageIndex),
+    pageIndex: pageIndex,
     showScrollToTop: ValueNotifier<bool>(false),
     pageCount: 7,
     goTo: (int _, {bool syncUrl = true}) {},
@@ -20,21 +17,17 @@ Widget _wrap({
     scrollToMobileSection: (int _, {bool syncUrl = true}) {},
     downloadResume: () async {},
   );
-  return BlocProvider<NavigationBloc>.value(
-    value: bloc,
-    child: Directionality(
-      textDirection: TextDirection.ltr,
-      child: HomeControllerScope(controller: controller, child: child),
-    ),
+  return Directionality(
+    textDirection: TextDirection.ltr,
+    child: HomeControllerScope(controller: controller, child: child),
   );
 }
 
 void main() {
   testWidgets('renders placeholder when page is far from section',
       (tester) async {
-    final bloc = NavigationBloc(initialPage: 0);
     await tester.pumpWidget(_wrap(
-      bloc: bloc,
+      pageIndex: ValueNotifier<int>(0),
       child: const DeferredMount(
         sectionIndex: 5,
         placeholderHeight: 720,
@@ -45,9 +38,8 @@ void main() {
   });
 
   testWidgets('mounts child when page is within distance', (tester) async {
-    final bloc = NavigationBloc(initialPage: 4);
     await tester.pumpWidget(_wrap(
-      bloc: bloc,
+      pageIndex: ValueNotifier<int>(4),
       child: const DeferredMount(
         sectionIndex: 5,
         placeholderHeight: 720,
@@ -57,10 +49,9 @@ void main() {
     expect(find.text('mounted'), findsOneWidget);
   });
 
-  testWidgets(
-      'mounts eagerly when rendered outside a HomeControllerScope or NavigationBloc',
+  testWidgets('mounts eagerly when rendered outside a HomeControllerScope',
       (tester) async {
-    // No NavigationBloc wraps the child — DeferredMount should
+    // No HomeControllerScope wraps the child — DeferredMount should
     // fall back to mounting immediately rather than freezing on the
     // placeholder.
     await tester.pumpWidget(const Directionality(
@@ -76,9 +67,9 @@ void main() {
 
   testWidgets('mounts on notifier change without unmounting again',
       (tester) async {
-    final bloc = NavigationBloc(initialPage: 0);
+    final pageIndex = ValueNotifier<int>(0);
     await tester.pumpWidget(_wrap(
-      bloc: bloc,
+      pageIndex: pageIndex,
       child: const DeferredMount(
         sectionIndex: 3,
         placeholderHeight: 720,
@@ -87,12 +78,12 @@ void main() {
     ));
     expect(find.text('mounted'), findsNothing);
 
-    bloc.add(const NavigationPageSelected(2)); // within distance 1
+    pageIndex.value = 2; // within distance 1
     await tester.pumpAndSettle();
     expect(find.text('mounted'), findsOneWidget);
 
     // Move far away — must stay mounted (sticky).
-    bloc.add(const NavigationPageSelected(0));
+    pageIndex.value = 0;
     await tester.pumpAndSettle();
     expect(find.text('mounted'), findsOneWidget);
   });

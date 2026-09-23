@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/portfolio_nav.dart';
@@ -32,15 +30,9 @@ Widget _wrap(Widget child, HomeController controller) {
     themeMode: ThemeMode.dark,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    home: BlocProvider<NavigationBloc>(
-      create: (_) => NavigationBloc(
-        initialPage: controller.pageIndex.value,
-        pageCount: controller.pageCount,
-      ),
-      child: HomeControllerScope(
-        controller: controller,
-        child: Scaffold(body: child),
-      ),
+    home: HomeControllerScope(
+      controller: controller,
+      child: Scaffold(body: child),
     ),
   );
 }
@@ -81,9 +73,7 @@ void main() {
     final items = find.byType(NavItem);
     expect(items, findsWidgets);
 
-    // Tap a non-active NavItem (index != 0) — should call HomeController.goTo,
-    // not mutate NavigationBloc directly (that's driven by the real page
-    // scroll, which this stub doesn't perform).
+    // Tap a non-active NavItem (index != 0) — should call HomeController.goTo.
     await tester.tap(items.last);
     await tester.pumpAndSettle();
     expect(goToArg, 6);

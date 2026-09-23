@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_event.dart';
 import 'package:profile/core/bloc/locale/locale_state.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
@@ -93,9 +92,6 @@ class PortfolioApp extends StatelessWidget {
         BlocProvider<LocaleBloc>(
           create: (_) => LocaleBloc(initialLocale: initialLocale)
             ..add(const LocaleStarted()),
-        ),
-        BlocProvider<NavigationBloc>(
-          create: (_) => NavigationBloc(),
         ),
       ],
       child: BlocBuilder<LocaleBloc, LocaleState>(

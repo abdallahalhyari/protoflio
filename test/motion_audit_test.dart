@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/features/projects/data/projects_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -53,12 +52,6 @@ Widget _wrapWithMedia({
     providers: [
       BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
       BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
-      BlocProvider<NavigationBloc>(
-        create: (_) => NavigationBloc(
-          initialPage: ctrl.pageIndex.value,
-          pageCount: ctrl.pageCount,
-        ),
-      ),
     ],
     child: MaterialApp(
       theme: AppTheme.dark(),
@@ -233,9 +226,8 @@ void main() {
 
       expect(find.text('02 / 07'), findsOneWidget);
 
-      // Tap next — MobilePager calls HomeController.scrollToMobileSection,
-      // not NavigationBloc directly (that bloc only mirrors real page
-      // scroll, which this mock controller doesn't perform).
+      // Tap next — MobilePager calls HomeController.scrollToMobileSection
+      // and reactively re-renders off controller.pageIndex.
       final nextButton = find.byTooltip('Next section');
       expect(nextButton, findsOneWidget);
       await tester.tap(nextButton);
@@ -243,16 +235,13 @@ void main() {
 
       expect(controller.pageIndex.value, 2);
 
-      // Tap previous — MobilePager reads its "page" from NavigationBloc
-      // (unchanged by the mock controller above), so this computes
-      // page - 1 off the original bloc pageIndex (1), not off the value
-      // scrollToMobileSection just wrote.
+      // Tap previous — should round-trip back to the original page.
       final prevButton = find.byTooltip('Previous section');
       expect(prevButton, findsOneWidget);
       await tester.tap(prevButton);
       await tester.pumpAndSettle();
 
-      expect(controller.pageIndex.value, 0);
+      expect(controller.pageIndex.value, 1);
       expect(tester.takeException(), isNull);
     });
 
@@ -276,8 +265,7 @@ void main() {
       await tester.tap(dots.at(1));
       await tester.pumpAndSettle();
 
-      // MobileProgressRail calls HomeController.scrollToMobileSection, not
-      // NavigationBloc directly.
+      // MobileProgressRail calls HomeController.scrollToMobileSection.
       expect(controller.pageIndex.value, 1);
       expect(tester.takeException(), isNull);
     });

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -16,68 +14,73 @@ class MobileProgressRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final page = context.select((NavigationBloc bloc) => bloc.state.pageIndex);
-    final pageCount =
-        context.select((NavigationBloc bloc) => bloc.state.pageCount);
+    final controller = HomeController.of(context);
+    final pageCount = controller.pageCount;
     final labels = TopNav.getLabels(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      decoration: BoxDecoration(
-        color: context.glassSurface,
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(color: context.glassBorder),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (int i = 0; i < pageCount; i++)
-            Semantics(
-              button: true,
-              selected: i == page,
-              label: i < labels.length
-                  ? 'Go to ${labels[i]}'
-                  : 'Go to page ${i + 1}',
-              child: InkResponse(
-                radius: 14,
-                onTap: i == page
-                    ? null
-                    : () {
-                        SoundService.instance.playSelection();
-                        HomeController.of(context).scrollToMobileSection(i);
-                      },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 3),
-                  child: _HoverScale(
-                    child: AnimatedContainer(
-                      duration: AppMotion.sm,
-                      curve: AppMotion.emphasized,
-                      width: i == page ? 8 : 5,
-                      height: i == page ? 8 : 5,
-                      decoration: BoxDecoration(
-                        color: i == page
-                            ? Theme.of(context).colorScheme.primary
-                            : context.railDot(ThemeBloc.colorForIndex(i)),
-                        shape: BoxShape.circle,
-                        boxShadow: i == page
-                            ? [
-                                BoxShadow(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withValues(alpha: 0.7),
-                                  blurRadius: 6,
-                                  spreadRadius: 0.5,
-                                ),
-                              ]
-                            : null,
+
+    return ValueListenableBuilder<int>(
+      valueListenable: controller.pageIndex,
+      builder: (context, page, _) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+          decoration: BoxDecoration(
+            color: context.glassSurface,
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            border: Border.all(color: context.glassBorder),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (int i = 0; i < pageCount; i++)
+                Semantics(
+                  button: true,
+                  selected: i == page,
+                  label: i < labels.length
+                      ? 'Go to ${labels[i]}'
+                      : 'Go to page ${i + 1}',
+                  child: InkResponse(
+                    radius: 14,
+                    onTap: i == page
+                        ? null
+                        : () {
+                            SoundService.instance.playSelection();
+                            controller.scrollToMobileSection(i);
+                          },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3),
+                      child: _HoverScale(
+                        child: AnimatedContainer(
+                          duration: AppMotion.sm,
+                          curve: AppMotion.emphasized,
+                          width: i == page ? 8 : 5,
+                          height: i == page ? 8 : 5,
+                          decoration: BoxDecoration(
+                            color: i == page
+                                ? Theme.of(context).colorScheme.primary
+                                : context.railDot(ThemeBloc.colorForIndex(i)),
+                            shape: BoxShape.circle,
+                            boxShadow: i == page
+                                ? [
+                                    BoxShadow(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withValues(alpha: 0.7),
+                                      blurRadius: 6,
+                                      spreadRadius: 0.5,
+                                    ),
+                                  ]
+                                : null,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-        ],
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

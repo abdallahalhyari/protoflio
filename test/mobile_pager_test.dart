@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/mobile_pager.dart';
@@ -31,15 +29,9 @@ Widget _host(HomeController controller) {
     themeMode: ThemeMode.dark,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    home: BlocProvider<NavigationBloc>(
-      create: (_) => NavigationBloc(
-        initialPage: controller.pageIndex.value,
-        pageCount: controller.pageCount,
-      ),
-      child: HomeControllerScope(
-        controller: controller,
-        child: const Scaffold(body: Center(child: MobilePager())),
-      ),
+    home: HomeControllerScope(
+      controller: controller,
+      child: const Scaffold(body: Center(child: MobilePager())),
     ),
   );
 }
@@ -77,10 +69,7 @@ void main() {
 
     final prevButton = find.byTooltip('Previous section');
     expect(prevButton, findsOneWidget);
-
-    final bloc =
-        tester.element(find.byType(MobilePager)).read<NavigationBloc>();
-    expect(bloc.state.pageIndex, 0);
+    expect(pageIndex.value, 0);
   });
 
   testWidgets('MobilePager next is disabled on the last section',
@@ -91,9 +80,6 @@ void main() {
 
     final nextButton = find.byTooltip('Next section');
     expect(nextButton, findsOneWidget);
-
-    final bloc =
-        tester.element(find.byType(MobilePager)).read<NavigationBloc>();
-    expect(bloc.state.pageIndex, 6);
+    expect(pageIndex.value, 6);
   });
 }
