@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/hats/data/hats_data.dart';
+import 'package:profile/features/hats/page/hats_grid_page.dart';
 import 'package:profile/features/hats/widget/continuous_mobile_hat_column.dart';
 import 'package:profile/features/hats/widget/hat_bio_strip.dart';
 import 'package:profile/features/hats/widget/hat_console_dock.dart';
@@ -180,6 +182,46 @@ void main() {
       await tester.tap(find.byIcon(Icons.layers_clear_outlined));
       await tester.pumpAndSettle();
       expect(reset, isTrue);
+    });
+
+    testWidgets(
+        'HatsGridPage keyboard shortcuts (arrow cycle, S shuffle) actually '
+        'fire — regression test for the dead-focus bug fixed this session',
+        (tester) async {
+      // HatsGridPage fills its parent via SizedBox.expand — needs bounded
+      // constraints, unlike _wrap's SingleChildScrollView used elsewhere
+      // in this file for standalone sub-widgets.
+      await tester.pumpWidget(MaterialApp(
+        theme: AppTheme.dark(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const MediaQuery(
+          data: MediaQueryData(size: Size(1200, 900)),
+          child: Scaffold(body: HatsGridPage()),
+        ),
+      ));
+      // HatsGridPage has ambient looping animations, so pumpAndSettle would
+      // time out waiting for them to finish — pump a fixed settle window
+      // instead, matching the existing HatsGridPage test in widget_test.dart.
+      await tester.pump(const Duration(milliseconds: 300));
+
+      // "THINKING" appears twice at rest: once as the fanned card's own
+      // label (always visible) and once as HatConsoleDock's active-role
+      // pill (only the selected role). "COMMUNICATING" only has the card
+      // label, so the active pill switching roles is what moves it from
+      // 1 occurrence to 2.
+      expect(find.text('THINKING'), findsNWidgets(2));
+      expect(find.text('COMMUNICATING'), findsOneWidget);
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.arrowRight);
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('COMMUNICATING'), findsNWidgets(2));
+      expect(find.text('THINKING'), findsOneWidget);
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.arrowLeft);
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('THINKING'), findsNWidgets(2));
+      expect(find.text('COMMUNICATING'), findsOneWidget);
     });
   });
 }
