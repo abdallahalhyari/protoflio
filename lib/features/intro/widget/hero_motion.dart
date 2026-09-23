@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:profile/shared/util/hover_reset_offset_controller.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// Snappy entrance micro-motion that smoothly fades and slides its child into
@@ -115,57 +116,28 @@ class HeroParallax extends StatefulWidget {
 
 class _HeroParallaxState extends State<HeroParallax>
     with SingleTickerProviderStateMixin {
-  final ValueNotifier<Offset> _normOffset = ValueNotifier<Offset>(Offset.zero);
-  late final AnimationController _resetCtrl;
-  late Animation<Offset> _resetAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _resetCtrl = AnimationController(
-      vsync: this,
-      duration: AppMotion.cardHover,
-    );
-    // One persistent listener reading the current _resetAnimation, rather
-    // than a fresh listener per _onExit call — that used to leak one
-    // listener per hover/exit cycle onto _resetCtrl for the widget's
-    // lifetime.
-    _resetCtrl.addListener(() {
-      _normOffset.value = _resetAnimation.value;
-    });
-  }
+  late final _hover = HoverResetOffsetController(
+    vsync: this,
+    duration: AppMotion.cardHover,
+    curve: AppMotion.emphasizedDecel,
+  );
 
   @override
   void dispose() {
-    _normOffset.dispose();
-    _resetCtrl.dispose();
+    _hover.dispose();
     super.dispose();
   }
 
   void _onHover(PointerEvent event, Size size) {
     if (kIsWeb && MediaQuery.disableAnimationsOf(context)) return;
     if (size.width == 0 || size.height == 0) return;
-    if (_resetCtrl.isAnimating) _resetCtrl.stop();
 
     final nx = ((event.localPosition.dx / size.width) - 0.5) * 2.0;
     final ny = ((event.localPosition.dy / size.height) - 0.5) * 2.0;
-    _normOffset.value = Offset(nx.clamp(-1.0, 1.0), ny.clamp(-1.0, 1.0));
+    _hover.set(Offset(nx.clamp(-1.0, 1.0), ny.clamp(-1.0, 1.0)));
   }
 
-  void _onExit(PointerEvent _) {
-    final current = _normOffset.value;
-    if (current == Offset.zero) return;
-
-    _resetAnimation = Tween<Offset>(
-      begin: current,
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _resetCtrl, curve: AppMotion.emphasizedDecel),
-    );
-
-    _resetCtrl.reset();
-    _resetCtrl.forward();
-  }
+  void _onExit(PointerEvent _) => _hover.animateToZero();
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +154,7 @@ class _HeroParallaxState extends State<HeroParallax>
           onExit: _onExit,
           child: RepaintBoundary(
             child: ValueListenableBuilder<Offset>(
-              valueListenable: _normOffset,
+              valueListenable: _hover.offset,
               builder: (context, norm, child) {
                 final tx = norm.dx * widget.maxOffset;
                 final ty = norm.dy * widget.maxOffset;

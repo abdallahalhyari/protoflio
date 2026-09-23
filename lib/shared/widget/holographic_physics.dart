@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/shared/util/hover_reset_offset_controller.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// A high-performance 3D interactive physics wrapper that tilts its child based
@@ -27,43 +28,26 @@ class HolographicCardPhysics extends StatefulWidget {
 
 class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
     with SingleTickerProviderStateMixin {
-  final ValueNotifier<Offset> _norm = ValueNotifier<Offset>(Offset.zero);
   final ValueNotifier<bool> _isHovering = ValueNotifier<bool>(false);
-  late final AnimationController _resetCtrl;
-  late Animation<Offset> _resetAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _resetCtrl = AnimationController(
-      vsync: this,
-      duration: AppMotion.sm,
-    );
-    // One persistent listener reading the current _resetAnimation, rather
-    // than a fresh listener per _onExit call — this widget is reused across
-    // every card grid (experience/projects/hats/skills), so a per-call leak
-    // here compounds fast with normal mouse movement over a session.
-    _resetCtrl.addListener(() {
-      _norm.value = _resetAnimation.value;
-    });
-  }
+  late final _hover = HoverResetOffsetController(
+    vsync: this,
+    duration: AppMotion.sm,
+    curve: Curves.easeOutCubic,
+  );
 
   @override
   void dispose() {
-    _norm.dispose();
     _isHovering.dispose();
-    _resetCtrl.dispose();
+    _hover.dispose();
     super.dispose();
   }
 
   void _onEnter(PointerEvent _) {
-    _resetCtrl.stop();
     _isHovering.value = true;
   }
 
   void _onHover(PointerEvent event, Size size) {
     if (size.width <= 0 || size.height <= 0) return;
-    if (_resetCtrl.isAnimating) _resetCtrl.stop();
 
     final nx =
         (((event.localPosition.dx / size.width) - 0.5) * 2.0).clamp(-1.0, 1.0);
@@ -71,24 +55,13 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
         (((event.localPosition.dy / size.height) - 0.5) * 2.0).clamp(-1.0, 1.0);
     final next = Offset(nx, ny);
 
-    if ((next - _norm.value).distanceSquared < 0.0004) return;
-    _norm.value = next;
+    if ((next - _hover.offset.value).distanceSquared < 0.0004) return;
+    _hover.set(next);
   }
 
   void _onExit(PointerEvent _) {
     _isHovering.value = false;
-    final current = _norm.value;
-    if (current == Offset.zero) return;
-
-    _resetAnimation = Tween<Offset>(
-      begin: current,
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _resetCtrl, curve: Curves.easeOutCubic),
-    );
-
-    _resetCtrl.reset();
-    _resetCtrl.forward();
+    _hover.animateToZero();
   }
 
   @override
@@ -110,7 +83,7 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
           onExit: _onExit,
           child: RepaintBoundary(
             child: ValueListenableBuilder<Offset>(
-              valueListenable: _norm,
+              valueListenable: _hover.offset,
               builder: (context, norm, staticChild) {
                 // Pitch (X-axis tilt): cursor down tilts top towards viewer
                 final double pitch = -norm.dy * widget.maxTiltAngle;
