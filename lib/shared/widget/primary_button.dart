@@ -209,8 +209,8 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                 curve: Curves.easeOut,
                 transform: Matrix4.identity()
                   ..scaleByDouble(
-                    hover ? 1.05 : 1.0,
-                    hover ? 1.05 : 1.0,
+                    hover && !reduceMotion ? 1.05 : 1.0,
+                    hover && !reduceMotion ? 1.05 : 1.0,
                     1.0,
                     1.0,
                   ),
