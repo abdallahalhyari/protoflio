@@ -20,90 +20,90 @@ Live: [alhyari.web.app](https://alhyari.web.app)
 
 ## Tech Stack
 
-- **Flutter 3.6+ / Dart 3** — single codebase for web, iOS, Android, desktop.
+- **Flutter 3.6+ / Dart 3** — single codebase for web, iOS, Android, desktop (macOS runner included for local dev/testing).
+- **flutter_bloc + equatable** — BLoC state management (`lib/core/bloc/{navigation,theme,locale}`, plus per-feature blocs under `lib/features/*/bloc/`).
 - **Material 3** theming — `AppTheme` derived from a seed color with per-brightness `ColorScheme`.
 - **Design tokens** (`lib/theme/tokens.dart`) — `AppSpacing`, `AppRadius`, `AppMotion`, `AppTypography`, `AppColors` (slate scale + editorial accents).
-- **firebase_core + analytics** — screen-view logging.
+- **Firebase Hosting** — deploy target only; the Flutter app itself has no `firebase_core`/Firebase SDK dependency. Analytics ships via `web/index.html`'s `gtag` snippet, called from Dart through `dart:js_interop` (`lib/service/analytics_service_web.dart`) — no Dart-side Firebase init needed.
 - **url_launcher** — email / phone / social channel deep links.
-- **google_fonts** — Inter body + custom `Tenada` display font (see `fonts/`).
-- **lottie + animate_do** — subtle intro / entry animations.
+- **shared_preferences** — persisted theme mode + locale.
+- **Custom `Tenada` display font** (`fonts/Tenada.ttf`, subsetted, <32 KB) + system font stack for body text — no `google_fonts` dependency.
 - **flutter_localizations + intl** — `en`, `ar`, `cs` locales (see `lib/l10n/`).
 
 ## Architecture
 
+Feature-first: each top-level section owns its `page/`, `widget/`, `bloc/`, `model/`, and `data/` — cross-cutting app shell and state live in `core/` and `features/shell/`.
+
 ```
 lib/
-├── main.dart                    # MaterialApp + global scroll behavior
-├── theme/                       # Design tokens + ThemeData (AppTheme, AppColors, AppSpacing...)
-├── locale_controller.dart       # Multi-locale state controller (en, ar, cs)
-├── theme_controller.dart        # Light/Dark mode state notifier
+├── main.dart                       # MaterialApp bootstrap + global scroll behavior
+├── core/
+│   └── bloc/
+│       ├── navigation/              # NavigationBloc — section index, scroll-to-top visibility
+│       ├── theme/                   # ThemeBloc — light/dark mode, live section-accent seed color
+│       └── locale/                  # LocaleBloc — en / ar / cs
 ├── service/
-│   ├── analytics_service.dart   # Screen tracking & CTA telemetry
-│   ├── cv_service.dart          # ATS-verified CV download & preview handler
-│   ├── sound_service.dart       # Ambient audio + tactile click feedback
-│   └── url_sync_service.dart    # Hash-based deep linking (#work, #contact, …)
-└── module/home/
-    ├── home_screen.dart         # Desktop PageView + mobile continuous scroll shell
-    ├── page/                    # Modularized section views (-56% total page footprint)
-    │   ├── intro_page.dart
-    │   ├── projects_page.dart
-    │   ├── engineering_page.dart
-    │   ├── experience_page.dart
-    │   ├── skills_page.dart
-    │   ├── hats_grid_page.dart
-    │   ├── contact_page.dart
-    │   └── project_modal.dart
-    ├── widget/                  # Domain-isolated component subpackages
-    │   ├── intro/               # IntroCtaRow, IntroFooterStrip, IntroAvailabilityBanner
-    │   ├── projects/            # PipelineTopologyDiagram, NfcArchitectureDiagram, ProjectDossierCard
-    │   ├── engineering/         # EngineeringHeader, ArchitectureTopicTabs, ArchitectureDiagramCard...
-    │   ├── experience/          # ExperienceHeader, CredentialsBentoCard, AnimatedExperienceNode...
-    │   ├── skills/              # SkillsHeader, SkillCategoryFilters, SkillsEmptyState...
-    │   ├── hats/                # HatDeckHeader, ContinuousMobileHatColumn, HatBioStrip, HatRolePills...
-    │   └── contact/             # ContactHeader, HeroEmailCard, ExpressPresetsBar, CvDossierCard...
-    ├── model/                   # Skill / Project / Experience / Hat / Topic data models
-    └── data/                    # Pure domain data sources (projects, skills, experience, hats)
+│   ├── analytics_service*.dart      # gtag-backed screen/CTA telemetry (web/stub split)
+│   ├── cv_service.dart              # CV download & preview handler
+│   ├── sound_service*.dart          # Ambient audio + tactile click feedback (web/io split)
+│   └── url_sync_service*.dart       # Hash-based deep linking (#work, #work/<slug>, …)
+├── theme/                           # Design tokens + ThemeData (AppTheme, AppColors, AppSpacing, AppMotion...)
+├── shared/widget/                   # Cross-feature components (PrimaryButton, HolographicCardPhysics, AppToast...)
+├── l10n/                            # ARB files + generated AppLocalizations (en, ar, cs)
+└── features/
+    ├── shell/                       # HomeScreen: desktop PageView + mobile continuous scroll,
+    │                                 #   HomeController (real nav state), keyboard nav, scroll interceptor
+    ├── intro/                       # Hero section (page/ + widget/)
+    ├── projects/                    # Selected Work grid, domain filters, case-study modal (page/widget/bloc/model/data)
+    ├── case_study/                  # Dedicated full-page case studies (routed via CaseStudyRouter, not the modal)
+    ├── engineering/                 # Architecture flowcharts + simulator (page/widget/bloc/data)
+    ├── experience/                  # Career timeline (page/widget/bloc/model/data)
+    ├── skills/                      # Skill tiles + category filters (page/widget/bloc/data)
+    ├── hats/                        # Perspective card deck (page/widget/bloc/model)
+    └── contact/                     # Contact channels + inquiry composer (page/widget/bloc)
 ```
+
+Notable architectural detail: `NavigationBloc` mirrors the current section index for UI highlighting (nav pills, dots, folio bar), but the *actual* page position is owned by `HomeController`/`_HomeScreenState` (the real `PageController` / mobile `ScrollController`). Always drive navigation through `HomeController.of(context).goTo(...)` / `.scrollToMobileSection(...)` — dispatching `NavigationPageSelected` straight to the bloc only updates the highlight, not the visible page.
 
 ## Running
 
-Prereqs: Flutter 3.6+, Dart 3, Xcode + CocoaPods (iOS), Android Studio (Android).
+Prereqs: Flutter 3.6+, Dart 3, Xcode + CocoaPods (iOS/macOS), Android Studio (Android).
 
 ```bash
 flutter pub get
 flutter run -d chrome              # web
 flutter run -d ios                 # simulator
 flutter run -d android             # device / emulator
+flutter run -d macos               # desktop
+```
+
+Or via the `Makefile` / npm scripts (both wrap the same commands):
+
+```bash
+make format         # dart format lib/ test/
+make analyze         # flutter analyze
+make test            # flutter test
+make build            # flutter build web --wasm --release ...
+make deploy           # format-check + analyze + test + build + firebase deploy
+make deploy-fast      # build + firebase deploy (skips verification, for quick iteration)
 ```
 
 ## Testing & Quality Assurance
 
-Comprehensive verification across 112 automated tests:
-
 ```bash
-flutter analyze                    # 0 static analysis issues
-flutter test                       # 112/112 passing tests
+flutter analyze     # 0 static analysis issues
+flutter test        # ~280 passing tests across 44 files in test/
 ```
 
-Test suites:
-- `test/widget_test.dart` — Core app bootstrap, desktop keyboard navigation & section transitions.
-- `test/theme_audit_test.dart` — Comprehensive light and dark mode audits across all 7 sections.
-- `test/responsive_audit_test.dart` — Breakpoint layout assertions across desktop, tablet, and mobile.
-- `test/rtl_smoke_test.dart` — Right-to-left bidirectional layout assertions (Arabic locale).
-- `test/contact_widgets_test.dart` — Contact header, encrypted email cards, express presets, CV dossier & channels.
-- `test/hats_widgets_test.dart` — Architectural perspectives deck, continuous mobile scroll, role pills & steppers.
-- `test/engineering_widgets_test.dart` — Architecture header, topic tabs, flowchart diagrams & technical safeguards.
-- `test/experience_widgets_test.dart` — Career trajectory header, academic annex, certification bento & timeline nodes.
-- `test/skills_widgets_test.dart` — Skills header, category filters, and empty-state fallback.
-- `test/projects_widgets_test.dart` — CI/CD pipeline topology, ISO-7816 NFC APDU architecture & dossier cards.
-- `test/editorial_chip_test.dart` & `test/primary_button_test.dart` — Design system atomic token components.
+Test suites cover, per feature: widget rendering across light/dark theme (`theme_audit_test.dart`), responsive breakpoints (`responsive_audit_test.dart`), RTL layout (`rtl_smoke_test.dart`), keyboard navigation (`home_screen_keyboard_test.dart`), motion/reduced-motion behavior (`motion_audit_test.dart`), accessibility semantics (`accessibility_audit_test.dart`), scroll/repaint performance (`scroll_performance_test.dart`, `performance_audit_test.dart`), each BLoC (`test/bloc/*_test.dart`), and per-feature widget suites (`*_widgets_test.dart`). See `test/` for the full list.
 
 ## Deploying
 
-Web (Firebase Hosting):
+Web (Firebase Hosting), via `make deploy` or manually:
 
 ```bash
 flutter build web --wasm --release --tree-shake-icons --no-source-maps
+node patch_flutter_js.js
 firebase deploy --only hosting
 ```
 
@@ -111,9 +111,12 @@ Build-flag notes:
 - `--wasm` compiles Dart to WebAssembly instead of JavaScript, delivering near-native performance and faster initial load times.
 - `--tree-shake-icons` drops unused MaterialIcons glyphs from the icon font (usually cuts ~80–90% of the icon-font bytes).
 - `--no-source-maps` keeps the release payload lean; drop it if you need to debug production stack traces.
+- `patch_flutter_js.js` patches the generated bundle for Lighthouse best-practices compliance (disables the SW, uses local CanvasKit, injects `.part.js` prefetch tags).
 - iOS release build should ship Impeller (default on stable). No extra flag needed.
 
-Configuration lives in `firebase.json`. Analytics + hosting cache rules are already wired.
+Configuration lives in `firebase.json` (single hosting target: `alhyari`) and `.firebaserc` (default project `testfirestore-9b0b0` — the project's default Hosting site of the same name exists but is unused/undeletable; deploys don't target it).
+
+CI/CD: `.github/workflows/firebase-hosting-merge.yml` runs format-check + analyze + test + build and deploys to Firebase Hosting on every push to `main`. Requires a `FIREBASE_SERVICE_ACCOUNT` secret configured in the repo settings.
 
 ## Contact
 
