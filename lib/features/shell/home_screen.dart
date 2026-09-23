@@ -299,8 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (visibleIndex != null && visibleIndex != _pageIndex.value) {
       _pageIndex.value = visibleIndex;
-      _navBloc
-          ?.add(NavigationMobileSectionScrolled(visibleIndex));
+      _navBloc?.add(NavigationMobileSectionScrolled(visibleIndex));
       context.read<ThemeBloc>().add(ThemeAccentUpdated(visibleIndex));
       _scheduleSettle(visibleIndex);
     }
