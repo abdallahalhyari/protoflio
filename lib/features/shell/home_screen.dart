@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/bloc/navigation/navigation_bloc.dart';
 import 'package:profile/core/bloc/navigation/navigation_event.dart';
@@ -231,6 +232,14 @@ class _HomeScreenState extends State<HomeScreen> {
       final labels = TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {
         Analytics.screen(labels[page], className: 'HomeScreen');
+        // This is a single-page scrollytelling app — section changes are a
+        // PageView/scroll position, not a route push, so screen readers get
+        // no automatic cue that content changed. Announce it explicitly.
+        unawaited(SemanticsService.sendAnnouncement(
+          View.of(context),
+          labels[page],
+          Directionality.of(context),
+        ));
       }
     });
   }
