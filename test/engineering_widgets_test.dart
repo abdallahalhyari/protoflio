@@ -95,7 +95,6 @@ void main() {
       expect(find.text(topic.summary), findsOneWidget);
     });
 
-
     testWidgets(
         'showArchitectureInspectModal opens dialog and renders InteractiveViewer',
         (tester) async {
@@ -132,7 +131,6 @@ void main() {
 
       expect(find.text('INSPECT BLUEPRINT // ZOOM & SIMULATE'), findsOneWidget);
       expect(find.byType(InteractiveViewer), findsOneWidget);
-
     });
   });
 }

@@ -121,18 +121,20 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
     if (timeSinceLastWheel > AppMotion.wheelResetGap) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
-    } 
+    }
     // 2. Sudden velocity spike (new flick in same direction)
-    else if (_lastDy != 0 && dy.sign == _lastDy.sign && dy.abs() > _lastDy.abs() + 15.0) {
+    else if (_lastDy != 0 &&
+        dy.sign == _lastDy.sign &&
+        dy.abs() > _lastDy.abs() + 15.0) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
-    } 
+    }
     // 3. Direction change (flick in opposite direction)
     else if (_lastDy != 0 && dy.sign != _lastDy.sign && dy.abs() > 2.0) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
     }
-    
+
     _lastDy = dy;
 
     // Drop further wheel events while a transition animation is actively in flight

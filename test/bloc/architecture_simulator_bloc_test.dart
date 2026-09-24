@@ -24,8 +24,7 @@ void main() {
       await expectLater(
         bloc.stream,
         emits(predicate<ArchitectureSimulatorState>((state) =>
-            state.selectedTopicIndex == 1 &&
-            state.currentStepIndex == 0)),
+            state.selectedTopicIndex == 1 && state.currentStepIndex == 0)),
       );
 
       await bloc.close();
