@@ -133,10 +133,10 @@ class ArchitectureDetailsCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '❖ ',
-                    style: TextStyle(
-                        color: accentText, fontSize: AppTypography.caption),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3, right: 4),
+                    child: Icon(Icons.diamond,
+                        size: AppTypography.caption, color: accentText),
                   ),
                   Expanded(
                     child: Text(

@@ -12,24 +12,30 @@ class ExpressPresetsBar extends StatelessWidget {
     required this.onSelectPreset,
   });
 
-  static const List<(String, String, String)> presets = [
+  // Material icons, not emoji: CanvasKit has no system fonts, so the emoji
+  // pulled ~527 KB of Noto Color Emoji + Noto Sans Symbols 2 at runtime.
+  static const List<(IconData, String, String, String)> presets = [
     (
-      '💼 Senior Role',
+      Icons.work_outline_rounded,
+      'Senior Role',
       '[Role Opportunity] Senior Mobile Architect - Abdallah Alhyari',
       'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Architect / Engineering role at our company...',
     ),
     (
-      '📐 Architecture Audit',
+      Icons.architecture_rounded,
+      'Architecture Audit',
       '[Architecture Review] Mobile Codebase Audit - Abdallah Alhyari',
       'Hi Abdallah,\n\nWe are looking for a deep architectural review of our existing mobile application...',
     ),
     (
-      '⚡ Production App',
+      Icons.bolt_rounded,
+      'Production App',
       '[App Project Inquiry] Enterprise Mobile App - Abdallah Alhyari',
       'Hi Abdallah,\n\nWe are planning to build a high-performance cross-platform application and want your expertise...',
     ),
     (
-      '☕ Advisory & Chat',
+      Icons.coffee_rounded,
+      'Advisory & Chat',
       '[Connect] Tech Advisory & Coffee - Abdallah Alhyari',
       'Hi Abdallah,\n\nI’d love to connect for a 20-minute chat regarding mobile engineering and technology...',
     ),
@@ -92,7 +98,8 @@ class ExpressPresetsBar extends StatelessWidget {
               children: [
                 for (final p in presets)
                   EditorialChip(
-                    label: p.$1,
+                    label: p.$2,
+                    icon: p.$1,
                     variant: ChipVariant.glass,
                     tone: ChipTone.primary,
                     trailing: Icon(
@@ -100,7 +107,7 @@ class ExpressPresetsBar extends StatelessWidget {
                       size: 12,
                       color: isDark ? accentSoft : accent,
                     ),
-                    onTap: () => onSelectPreset(p.$2, p.$3),
+                    onTap: () => onSelectPreset(p.$3, p.$4),
                   ),
               ],
             ),

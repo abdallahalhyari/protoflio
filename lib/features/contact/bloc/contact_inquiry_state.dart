@@ -1,41 +1,48 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart' show IconData, Icons;
 
 class InquiryTrackInfo extends Equatable {
   final String title;
+  final IconData icon;
   final String subject;
   final String defaultBody;
 
   const InquiryTrackInfo({
     required this.title,
+    required this.icon,
     required this.subject,
     required this.defaultBody,
   });
 
   @override
-  List<Object?> get props => [title, subject, defaultBody];
+  List<Object?> get props => [title, icon, subject, defaultBody];
 }
 
 const List<InquiryTrackInfo> kDefaultInquiryTracks = [
   InquiryTrackInfo(
-    title: '💼 Role Opportunity',
+    title: 'Role Opportunity',
+    icon: Icons.work_outline_rounded,
     subject: '[Role Opportunity] Senior Mobile Architect - Abdallah Alhyari',
     defaultBody:
         'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Architect / Flutter Engineering position at our company.\n\nLooking forward to scheduling an introductory conversation.',
   ),
   InquiryTrackInfo(
-    title: '📐 Architecture Audit',
+    title: 'Architecture Audit',
+    icon: Icons.architecture_rounded,
     subject: '[Architecture Review] Mobile Codebase Audit - Abdallah Alhyari',
     defaultBody:
         'Hi Abdallah,\n\nWe are looking for an expert architectural audit and performance profiling for our enterprise mobile codebase.\n\nPlease let us know your availability for a technical discovery call.',
   ),
   InquiryTrackInfo(
-    title: '⚡ Production App',
+    title: 'Production App',
+    icon: Icons.bolt_rounded,
     subject: '[Project Inquiry] Enterprise Mobile System - Abdallah Alhyari',
     defaultBody:
         'Hi Abdallah,\n\nWe are planning to build a high-performance cross-platform system requiring offline-first synchronization and robust security.\n\nWe would love to explore an engagement scope.',
   ),
   InquiryTrackInfo(
-    title: '☕ Tech Advisory',
+    title: 'Tech Advisory',
+    icon: Icons.coffee_rounded,
     subject: '[Connect] Tech Advisory & Coffee - Abdallah Alhyari',
     defaultBody:
         'Hi Abdallah,\n\nI’d love to connect for a 20-minute chat regarding mobile engineering, smart-card integrations, and architecture.',

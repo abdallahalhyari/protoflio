@@ -77,9 +77,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('ONE-TAP EXPRESS REACH-OUT PRESETS'), findsOneWidget);
-      expect(find.text('💼 Senior Role'), findsOneWidget);
+      expect(find.text('Senior Role'), findsOneWidget);
 
-      await tester.tap(find.text('💼 Senior Role'));
+      await tester.tap(find.text('Senior Role'));
       await tester.pumpAndSettle();
 
       expect(selectedSubject, contains('Senior Mobile Architect'));
@@ -202,10 +202,10 @@ void main() {
       expect(find.text('DIRECT INQUIRY COMPOSER'), findsOneWidget);
       expect(find.text('Reach Abdallah Alhyari'), findsOneWidget);
       expect(find.textContaining('AMMAN (UTC+3)'), findsOneWidget);
-      expect(find.text('💼 Role Opportunity'), findsOneWidget);
-      expect(find.text('📐 Architecture Audit'), findsOneWidget);
-      expect(find.text('⚡ Production App'), findsOneWidget);
-      expect(find.text('☕ Tech Advisory'), findsOneWidget);
+      expect(find.text('Role Opportunity'), findsOneWidget);
+      expect(find.text('Architecture Audit'), findsOneWidget);
+      expect(find.text('Production App'), findsOneWidget);
+      expect(find.text('Tech Advisory'), findsOneWidget);
       expect(find.text('COPY DRAFT'), findsOneWidget);
       expect(find.text('OPEN IN EMAIL CLIENT'), findsOneWidget);
 
@@ -215,7 +215,7 @@ void main() {
           findsOneWidget);
 
       // Tap Architecture Audit track
-      await tester.tap(find.text('📐 Architecture Audit'));
+      await tester.tap(find.text('Architecture Audit'));
       await tester.pumpAndSettle();
 
       expect(find.textContaining('expert architectural audit'), findsOneWidget);

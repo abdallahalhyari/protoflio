@@ -25,7 +25,7 @@ class RelatedCaseStudies extends StatelessWidget {
     ),
     'eskadenia': (
       title: 'ESKADENIA Enterprise Suite',
-      subtitle: 'MVVM refactor · 60fps · −35% crashes',
+      subtitle: 'MVVM refactor · 60fps · -35% crashes',
     ),
     'solutions': (
       title: 'Loyalty + Ephemeral Social',

@@ -45,7 +45,7 @@ class ContactChannelsGrid extends StatelessWidget {
 
     final channels = [
       ChannelData(
-        badge: '📱 DIRECT LINE',
+        badge: 'DIRECT LINE',
         badgeColor: _sky,
         label: l10n.contactPhone,
         value: phone,
@@ -63,7 +63,7 @@ class ContactChannelsGrid extends StatelessWidget {
         accent: _sky,
       ),
       ChannelData(
-        badge: '💬 QUICK CHAT',
+        badge: 'QUICK CHAT',
         badgeColor: _availabilityGreen,
         label: l10n.contactWhatsapp,
         value: 'wa.me/962787032264',
@@ -78,7 +78,7 @@ class ContactChannelsGrid extends StatelessWidget {
         accent: _availabilityGreen,
       ),
       ChannelData(
-        badge: '🌐 500+ NETWORK',
+        badge: '500+ NETWORK',
         badgeColor: _indigo,
         label: l10n.contactLinkedin,
         value: 'in/$linkedInHandle',
@@ -93,7 +93,7 @@ class ContactChannelsGrid extends StatelessWidget {
         accent: _indigo,
       ),
       ChannelData(
-        badge: '💻 REPOSITORIES',
+        badge: 'REPOSITORIES',
         badgeColor: _accent,
         label: l10n.contactGithub,
         value: '@$githubHandle',

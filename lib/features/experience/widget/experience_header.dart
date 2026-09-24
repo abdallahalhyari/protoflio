@@ -87,10 +87,10 @@ class ExperienceHeader extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('✦',
-                        style: TextStyle(
-                            color: accentText,
-                            fontSize: AppTypography.caption)),
+                    // Icon, not a '✦' glyph: CanvasKit has no system fonts,
+                    // so the glyph pulled a 374 KB Noto Symbols 2 download.
+                    Icon(Icons.auto_awesome,
+                        size: AppTypography.caption + 1, color: accentText),
                     const SizedBox(width: 6),
                     Text(
                       '4 ROLES · ENTERPRISE IMPACT',

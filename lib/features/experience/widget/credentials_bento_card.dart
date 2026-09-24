@@ -149,10 +149,11 @@ class CredentialsBentoCard extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    '❖ ',
-                                    style: TextStyle(
-                                      fontSize: AppTypography.overline,
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 3),
+                                    child: Icon(
+                                      Icons.diamond,
+                                      size: AppTypography.overline,
                                       color: context.amberText,
                                     ),
                                   ),

@@ -90,10 +90,11 @@ class SkillsHeader extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('✦',
-                        style: TextStyle(
-                            color: context.amberText,
-                            fontSize: AppTypography.caption)),
+                    // Icon, not a '✦' glyph: CanvasKit has no system fonts,
+                    // so the glyph pulled a 374 KB Noto Symbols 2 download.
+                    Icon(Icons.auto_awesome,
+                        size: AppTypography.caption + 1,
+                        color: context.amberText),
                     const SizedBox(width: 6),
                     Text(
                       '${kSkills.length} CORE DISCIPLINES',

@@ -226,7 +226,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                'TAP TO FLIP ↺',
+                                'TAP TO FLIP',
                                 style: TextStyle(
                                   fontFamily: AppTypography.monoFont,
                                   color: isDark
@@ -236,6 +236,14 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                                   fontWeight: FontWeight.w800,
                                   letterSpacing: 0.8,
                                 ),
+                              ),
+                              const SizedBox(width: 3),
+                              Icon(
+                                Icons.refresh_rounded,
+                                size: 11,
+                                color: isDark
+                                    ? Colors.white.withValues(alpha: 0.6)
+                                    : AppColors.slate500,
                               ),
                             ],
                           ),

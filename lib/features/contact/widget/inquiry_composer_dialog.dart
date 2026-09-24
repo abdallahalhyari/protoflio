@@ -318,6 +318,7 @@ class _InquiryComposerDialogViewState
                     children: [
                       for (int i = 0; i < tracks.length; i++)
                         ChoiceChip(
+                          avatar: Icon(tracks[i].icon, size: 16),
                           label: Text(tracks[i].title),
                           selected: selectedTrack == i,
                           onSelected: (_) => _onTrackChanged(i, state),
