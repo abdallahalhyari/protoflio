@@ -188,6 +188,15 @@
       user-select: none;
       -webkit-user-select: none;
     }
+    .boot-slow {
+      display: none;
+      margin-top: 22px;
+      max-width: 340px;
+      font: 500 13px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: rgba(255, 255, 255, 0.72);
+    }
+    .boot-slow a { color: #A5B4FC; }
+    #boot-loader.slow .boot-slow { display: block; }
     #boot-loader.hidden {
       opacity: 0;
       transform: scale(1.025);
@@ -356,10 +365,13 @@
         <div class="boot-emblem">A</div>
       </div>
       <div class="boot-title">Abdallah Alhyari</div>
-      <div class="boot-role">Senior Flutter &amp; Android Architect</div>
+      <div class="boot-role">Senior Flutter &amp; Android Engineer</div>
       <div class="boot-progress-track">
         <div class="boot-progress-bar"></div>
       </div>
+      <p class="boot-slow">Still loading &mdash; this can take a moment on a slow connection.
+        Meanwhile: <a href="cv.pdf">CV (PDF)</a> &middot;
+        <a href="mailto:alhyariabdallh@gmail.com">email</a></p>
     </div>
   </div>
 
@@ -467,11 +479,14 @@
     // Hide loader once Flutter renders first frame
     window.addEventListener('flutter-first-frame', dismissBootLoader);
 
-    // Safety fallback: dismiss after 8s in case the Flutter event
-    // fails to fire (engine error, blocked wasm, etc.). We keep the
-    // loader up longer than before so slow-network users see the HTML
-    // hero skeleton (LCP element) instead of a blank canvas.
-    setTimeout(dismissBootLoader, 8000);
+    // Slow-load fallback: never dismiss before Flutter paints — hiding the
+    // loader at 8s used to leave slow connections staring at a blank page
+    // until the first frame. Instead, after 8s surface a note plus direct
+    // CV / email links so a recruiter on bad Wi-Fi still has a way through.
+    setTimeout(function(){
+      var l = document.getElementById('boot-loader');
+      if (l && !l.classList.contains('hidden')) l.classList.add('slow');
+    }, 8000);
 
     // One-time cleanup of legacy Flutter service workers (SW is intentionally
     // disabled at bootstrap via patch_flutter_js.js). Gated by a localStorage
