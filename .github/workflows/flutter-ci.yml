@@ -19,6 +19,7 @@ jobs:
 
       - run: flutter --version
       - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed lib/ test/
       - run: flutter analyze
       - run: flutter test
 
@@ -34,7 +35,11 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
+      # Single production deploy path (deploy-live below). Patching also runs
+      # as firebase.json's predeploy hook; running it here keeps the uploaded
+      # artifact identical to what ships.
       - run: flutter build web --wasm --release --tree-shake-icons --no-source-maps
+      - run: node patch_flutter_js.js
       - id: upload
         uses: actions/upload-artifact@v5
         with:
