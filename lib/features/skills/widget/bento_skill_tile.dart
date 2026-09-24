@@ -141,115 +141,126 @@ class _BentoSkillTileState extends State<BentoSkillTile>
             Expanded(
               child: Padding(
                 padding: EdgeInsets.all(widget.isDesktop ? 16.0 : 12.0),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(widget.isDesktop ? 12 : 6),
-                        decoration: BoxDecoration(
-                          color: widget.categoryColor
-                              .withValues(alpha: isDark ? 0.15 : 0.10),
-                          shape: BoxShape.circle,
-                          border: Border.all(
+                // Give the face the tile's real width: titles wrap to two
+                // lines at one shared size instead of the whole face
+                // shrinking to fit its longest name (which made every tile's
+                // title a different size). FittedBox stays as a height guard.
+                child: LayoutBuilder(
+                  builder: (context, constraints) => FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: constraints.maxWidth,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(widget.isDesktop ? 12 : 6),
+                            decoration: BoxDecoration(
                               color: widget.categoryColor
-                                  .withValues(alpha: isDark ? 0.3 : 0.4)),
-                        ),
-                        child: Icon(widget.skill.icon,
-                            color: accentText,
-                            size: widget.isDesktop ? 36 : 20),
-                      ),
-                      SizedBox(height: widget.isDesktop ? 16 : 8),
-                      Text(
-                        widget.skill.name.toUpperCase(),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: AppTypography.displayFont,
-                          color: context.onSurface,
-                          fontSize: widget.isDesktop ? 22 : 14,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
-                      SizedBox(height: widget.isDesktop ? 8 : 4),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: widget.categoryColor
-                              .withValues(alpha: isDark ? 0.2 : 0.12),
-                          borderRadius: BorderRadius.circular(AppRadius.xs),
-                        ),
-                        child: Text(
-                          _masteryLabel(widget.skill.level),
-                          style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
-                            color: accentText,
-                            fontSize: widget.isDesktop ? 11 : 9,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 1.2,
+                                  .withValues(alpha: isDark ? 0.15 : 0.10),
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                  color: widget.categoryColor
+                                      .withValues(alpha: isDark ? 0.3 : 0.4)),
+                            ),
+                            child: Icon(widget.skill.icon,
+                                color: accentText,
+                                size: widget.isDesktop ? 36 : 20),
                           ),
-                        ),
-                      ),
-                      SizedBox(height: widget.isDesktop ? 10 : 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 7, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: 0.05)
-                              : Colors.black.withValues(alpha: 0.04),
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
-                          border: Border.all(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: AppAlpha.hover)
-                                : AppColors.slate300,
-                            width: 0.8,
+                          SizedBox(height: widget.isDesktop ? 16 : 8),
+                          Text(
+                            widget.skill.name.toUpperCase(),
+                            textAlign: TextAlign.center,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: AppTypography.displayFont,
+                              color: context.onSurface,
+                              fontSize: widget.isDesktop ? 22 : 14,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 1.2,
+                            ),
                           ),
-                        ),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.touch_app_outlined,
-                                size: 11,
+                          SizedBox(height: widget.isDesktop ? 8 : 4),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 3),
+                            decoration: BoxDecoration(
+                              color: widget.categoryColor
+                                  .withValues(alpha: isDark ? 0.2 : 0.12),
+                              borderRadius: BorderRadius.circular(AppRadius.xs),
+                            ),
+                            child: Text(
+                              _masteryLabel(widget.skill.level),
+                              style: TextStyle(
+                                fontFamily: AppTypography.monoFont,
+                                color: accentText,
+                                fontSize: widget.isDesktop ? 11 : 9,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: widget.isDesktop ? 10 : 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 7, vertical: 3),
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? Colors.white.withValues(alpha: 0.05)
+                                  : Colors.black.withValues(alpha: 0.04),
+                              borderRadius:
+                                  BorderRadius.circular(AppRadius.pill),
+                              border: Border.all(
                                 color: isDark
-                                    ? Colors.white.withValues(alpha: 0.6)
-                                    : AppColors.slate500,
+                                    ? Colors.white
+                                        .withValues(alpha: AppAlpha.hover)
+                                    : AppColors.slate300,
+                                width: 0.8,
                               ),
-                              const SizedBox(width: 4),
-                              Text(
-                                'TAP TO FLIP',
-                                style: TextStyle(
-                                  fontFamily: AppTypography.monoFont,
-                                  color: isDark
-                                      ? Colors.white.withValues(alpha: 0.6)
-                                      : AppColors.slate500,
-                                  fontSize: widget.isDesktop ? 9.5 : 10,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 0.8,
-                                ),
+                            ),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.touch_app_outlined,
+                                    size: 11,
+                                    color: isDark
+                                        ? Colors.white.withValues(alpha: 0.6)
+                                        : AppColors.slate500,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'TAP TO FLIP',
+                                    style: TextStyle(
+                                      fontFamily: AppTypography.monoFont,
+                                      color: isDark
+                                          ? Colors.white.withValues(alpha: 0.6)
+                                          : AppColors.slate500,
+                                      fontSize: widget.isDesktop ? 9.5 : 10,
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 0.8,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 3),
+                                  Icon(
+                                    Icons.refresh_rounded,
+                                    size: 11,
+                                    color: isDark
+                                        ? Colors.white.withValues(alpha: 0.6)
+                                        : AppColors.slate500,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 3),
-                              Icon(
-                                Icons.refresh_rounded,
-                                size: 11,
-                                color: isDark
-                                    ? Colors.white.withValues(alpha: 0.6)
-                                    : AppColors.slate500,
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),

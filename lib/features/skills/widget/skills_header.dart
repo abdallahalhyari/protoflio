@@ -36,8 +36,8 @@ class SkillsHeader extends StatelessWidget {
                 children: [
                   Text(
                     isDesktop
-                        ? 'FEATURE 05 · ARCHITECTURAL MASTERY'
-                        : 'FEATURE 05 · CORE SKILLS',
+                        ? 'FEATURE 04 · ARCHITECTURAL MASTERY'
+                        : 'FEATURE 04 · CORE SKILLS',
                     style: TextStyle(
                       color: accentText,
                       fontSize: isDesktop ? 11 : 10,

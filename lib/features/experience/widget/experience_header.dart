@@ -34,8 +34,8 @@ class ExperienceHeader extends StatelessWidget {
                 children: [
                   Text(
                     isDesktop
-                        ? 'FEATURE 04 · CAREER TRAJECTORY'
-                        : 'FEATURE 04 · EXPERIENCE',
+                        ? 'FEATURE 02 · CAREER TRAJECTORY'
+                        : 'FEATURE 02 · EXPERIENCE',
                     style: TextStyle(
                       color: accentText,
                       fontSize: isDesktop ? 11 : 10,

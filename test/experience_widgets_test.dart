@@ -26,7 +26,7 @@ void main() {
       await tester.pumpWidget(_wrap(const ExperienceHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
-      expect(find.text('FEATURE 04 · CAREER TRAJECTORY'), findsOneWidget);
+      expect(find.text('FEATURE 02 · CAREER TRAJECTORY'), findsOneWidget);
       expect(find.text('CAREER TRAJECTORY'), findsOneWidget);
       expect(find.text('4 ROLES · ENTERPRISE IMPACT'), findsOneWidget);
     });

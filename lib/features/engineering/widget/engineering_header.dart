@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/features/engineering/data/architecture_data.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -39,7 +40,7 @@ class EngineeringHeader extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'FEATURE 03 · SYSTEMS ARCHITECTURE',
+                          'FEATURE 05 · SYSTEMS ARCHITECTURE',
                           style: TextStyle(
                             color: accentText,
                             fontSize: isDesktop ? 11 : 10,
@@ -99,7 +100,7 @@ class EngineeringHeader extends StatelessWidget {
                           Icon(Icons.hub_outlined, color: accentText, size: 13),
                           const SizedBox(width: 6),
                           Text(
-                            '4 ARCHITECTURES',
+                            '${kArchitectureTopics.length} ARCHITECTURES',
                             style: TextStyle(
                               color: accentText,
                               fontSize: AppTypography.editorial,

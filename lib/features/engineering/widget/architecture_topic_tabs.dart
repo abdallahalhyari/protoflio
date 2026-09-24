@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/widget/edge_fade_scroller.dart';
 import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
@@ -23,8 +24,7 @@ class ArchitectureTopicTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+    return EdgeFadeScroller(
       child: Row(
         children: [
           for (int i = 0; i < topics.length; i++) ...[

@@ -28,9 +28,10 @@ void main() {
       await tester.pumpWidget(_wrap(const EngineeringHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
-      expect(find.text('FEATURE 03 · SYSTEMS ARCHITECTURE'), findsOneWidget);
+      expect(find.text('FEATURE 05 · SYSTEMS ARCHITECTURE'), findsOneWidget);
       expect(find.text('ENGINEERING EXPERTISE'), findsOneWidget);
-      expect(find.text('4 ARCHITECTURES'), findsOneWidget);
+      expect(find.text('${kArchitectureTopics.length} ARCHITECTURES'),
+          findsOneWidget);
     });
 
     testWidgets(

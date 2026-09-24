@@ -27,7 +27,7 @@ void main() {
       await tester.pumpWidget(_wrap(const SkillsHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
-      expect(find.text('FEATURE 05 · ARCHITECTURAL MASTERY'), findsOneWidget);
+      expect(find.text('FEATURE 04 · ARCHITECTURAL MASTERY'), findsOneWidget);
       expect(find.text('${kSkills.length} CORE DISCIPLINES'), findsOneWidget);
     });
 

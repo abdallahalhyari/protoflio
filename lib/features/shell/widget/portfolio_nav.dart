@@ -7,6 +7,7 @@ import 'package:profile/theme/tokens.dart';
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
 import '../home_controller.dart';
+import 'package:profile/shared/widget/edge_fade_scroller.dart';
 
 class TopNav extends StatelessWidget {
   static List<String> getLabels(BuildContext context) {
@@ -68,7 +69,7 @@ class TopNav extends StatelessWidget {
                   ),
                   boxShadow: context.ambientGlow(accent),
                 ),
-                child: _EdgeFadeScroller(
+                child: EdgeFadeScroller(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -249,90 +250,6 @@ class _NavItemState extends State<NavItem> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// Horizontal scroller with a left/right gradient mask that appears only
-/// when the child actually overflows. Signals to keyboard/mouse users that
-/// the TopNav has more items off-screen on narrow desktops.
-class _EdgeFadeScroller extends StatefulWidget {
-  const _EdgeFadeScroller({required this.child});
-  final Widget child;
-
-  @override
-  State<_EdgeFadeScroller> createState() => _EdgeFadeScrollerState();
-}
-
-class _EdgeFadeScrollerState extends State<_EdgeFadeScroller> {
-  final ScrollController _controller = ScrollController();
-  bool _fadeLeft = false;
-  bool _fadeRight = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(_recompute);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _recompute());
-  }
-
-  @override
-  void dispose() {
-    _controller.removeListener(_recompute);
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _recompute() {
-    if (!_controller.hasClients) return;
-    final pos = _controller.position;
-    final left = pos.pixels > 2;
-    final right = pos.pixels < pos.maxScrollExtent - 2;
-    if (left != _fadeLeft || right != _fadeRight) {
-      setState(() {
-        _fadeLeft = left;
-        _fadeRight = right;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final scroller = SingleChildScrollView(
-      controller: _controller,
-      scrollDirection: Axis.horizontal,
-      child: widget.child,
-    );
-
-    if (!_fadeLeft && !_fadeRight) return scroller;
-
-    return ShaderMask(
-      blendMode: BlendMode.dstIn,
-      shaderCallback: (rect) {
-        return LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: const [
-            Colors.transparent,
-            Colors.black,
-            Colors.black,
-            Colors.transparent,
-          ],
-          stops: [
-            0.0,
-            _fadeLeft ? 0.05 : 0.0,
-            _fadeRight ? 0.95 : 1.0,
-            1.0,
-          ],
-        ).createShader(rect);
-      },
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (_) {
-          _recompute();
-          return false;
-        },
-        child: scroller,
       ),
     );
   }
