@@ -5,8 +5,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Thinking',
     heroTag: 'Thinking Cap',
-    image:
-        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394cedd72e210c65688_Grad%20Cap.png',
+    image: 'assets/images/hats/grad_cap.png',
     color: AppColors.hatBrown,
     titleDesc: 'I AM A QUICK LEARNER',
     desc:
@@ -15,8 +14,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Communicating',
     heroTag: 'Communicating hat',
-    image:
-        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4cfd6087595af9f4bd_Comms%20Hat.png',
+    image: 'assets/images/hats/comms_hat.png',
     color: AppColors.hatOrange,
     titleDesc: 'I LISTEN CAREFULLY AND RESPOND CLEARLY',
     desc:
@@ -34,8 +32,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Building',
     heroTag: 'Building Hat',
-    image:
-        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608b4394611cbb78872e2ccd_Hard%20Hat.png',
+    image: 'assets/images/hats/hard_hat.png',
     color: AppColors.hatRed,
     titleDesc: 'I LOVE MAKING THINGS',
     desc:
@@ -44,8 +41,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Fixing',
     heroTag: 'Fixing Hat',
-    image:
-        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/609c3c4d8ed2f6dde086c99c_DT%20Hat.png',
+    image: 'assets/images/hats/dt_hat.png',
     color: AppColors.hatGreen,
     titleDesc: 'I AM A PROBLEM SOLVER',
     desc:
@@ -54,8 +50,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Compassion',
     heroTag: 'Compassion Hat',
-    image:
-        'https://uploads-ssl.webflow.com/608acc9573595051d044f20f/608c53df121d44d8d5ab6439_Nurses%20Cap.png',
+    image: 'assets/images/hats/nurses_cap.png',
     color: AppColors.hatPurple,
     titleDesc: 'I LIVE BY THE GOLDEN RULE',
     desc:

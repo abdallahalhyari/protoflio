@@ -34,6 +34,7 @@ flutter:
   assets:
     - assets/
     - assets/images/projects/
+    - assets/images/hats/
 
   fonts:
     - family: Tenada

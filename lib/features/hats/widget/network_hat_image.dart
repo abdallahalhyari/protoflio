@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/shared/widget/retrying_asset_image.dart';
+
 class HatImage extends StatefulWidget {
   final String path;
   final double height;
@@ -46,44 +48,15 @@ class _HatImageState extends State<HatImage>
     super.dispose();
   }
 
-  bool get _isNetwork => widget.path.startsWith('http');
-
+  // All hats ship as bundled assets now — they used to be hotlinked from a
+  // third-party Webflow CDN that could disappear at any time.
   Widget _buildImage() {
-    if (!_isNetwork) {
-      return Image.asset(
+    return SizedBox(
+      height: widget.height,
+      child: RetryingAssetImage(
         widget.path,
-        height: widget.height,
         fit: BoxFit.contain,
         semanticLabel: widget.semanticLabel,
-      );
-    }
-    return Image.network(
-      widget.path,
-      height: widget.height,
-      fit: BoxFit.contain,
-      semanticLabel: widget.semanticLabel,
-      loadingBuilder: (context, child, progress) {
-        if (progress == null) return child;
-        return SizedBox(
-          height: widget.height,
-          child: const Center(
-            child: SizedBox(
-              width: 28,
-              height: 28,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: Colors.white70,
-              ),
-            ),
-          ),
-        );
-      },
-      errorBuilder: (context, error, stack) => SizedBox(
-        height: widget.height,
-        child: const Center(
-          child: Icon(Icons.broken_image_outlined,
-              color: Colors.white70, size: 40),
-        ),
       ),
     );
   }
