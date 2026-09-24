@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 /// Top editorial header for the Career Trajectory / Experience section.
 class ExperienceHeader extends StatelessWidget {
@@ -63,7 +64,7 @@ class ExperienceHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Multi-year development of enterprise mobile systems',
+                    AppLocalizations.of(context)!.sectionSubtitleExperience,
                     style: TextStyle(
                       color: scheme.onSurface.withValues(alpha: 0.75),
                       fontSize: isDesktop ? 12.5 : 11.5,

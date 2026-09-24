@@ -163,7 +163,7 @@ abstract class AppLocalizations {
   /// No description provided for @introLocation.
   ///
   /// In en, this message translates to:
-  /// **'Amman, Jordan → Brno, Czech Republic (2027)'**
+  /// **'Amman, Jordan › Brno, Czech Republic (2027)'**
   String get introLocation;
 
   /// No description provided for @sectionEducation.
@@ -229,7 +229,7 @@ abstract class AppLocalizations {
   /// No description provided for @keyboardHintArrows.
   ///
   /// In en, this message translates to:
-  /// **'↑ ↓   prev / next page'**
+  /// **'Up / Down arrows · prev / next page'**
   String get keyboardHintArrows;
 
   /// No description provided for @keyboardHintHome.
@@ -367,7 +367,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactPdfSize.
   ///
   /// In en, this message translates to:
-  /// **'PDF · 240 KB'**
+  /// **'PDF · 22 KB'**
   String get contactPdfSize;
 
   /// No description provided for @contactCvDossierTitle.
@@ -721,8 +721,38 @@ abstract class AppLocalizations {
   /// No description provided for @perspectiveShortcutsHint.
   ///
   /// In en, this message translates to:
-  /// **'← / → or A / D to cycle · S shuffle · R align'**
+  /// **'Arrow keys or A / D to cycle · S shuffle · R align'**
   String get perspectiveShortcutsHint;
+
+  /// No description provided for @sectionSubtitleWork.
+  ///
+  /// In en, this message translates to:
+  /// **'In-depth looks at architecture, implementation, and measurable outcomes.'**
+  String get sectionSubtitleWork;
+
+  /// No description provided for @sectionSubtitleExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Multi-year development of enterprise mobile systems'**
+  String get sectionSubtitleExperience;
+
+  /// No description provided for @sectionSubtitleSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Disciplines and stack the work is built on · Tap any card to flip'**
+  String get sectionSubtitleSkills;
+
+  /// No description provided for @sectionSubtitleEngineering.
+  ///
+  /// In en, this message translates to:
+  /// **'Production-tested architectures behind the mobile suites'**
+  String get sectionSubtitleEngineering;
+
+  /// No description provided for @sectionSubtitleAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Six roles a senior engineer switches between'**
+  String get sectionSubtitleAbout;
 }
 
 class _AppLocalizationsDelegate

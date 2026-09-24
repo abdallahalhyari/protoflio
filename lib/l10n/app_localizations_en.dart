@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navProjects => 'Projects';
 
   @override
-  String get introLocation => 'Amman, Jordan → Brno, Czech Republic (2027)';
+  String get introLocation => 'Amman, Jordan › Brno, Czech Republic (2027)';
 
   @override
   String get sectionEducation => 'EDUCATION';
@@ -72,7 +72,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get keyboardHintDigits => '1–7   jump to section';
 
   @override
-  String get keyboardHintArrows => '↑ ↓   prev / next page';
+  String get keyboardHintArrows => 'Up / Down arrows · prev / next page';
 
   @override
   String get keyboardHintHome => 'Home  first page';
@@ -149,7 +149,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactAtsVerified => 'ATS-VERIFIED · 2026 EDITION';
 
   @override
-  String get contactPdfSize => 'PDF · 240 KB';
+  String get contactPdfSize => 'PDF · 22 KB';
 
   @override
   String get contactCvDossierTitle =>
@@ -345,5 +345,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get perspectiveShortcutsHint =>
-      '← / → or A / D to cycle · S shuffle · R align';
+      'Arrow keys or A / D to cycle · S shuffle · R align';
+
+  @override
+  String get sectionSubtitleWork =>
+      'In-depth looks at architecture, implementation, and measurable outcomes.';
+
+  @override
+  String get sectionSubtitleExperience =>
+      'Multi-year development of enterprise mobile systems';
+
+  @override
+  String get sectionSubtitleSkills =>
+      'Disciplines and stack the work is built on · Tap any card to flip';
+
+  @override
+  String get sectionSubtitleEngineering =>
+      'Production-tested architectures behind the mobile suites';
+
+  @override
+  String get sectionSubtitleAbout =>
+      'Six roles a senior engineer switches between';
 }

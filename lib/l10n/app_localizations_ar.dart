@@ -39,7 +39,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navProjects => 'مشاريع';
 
   @override
-  String get introLocation => 'عمان، الأردن → برنو، التشيك (2027)';
+  String get introLocation => 'عمان، الأردن › برنو، التشيك (2027)';
 
   @override
   String get sectionEducation => 'التعليم';
@@ -72,7 +72,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get keyboardHintDigits => '1–7   الانتقال إلى قسم';
 
   @override
-  String get keyboardHintArrows => '↑ ↓   السابق / التالي';
+  String get keyboardHintArrows => 'سهما الأعلى / الأسفل · السابق / التالي';
 
   @override
   String get keyboardHintHome => 'الصفحة الأولى';
@@ -147,7 +147,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactAtsVerified => 'معتمد لنظام ATS · إصدار 2026';
 
   @override
-  String get contactPdfSize => 'بي دي إف · 240 ك.ب';
+  String get contactPdfSize => 'بي دي إف · 22 ك.ب';
 
   @override
   String get contactCvDossierTitle => 'السيرة الذاتية التنفيذية وملف الأعمال';
@@ -341,5 +341,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get perspectiveShortcutsHint =>
-      '← / → أو A / D للتنقل · S خلط · R محاذاة';
+      'الأسهم أو A / D للتنقل · S خلط · R محاذاة';
+
+  @override
+  String get sectionSubtitleWork =>
+      'نظرة معمّقة على البنية المعمارية والتنفيذ والنتائج القابلة للقياس.';
+
+  @override
+  String get sectionSubtitleExperience =>
+      'سنوات من تطوير أنظمة الهاتف المحمول للمؤسسات';
+
+  @override
+  String get sectionSubtitleSkills =>
+      'التخصصات والتقنيات التي يقوم عليها العمل · اضغط على أي بطاقة لقلبها';
+
+  @override
+  String get sectionSubtitleEngineering =>
+      'هياكل معمارية مُختبَرة في بيئات الإنتاج خلف تطبيقات الهاتف';
+
+  @override
+  String get sectionSubtitleAbout => 'ستة أدوار يتنقّل بينها المهندس الخبير';
 }

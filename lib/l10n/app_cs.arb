@@ -10,7 +10,7 @@
   "navResume": "Životopis",
   "navSkills": "Dovednosti",
   "navProjects": "Projekty",
-  "introLocation": "Ammán, Jordánsko → Brno, Česká republika (2027)",
+  "introLocation": "Ammán, Jordánsko › Brno, Česká republika (2027)",
   "sectionEducation": "VZDĚLÁNÍ",
   "sectionCertifications": "CERTIFIKACE",
   "contactHeroEyebrow": "PŘÍMÝ E-MAIL · NEJRYCHLEJŠÍ ODPOVĚĎ",
@@ -21,7 +21,7 @@
   "skillsEmptyShowAll": "ZOBRAZIT VŠE",
   "keyboardHintTitle": "Klávesové zkratky",
   "keyboardHintDigits": "1–7   přejít na sekci",
-  "keyboardHintArrows": "↑ ↓   předchozí / další",
+  "keyboardHintArrows": "Šipky nahoru / dolů · předchozí / další",
   "keyboardHintHome": "První stránka",
   "keyboardHintEnd": "Poslední stránka",
   "closeTooltip": "Zavřít",
@@ -44,7 +44,7 @@
   "introMeticulouslyEngineered": "Pečlivě navržené portfolio.",
   "contactEngagementScopes": "// ROZSAHY SPOLUPRÁCE A REŽIMY",
   "contactAtsVerified": "ATS OVĚŘENO · EDICE 2026",
-  "contactPdfSize": "PDF · 240 KB",
+  "contactPdfSize": "PDF · 22 KB",
   "contactCvDossierTitle": "Exekutivní životopis a portfolio",
   "contactCvDossierDesc": "Kompletní chronologický záznam, případové studie podnikové architektury a inženýrské kompetence.",
   "contactDownloadCvPdf": "STÁHNOUT ŽIVOTOPIS · PDF",
@@ -103,5 +103,10 @@
   "skillsClearSearch": "VYMAZAT HLEDÁNÍ",
   "perspectivePrev": "PŘEDCHOZÍ ROLE",
   "perspectiveNext": "DALŠÍ ROLE",
-  "perspectiveShortcutsHint": "← / → nebo A / D k procházení · S zamíchat · R zarovnat"
+  "perspectiveShortcutsHint": "Šipky nebo A / D k procházení · S zamíchat · R zarovnat",
+  "sectionSubtitleWork": "Podrobný pohled na architekturu, implementaci a měřitelné výsledky.",
+  "sectionSubtitleExperience": "Víceletý vývoj podnikových mobilních systémů",
+  "sectionSubtitleSkills": "Disciplíny a technologie, na kterých práce stojí · Klepnutím kartu otočíte",
+  "sectionSubtitleEngineering": "Architektury ověřené v produkci, na kterých stojí mobilní aplikace",
+  "sectionSubtitleAbout": "Šest rolí, mezi kterými senior inženýr přepíná"
 }

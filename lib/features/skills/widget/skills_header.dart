@@ -66,7 +66,7 @@ class SkillsHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Disciplines and stack the work is built on · Tap any card to flip',
+                    loc.sectionSubtitleSkills,
                     style: TextStyle(
                       color: scheme.onSurface.withValues(alpha: 0.75),
                       fontSize: isDesktop ? 12.5 : 11.5,

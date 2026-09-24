@@ -39,7 +39,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navProjects => 'Projekty';
 
   @override
-  String get introLocation => 'Ammán, Jordánsko → Brno, Česká republika (2027)';
+  String get introLocation => 'Ammán, Jordánsko › Brno, Česká republika (2027)';
 
   @override
   String get sectionEducation => 'VZDĚLÁNÍ';
@@ -73,7 +73,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get keyboardHintDigits => '1–7   přejít na sekci';
 
   @override
-  String get keyboardHintArrows => '↑ ↓   předchozí / další';
+  String get keyboardHintArrows => 'Šipky nahoru / dolů · předchozí / další';
 
   @override
   String get keyboardHintHome => 'První stránka';
@@ -148,7 +148,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get contactAtsVerified => 'ATS OVĚŘENO · EDICE 2026';
 
   @override
-  String get contactPdfSize => 'PDF · 240 KB';
+  String get contactPdfSize => 'PDF · 22 KB';
 
   @override
   String get contactCvDossierTitle => 'Exekutivní životopis a portfolio';
@@ -345,5 +345,25 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get perspectiveShortcutsHint =>
-      '← / → nebo A / D k procházení · S zamíchat · R zarovnat';
+      'Šipky nebo A / D k procházení · S zamíchat · R zarovnat';
+
+  @override
+  String get sectionSubtitleWork =>
+      'Podrobný pohled na architekturu, implementaci a měřitelné výsledky.';
+
+  @override
+  String get sectionSubtitleExperience =>
+      'Víceletý vývoj podnikových mobilních systémů';
+
+  @override
+  String get sectionSubtitleSkills =>
+      'Disciplíny a technologie, na kterých práce stojí · Klepnutím kartu otočíte';
+
+  @override
+  String get sectionSubtitleEngineering =>
+      'Architektury ověřené v produkci, na kterých stojí mobilní aplikace';
+
+  @override
+  String get sectionSubtitleAbout =>
+      'Šest rolí, mezi kterými senior inženýr přepíná';
 }

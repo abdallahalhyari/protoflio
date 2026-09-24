@@ -98,7 +98,7 @@ class FaisCaseStudy extends StatelessWidget {
                 layer: 'STATE MACHINE',
                 title: 'Deterministic Funnel Navigation',
                 body:
-                    'Structured checkout steps (Cart → Delivery → Payment Gateway → Order Confirmation) as a strict finite state machine. Impossible state transitions and accidental back-navigation during payment processing were blocked defensively.',
+                    'Structured checkout steps (Cart › Delivery › Payment Gateway › Order Confirmation) as a strict finite state machine. Impossible state transitions and accidental back-navigation during payment processing were blocked defensively.',
               ),
               TechStep(
                 layer: 'PERSISTENCE',

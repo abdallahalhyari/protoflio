@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 /// The top editorial header for the Systems Architecture / Engineering Expertise section.
 class EngineeringHeader extends StatelessWidget {
@@ -67,7 +68,8 @@ class EngineeringHeader extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Production-tested architectures behind the mobile suites',
+                          AppLocalizations.of(context)!
+                              .sectionSubtitleEngineering,
                           style: TextStyle(
                             color: scheme.onSurface.withValues(alpha: 0.75),
                             fontSize: isDesktop ? 12.5 : 11.5,

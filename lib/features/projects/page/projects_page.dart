@@ -402,7 +402,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
         ),
         const SizedBox(height: AppSpacing.sm),
         Text(
-          'In-depth looks at architecture, implementation, and measurable outcomes.',
+          AppLocalizations.of(context)!.sectionSubtitleWork,
           style: TextStyle(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.7)

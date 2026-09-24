@@ -63,7 +63,7 @@ class HatDeckHeader extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'Six roles a senior engineer switches between',
+                loc.sectionSubtitleAbout,
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.75)

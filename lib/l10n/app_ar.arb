@@ -10,7 +10,7 @@
   "navResume": "السيرة الذاتية",
   "navSkills": "مهارات",
   "navProjects": "مشاريع",
-  "introLocation": "عمان، الأردن → برنو، التشيك (2027)",
+  "introLocation": "عمان، الأردن › برنو، التشيك (2027)",
   "sectionEducation": "التعليم",
   "sectionCertifications": "الشهادات",
   "contactHeroEyebrow": "البريد المباشر · الرد الأسرع",
@@ -21,7 +21,7 @@
   "skillsEmptyShowAll": "عرض الكل",
   "keyboardHintTitle": "اختصارات لوحة المفاتيح",
   "keyboardHintDigits": "1–7   الانتقال إلى قسم",
-  "keyboardHintArrows": "↑ ↓   السابق / التالي",
+  "keyboardHintArrows": "سهما الأعلى / الأسفل · السابق / التالي",
   "keyboardHintHome": "الصفحة الأولى",
   "keyboardHintEnd": "الصفحة الأخيرة",
   "closeTooltip": "إغلاق",
@@ -44,7 +44,7 @@
   "introMeticulouslyEngineered": "معرض أعمال مصمم هندسياً بعناية.",
   "contactEngagementScopes": "// مجالات المشاركة وأساليب التعاون",
   "contactAtsVerified": "معتمد لنظام ATS · إصدار 2026",
-  "contactPdfSize": "بي دي إف · 240 ك.ب",
+  "contactPdfSize": "بي دي إف · 22 ك.ب",
   "contactCvDossierTitle": "السيرة الذاتية التنفيذية وملف الأعمال",
   "contactCvDossierDesc": "سجل زمني متكامل، دراسات حالة لبنية المؤسسات، وكفاءات هندسية.",
   "contactDownloadCvPdf": "تحميل السيرة · PDF",
@@ -103,5 +103,10 @@
   "skillsClearSearch": "مسح البحث",
   "perspectivePrev": "الدور السابق",
   "perspectiveNext": "الدور التالي",
-  "perspectiveShortcutsHint": "← / → أو A / D للتنقل · S خلط · R محاذاة"
+  "perspectiveShortcutsHint": "الأسهم أو A / D للتنقل · S خلط · R محاذاة",
+  "sectionSubtitleWork": "نظرة معمّقة على البنية المعمارية والتنفيذ والنتائج القابلة للقياس.",
+  "sectionSubtitleExperience": "سنوات من تطوير أنظمة الهاتف المحمول للمؤسسات",
+  "sectionSubtitleSkills": "التخصصات والتقنيات التي يقوم عليها العمل · اضغط على أي بطاقة لقلبها",
+  "sectionSubtitleEngineering": "هياكل معمارية مُختبَرة في بيئات الإنتاج خلف تطبيقات الهاتف",
+  "sectionSubtitleAbout": "ستة أدوار يتنقّل بينها المهندس الخبير"
 }

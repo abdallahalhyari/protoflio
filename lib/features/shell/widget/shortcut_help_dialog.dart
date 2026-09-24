@@ -52,11 +52,23 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.smd),
-                _shortcutRow(scheme, '1–7', l10n.keyboardHintDigits),
-                _shortcutRow(scheme, '↑ ↓', l10n.keyboardHintArrows),
-                _shortcutRow(scheme, 'Home', l10n.keyboardHintHome),
-                _shortcutRow(scheme, 'End', l10n.keyboardHintEnd),
-                _shortcutRow(scheme, '?', l10n.showHelpShortcut),
+                _shortcutRow(
+                    scheme, _keyText(scheme, '1–7'), l10n.keyboardHintDigits),
+                // Icons, not '↑ ↓': Roboto has no arrow glyphs, so the text pulled
+                // a 68 KB Noto Sans Symbols fallback font at runtime.
+                _shortcutRow(
+                    scheme,
+                    _keyIcons(scheme, const [
+                      Icons.arrow_upward_rounded,
+                      Icons.arrow_downward_rounded,
+                    ]),
+                    l10n.keyboardHintArrows),
+                _shortcutRow(
+                    scheme, _keyText(scheme, 'Home'), l10n.keyboardHintHome),
+                _shortcutRow(
+                    scheme, _keyText(scheme, 'End'), l10n.keyboardHintEnd),
+                _shortcutRow(
+                    scheme, _keyText(scheme, '?'), l10n.showHelpShortcut),
               ],
             ),
           ),
@@ -66,7 +78,26 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
   );
 }
 
-Widget _shortcutRow(ColorScheme scheme, String key, String label) {
+Widget _keyText(ColorScheme scheme, String key) => Text(
+      key,
+      style: TextStyle(
+        fontFamily: AppTypography.monoFont,
+        color: scheme.primary,
+        fontSize: AppTypography.overline,
+        fontWeight: FontWeight.w900,
+        letterSpacing: 0.5,
+      ),
+    );
+
+Widget _keyIcons(ColorScheme scheme, List<IconData> icons) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (final icon in icons)
+          Icon(icon, size: AppTypography.overline + 3, color: scheme.primary),
+      ],
+    );
+
+Widget _shortcutRow(ColorScheme scheme, Widget keyCap, String label) {
   return Padding(
     padding: const EdgeInsets.only(bottom: AppSpacing.sm),
     child: Row(
@@ -82,16 +113,7 @@ Widget _shortcutRow(ColorScheme scheme, String key, String label) {
             ),
           ),
           alignment: Alignment.center,
-          child: Text(
-            key,
-            style: TextStyle(
-              fontFamily: AppTypography.monoFont,
-              color: scheme.primary,
-              fontSize: AppTypography.overline,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 0.5,
-            ),
-          ),
+          child: keyCap,
         ),
         const SizedBox(width: AppSpacing.md),
         Expanded(

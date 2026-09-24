@@ -102,7 +102,7 @@ class NatHealthCaseStudy extends StatelessWidget {
               ),
               TechStep(
                 layer: 'COMMAND CHAIN',
-                title: 'AID select → auth → binary read',
+                title: 'AID select › auth › binary read',
                 body:
                     'Application selection (AID), mutual authentication with the card\'s embedded certificate, then encrypted binary block reads. Each command has a strict per-step timeout; a defensive state machine unwinds cleanly if the card is displaced mid-chain.',
               ),
@@ -174,7 +174,7 @@ class NatHealthCaseStudy extends StatelessWidget {
             items: const [
               (
                 '< 1s',
-                'contactless card verification, flagship → budget handsets'
+                'contactless card verification, flagship to budget handsets'
               ),
               ('100%', 'reliable offline batch sync during connectivity drops'),
               ('0', 'security breaches under hardware-bound token lifecycle'),

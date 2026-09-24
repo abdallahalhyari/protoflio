@@ -32,7 +32,8 @@ void main() {
 
     // Digits / arrows / Home / End / ? rows.
     expect(find.text('1–7'), findsOneWidget);
-    expect(find.text('↑ ↓'), findsOneWidget);
+    expect(find.byIcon(Icons.arrow_upward_rounded), findsOneWidget);
+    expect(find.byIcon(Icons.arrow_downward_rounded), findsOneWidget);
     expect(find.text('Home'), findsOneWidget);
     expect(find.text('End'), findsOneWidget);
     expect(find.text('?'), findsOneWidget);

@@ -63,7 +63,7 @@ class HatConsoleDock extends StatelessWidget {
               children: [
                 // PREV ROLE Button
                 Tooltip(
-                  message: '${loc.perspectivePrev} [← / A]',
+                  message: '${loc.perspectivePrev} (Left arrow / A)',
                   child: OutlinedButton.icon(
                     onPressed: onPrev,
                     style: OutlinedButton.styleFrom(
@@ -159,7 +159,7 @@ class HatConsoleDock extends StatelessWidget {
 
                 // NEXT ROLE Button
                 Tooltip(
-                  message: '${loc.perspectiveNext} [→ / D]',
+                  message: '${loc.perspectiveNext} (Right arrow / D)',
                   child: OutlinedButton.icon(
                     onPressed: onNext,
                     style: OutlinedButton.styleFrom(
