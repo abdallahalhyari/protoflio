@@ -146,9 +146,14 @@ class _CaseStudyScaffoldState extends State<CaseStudyScaffold> {
                 ],
               ),
               SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: hPad,
-                  vertical: AppSpacing.xl,
+                // Bottom clears the floating reading dock (≈44px pill, 16–24px
+                // off the edge) so the closing "Back to portfolio" CTA isn't
+                // tucked under it.
+                padding: EdgeInsets.fromLTRB(
+                  hPad,
+                  AppSpacing.xl,
+                  hPad,
+                  AppSpacing.xl + 72 + MediaQuery.paddingOf(context).bottom,
                 ),
                 sliver: SliverList.list(
                   children: widget.sliversBuilder(context, _keys, isDesktop),
