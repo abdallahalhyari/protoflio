@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_event.dart';
@@ -17,6 +18,11 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
 
 Future<void> main() async {
+  // UrlSyncService owns the URL hash (`#work`, `#work/<slug>`). Flutter's
+  // default hash strategy fought it: it stripped the hash on load and
+  // turned hash changes into `pushNamed` calls this app has no routes for
+  // (null-check crash, then a jump to Home). No-op off the web.
+  setUrlStrategy(null);
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
 
@@ -106,6 +112,8 @@ class PortfolioApp extends StatelessWidget {
                 themeMode: themeState.mode,
                 theme: AppTheme.light(),
                 darkTheme: AppTheme.dark(),
+                themeAnimationDuration: AppMotion.heroEntry,
+                themeAnimationCurve: AppMotion.standard,
                 locale: localeState.locale,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
@@ -140,12 +148,14 @@ class PortfolioApp extends StatelessWidget {
   }
 }
 
-/// Applies the live section-accent color as an `AnimatedTheme` override
-/// on top of the base MaterialApp theme. Only this subtree rebuilds on
-/// seed change, and the color transition is lerped over 260ms — no
-/// visible refresh flash on section navigation.
+/// Applies the live section-accent color as a `Theme` override on top of
+/// the base MaterialApp theme. Only this subtree rebuilds on seed change.
 ///
-/// Reduced-motion users get an instant snap instead of the lerp.
+/// Deliberately a snap, not an `AnimatedTheme` lerp: lerping `ThemeData`
+/// rebuilds every `Theme.of` dependent in every mounted page on each frame,
+/// ~10x the rebuild work of a page turn (≈70k vs ≈7k element rebuilds)
+/// while the slide is running. Accent surfaces that should fade (page
+/// background glow, nav pill) animate their own colors implicitly.
 class _AccentTheme extends StatelessWidget {
   const _AccentTheme({required this.child});
 
@@ -160,7 +170,6 @@ class _AccentTheme extends StatelessWidget {
   }
 
   Widget _buildThemed(BuildContext context, Color seed, Widget staticChild) {
-    final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final base = Theme.of(context);
     final onPrimary = base.brightness == Brightness.dark
         ? Colors.white
@@ -176,10 +185,8 @@ class _AccentTheme extends StatelessWidget {
       surfaceTint: seed,
     );
 
-    return AnimatedTheme(
+    return Theme(
       data: base.copyWith(colorScheme: scheme),
-      duration: reduceMotion ? Duration.zero : AppMotion.heroEntry,
-      curve: AppMotion.standard,
       child: staticChild,
     );
   }

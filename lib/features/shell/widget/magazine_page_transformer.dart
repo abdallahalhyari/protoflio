@@ -35,90 +35,78 @@ class MagazinePageTransformer extends StatelessWidget {
         }
 
         // Pages fully outside the viewport (1 or more screens away):
-        // Retain them in Offstage + TickerMode(enabled: false) so widgets,
-        // elements, and state are preserved without paying GPU raster or CPU tick cost.
-        if (position >= 1.0 || position <= -1.0) {
-          return Offstage(
-            offstage: true,
-            child: TickerMode(
-              enabled: false,
-              child: staticChild!,
+        // Offstage + TickerMode(enabled: false) keeps widgets, elements, and
+        // state alive without paying GPU raster or CPU tick cost.
+        final offscreen = position >= 1.0 || position <= -1.0;
+
+        double dy = 0.0;
+        double scale = 1.0;
+        double shade = 0.0;
+        if (!offscreen && position > 0.0) {
+          // Page is scrolling away (moving up) — scales down into the
+          // background.
+          final turnProgress = AppMotion.emphasizedDecel.transform(position);
+          dy = turnProgress * 40.0;
+          scale = 1.0 - (turnProgress * 0.08);
+        } else if (!offscreen && position < 0.0) {
+          // Incoming page from below, with a soft shadow on its top edge.
+          final emergeProgress = AppMotion.emphasizedDecel.transform(-position);
+          dy = emergeProgress * 20.0;
+          shade = emergeProgress * 0.35;
+        }
+
+        // The widget tree shape must stay identical across every phase —
+        // swapping root widget types (bare child ↔ Transform ↔ Offstage)
+        // makes Flutter unmount and remount the whole page on each turn,
+        // replaying deferred-load placeholders and entrance animations
+        // and defeating AutomaticKeepAlive.
+        return Offstage(
+          offstage: offscreen,
+          child: TickerMode(
+            enabled: !offscreen,
+            child: Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.translationValues(0.0, dy, 0.0)
+                ..scaleByDouble(scale, scale, 1.0, 1.0),
+              child: CustomPaint(
+                foregroundPainter: _TopShadePainter(shade),
+                child: staticChild,
+              ),
             ),
-          );
-        }
-
-        // When page is active and resting
-        if (position.abs() < 0.001) {
-          return staticChild!;
-        }
-
-        // Page is scrolling away (moving up)
-        // It fades out and scales down into the background
-        if (position > 0.0 && position < 1.0) {
-          final double turnProgress =
-              AppMotion.emphasizedDecel.transform(position);
-          final double scale = 1.0 - (turnProgress * 0.08);
-          final double opacity = (1.0 - turnProgress).clamp(0.0, 1.0);
-
-          Widget transformed = Transform.translate(
-            offset: Offset(0.0, turnProgress * 40.0),
-            child: Transform.scale(
-              scale: scale,
-              child: staticChild!,
-            ),
-          );
-
-          // Only invoke Opacity (which allocates a full-screen saveLayer texture)
-          // when opacity is noticeably fractional.
-          if (opacity < 0.99) {
-            transformed = Opacity(
-              opacity: opacity,
-              child: transformed,
-            );
-          }
-
-          return transformed;
-        }
-
-        // Incoming page from below
-        if (position < 0.0 && position > -1.0) {
-          final double emergeProgress =
-              AppMotion.emphasizedDecel.transform(-position);
-
-          return Transform.translate(
-            offset: Offset(0, emergeProgress * 20.0),
-            child: Stack(
-              children: [
-                staticChild!,
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: 80,
-                  child: IgnorePointer(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            AppColors.shadowDeep
-                                .withValues(alpha: emergeProgress * 0.35),
-                            Colors.transparent,
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-
-        return staticChild!;
+          ),
+        );
       },
       child: RepaintBoundary(child: child),
     );
   }
+}
+
+class _TopShadePainter extends CustomPainter {
+  _TopShadePainter(this.alpha);
+
+  final double alpha;
+
+  static const double _height = 80;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (alpha <= 0.0) return;
+    final rect = Rect.fromLTWH(0, 0, size.width, _height);
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppColors.shadowDeep.withValues(alpha: alpha),
+            Colors.transparent,
+          ],
+        ).createShader(rect),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_TopShadePainter oldDelegate) =>
+      oldDelegate.alpha != alpha;
 }

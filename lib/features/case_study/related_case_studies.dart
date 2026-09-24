@@ -93,12 +93,7 @@ class _RelatedCardState extends State<_RelatedCard> {
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: GestureDetector(
-        onTap: () async {
-          final nav = Navigator.of(context, rootNavigator: true);
-          await nav.maybePop();
-          if (!mounted || !context.mounted) return;
-          await CaseStudyRouter.push(context, widget.slug);
-        },
+        onTap: () => CaseStudyRouter.replace(context, widget.slug),
         child: AnimatedContainer(
           duration: AppMotion.cardHover,
           curve: AppMotion.emphasizedDecel,

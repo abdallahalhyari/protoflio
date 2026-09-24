@@ -62,7 +62,7 @@ class _IntroPageState extends State<IntroPage>
     if (AppMedia.reduceMotion(context)) {
       _rimController.stop();
     } else {
-      _rimController.repeat();
+      _rimController.forward();
     }
   }
 

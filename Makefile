@@ -15,7 +15,7 @@ test:
 	flutter test
 
 build:
-	flutter build web --wasm --release --tree-shake-icons --no-source-maps
+	flutter build web --wasm --release --tree-shake-icons --source-maps
 	node patch_flutter_js.js
 
 deploy: format-check analyze test build

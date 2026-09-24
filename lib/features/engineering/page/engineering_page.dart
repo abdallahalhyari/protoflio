@@ -70,43 +70,17 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
     BuildContext context,
     ArchitectureTopic topic,
     int currentStepIndex,
-    bool isPlaying,
     bool isDesktop,
   ) {
     return ArchitectureDiagramCard(
       topic: topic,
       isDesktop: isDesktop,
       activeStepIndex: currentStepIndex,
-      isPlaying: isPlaying,
       onSelectStep: (step) {
         SoundService.instance.playSelection();
         context
             .read<ArchitectureSimulatorBloc>()
             .add(SimulatorStepSelected(step));
-      },
-      onPreviousStep: () {
-        SoundService.instance.playClick();
-        context
-            .read<ArchitectureSimulatorBloc>()
-            .add(const SimulatorPreviousStepRequested());
-      },
-      onNextStep: () {
-        SoundService.instance.playClick();
-        context
-            .read<ArchitectureSimulatorBloc>()
-            .add(const SimulatorNextStepRequested());
-      },
-      onTogglePlay: () {
-        SoundService.instance.playClick();
-        context
-            .read<ArchitectureSimulatorBloc>()
-            .add(const SimulatorAutoPlayToggled());
-      },
-      onResetStep: () {
-        SoundService.instance.playClick();
-        context
-            .read<ArchitectureSimulatorBloc>()
-            .add(const SimulatorResetRequested());
       },
       onInspect: () {
         showArchitectureInspectModal(
@@ -131,7 +105,7 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
 
     return BlocConsumer<ArchitectureSimulatorBloc, ArchitectureSimulatorState>(
       listenWhen: (prev, curr) =>
-          prev.currentStepIndex != curr.currentStepIndex && curr.isPlaying,
+          prev.currentStepIndex != curr.currentStepIndex,
       listener: (context, state) {
         SoundService.instance.playSelection();
       },
@@ -139,7 +113,6 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
         final activeTopic = state.currentTopic;
         final selectedTopicIndex = state.selectedTopicIndex;
         final currentStepIndex = state.currentStepIndex;
-        final isPlaying = state.isPlaying;
 
         return AppScreenShell(
           maxWidth: 1280,
@@ -211,7 +184,6 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                             context,
                             activeTopic,
                             currentStepIndex,
-                            isPlaying,
                             isDesktop,
                           ),
                           const SizedBox(height: AppSpacing.md),
@@ -236,7 +208,6 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                                 context,
                                 activeTopic,
                                 currentStepIndex,
-                                isPlaying,
                                 isDesktop,
                               ),
                             ),
@@ -259,7 +230,6 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                               context,
                               activeTopic,
                               currentStepIndex,
-                              isPlaying,
                               isDesktop,
                             ),
                             const SizedBox(height: AppSpacing.md),

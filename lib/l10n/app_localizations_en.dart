@@ -322,7 +322,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get skillsSearchHint => 'Search 24 skills, tools, or architectures...';
+  String get skillsSearchHint => 'Search skills, tools, or architectures...';
 
   @override
   String skillsCountAll(int count) {

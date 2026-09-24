@@ -57,10 +57,12 @@ patchFile(mjsPath);
 patchFile(jsPath);
 patchBootstrap(bootstrapPath);
 
-// Inject <link rel="prefetch"> tags for every deferred `.part.js` chunk
-// so the browser downloads them at idle priority in parallel with the
-// wasm/JS boot, off the main thread. Flutter's Dart-side `loadLibrary`
-// call becomes an HTTP-cache hit instead of a fresh network fetch.
+// Inject <link rel="prefetch"> tags for every deferred `.part.js` chunk.
+// NOT run for `--wasm` builds: dart2wasm compiles everything into
+// main.dart.wasm and never loads `.part.js`, so on the wasm path (every
+// modern browser) these prefetches were ~490 KB of dead downloads. The JS
+// fallback still gets its chunks warmed by HomeScreen._schedulePrefetch.
+// Opt back in with PREFETCH_PARTS=1 for JS-only builds.
 function injectPartPrefetch() {
   const indexPath = path.join(__dirname, 'build', 'web', 'index.html');
   if (!fs.existsSync(indexPath)) {
@@ -95,4 +97,6 @@ function injectPartPrefetch() {
   }
 }
 
-injectPartPrefetch();
+if (process.env.PREFETCH_PARTS === '1') {
+  injectPartPrefetch();
+}

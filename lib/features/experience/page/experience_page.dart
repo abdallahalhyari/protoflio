@@ -181,7 +181,8 @@ class _ExperiencePageState extends State<ExperiencePage>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Column 1: Experiences 0 and 1
+        // Column 1: Experiences 0 and 2 — row-major so the grid reads
+        // chronologically left-to-right, top-to-bottom.
         Expanded(
           flex: 5,
           child: StaggeredEntrance(
@@ -204,16 +205,16 @@ class _ExperiencePageState extends State<ExperiencePage>
                     ),
                   ),
                 const SizedBox(height: AppSpacing.lg),
-                if (experiences.length > 1)
+                if (experiences.length > 2)
                   Expanded(
                     flex: 4,
                     child: AnimatedExperienceNode(
-                      exp: experiences[1],
-                      index: 1,
+                      exp: experiences[2],
+                      index: 2,
                       isVisible: state.isVisible,
-                      isSelected: state.selectedIndex == 1,
+                      isSelected: state.selectedIndex == 2,
                       onSelect: () =>
-                          _bloc.add(const ExperienceNodeSelected(1)),
+                          _bloc.add(const ExperienceNodeSelected(2)),
                       isDesktop: true,
                     ),
                   ),
@@ -223,7 +224,7 @@ class _ExperiencePageState extends State<ExperiencePage>
         ),
         const SizedBox(width: AppSpacing.lg),
 
-        // Column 2: Experiences 2 and 3
+        // Column 2: Experiences 1 and 3
         Expanded(
           flex: 5,
           child: StaggeredEntrance(
@@ -232,16 +233,16 @@ class _ExperiencePageState extends State<ExperiencePage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (experiences.length > 2)
+                if (experiences.length > 1)
                   Expanded(
                     flex: 5,
                     child: AnimatedExperienceNode(
-                      exp: experiences[2],
-                      index: 2,
+                      exp: experiences[1],
+                      index: 1,
                       isVisible: state.isVisible,
-                      isSelected: state.selectedIndex == 2,
+                      isSelected: state.selectedIndex == 1,
                       onSelect: () =>
-                          _bloc.add(const ExperienceNodeSelected(2)),
+                          _bloc.add(const ExperienceNodeSelected(1)),
                       isDesktop: true,
                     ),
                   ),

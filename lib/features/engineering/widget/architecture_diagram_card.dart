@@ -4,8 +4,6 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
-import 'architecture_simulator_bar.dart';
-import 'architecture_telemetry_strip.dart';
 import 'diagram_list.dart';
 
 /// Card container displaying the interactive flowchart tiers for an architecture topic.
@@ -14,11 +12,6 @@ class ArchitectureDiagramCard extends StatelessWidget {
   final bool isDesktop;
   final int activeStepIndex;
   final ValueChanged<int>? onSelectStep;
-  final bool isPlaying;
-  final VoidCallback? onPreviousStep;
-  final VoidCallback? onNextStep;
-  final VoidCallback? onTogglePlay;
-  final VoidCallback? onResetStep;
   final VoidCallback? onInspect;
 
   const ArchitectureDiagramCard({
@@ -27,11 +20,6 @@ class ArchitectureDiagramCard extends StatelessWidget {
     required this.isDesktop,
     this.activeStepIndex = 0,
     this.onSelectStep,
-    this.isPlaying = false,
-    this.onPreviousStep,
-    this.onNextStep,
-    this.onTogglePlay,
-    this.onResetStep,
     this.onInspect,
   });
 
@@ -40,7 +28,6 @@ class ArchitectureDiagramCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
     final clampedStep = activeStepIndex.clamp(0, topic.diagramSteps.length - 1);
-    final activeStepObj = topic.diagramSteps[clampedStep];
 
     return Semantics(
       container: true,
@@ -131,31 +118,6 @@ class ArchitectureDiagramCard extends StatelessWidget {
                 onSelectStep: onSelectStep,
                 shrinkWrap: true,
               ),
-              if (onPreviousStep != null &&
-                  onNextStep != null &&
-                  onTogglePlay != null &&
-                  onResetStep != null) ...[
-                const SizedBox(height: 12),
-                ArchitectureSimulatorBar(
-                  currentStep: clampedStep,
-                  totalSteps: topic.diagramSteps.length,
-                  isPlaying: isPlaying,
-                  stepTitle: activeStepObj.title,
-                  accentColor: scheme.primary,
-                  isDesktop: isDesktop,
-                  onPrevious: onPreviousStep!,
-                  onNext: onNextStep!,
-                  onTogglePlay: onTogglePlay!,
-                  onReset: onResetStep!,
-                  onInspect: onInspect,
-                ),
-                const SizedBox(height: 8),
-                ArchitectureTelemetryStrip(
-                  step: activeStepObj,
-                  accentColor: scheme.primary,
-                  isDesktop: isDesktop,
-                ),
-              ],
             ],
           ),
         ),

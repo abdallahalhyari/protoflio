@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/features/skills/data/skills_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
@@ -95,7 +96,7 @@ class SkillsHeader extends StatelessWidget {
                             fontSize: AppTypography.caption)),
                     const SizedBox(width: 6),
                     Text(
-                      '12 CORE DISCIPLINES',
+                      '${kSkills.length} CORE DISCIPLINES',
                       style: TextStyle(
                         color: accentText,
                         fontSize: AppTypography.editorial,

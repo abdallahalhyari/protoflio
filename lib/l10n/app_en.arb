@@ -119,7 +119,7 @@
       }
     }
   },
-  "skillsSearchHint": "Search 24 skills, tools, or architectures...",
+  "skillsSearchHint": "Search skills, tools, or architectures...",
   "skillsCountAll": "{count} SKILLS",
   "@skillsCountAll": {
     "placeholders": {

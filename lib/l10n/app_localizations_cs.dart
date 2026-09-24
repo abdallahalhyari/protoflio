@@ -322,7 +322,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get skillsSearchHint =>
-      'Hledat v 24 dovednostech, nástrojích nebo architekturách...';
+      'Hledat dovednosti, nástroje nebo architektury...';
 
   @override
   String skillsCountAll(int count) {

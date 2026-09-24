@@ -38,6 +38,9 @@ class HoverResetOffsetController {
     required this.duration,
     required this.curve,
   }) : _controller = AnimationController(vsync: vsync, duration: duration) {
+    // Built once: `CurvedAnimation` registers a status listener on its
+    // parent, so constructing one per exit would leak all over again.
+    _curved = CurvedAnimation(parent: _controller, curve: curve);
     _controller.addListener(() {
       final anim = _resetAnimation;
       if (anim != null) offset.value = anim.value;
@@ -47,6 +50,7 @@ class HoverResetOffsetController {
   final Duration duration;
   final Curve curve;
   final AnimationController _controller;
+  late final CurvedAnimation _curved;
   Animation<Offset>? _resetAnimation;
 
   /// Current pointer-relative offset. Listen to this to drive tilt/parallax
@@ -68,15 +72,15 @@ class HoverResetOffsetController {
     final current = offset.value;
     if (current == Offset.zero) return;
 
-    _resetAnimation = Tween<Offset>(begin: current, end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: curve),
-    );
+    _resetAnimation =
+        Tween<Offset>(begin: current, end: Offset.zero).animate(_curved);
     _controller
       ..reset()
       ..forward();
   }
 
   void dispose() {
+    _curved.dispose();
     offset.dispose();
     _controller.dispose();
   }

@@ -19,6 +19,14 @@ class LocaleBloc extends Bloc<LocaleEvent, LocaleState> {
 
   Future<void> _onStarted(
       LocaleStarted event, Emitter<LocaleState> emit) async {
+    final urlLang = Uri.base.queryParameters['lang']?.toLowerCase();
+    if (urlLang != null && supportedLanguages.contains(urlLang)) {
+      final loc = Locale(urlLang);
+      emit(state.copyWith(locale: loc));
+      unawaited(_persist(urlLang));
+      return;
+    }
+
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_prefsKey);
     if (raw != null && supportedLanguages.contains(raw)) {

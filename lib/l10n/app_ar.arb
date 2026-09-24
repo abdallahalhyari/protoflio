@@ -97,7 +97,7 @@
   "navSubContact": "القنوات المباشرة وحالة التوفر",
   "selectedRoleAnnouncement": "تم تحديد الدور: {role}",
   "copiedToClipboard": "تم نسخ {value} إلى الحافظة",
-  "skillsSearchHint": "ابحث في 24 مهارة وتقنية وهندسة أنظمة...",
+  "skillsSearchHint": "ابحث في المهارات والتقنيات وهندسة الأنظمة...",
   "skillsCountAll": "{count} مهارة",
   "skillsCountFiltered": "{filtered} من أصل {total} مهارة",
   "skillsClearSearch": "مسح البحث",

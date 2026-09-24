@@ -17,6 +17,7 @@ import 'package:profile/features/hats/widget/hat_deck_header.dart';
 import 'package:profile/features/hats/widget/hat_drag_hint.dart';
 import 'package:profile/features/hats/widget/hat_playing_card.dart';
 import 'package:profile/features/hats/widget/hat_role_pills.dart';
+import 'package:profile/shared/widget/page_activity.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
 
 class HatsGridPage extends StatelessWidget {
@@ -57,7 +58,7 @@ class _HatsGridPageView extends StatefulWidget {
 }
 
 class _HatsGridPageViewState extends State<_HatsGridPageView>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, ActivePageFocusMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -68,14 +69,14 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
   void initState() {
     super.initState();
     _focusNode = FocusNode(debugLabel: 'HatsGridFocus');
-    // `autofocus` only wins when nothing in the enclosing scope already has
-    // focus — DesktopKeyboardNav's app-wide Focus claims it first, so this
-    // page's arrow/A-D/S/R shortcuts would otherwise never fire. Request
-    // focus explicitly once mounted instead.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _focusNode.requestFocus();
-    });
   }
+
+  // `autofocus` only wins when nothing in the enclosing scope already has
+  // focus — DesktopKeyboardNav's app-wide Focus claims it first, so this
+  // page's arrow/A-D/S/R shortcuts would otherwise never fire. The mixin
+  // requests focus explicitly whenever this page becomes the visible one.
+  @override
+  FocusNode get pageFocusNode => _focusNode;
 
   @override
   void dispose() {

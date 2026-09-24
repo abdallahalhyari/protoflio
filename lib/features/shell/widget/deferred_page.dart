@@ -20,22 +20,42 @@ class DeferredPage extends StatefulWidget {
   final Widget Function() builder;
   final double placeholderHeight;
 
+  /// Warms [loader]'s chunk ahead of time and records it, so a later
+  /// [DeferredPage] using the same loader mounts straight into content.
+  static Future<void> prefetch(Future<void> Function() loader) async {
+    await loader();
+    _DeferredPageState._resolvedLoaders.add(loader);
+  }
+
   @override
   State<DeferredPage> createState() => _DeferredPageState();
 }
 
-class _DeferredPageState extends State<DeferredPage> {
-  bool _loaded = false;
+class _DeferredPageState extends State<DeferredPage>
+    with AutomaticKeepAliveClientMixin {
+  // Loaders whose chunk has already resolved (e.g. via HomeScreen's
+  // prefetch). A remount can then paint content on its first frame instead
+  // of flashing the placeholder and cross-fading while the page slides in.
+  static final Set<Object> _resolvedLoaders = {};
+
+  late bool _loaded = _resolvedLoaders.contains(widget.loader);
   Object? _loadError;
+
+  // Keep every section alive across page turns so revisits don't replay
+  // entrance animations; off-screen pages are already Offstage and
+  // ticker-muted by MagazinePageTransformer.
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
-    _startLoad();
+    if (!_loaded) _startLoad();
   }
 
   void _startLoad() {
     widget.loader().then((_) {
+      _resolvedLoaders.add(widget.loader);
       if (mounted) {
         setState(() {
           _loaded = true;
@@ -49,6 +69,7 @@ class _DeferredPageState extends State<DeferredPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // AutomaticKeepAliveClientMixin requirement
     Widget content;
     if (_loaded) {
       content = KeyedSubtree(

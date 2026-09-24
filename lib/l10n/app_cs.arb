@@ -97,7 +97,7 @@
   "navSubContact": "Přímé komunikační kanály a dostupnost",
   "selectedRoleAnnouncement": "Vybraná role: {role}",
   "copiedToClipboard": "Zkopírováno {value} do schránky",
-  "skillsSearchHint": "Hledat v 24 dovednostech, nástrojích nebo architekturách...",
+  "skillsSearchHint": "Hledat dovednosti, nástroje nebo architektury...",
   "skillsCountAll": "{count} DOVEDNOSTÍ",
   "skillsCountFiltered": "{filtered} Z {total} DOVEDNOSTÍ",
   "skillsClearSearch": "VYMAZAT HLEDÁNÍ",

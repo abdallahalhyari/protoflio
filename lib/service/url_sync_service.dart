@@ -60,7 +60,15 @@ abstract class UrlSyncService {
     }
   }
 
+  /// Replaces the current history entry's hash (no new Back step).
   void updateHash(String hash);
+
+  /// Pushes a new history entry for [hash], so browser Back returns to the
+  /// current one. Used for pages that should close on Back (case studies).
+  void pushHash(String hash);
+
+  /// Steps browser history back one entry.
+  void back();
   void updateTitle(String title);
   String? getInitialHash();
 

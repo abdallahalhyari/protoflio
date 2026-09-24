@@ -40,6 +40,7 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
   static const Duration _kWheelCooldown = Duration(milliseconds: 320);
   double _wheelAccum = 0;
   DateTime _lastWheelAt = DateTime.fromMillisecondsSinceEpoch(0);
+  double _lastDy = 0;
 
   bool _isIgnoringBurst = false;
 
@@ -111,16 +112,28 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
 
     final now = DateTime.now();
     final timeSinceLastWheel = now.difference(_lastWheelAt);
-
-    // Update last wheel time so we can track the burst continuousness.
     _lastWheelAt = now;
 
-    // If there's been a long enough pause, the user lifted their fingers.
-    // We can reset the burst ignore flag and the accumulator.
+    final dy = event.scrollDelta.dy;
+
+    // Detect new interaction intent to break out of burst ignore:
+    // 1. Time gap (user paused)
     if (timeSinceLastWheel > AppMotion.wheelResetGap) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
+    } 
+    // 2. Sudden velocity spike (new flick in same direction)
+    else if (_lastDy != 0 && dy.sign == _lastDy.sign && dy.abs() > _lastDy.abs() + 15.0) {
+      _isIgnoringBurst = false;
+      _wheelAccum = 0;
+    } 
+    // 3. Direction change (flick in opposite direction)
+    else if (_lastDy != 0 && dy.sign != _lastDy.sign && dy.abs() > 2.0) {
+      _isIgnoringBurst = false;
+      _wheelAccum = 0;
     }
+    
+    _lastDy = dy;
 
     // Drop further wheel events while a transition animation is actively in flight
     // or within the post-turn cooldown window.
@@ -140,17 +153,11 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
       return;
     }
 
-    final dy = event.scrollDelta.dy;
     if (dy.abs() < 1.0) return;
 
     if (_canInnerScroll(event.position, dy)) {
       _wheelAccum = 0;
       return;
-    }
-
-    // If direction changed, reset accumulator immediately so opposite scroll is responsive
-    if ((_wheelAccum > 0 && dy < 0) || (_wheelAccum < 0 && dy > 0)) {
-      _wheelAccum = 0;
     }
 
     _wheelAccum += dy;

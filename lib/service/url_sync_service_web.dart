@@ -64,6 +64,27 @@ class UrlSyncServiceWeb extends UrlSyncService {
   }
 
   @override
+  void pushHash(String hash) {
+    updateTitle(titleForHash(hash));
+    _lastReportedHash = hash;
+    try {
+      final history = _window.getProperty('history'.toJS) as JSObject;
+      // callAsFunction, not callMethod: callMethod drops null arguments, which
+      // shifted `url` into the `title` slot and silently pushed nothing.
+      final pushState = history.getProperty('pushState'.toJS) as JSFunction;
+      pushState.callAsFunction(history, null, ''.toJS, '#$hash'.toJS);
+    } catch (_) {}
+  }
+
+  @override
+  void back() {
+    try {
+      final history = _window.getProperty('history'.toJS) as JSObject;
+      history.callMethod('back'.toJS);
+    } catch (_) {}
+  }
+
+  @override
   void Function() listenToHashChanges(void Function(String hash) onHashChange) {
     try {
       if (_window.has('addEventListener')) {
@@ -71,10 +92,14 @@ class UrlSyncServiceWeb extends UrlSyncService {
             _window.getProperty('addEventListener'.toJS) as JSFunction;
         final callback = ((JSAny? event) {
           final hash = getInitialHash() ?? 'home';
+          _lastReportedHash = hash;
           onHashChange(hash);
         }).toJS;
+        // `hashchange` only: browsers fire `popstate` *and* `hashchange` for
+        // one fragment navigation, which double-pushed case studies. Every
+        // entry the app creates has a distinct hash, so `hashchange` also
+        // covers back/forward.
         addEventListener.callAsFunction(_window, 'hashchange'.toJS, callback);
-        addEventListener.callAsFunction(_window, 'popstate'.toJS, callback);
         return () {
           try {
             if (_window.has('removeEventListener')) {
@@ -82,8 +107,6 @@ class UrlSyncServiceWeb extends UrlSyncService {
                   _window.getProperty('removeEventListener'.toJS) as JSFunction;
               removeEventListener.callAsFunction(
                   _window, 'hashchange'.toJS, callback);
-              removeEventListener.callAsFunction(
-                  _window, 'popstate'.toJS, callback);
             }
           } catch (_) {}
         };

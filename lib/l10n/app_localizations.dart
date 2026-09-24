@@ -685,7 +685,7 @@ abstract class AppLocalizations {
   /// No description provided for @skillsSearchHint.
   ///
   /// In en, this message translates to:
-  /// **'Search 24 skills, tools, or architectures...'**
+  /// **'Search skills, tools, or architectures...'**
   String get skillsSearchHint;
 
   /// No description provided for @skillsCountAll.

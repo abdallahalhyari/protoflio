@@ -318,7 +318,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get skillsSearchHint => 'ابحث في 24 مهارة وتقنية وهندسة أنظمة...';
+  String get skillsSearchHint => 'ابحث في المهارات والتقنيات وهندسة الأنظمة...';
 
   @override
   String skillsCountAll(int count) {

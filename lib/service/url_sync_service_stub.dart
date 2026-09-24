@@ -10,6 +10,14 @@ class UrlSyncServiceStub extends UrlSyncService {
   }
 
   @override
+  void pushHash(String hash) {
+    updateTitle(titleForHash(hash));
+  }
+
+  @override
+  void back() {}
+
+  @override
   void updateTitle(String title) {
     try {
       SystemChrome.setApplicationSwitcherDescription(

@@ -34,7 +34,7 @@ class _HatImageState extends State<HatImage>
     super.didChangeDependencies();
     final shouldAnimate = !MediaQuery.disableAnimationsOf(context);
     if (shouldAnimate && !_c.isAnimating) {
-      _c.repeat(reverse: true);
+      _c.forward();
     } else if (!shouldAnimate && _c.isAnimating) {
       _c.stop();
     }

@@ -4,8 +4,6 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
-import 'architecture_simulator_bar.dart';
-import 'architecture_telemetry_strip.dart';
 import 'diagram_list.dart';
 
 Future<void> showArchitectureInspectModal(
@@ -44,7 +42,6 @@ class _ArchitectureInspectDialog extends StatefulWidget {
 class _ArchitectureInspectDialogState
     extends State<_ArchitectureInspectDialog> {
   late int _step;
-  bool _isPlaying = false;
   final TransformationController _transformController =
       TransformationController();
 
@@ -71,7 +68,6 @@ class _ArchitectureInspectDialogState
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
-    final currentStepObj = widget.topic.diagramSteps[_step];
 
     return Dialog(
       backgroundColor: context.modalSurface,
@@ -174,34 +170,6 @@ class _ArchitectureInspectDialogState
                     ),
                   ),
                 ),
-              ),
-            ),
-            const Divider(height: 1),
-            // Bottom Controls & Telemetry
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Column(
-                children: [
-                  ArchitectureSimulatorBar(
-                    currentStep: _step,
-                    totalSteps: widget.topic.diagramSteps.length,
-                    isPlaying: _isPlaying,
-                    stepTitle: currentStepObj.title,
-                    accentColor: scheme.primary,
-                    isDesktop: true,
-                    onPrevious: () => _updateStep(_step - 1),
-                    onNext: () => _updateStep(_step + 1),
-                    onTogglePlay: () =>
-                        setState(() => _isPlaying = !_isPlaying),
-                    onReset: () => _updateStep(0),
-                  ),
-                  const SizedBox(height: 8),
-                  ArchitectureTelemetryStrip(
-                    step: currentStepObj,
-                    accentColor: scheme.primary,
-                    isDesktop: true,
-                  ),
-                ],
               ),
             ),
           ],

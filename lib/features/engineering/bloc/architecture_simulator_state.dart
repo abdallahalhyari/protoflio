@@ -5,13 +5,11 @@ class ArchitectureSimulatorState extends Equatable {
   final List<ArchitectureTopic> topics;
   final int selectedTopicIndex;
   final int currentStepIndex;
-  final bool isPlaying;
 
   const ArchitectureSimulatorState({
     required this.topics,
     this.selectedTopicIndex = 0,
     this.currentStepIndex = 0,
-    this.isPlaying = false,
   });
 
   ArchitectureTopic get currentTopic => topics[selectedTopicIndex];
@@ -23,13 +21,11 @@ class ArchitectureSimulatorState extends Equatable {
     List<ArchitectureTopic>? topics,
     int? selectedTopicIndex,
     int? currentStepIndex,
-    bool? isPlaying,
   }) {
     return ArchitectureSimulatorState(
       topics: topics ?? this.topics,
       selectedTopicIndex: selectedTopicIndex ?? this.selectedTopicIndex,
       currentStepIndex: currentStepIndex ?? this.currentStepIndex,
-      isPlaying: isPlaying ?? this.isPlaying,
     );
   }
 
@@ -38,6 +34,5 @@ class ArchitectureSimulatorState extends Equatable {
         topics,
         selectedTopicIndex,
         currentStepIndex,
-        isPlaying,
       ];
 }

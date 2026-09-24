@@ -21,8 +21,8 @@
 
   <link rel="canonical" href="https://alhyari.web.app/">
   <link rel="alternate" hreflang="en" href="https://alhyari.web.app/">
-  <link rel="alternate" hreflang="ar" href="https://alhyari.web.app/">
-  <link rel="alternate" hreflang="cs" href="https://alhyari.web.app/">
+  <link rel="alternate" hreflang="ar" href="https://alhyari.web.app/?lang=ar">
+  <link rel="alternate" hreflang="cs" href="https://alhyari.web.app/?lang=cs">
   <link rel="alternate" hreflang="x-default" href="https://alhyari.web.app/">
 
   <!-- Open Graph / Social Sharing Previews (LinkedIn, Telegram, Slack, WhatsApp, Discord, iMessage) -->
@@ -497,7 +497,8 @@
       var urlParams = new URLSearchParams(window.location.search);
       var theme = urlParams.get('theme');
       if (theme === 'light' || theme === 'dark') {
-        window.localStorage.setItem('flutter.themeMode', theme);
+        // shared_preferences_web JSON-decodes values; a raw string reads as null.
+        window.localStorage.setItem('flutter.themeMode', JSON.stringify(theme));
       }
     } catch(e) {}
 

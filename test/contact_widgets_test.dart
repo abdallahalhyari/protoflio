@@ -9,6 +9,7 @@ import 'package:profile/features/contact/widget/engagement_matrix_section.dart';
 import 'package:profile/features/contact/widget/express_presets_bar.dart';
 import 'package:profile/features/contact/widget/hero_email_card.dart';
 import 'package:profile/features/contact/widget/inquiry_composer_dialog.dart';
+import 'package:profile/shared/util/career_facts.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
@@ -33,7 +34,8 @@ void main() {
       expect(find.text('FEATURE 07 · DIRECT LINE & REACH OUT'), findsOneWidget);
       expect(find.text("LET'S BUILD SOMETHING EXTRAORDINARY"), findsOneWidget);
       expect(
-          find.textContaining('Principal & Senior Mobile Software Architect'),
+          find.textContaining(
+              'Senior Mobile Engineer with ${CareerFacts.yearsOfExperience()}+ years'),
           findsOneWidget);
     });
 

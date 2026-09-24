@@ -20,7 +20,7 @@ class _PulsingDotState extends State<PulsingDot>
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_c.isAnimating && !MediaQuery.disableAnimationsOf(context)) {
-      _c.repeat(reverse: true);
+      _c.forward();
     }
   }
 

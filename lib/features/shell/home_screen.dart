@@ -10,6 +10,7 @@ import 'package:profile/service/cv_service.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/service/url_sync_service.dart';
 import 'package:profile/features/case_study/case_study_router.dart';
+import 'package:profile/shared/widget/page_activity.dart';
 import 'package:profile/features/intro/page/intro_page.dart';
 import 'package:profile/features/hats/page/hats_grid_page.dart'
     deferred as hats_lib;
@@ -81,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // setState, so a plain field would freeze at whatever it was when
   // DesktopScrollInterceptor was last constructed.
   final ValueNotifier<bool> _isPageTransitioning = ValueNotifier<bool>(false);
+  int _turnId = 0;
   void Function()? _cancelHashListener;
 
   late final HomeController _homeController = HomeController(
@@ -124,6 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (initialSlug != null && CaseStudyRouter.has(initialSlug)) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
+        // Put `#work` underneath so Back closes the study onto Projects
+        // instead of leaving the site.
+        UrlSyncService.instance.updateHash('work');
         CaseStudyRouter.push(context, initialSlug);
       });
     }
@@ -138,10 +143,18 @@ class _HomeScreenState extends State<HomeScreen> {
     _cancelHashListener = UrlSyncService.instance.listenToHashChanges((hash) {
       final section = _sectionFromHash(hash);
       final slug = _slugFromHash(hash);
-      if (slug != null && CaseStudyRouter.has(slug) && mounted) {
-        CaseStudyRouter.push(context, slug);
+      if (!mounted) return;
+      UrlSyncService.instance
+          .updateTitle(UrlSyncService.instance.titleForHash(hash));
+      if (slug != null && CaseStudyRouter.has(slug)) {
+        if (!CaseStudyRouter.isOpen(slug)) {
+          CaseStudyRouter.closeFromUrl();
+          CaseStudyRouter.push(context, slug, fromUrl: true);
+        }
         return;
       }
+      // Back (or a manual edit) moved off `#work/<slug>`.
+      CaseStudyRouter.closeFromUrl();
       if (section != null) {
         final target = UrlSyncService.instance.hashToIndex(section);
         if (target != _pageIndex.value && mounted) {
@@ -184,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
       for (final entry in loaders) {
         if (!mounted) return;
         try {
-          await entry.$2();
+          await DeferredPage.prefetch(entry.$2);
         } catch (_) {}
       }
     });
@@ -219,7 +232,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _settleTimer = Timer(AppMotion.sm, () {
       if (!mounted) return;
       final hash = UrlSyncService.instance.indexToHash(page);
-      UrlSyncService.instance.updateHash(hash);
+      // A case study owns the URL while open; replacing it would clobber
+      // the `#work/<slug>` entry Back relies on.
+      if (!CaseStudyRouter.hasOpen) UrlSyncService.instance.updateHash(hash);
       context.read<ThemeBloc>().add(ThemeAccentUpdatedFromHash(hash));
       final labels = TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {
@@ -238,6 +253,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onScroll() {
     if (!_controller.hasClients || _controller.positions.length != 1) return;
+    // Programmatic turns (`_goTo`) already published the target index,
+    // accent, and settle. Tracking the rounded page mid-flight would flash
+    // intermediate sections in the nav and replay the page-turn sound.
+    if (_isPageTransitioning.value) return;
     final page = _controller.page?.round() ?? 0;
     if (page != _pageIndex.value) {
       _pageIndex.value = page;
@@ -306,6 +325,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void _scrollToMobileSection(int index, {bool syncUrl = true}) {
     final target = index.clamp(0, _pageCount - 1);
     _pageIndex.value = target;
+    // Hand keys back to section navigation; a page with its own shortcuts
+    // reclaims focus once it becomes active (see ActivePageFocusMixin).
+    _focusNode.requestFocus();
     context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
     if (syncUrl) {
       _scheduleSettle(target);
@@ -362,46 +384,53 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _goTo(int page, {bool syncUrl = true}) {
     final target = page.clamp(0, _pageCount - 1);
-    if (target == _pageIndex.value && !_isPageTransitioning.value) return;
-    context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
-    if (syncUrl) {
-      _scheduleSettle(target);
-    }
+    if (target == _pageIndex.value) return;
     if (mounted && MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
       _scrollToMobileSection(target, syncUrl: syncUrl);
       return;
     }
 
-    if (mounted && target != _pageIndex.value) {
-      _pageIndex.value = target;
-    }
+    _pageIndex.value = target;
+    // Hand keys back to section navigation; a page with its own shortcuts
+    // reclaims focus once it becomes active (see ActivePageFocusMixin).
+    _focusNode.requestFocus();
+    context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
+    // Settle regardless of [syncUrl]: `updateHash` is idempotent
+    // (replaceState + dedupe), and settle also drives the title, analytics,
+    // and the screen-reader announcement for back/forward navigation.
+    _scheduleSettle(target);
 
     if (_controller.hasClients && _controller.positions.length == 1) {
-      final current = _controller.page?.round() ?? _pageIndex.value;
-      if ((target - current).abs() > 1) {
+      final wasTransitioning = _isPageTransitioning.value;
+      // Raise the flag before any jump so `_onScroll` ignores it.
+      _isPageTransitioning.value = true;
+      final current = _controller.page?.round() ?? target;
+      if (!wasTransitioning && (target - current).abs() > 1) {
         // Pre-jump to the step right before target so only 1 slide is rendered,
         // skipping unneeded mounting and layout of all intermediate pages.
+        // Skipped when retargeting mid-flight — a hard cut there reads as a
+        // glitch; animating on from the current fractional page is smoother.
         final preStep = target > current ? target - 1 : target + 1;
         _controller.jumpToPage(preStep);
       }
-      _isPageTransitioning.value = true;
+      SoundService.instance.playPageTurn();
+      final turnId = ++_turnId;
+      void settle() {
+        // An interrupted turn completes its future early — only the latest
+        // turn may clear the flag, or the wheel lock drops mid-animation.
+        if (!mounted || turnId != _turnId) return;
+        _isPageTransitioning.value = false;
+        _lastPageTurnCompletedAt.value = DateTime.now();
+      }
+
       _controller
           .animateToPage(
-        target,
-        duration: AppMotion.pageTurn,
-        curve: AppMotion.emphasized,
-      )
-          .then((_) {
-        if (mounted) {
-          _isPageTransitioning.value = false;
-          _lastPageTurnCompletedAt.value = DateTime.now();
-        }
-      }).catchError((_) {
-        if (mounted) {
-          _isPageTransitioning.value = false;
-          _lastPageTurnCompletedAt.value = DateTime.now();
-        }
-      });
+            target,
+            duration: AppMotion.pageTurn,
+            curve: AppMotion.emphasized,
+          )
+          .then((_) => settle())
+          .catchError((_) => settle());
     }
   }
 
@@ -520,9 +549,19 @@ class _HomeScreenState extends State<HomeScreen> {
               return MagazinePageTransformer(
                 controller: _controller,
                 index: index,
-                child: RepaintBoundary(
-                  key: ValueKey('desktop_page_repaint_$index'),
-                  child: _buildDesktopPage(index),
+                // Pre-built neighbours and kept-alive pages stay mounted, so
+                // only the visible page may hold keyboard focus.
+                child: ValueListenableBuilder<int>(
+                  valueListenable: _pageIndex,
+                  builder: (context, active, page) => ExcludeFocus(
+                    excluding: active != index,
+                    child:
+                        PageActivity(isActive: active == index, child: page!),
+                  ),
+                  child: RepaintBoundary(
+                    key: ValueKey('desktop_page_repaint_$index'),
+                    child: _buildDesktopPage(index),
+                  ),
                 ),
               );
             },

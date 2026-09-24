@@ -11,6 +11,7 @@ import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_bloc.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_event.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
+import 'package:profile/shared/util/mailto.dart';
 
 Future<void> showInquiryComposerDialog(
   BuildContext context, {
@@ -131,14 +132,7 @@ class _InquiryComposerDialogViewState
       return;
     }
 
-    final Uri mailUri = Uri(
-      scheme: 'mailto',
-      path: _recipientEmail,
-      queryParameters: {
-        'subject': subject,
-        'body': body,
-      },
-    );
+    final mailUri = mailtoUri(_recipientEmail, subject: subject, body: body);
     await launchUrl(mailUri, mode: LaunchMode.externalApplication);
   }
 

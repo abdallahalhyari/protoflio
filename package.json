@@ -8,7 +8,7 @@
     "test": "flutter test",
     "format": "dart format lib/ test/",
     "format:check": "dart format --output=none --set-exit-if-changed lib/ test/",
-    "build:web": "flutter build web --wasm --release --tree-shake-icons --no-source-maps",
+    "build:web": "flutter build web --wasm --release --tree-shake-icons --source-maps",
     "patch": "node patch_flutter_js.js",
     "build": "npm run build:web && npm run patch",
     "deploy": "npm run test && npm run analyze && npm run build && firebase deploy --only hosting",

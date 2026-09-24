@@ -24,23 +24,3 @@ class SimulatorStepSelected extends ArchitectureSimulatorEvent {
   @override
   List<Object?> get props => [stepIndex];
 }
-
-class SimulatorNextStepRequested extends ArchitectureSimulatorEvent {
-  const SimulatorNextStepRequested();
-}
-
-class SimulatorPreviousStepRequested extends ArchitectureSimulatorEvent {
-  const SimulatorPreviousStepRequested();
-}
-
-class SimulatorAutoPlayToggled extends ArchitectureSimulatorEvent {
-  const SimulatorAutoPlayToggled();
-}
-
-class SimulatorResetRequested extends ArchitectureSimulatorEvent {
-  const SimulatorResetRequested();
-}
-
-class SimulatorTick extends ArchitectureSimulatorEvent {
-  const SimulatorTick();
-}

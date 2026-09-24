@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/shared/util/career_facts.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
@@ -69,7 +70,7 @@ class ContactHeader extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 720),
         child: Text(
-          'Principal & Senior Mobile Software Architect with 6+ years delivering resilient '
+          'Senior Mobile Engineer with ${CareerFacts.yearsOfExperience()}+ years delivering resilient '
           'production Flutter engines, offline-first sync protocols, and native iOS/Android bridges. '
           'Available for senior full-time leadership, architectural audits, and technical partnerships.',
           textAlign: TextAlign.center,

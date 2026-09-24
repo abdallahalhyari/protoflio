@@ -10,6 +10,7 @@ import 'package:profile/features/projects/bloc/projects_filter_event.dart';
 import 'package:profile/features/projects/bloc/projects_filter_state.dart';
 import 'package:profile/features/projects/data/projects_data.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
+import 'package:profile/shared/widget/page_activity.dart';
 import 'package:profile/features/projects/widget/interactive_project_card.dart';
 import 'package:profile/features/projects/model/project.dart';
 import 'package:profile/features/projects/widget/project_domain_filters.dart';
@@ -54,7 +55,7 @@ class _ProjectsPageView extends StatefulWidget {
 }
 
 class _ProjectsPageViewState extends State<_ProjectsPageView>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, ActivePageFocusMixin {
   int _mobileSelectedIndex = 0;
   final FocusNode _keyboardFocusNode = FocusNode(debugLabel: 'ProjectsPage');
 
@@ -69,17 +70,12 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
   @override
   bool get wantKeepAlive => true;
 
+  // `autofocus` only wins when nothing in the enclosing scope already has
+  // focus — DesktopKeyboardNav's app-wide Focus claims it first, so this
+  // page's arrow-key filter shortcut would otherwise never fire. The mixin
+  // requests focus explicitly whenever this page becomes the visible one.
   @override
-  void initState() {
-    super.initState();
-    // `autofocus` only wins when nothing in the enclosing scope already has
-    // focus — DesktopKeyboardNav's app-wide Focus claims it first, so this
-    // page's arrow-key filter shortcut would otherwise never fire. Request
-    // focus explicitly once mounted instead.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _keyboardFocusNode.requestFocus();
-    });
-  }
+  FocusNode get pageFocusNode => _keyboardFocusNode;
 
   @override
   void dispose() {

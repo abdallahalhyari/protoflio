@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/shared/util/career_facts.dart';
+
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
@@ -11,8 +13,8 @@ class HatBioStrip extends StatelessWidget {
     required this.isMobile,
   });
 
-  static const String bio =
-      'Senior mobile engineer with 4+ years shipping enterprise Flutter & '
+  static String get bio =>
+      'Senior mobile engineer with ${CareerFacts.yearsOfExperience()}+ years shipping enterprise Flutter & '
       'Android systems at scale — offline-first pipelines, NFC + hardware-bound '
       'auth, RabbitMQ event flows, WorkManager sync. Based in Amman, relocating '
       'to Brno for 2027.';

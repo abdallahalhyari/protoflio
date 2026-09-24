@@ -21,6 +21,7 @@ import 'package:profile/features/contact/widget/inquiry_composer_dialog.dart';
 import 'package:profile/features/contact/widget/telemetry_bar.dart';
 import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/shared/widget/scrollable_screen_shell.dart';
+import 'package:profile/shared/util/mailto.dart';
 
 /// Executive-grade editorial contact dossier and consulting portal.
 /// Commands trust with real-time timezone telemetry, consulting engagement matrix,
@@ -62,14 +63,7 @@ class _ContactPageState extends State<ContactPage>
   Future<void> _openMail({required String subject, String? body}) async {
     SoundService.instance.playClick();
     Analytics.ctaEmail();
-    final Uri mailUri = Uri(
-      scheme: 'mailto',
-      path: _email,
-      queryParameters: {
-        'subject': subject,
-        if (body != null && body.isNotEmpty) 'body': body,
-      },
-    );
+    final mailUri = mailtoUri(_email, subject: subject, body: body);
     await launchUrl(mailUri, mode: LaunchMode.externalApplication);
   }
 
