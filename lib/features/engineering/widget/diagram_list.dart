@@ -167,22 +167,28 @@ class DiagramList extends StatelessWidget {
                           ),
                           if (isActive) ...[
                             const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 1.5),
-                              decoration: BoxDecoration(
-                                color: accent.withValues(alpha: AppAlpha.fill),
-                                borderRadius:
-                                    BorderRadius.circular(AppRadius.chip),
-                              ),
-                              child: Text(
-                                'ACTIVE TRACE',
-                                style: TextStyle(
-                                  fontFamily: AppTypography.monoFont,
-                                  fontSize: AppTypography.nano,
-                                  fontWeight: FontWeight.w900,
-                                  color: accent,
-                                  letterSpacing: 0.8,
+                            Flexible(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 1.5),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        accent.withValues(alpha: AppAlpha.fill),
+                                    borderRadius:
+                                        BorderRadius.circular(AppRadius.chip),
+                                  ),
+                                  child: Text(
+                                    'ACTIVE TRACE',
+                                    style: TextStyle(
+                                      fontFamily: AppTypography.monoFont,
+                                      fontSize: AppTypography.nano,
+                                      fontWeight: FontWeight.w900,
+                                      color: accent,
+                                      letterSpacing: 0.8,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

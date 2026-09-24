@@ -46,13 +46,15 @@ class MobileFooter extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              Text(
-                'ABDALLAH AL-HYARI',
-                style: TextStyle(
-                  color: context.onSurface,
-                  fontWeight: FontWeight.w900,
-                  fontSize: AppTypography.overline,
-                  letterSpacing: 2,
+              Flexible(
+                child: Text(
+                  'ABDALLAH ALHYARI',
+                  style: TextStyle(
+                    color: context.onSurface,
+                    fontWeight: FontWeight.w900,
+                    fontSize: AppTypography.overline,
+                    letterSpacing: 2,
+                  ),
                 ),
               ),
             ],

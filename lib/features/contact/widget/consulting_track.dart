@@ -165,13 +165,15 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      'INQUIRE TRACK',
-                      style: TextStyle(
-                        color: accentText,
-                        fontSize: AppTypography.micro,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.4,
+                    Flexible(
+                      child: Text(
+                        'INQUIRE TRACK',
+                        style: TextStyle(
+                          color: accentText,
+                          fontSize: AppTypography.micro,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.4,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 4),

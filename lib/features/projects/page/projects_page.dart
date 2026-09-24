@@ -179,6 +179,13 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                         const double spacing = AppSpacing.lg;
                         final double itemWidth =
                             (constraints.maxWidth - spacing) / 2;
+                        // Fixed-height grid cells: grow the text area with
+                        // the user's text scale (up to 2x) instead of
+                        // clipping the card body.
+                        final double textScale =
+                            MediaQuery.textScalerOf(context).scale(1);
+                        final double itemHeight =
+                            380 + 110 * (textScale - 1).clamp(0.0, 1.0);
 
                         return Wrap(
                           spacing: spacing,
@@ -187,7 +194,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                             for (int i = 0; i < filteredProjects.length; i++)
                               SizedBox(
                                 width: itemWidth,
-                                height: 380,
+                                height: itemHeight,
                                 child: _buildProjectItem(
                                   project: filteredProjects[i],
                                   scheme: scheme,

@@ -35,10 +35,7 @@ Widget _wrapWithTextScaler({
       return MediaQuery(
         data: media.copyWith(
           size: size,
-          textScaler: media.textScaler.clamp(
-            minScaleFactor: 0.85,
-            maxScaleFactor: 1.35,
-          ),
+          textScaler: AppMedia.clampTextScale(media.textScaler),
         ),
         child: c!,
       );
@@ -104,7 +101,7 @@ void main() {
 
   group('Dynamic Text Scaling Clamping Audit', () {
     testWidgets(
-        'Clamps huge OS font accessibility scale factor (2.5x) down to 1.35x',
+        'Clamps huge OS font accessibility scale factor (2.5x) down to 2x',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       late double effectiveScale;
@@ -118,10 +115,7 @@ void main() {
             );
             return MediaQuery(
               data: media.copyWith(
-                textScaler: media.textScaler.clamp(
-                  minScaleFactor: 0.85,
-                  maxScaleFactor: 1.35,
-                ),
+                textScaler: AppMedia.clampTextScale(media.textScaler),
               ),
               child: Builder(
                 builder: (innerCtx) {
@@ -137,7 +131,7 @@ void main() {
       );
 
       await tester.pumpAndSettle();
-      expect(effectiveScale, closeTo(1.35, 0.001));
+      expect(effectiveScale, closeTo(AppMedia.maxTextScale, 0.001));
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
@@ -156,10 +150,7 @@ void main() {
             );
             return MediaQuery(
               data: media.copyWith(
-                textScaler: media.textScaler.clamp(
-                  minScaleFactor: 0.85,
-                  maxScaleFactor: 1.35,
-                ),
+                textScaler: AppMedia.clampTextScale(media.textScaler),
               ),
               child: Builder(
                 builder: (innerCtx) {
@@ -180,24 +171,24 @@ void main() {
       await tester.binding.setSurfaceSize(null);
     });
 
-    testWidgets('Renders MobileFooter cleanly under max clamped scale (1.35x)',
+    testWidgets('Renders MobileFooter cleanly under max clamped scale (2x)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       await tester.pumpWidget(
         _wrapWithTextScaler(
           child: const MobileFooter(),
-          textScaler: const TextScaler.linear(2.0), // will be clamped to 1.35
+          textScaler: const TextScaler.linear(2.5), // clamped to 2x
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('ABDALLAH AL-HYARI'), findsOneWidget);
+      expect(find.text('ABDALLAH ALHYARI'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
 
     testWidgets(
-        'Renders CredentialsBentoCard cleanly under max clamped scale (1.35x)',
+        'Renders CredentialsBentoCard cleanly under max clamped scale (2x)',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(420, 844));
       await tester.pumpWidget(
@@ -205,7 +196,7 @@ void main() {
           child: const SingleChildScrollView(
             child: CredentialsBentoCard(isDesktop: false, isVisible: true),
           ),
-          textScaler: const TextScaler.linear(1.35),
+          textScaler: const TextScaler.linear(2.0),
         ),
       );
       await tester.pumpAndSettle();

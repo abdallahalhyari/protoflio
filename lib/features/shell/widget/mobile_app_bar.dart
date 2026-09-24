@@ -31,9 +31,18 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kBarHeight);
 
   @override
-  Widget build(BuildContext context) {
+  // Fixed-height toolbar: cap text scale locally (as Material app bars do)
+  // so large accessibility text can't push actions off-screen.
+  Widget build(BuildContext context) => MediaQuery.withClampedTextScaling(
+        maxScaleFactor: 1.35,
+        child: Builder(builder: _buildBar),
+      );
+
+  Widget _buildBar(BuildContext context) {
     final isDark = context.isDarkMode;
-    final tight = AppBreakpoints.isCompact(context);
+    // Enlarged text needs the compact bar too, or the actions overflow.
+    final tight = AppBreakpoints.isCompact(context) ||
+        MediaQuery.textScalerOf(context).scale(1) > 1.15;
     final ultraTight = MediaQuery.sizeOf(context).width < 360;
     final primary = Theme.of(context).colorScheme.primary;
     final secondary = Theme.of(context).colorScheme.secondary;
@@ -66,79 +75,90 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: Row(
             children: [
-              // Brand signature
-              Semantics(
-                button: true,
-                label: 'Abdallah Alhyari — return to top',
-                child: InkWell(
-                  onTap: () {
-                    SoundService.instance.playClick();
-                    onLogoPressed?.call();
-                  },
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Monogram badge
-                        Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                            gradient: LinearGradient(
-                              colors: [primary, secondary],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    primary.withValues(alpha: AppAlpha.border),
-                                blurRadius: 8,
+              // Brand signature — takes the leftover width and scales down
+              // rather than overflowing (it overflowed 4.4px on a 390px
+              // phone at default text size).
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Semantics(
+                      button: true,
+                      label: 'Abdallah Alhyari — return to top',
+                      child: InkWell(
+                        onTap: () {
+                          SoundService.instance.playClick();
+                          onLogoPressed?.call();
+                        },
+                        borderRadius: BorderRadius.circular(AppRadius.sm),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4, horizontal: 2),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Monogram badge
+                              Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(AppRadius.sm),
+                                  gradient: LinearGradient(
+                                    colors: [primary, secondary],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: primary.withValues(
+                                          alpha: AppAlpha.border),
+                                      blurRadius: 8,
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'A',
+                                    style: TextStyle(
+                                      fontFamily: AppTypography.displayFont,
+                                      color: Colors.white,
+                                      fontSize: AppTypography.subtitle,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.sm),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'ABDALLAH',
+                                    style: TextStyle(
+                                      fontFamily: AppTypography.displayFont,
+                                      color: context.onSurface,
+                                      fontSize: AppTypography.small,
+                                      fontWeight: FontWeight.w900,
+                                      letterSpacing: 1.4,
+                                      height: 1.1,
+                                    ),
+                                  ),
+                                  if (!tight) _buildSubBadge(context, isDark),
+                                ],
                               ),
                             ],
                           ),
-                          child: const Center(
-                            child: Text(
-                              'A',
-                              style: TextStyle(
-                                fontFamily: AppTypography.displayFont,
-                                color: Colors.white,
-                                fontSize: AppTypography.subtitle,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                          ),
                         ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'ABDALLAH',
-                              style: TextStyle(
-                                fontFamily: AppTypography.displayFont,
-                                color: context.onSurface,
-                                fontSize: AppTypography.small,
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.4,
-                                height: 1.1,
-                              ),
-                            ),
-                            if (!tight) _buildSubBadge(context, isDark),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-
-              const Spacer(),
+              const SizedBox(width: 6),
 
               // Quick Controls
               // Language (hidden under 400px — reachable via slide-out menu)

@@ -473,15 +473,17 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                           : AppColors.accentIndigoDeepText;
                                       return Row(
                                         children: [
-                                          Text(
-                                            'READ CASE STUDY',
-                                            style: TextStyle(
-                                              fontFamily:
-                                                  AppTypography.monoFont,
-                                              color: ctaColor,
-                                              fontSize: AppTypography.caption,
-                                              fontWeight: FontWeight.w900,
-                                              letterSpacing: 1.0,
+                                          Flexible(
+                                            child: Text(
+                                              'READ CASE STUDY',
+                                              style: TextStyle(
+                                                fontFamily:
+                                                    AppTypography.monoFont,
+                                                color: ctaColor,
+                                                fontSize: AppTypography.caption,
+                                                fontWeight: FontWeight.w900,
+                                                letterSpacing: 1.0,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(width: 6),

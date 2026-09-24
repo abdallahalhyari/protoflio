@@ -67,4 +67,16 @@ class AppMedia {
   static bool reduceBlur(BuildContext context) {
     return reduceMotion(context);
   }
+
+  /// App-wide bounds for the OS/browser text scale. The upper bound is 2.0
+  /// to meet WCAG 1.4.4 (resize text to 200%); `text_scale_layout_test`
+  /// guards every section against overflow at that size. Fixed-geometry
+  /// pieces (hat cards, mobile app bar) cap locally instead.
+  static const double minTextScale = 0.85;
+  static const double maxTextScale = 2.0;
+
+  static TextScaler clampTextScale(TextScaler scaler) => scaler.clamp(
+        minScaleFactor: minTextScale,
+        maxScaleFactor: maxTextScale,
+      );
 }

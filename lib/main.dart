@@ -130,10 +130,7 @@ class PortfolioApp extends StatelessWidget {
                   final media = MediaQuery.of(context);
                   return MediaQuery(
                     data: media.copyWith(
-                      textScaler: media.textScaler.clamp(
-                        minScaleFactor: 0.85,
-                        maxScaleFactor: 1.35,
-                      ),
+                      textScaler: AppMedia.clampTextScale(media.textScaler),
                     ),
                     child: child!,
                   );

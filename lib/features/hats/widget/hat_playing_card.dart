@@ -121,7 +121,14 @@ class _HatPlayingCardState extends State<HatPlayingCard>
   }
 
   @override
-  Widget build(BuildContext context) {
+  // Playing cards are fixed-size artwork in a fanned deck; cap text scale
+  // locally so large accessibility text doesn't overflow the card face.
+  Widget build(BuildContext context) => MediaQuery.withClampedTextScaling(
+        maxScaleFactor: 1.35,
+        child: Builder(builder: _buildCard),
+      );
+
+  Widget _buildCard(BuildContext context) {
     final reduce = MediaQuery.disableAnimationsOf(context);
     final cardContent = GestureDetector(
       onPanStart:
