@@ -155,7 +155,10 @@ class _IntroPageState extends State<IntroPage>
         const Spacer(),
         rule(),
         const SizedBox(width: AppSpacing.sm),
+        // flex 8: the two Spacers used to take two thirds of the free width,
+        // so on phones the FittedBox shrank the strip to ~5px type.
         Flexible(
+          flex: 8,
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -166,7 +169,7 @@ class _IntroPageState extends State<IntroPage>
                     : AppColors.slate600,
                 fontSize: fs,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 4,
+                letterSpacing: size.width < AppBreakpoints.tablet ? 2.5 : 4,
               ),
             ),
           ),
@@ -198,6 +201,46 @@ class _IntroPageState extends State<IntroPage>
         ),
       );
 
+  /// Outlined display wordmark. Line height 1.0 (was 0.9): the squeezed
+  /// line box let Tenada's caps paint above it, through the issue strip.
+  /// The stroke carries a soft sky → indigo → violet sweep of the brand
+  /// accents instead of flat grey, so the masthead reads as ink, not a
+  /// disabled placeholder — at the same low opacity as before.
+  TextStyle _wordmarkStyle(bool isDark) {
+    final base = TextStyle(
+      fontFamily: AppTypography.displayFont,
+      fontSize: AppTypography.watermark,
+      fontWeight: FontWeight.w900,
+      letterSpacing: 10,
+      height: 1.0,
+    );
+    // Measured in the text's own coordinates (FittedBox scales afterwards),
+    // so the gradient spans exactly the word.
+    final painter = TextPainter(
+      text: TextSpan(text: 'ABDALLAH', style: base),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    final bounds = Offset.zero & painter.size;
+    painter.dispose();
+    final alpha = isDark ? 0.46 : 0.42;
+    return base.copyWith(
+      foreground: Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3
+        ..shader = LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            (isDark ? Colors.white : AppColors.accentSky)
+                .withValues(alpha: alpha),
+            AppColors.accentIndigo.withValues(alpha: alpha + 0.08),
+            AppColors.accentViolet.withValues(alpha: alpha),
+          ],
+          stops: const [0.0, 0.55, 1.0],
+        ).createShader(bounds),
+    );
+  }
+
   Widget _wordmark(Size size, bool isDark, bool isCompactH, bool isWide) {
     final wordmarkHeight = isCompactH
         ? (size.height * 0.17).clamp(95.0, 165.0)
@@ -217,19 +260,7 @@ class _IntroPageState extends State<IntroPage>
               fit: BoxFit.contain,
               child: Text(
                 'ABDALLAH',
-                style: TextStyle(
-                  fontFamily: AppTypography.displayFont,
-                  fontSize: AppTypography.watermark,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 10,
-                  height: 0.9,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 3
-                    ..color = isDark
-                        ? Colors.white.withValues(alpha: 0.38)
-                        : _accent.withValues(alpha: 0.40),
-                ),
+                style: _wordmarkStyle(isDark),
               ),
             ),
           ),

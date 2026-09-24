@@ -72,7 +72,11 @@ class _MobilePagerContent extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
         decoration: BoxDecoration(
-          color: context.glassSurface,
+          // Denser than glassSurface: the pill floats over body copy, and
+          // at 78% the text underneath read straight through the counter.
+          color: isDark
+              ? AppColors.darkSurface.withValues(alpha: 0.95)
+              : context.glassSurface,
           borderRadius: BorderRadius.circular(AppRadius.pill),
           border: Border.all(color: context.glassBorder),
           boxShadow: [
