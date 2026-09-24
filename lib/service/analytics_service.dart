@@ -26,6 +26,16 @@ class Analytics {
 
   static void setEnabled(bool enabled) => _enabled = enabled;
 
+  /// Shows the consent banner again so visitors can change their choice
+  /// (GDPR: withdrawing must be as easy as giving). No-op off the web.
+  static void reopenConsent() {
+    try {
+      reopenAnalyticsConsent();
+    } catch (e) {
+      _logIfDebug('Analytics.reopenConsent failed: $e');
+    }
+  }
+
   static void screen(String name, {String? className}) {
     if (!_enabled) return;
     try {

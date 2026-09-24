@@ -20,3 +20,9 @@ JSAny? _toJs(Object v) {
 
 @JS('gtag')
 external void _gtag(JSString command, JSString name, [JSObject? params]);
+
+/// Reopens the analytics consent banner defined in `web/index.html`.
+void reopenAnalyticsConsent() => _resetAnalyticsConsent();
+
+@JS('resetAnalyticsConsent')
+external void _resetAnalyticsConsent();

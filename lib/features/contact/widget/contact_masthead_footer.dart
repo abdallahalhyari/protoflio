@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+
+import 'package:profile/service/analytics_service.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -213,6 +216,20 @@ class ContactMastheadFooter extends StatelessWidget {
               blocks[3],
             ],
           ),
+        if (kIsWeb) ...[
+          const SizedBox(height: AppSpacing.md),
+          TextButton(
+            onPressed: Analytics.reopenConsent,
+            child: Text(
+              'Analytics preferences',
+              style: TextStyle(
+                color: context.subtleText,
+                fontSize: AppTypography.caption,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        ],
       ],
     );
   }
