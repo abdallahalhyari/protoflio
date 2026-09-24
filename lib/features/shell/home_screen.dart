@@ -284,6 +284,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   double _lastMobileScrollSample = -1e9;
 
+  /// Bumped per menu/hash jump; non-zero while one is animating so the
+  /// scroll sweep doesn't publish the sections it flies past.
+  int _mobileJumpId = 0;
+  bool _mobileJumpInFlight = false;
+
   void _onMobileScroll() {
     if (!_mobileScrollController.hasClients) return;
     final offset = _mobileScrollController.offset;
@@ -295,6 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Section-sweep is O(N) findRenderObject + localToGlobal per call.
     // Skip until the user has scrolled at least ~10px since the last
     // sample so we're not doing that work on every wheel tick.
+    if (_mobileJumpInFlight) return;
     if ((offset - _lastMobileScrollSample).abs() < 10) return;
     _lastMobileScrollSample = offset;
 
@@ -345,7 +351,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Scrolls the target section top to sit *below* the sticky MobileAppBar
   /// (~60px) — plain `ensureVisible` would tuck the section title under it.
-  void _animateSectionIntoView(int target, {int retry = 0}) {
+  void _animateSectionIntoView(int target, {int retry = 0, int? jumpId}) {
+    final id = jumpId ?? ++_mobileJumpId;
+    if (id != _mobileJumpId) return; // superseded by a newer jump
     final keyContext = _sectionKeys[target].currentContext;
     // Section may be wrapped in a DeferredMount and not yet materialized
     // — bumping _pageIndex fires the mount, but the key attaches next
@@ -354,7 +362,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (keyContext == null) {
       if (retry < 1 && _mobileScrollController.hasClients) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) _animateSectionIntoView(target, retry: retry + 1);
+          if (mounted) {
+            _animateSectionIntoView(target, retry: retry + 1, jumpId: id);
+          }
         });
       }
       return;
@@ -375,11 +385,35 @@ class _HomeScreenState extends State<HomeScreen> {
       _mobileScrollController.position.maxScrollExtent,
     );
 
-    _mobileScrollController.animateTo(
+    // Close enough — done. (Also ends the correction loop below.)
+    if ((targetOffset - currentOffset).abs() < 4) {
+      if (id == _mobileJumpId) _mobileJumpInFlight = false;
+      return;
+    }
+
+    _mobileJumpInFlight = true;
+    _mobileScrollController
+        .animateTo(
       targetOffset,
-      duration: AppMotion.sectionScroll,
+      // Correction passes are short nudges, not a second full flight.
+      duration: retry == 0 ? AppMotion.sectionScroll : AppMotion.sm,
       curve: AppMotion.standard,
-    );
+    )
+        .whenComplete(() {
+      if (!mounted || id != _mobileJumpId) return;
+      // Sections passed on the way can mount mid-flight and change height,
+      // leaving the target short of the app bar. Re-measure and nudge (up
+      // to twice) instead of landing on the previous section.
+      if (retry < 3) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            _animateSectionIntoView(target, retry: retry + 1, jumpId: id);
+          }
+        });
+      } else {
+        _mobileJumpInFlight = false;
+      }
+    });
   }
 
   void _goTo(int page, {bool syncUrl = true}) {

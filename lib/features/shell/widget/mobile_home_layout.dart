@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -56,6 +57,10 @@ class MobileHomeLayout extends StatelessWidget {
         ListView(
           key: const PageStorageKey<String>('mobile_scrollview'),
           controller: scrollController,
+          // Lay out all seven top-level slots so every section key has a
+          // position for menu/hash jumps. Far sections are 720px
+          // DeferredMount placeholders, so this stays cheap.
+          scrollCacheExtent: const ScrollCacheExtent.pixels(100000),
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.only(
             top: 60 + MediaQuery.paddingOf(context).top,
@@ -75,12 +80,14 @@ class MobileHomeLayout extends StatelessWidget {
               ),
             ),
             MobileSectionDivider(number: '02', title: _dividerLabel(labels, 1)),
-            DeferredMount(
-              sectionIndex: 1,
-              placeholderHeight: 720,
-              child: RepaintBoundary(
-                child: KeyedSubtree(
-                  key: sectionKeys[1],
+            // Key outside DeferredMount: the jump target must exist (and
+            // have a position) even while the section is a placeholder.
+            KeyedSubtree(
+              key: sectionKeys[1],
+              child: DeferredMount(
+                sectionIndex: 1,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
                   child: DeferredPage(
                     loader: experience_lib.loadLibrary,
                     builder: () =>
@@ -90,12 +97,12 @@ class MobileHomeLayout extends StatelessWidget {
               ),
             ),
             MobileSectionDivider(number: '03', title: _dividerLabel(labels, 2)),
-            DeferredMount(
-              sectionIndex: 2,
-              placeholderHeight: 720,
-              child: RepaintBoundary(
-                child: KeyedSubtree(
-                  key: sectionKeys[2],
+            KeyedSubtree(
+              key: sectionKeys[2],
+              child: DeferredMount(
+                sectionIndex: 2,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
                   child: DeferredPage(
                     loader: projects_lib.loadLibrary,
                     builder: () =>
@@ -105,12 +112,12 @@ class MobileHomeLayout extends StatelessWidget {
               ),
             ),
             MobileSectionDivider(number: '04', title: _dividerLabel(labels, 3)),
-            DeferredMount(
-              sectionIndex: 3,
-              placeholderHeight: 720,
-              child: RepaintBoundary(
-                child: KeyedSubtree(
-                  key: sectionKeys[3],
+            KeyedSubtree(
+              key: sectionKeys[3],
+              child: DeferredMount(
+                sectionIndex: 3,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
                   child: DeferredPage(
                     loader: skills_lib.loadLibrary,
                     builder: () =>
@@ -120,12 +127,12 @@ class MobileHomeLayout extends StatelessWidget {
               ),
             ),
             MobileSectionDivider(number: '05', title: _dividerLabel(labels, 4)),
-            DeferredMount(
-              sectionIndex: 4,
-              placeholderHeight: 720,
-              child: RepaintBoundary(
-                child: KeyedSubtree(
-                  key: sectionKeys[4],
+            KeyedSubtree(
+              key: sectionKeys[4],
+              child: DeferredMount(
+                sectionIndex: 4,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
                   child: DeferredPage(
                     loader: engineering_lib.loadLibrary,
                     builder: () => engineering_lib.EngineeringPage(
@@ -135,12 +142,12 @@ class MobileHomeLayout extends StatelessWidget {
               ),
             ),
             MobileSectionDivider(number: '06', title: _dividerLabel(labels, 5)),
-            DeferredMount(
-              sectionIndex: 5,
-              placeholderHeight: 720,
-              child: RepaintBoundary(
-                child: KeyedSubtree(
-                  key: sectionKeys[5],
+            KeyedSubtree(
+              key: sectionKeys[5],
+              child: DeferredMount(
+                sectionIndex: 5,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
                   child: DeferredPage(
                     loader: hats_lib.loadLibrary,
                     builder: () =>
@@ -150,12 +157,12 @@ class MobileHomeLayout extends StatelessWidget {
               ),
             ),
             MobileSectionDivider(number: '07', title: _dividerLabel(labels, 6)),
-            DeferredMount(
-              sectionIndex: 6,
-              placeholderHeight: 720,
-              child: RepaintBoundary(
-                child: KeyedSubtree(
-                  key: sectionKeys[6],
+            KeyedSubtree(
+              key: sectionKeys[6],
+              child: DeferredMount(
+                sectionIndex: 6,
+                placeholderHeight: 720,
+                child: RepaintBoundary(
                   child: DeferredPage(
                     loader: contact_lib.loadLibrary,
                     builder: () =>
