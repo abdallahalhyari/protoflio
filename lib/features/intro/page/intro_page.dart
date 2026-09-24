@@ -8,6 +8,7 @@ import 'package:profile/features/intro/widget/intro_cta_row.dart';
 import 'package:profile/features/intro/widget/intro_footer_strip.dart';
 import 'package:profile/features/intro/widget/hero_motion.dart';
 import 'package:profile/shared/widget/scrollable_screen_shell.dart';
+import 'package:profile/shared/widget/retrying_asset_image.dart';
 import 'package:profile/features/shell/widget/scroll_explore_hint.dart';
 
 /// Intro reimagined as a premium magazine cover:
@@ -307,7 +308,7 @@ class _IntroPageState extends State<IntroPage>
       borderRadius: BorderRadius.circular(13.5),
       child: Container(
         color: Colors.black.withValues(alpha: 0.4),
-        child: Image.asset(
+        child: RetryingAssetImage(
           'assets/my_image.webp',
           fit: BoxFit.cover,
           cacheWidth: 280,
@@ -374,11 +375,8 @@ class _IntroPageState extends State<IntroPage>
             children: [
               _hairlineRow(
                 isDark: isDark,
-                child: Text(
-                  '❖',
-                  style:
-                      TextStyle(color: _accent, fontSize: AppTypography.small),
-                ),
+                child: Icon(Icons.diamond,
+                    size: AppTypography.small, color: _accent),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
               Text(
