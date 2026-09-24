@@ -621,15 +621,34 @@
       }
       function read(){ try { return localStorage.getItem(KEY); } catch(_) { return null; } }
       function save(v){ try { localStorage.setItem(KEY, v); } catch(_) {} }
+      var COPY = {
+        en: { label: 'Analytics consent', text: 'This site uses Google Analytics to count visits. OK to enable it?', no: 'Decline', yes: 'Allow' },
+        ar: { label: 'الموافقة على التحليلات', text: 'يستخدم هذا الموقع Google Analytics لإحصاء الزيارات. هل توافق على تفعيله؟', no: 'رفض', yes: 'سماح' },
+        cs: { label: 'Souhlas s analytikou', text: 'Tento web používá Google Analytics k počítání návštěv. Souhlasíte s jeho použitím?', no: 'Odmítnout', yes: 'Povolit' }
+      };
+      // Same precedence as the app: ?lang= > saved app locale > browser.
+      function lang(){
+        var l = null;
+        try { l = new URLSearchParams(location.search).get('lang'); } catch(_) {}
+        if (!COPY[l]) { try { l = JSON.parse(localStorage.getItem('flutter.localeCode')); } catch(_) { l = null; } }
+        if (!COPY[l]) l = (navigator.language || 'en').slice(0, 2).toLowerCase();
+        return COPY[l] ? l : 'en';
+      }
       function showBanner(){
+        var code = lang(), t = COPY[code];
         var bar = document.createElement('div');
         bar.id = 'consent-banner';
         bar.setAttribute('role', 'region');
-        bar.setAttribute('aria-label', 'Analytics consent');
-        bar.innerHTML =
-          '<span>This site uses Google Analytics to count visits. OK to enable it?</span>' +
-          '<button type="button" data-v="denied">Decline</button>' +
-          '<button type="button" data-v="granted" class="primary">Allow</button>';
+        bar.setAttribute('aria-label', t.label);
+        bar.setAttribute('lang', code);
+        bar.setAttribute('dir', code === 'ar' ? 'rtl' : 'ltr');
+        var span = document.createElement('span');
+        span.textContent = t.text;
+        var no = document.createElement('button');
+        no.type = 'button'; no.setAttribute('data-v', 'denied'); no.textContent = t.no;
+        var yes = document.createElement('button');
+        yes.type = 'button'; yes.setAttribute('data-v', 'granted'); yes.className = 'primary'; yes.textContent = t.yes;
+        bar.appendChild(span); bar.appendChild(no); bar.appendChild(yes);
         bar.addEventListener('click', function(e){
           var v = e.target && e.target.getAttribute && e.target.getAttribute('data-v');
           if (!v) return;

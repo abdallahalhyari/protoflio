@@ -39,7 +39,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navProjects => 'مشاريع';
 
   @override
-  String get introLocation => 'عمان، الأردن › برنو، التشيك (2027)';
+  String get introLocation => 'عمان، الأردن ‹ برنو، التشيك (2027)';
 
   @override
   String get sectionEducation => 'التعليم';
