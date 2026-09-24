@@ -7,6 +7,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/experience/model/experience.dart';
 import 'package:profile/shared/widget/holographic_physics.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 const _kNowAccent = AppColors.accentGreen; // Emerald green for "Present"
 
@@ -310,10 +311,17 @@ class _ExperienceCardState extends State<ExperienceCard> {
     final isDark = context.isDarkMode;
     final int colonIndex = highlight.indexOf(':');
     final bool hasColon = colonIndex != -1;
+    // One LTR isolate around the whole bullet so an RTL (ar) layout doesn't
+    // flip its punctuation — spans share one paragraph, so open on the
+    // first span and close on the last.
+    final isolate = needsLtrIsolate(context, highlight);
+    final String open = isolate ? kLri : '';
+    final String close = isolate ? kPdi : '';
     final String prefix =
-        hasColon ? highlight.substring(0, colonIndex + 1) : '';
-    final String rest =
-        hasColon ? highlight.substring(colonIndex + 1) : highlight;
+        hasColon ? '$open${highlight.substring(0, colonIndex + 1)}' : '';
+    final String rest = hasColon
+        ? '${highlight.substring(colonIndex + 1)}$close'
+        : '$open$highlight$close';
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -361,7 +369,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                     ),
                   )
                 : Text(
-                    highlight,
+                    rest,
                     style: TextStyle(
                       color: isDark
                           ? scheme.onSurface.withValues(alpha: 0.85)

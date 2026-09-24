@@ -10,6 +10,8 @@ import 'package:profile/features/case_study/case_study_widgets.dart';
 import 'package:profile/features/projects/model/project.dart';
 import 'package:profile/features/projects/page/project_modal.dart';
 import 'package:profile/shared/widget/holographic_physics.dart';
+import 'package:profile/shared/widget/retrying_asset_image.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 class InteractiveProjectCard extends StatefulWidget {
   final Project project;
@@ -129,7 +131,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                       scale: hovered ? 1.08 : 1.0,
                                       duration: AppMotion.lg,
                                       curve: AppMotion.emphasizedDecel,
-                                      child: Image.asset(
+                                      child: RetryingAssetImage(
                                         widget.project.heroImagePath!,
                                         fit: BoxFit.cover,
                                         gaplessPlayback: true,
@@ -420,7 +422,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      widget.project.tagline,
+                                      ltrContent(
+                                          context, widget.project.tagline),
                                       style: TextStyle(
                                         color: isDark
                                             ? Colors.white

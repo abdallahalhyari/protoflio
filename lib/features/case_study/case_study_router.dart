@@ -104,7 +104,12 @@ class CaseStudyRouter {
     final route = PageRouteBuilder<void>(
       transitionDuration: AppMotion.md,
       reverseTransitionDuration: AppMotion.sm,
-      pageBuilder: (ctx, __, ___) => builder(ctx),
+      // Case studies are English-only documents; under `ar` an RTL layout
+      // mirrored them and flipped every sentence's punctuation.
+      pageBuilder: (ctx, __, ___) => Directionality(
+        textDirection: TextDirection.ltr,
+        child: Builder(builder: builder),
+      ),
       transitionsBuilder: (_, animation, __, child) {
         return SlideTransition(
           position: Tween<Offset>(
