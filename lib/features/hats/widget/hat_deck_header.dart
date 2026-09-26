@@ -51,7 +51,8 @@ class HatDeckHeader extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'ARCHITECTURAL PERSPECTIVES',
+                // Heading = nav label, so nav, menu and page agree.
+                loc.navAbout.toUpperCase(),
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,

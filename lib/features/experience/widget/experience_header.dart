@@ -15,10 +15,9 @@ class ExperienceHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SectionMasthead(
-      kicker: isDesktop
-          ? 'FEATURE 02 · CAREER TRAJECTORY'
-          : 'FEATURE 02 · EXPERIENCE',
-      title: 'CAREER TRAJECTORY',
+      kicker: 'FEATURE 02 · CAREER TRAJECTORY',
+      // Heading = nav label, so nav, menu and page say the same thing.
+      title: AppLocalizations.of(context)!.navExperience.toUpperCase(),
       subtitle: AppLocalizations.of(context)!.sectionSubtitleExperience,
       isDesktop: isDesktop,
       badgeIcon: Icons.auto_awesome,

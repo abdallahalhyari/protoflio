@@ -12,7 +12,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navHome => 'الرئيسية';
 
   @override
-  String get navWork => 'أعمالي';
+  String get navWork => 'أبرز الأعمال';
 
   @override
   String get navEngineering => 'الهندسة';
@@ -21,22 +21,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navExperience => 'الخبرات';
 
   @override
-  String get navStack => 'التقنيات';
+  String get navStack => 'المهارات والتقنيات';
 
   @override
-  String get navAbout => 'عني';
+  String get navAbout => 'رؤى';
 
   @override
   String get navContact => 'تواصل';
 
   @override
   String get navResume => 'السيرة الذاتية';
-
-  @override
-  String get navSkills => 'مهارات';
-
-  @override
-  String get navProjects => 'مشاريع';
 
   @override
   String get introLocation => 'عمان، الأردن ‹ برنو، التشيك (2027)';
@@ -272,13 +266,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navSubCover => 'مهندس تطبيقات فلاتر وأندرويد أول';
 
   @override
-  String get navSectionExperience => 'المسيرة المهنية والخبرات';
+  String get navSectionExperience => 'الخبرات';
 
   @override
   String get navSubExperience => '+5 سنوات من هندسة الأنظمة المؤسسية';
 
   @override
-  String get navSectionWork => 'أبرز الأعمال والمشاريع';
+  String get navSectionWork => 'أبرز الأعمال';
 
   @override
   String get navSubWork => 'أنظمة الإنتاج ودراسات الحالة المتعمقة';
@@ -290,19 +284,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navSubStack => 'مصفوفة الكفاءة الهندسية والتقنية';
 
   @override
-  String get navSectionEngineering => 'بنية وهندسة الأنظمة';
+  String get navSectionEngineering => 'الهندسة';
 
   @override
   String get navSubEngineering => 'مخططات معمارية وأنظمة تدعم وضع عدم الاتصال';
 
   @override
-  String get navSectionAbout => 'رؤى وأدوار قيادية';
+  String get navSectionAbout => 'رؤى';
 
   @override
   String get navSubAbout => 'وجهات نظر معمارية وأدوار قيادية';
 
   @override
-  String get navSectionContact => 'التواصل والاستفسارات';
+  String get navSectionContact => 'تواصل';
 
   @override
   String get navSubContact => 'القنوات المباشرة وحالة التوفر';

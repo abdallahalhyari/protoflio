@@ -43,8 +43,8 @@ class ContinuousMobileHatColumn extends StatelessWidget {
           // Same masthead as the other sections; the hand-rolled one drew
           // its kicker at border opacity, which barely read on dark.
           SectionMasthead(
-            kicker: 'FEATURE 06 · 6 ROLES',
-            title: 'ARCHITECTURAL PERSPECTIVES',
+            kicker: 'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP',
+            title: AppLocalizations.of(context)!.navAbout.toUpperCase(),
             subtitle: AppLocalizations.of(context)!.sectionSubtitleAbout,
             isDesktop: false,
           ),

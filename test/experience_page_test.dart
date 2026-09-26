@@ -37,7 +37,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('CAREER TRAJECTORY'), findsOneWidget);
+      expect(find.text('EXPERIENCE'), findsOneWidget);
       expect(find.text('NatHealth'), findsOneWidget);
       expect(find.text('ESKADENIA Software'), findsOneWidget);
       expect(find.text('Solutions Now IT'), findsOneWidget);

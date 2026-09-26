@@ -12,7 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navHome => 'Home';
 
   @override
-  String get navWork => 'Work';
+  String get navWork => 'Selected Work';
 
   @override
   String get navEngineering => 'Engineering';
@@ -21,22 +21,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navExperience => 'Experience';
 
   @override
-  String get navStack => 'Stack';
+  String get navStack => 'Skills & Stack';
 
   @override
-  String get navAbout => 'About';
+  String get navAbout => 'Perspectives';
 
   @override
   String get navContact => 'Contact';
 
   @override
   String get navResume => 'Resume';
-
-  @override
-  String get navSkills => 'Skills';
-
-  @override
-  String get navProjects => 'Projects';
 
   @override
   String get introLocation => 'Amman, Jordan › Brno, Czech Republic (2027)';
@@ -276,13 +270,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSubCover => 'Senior Flutter & Android Engineer';
 
   @override
-  String get navSectionExperience => 'CAREER & EXPERIENCE';
+  String get navSectionExperience => 'EXPERIENCE';
 
   @override
   String get navSubExperience => '5+ Years Enterprise Engineering & Impact';
 
   @override
-  String get navSectionWork => 'FEATURED WORK';
+  String get navSectionWork => 'SELECTED WORK';
 
   @override
   String get navSubWork => 'Production Systems & Case Studies';
@@ -294,19 +288,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSubStack => 'Technical Proficiency Matrix';
 
   @override
-  String get navSectionEngineering => 'SYSTEM ARCHITECTURES';
+  String get navSectionEngineering => 'ENGINEERING';
 
   @override
   String get navSubEngineering => 'Enterprise Blueprints & Offline-First';
 
   @override
-  String get navSectionAbout => 'LEADERSHIP PERSPECTIVES';
+  String get navSectionAbout => 'PERSPECTIVES';
 
   @override
   String get navSubAbout => 'Architectural Perspectives & Hats';
 
   @override
-  String get navSectionContact => 'CONTACT & INQUIRIES';
+  String get navSectionContact => 'CONTACT';
 
   @override
   String get navSubContact => 'Direct Channels & Availability';

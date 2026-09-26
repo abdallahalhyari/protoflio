@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// No description provided for @navWork.
   ///
   /// In en, this message translates to:
-  /// **'Work'**
+  /// **'Selected Work'**
   String get navWork;
 
   /// No description provided for @navEngineering.
@@ -127,13 +127,13 @@ abstract class AppLocalizations {
   /// No description provided for @navStack.
   ///
   /// In en, this message translates to:
-  /// **'Stack'**
+  /// **'Skills & Stack'**
   String get navStack;
 
   /// No description provided for @navAbout.
   ///
   /// In en, this message translates to:
-  /// **'About'**
+  /// **'Perspectives'**
   String get navAbout;
 
   /// No description provided for @navContact.
@@ -147,18 +147,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resume'**
   String get navResume;
-
-  /// No description provided for @navSkills.
-  ///
-  /// In en, this message translates to:
-  /// **'Skills'**
-  String get navSkills;
-
-  /// No description provided for @navProjects.
-  ///
-  /// In en, this message translates to:
-  /// **'Projects'**
-  String get navProjects;
 
   /// No description provided for @introLocation.
   ///
@@ -601,7 +589,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSectionExperience.
   ///
   /// In en, this message translates to:
-  /// **'CAREER & EXPERIENCE'**
+  /// **'EXPERIENCE'**
   String get navSectionExperience;
 
   /// No description provided for @navSubExperience.
@@ -613,7 +601,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSectionWork.
   ///
   /// In en, this message translates to:
-  /// **'FEATURED WORK'**
+  /// **'SELECTED WORK'**
   String get navSectionWork;
 
   /// No description provided for @navSubWork.
@@ -637,7 +625,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSectionEngineering.
   ///
   /// In en, this message translates to:
-  /// **'SYSTEM ARCHITECTURES'**
+  /// **'ENGINEERING'**
   String get navSectionEngineering;
 
   /// No description provided for @navSubEngineering.
@@ -649,7 +637,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSectionAbout.
   ///
   /// In en, this message translates to:
-  /// **'LEADERSHIP PERSPECTIVES'**
+  /// **'PERSPECTIVES'**
   String get navSectionAbout;
 
   /// No description provided for @navSubAbout.
@@ -661,7 +649,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSectionContact.
   ///
   /// In en, this message translates to:
-  /// **'CONTACT & INQUIRIES'**
+  /// **'CONTACT'**
   String get navSectionContact;
 
   /// No description provided for @navSubContact.

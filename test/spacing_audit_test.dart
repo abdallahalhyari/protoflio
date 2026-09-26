@@ -89,15 +89,28 @@ void main() {
           .pumpWidget(_wrap(const TopNav(), size: const Size(960, 800)));
       await tester.pumpAndSettle();
 
-      final constrainedBox = tester.widget<ConstrainedBox>(
+      // The toolbar (~140px + 12px margin) sits at the top right; the nav
+      // pill must end left of it. Below desktop width the pill centres in
+      // the space left of the toolbar rather than the whole viewport.
+      Rect pillRect() => tester.getRect(find
+          .descendant(
+              of: find.byType(TopNav), matching: find.byType(RepaintBoundary))
+          .first);
+      expect(pillRect().right, lessThanOrEqualTo(960 - 152));
+
+      // Desktop width: centred, with the 320px symmetric reserve.
+      await tester.binding.setSurfaceSize(const Size(1280, 800));
+      await tester
+          .pumpWidget(_wrap(const TopNav(), size: const Size(1280, 800)));
+      await tester.pumpAndSettle();
+      final wide = tester.widget<ConstrainedBox>(
         find
             .descendant(
                 of: find.byType(TopNav), matching: find.byType(ConstrainedBox))
             .first,
       );
-
-      // Width 960 - 320 reserve = 640 max width
-      expect(constrainedBox.constraints.maxWidth, 640.0);
+      expect(wide.constraints.maxWidth, 1280.0 - 320);
+      expect(pillRect().right, lessThanOrEqualTo(1280 - 152));
 
       await tester.binding.setSurfaceSize(null);
     });
