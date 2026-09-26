@@ -9,7 +9,6 @@ import 'package:profile/features/projects/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/bloc/projects_filter_event.dart';
 import 'package:profile/features/projects/bloc/projects_filter_state.dart';
 import 'package:profile/features/projects/data/projects_data.dart';
-import 'package:profile/shared/widget/directional_icon.dart';
 import 'package:profile/shared/widget/page_activity.dart';
 import 'package:profile/features/projects/widget/interactive_project_card.dart';
 import 'package:profile/features/projects/model/project.dart';
@@ -56,7 +55,6 @@ class _ProjectsPageView extends StatefulWidget {
 
 class _ProjectsPageViewState extends State<_ProjectsPageView>
     with AutomaticKeepAliveClientMixin, ActivePageFocusMixin {
-  int _mobileSelectedIndex = 0;
   final FocusNode _keyboardFocusNode = FocusNode(debugLabel: 'ProjectsPage');
 
   static const List<String> _domains = [
@@ -110,7 +108,6 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                 context
                     .read<ProjectsFilterBloc>()
                     .add(DomainFilterSelected(_domains[nextIdx]));
-                setState(() => _mobileSelectedIndex = 0);
                 return KeyEventResult.handled;
               } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
                 final curIdx = _domains.indexOf(selectedDomain);
@@ -119,7 +116,6 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                 context
                     .read<ProjectsFilterBloc>()
                     .add(DomainFilterSelected(_domains[nextIdx]));
-                setState(() => _mobileSelectedIndex = 0);
                 return KeyEventResult.handled;
               }
             }
@@ -152,17 +148,11 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                       context
                           .read<ProjectsFilterBloc>()
                           .add(DomainFilterSelected(domain));
-                      setState(() {
-                        _mobileSelectedIndex = 0;
-                      });
                     },
                     onClearTech: () {
                       context
                           .read<ProjectsFilterBloc>()
                           .add(const ProjectsFilterReset());
-                      setState(() {
-                        _mobileSelectedIndex = 0;
-                      });
                     },
                   ),
                 ),
@@ -200,7 +190,6 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                                   scheme: scheme,
                                   isDesktop: isDesktop,
                                   selectedTech: selectedTech,
-                                  isMobileSelected: false,
                                 ),
                               ),
                           ],
@@ -216,7 +205,6 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                               scheme: scheme,
                               isDesktop: isDesktop,
                               selectedTech: selectedTech,
-                              isMobileSelected: i == _mobileSelectedIndex,
                             ),
                             if (i < filteredProjects.length - 1)
                               const SizedBox(height: AppSpacing.md),
@@ -226,67 +214,6 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                     },
                   ),
                 ),
-                if (!isDesktop && filteredProjects.length > 1) ...[
-                  const SliverToBoxAdapter(
-                      child: SizedBox(height: AppSpacing.md)),
-                  SliverToBoxAdapter(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        OutlinedButton.icon(
-                          onPressed: () => setState(() {
-                            _mobileSelectedIndex = (_mobileSelectedIndex -
-                                    1 +
-                                    filteredProjects.length) %
-                                filteredProjects.length;
-                          }),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(88, 36),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.md,
-                            ),
-                          ),
-                          icon: const DirIcon(Icons.chevron_left_rounded,
-                              size: 16),
-                          label: Text(loc.previousAction),
-                        ),
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.sm,
-                            ),
-                            child: Text(
-                              'CASE ${(_mobileSelectedIndex + 1).clamp(1, filteredProjects.length)}/${filteredProjects.length}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: scheme.primary,
-                                fontFamily: AppTypography.monoFont,
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.2,
-                                fontSize: AppTypography.micro,
-                              ),
-                            ),
-                          ),
-                        ),
-                        OutlinedButton.icon(
-                          onPressed: () => setState(() {
-                            _mobileSelectedIndex = (_mobileSelectedIndex + 1) %
-                                filteredProjects.length;
-                          }),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(88, 36),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.md,
-                            ),
-                          ),
-                          icon: const DirIcon(Icons.chevron_right_rounded,
-                              size: 16),
-                          label: Text(loc.nextAction),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
               ],
             ),
           ),
@@ -335,9 +262,6 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
               context
                   .read<ProjectsFilterBloc>()
                   .add(const ProjectsFilterReset());
-              setState(() {
-                _mobileSelectedIndex = 0;
-              });
             },
             icon: const Icon(Icons.refresh_rounded, size: 16),
             label: const Text('RESET FILTERS'),
@@ -427,31 +351,16 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     required ColorScheme scheme,
     required bool isDesktop,
     required String? selectedTech,
-    required bool isMobileSelected,
   }) {
-    return Container(
-      decoration: isMobileSelected
-          ? BoxDecoration(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              border: Border.all(
-                color: scheme.primary.withValues(alpha: AppAlpha.border),
-                width: 1,
-              ),
-            )
-          : null,
-      child: InteractiveProjectCard(
-        project: project,
-        index: kProjects.indexOf(project),
-        scheme: scheme,
-        isDesktop: isDesktop,
-        selectedTech: selectedTech,
-        onSelectTech: (tech) {
-          context.read<ProjectsFilterBloc>().add(TechFilterToggled(tech));
-          setState(() {
-            _mobileSelectedIndex = 0;
-          });
-        },
-      ),
+    return InteractiveProjectCard(
+      project: project,
+      index: kProjects.indexOf(project),
+      scheme: scheme,
+      isDesktop: isDesktop,
+      selectedTech: selectedTech,
+      onSelectTech: (tech) {
+        context.read<ProjectsFilterBloc>().add(TechFilterToggled(tech));
+      },
     );
   }
 }

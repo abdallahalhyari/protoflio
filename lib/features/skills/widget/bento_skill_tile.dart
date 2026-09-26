@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
@@ -235,7 +236,13 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    'TAP TO FLIP',
+                                    widget.isDesktop
+                                        ? (AppLocalizations.of(context)
+                                                ?.flipHintClick ??
+                                            'CLICK TO FLIP')
+                                        : (AppLocalizations.of(context)
+                                                ?.flipHintTap ??
+                                            'TAP TO FLIP'),
                                     style: TextStyle(
                                       fontFamily: AppTypography.monoFont,
                                       color: isDark

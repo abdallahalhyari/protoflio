@@ -655,6 +655,11 @@
           save(v);
           bar.remove();
           if (v === 'granted') loadGtag();
+          // The clicked button took focus; removing it drops focus to
+          // <body>, where the app's arrow/number-key navigation can't
+          // hear it. Hand focus back to the Flutter view.
+          var view = document.querySelector('flutter-view');
+          if (view) { try { view.focus({ preventScroll: true }); } catch(_) {} }
         });
         document.body.appendChild(bar);
       }

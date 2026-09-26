@@ -57,6 +57,12 @@ class _SkillsPageViewState extends State<_SkillsPageView>
   @override
   bool get wantKeepAlive => true;
 
+  /// Shortest tile that still fits icon, a two-line title, level badge
+  /// and flip hint at full size.
+  static const double _minDesktopTileHeight = 240;
+  static const double _minTileWidth = 220;
+  static const double _maxTileWidth = 300;
+
   static const List<String> _categories = [
     'ALL',
     'Domain Expertise',
@@ -100,27 +106,46 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                       .add(const SkillsFilterReset());
                 },
               )
-            : GridView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsetsDirectional.only(end: 20),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: isDesktop ? 2 : 1, // Number of rows
-                  childAspectRatio: isDesktop ? 1.1 : 1.28, // Height / Width
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemCount: displayedSkills.length,
-                itemBuilder: (context, index) {
-                  final skill = displayedSkills[index];
-                  return RepaintBoundary(
-                    child: BentoSkillTile(
-                      skill: skill,
-                      categoryColor:
-                          SkillCategoryStyle.getColor(skill.category, scheme),
-                      categoryGradient: SkillCategoryStyle.getGradient(
-                          skill.category, scheme),
-                      isDesktop: isDesktop,
+            : LayoutBuilder(
+                builder: (context, constraints) {
+                  // Tile size follows the available height, so a short
+                  // viewport (13-14" laptop, ~650px tall) squeezed two rows
+                  // into ~120px-wide tiles and titles broke mid-word. Drop
+                  // to one row when two won't fit at a readable size, and
+                  // keep the width in a legible band either way.
+                  const spacing = 16.0;
+                  final rows = isDesktop &&
+                          constraints.maxHeight >=
+                              _minDesktopTileHeight * 2 + spacing
+                      ? 2
+                      : 1;
+                  final tileHeight =
+                      (constraints.maxHeight - spacing * (rows - 1)) / rows;
+                  final tileWidth = (tileHeight / (isDesktop ? 1.1 : 1.28))
+                      .clamp(_minTileWidth, _maxTileWidth);
+                  return GridView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsetsDirectional.only(end: 20),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: rows,
+                      mainAxisExtent: tileWidth,
+                      crossAxisSpacing: spacing,
+                      mainAxisSpacing: spacing,
                     ),
+                    itemCount: displayedSkills.length,
+                    itemBuilder: (context, index) {
+                      final skill = displayedSkills[index];
+                      return RepaintBoundary(
+                        child: BentoSkillTile(
+                          skill: skill,
+                          categoryColor: SkillCategoryStyle.getColor(
+                              skill.category, scheme),
+                          categoryGradient: SkillCategoryStyle.getGradient(
+                              skill.category, scheme),
+                          isDesktop: isDesktop,
+                        ),
+                      );
+                    },
                   );
                 },
               );

@@ -194,7 +194,36 @@ class MobileHomeLayout extends StatelessWidget {
           ),
         ),
 
-        // Layer 3: Floating Scroll-To-Top button
+        // Layer 3: Bottom scrim — fades the scrolling content out behind
+        // the pager pill and scroll-to-top button, so body copy doesn't
+        // read half-covered on either side of them.
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 96 + MediaQuery.paddingOf(context).bottom,
+          child: IgnorePointer(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Theme.of(context)
+                        .scaffoldBackgroundColor
+                        .withValues(alpha: 0.0),
+                    Theme.of(context)
+                        .scaffoldBackgroundColor
+                        .withValues(alpha: 0.92),
+                  ],
+                  stops: const [0.0, 0.55],
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        // Layer 4: Floating Scroll-To-Top button
         Positioned(
           bottom: 24,
           right: 18,
@@ -213,7 +242,7 @@ class MobileHomeLayout extends StatelessWidget {
           ),
         ),
 
-        // Layer 4: Vertical progress rail — tap any dot to jump.
+        // Layer 5: Vertical progress rail — tap any dot to jump.
         const Positioned(
           top: 0,
           bottom: 0,
@@ -221,7 +250,7 @@ class MobileHomeLayout extends StatelessWidget {
           child: Center(child: MobileProgressRail()),
         ),
 
-        // Layer 5: Prev / Next floating pager — one-tap section skip
+        // Layer 6: Prev / Next floating pager — one-tap section skip
         // without opening the menu sheet.
         Positioned(
           left: 0,

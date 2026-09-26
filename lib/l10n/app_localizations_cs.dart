@@ -271,13 +271,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navSectionCover => 'ÚVOD & PROFIL';
 
   @override
-  String get navSubCover => 'Senior Flutter & Android Architekt';
+  String get navSubCover => 'Senior Flutter & Android inženýr';
 
   @override
   String get navSectionExperience => 'KARIÉRA & ZKUŠENOSTI';
 
   @override
-  String get navSubExperience => '4+ roky vývoje a dopadu na podnikové systémy';
+  String get navSubExperience => '5+ let vývoje a dopadu na podnikové systémy';
 
   @override
   String get navSectionWork => 'VYBRANÉ PROJEKTY';
@@ -357,7 +357,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get sectionSubtitleSkills =>
-      'Disciplíny a technologie, na kterých práce stojí · Klepnutím kartu otočíte';
+      'Disciplíny a technologie, na kterých práce stojí · Otočte kartu pro podrobnosti';
 
   @override
   String get sectionSubtitleEngineering =>
@@ -366,4 +366,10 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get sectionSubtitleAbout =>
       'Šest rolí, mezi kterými senior inženýr přepíná';
+
+  @override
+  String get flipHintTap => 'KLEPNĚTE A OTOČTE';
+
+  @override
+  String get flipHintClick => 'KLIKNĚTE A OTOČTE';
 }

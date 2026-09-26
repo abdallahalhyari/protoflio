@@ -595,7 +595,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSubCover.
   ///
   /// In en, this message translates to:
-  /// **'Senior Flutter & Android Architect'**
+  /// **'Senior Flutter & Android Engineer'**
   String get navSubCover;
 
   /// No description provided for @navSectionExperience.
@@ -607,7 +607,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSubExperience.
   ///
   /// In en, this message translates to:
-  /// **'4+ Years Enterprise Engineering & Impact'**
+  /// **'5+ Years Enterprise Engineering & Impact'**
   String get navSubExperience;
 
   /// No description provided for @navSectionWork.
@@ -739,7 +739,7 @@ abstract class AppLocalizations {
   /// No description provided for @sectionSubtitleSkills.
   ///
   /// In en, this message translates to:
-  /// **'Disciplines and stack the work is built on · Tap any card to flip'**
+  /// **'Disciplines and stack the work is built on · Flip any card for details'**
   String get sectionSubtitleSkills;
 
   /// No description provided for @sectionSubtitleEngineering.
@@ -753,6 +753,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Six roles a senior engineer switches between'**
   String get sectionSubtitleAbout;
+
+  /// Hint on flippable skill / role cards for touch viewports.
+  ///
+  /// In en, this message translates to:
+  /// **'TAP TO FLIP'**
+  String get flipHintTap;
+
+  /// Hint on flippable skill / role cards for desktop (pointer) viewports.
+  ///
+  /// In en, this message translates to:
+  /// **'CLICK TO FLIP'**
+  String get flipHintClick;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'network_hat_image.dart';
@@ -401,7 +402,13 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                     Icon(Icons.touch_app_outlined,
                         size: 12, color: Colors.white.withValues(alpha: 0.60)),
                     Text(
-                      'TAP TO FLIP',
+                      // The fanned deck is desktop-only; the standalone
+                      // card is the touch (mobile) presentation.
+                      widget.isStandalone
+                          ? (AppLocalizations.of(context)?.flipHintTap ??
+                              'TAP TO FLIP')
+                          : (AppLocalizations.of(context)?.flipHintClick ??
+                              'CLICK TO FLIP'),
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.82),
                         fontSize: AppTypography.editorial,

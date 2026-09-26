@@ -43,6 +43,22 @@ class TopNav extends StatelessWidget {
     final horizontalReserve =
         width >= AppBreakpoints.tablet ? 320.0 : AppSpacing.xl;
 
+    final compactResume = width < AppBreakpoints.desktop;
+    final resumeLabel = AppLocalizations.of(context)!.navResume.toUpperCase();
+    void onResume() {
+      HapticFeedback.lightImpact();
+      CvService.open(context);
+    }
+
+    final resumeStyle = OutlinedButton.styleFrom(
+      foregroundColor: context.resumeAccent,
+      side: BorderSide(color: context.resumeBorder, width: 1.2),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+      ),
+    );
+
     return Semantics(
       container: true,
       explicitChildNodes: true,
@@ -69,73 +85,78 @@ class TopNav extends StatelessWidget {
                   ),
                   boxShadow: context.ambientGlow(accent),
                 ),
-                child: EdgeFadeScroller(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Builder(
-                        builder: (context) {
-                          final labels = getLabels(context);
-                          return Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              for (var i = 0; i < labels.length; i++)
-                                NavItem(
-                                  label: labels[i],
-                                  active: current == i,
-                                  onTap: () {
-                                    if (i == current) return;
-                                    HapticFeedback.selectionClick();
-                                    HomeController.of(context).goTo(i);
-                                  },
-                                ),
-                            ],
-                          );
-                        },
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Container(
-                        width: 1,
-                        height: 18,
-                        color: context.navDivider,
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Semantics(
-                        button: true,
-                        label: 'Download Resume PDF',
-                        child: OutlinedButton.icon(
-                          onPressed: () {
-                            HapticFeedback.lightImpact();
-                            CvService.open(context);
+                // Only the section links scroll; the Resume CTA stays pinned
+                // so it is never faded or clipped on mid-size windows.
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: EdgeFadeScroller(
+                        child: Builder(
+                          builder: (context) {
+                            final labels = getLabels(context);
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (var i = 0; i < labels.length; i++)
+                                  NavItem(
+                                    label: labels[i],
+                                    active: current == i,
+                                    onTap: () {
+                                      if (i == current) return;
+                                      HapticFeedback.selectionClick();
+                                      HomeController.of(context).goTo(i);
+                                    },
+                                  ),
+                              ],
+                            );
                           },
-                          icon: const Icon(Icons.download_rounded, size: 14),
-                          label: Text(
-                            AppLocalizations.of(context)!
-                                .navResume
-                                .toUpperCase(),
-                            style: const TextStyle(
-                              fontSize: AppTypography.caption,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 1.0,
-                            ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: context.resumeAccent,
-                            side: BorderSide(
-                              color: context.resumeBorder,
-                              width: 1.2,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(AppRadius.pill),
-                            ),
-                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Container(
+                      width: 1,
+                      height: 18,
+                      color: context.navDivider,
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Semantics(
+                      button: true,
+                      label: 'Download Resume PDF',
+                      child: compactResume
+                          // Icon-only below desktop width, so the pill fits
+                          // every section link without clipping Contact.
+                          ? Tooltip(
+                              message: resumeLabel,
+                              child: OutlinedButton(
+                                onPressed: onResume,
+                                style: resumeStyle.copyWith(
+                                  padding: const WidgetStatePropertyAll(
+                                      EdgeInsets.all(6)),
+                                  minimumSize: const WidgetStatePropertyAll(
+                                      Size(32, 32)),
+                                ),
+                                child: const Icon(Icons.download_rounded,
+                                    size: 16),
+                              ),
+                            )
+                          : OutlinedButton.icon(
+                              onPressed: onResume,
+                              icon:
+                                  const Icon(Icons.download_rounded, size: 14),
+                              label: Text(
+                                resumeLabel,
+                                style: const TextStyle(
+                                  fontSize: AppTypography.caption,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 1.0,
+                                ),
+                              ),
+                              style: resumeStyle,
+                            ),
+                    ),
+                  ],
                 ),
               ),
             ),
