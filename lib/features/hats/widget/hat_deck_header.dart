@@ -49,7 +49,8 @@ class HatDeckHeader extends StatelessWidget {
                   letterSpacing: 3,
                 ),
               ),
-              const SizedBox(height: 4),
+              // Tenada caps fill a 1.0 line box; 4px read as ~2px under the kicker.
+              const SizedBox(height: 8),
               Text(
                 // Heading = nav label, so nav, menu and page agree.
                 loc.navAbout.toUpperCase(),
