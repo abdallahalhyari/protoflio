@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:profile/features/skills/data/skills_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
-
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/widget/section_masthead.dart';
 
 /// Top editorial header for the Skills & Disciplines section.
 class SkillsHeader extends StatelessWidget {
@@ -16,103 +15,18 @@ class SkillsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.sizeOf(context);
     final loc = AppLocalizations.of(context)!;
-    final accentText = context.adaptiveAccentText(scheme.primary);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(height: 2, color: scheme.primary.withValues(alpha: 0.9)),
-        const SizedBox(height: 6),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    isDesktop
-                        ? 'FEATURE 04 · ARCHITECTURAL MASTERY'
-                        : 'FEATURE 04 · CORE SKILLS',
-                    style: TextStyle(
-                      color: accentText,
-                      fontSize: isDesktop ? 11 : 10,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 3,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Semantics(
-                    header: true,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        loc.navSkills.toUpperCase(),
-                        style: TextStyle(
-                          fontFamily: AppTypography.displayFont,
-                          color: scheme.onSurface,
-                          fontSize: (size.width * 0.05).clamp(24.0, 48.0),
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 4,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    loc.sectionSubtitleSkills,
-                    style: TextStyle(
-                      color: scheme.onSurface.withValues(alpha: 0.75),
-                      fontSize: isDesktop ? 12.5 : 11.5,
-                      fontStyle: FontStyle.italic,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (isDesktop)
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: scheme.primary.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border:
-                      Border.all(color: scheme.primary.withValues(alpha: 0.4)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Icon, not a '✦' glyph: CanvasKit has no system fonts,
-                    // so the glyph pulled a 374 KB Noto Symbols 2 download.
-                    Icon(Icons.auto_awesome,
-                        size: AppTypography.caption + 1,
-                        color: context.amberText),
-                    const SizedBox(width: 6),
-                    Text(
-                      '${kSkills.length} CORE DISCIPLINES',
-                      style: TextStyle(
-                        color: accentText,
-                        fontSize: AppTypography.editorial,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.4,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
-        const SizedBox(height: 6),
-        Container(height: 0.75, color: scheme.primary.withValues(alpha: 0.5)),
-      ],
+    return SectionMasthead(
+      kicker: isDesktop
+          ? 'FEATURE 04 · ARCHITECTURAL MASTERY'
+          : 'FEATURE 04 · CORE SKILLS',
+      title: loc.navSkills.toUpperCase(),
+      subtitle: loc.sectionSubtitleSkills,
+      isDesktop: isDesktop,
+      // Icon, not a '✦' glyph: CanvasKit has no system fonts, so the
+      // glyph pulled a 374 KB Noto Symbols 2 download.
+      badgeIcon: Icons.auto_awesome,
+      badgeLabel: '${kSkills.length} CORE DISCIPLINES',
     );
   }
 }

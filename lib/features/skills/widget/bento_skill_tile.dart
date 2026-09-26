@@ -204,67 +204,68 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                               ),
                             ),
                           ),
-                          SizedBox(height: widget.isDesktop ? 10 : 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 7, vertical: 3),
-                            decoration: BoxDecoration(
-                              color: isDark
-                                  ? Colors.white.withValues(alpha: 0.05)
-                                  : Colors.black.withValues(alpha: 0.04),
-                              borderRadius:
-                                  BorderRadius.circular(AppRadius.pill),
-                              border: Border.all(
+                          // Desktop tiles flip on hover, so a "flip"
+                          // hint there only mislabels the gesture.
+                          if (!widget.isDesktop) ...[
+                            const SizedBox(height: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 7, vertical: 3),
+                              decoration: BoxDecoration(
                                 color: isDark
-                                    ? Colors.white
-                                        .withValues(alpha: AppAlpha.hover)
-                                    : AppColors.slate300,
-                                width: 0.8,
+                                    ? Colors.white.withValues(alpha: 0.05)
+                                    : Colors.black.withValues(alpha: 0.04),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadius.pill),
+                                border: Border.all(
+                                  color: isDark
+                                      ? Colors.white
+                                          .withValues(alpha: AppAlpha.hover)
+                                      : AppColors.slate300,
+                                  width: 0.8,
+                                ),
                               ),
-                            ),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.touch_app_outlined,
-                                    size: 11,
-                                    color: isDark
-                                        ? Colors.white.withValues(alpha: 0.6)
-                                        : AppColors.slate500,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    widget.isDesktop
-                                        ? (AppLocalizations.of(context)
-                                                ?.flipHintClick ??
-                                            'CLICK TO FLIP')
-                                        : (AppLocalizations.of(context)
-                                                ?.flipHintTap ??
-                                            'TAP TO FLIP'),
-                                    style: TextStyle(
-                                      fontFamily: AppTypography.monoFont,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.touch_app_outlined,
+                                      size: 11,
                                       color: isDark
                                           ? Colors.white.withValues(alpha: 0.6)
                                           : AppColors.slate500,
-                                      fontSize: widget.isDesktop ? 9.5 : 10,
-                                      fontWeight: FontWeight.w800,
-                                      letterSpacing: 0.8,
                                     ),
-                                  ),
-                                  const SizedBox(width: 3),
-                                  Icon(
-                                    Icons.refresh_rounded,
-                                    size: 11,
-                                    color: isDark
-                                        ? Colors.white.withValues(alpha: 0.6)
-                                        : AppColors.slate500,
-                                  ),
-                                ],
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      AppLocalizations.of(context)
+                                              ?.flipHintTap ??
+                                          'TAP TO FLIP',
+                                      style: TextStyle(
+                                        fontFamily: AppTypography.monoFont,
+                                        color: isDark
+                                            ? Colors.white
+                                                .withValues(alpha: 0.6)
+                                            : AppColors.slate500,
+                                        fontSize: widget.isDesktop ? 9.5 : 10,
+                                        fontWeight: FontWeight.w800,
+                                        letterSpacing: 0.8,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 3),
+                                    Icon(
+                                      Icons.refresh_rounded,
+                                      size: 11,
+                                      color: isDark
+                                          ? Colors.white.withValues(alpha: 0.6)
+                                          : AppColors.slate500,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ],
                       ),
                     ),

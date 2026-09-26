@@ -56,214 +56,435 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
     final isInteractive = (hovered || _isFocused) && !reduceMotion;
     final caseStudySlug =
         CaseStudyRouter.slugForCompany(widget.project.company);
-    return RepaintBoundary(
-      child: Semantics(
-        button: true,
-        label: 'Read case study for ${widget.project.name}',
-        child: MouseRegion(
-          onEnter: (_) => setState(() => _isHovered = true),
-          onExit: (_) => setState(() => _isHovered = false),
-          onHover: (e) => _mousePos.value = e.localPosition,
-          child: AnimatedOpacity(
-            opacity: widget.isDimmed ? 0.35 : 1.0,
-            duration: AppMotion.snap,
-            child: AnimatedScale(
-              scale: isInteractive ? 1.02 : 1.0,
-              duration: AppMotion.cardHover,
-              curve: AppMotion.emphasized,
-              child: HolographicCardPhysics(
-                enableGlare: false,
-                child: Card(
-                  margin: EdgeInsets.zero,
-                  clipBehavior: Clip.antiAlias,
-                  elevation: isDark ? 0 : (isInteractive ? 16 : 8),
-                  shadowColor: isDark
-                      ? Colors.transparent
-                      : (isInteractive
-                          ? AppColors.shadowMedium
-                          : AppColors.shadowSoft),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                    side: BorderSide(
-                      color: isInteractive
-                          ? widget.scheme.primary
-                              .withValues(alpha: isDark ? 0.7 : 0.6)
-                          : (isDark
-                              ? Colors.white.withValues(alpha: 0.10)
-                              : AppColors.slate200),
-                      width: isInteractive ? 1.5 : 1.0,
+    // Headline outcome from the case study, shown on the card face.
+    final results = widget.project.results;
+    final outcome =
+        (results != null && results.isNotEmpty) ? results.first : null;
+    // [pinFoot]: the card has a bounded height (desktop grid cell), so
+    // the tags + CTA can sit at its foot and the outcome may give way.
+    Widget buildBody(bool pinFoot) => Padding(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AnimatedDefaultTextStyle(
+                    duration: AppMotion.snap,
+                    style: TextStyle(
+                      fontFamily: AppTypography.displayFont,
+                      color: _isHovered
+                          ? (isDark
+                              ? widget.scheme.primary
+                              : AppColors.toAccessibleLightText(
+                                  widget.scheme.primary))
+                          : (context.onSurface),
+                      fontSize: widget.isDesktop ? 22 : 18,
+                      fontWeight: FontWeight.w900,
+                      height: 1.1,
+                    ),
+                    child: Text(
+                      widget.project.name,
+                      // Phones: two lines, one cut most
+                      // titles off. Desktop grid cells
+                      // are fixed-height, so stay at one.
+                      maxLines: widget.isDesktop ? 1 : 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  color: isInteractive
-                      ? context.cardGlassHover
-                      : context.cardGlass,
-                  child: InkWell(
-                    onFocusChange: (focused) =>
-                        setState(() => _isFocused = focused),
-                    onTap: () {
-                      SoundService.instance.playClick();
-                      if (caseStudySlug != null) {
-                        CaseStudyRouter.push(context, caseStudySlug);
-                      } else {
-                        showProjectCaseStudy(
-                          context,
-                          project: widget.project,
-                          index: widget.index,
-                        );
-                      }
-                    },
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: widget.isDesktop ? 300 : 270,
+                  const SizedBox(height: 4),
+                  Text(
+                    ltrContent(context, widget.project.tagline),
+                    style: TextStyle(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.7)
+                          : AppColors.slate600,
+                      fontSize: widget.isDesktop ? 13 : 12,
+                      height: 1.4,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+              if (outcome != null) ...[
+                const SizedBox(height: AppSpacing.sm),
+                // Desktop cells are fixed-height: let the
+                // outcome give way rather than overflow.
+                if (pinFoot)
+                  Flexible(
+                    child: ClipRect(
+                      child: _OutcomeLine(
+                        text: outcome,
+                        scheme: widget.scheme,
+                        isDark: isDark,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          // Image Header with Parallax & Spotlight
-                          if (widget.project.heroImagePath != null)
-                            SizedBox(
-                              height: widget.isDesktop ? 175 : 155,
-                              child: ClipRect(
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    AnimatedScale(
-                                      scale: hovered ? 1.08 : 1.0,
-                                      duration: AppMotion.lg,
-                                      curve: AppMotion.emphasizedDecel,
-                                      child: RetryingAssetImage(
-                                        widget.project.heroImagePath!,
-                                        fit: BoxFit.cover,
-                                        gaplessPlayback: true,
-                                      ),
-                                    ),
-                                    // Gradient Overlay
-                                    AnimatedOpacity(
-                                      opacity: hovered ? 1.0 : 0.8,
-                                      duration: AppMotion.cardHover,
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.bottomCenter,
-                                            end: Alignment.topCenter,
-                                            colors: [
-                                              Colors.black
-                                                  .withValues(alpha: 0.90),
-                                              Colors.black
-                                                  .withValues(alpha: 0.10),
-                                            ],
-                                          ),
+                    ),
+                  )
+                else
+                  _OutcomeLine(
+                    text: outcome,
+                    scheme: widget.scheme,
+                    isDark: isDark,
+                  ),
+              ],
+              // Desktop: pin tags + CTA to the card foot
+              // instead of leaving the gap under them.
+              if (pinFoot) const Spacer(),
+              const SizedBox(height: AppSpacing.sm),
+              Wrap(
+                spacing: 6,
+                runSpacing: 4,
+                children: [
+                  for (final tag
+                      in widget.project.stack.take(widget.isDesktop ? 4 : 3))
+                    _TechTagChip(
+                      tag: tag,
+                      isSelected: widget.selectedTech == tag,
+                      scheme: widget.scheme,
+                      isDark: isDark,
+                      onTap: widget.onSelectTech != null
+                          ? () {
+                              SoundService.instance.playSelection();
+                              widget.onSelectTech!(tag);
+                            }
+                          : null,
+                    ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              AnimatedSlide(
+                offset: _isHovered && widget.isDesktop
+                    ? const Offset(0.05, 0)
+                    : Offset.zero,
+                duration: AppMotion.cardHover,
+                curve: AppMotion.emphasized,
+                child: Builder(
+                  builder: (context) {
+                    final ctaColor = isDark
+                        ? widget.scheme.primary
+                        : AppColors.accentIndigoDeepText;
+                    return Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'READ CASE STUDY',
+                            style: TextStyle(
+                              fontFamily: AppTypography.monoFont,
+                              color: ctaColor,
+                              fontSize: AppTypography.caption,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 1.0,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Icon(Icons.arrow_forward_rounded,
+                            size: 14, color: ctaColor),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+
+    return LayoutBuilder(builder: (context, constraints) {
+      final pinFoot = widget.isDesktop && constraints.hasBoundedHeight;
+      return RepaintBoundary(
+        child: Semantics(
+          button: true,
+          label: 'Read case study for ${widget.project.name}',
+          child: MouseRegion(
+            onEnter: (_) => setState(() => _isHovered = true),
+            onExit: (_) => setState(() => _isHovered = false),
+            onHover: (e) => _mousePos.value = e.localPosition,
+            child: AnimatedOpacity(
+              opacity: widget.isDimmed ? 0.35 : 1.0,
+              duration: AppMotion.snap,
+              child: AnimatedScale(
+                scale: isInteractive ? 1.02 : 1.0,
+                duration: AppMotion.cardHover,
+                curve: AppMotion.emphasized,
+                child: HolographicCardPhysics(
+                  enableGlare: false,
+                  child: Card(
+                    margin: EdgeInsets.zero,
+                    clipBehavior: Clip.antiAlias,
+                    elevation: isDark ? 0 : (isInteractive ? 16 : 8),
+                    shadowColor: isDark
+                        ? Colors.transparent
+                        : (isInteractive
+                            ? AppColors.shadowMedium
+                            : AppColors.shadowSoft),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      side: BorderSide(
+                        color: isInteractive
+                            ? widget.scheme.primary
+                                .withValues(alpha: isDark ? 0.7 : 0.6)
+                            : (isDark
+                                ? Colors.white.withValues(alpha: 0.10)
+                                : AppColors.slate200),
+                        width: isInteractive ? 1.5 : 1.0,
+                      ),
+                    ),
+                    color: isInteractive
+                        ? context.cardGlassHover
+                        : context.cardGlass,
+                    child: InkWell(
+                      onFocusChange: (focused) =>
+                          setState(() => _isFocused = focused),
+                      onTap: () {
+                        SoundService.instance.playClick();
+                        if (caseStudySlug != null) {
+                          CaseStudyRouter.push(context, caseStudySlug);
+                        } else {
+                          showProjectCaseStudy(
+                            context,
+                            project: widget.project,
+                            index: widget.index,
+                          );
+                        }
+                      },
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: widget.isDesktop ? 300 : 270,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // Image Header with Parallax & Spotlight
+                            if (widget.project.heroImagePath != null)
+                              SizedBox(
+                                height: widget.isDesktop ? 175 : 155,
+                                child: ClipRect(
+                                  child: Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      AnimatedScale(
+                                        scale: hovered ? 1.08 : 1.0,
+                                        duration: AppMotion.lg,
+                                        curve: AppMotion.emphasizedDecel,
+                                        child: RetryingAssetImage(
+                                          widget.project.heroImagePath!,
+                                          fit: BoxFit.cover,
+                                          gaplessPlayback: true,
                                         ),
-                                        child: const SizedBox.expand(),
                                       ),
-                                    ),
-                                    // Spotlight
-                                    if (hovered)
-                                      Positioned.fill(
-                                        child: LayoutBuilder(
-                                          builder: (context, constraints) {
-                                            final w = constraints.maxWidth > 0
-                                                ? constraints.maxWidth
-                                                : 400.0;
-                                            final h = constraints.maxHeight > 0
-                                                ? constraints.maxHeight
-                                                : 200.0;
-                                            return ValueListenableBuilder<
-                                                Offset>(
-                                              valueListenable: _mousePos,
-                                              builder: (context, pos, _) =>
-                                                  Container(
-                                                decoration: BoxDecoration(
-                                                  gradient: RadialGradient(
-                                                    center: FractionalOffset(
-                                                      (pos.dx / w)
-                                                          .clamp(0.0, 1.0),
-                                                      (pos.dy / h)
-                                                          .clamp(0.0, 1.0),
-                                                    ),
-                                                    radius: 0.65,
-                                                    colors: [
-                                                      widget.scheme.primary
-                                                          .withValues(
-                                                              alpha: isDark
-                                                                  ? 0.32
-                                                                  : 0.22),
-                                                      Colors.transparent,
-                                                    ],
-                                                    stops: const [0.0, 1.0],
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    // Metric Badge
-                                    if (widget.project.metricBadge != null)
-                                      Positioned(
-                                        top: AppSpacing.sm,
-                                        left: AppSpacing.sm,
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 4),
+                                      // Gradient Overlay
+                                      AnimatedOpacity(
+                                        opacity: hovered ? 1.0 : 0.8,
+                                        duration: AppMotion.cardHover,
+                                        child: DecoratedBox(
                                           decoration: BoxDecoration(
-                                            color: Colors.black
-                                                .withValues(alpha: 0.75),
-                                            borderRadius: BorderRadius.circular(
-                                                AppRadius.xs),
-                                            border: Border.all(
-                                              color: widget.scheme.primary
-                                                  .withValues(alpha: 0.6),
-                                              width: 1,
+                                            gradient: LinearGradient(
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                                Colors.black
+                                                    .withValues(alpha: 0.90),
+                                                Colors.black
+                                                    .withValues(alpha: 0.10),
+                                              ],
                                             ),
                                           ),
+                                          child: const SizedBox.expand(),
+                                        ),
+                                      ),
+                                      // Spotlight
+                                      if (hovered)
+                                        Positioned.fill(
+                                          child: LayoutBuilder(
+                                            builder: (context, constraints) {
+                                              final w = constraints.maxWidth > 0
+                                                  ? constraints.maxWidth
+                                                  : 400.0;
+                                              final h =
+                                                  constraints.maxHeight > 0
+                                                      ? constraints.maxHeight
+                                                      : 200.0;
+                                              return ValueListenableBuilder<
+                                                  Offset>(
+                                                valueListenable: _mousePos,
+                                                builder: (context, pos, _) =>
+                                                    Container(
+                                                  decoration: BoxDecoration(
+                                                    gradient: RadialGradient(
+                                                      center: FractionalOffset(
+                                                        (pos.dx / w)
+                                                            .clamp(0.0, 1.0),
+                                                        (pos.dy / h)
+                                                            .clamp(0.0, 1.0),
+                                                      ),
+                                                      radius: 0.65,
+                                                      colors: [
+                                                        widget.scheme.primary
+                                                            .withValues(
+                                                                alpha: isDark
+                                                                    ? 0.32
+                                                                    : 0.22),
+                                                        Colors.transparent,
+                                                      ],
+                                                      stops: const [0.0, 1.0],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      // Metric Badge
+                                      if (widget.project.metricBadge != null)
+                                        Positioned(
+                                          top: AppSpacing.sm,
+                                          left: AppSpacing.sm,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black
+                                                  .withValues(alpha: 0.75),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      AppRadius.xs),
+                                              border: Border.all(
+                                                color: widget.scheme.primary
+                                                    .withValues(alpha: 0.6),
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(Icons.verified_rounded,
+                                                    size: 12,
+                                                    color:
+                                                        widget.scheme.primary),
+                                                const SizedBox(width: 4),
+                                                Text(
+                                                  widget.project.metricBadge!
+                                                      .toUpperCase(),
+                                                  style: const TextStyle(
+                                                    fontFamily:
+                                                        AppTypography.monoFont,
+                                                    color: Colors.white,
+                                                    fontSize: AppTypography
+                                                        .editorialSm,
+                                                    fontWeight: FontWeight.w900,
+                                                    letterSpacing: 0.8,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      // Label
+                                      Positioned(
+                                        left: AppSpacing.md,
+                                        bottom: AppSpacing.md,
+                                        child: Text(
+                                          widget.project.company.toUpperCase(),
+                                          style: const TextStyle(
+                                            fontFamily: AppTypography.monoFont,
+                                            color: Colors.white,
+                                            fontSize: AppTypography.micro,
+                                            fontWeight: FontWeight.w900,
+                                            letterSpacing: 1.5,
+                                          ),
+                                        ),
+                                      ),
+                                      // Company Quick Links
+                                      if (widget.project.url != null ||
+                                          widget.project.linkedinUrl != null ||
+                                          caseStudySlug != null)
+                                        Positioned(
+                                          top: AppSpacing.sm,
+                                          right: AppSpacing.sm,
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Icon(Icons.verified_rounded,
-                                                  size: 12,
-                                                  color: widget.scheme.primary),
-                                              const SizedBox(width: 4),
-                                              Text(
-                                                widget.project.metricBadge!
-                                                    .toUpperCase(),
-                                                style: const TextStyle(
-                                                  fontFamily:
-                                                      AppTypography.monoFont,
-                                                  color: Colors.white,
-                                                  fontSize:
-                                                      AppTypography.editorialSm,
-                                                  fontWeight: FontWeight.w900,
-                                                  letterSpacing: 0.8,
+                                              if (widget.project.url != null)
+                                                _ProjectCardLinkIcon(
+                                                  tooltip:
+                                                      'Visit ${widget.project.company} official website',
+                                                  url: widget.project.url!,
+                                                  icon: Icons.language_rounded,
+                                                  company:
+                                                      widget.project.company,
+                                                  type: 'website',
+                                                  scheme: widget.scheme,
                                                 ),
-                                              ),
+                                              if (widget.project.linkedinUrl !=
+                                                  null) ...[
+                                                const SizedBox(width: 6),
+                                                _ProjectCardLinkIcon(
+                                                  tooltip:
+                                                      'View ${widget.project.company} on LinkedIn',
+                                                  url: widget
+                                                      .project.linkedinUrl!,
+                                                  isLinkedIn: true,
+                                                  company:
+                                                      widget.project.company,
+                                                  type: 'linkedin',
+                                                  scheme: widget.scheme,
+                                                ),
+                                              ],
+                                              if (caseStudySlug != null) ...[
+                                                const SizedBox(width: 6),
+                                                _ProjectCardLinkIcon(
+                                                  tooltip:
+                                                      'Copy link to ${widget.project.name} case study',
+                                                  icon: Icons.share_rounded,
+                                                  onTap: () => shareCaseStudy(
+                                                    context,
+                                                    slug: caseStudySlug,
+                                                    title: widget.project.name,
+                                                  ),
+                                                  company:
+                                                      widget.project.company,
+                                                  type: 'share_case_study',
+                                                  scheme: widget.scheme,
+                                                ),
+                                              ],
                                             ],
                                           ),
                                         ),
-                                      ),
-                                    // Label
-                                    Positioned(
-                                      left: AppSpacing.md,
-                                      bottom: AppSpacing.md,
-                                      child: Text(
+                                    ],
+                                  ),
+                                ),
+                              )
+                            else
+                              SizedBox(
+                                height: widget.isDesktop ? 175 : 155,
+                                child: Container(
+                                  color: widget.scheme.primary
+                                      .withValues(alpha: 0.1),
+                                  padding: const EdgeInsets.all(AppSpacing.md),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         widget.project.company.toUpperCase(),
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontFamily: AppTypography.monoFont,
-                                          color: Colors.white,
+                                          color: isDark
+                                              ? widget.scheme.primary
+                                              : AppColors.toAccessibleLightText(
+                                                  widget.scheme.primary),
                                           fontSize: AppTypography.micro,
                                           fontWeight: FontWeight.w900,
                                           letterSpacing: 1.5,
                                         ),
                                       ),
-                                    ),
-                                    // Company Quick Links
-                                    if (widget.project.url != null ||
-                                        widget.project.linkedinUrl != null ||
-                                        caseStudySlug != null)
-                                      Positioned(
-                                        top: AppSpacing.sm,
-                                        right: AppSpacing.sm,
-                                        child: Row(
+                                      if (widget.project.url != null ||
+                                          widget.project.linkedinUrl != null ||
+                                          caseStudySlug != null)
+                                        Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             if (widget.project.url != null)
@@ -308,199 +529,17 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                             ],
                                           ],
                                         ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          else
-                            SizedBox(
-                              height: widget.isDesktop ? 175 : 155,
-                              child: Container(
-                                color: widget.scheme.primary
-                                    .withValues(alpha: 0.1),
-                                padding: const EdgeInsets.all(AppSpacing.md),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      widget.project.company.toUpperCase(),
-                                      style: TextStyle(
-                                        fontFamily: AppTypography.monoFont,
-                                        color: isDark
-                                            ? widget.scheme.primary
-                                            : AppColors.toAccessibleLightText(
-                                                widget.scheme.primary),
-                                        fontSize: AppTypography.micro,
-                                        fontWeight: FontWeight.w900,
-                                        letterSpacing: 1.5,
-                                      ),
-                                    ),
-                                    if (widget.project.url != null ||
-                                        widget.project.linkedinUrl != null ||
-                                        caseStudySlug != null)
-                                      Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          if (widget.project.url != null)
-                                            _ProjectCardLinkIcon(
-                                              tooltip:
-                                                  'Visit ${widget.project.company} official website',
-                                              url: widget.project.url!,
-                                              icon: Icons.language_rounded,
-                                              company: widget.project.company,
-                                              type: 'website',
-                                              scheme: widget.scheme,
-                                            ),
-                                          if (widget.project.linkedinUrl !=
-                                              null) ...[
-                                            const SizedBox(width: 6),
-                                            _ProjectCardLinkIcon(
-                                              tooltip:
-                                                  'View ${widget.project.company} on LinkedIn',
-                                              url: widget.project.linkedinUrl!,
-                                              isLinkedIn: true,
-                                              company: widget.project.company,
-                                              type: 'linkedin',
-                                              scheme: widget.scheme,
-                                            ),
-                                          ],
-                                          if (caseStudySlug != null) ...[
-                                            const SizedBox(width: 6),
-                                            _ProjectCardLinkIcon(
-                                              tooltip:
-                                                  'Copy link to ${widget.project.name} case study',
-                                              icon: Icons.share_rounded,
-                                              onTap: () => shareCaseStudy(
-                                                context,
-                                                slug: caseStudySlug,
-                                                title: widget.project.name,
-                                              ),
-                                              company: widget.project.company,
-                                              type: 'share_case_study',
-                                              scheme: widget.scheme,
-                                            ),
-                                          ],
-                                        ],
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          // Body
-                          Padding(
-                            padding: const EdgeInsets.all(AppSpacing.md),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AnimatedDefaultTextStyle(
-                                      duration: AppMotion.snap,
-                                      style: TextStyle(
-                                        fontFamily: AppTypography.displayFont,
-                                        color: _isHovered
-                                            ? (isDark
-                                                ? widget.scheme.primary
-                                                : AppColors
-                                                    .toAccessibleLightText(
-                                                        widget.scheme.primary))
-                                            : (context.onSurface),
-                                        fontSize: widget.isDesktop ? 22 : 18,
-                                        fontWeight: FontWeight.w900,
-                                        height: 1.1,
-                                      ),
-                                      child: Text(
-                                        widget.project.name,
-                                        // Phones: two lines, one cut most
-                                        // titles off. Desktop grid cells
-                                        // are fixed-height, so stay at one.
-                                        maxLines: widget.isDesktop ? 1 : 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      ltrContent(
-                                          context, widget.project.tagline),
-                                      style: TextStyle(
-                                        color: isDark
-                                            ? Colors.white
-                                                .withValues(alpha: 0.7)
-                                            : AppColors.slate600,
-                                        fontSize: widget.isDesktop ? 13 : 12,
-                                        height: 1.4,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: AppSpacing.xs),
-                                Wrap(
-                                  spacing: 6,
-                                  runSpacing: 4,
-                                  children: [
-                                    for (final tag in widget.project.stack
-                                        .take(widget.isDesktop ? 4 : 3))
-                                      _TechTagChip(
-                                        tag: tag,
-                                        isSelected: widget.selectedTech == tag,
-                                        scheme: widget.scheme,
-                                        isDark: isDark,
-                                        onTap: widget.onSelectTech != null
-                                            ? () {
-                                                SoundService.instance
-                                                    .playSelection();
-                                                widget.onSelectTech!(tag);
-                                              }
-                                            : null,
-                                      ),
-                                  ],
-                                ),
-                                const SizedBox(height: AppSpacing.xs),
-                                AnimatedSlide(
-                                  offset: _isHovered && widget.isDesktop
-                                      ? const Offset(0.05, 0)
-                                      : Offset.zero,
-                                  duration: AppMotion.cardHover,
-                                  curve: AppMotion.emphasized,
-                                  child: Builder(
-                                    builder: (context) {
-                                      final ctaColor = isDark
-                                          ? widget.scheme.primary
-                                          : AppColors.accentIndigoDeepText;
-                                      return Row(
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              'READ CASE STUDY',
-                                              style: TextStyle(
-                                                fontFamily:
-                                                    AppTypography.monoFont,
-                                                color: ctaColor,
-                                                fontSize: AppTypography.caption,
-                                                fontWeight: FontWeight.w900,
-                                                letterSpacing: 1.0,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 6),
-                                          Icon(Icons.arrow_forward_rounded,
-                                              size: 14, color: ctaColor),
-                                        ],
-                                      );
-                                    },
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ],
+                              ),
+                            // Body
+                            if (pinFoot)
+                              Expanded(child: buildBody(true))
+                            else
+                              buildBody(false),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -509,8 +548,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -716,6 +755,51 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// One-line "what it achieved" row under the tagline.
+class _OutcomeLine extends StatelessWidget {
+  const _OutcomeLine({
+    required this.text,
+    required this.scheme,
+    required this.isDark,
+  });
+
+  final String text;
+  final ColorScheme scheme;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = isDark
+        ? scheme.primary
+        : AppColors.toAccessibleLightText(scheme.primary);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 1),
+          child: Icon(Icons.trending_up_rounded, size: 15, color: accent),
+        ),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            ltrContent(context, text),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.88)
+                  : AppColors.slate800,
+              fontSize: AppTypography.caption + 1,
+              fontWeight: FontWeight.w600,
+              height: 1.35,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

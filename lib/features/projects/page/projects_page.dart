@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/projects/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/bloc/projects_filter_event.dart';
@@ -14,6 +13,7 @@ import 'package:profile/features/projects/widget/interactive_project_card.dart';
 import 'package:profile/features/projects/model/project.dart';
 import 'package:profile/features/projects/widget/project_domain_filters.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
+import 'package:profile/shared/widget/section_masthead.dart';
 
 class ProjectsPage extends StatelessWidget {
   final bool isContinuousMobile;
@@ -273,76 +273,13 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
 
   Widget _buildHeader(
       ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
-    final isDark = scheme.brightness == Brightness.dark;
-    final accentText = context.adaptiveAccentText(scheme.primary);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: scheme.primary.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-                border:
-                    Border.all(color: scheme.primary.withValues(alpha: 0.3)),
-              ),
-              child: Text(
-                'CASE STUDIES',
-                style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
-                  color: accentText,
-                  fontWeight: FontWeight.w900,
-                  fontSize: AppTypography.micro,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            Expanded(
-              child: Container(height: 1, color: context.glassBorderStrong),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Text(
-          'SELECTED WORK',
-          style: TextStyle(
-            fontFamily: AppTypography.monoFont,
-            color: accentText,
-            fontWeight: FontWeight.w900,
-            fontSize: AppTypography.micro,
-            letterSpacing: 1.2,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        Semantics(
-          header: true,
-          child: Text(
-            loc.navProjects,
-            style: TextStyle(
-              fontFamily: AppTypography.displayFont,
-              color: context.onSurface,
-              fontSize: isDesktop ? 48 : 36,
-              fontWeight: FontWeight.w900,
-              letterSpacing: -0.5,
-              height: 1.1,
-            ),
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        Text(
-          AppLocalizations.of(context)!.sectionSubtitleWork,
-          style: TextStyle(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.7)
-                : AppColors.slate600,
-            fontSize: isDesktop ? 16 : 14,
-            height: 1.5,
-          ),
-        ),
-      ],
+    return SectionMasthead(
+      kicker: 'FEATURE 03 · SELECTED WORK',
+      title: loc.navProjects.toUpperCase(),
+      subtitle: loc.sectionSubtitleWork,
+      isDesktop: isDesktop,
+      badgeIcon: Icons.work_outline_rounded,
+      badgeLabel: '${kProjects.length} CASE STUDIES',
     );
   }
 
