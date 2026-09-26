@@ -8,7 +8,6 @@ import 'hats_deck_state.dart';
 const double kCardW = 255;
 const double kCardH = 370;
 const double kEdgeInset = 16;
-const double kTopInset = 80;
 const double kFanSideReserve = 200;
 const double kFanArcHeight = 30;
 const double kShuffleSpread = 260;
@@ -115,11 +114,12 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
     for (int i = 0; i < count; i++) {
       final double rx = (size.width / 2 - kCardW / 2) +
           (random.nextDouble() * kShuffleSpread - kShuffleSpread / 2);
-      final double ry = (size.height / 2 - kCardH / 2 + 30) +
+      final double ry = (size.height / 2 - kCardH / 2) +
           (random.nextDouble() * kShuffleDrop - kShuffleDrop / 2);
       positions[i] = Offset(
-        rx.clamp(kEdgeInset, size.width - kCardW - kEdgeInset),
-        ry.clamp(kTopInset, size.height - kCardH - kEdgeInset),
+        rx.clamp(
+            kEdgeInset, math.max(kEdgeInset, size.width - kCardW - kEdgeInset)),
+        ry.clamp(0.0, math.max(0.0, size.height - kCardH)),
       );
       rotations[i] = (random.nextDouble() * 0.36) - 0.18;
     }
@@ -141,23 +141,26 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
     ));
   }
 
+  /// Fans the cards across [size], the felt the cards are drawn in (not
+  /// the whole viewport): centred horizontally, and centred vertically
+  /// with the fan arc included.
   static List<Offset> _calculateFanPositions(Size size, int count) {
     final double centerX = size.width / 2;
-    final double centerY = size.height / 2 + 30;
     final double availableWidth = size.width - kFanSideReserve * 2;
     final double spacing = (availableWidth / (count - 1)).clamp(80.0, 170.0);
     final double totalW = spacing * (count - 1);
     final double startX = centerX - totalW / 2 - kCardW / 2;
+    final double topY =
+        math.max(0.0, (size.height - kCardH - kFanArcHeight) / 2);
 
     final positions = List<Offset>.filled(count, Offset.zero);
     for (int i = 0; i < count; i++) {
       final double progress = (i - (count - 1) / 2) / ((count - 1) / 2);
       final double arcY = progress * progress * kFanArcHeight;
       positions[i] = Offset(
-        (startX + i * spacing)
-            .clamp(kEdgeInset * 2, size.width - kCardW - kEdgeInset * 3),
-        (centerY - kCardH / 2 + arcY)
-            .clamp(kTopInset, size.height - kCardH - kEdgeInset),
+        (startX + i * spacing).clamp(kEdgeInset * 2,
+            math.max(kEdgeInset * 2, size.width - kCardW - kEdgeInset * 3)),
+        topY + arcY,
       );
     }
     return positions;
