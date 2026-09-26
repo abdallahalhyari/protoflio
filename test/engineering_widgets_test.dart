@@ -29,7 +29,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('FEATURE 05 · SYSTEMS ARCHITECTURE'), findsOneWidget);
-      expect(find.text('ENGINEERING EXPERTISE'), findsOneWidget);
+      expect(find.text('ENGINEERING'), findsOneWidget);
       expect(find.text('${kArchitectureTopics.length} ARCHITECTURES'),
           findsOneWidget);
     });

@@ -151,7 +151,7 @@ void main() {
         ));
         await tester.pump(const Duration(milliseconds: 300));
 
-        expect(find.text('ARCHITECTURAL PERSPECTIVES'), findsOneWidget);
+        expect(find.text('PERSPECTIVES'), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });

@@ -17,10 +17,8 @@ class SkillsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return SectionMasthead(
-      kicker: isDesktop
-          ? 'FEATURE 04 · ARCHITECTURAL MASTERY'
-          : 'FEATURE 04 · CORE SKILLS',
-      title: loc.navSkills.toUpperCase(),
+      kicker: 'FEATURE 04 · ARCHITECTURAL MASTERY',
+      title: loc.navStack.toUpperCase(),
       subtitle: loc.sectionSubtitleSkills,
       isDesktop: isDesktop,
       // Icon, not a '✦' glyph: CanvasKit has no system fonts, so the

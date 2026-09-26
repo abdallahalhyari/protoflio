@@ -258,7 +258,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('CAREER TRAJECTORY'), findsOneWidget);
+      expect(find.text('EXPERIENCE'), findsOneWidget);
     });
 
     testWidgets('ProjectsPage renders cleanly on compact 320x568',
@@ -286,7 +286,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('SKILLS'), findsOneWidget);
+      expect(find.text('SKILLS & STACK'), findsOneWidget);
     });
 
     testWidgets('EngineeringPage renders cleanly on compact 320x568',
@@ -300,7 +300,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('ENGINEERING EXPERTISE'), findsOneWidget);
+      expect(find.text('ENGINEERING'), findsOneWidget);
     });
 
     testWidgets('HatsGridPage renders cleanly on compact 320x568',
@@ -314,7 +314,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('ARCHITECTURAL PERSPECTIVES'), findsOneWidget);
+      expect(find.text('PERSPECTIVES'), findsOneWidget);
     });
 
     testWidgets('ContactPage renders cleanly on compact 320x568',

@@ -17,7 +17,7 @@ class EngineeringHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SectionMasthead(
       kicker: 'FEATURE 05 · SYSTEMS ARCHITECTURE',
-      title: 'ENGINEERING EXPERTISE',
+      title: AppLocalizations.of(context)!.navEngineering.toUpperCase(),
       subtitle: AppLocalizations.of(context)!.sectionSubtitleEngineering,
       isDesktop: isDesktop,
       badgeIcon: Icons.hub_outlined,

@@ -9,6 +9,10 @@ import 'package:profile/shared/widget/conditional_blur.dart';
 import '../home_controller.dart';
 import 'package:profile/shared/widget/edge_fade_scroller.dart';
 
+/// Below this width the section links use [NavItem.dense] so the full
+/// section names still fit the pill beside the Resume button.
+const double _kDenseNavBelow = 1200;
+
 class TopNav extends StatelessWidget {
   static List<String> getLabels(BuildContext context) {
     final l = AppLocalizations.of(context)!;
@@ -42,8 +46,14 @@ class TopNav extends StatelessWidget {
     // centered nav pill never collides with toolbar pucks on mid-size screens.
     final horizontalReserve =
         width >= AppBreakpoints.tablet ? 320.0 : AppSpacing.xl;
+    // Between tablet and desktop width a centred pill can't also clear the
+    // toolbar on both sides with the full section names, so it centres in
+    // the space left of the toolbar instead.
+    final offsetForToolbar =
+        width >= AppBreakpoints.tablet && width < AppBreakpoints.desktop;
 
     final compactResume = width < AppBreakpoints.desktop;
+    final denseLinks = width < _kDenseNavBelow;
     final resumeLabel = AppLocalizations.of(context)!.navResume.toUpperCase();
     void onResume() {
       HapticFeedback.lightImpact();
@@ -63,100 +73,109 @@ class TopNav extends StatelessWidget {
       container: true,
       explicitChildNodes: true,
       label: 'Section navigation',
-      child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: math.max(0.0, width - horizontalReserve),
-          ),
-          child: RepaintBoundary(
-            child: ConditionalBlur(
-              sigma: 12,
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              child: Container(
-                margin: const EdgeInsets.only(top: AppSpacing.smd),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.md, vertical: AppSpacing.xs),
-                decoration: BoxDecoration(
-                  color: context.glassSurface,
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: context.navSurfaceBorder(accent),
-                    width: 1,
+      child: Padding(
+        padding: offsetForToolbar
+            ? const EdgeInsets.only(left: AppSpacing.md, right: 170)
+            : EdgeInsets.zero,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: offsetForToolbar
+                  ? double.infinity
+                  : math.max(0.0, width - horizontalReserve),
+            ),
+            child: RepaintBoundary(
+              child: ConditionalBlur(
+                sigma: 12,
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                child: Container(
+                  margin: const EdgeInsets.only(top: AppSpacing.smd),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: denseLinks ? AppSpacing.sm : AppSpacing.md,
+                      vertical: AppSpacing.xs),
+                  decoration: BoxDecoration(
+                    color: context.glassSurface,
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                    border: Border.all(
+                      color: context.navSurfaceBorder(accent),
+                      width: 1,
+                    ),
+                    boxShadow: context.ambientGlow(accent),
                   ),
-                  boxShadow: context.ambientGlow(accent),
-                ),
-                // Only the section links scroll; the Resume CTA stays pinned
-                // so it is never faded or clipped on mid-size windows.
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: EdgeFadeScroller(
-                        child: Builder(
-                          builder: (context) {
-                            final labels = getLabels(context);
-                            return Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                for (var i = 0; i < labels.length; i++)
-                                  NavItem(
-                                    label: labels[i],
-                                    active: current == i,
-                                    onTap: () {
-                                      if (i == current) return;
-                                      HapticFeedback.selectionClick();
-                                      HomeController.of(context).goTo(i);
-                                    },
-                                  ),
-                              ],
-                            );
-                          },
+                  // Only the section links scroll; the Resume CTA stays pinned
+                  // so it is never faded or clipped on mid-size windows.
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: EdgeFadeScroller(
+                          child: Builder(
+                            builder: (context) {
+                              final labels = getLabels(context);
+                              return Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  for (var i = 0; i < labels.length; i++)
+                                    NavItem(
+                                      label: labels[i],
+                                      active: current == i,
+                                      dense: denseLinks,
+                                      onTap: () {
+                                        if (i == current) return;
+                                        HapticFeedback.selectionClick();
+                                        HomeController.of(context).goTo(i);
+                                      },
+                                    ),
+                                ],
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Container(
-                      width: 1,
-                      height: 18,
-                      color: context.navDivider,
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Semantics(
-                      button: true,
-                      label: 'Download Resume PDF',
-                      child: compactResume
-                          // Icon-only below desktop width, so the pill fits
-                          // every section link without clipping Contact.
-                          ? Tooltip(
-                              message: resumeLabel,
-                              child: OutlinedButton(
+                      const SizedBox(width: AppSpacing.sm),
+                      Container(
+                        width: 1,
+                        height: 18,
+                        color: context.navDivider,
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Semantics(
+                        button: true,
+                        label: 'Download Resume PDF',
+                        child: compactResume
+                            // Icon-only below desktop width, so the pill fits
+                            // every section link without clipping Contact.
+                            ? Tooltip(
+                                message: resumeLabel,
+                                child: OutlinedButton(
+                                  onPressed: onResume,
+                                  style: resumeStyle.copyWith(
+                                    padding: const WidgetStatePropertyAll(
+                                        EdgeInsets.all(6)),
+                                    minimumSize: const WidgetStatePropertyAll(
+                                        Size(32, 32)),
+                                  ),
+                                  child: const Icon(Icons.download_rounded,
+                                      size: 16),
+                                ),
+                              )
+                            : OutlinedButton.icon(
                                 onPressed: onResume,
-                                style: resumeStyle.copyWith(
-                                  padding: const WidgetStatePropertyAll(
-                                      EdgeInsets.all(6)),
-                                  minimumSize: const WidgetStatePropertyAll(
-                                      Size(32, 32)),
+                                icon: const Icon(Icons.download_rounded,
+                                    size: 14),
+                                label: Text(
+                                  resumeLabel,
+                                  style: const TextStyle(
+                                    fontSize: AppTypography.caption,
+                                    fontWeight: FontWeight.w800,
+                                    letterSpacing: 1.0,
+                                  ),
                                 ),
-                                child: const Icon(Icons.download_rounded,
-                                    size: 16),
+                                style: resumeStyle,
                               ),
-                            )
-                          : OutlinedButton.icon(
-                              onPressed: onResume,
-                              icon:
-                                  const Icon(Icons.download_rounded, size: 14),
-                              label: Text(
-                                resumeLabel,
-                                style: const TextStyle(
-                                  fontSize: AppTypography.caption,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 1.0,
-                                ),
-                              ),
-                              style: resumeStyle,
-                            ),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -172,11 +191,16 @@ class NavItem extends StatefulWidget {
   final bool active;
   final VoidCallback onTap;
 
+  /// Tighter padding and a smaller label, for windows under desktop width
+  /// where the full-length section names otherwise overflow the pill.
+  final bool dense;
+
   const NavItem({
     super.key,
     required this.label,
     required this.active,
     required this.onTap,
+    this.dense = false,
   });
 
   @override
@@ -209,8 +233,9 @@ class _NavItemState extends State<NavItem> {
             child: AnimatedContainer(
               duration: widget.active ? AppMotion.sm : AppMotion.chipHover,
               curve: AppMotion.emphasized,
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.smd, vertical: AppSpacing.sm),
+              padding: EdgeInsets.symmetric(
+                  horizontal: widget.dense ? AppSpacing.sm : AppSpacing.smd,
+                  vertical: AppSpacing.sm),
               decoration: BoxDecoration(
                 color: widget.active
                     ? context.activeChipSurface(accent)
@@ -259,7 +284,9 @@ class _NavItemState extends State<NavItem> {
                                   ? Colors.white.withValues(alpha: 0.92)
                                   : AppColors.slate800)
                               : (context.mutedText),
-                      fontSize: AppTypography.small,
+                      fontSize: widget.dense
+                          ? AppTypography.caption + 1
+                          : AppTypography.small,
                       fontWeight:
                           widget.active ? FontWeight.w800 : FontWeight.w600,
                       letterSpacing: 0.3,

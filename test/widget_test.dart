@@ -38,7 +38,7 @@ void main() {
         .pumpWidget(createTestApp(const HatsGridPage(), const Size(1200, 900)));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('ARCHITECTURAL PERSPECTIVES'), findsOneWidget);
+    expect(find.text('PERSPECTIVES'), findsOneWidget);
     expect(find.text('SPREAD'), findsOneWidget);
     expect(find.text('ALIGN'), findsOneWidget);
     expect(find.textContaining('THINKING'), findsWidgets);
@@ -109,7 +109,7 @@ void main() {
         createTestApp(const EngineeringPage(), const Size(1200, 900)));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('ENGINEERING EXPERTISE'), findsOneWidget);
+    expect(find.text('ENGINEERING'), findsOneWidget);
     expect(find.textContaining('CLEAN MOBILE ARCHITECTURE'), findsWidgets);
     expect(find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'), findsWidgets);
 

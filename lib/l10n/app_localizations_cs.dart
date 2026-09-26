@@ -12,7 +12,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navHome => 'Domů';
 
   @override
-  String get navWork => 'Projekty';
+  String get navWork => 'Vybrané projekty';
 
   @override
   String get navEngineering => 'Inženýrství';
@@ -21,22 +21,16 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navExperience => 'Zkušenosti';
 
   @override
-  String get navStack => 'Technologie';
+  String get navStack => 'Dovednosti & technologie';
 
   @override
-  String get navAbout => 'O mně';
+  String get navAbout => 'Perspektivy';
 
   @override
   String get navContact => 'Kontakt';
 
   @override
   String get navResume => 'Životopis';
-
-  @override
-  String get navSkills => 'Dovednosti';
-
-  @override
-  String get navProjects => 'Projekty';
 
   @override
   String get introLocation => 'Ammán, Jordánsko › Brno, Česká republika (2027)';
@@ -274,7 +268,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navSubCover => 'Senior Flutter & Android inženýr';
 
   @override
-  String get navSectionExperience => 'KARIÉRA & ZKUŠENOSTI';
+  String get navSectionExperience => 'ZKUŠENOSTI';
 
   @override
   String get navSubExperience => '5+ let vývoje a dopadu na podnikové systémy';
@@ -292,20 +286,20 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navSubStack => 'Matice technických kompetencí';
 
   @override
-  String get navSectionEngineering => 'SYSTÉMOVÁ ARCHITEKTURA';
+  String get navSectionEngineering => 'INŽENÝRSTVÍ';
 
   @override
   String get navSubEngineering =>
       'Podnikové modely & offline-first architektura';
 
   @override
-  String get navSectionAbout => 'PERSPEKTIVY & ROLE';
+  String get navSectionAbout => 'PERSPEKTIVY';
 
   @override
   String get navSubAbout => 'Architektonické úhly pohledu a role';
 
   @override
-  String get navSectionContact => 'KONTAKT & DOTAZY';
+  String get navSectionContact => 'KONTAKT';
 
   @override
   String get navSubContact => 'Přímé komunikační kanály a dostupnost';
