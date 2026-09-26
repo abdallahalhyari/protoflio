@@ -60,7 +60,7 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
     );
     widget.scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _onScroll();
+      if (mounted) _measure();
     });
   }
 
@@ -80,7 +80,22 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
     super.dispose();
   }
 
+  bool _spyScheduled = false;
+
+  /// Scroll listeners fire before the frame lays the new offset out, so
+  /// chapter positions read here are a frame stale (a whole wheel step,
+  /// ~500px, on desktop). Measure once per frame, after layout, instead.
   void _onScroll() {
+    if (_spyScheduled) return;
+    _spyScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _spyScheduled = false;
+      _measure();
+    });
+    WidgetsBinding.instance.scheduleFrame();
+  }
+
+  void _measure() {
     if (!mounted || !widget.scrollController.hasClients) return;
 
     final offset = widget.scrollController.offset;
@@ -88,20 +103,33 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
     final progress = maxScroll > 0 ? (offset / maxScroll).clamp(0.0, 1.0) : 0.0;
     final showDock = offset > 140.0;
 
+    // Active chapter = the last one whose top has passed 45% of the
+    // viewport. Chapters scrolled far above are no longer built (the
+    // sliver list drops them), so when the first built chapter is still
+    // below the line, the reader is inside the unbuilt chapter just
+    // before it — not back at chapter one, which is where this used to
+    // fall through to mid-article.
     String? activeId;
-    final vpHeight = MediaQuery.sizeOf(context).height;
+    String? lastUnbuilt;
+    var sawBuilt = false;
+    final threshold = MediaQuery.sizeOf(context).height * 0.45;
     for (final chapter in widget.chapters) {
-      final ctx = chapter.key.currentContext;
-      if (ctx != null && ctx.findRenderObject() is RenderBox) {
-        final box = ctx.findRenderObject()! as RenderBox;
-        if (box.hasSize) {
-          final pos = box.localToGlobal(Offset.zero);
-          if (pos.dy <= vpHeight * 0.45) {
-            activeId = chapter.id;
-          }
+      final box = chapter.key.currentContext?.findRenderObject();
+      if (box is RenderBox && box.attached && box.hasSize) {
+        sawBuilt = true;
+        if (box.localToGlobal(Offset.zero).dy <= threshold) {
+          activeId = chapter.id;
+        } else {
+          activeId ??= lastUnbuilt;
+          break;
         }
+      } else if (activeId == null) {
+        lastUnbuilt = chapter.id;
       }
     }
+    // Deep inside one long chapter neither its heading nor the next one
+    // is built: keep the current highlight rather than resetting it.
+    if (!sawBuilt) activeId = _bloc.state.activeChapterId;
 
     activeId ??= widget.chapters.isNotEmpty ? widget.chapters.first.id : null;
 
@@ -158,6 +186,37 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
             child: Stack(
               children: [
                 widget.child,
+                // Fades the prose out under the floating chapter dock so a
+                // line of body copy doesn't read half-covered behind it.
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: 96 + MediaQuery.paddingOf(context).bottom,
+                  child: IgnorePointer(
+                    child: AnimatedOpacity(
+                      opacity: state.showDock ? 1 : 0,
+                      duration: AppMotion.sm,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Theme.of(context)
+                                  .scaffoldBackgroundColor
+                                  .withValues(alpha: 0.0),
+                              Theme.of(context)
+                                  .scaffoldBackgroundColor
+                                  .withValues(alpha: 0.92),
+                            ],
+                            stops: const [0.0, 0.6],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 _TopReadingProgressBar(
                   progress: state.progress,
                   isDark: isDark,

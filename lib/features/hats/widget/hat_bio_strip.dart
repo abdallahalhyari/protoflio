@@ -43,8 +43,10 @@ class HatBioStrip extends StatelessWidget {
         ),
         child: Text(
           bio,
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
+          // Phones show the whole bio (it was cut at "WorkMa…"); the
+          // desktop header keeps its height bounded for the card felt.
+          maxLines: isMobile ? null : 3,
+          overflow: isMobile ? null : TextOverflow.ellipsis,
           style: TextStyle(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.9)

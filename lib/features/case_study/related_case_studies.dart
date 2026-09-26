@@ -43,19 +43,24 @@ class RelatedCaseStudies extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionKicker(number: '99', label: 'MORE CASE STUDIES'),
+        const SectionKicker(number: '09', label: 'MORE CASE STUDIES'),
         const SizedBox(height: AppSpacing.md),
         if (isDesktop)
-          Row(
-            children: [
-              for (int i = 0; i < siblings.length; i++) ...[
-                Expanded(
-                    child: _RelatedCard(
-                        slug: siblings[i], data: _summary[siblings[i]]!)),
-                if (i < siblings.length - 1)
-                  const SizedBox(width: AppSpacing.md),
+          // Equal-height cards: titles wrap to one or two lines, which
+          // left the three cards visibly uneven.
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (int i = 0; i < siblings.length; i++) ...[
+                  Expanded(
+                      child: _RelatedCard(
+                          slug: siblings[i], data: _summary[siblings[i]]!)),
+                  if (i < siblings.length - 1)
+                    const SizedBox(width: AppSpacing.md),
+                ],
               ],
-            ],
+            ),
           )
         else
           Column(
