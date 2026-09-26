@@ -87,4 +87,47 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('mounted'), findsOneWidget);
   });
+
+  testWidgets(
+      'horizontal rows inside a section do not inherit the page scroll '
+      'offset', (tester) async {
+    // Regression: unkeyed scrollables under the mobile ListView shared its
+    // PageStorage slot, so a row built mid-page restored the vertical
+    // offset and opened scrolled to its far end.
+    final page = ScrollController();
+    final row = ScrollController();
+    await tester.pumpWidget(Directionality(
+      textDirection: TextDirection.ltr,
+      // The app gets its bucket from the route; provide one directly.
+      child: PageStorage(
+        bucket: PageStorageBucket(),
+        child: ListView(
+          key: const PageStorageKey<String>('page'),
+          controller: page,
+          children: [
+            // Far enough down that the section isn't built on first frame.
+            const SizedBox(height: 5000),
+            DeferredMount(
+              sectionIndex: 2,
+              placeholderHeight: 50,
+              child: SingleChildScrollView(
+                controller: row,
+                scrollDirection: Axis.horizontal,
+                child: const SizedBox(width: 3000, height: 50),
+              ),
+            ),
+            const SizedBox(height: 2000),
+          ],
+        ),
+      ),
+    ));
+    expect(row.hasClients, isFalse);
+
+    // Scrolling saves the page offset to PageStorage; the row is then
+    // built for the first time and restores from PageStorage.
+    page.jumpTo(4800);
+    await tester.pump();
+
+    expect(row.offset, 0.0);
+  });
 }

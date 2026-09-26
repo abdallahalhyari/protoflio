@@ -82,9 +82,9 @@
   "introMobileArch": "بنية تطبيقات الهواتف",
   "introMasthead": "// الترويسة",
   "navSectionCover": "الغلاف والملف الشخصي",
-  "navSubCover": "مهندس ومعماري تطبيقات فلاتر وأندرويد أول",
+  "navSubCover": "مهندس تطبيقات فلاتر وأندرويد أول",
   "navSectionExperience": "المسيرة المهنية والخبرات",
-  "navSubExperience": "+4 سنوات من هندسة الأنظمة المؤسسية",
+  "navSubExperience": "+5 سنوات من هندسة الأنظمة المؤسسية",
   "navSectionWork": "أبرز الأعمال والمشاريع",
   "navSubWork": "أنظمة الإنتاج ودراسات الحالة المتعمقة",
   "navSectionStack": "المهارات والتقنيات",
@@ -106,7 +106,9 @@
   "perspectiveShortcutsHint": "الأسهم أو A / D للتنقل · S خلط · R محاذاة",
   "sectionSubtitleWork": "نظرة معمّقة على البنية المعمارية والتنفيذ والنتائج القابلة للقياس.",
   "sectionSubtitleExperience": "سنوات من تطوير أنظمة الهاتف المحمول للمؤسسات",
-  "sectionSubtitleSkills": "التخصصات والتقنيات التي يقوم عليها العمل · اضغط على أي بطاقة لقلبها",
+  "sectionSubtitleSkills": "التخصصات والتقنيات التي يقوم عليها العمل · اقلب أي بطاقة لعرض التفاصيل",
   "sectionSubtitleEngineering": "هياكل معمارية مُختبَرة في بيئات الإنتاج خلف تطبيقات الهاتف",
-  "sectionSubtitleAbout": "ستة أدوار يتنقّل بينها المهندس الخبير"
+  "sectionSubtitleAbout": "ستة أدوار يتنقّل بينها المهندس الخبير",
+  "flipHintTap": "اضغط للقلب",
+  "flipHintClick": "انقر للقلب"
 }

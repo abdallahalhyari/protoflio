@@ -82,9 +82,9 @@
   "introMobileArch": "MOBILNÍ ARCHITEKTURA",
   "introMasthead": "// HLAVIČKA",
   "navSectionCover": "ÚVOD & PROFIL",
-  "navSubCover": "Senior Flutter & Android Architekt",
+  "navSubCover": "Senior Flutter & Android inženýr",
   "navSectionExperience": "KARIÉRA & ZKUŠENOSTI",
-  "navSubExperience": "4+ roky vývoje a dopadu na podnikové systémy",
+  "navSubExperience": "5+ let vývoje a dopadu na podnikové systémy",
   "navSectionWork": "VYBRANÉ PROJEKTY",
   "navSubWork": "Produkční systémy a případové studie",
   "navSectionStack": "DOVEDNOSTI & TECHNOLOGIE",
@@ -106,7 +106,9 @@
   "perspectiveShortcutsHint": "Šipky nebo A / D k procházení · S zamíchat · R zarovnat",
   "sectionSubtitleWork": "Podrobný pohled na architekturu, implementaci a měřitelné výsledky.",
   "sectionSubtitleExperience": "Víceletý vývoj podnikových mobilních systémů",
-  "sectionSubtitleSkills": "Disciplíny a technologie, na kterých práce stojí · Klepnutím kartu otočíte",
+  "sectionSubtitleSkills": "Disciplíny a technologie, na kterých práce stojí · Otočte kartu pro podrobnosti",
   "sectionSubtitleEngineering": "Architektury ověřené v produkci, na kterých stojí mobilní aplikace",
-  "sectionSubtitleAbout": "Šest rolí, mezi kterými senior inženýr přepíná"
+  "sectionSubtitleAbout": "Šest rolí, mezi kterými senior inženýr přepíná",
+  "flipHintTap": "KLEPNĚTE A OTOČTE",
+  "flipHintClick": "KLIKNĚTE A OTOČTE"
 }

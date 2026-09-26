@@ -88,9 +88,9 @@
   "introMobileArch": "MOBILE ARCHITECTURE",
   "introMasthead": "// MASTHEAD",
   "navSectionCover": "COVER & PROFILE",
-  "navSubCover": "Senior Flutter & Android Architect",
+  "navSubCover": "Senior Flutter & Android Engineer",
   "navSectionExperience": "CAREER & EXPERIENCE",
-  "navSubExperience": "4+ Years Enterprise Engineering & Impact",
+  "navSubExperience": "5+ Years Enterprise Engineering & Impact",
   "navSectionWork": "FEATURED WORK",
   "navSubWork": "Production Systems & Case Studies",
   "navSectionStack": "SKILLS & STACK",
@@ -145,7 +145,15 @@
   "perspectiveShortcutsHint": "Arrow keys or A / D to cycle · S shuffle · R align",
   "sectionSubtitleWork": "In-depth looks at architecture, implementation, and measurable outcomes.",
   "sectionSubtitleExperience": "Multi-year development of enterprise mobile systems",
-  "sectionSubtitleSkills": "Disciplines and stack the work is built on · Tap any card to flip",
+  "sectionSubtitleSkills": "Disciplines and stack the work is built on · Flip any card for details",
   "sectionSubtitleEngineering": "Production-tested architectures behind the mobile suites",
-  "sectionSubtitleAbout": "Six roles a senior engineer switches between"
+  "sectionSubtitleAbout": "Six roles a senior engineer switches between",
+  "flipHintTap": "TAP TO FLIP",
+  "flipHintClick": "CLICK TO FLIP",
+  "@flipHintTap": {
+    "description": "Hint on flippable skill / role cards for touch viewports."
+  },
+  "@flipHintClick": {
+    "description": "Hint on flippable skill / role cards for desktop (pointer) viewports."
+  }
 }

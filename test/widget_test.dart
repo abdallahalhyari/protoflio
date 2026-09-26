@@ -81,15 +81,11 @@ void main() {
         .pumpWidget(createTestApp(const ProjectsPage(), const Size(400, 800)));
     await tester.pumpAndSettle();
 
-    // PREV/NEXT sit below the fold on mobile — scroll them in first.
-    await tester.scrollUntilVisible(find.text('PREV'), 200,
+    // Mobile lists every case study; the last one scrolls into view.
+    await tester.scrollUntilVisible(
+        find.text('M-Commerce & Media-Streaming Clients'), 200,
         scrollable: find.byType(Scrollable).first);
-
-    expect(find.text('PREV'), findsOneWidget);
-    expect(find.text('NEXT'), findsOneWidget);
-
-    await tester.tap(find.text('NEXT'));
-    await tester.pump(const Duration(milliseconds: 200));
+    expect(find.text('M-Commerce & Media-Streaming Clients'), findsOneWidget);
 
     await tester.binding.setSurfaceSize(null);
   });

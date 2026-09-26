@@ -269,13 +269,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navSectionCover => 'الغلاف والملف الشخصي';
 
   @override
-  String get navSubCover => 'مهندس ومعماري تطبيقات فلاتر وأندرويد أول';
+  String get navSubCover => 'مهندس تطبيقات فلاتر وأندرويد أول';
 
   @override
   String get navSectionExperience => 'المسيرة المهنية والخبرات';
 
   @override
-  String get navSubExperience => '+4 سنوات من هندسة الأنظمة المؤسسية';
+  String get navSubExperience => '+5 سنوات من هندسة الأنظمة المؤسسية';
 
   @override
   String get navSectionWork => 'أبرز الأعمال والمشاريع';
@@ -353,7 +353,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sectionSubtitleSkills =>
-      'التخصصات والتقنيات التي يقوم عليها العمل · اضغط على أي بطاقة لقلبها';
+      'التخصصات والتقنيات التي يقوم عليها العمل · اقلب أي بطاقة لعرض التفاصيل';
 
   @override
   String get sectionSubtitleEngineering =>
@@ -361,4 +361,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sectionSubtitleAbout => 'ستة أدوار يتنقّل بينها المهندس الخبير';
+
+  @override
+  String get flipHintTap => 'اضغط للقلب';
+
+  @override
+  String get flipHintClick => 'انقر للقلب';
 }

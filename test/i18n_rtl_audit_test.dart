@@ -186,7 +186,7 @@ void main() {
     });
 
     testWidgets(
-        'ProjectsPage renders cleanly in Arabic (RTL) with localized mobile controls',
+        'ProjectsPage renders cleanly in Arabic (RTL) with localized mobile copy',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(390, 844));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -200,8 +200,8 @@ void main() {
       ));
       await tester.pump(const Duration(milliseconds: 300));
       expect(tester.takeException(), isNull);
-      expect(find.text('السابق'), findsOneWidget);
-      expect(find.text('التالي'), findsOneWidget);
+      final l10n = lookupAppLocalizations(const Locale('ar'));
+      expect(find.text(l10n.sectionSubtitleWork), findsOneWidget);
     });
 
     testWidgets(

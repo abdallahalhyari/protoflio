@@ -74,6 +74,10 @@ void main() {
     expect(items, findsWidgets);
 
     // Tap a non-active NavItem (index != 0) — should call HomeController.goTo.
+    // The links scroll horizontally beside the pinned Resume button, so
+    // bring the last one into view first, as a user would.
+    await tester.ensureVisible(items.last);
+    await tester.pumpAndSettle();
     await tester.tap(items.last);
     await tester.pumpAndSettle();
     expect(goToArg, 6);

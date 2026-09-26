@@ -416,7 +416,10 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                       ),
                                       child: Text(
                                         widget.project.name,
-                                        maxLines: 1,
+                                        // Phones: two lines, one cut most
+                                        // titles off. Desktop grid cells
+                                        // are fixed-height, so stay at one.
+                                        maxLines: widget.isDesktop ? 1 : 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),

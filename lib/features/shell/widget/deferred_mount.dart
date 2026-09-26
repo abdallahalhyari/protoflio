@@ -48,6 +48,18 @@ class _DeferredMountState extends State<DeferredMount>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    // Own PageStorage scope per section. Scrollables below carry no
+    // PageStorageKey of their own, so without this every horizontal row
+    // (filter chips, tabs) shared a storage slot with the mobile page's
+    // vertical ListView and restored its offset — rows built mid-page
+    // opened scrolled to their far end.
+    return KeyedSubtree(
+      key: PageStorageKey<String>('deferred_section_${widget.sectionIndex}'),
+      child: _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     final controller = HomeController.maybeOf(context);
     if (controller == null || _mounted) return widget.child;
 

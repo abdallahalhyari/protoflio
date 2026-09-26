@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'package:profile/theme/tokens.dart';
@@ -19,6 +21,10 @@ const double kBottomNavReserve = 80;
 /// narrow viewports. Screens reserve this much top padding so mastheads
 /// don't collide with the globe/theme toggles.
 const double kMobileTopReserve = 64;
+
+/// Distance from the viewport's right edge kept clear on desktop for the
+/// vertical page-indicator dots (pinned 12px in, ~20px wide).
+const double kSideRailReserve = 48;
 
 /// Shared screen shell: SafeArea + centered content column + capped
 /// max-width + top-nav reserve. (backdrop system removed).
@@ -73,11 +79,19 @@ class AppScreenShell extends StatelessWidget {
     final mobileBottomExtra =
         (!wide && reserveBottomNav) ? kBottomNavReserve : 0.0;
 
+    // On desktop the content must not run under the page-indicator dots.
+    // Whatever of [kSideRailReserve] the centred max-width box doesn't
+    // already leave free becomes padding (on both sides, to stay centred).
+    var side = hPad ?? horizontalPadding(context);
+    if (wide) {
+      final freeEachSide = math.max(0.0, (width - maxWidth) / 2);
+      side = math.max(side, kSideRailReserve - freeEachSide);
+    }
     final shellPadding = padding ??
         EdgeInsets.fromLTRB(
-          hPad ?? horizontalPadding(context),
+          side,
           verticalPadding + topExtra,
-          hPad ?? horizontalPadding(context),
+          side,
           verticalPadding + mobileBottomExtra,
         );
 

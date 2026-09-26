@@ -222,7 +222,9 @@ class _IntroPageState extends State<IntroPage>
     )..layout();
     final bounds = Offset.zero & painter.size;
     painter.dispose();
-    final alpha = isDark ? 0.46 : 0.42;
+    // Light mode uses the deeper end of each hue at a higher opacity: the
+    // pale sky/indigo pair at 42% all but vanished on the pearl surface.
+    final alpha = isDark ? 0.46 : 0.7;
     return base.copyWith(
       foreground: Paint()
         ..style = PaintingStyle.stroke
@@ -231,9 +233,10 @@ class _IntroPageState extends State<IntroPage>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            (isDark ? Colors.white : AppColors.accentSky)
+            (isDark ? Colors.white : AppColors.slate700)
                 .withValues(alpha: alpha),
-            AppColors.accentIndigo.withValues(alpha: alpha + 0.08),
+            (isDark ? AppColors.accentIndigo : AppColors.accentIndigo600)
+                .withValues(alpha: alpha + 0.08),
             AppColors.accentViolet.withValues(alpha: alpha),
           ],
           stops: const [0.0, 0.55, 1.0],

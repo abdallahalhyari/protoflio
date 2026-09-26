@@ -14,6 +14,11 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
     barrierColor: Colors.black.withValues(alpha: 0.55),
     builder: (ctx) {
       return Dialog(
+        // Opaque: the themed glass dialog let the page behind (headline,
+        // buttons) read straight through the shortcut list.
+        backgroundColor: Theme.of(ctx).brightness == Brightness.dark
+            ? AppColors.darkSurfaceElevated
+            : AppColors.lightSurface,
         insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.card),

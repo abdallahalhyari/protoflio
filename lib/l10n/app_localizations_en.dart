@@ -273,13 +273,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSectionCover => 'COVER & PROFILE';
 
   @override
-  String get navSubCover => 'Senior Flutter & Android Architect';
+  String get navSubCover => 'Senior Flutter & Android Engineer';
 
   @override
   String get navSectionExperience => 'CAREER & EXPERIENCE';
 
   @override
-  String get navSubExperience => '4+ Years Enterprise Engineering & Impact';
+  String get navSubExperience => '5+ Years Enterprise Engineering & Impact';
 
   @override
   String get navSectionWork => 'FEATURED WORK';
@@ -357,7 +357,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionSubtitleSkills =>
-      'Disciplines and stack the work is built on · Tap any card to flip';
+      'Disciplines and stack the work is built on · Flip any card for details';
 
   @override
   String get sectionSubtitleEngineering =>
@@ -366,4 +366,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get sectionSubtitleAbout =>
       'Six roles a senior engineer switches between';
+
+  @override
+  String get flipHintTap => 'TAP TO FLIP';
+
+  @override
+  String get flipHintClick => 'CLICK TO FLIP';
 }
