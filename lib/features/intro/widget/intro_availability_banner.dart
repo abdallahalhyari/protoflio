@@ -23,27 +23,28 @@ class IntroAvailabilityBanner extends StatelessWidget {
     return Center(
       child: BreathingPulse(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          // A status tag, not an action: compact and borderless so it no
+          // longer reads as a fifth button next to the CTAs.
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: isDark
-                ? accent.withValues(alpha: 0.1)
-                : accent.withValues(alpha: 0.05),
-            border: Border.all(color: accent.withValues(alpha: 0.3)),
-            borderRadius: BorderRadius.circular(AppRadius.pill),
+                ? accent.withValues(alpha: 0.12)
+                : accent.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.flight_takeoff_outlined, color: accent, size: 18),
-              const SizedBox(width: 8),
+              Icon(Icons.flight_takeoff_outlined, color: accent, size: 14),
+              const SizedBox(width: 6),
               Flexible(
                 child: Text(
                   loc.introEuEligibility,
                   style: TextStyle(
                     color: context.onSurface,
-                    fontSize: isWide ? 13 : 11,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
+                    fontSize: isWide ? 11 : 10,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.2,
                   ),
                   textAlign: TextAlign.center,
                 ),

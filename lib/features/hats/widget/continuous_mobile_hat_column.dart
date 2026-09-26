@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/widget/section_masthead.dart';
 
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/hats/data/hats_data.dart';
@@ -39,31 +40,13 @@ class ContinuousMobileHatColumn extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            height: 2,
-            color: theme.colorScheme.primary.withValues(alpha: 0.9),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'FEATURE 06 · 6 ROLES',
-            style: TextStyle(
-              color:
-                  theme.colorScheme.primary.withValues(alpha: AppAlpha.border),
-              fontSize: AppTypography.editorial,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 3,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'ARCHITECTURAL PERSPECTIVES',
-            style: TextStyle(
-              fontFamily: AppTypography.displayFont,
-              color: context.onSurface,
-              fontSize: AppTypography.titleMid,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 3,
-            ),
+          // Same masthead as the other sections; the hand-rolled one drew
+          // its kicker at border opacity, which barely read on dark.
+          SectionMasthead(
+            kicker: 'FEATURE 06 · 6 ROLES',
+            title: 'ARCHITECTURAL PERSPECTIVES',
+            subtitle: AppLocalizations.of(context)!.sectionSubtitleAbout,
+            isDesktop: false,
           ),
           const SizedBox(height: AppSpacing.sm),
           HatRolePills(

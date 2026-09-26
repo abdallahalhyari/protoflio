@@ -82,15 +82,13 @@ class SkillCategoryFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
     if (!isDesktop) {
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
             for (int i = 0; i < categories.length; i++) ...[
-              _buildFilterChip(categories[i], scheme, false),
+              _buildFilterChip(categories[i], false),
               if (i < categories.length - 1) const SizedBox(width: 8),
             ],
           ],
@@ -101,12 +99,48 @@ class SkillCategoryFilters extends StatelessWidget {
       spacing: 8,
       runSpacing: 8,
       children: [
-        for (final cat in categories) _buildFilterChip(cat, scheme, isDesktop),
+        for (final cat in categories) _buildFilterChip(cat, isDesktop),
       ],
     );
   }
 
-  Widget _buildFilterChip(String cat, ColorScheme scheme, bool isDesktop) {
+  Widget _buildFilterChip(String cat, bool isDesktop) {
+    return _SkillFilterChip(
+      cat: cat,
+      isDesktop: isDesktop,
+      selectedCategory: selectedCategory,
+      onSelectCategory: onSelectCategory,
+    );
+  }
+}
+
+class _SkillFilterChip extends StatefulWidget {
+  const _SkillFilterChip({
+    required this.cat,
+    required this.isDesktop,
+    required this.selectedCategory,
+    required this.onSelectCategory,
+  });
+
+  final String cat;
+  final bool isDesktop;
+  final String selectedCategory;
+  final ValueChanged<String> onSelectCategory;
+
+  @override
+  State<_SkillFilterChip> createState() => _SkillFilterChipState();
+}
+
+class _SkillFilterChipState extends State<_SkillFilterChip> {
+  bool _focused = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final cat = widget.cat;
+    final scheme = Theme.of(context).colorScheme;
+    final isDesktop = widget.isDesktop;
+    final selectedCategory = widget.selectedCategory;
+    final onSelectCategory = widget.onSelectCategory;
     final isDark = scheme.brightness == Brightness.dark;
     final isSelected = selectedCategory == cat;
     final color = cat == 'ALL'
@@ -132,6 +166,9 @@ class SkillCategoryFilters extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(AppRadius.sm),
         focusColor: color.withValues(alpha: AppAlpha.fill),
+        onFocusChange: (focused) {
+          if (focused != _focused) setState(() => _focused = focused);
+        },
         child: AnimatedContainer(
           duration: AppMotion.chipHover,
           curve: AppMotion.emphasized,
@@ -146,13 +183,15 @@ class SkillCategoryFilters extends StatelessWidget {
                     ? Colors.transparent
                     : Colors.white.withValues(alpha: 0.8)),
             borderRadius: BorderRadius.circular(AppRadius.sm),
+            // Keyboard focus gets the category colour at full strength —
+            // the InkWell focus tint alone was near-invisible on dark.
             border: Border.all(
-              color: isSelected
+              color: isSelected || _focused
                   ? color
                   : (isDark
                       ? scheme.onSurface.withValues(alpha: 0.15)
                       : AppColors.slate300),
-              width: isSelected ? 1.5 : 1.0,
+              width: _focused ? 2.0 : (isSelected ? 1.5 : 1.0),
             ),
             boxShadow: isSelected
                 ? [

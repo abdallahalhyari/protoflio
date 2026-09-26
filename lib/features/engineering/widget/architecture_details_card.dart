@@ -20,6 +20,9 @@ class ArchitectureDetailsCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
     final accentText = context.adaptiveAccentText(scheme.primary);
+    // Per-tier budgets live in the data but were never shown.
+    final budgets =
+        topic.diagramSteps.where((s) => s.latencyBudget != null).toList();
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -154,6 +157,75 @@ class ArchitectureDetailsCard extends StatelessWidget {
               ),
             ),
           ],
+          if (budgets.isNotEmpty) ...[
+            const SizedBox(height: 14),
+            Text(
+              'LATENCY BUDGET PER TIER',
+              style: TextStyle(
+                fontFamily: AppTypography.monoFont,
+                color: accentText,
+                fontSize: AppTypography.editorial,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(height: 8),
+            for (final step in budgets) _BudgetRow(step: step, isDark: isDark),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// One tier of the latency budget: coloured layer dot, tier title, and
+/// the budget as a mono figure on the right.
+class _BudgetRow extends StatelessWidget {
+  const _BudgetRow({required this.step, required this.isDark});
+
+  final DiagramStep step;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    final tone = context.adaptiveAccentText(step.color);
+    return Container(
+      margin: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: step.color.withValues(alpha: isDark ? 0.08 : 0.06),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: Border(left: BorderSide(color: step.color, width: 2)),
+      ),
+      child: Row(
+        children: [
+          Icon(step.icon, size: AppTypography.small, color: tone),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              step.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.85)
+                    : AppColors.slate700,
+                fontSize: AppTypography.captionSm,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            step.latencyBudget!,
+            style: TextStyle(
+              fontFamily: AppTypography.monoFont,
+              color: tone,
+              fontSize: AppTypography.captionSm,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 0.5,
+            ),
+          ),
         ],
       ),
     );

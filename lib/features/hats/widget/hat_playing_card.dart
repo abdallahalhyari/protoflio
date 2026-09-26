@@ -8,6 +8,10 @@ import 'package:profile/shared/widget/holographic_physics.dart';
 
 import '../model/hat_info.dart';
 
+/// Width of a fanned card left uncovered by its neighbour (fan spacing
+/// tops out at 170px) minus the face's inner padding.
+const double _kFanVisibleWidth = 140;
+
 class HatPlayingCard extends StatefulWidget {
   final HatInfo hat;
   final int index;
@@ -245,6 +249,37 @@ class _HatPlayingCardState extends State<HatPlayingCard>
     );
   }
 
+  /// In the fanned deck each card covers the right third of the one
+  /// before it, so a centred title read as "THINKIN" / "COMMUNICA". Fanned
+  /// cards start-align the title and scale it into the uncovered strip;
+  /// the standalone (mobile) card keeps it centred at full size.
+  Widget _buildTitle() {
+    final text = Text(
+      widget.hat.title.toUpperCase(),
+      textAlign: TextAlign.center,
+      maxLines: 1,
+      style: const TextStyle(
+        fontFamily: AppTypography.displayFont,
+        color: Colors.white,
+        fontSize: AppTypography.title + 1,
+        fontWeight: FontWeight.w900,
+        letterSpacing: 2.2,
+      ),
+    );
+    if (widget.isStandalone) return text;
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: _kFanVisibleWidth),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: AlignmentDirectional.centerStart,
+          child: text,
+        ),
+      ),
+    );
+  }
+
   Widget _buildCardFront(BuildContext context) {
     final accent = widget.hat.color;
     final ordinal = (widget.index + 1).toString().padLeft(2, '0');
@@ -368,20 +403,13 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  widget.hat.title.toUpperCase(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontFamily: AppTypography.displayFont,
-                    color: Colors.white,
-                    fontSize: AppTypography.title + 1,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2.2,
-                  ),
-                ),
+                _buildTitle(),
                 const SizedBox(height: 6),
                 // Accent under-rule — width scales with the title font.
                 Container(
+                  alignment: widget.isStandalone
+                      ? null
+                      : AlignmentDirectional.centerStart,
                   height: 1.5,
                   width: 64,
                   decoration: BoxDecoration(
@@ -395,12 +423,16 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                   ),
                 ),
                 const SizedBox(height: 10),
-                // Single meta row — was two rows previously.
+                // Single meta row — was two rows previously. Fanned cards
+                // keep it in the uncovered start strip, like the title.
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: widget.isStandalone
+                      ? MainAxisAlignment.spaceBetween
+                      : MainAxisAlignment.start,
                   children: [
                     Icon(Icons.touch_app_outlined,
                         size: 12, color: Colors.white.withValues(alpha: 0.60)),
+                    if (!widget.isStandalone) const SizedBox(width: 6),
                     Text(
                       // The fanned deck is desktop-only; the standalone
                       // card is the touch (mobile) presentation.
@@ -416,8 +448,10 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                         letterSpacing: 1.8,
                       ),
                     ),
-                    Icon(Icons.autorenew,
-                        size: 12, color: Colors.white.withValues(alpha: 0.60)),
+                    if (widget.isStandalone)
+                      Icon(Icons.autorenew,
+                          size: 12,
+                          color: Colors.white.withValues(alpha: 0.60)),
                   ],
                 ),
               ],
