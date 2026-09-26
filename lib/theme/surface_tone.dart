@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import 'tokens.dart';
@@ -17,8 +18,14 @@ extension SurfaceTone on BuildContext {
   /// Translucent glass surface for floating toolbars — top nav pill,
   /// mobile app bar, folio bar, pager pill. Slightly opaque so text
   /// stays legible over any canvas.
+  ///
+  /// 78% dark glass was tuned to sit on a backdrop blur, but
+  /// ConditionalBlur skips the blur on web (too costly in CanvasKit), so
+  /// there scrolling copy read crisply straight through the chrome. Without
+  /// a blur the dark glass is denser.
   Color get glassSurface => isDarkMode
-      ? AppColors.darkSurface.withValues(alpha: 0.78)
+      ? AppColors.darkSurface
+          .withValues(alpha: kIsWeb || AppMedia.reduceBlur(this) ? 0.92 : 0.78)
       : Theme.of(this).scaffoldBackgroundColor.withValues(alpha: 0.92);
 
   /// Slightly denser glass — used for raised toggles (theme puck,

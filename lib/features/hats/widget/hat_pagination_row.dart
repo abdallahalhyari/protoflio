@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/tokens.dart';
@@ -29,12 +30,14 @@ class HatPaginationRow extends StatelessWidget {
         OutlinedButton.icon(
           onPressed: onPrev,
           style: OutlinedButton.styleFrom(
-            foregroundColor: primary.withValues(alpha: AppAlpha.border),
-            side: const BorderSide(color: AppColors.hatGold),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+            // Full-strength accent text (was border-alpha, read as
+            // disabled) and a padded 48px hit area around the same visual.
+            foregroundColor: context.adaptiveAccentText(primary),
+            side: BorderSide(color: AppColors.hatGold.withValues(alpha: 0.7)),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             visualDensity: VisualDensity.compact,
             minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            tapTargetSize: MaterialTapTargetSize.padded,
           ),
           icon: const DirIcon(Icons.chevron_left, size: 14),
           label: Text(
@@ -67,12 +70,14 @@ class HatPaginationRow extends StatelessWidget {
         OutlinedButton.icon(
           onPressed: onNext,
           style: OutlinedButton.styleFrom(
-            foregroundColor: primary.withValues(alpha: AppAlpha.border),
-            side: const BorderSide(color: AppColors.hatGold),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+            // Full-strength accent text (was border-alpha, read as
+            // disabled) and a padded 48px hit area around the same visual.
+            foregroundColor: context.adaptiveAccentText(primary),
+            side: BorderSide(color: AppColors.hatGold.withValues(alpha: 0.7)),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             visualDensity: VisualDensity.compact,
             minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            tapTargetSize: MaterialTapTargetSize.padded,
           ),
           icon: const DirIcon(Icons.chevron_right, size: 14),
           label: Text(
