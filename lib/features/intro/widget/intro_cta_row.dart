@@ -73,48 +73,98 @@ class IntroCtaRow extends StatelessWidget {
     );
   }
 
+  /// Quiet text-link action for the secondary row under the main pair.
+  Widget _linkButton({
+    required String label,
+    required IconData icon,
+    required VoidCallback onPressed,
+  }) {
+    return Semantics(
+      button: true,
+      label: label,
+      child: TextButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: 15),
+        label: Text(
+          label,
+          style: const TextStyle(
+            fontSize: AppTypography.caption,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.2,
+          ),
+        ),
+        style: TextButton.styleFrom(
+          foregroundColor: isDark ? Colors.white70 : AppColors.slate600,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
     final loc = AppLocalizations.of(context)!;
 
-    return Wrap(
-      spacing: 12,
-      runSpacing: 10,
-      alignment: WrapAlignment.center,
+    // Hierarchy: one primary + one secondary action, then the utility
+    // actions as quiet links. Four equal-weight pills made every option
+    // read as the main one.
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        PrimaryButton(
-          label: loc.viewMyWork,
-          isPill: true,
-          onPressed: () {
-            SoundService.instance.playClick();
-            onViewWork();
-          },
+        Wrap(
+          spacing: 12,
+          runSpacing: 10,
+          alignment: WrapAlignment.center,
+          children: [
+            PrimaryButton(
+              label: loc.viewMyWork,
+              isPill: true,
+              onPressed: () {
+                SoundService.instance.playClick();
+                onViewWork();
+              },
+            ),
+            // Match the primary pill's height so the pair reads as one
+            // row; a min (not fixed) height still grows with text scale.
+            ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 40),
+              child: _ghostButton(
+                label: loc.contactMe,
+                icon: Icons.send_rounded,
+                color: accent,
+                isDark: isDark,
+                onPressed: () {
+                  SoundService.instance.playClick();
+                  onContactMe();
+                },
+              ),
+            ),
+          ],
         ),
-        _ghostButton(
-          label: loc.downloadResume,
-          icon: Icons.download_rounded,
-          isDark: isDark,
-          onPressed: () {
-            SoundService.instance.playClick();
-            onDownloadResume();
-          },
-        ),
-        _ghostButton(
-          label: loc.contactMe,
-          icon: Icons.send_rounded,
-          color: accent,
-          isDark: isDark,
-          onPressed: () {
-            SoundService.instance.playClick();
-            onContactMe();
-          },
-        ),
-        _ghostButton(
-          label: loc.copyEmail,
-          icon: Icons.content_copy_rounded,
-          isDark: isDark,
-          onPressed: () => _copyEmail(context),
+        const SizedBox(height: AppSpacing.xs),
+        Wrap(
+          spacing: 4,
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            _linkButton(
+              label: loc.downloadResume,
+              icon: Icons.download_rounded,
+              onPressed: () {
+                SoundService.instance.playClick();
+                onDownloadResume();
+              },
+            ),
+            _linkButton(
+              label: loc.copyEmail,
+              icon: Icons.content_copy_rounded,
+              onPressed: () => _copyEmail(context),
+            ),
+          ],
         ),
       ],
     );

@@ -30,6 +30,7 @@ class BentoSkillTile extends StatefulWidget {
 class _BentoSkillTileState extends State<BentoSkillTile>
     with SingleTickerProviderStateMixin {
   bool _isHovered = false;
+  bool _showFocus = false;
   late final AnimationController _c = AnimationController(
     vsync: this,
     duration: AppMotion.cardFlip,
@@ -75,31 +76,51 @@ class _BentoSkillTileState extends State<BentoSkillTile>
           '${widget.skill.name} skill, ${_masteryLabel(widget.skill.level)} mastery level. Tap to flip and view details.',
       child: HolographicCardPhysics(
         borderRadius: 14,
-        child: MouseRegion(
-          onEnter: (_) => _onHover(true),
-          onExit: (_) => _onHover(false),
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              SoundService.instance.playClick();
-              _onHover(!_isHovered);
-            },
-            child: AnimatedBuilder(
-              animation: _flipAnim,
-              builder: (context, child) {
-                final isBack = _flipAnim.value >= 0.5;
-                final angle = _flipAnim.value * math.pi;
-
-                final transform = Matrix4.identity()
-                  ..setEntry(3, 2, 0.001)
-                  ..rotateY(angle);
-
-                return Transform(
-                  alignment: Alignment.center,
-                  transform: transform,
-                  child: isBack ? backCard : frontCard,
-                );
+        // Keyboard: Tab reaches the tile, Enter / Space flips it (the
+        // same toggle a tap does), leaving it turns it back, and a focus
+        // ring marks where the keyboard is.
+        child: FocusableActionDetector(
+          actions: <Type, Action<Intent>>{
+            ActivateIntent: CallbackAction<ActivateIntent>(
+              onInvoke: (_) {
+                SoundService.instance.playClick();
+                _onHover(!_isHovered);
+                return null;
               },
+            ),
+          },
+          onShowFocusHighlight: (show) {
+            if (show != _showFocus) setState(() => _showFocus = show);
+          },
+          onFocusChange: (focused) {
+            if (!focused) _onHover(false);
+          },
+          child: MouseRegion(
+            onEnter: (_) => _onHover(true),
+            onExit: (_) => _onHover(false),
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () {
+                SoundService.instance.playClick();
+                _onHover(!_isHovered);
+              },
+              child: AnimatedBuilder(
+                animation: _flipAnim,
+                builder: (context, child) {
+                  final isBack = _flipAnim.value >= 0.5;
+                  final angle = _flipAnim.value * math.pi;
+
+                  final transform = Matrix4.identity()
+                    ..setEntry(3, 2, 0.001)
+                    ..rotateY(angle);
+
+                  return Transform(
+                    alignment: Alignment.center,
+                    transform: transform,
+                    child: isBack ? backCard : frontCard,
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -115,8 +136,10 @@ class _BentoSkillTileState extends State<BentoSkillTile>
         color: _isHovered ? context.cardGlassHover : context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.card),
         border: Border.all(
-          color: widget.categoryColor.withValues(alpha: isDark ? 0.3 : 0.4),
-          width: 1.5,
+          color: _showFocus
+              ? widget.categoryColor
+              : widget.categoryColor.withValues(alpha: isDark ? 0.3 : 0.4),
+          width: _showFocus ? 2.5 : 1.5,
         ),
         boxShadow: [
           BoxShadow(

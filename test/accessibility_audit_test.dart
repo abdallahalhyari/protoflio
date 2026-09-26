@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
@@ -220,6 +221,36 @@ void main() {
             (w.properties.label?.contains('flip') ?? false),
       );
       expect(skillSemantics, findsOneWidget);
+    });
+
+    testWidgets('BentoSkillTile flips with the keyboard (Tab, then Enter)',
+        (tester) async {
+      final skill = kSkills.first;
+      await tester.pumpWidget(_wrapWithHarness(
+        child: SizedBox(
+          width: 260,
+          height: 280,
+          child: BentoSkillTile(
+            skill: skill,
+            categoryColor: Colors.blue,
+            categoryGradient: const [Colors.blue, Colors.cyan],
+            isDesktop: true,
+          ),
+        ),
+      ));
+      await tester.pumpAndSettle();
+      // The description lives on the back face only.
+      expect(find.text(skill.description), findsNothing);
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pumpAndSettle();
+      expect(find.text(skill.description), findsOneWidget);
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pumpAndSettle();
+      expect(find.text(skill.description), findsNothing);
     });
 
     testWidgets(
