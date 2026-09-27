@@ -4,6 +4,7 @@
 /// while maintaining full backwards compatibility for all case study pages and tests.
 library;
 
+export 'widget/case_study_at_a_glance.dart';
 export 'widget/case_study_corporate_header.dart';
 export 'widget/case_study_layout.dart';
 export 'widget/case_study_outcomes.dart';

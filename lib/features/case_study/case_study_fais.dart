@@ -27,6 +27,18 @@ class FaisCaseStudy extends StatelessWidget {
         final isDark = Theme.of(context).brightness == Brightness.dark;
         return [
           _Masthead(isDesktop: isDesktop),
+          const SizedBox(height: AppSpacing.xl),
+          CaseStudyAtAGlance(
+            slug: 'fais',
+            challenge:
+                'Checkout drops on flaky networks caused duplicate charges and abandoned carts, and OEM battery savers killed streaming playback.',
+            built:
+                'Idempotent checkout with client-side state reconciliation, defensive network interceptors, and a foreground-service streaming buffer manager.',
+            result:
+                '99.8% checkout completion with zero duplicate charges, 45% fewer support escalations, and cart reconciliation under 200ms.',
+            outcomesKey: keys.outcomesKey,
+            isDesktop: isDesktop,
+          ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,

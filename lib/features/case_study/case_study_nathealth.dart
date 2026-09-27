@@ -30,6 +30,18 @@ class NatHealthCaseStudy extends StatelessWidget {
         final isDark = Theme.of(context).brightness == Brightness.dark;
         return [
           _Masthead(isDesktop: isDesktop),
+          const SizedBox(height: AppSpacing.xl),
+          CaseStudyAtAGlance(
+            slug: 'nathealth',
+            challenge:
+                'Paper claims slowed reimbursement and exposed Jordan\'s largest health-insurance TPA to fraud, and many clinics had unreliable connectivity.',
+            built:
+                'A three-app NFC smart-card suite: a native Kotlin APDU bridge, an offline-first WorkManager sync pipeline, and hardware-bound JWT tokens.',
+            result:
+                'Card verification in under a second, claims that survive connectivity drops, zero security breaches, and three clients shipped on one architecture.',
+            outcomesKey: keys.outcomesKey,
+            isDesktop: isDesktop,
+          ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,
