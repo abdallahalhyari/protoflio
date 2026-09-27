@@ -31,6 +31,8 @@ void main() {
       child: const DeferredMount(
         sectionIndex: 5,
         placeholderHeight: 720,
+        // The app default mounts everything; test the deferral itself.
+        distance: 1,
         child: Text('mounted'),
       ),
     ));
@@ -43,6 +45,8 @@ void main() {
       child: const DeferredMount(
         sectionIndex: 5,
         placeholderHeight: 720,
+        // The app default mounts everything; test the deferral itself.
+        distance: 1,
         child: Text('mounted'),
       ),
     ));
@@ -59,6 +63,8 @@ void main() {
       child: DeferredMount(
         sectionIndex: 5,
         placeholderHeight: 720,
+        // The app default mounts everything; test the deferral itself.
+        distance: 1,
         child: Text('mounted'),
       ),
     ));
@@ -73,6 +79,8 @@ void main() {
       child: const DeferredMount(
         sectionIndex: 3,
         placeholderHeight: 720,
+        // The app default mounts everything; test the deferral itself.
+        distance: 1,
         child: Text('mounted'),
       ),
     ));

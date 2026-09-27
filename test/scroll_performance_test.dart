@@ -120,8 +120,8 @@ void main() {
           initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
       await tester.pump(const Duration(milliseconds: 300));
 
-      final pageView = tester.widget<PageView>(find.byType(PageView));
-      expect(pageView.controller!.page!.round(), 0);
+      final pages = _desktopPages(tester);
+      expect(pages.page!.round(), 0);
 
       // Scroll down partially (80px, below threshold 140px)
       await tester.sendEventToBinding(
@@ -131,7 +131,7 @@ void main() {
         ),
       );
       await tester.pump(const Duration(milliseconds: 50));
-      expect(pageView.controller!.page!.round(), 0);
+      expect(pages.page!.round(), 0);
 
       // Scroll down another 80px to exceed 140px threshold -> should advance to page 1
       await tester.sendEventToBinding(
@@ -143,7 +143,14 @@ void main() {
       for (int i = 0; i < 15; i++) {
         await tester.pump(const Duration(milliseconds: 50));
       }
-      expect(pageView.controller!.page!.round(), 1);
+      expect(pages.page!.round(), 1);
     });
   });
 }
+
+/// The desktop page controller. Pages live in a custom Scrollable
+/// (all pages prebuilt) rather than a PageView, keyed 'desktop_pageview'.
+PageController _desktopPages(WidgetTester tester) => tester
+    .widget<Scrollable>(
+        find.byKey(const PageStorageKey<String>('desktop_pageview')))
+    .controller! as PageController;
