@@ -44,57 +44,72 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
 
   bool _isIgnoringBurst = false;
 
+  Offset _lastHitTestPosition = const Offset(-1, -1);
+  int _lastHitTestTime = 0;
+  final List<ScrollPosition> _cachedScrollPositions = [];
+
   bool _canInnerScroll(Offset globalPosition, double dy) {
     if (!mounted) return false;
 
-    final result = HitTestResult();
-    final viewId = View.of(context).viewId;
-    RendererBinding.instance.hitTestInView(result, globalPosition, viewId);
+    final now = DateTime.now().millisecondsSinceEpoch;
+    // Mouse hasn't moved and we checked less than 300ms ago? Use cached scroll positions.
+    if (globalPosition != _lastHitTestPosition || now - _lastHitTestTime > 300) {
+      _lastHitTestPosition = globalPosition;
+      _lastHitTestTime = now;
+      _cachedScrollPositions.clear();
 
-    for (final entry in result.path) {
-      final target = entry.target;
-      if (target is! RenderObject) continue;
+      final result = HitTestResult();
+      final viewId = View.of(context).viewId;
+      RendererBinding.instance.hitTestInView(result, globalPosition, viewId);
 
-      RenderObject? currentObj = target;
-      while (currentObj != null) {
-        if (currentObj is RenderAbstractViewport) {
-          ViewportOffset? offset;
-          if (currentObj is RenderViewportBase) {
-            offset = currentObj.offset;
-          } else {
-            try {
-              offset = (currentObj as dynamic).offset as ViewportOffset?;
-            } catch (_) {}
-          }
+      for (final entry in result.path) {
+        final target = entry.target;
+        if (target is! RenderObject) continue;
 
-          if (offset != null) {
-            // If this viewport is the outer PageView, stop ascending this branch
-            if (widget.pageController.hasClients &&
-                offset == widget.pageController.position) {
-              break;
+        RenderObject? currentObj = target;
+        while (currentObj != null) {
+          if (currentObj is RenderAbstractViewport) {
+            ViewportOffset? offset;
+            if (currentObj is RenderViewportBase) {
+              offset = currentObj.offset;
+            } else {
+              try {
+                offset = (currentObj as dynamic).offset as ViewportOffset?;
+              } catch (_) {}
             }
 
-            if (offset is ScrollPosition) {
-              final pos = offset;
-              if (pos.axis == Axis.vertical &&
-                  pos.hasContentDimensions &&
-                  pos.maxScrollExtent > 0) {
-                if (dy > 0) {
-                  // Scrolling down: can inner scroll further down?
-                  if (pos.pixels < pos.maxScrollExtent - 2.0) {
-                    return true;
-                  }
-                } else if (dy < 0) {
-                  // Scrolling up: can inner scroll further up?
-                  if (pos.pixels > pos.minScrollExtent + 2.0) {
-                    return true;
-                  }
-                }
+            if (offset != null) {
+              // If this viewport is the outer PageView, stop ascending this branch
+              if (widget.pageController.hasClients &&
+                  offset == widget.pageController.position) {
+                break;
+              }
+
+              if (offset is ScrollPosition) {
+                _cachedScrollPositions.add(offset);
               }
             }
           }
+          currentObj = currentObj.parent;
         }
-        currentObj = currentObj.parent;
+      }
+    }
+
+    for (final pos in _cachedScrollPositions) {
+      if (pos.axis == Axis.vertical &&
+          pos.hasContentDimensions &&
+          pos.maxScrollExtent > 0) {
+        if (dy > 0) {
+          // Scrolling down: can inner scroll further down?
+          if (pos.pixels < pos.maxScrollExtent - 2.0) {
+            return true;
+          }
+        } else if (dy < 0) {
+          // Scrolling up: can inner scroll further up?
+          if (pos.pixels > pos.minScrollExtent + 2.0) {
+            return true;
+          }
+        }
       }
     }
     return false;
