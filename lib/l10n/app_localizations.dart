@@ -753,6 +753,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CLICK TO FLIP'**
   String get flipHintClick;
+
+  /// Desktop footer link to the next section.
+  ///
+  /// In en, this message translates to:
+  /// **'NEXT'**
+  String get folioNext;
+
+  /// No description provided for @folioBackToStart.
+  ///
+  /// In en, this message translates to:
+  /// **'BACK TO START'**
+  String get folioBackToStart;
+
+  /// Toast for a returning visitor, offering to jump back to the section they last viewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back — continue at {section}?'**
+  String welcomeBack(String section);
+
+  /// No description provided for @continueAction.
+  ///
+  /// In en, this message translates to:
+  /// **'CONTINUE'**
+  String get continueAction;
 }
 
 class _AppLocalizationsDelegate

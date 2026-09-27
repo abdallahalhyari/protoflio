@@ -5,12 +5,12 @@ import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/folio_bar.dart';
 import 'package:profile/theme/app_theme.dart';
 
-Widget _host(ValueNotifier<int> pageIndex) {
+Widget _host(ValueNotifier<int> pageIndex, {void Function(int)? onGoTo}) {
   final controller = HomeController(
     pageIndex: pageIndex,
     showScrollToTop: ValueNotifier<bool>(false),
     pageCount: 7,
-    goTo: (int _, {bool syncUrl = true}) {},
+    goTo: (int page, {bool syncUrl = true}) => onGoTo?.call(page),
     next: () {},
     prev: () {},
     scrollToMobileSection: (int _, {bool syncUrl = true}) {},
@@ -49,5 +49,25 @@ void main() {
     pageIndex.value = 5;
     await tester.pumpAndSettle();
     expect(find.textContaining('06'), findsWidgets);
+  });
+
+  testWidgets('FolioBar "Next" goes to the following section', (tester) async {
+    int? went;
+    await tester
+        .pumpWidget(_host(ValueNotifier<int>(2), onGoTo: (p) => went = p));
+    await tester.pumpAndSettle();
+    expect(find.text('NEXT · SKILLS & STACK'), findsOneWidget);
+    await tester.tap(find.text('NEXT · SKILLS & STACK'));
+    expect(went, 3);
+  });
+
+  testWidgets('FolioBar offers the way back to the start on the last page',
+      (tester) async {
+    int? went;
+    await tester
+        .pumpWidget(_host(ValueNotifier<int>(6), onGoTo: (p) => went = p));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('BACK TO START'));
+    expect(went, 0);
   });
 }

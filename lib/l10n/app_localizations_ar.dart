@@ -361,4 +361,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get flipHintClick => 'انقر للقلب';
+
+  @override
+  String get folioNext => 'التالي';
+
+  @override
+  String get folioBackToStart => 'العودة إلى البداية';
+
+  @override
+  String welcomeBack(String section) {
+    return 'مرحبًا بعودتك — هل تريد المتابعة من $section؟';
+  }
+
+  @override
+  String get continueAction => 'متابعة';
 }

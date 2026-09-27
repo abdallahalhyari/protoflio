@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/widget/app_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/theme/tokens.dart';
@@ -122,6 +125,11 @@ class _HomeScreenState extends State<HomeScreen> {
         UrlSyncService.instance.updateTitle(UrlSyncService.baseTitle);
       });
     }
+    // Landing on the cover with no deep link: a returning visitor gets a
+    // one-tap way back to where they left off.
+    if (initialSection == null || initialSection == 'home') {
+      unawaited(_offerResume());
+    }
 
     // Deep-link into a case study when the URL had `#work/<slug>`.
     // Deferred until after first frame so the outer section paints
@@ -236,6 +244,52 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  static const String _lastSectionKey = 'lastSection';
+
+  Future<void> _rememberSection(int page) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_lastSectionKey, page);
+    } catch (_) {}
+  }
+
+  Future<void> _offerResume() async {
+    int? saved;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      saved = prefs.getInt(_lastSectionKey);
+    } catch (_) {
+      return;
+    }
+    if (saved == null || saved <= 0 || saved >= _pageCount) return;
+    // Let the cover paint first; the offer shouldn't be the first thing.
+    await Future<void>.delayed(AppMotion.ambient);
+    if (!mounted || _pageIndex.value != 0 || CaseStudyRouter.hasOpen) return;
+    final labels = TopNav.getLabels(context);
+    final l10n = AppLocalizations.of(context)!;
+    final target = saved;
+    AppToast.show(
+      context,
+      message: l10n.welcomeBack(labels[target]),
+      icon: Icons.history_rounded,
+      duration: const Duration(seconds: 7),
+      width: MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet
+          ? 460
+          : null,
+      action: SnackBarAction(
+        label: l10n.continueAction,
+        onPressed: () {
+          if (!mounted) return;
+          if (MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
+            _scrollToMobileSection(target);
+          } else {
+            _goTo(target);
+          }
+        },
+      ),
+    );
+  }
+
   void _scheduleSettle(int page) {
     _settleTimer?.cancel();
     _settleTimer = Timer(AppMotion.sm, () {
@@ -245,6 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // the `#work/<slug>` entry Back relies on.
       if (!CaseStudyRouter.hasOpen) UrlSyncService.instance.updateHash(hash);
       context.read<ThemeBloc>().add(ThemeAccentUpdatedFromHash(hash));
+      unawaited(_rememberSection(page));
       final labels = TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {
         Analytics.screen(labels[page], className: 'HomeScreen');
@@ -346,6 +401,9 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
     if (syncUrl) {
       _scheduleSettle(target);
+    } else {
+      // Deep-link / Back jumps skip settle; still remember the section.
+      unawaited(_rememberSection(target));
     }
     if (target == 0 && _mobileScrollController.hasClients) {
       _mobileScrollController.animateTo(

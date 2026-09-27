@@ -366,4 +366,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get flipHintClick => 'CLICK TO FLIP';
+
+  @override
+  String get folioNext => 'NEXT';
+
+  @override
+  String get folioBackToStart => 'BACK TO START';
+
+  @override
+  String welcomeBack(String section) {
+    return 'Welcome back — continue at $section?';
+  }
+
+  @override
+  String get continueAction => 'CONTINUE';
 }

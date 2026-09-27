@@ -108,5 +108,9 @@
   "sectionSubtitleEngineering": "Architektury ověřené v produkci, na kterých stojí mobilní aplikace",
   "sectionSubtitleAbout": "Šest rolí, mezi kterými senior inženýr přepíná",
   "flipHintTap": "KLEPNĚTE A OTOČTE",
-  "flipHintClick": "KLIKNĚTE A OTOČTE"
+  "flipHintClick": "KLIKNĚTE A OTOČTE",
+  "folioNext": "DÁLE",
+  "folioBackToStart": "ZPĚT NA ZAČÁTEK",
+  "welcomeBack": "Vítejte zpět — pokračovat v sekci {section}?",
+  "continueAction": "POKRAČOVAT"
 }
