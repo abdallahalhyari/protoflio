@@ -639,31 +639,43 @@ class _HomeScreenState extends State<HomeScreen> {
       lastPageTurnCompletedAt: _lastPageTurnCompletedAt,
       child: Stack(
         children: [
-          PageView.builder(
+          Scrollable(
             key: const PageStorageKey<String>('desktop_pageview'),
-            physics: const NeverScrollableScrollPhysics(),
-            allowImplicitScrolling: true,
             controller: _controller,
-            scrollDirection: Axis.vertical,
-            itemCount: _pageCount,
-            itemBuilder: (context, index) {
-              return MagazinePageTransformer(
-                controller: _controller,
-                index: index,
-                // Pre-built neighbours and kept-alive pages stay mounted, so
-                // only the visible page may hold keyboard focus.
-                child: ValueListenableBuilder<int>(
-                  valueListenable: _pageIndex,
-                  builder: (context, active, page) => ExcludeFocus(
-                    excluding: active != index,
-                    child:
-                        PageActivity(isActive: active == index, child: page!),
+            axisDirection: AxisDirection.down,
+            physics: const NeverScrollableScrollPhysics(),
+            viewportBuilder: (context, position) {
+              return Viewport(
+                axisDirection: AxisDirection.down,
+                offset: position,
+                cacheExtent: 100000.0, // Cache 100000 pixels (all pages)
+                slivers: [
+                  SliverFillViewport(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return MagazinePageTransformer(
+                          controller: _controller,
+                          index: index,
+                          // Pre-built neighbours and kept-alive pages stay mounted, so
+                          // only the visible page may hold keyboard focus.
+                          child: ValueListenableBuilder<int>(
+                            valueListenable: _pageIndex,
+                            builder: (context, active, page) => ExcludeFocus(
+                              excluding: active != index,
+                              child: PageActivity(
+                                  isActive: active == index, child: page!),
+                            ),
+                            child: RepaintBoundary(
+                              key: ValueKey('desktop_page_repaint_$index'),
+                              child: _buildDesktopPage(index),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: _pageCount,
+                    ),
                   ),
-                  child: RepaintBoundary(
-                    key: ValueKey('desktop_page_repaint_$index'),
-                    child: _buildDesktopPage(index),
-                  ),
-                ),
+                ],
               );
             },
           ),
