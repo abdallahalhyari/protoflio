@@ -196,24 +196,38 @@
       color: rgba(255, 255, 255, 0.72);
     }
     #boot-loader.slow .boot-slow { display: block; }
-    .boot-actions {
-      margin-top: 22px;
-      display: flex; gap: 10px; align-items: center; justify-content: center;
-      font: 600 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      color: rgba(255, 255, 255, 0.45);
-      opacity: 0;
-      animation: boot-actions-in 0.4s ease-out 1.2s forwards;
+    .boot-pitch {
+      max-width: 440px;
+      margin: 0 0 24px;
+      font: 400 14px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: #CBD5E1;
       user-select: text; -webkit-user-select: text;
     }
-    .boot-actions a {
-      color: #A5B4FC; text-decoration: none;
-      padding: 8px 6px; border-radius: 6px;
+    .boot-actions {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      align-items: center; justify-content: center;
+      margin-bottom: 28px;
     }
-    .boot-actions a:hover { text-decoration: underline; }
-    .boot-actions a:focus-visible { outline: 2px solid #A5B4FC; outline-offset: 2px; }
-    @keyframes boot-actions-in { to { opacity: 1; } }
-    @media (prefers-reduced-motion: reduce) {
-      .boot-actions { animation-duration: 0s; }
+    .boot-actions a {
+      display: inline-flex; align-items: center; min-height: 44px;
+      padding: 0 20px; border-radius: 999px;
+      font: 700 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+      color: #C7D2FE; border: 1px solid rgba(165, 180, 252, 0.45);
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .boot-actions a:hover { background: rgba(99, 102, 241, 0.14); border-color: #A5B4FC; }
+    .boot-actions a.primary { background: #6366F1; border-color: #6366F1; color: #FFFFFF; }
+    .boot-actions a.primary:hover { background: #4F46E5; }
+    .boot-actions a:focus-visible { outline: 2px solid #A5B4FC; outline-offset: 3px; }
+    @media (max-width: 420px) {
+      .boot-role { letter-spacing: 0.1em; }
+    }
+    .boot-loading {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font: 500 11px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: #94A3B8;
     }
     #consent-banner {
       position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
@@ -281,7 +295,7 @@
     }
     .boot-title {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 15px;
+      font-size: clamp(20px, 4.2vw, 34px);
       font-weight: 800;
       letter-spacing: 0.26em;
       text-transform: uppercase;
@@ -291,12 +305,12 @@
     }
     .boot-role {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #94A3B8;
-      font-weight: 600;
-      margin-bottom: 28px;
+      color: #A5B4FC;
+      font-weight: 700;
+      margin-bottom: 14px;
     }
     .boot-progress-track {
       width: 140px;
@@ -394,26 +408,30 @@
        of walking through the boot loader / decorative overlays. -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <div id="boot-loader" role="status" aria-label="Loading portfolio">
+  <!-- First screen, painted by the browser before Flutter loads: who,
+       what, and the three actions a recruiter wants, usable from the first
+       frame. Crossfades into the app's own hero once it renders. -->
+  <div id="boot-loader">
     <div class="boot-container">
-      <div class="boot-emblem-wrap">
+      <div class="boot-emblem-wrap" aria-hidden="true">
         <div class="boot-orbital-ring"></div>
         <div class="boot-emblem">A</div>
       </div>
       <div class="boot-title">Abdallah Alhyari</div>
-      <div class="boot-role">Senior Flutter &amp; Android Engineer</div>
-      <div class="boot-progress-track">
-        <div class="boot-progress-bar"></div>
-      </div>
-      <!-- Quick actions fade in after ~1.2s, so a fast load never sees them
-           but a recruiter on a slow connection can act straight away. -->
+      <div class="boot-role">Senior Mobile Engineer &middot; Flutter &amp; Android</div>
+      <p class="boot-pitch">Builds complex, reliable, scalable mobile systems &mdash;
+        offline-first sync, NFC smart-cards, security and real-time apps.</p>
       <nav class="boot-actions" aria-label="Quick links">
-        <a href="cv.pdf">CV (PDF)</a>
-        <span aria-hidden="true">&middot;</span>
-        <a href="mailto:alhyariabdallh@gmail.com">Email</a>
-        <span aria-hidden="true">&middot;</span>
+        <a class="primary" href="cv.pdf">Download CV</a>
+        <a href="mailto:alhyariabdallh@gmail.com">Email me</a>
         <a href="https://www.linkedin.com/in/abdallah-alhyari-0294791a0/" rel="noopener" target="_blank">LinkedIn</a>
       </nav>
+      <div class="boot-loading" role="status">
+        <div class="boot-progress-track" aria-hidden="true">
+          <div class="boot-progress-bar"></div>
+        </div>
+        <span>Loading the interactive portfolio&hellip;</span>
+      </div>
       <p class="boot-slow">Still loading &mdash; this can take a moment on a slow connection.</p>
     </div>
   </div>
