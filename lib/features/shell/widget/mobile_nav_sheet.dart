@@ -542,13 +542,14 @@ class MobileNavSheet extends StatelessWidget {
                           _SocialButton(
                             label: 'LinkedIn',
                             icon: Icons.link_rounded,
-                            url: 'https://linkedin.com/in/abdallah-alhyari',
+                            url:
+                                'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/',
                           ),
                           SizedBox(width: 12),
                           _SocialButton(
                             label: 'GitHub',
                             icon: Icons.code_rounded,
-                            url: 'https://github.com/abdallah-alhyari',
+                            url: 'https://github.com/abdallahalhyari',
                           ),
                         ],
                       ),

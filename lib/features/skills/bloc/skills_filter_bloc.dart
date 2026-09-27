@@ -80,15 +80,25 @@ class SkillsFilterBloc extends Bloc<SkillsFilterEvent, SkillsFilterState> {
         ? skills
         : skills.where((s) => s.category == category).toList();
 
-    final q = query.trim().toLowerCase();
-    if (q.isNotEmpty) {
+    // Every word must match somewhere on the skill, so recruiter-style
+    // multi-word queries ("flutter bloc", "android security") narrow the
+    // list instead of returning nothing because no one field contains
+    // the whole phrase.
+    final words = query
+        .toLowerCase()
+        .split(RegExp(r'[\s,]+'))
+        .where((w) => w.isNotEmpty)
+        .toList();
+    if (words.isNotEmpty) {
       result = result.where((s) {
-        final nameMatch = s.name.toLowerCase().contains(q);
-        final catMatch = s.category.toLowerCase().contains(q);
-        final descMatch = s.description.toLowerCase().contains(q);
-        final provenMatch = s.provenIn.toLowerCase().contains(q);
-        final tagsMatch = s.tags.any((t) => t.toLowerCase().contains(q));
-        return nameMatch || catMatch || descMatch || provenMatch || tagsMatch;
+        final haystack = [
+          s.name,
+          s.category,
+          s.description,
+          s.provenIn,
+          ...s.tags,
+        ].join(' ').toLowerCase();
+        return words.every(haystack.contains);
       }).toList();
     }
 
