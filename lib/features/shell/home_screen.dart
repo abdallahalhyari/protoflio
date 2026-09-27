@@ -594,6 +594,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       case 1:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: experience_lib.loadLibrary,
           builder: () => experience_lib.ExperiencePage(
             controller: _controller,
@@ -602,26 +603,31 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       case 2:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: projects_lib.loadLibrary,
           builder: () => projects_lib.ProjectsPage(),
         );
       case 3:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: skills_lib.loadLibrary,
           builder: () => skills_lib.SkillsPage(),
         );
       case 4:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: engineering_lib.loadLibrary,
           builder: () => engineering_lib.EngineeringPage(),
         );
       case 5:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: hats_lib.loadLibrary,
           builder: () => hats_lib.HatsGridPage(),
         );
       case 6:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: contact_lib.loadLibrary,
           builder: () => contact_lib.ContactPage(),
         );
