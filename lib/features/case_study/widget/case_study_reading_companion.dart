@@ -368,7 +368,8 @@ class _FloatingChapterDock extends StatelessWidget {
                 child: Container(
                   key: const Key('case_study_chapter_dock'),
                   constraints: isCompact
-                      ? BoxConstraints(maxWidth: screenWidth - 24)
+                      ? BoxConstraints(
+                          maxWidth: math.max(0.0, screenWidth - 24))
                       : null,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppRadius.pill),

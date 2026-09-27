@@ -435,19 +435,27 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                     Icon(Icons.touch_app_outlined,
                         size: 12, color: Colors.white.withValues(alpha: 0.60)),
                     if (!widget.isStandalone) const SizedBox(width: 6),
-                    Text(
-                      // The fanned deck is desktop-only; the standalone
-                      // card is the touch (mobile) presentation.
-                      widget.isStandalone
-                          ? (AppLocalizations.of(context)?.flipHintTap ??
-                              'TAP TO FLIP')
-                          : (AppLocalizations.of(context)?.flipHintClick ??
-                              'CLICK TO FLIP'),
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.82),
-                        fontSize: AppTypography.editorial,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.8,
+                    // Longer translations (Czech) shrink to fit rather than
+                    // overflow or cut off the instruction.
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          // The fanned deck is desktop-only; the standalone
+                          // card is the touch (mobile) presentation.
+                          widget.isStandalone
+                              ? (AppLocalizations.of(context)?.flipHintTap ??
+                                  'TAP TO FLIP')
+                              : (AppLocalizations.of(context)?.flipHintClick ??
+                                  'CLICK TO FLIP'),
+                          style: TextStyle(
+                            color: Colors.white.withValues(alpha: 0.82),
+                            fontSize: AppTypography.editorial,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.8,
+                          ),
+                        ),
                       ),
                     ),
                     if (widget.isStandalone)

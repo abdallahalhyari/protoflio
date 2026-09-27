@@ -238,18 +238,23 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                       ),
                     ],
                     const SizedBox(width: 5),
-                    Text(
-                      widget.label,
-                      style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        fontSize: AppTypography.micro,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.2,
-                        color: _hovered
-                            ? (isDark ? Colors.white : primary)
-                            : (isDark
-                                ? Colors.white.withValues(alpha: 0.88)
-                                : AppColors.slate800),
+                    Flexible(
+                      child: Text(
+                        widget.label,
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: AppTypography.monoFont,
+                          fontSize: AppTypography.micro,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.2,
+                          color: _hovered
+                              ? (isDark ? Colors.white : primary)
+                              : (isDark
+                                  ? Colors.white.withValues(alpha: 0.88)
+                                  : AppColors.slate800),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 3),
