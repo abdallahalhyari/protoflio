@@ -5,7 +5,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Thinking',
     heroTag: 'Thinking Cap',
-    image: 'assets/images/hats/grad_cap.png',
+    image: 'assets/images/hats/grad_cap.webp',
     color: AppColors.hatBrown,
     titleDesc: 'I AM A QUICK LEARNER',
     desc:
@@ -14,7 +14,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Communicating',
     heroTag: 'Communicating hat',
-    image: 'assets/images/hats/comms_hat.png',
+    image: 'assets/images/hats/comms_hat.webp',
     color: AppColors.hatOrange,
     titleDesc: 'I LISTEN CAREFULLY AND RESPOND CLEARLY',
     desc:
@@ -32,7 +32,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Building',
     heroTag: 'Building Hat',
-    image: 'assets/images/hats/hard_hat.png',
+    image: 'assets/images/hats/hard_hat.webp',
     color: AppColors.hatRed,
     titleDesc: 'I LOVE MAKING THINGS',
     desc:
@@ -41,7 +41,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Fixing',
     heroTag: 'Fixing Hat',
-    image: 'assets/images/hats/dt_hat.png',
+    image: 'assets/images/hats/dt_hat.webp',
     color: AppColors.hatGreen,
     titleDesc: 'I AM A PROBLEM SOLVER',
     desc:
@@ -50,7 +50,7 @@ final List<HatInfo> kHats = [
   HatInfo(
     title: 'Compassion',
     heroTag: 'Compassion Hat',
-    image: 'assets/images/hats/nurses_cap.png',
+    image: 'assets/images/hats/nurses_cap.webp',
     color: AppColors.hatPurple,
     titleDesc: 'I LIVE BY THE GOLDEN RULE',
     desc:

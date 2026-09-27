@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:profile/theme/tokens.dart';
 
 /// Wraps a page whose Dart code is behind a `deferred as` import.
@@ -14,11 +15,19 @@ class DeferredPage extends StatefulWidget {
     required this.loader,
     required this.builder,
     this.placeholderHeight = 720,
+    this.mountPriority,
   });
 
   final Future<void> Function() loader;
   final Widget Function() builder;
   final double placeholderHeight;
+
+  /// When set, the page swaps its content in through [StaggeredMount]
+  /// (lowest priority first, one page per frame) instead of building the
+  /// moment its code arrives. Use for independent full-screen pages that
+  /// all load at once: in the wasm build every chunk resolves together,
+  /// and building six sections in one frame was a 400ms+ main-thread task.
+  final int? mountPriority;
 
   /// Warms [loader]'s chunk ahead of time and records it, so a later
   /// [DeferredPage] using the same loader mounts straight into content.
@@ -56,15 +65,30 @@ class _DeferredPageState extends State<DeferredPage>
   void _startLoad() {
     widget.loader().then((_) {
       _resolvedLoaders.add(widget.loader);
-      if (mounted) {
-        setState(() {
-          _loaded = true;
-          _loadError = null;
-        });
+      if (!mounted) return;
+      final priority = widget.mountPriority;
+      if (priority == null) {
+        _showContent();
+      } else {
+        StaggeredMount.request(priority, _showContent);
       }
     }).catchError((Object err) {
       if (mounted) setState(() => _loadError = err);
     });
+  }
+
+  void _showContent() {
+    if (!mounted || _loaded) return;
+    setState(() {
+      _loaded = true;
+      _loadError = null;
+    });
+  }
+
+  @override
+  void dispose() {
+    StaggeredMount.cancel(_showContent);
+    super.dispose();
   }
 
   @override
@@ -106,5 +130,43 @@ class _DeferredPageState extends State<DeferredPage>
       switchOutCurve: AppMotion.standard,
       child: content,
     );
+  }
+}
+
+/// Hands out one mount per frame, lowest priority first.
+///
+/// Waits for the frame in progress to finish before the first mount, so
+/// every page that became ready in the same burst is queued and ordered
+/// by priority (distance from the page on screen) before any of them
+/// builds. Each mount then gets a frame of its own: the same total work,
+/// split into short tasks that don't block input.
+class StaggeredMount {
+  StaggeredMount._();
+
+  static final List<(int, VoidCallback)> _pending = [];
+  static bool _draining = false;
+
+  static void request(int priority, VoidCallback mount) {
+    // Stable insert: equal priorities keep request order.
+    final at = _pending.indexWhere((e) => e.$1 > priority);
+    _pending.insert(at < 0 ? _pending.length : at, (priority, mount));
+    _drain();
+  }
+
+  static void cancel(VoidCallback mount) =>
+      _pending.removeWhere((e) => e.$2 == mount);
+
+  static Future<void> _drain() async {
+    if (_draining) return;
+    _draining = true;
+    try {
+      await SchedulerBinding.instance.endOfFrame;
+      while (_pending.isNotEmpty) {
+        _pending.removeAt(0).$2();
+        await SchedulerBinding.instance.endOfFrame;
+      }
+    } finally {
+      _draining = false;
+    }
   }
 }

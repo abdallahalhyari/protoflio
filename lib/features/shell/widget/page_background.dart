@@ -355,10 +355,14 @@ class _PageBackgroundState extends State<PageBackground> {
                         child: orbsWidget,
                         builder: (context, mouseOffset, staticOrbs) {
                           final maxShift = isDark ? 24.0 : 20.0;
-                          final shiftX = reduceMotion
+                          // An empty view (hot restart, minimised tab)
+                          // would make this 0 / 0 = NaN: an invalid
+                          // transform that breaks layer compositing.
+                          final still = reduceMotion || size.isEmpty;
+                          final shiftX = still
                               ? 0.0
                               : (mouseOffset.dx / size.width * maxShift);
-                          final shiftY = reduceMotion
+                          final shiftY = still
                               ? 0.0
                               : (mouseOffset.dy / size.height * maxShift);
                           return Transform.translate(

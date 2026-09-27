@@ -25,7 +25,9 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
         ),
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 380),
-          child: Padding(
+          // Scrolls in a short window or at large text sizes instead of
+          // overflowing the dialog.
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: Column(
               mainAxisSize: MainAxisSize.min,
