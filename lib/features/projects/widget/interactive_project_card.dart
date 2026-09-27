@@ -306,29 +306,30 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                                   constraints.maxHeight > 0
                                                       ? constraints.maxHeight
                                                       : 200.0;
-                                              return ValueListenableBuilder<
-                                                  Offset>(
-                                                valueListenable: _mousePos,
-                                                builder: (context, pos, _) =>
-                                                    Container(
-                                                  decoration: BoxDecoration(
-                                                    gradient: RadialGradient(
-                                                      center: FractionalOffset(
-                                                        (pos.dx / w)
-                                                            .clamp(0.0, 1.0),
-                                                        (pos.dy / h)
-                                                            .clamp(0.0, 1.0),
+                                              return RepaintBoundary(
+                                                child: ValueListenableBuilder<Offset>(
+                                                  valueListenable: _mousePos,
+                                                  builder: (context, pos, _) =>
+                                                      Container(
+                                                    decoration: BoxDecoration(
+                                                      gradient: RadialGradient(
+                                                        center: FractionalOffset(
+                                                          (pos.dx / w)
+                                                              .clamp(0.0, 1.0),
+                                                          (pos.dy / h)
+                                                              .clamp(0.0, 1.0),
+                                                        ),
+                                                        radius: 0.65,
+                                                        colors: [
+                                                          widget.scheme.primary
+                                                              .withValues(
+                                                                  alpha: isDark
+                                                                      ? 0.32
+                                                                      : 0.22),
+                                                          Colors.transparent,
+                                                        ],
+                                                        stops: const [0.0, 1.0],
                                                       ),
-                                                      radius: 0.65,
-                                                      colors: [
-                                                        widget.scheme.primary
-                                                            .withValues(
-                                                                alpha: isDark
-                                                                    ? 0.32
-                                                                    : 0.22),
-                                                        Colors.transparent,
-                                                      ],
-                                                      stops: const [0.0, 1.0],
                                                     ),
                                                   ),
                                                 ),

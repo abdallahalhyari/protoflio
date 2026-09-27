@@ -104,18 +104,20 @@ class _HatPlayingCardState extends State<HatPlayingCard>
         child: ValueListenableBuilder<Offset>(
           valueListenable: _tiltOffset,
           builder: (context, tilt, _) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                gradient: RadialGradient(
-                  center: Alignment(tilt.dx, tilt.dy),
-                  radius: 0.9,
-                  colors: [
-                    AppColors.accentAmber.withValues(alpha: 0.2),
-                    Colors.white.withValues(alpha: AppAlpha.whisper),
-                    Colors.transparent,
-                  ],
-                  stops: const [0.0, 0.45, 1.0],
+            return RepaintBoundary(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  gradient: RadialGradient(
+                    center: Alignment(tilt.dx, tilt.dy),
+                    radius: 0.9,
+                    colors: [
+                      AppColors.accentAmber.withValues(alpha: 0.2),
+                      Colors.white.withValues(alpha: AppAlpha.whisper),
+                      Colors.transparent,
+                    ],
+                    stops: const [0.0, 0.45, 1.0],
+                  ),
                 ),
               ),
             );

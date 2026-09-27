@@ -112,23 +112,25 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                         widget.borderRadius),
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        gradient: RadialGradient(
-                                          center: Alignment(
-                                              norm.dx * 0.8, norm.dy * 0.8),
-                                          radius: 1.2,
-                                          colors: [
-                                            Theme.of(context)
-                                                .colorScheme
-                                                .onSurface
-                                                .withValues(alpha: 0.15),
-                                            Theme.of(context)
-                                                .colorScheme
-                                                .onSurface
-                                                .withValues(alpha: 0.0),
-                                          ],
-                                          stops: const [0.0, 1.0],
+                                    child: RepaintBoundary(
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          gradient: RadialGradient(
+                                            center: Alignment(
+                                                norm.dx * 0.8, norm.dy * 0.8),
+                                            radius: 1.2,
+                                            colors: [
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface
+                                                  .withValues(alpha: 0.15),
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface
+                                                  .withValues(alpha: 0.0),
+                                            ],
+                                            stops: const [0.0, 1.0],
+                                          ),
                                         ),
                                       ),
                                     ),
