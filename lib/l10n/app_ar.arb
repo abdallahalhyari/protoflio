@@ -112,5 +112,15 @@
   "folioNext": "التالي",
   "folioBackToStart": "العودة إلى البداية",
   "welcomeBack": "مرحبًا بعودتك — هل تريد المتابعة من {section}؟",
-  "continueAction": "متابعة"
+  "continueAction": "متابعة",
+  "quickProfile": "ملف في 30 ثانية",
+  "quickProfileTitle": "ملخص للتوظيف",
+  "quickProfileRole": "الدور",
+  "quickProfileExperience": "الخبرة",
+  "quickProfileYears": "أكثر من {years} سنوات في هندسة تطبيقات الجوال",
+  "quickProfileStack": "التقنيات الأساسية",
+  "quickProfileRecent": "أحدث المناصب",
+  "quickProfileEmail": "البريد الإلكتروني",
+  "quickProfileCopy": "نسخ الملخص",
+  "quickProfileCopied": "تم نسخ ملخص الملف"
 }

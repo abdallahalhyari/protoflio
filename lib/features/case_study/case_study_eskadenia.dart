@@ -28,6 +28,18 @@ class EskadeniaCaseStudy extends StatelessWidget {
         final isDark = Theme.of(context).brightness == Brightness.dark;
         return [
           _Masthead(isDesktop: isDesktop),
+          const SizedBox(height: AppSpacing.xl),
+          CaseStudyAtAGlance(
+            slug: 'eskadenia',
+            challenge:
+                'Legacy monolithic hospital and university apps stuttered on dense records and crashed on low-spec ward tablets during long shifts.',
+            built:
+                'An incremental MVVM refactor into decoupled feature packages with cached repositories and typed contracts, profiled with DevTools, with zero downtime.',
+            result:
+                '60 FPS on dense data tables, 35% fewer crashes, 1,000+ records rendered smoothly, and four enterprise platforms deployed.',
+            outcomesKey: keys.outcomesKey,
+            isDesktop: isDesktop,
+          ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,

@@ -36,6 +36,10 @@ void main() {
       expect(find.text('SYSTEM ARCHITECTURE'), findsOneWidget);
       expect(find.text('OUTCOMES'), findsOneWidget);
       expect(find.text('LESSONS'), findsOneWidget);
+      // Scroll rather than rely on the surface height: the article is a
+      // lazy list and grows as studies gain sections.
+      await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
+          scrollable: find.byType(Scrollable).first);
       expect(find.text('Back to portfolio'), findsOneWidget);
       expect(tester.takeException(), isNull);
 
@@ -65,6 +69,10 @@ void main() {
       expect(find.text('OUTCOMES'), findsOneWidget);
       expect(find.text('LESSONS'), findsOneWidget);
       expect(find.text('60 FPS'), findsOneWidget);
+      // Scroll rather than rely on the surface height: the article is a
+      // lazy list and grows as studies gain sections.
+      await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
+          scrollable: find.byType(Scrollable).first);
       expect(find.text('Back to portfolio'), findsOneWidget);
       expect(tester.takeException(), isNull);
 
@@ -94,6 +102,10 @@ void main() {
       expect(find.text('OUTCOMES'), findsOneWidget);
       expect(find.text('LESSONS'), findsOneWidget);
       expect(find.text('4.7+'), findsOneWidget);
+      // Scroll rather than rely on the surface height: the article is a
+      // lazy list and grows as studies gain sections.
+      await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
+          scrollable: find.byType(Scrollable).first);
       expect(find.text('Back to portfolio'), findsOneWidget);
       expect(tester.takeException(), isNull);
 
@@ -122,6 +134,10 @@ void main() {
       expect(find.text('OUTCOMES'), findsOneWidget);
       expect(find.text('LESSONS'), findsOneWidget);
       expect(find.text('99.8%'), findsOneWidget);
+      // Scroll rather than rely on the surface height: the article is a
+      // lazy list and grows as studies gain sections.
+      await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
+          scrollable: find.byType(Scrollable).first);
       expect(find.text('Back to portfolio'), findsOneWidget);
       expect(tester.takeException(), isNull);
 

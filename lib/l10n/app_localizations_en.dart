@@ -380,4 +380,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continueAction => 'CONTINUE';
+
+  @override
+  String get quickProfile => '30-SEC PROFILE';
+
+  @override
+  String get quickProfileTitle => 'Hiring summary';
+
+  @override
+  String get quickProfileRole => 'ROLE';
+
+  @override
+  String get quickProfileExperience => 'EXPERIENCE';
+
+  @override
+  String quickProfileYears(int years) {
+    return '$years+ years in mobile engineering';
+  }
+
+  @override
+  String get quickProfileStack => 'CORE STACK';
+
+  @override
+  String get quickProfileRecent => 'RECENT ROLES';
+
+  @override
+  String get quickProfileEmail => 'Email';
+
+  @override
+  String get quickProfileCopy => 'Copy summary';
+
+  @override
+  String get quickProfileCopied => 'Profile summary copied';
 }
