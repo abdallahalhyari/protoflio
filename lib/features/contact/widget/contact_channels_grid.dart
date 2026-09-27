@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/shared/util/grid_math.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/service/analytics_service.dart';
 import 'channel_tile.dart';
@@ -143,9 +144,9 @@ class ContactChannelsGrid extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         LayoutBuilder(
           builder: (context, constraints) {
-            final tileW = isDesktop
-                ? (constraints.maxWidth - AppSpacing.md) / 2
-                : constraints.maxWidth;
+            final tileW = columnWidth(
+                constraints.maxWidth, isDesktop ? 2 : 1, AppSpacing.md);
+            if (tileW <= 0) return const SizedBox.shrink();
             return Wrap(
               spacing: AppSpacing.md,
               runSpacing: AppSpacing.md,

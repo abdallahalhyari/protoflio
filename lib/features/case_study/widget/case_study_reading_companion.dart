@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -295,8 +297,8 @@ class _TopReadingProgressBar extends StatelessWidget {
                 ),
                 if (progress > 0.01 && progress < 0.995)
                   Positioned(
-                    left:
-                        (filledWidth - 3).clamp(0.0, constraints.maxWidth - 6),
+                    left: (filledWidth - 3)
+                        .clamp(0.0, math.max(0.0, constraints.maxWidth - 6)),
                     top: -1.2,
                     child: Container(
                       width: 6,

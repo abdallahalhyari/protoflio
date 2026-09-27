@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/shared/util/grid_math.dart';
 import 'package:profile/theme/tokens.dart';
 import 'consulting_track.dart';
 
@@ -105,9 +106,9 @@ class EngagementMatrixSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           LayoutBuilder(
             builder: (context, constraints) {
-              final cardWidth = isDesktop
-                  ? (constraints.maxWidth - 2 * AppSpacing.md) / 3
-                  : constraints.maxWidth;
+              final cardWidth = columnWidth(
+                  constraints.maxWidth, isDesktop ? 3 : 1, AppSpacing.md);
+              if (cardWidth <= 0) return const SizedBox.shrink();
 
               return Wrap(
                 spacing: AppSpacing.md,
