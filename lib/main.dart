@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:profile/shared/widget/keyboard_focus_ring.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
@@ -132,7 +133,9 @@ class PortfolioApp extends StatelessWidget {
                     data: media.copyWith(
                       textScaler: AppMedia.clampTextScale(media.textScaler),
                     ),
-                    child: child!,
+                    // Above the Navigator, so dialogs and case-study
+                    // routes get the keyboard focus ring too.
+                    child: KeyboardFocusRing(child: child!),
                   );
                 },
                 home: const _AccentTheme(child: HomeScreen()),

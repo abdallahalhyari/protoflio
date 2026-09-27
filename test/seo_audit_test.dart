@@ -27,19 +27,19 @@ void main() {
       );
       expect(
         service.titleForHash('engineering'),
-        'Systems Architecture & Engineering · Abdallah Alhyari',
+        'Engineering & Systems Architecture · Abdallah Alhyari',
       );
       expect(
         service.titleForHash('experience'),
-        'Career Trajectory & Roles · Abdallah Alhyari',
+        'Experience & Career · Abdallah Alhyari',
       );
       expect(
         service.titleForHash('stack'),
-        'Architectural Mastery & Skills · Abdallah Alhyari',
+        'Skills & Stack · Abdallah Alhyari',
       );
       expect(
         service.titleForHash('about'),
-        'Perspectives & Roles · Abdallah Alhyari',
+        'Perspectives · Abdallah Alhyari',
       );
       expect(
         service.titleForHash('contact'),

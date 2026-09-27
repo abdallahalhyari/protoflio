@@ -108,5 +108,9 @@
   "sectionSubtitleEngineering": "هياكل معمارية مُختبَرة في بيئات الإنتاج خلف تطبيقات الهاتف",
   "sectionSubtitleAbout": "ستة أدوار يتنقّل بينها المهندس الخبير",
   "flipHintTap": "اضغط للقلب",
-  "flipHintClick": "انقر للقلب"
+  "flipHintClick": "انقر للقلب",
+  "folioNext": "التالي",
+  "folioBackToStart": "العودة إلى البداية",
+  "welcomeBack": "مرحبًا بعودتك — هل تريد المتابعة من {section}؟",
+  "continueAction": "متابعة"
 }

@@ -23,6 +23,9 @@ class AppToast {
     IconData? icon,
     Duration duration = AppMotion.toast,
     SnackBarAction? action,
+    // Fixed width for a compact floating card instead of a full-width bar;
+    // null keeps the default edge-to-edge floating snack.
+    double? width,
   }) {
     final effectiveIcon = icon ?? _defaultIcon(status);
     final accent = _accent(status);
@@ -34,6 +37,7 @@ class AppToast {
     return messenger.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
+        width: width,
         duration: duration,
         backgroundColor: theme.colorScheme.inverseSurface,
         shape: RoundedRectangleBorder(
@@ -210,30 +214,34 @@ class _ToastContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (accent != null) Container(width: 4, color: accent),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md,
-                  vertical: AppSpacing.smd,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (icon != null) ...[
-                      Icon(icon,
-                          size: AppTypography.subtitle,
-                          color: accent ?? onInverse),
-                      const SizedBox(width: AppSpacing.sm),
-                    ],
-                    Flexible(
-                      child: Text(
-                        message,
-                        style: TextStyle(
-                          color: onInverse,
-                          fontSize: AppTypography.body,
+              // Flexible: unconstrained, a long message never wrapped and
+              // ran underneath the snack's action button on phones.
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.smd,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (icon != null) ...[
+                        Icon(icon,
+                            size: AppTypography.subtitle,
+                            color: accent ?? onInverse),
+                        const SizedBox(width: AppSpacing.sm),
+                      ],
+                      Flexible(
+                        child: Text(
+                          message,
+                          style: TextStyle(
+                            color: onInverse,
+                            fontSize: AppTypography.body,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

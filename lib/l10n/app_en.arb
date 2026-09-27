@@ -153,5 +153,20 @@
   },
   "@flipHintClick": {
     "description": "Hint on flippable skill / role cards for desktop (pointer) viewports."
+  },
+  "folioNext": "NEXT",
+  "folioBackToStart": "BACK TO START",
+  "welcomeBack": "Welcome back — continue at {section}?",
+  "continueAction": "CONTINUE",
+  "@welcomeBack": {
+    "description": "Toast for a returning visitor, offering to jump back to the section they last viewed.",
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "@folioNext": {
+    "description": "Desktop footer link to the next section."
   }
 }

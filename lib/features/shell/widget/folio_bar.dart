@@ -4,6 +4,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/widget/directional_icon.dart';
 import 'portfolio_nav.dart' show TopNav;
 
 /// Desktop bottom-left "05 / 07 · SKILLS" folio bar. Reads pageIndex from
@@ -28,7 +29,7 @@ class FolioBar extends StatelessWidget {
           label:
               'Current section: $currentLabel, page ${page + 1} of $pageCount',
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: const EdgeInsets.fromLTRB(10, 0, 2, 0),
             decoration: BoxDecoration(
               color: context.glassSurface,
               borderRadius: BorderRadius.circular(AppRadius.xs),
@@ -123,11 +124,113 @@ class FolioBar extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(width: 8),
+                Container(
+                  width: 1,
+                  height: 10,
+                  color: context.glassBorderStrong,
+                ),
+                const SizedBox(width: 2),
+                _NextStep(
+                  page: page,
+                  pageCount: pageCount,
+                  labels: labels,
+                  onGoTo: controller.goTo,
+                ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+/// "NEXT · SKILLS & STACK →" — the journey's next step, one click away,
+/// so the reader never has to guess what follows or discover the wheel /
+/// arrow keys. On the last section it offers the way back to the start.
+class _NextStep extends StatefulWidget {
+  const _NextStep({
+    required this.page,
+    required this.pageCount,
+    required this.labels,
+    required this.onGoTo,
+  });
+
+  final int page;
+  final int pageCount;
+  final List<String> labels;
+  final void Function(int index, {bool syncUrl}) onGoTo;
+
+  @override
+  State<_NextStep> createState() => _NextStepState();
+}
+
+class _NextStepState extends State<_NextStep> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isLast = widget.page >= widget.pageCount - 1;
+    final target = isLast ? 0 : widget.page + 1;
+    final label = isLast
+        ? l10n.folioBackToStart
+        : '${l10n.folioNext} · ${widget.labels[target].toUpperCase()}';
+    final accent =
+        context.adaptiveAccentText(Theme.of(context).colorScheme.primary);
+    final reduce = MediaQuery.disableAnimationsOf(context);
+
+    return Semantics(
+      button: true,
+      label: isLast
+          ? l10n.folioBackToStart
+          : '${l10n.folioNext}: ${widget.labels[target]}',
+      excludeSemantics: true,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: InkWell(
+          onTap: () => widget.onGoTo(target),
+          borderRadius: BorderRadius.circular(AppRadius.xs),
+          child: Padding(
+            // 28px tall hit area around the micro label.
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AnimatedSwitcher(
+                  duration: AppMotion.switcher,
+                  child: Text(
+                    label,
+                    key: ValueKey<String>(label),
+                    style: TextStyle(
+                      color: _hovered ? accent : context.mutedText,
+                      fontSize: AppTypography.micro,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                AnimatedSlide(
+                  offset: _hovered && !reduce
+                      ? Offset(isLast ? 0 : 0.25, isLast ? -0.25 : 0)
+                      : Offset.zero,
+                  duration: AppMotion.chipHover,
+                  curve: AppMotion.emphasized,
+                  child: isLast
+                      ? Icon(Icons.arrow_upward_rounded,
+                          size: 12, color: accent)
+                      : DirIcon(Icons.arrow_forward_rounded,
+                          size: 12, color: accent),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -366,4 +366,18 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get flipHintClick => 'KLIKNĚTE A OTOČTE';
+
+  @override
+  String get folioNext => 'DÁLE';
+
+  @override
+  String get folioBackToStart => 'ZPĚT NA ZAČÁTEK';
+
+  @override
+  String welcomeBack(String section) {
+    return 'Vítejte zpět — pokračovat v sekci $section?';
+  }
+
+  @override
+  String get continueAction => 'POKRAČOVAT';
 }
