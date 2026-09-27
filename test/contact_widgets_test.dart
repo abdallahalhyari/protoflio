@@ -315,4 +315,27 @@ void main() {
       expect(find.text('DIRECT INQUIRY COMPOSER'), findsNothing);
     });
   });
+
+  testWidgets(
+      'InquiryComposerDialog disables sending until the message has text',
+      (tester) async {
+    await tester.binding.setSurfaceSize(const Size(1200, 1000));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester
+        .pumpWidget(_wrap(const InquiryComposerDialog(initialTrackIndex: 0)));
+    await tester.pumpAndSettle();
+
+    FilledButton sendButton() => tester.widget<FilledButton>(find.ancestor(
+        of: find.text('OPEN IN EMAIL CLIENT'),
+        matching: find.byWidgetPredicate((w) => w is FilledButton)));
+
+    // The template pre-fills the body, so sending starts enabled.
+    expect(sendButton().onPressed, isNotNull);
+
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Message Body'), '   ');
+    await tester.pump();
+    expect(sendButton().onPressed, isNull);
+    expect(find.text('Write a message to enable sending'), findsOneWidget);
+  });
 }

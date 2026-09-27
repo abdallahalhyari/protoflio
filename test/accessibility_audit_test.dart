@@ -153,7 +153,7 @@ void main() {
         find.byWidgetPredicate((w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.contains('ambient audio') ?? false)),
+            (w.properties.label?.contains('sound effects') ?? false)),
         findsOneWidget,
       );
 

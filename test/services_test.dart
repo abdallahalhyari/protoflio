@@ -11,8 +11,8 @@ void main() {
   });
 
   group('SoundService', () {
-    test('starts enabled', () {
-      expect(SoundService.instance.isEnabled.value, isTrue);
+    test('starts disabled (sound effects are opt-in)', () {
+      expect(SoundService.instance.isEnabled.value, isFalse);
     });
 
     test('toggle flips isEnabled', () async {

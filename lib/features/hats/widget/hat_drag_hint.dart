@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
 
@@ -30,18 +31,16 @@ class HatDragHint extends StatelessWidget {
               Icon(
                 Icons.back_hand_outlined,
                 size: 13,
-                color: isDark
-                    ? primary.withValues(alpha: AppAlpha.border)
-                    : primary,
+                color: context.adaptiveAccentText(primary),
               ),
               const SizedBox(width: 6),
               Text(
                 'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE',
                 style: TextStyle(
                   fontFamily: AppTypography.monoFont,
-                  color: isDark
-                      ? primary.withValues(alpha: AppAlpha.border)
-                      : primary,
+                  // Full-strength accent: at border opacity this
+                  // instruction measured ~2:1 on the dark canvas.
+                  color: context.adaptiveAccentText(primary),
                   fontSize: AppTypography.editorial,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,

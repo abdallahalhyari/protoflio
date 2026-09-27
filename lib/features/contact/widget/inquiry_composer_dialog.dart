@@ -179,6 +179,35 @@ class _InquiryComposerDialogViewState
 
     return BlocBuilder<ContactInquiryBloc, ContactInquiryState>(
       builder: (context, state) {
+        final canSend = state.body.trim().isNotEmpty;
+        final nameField = TextField(
+          controller: _nameController,
+          autofillHints: const [AutofillHints.name],
+          textInputAction: TextInputAction.next,
+          textCapitalization: TextCapitalization.words,
+          onChanged: (val) {
+            context.read<ContactInquiryBloc>().add(InquiryNameChanged(val));
+          },
+          decoration: const InputDecoration(
+            labelText: 'Your Name (Optional)',
+            border: OutlineInputBorder(),
+            isDense: true,
+          ),
+        );
+        final companyField = TextField(
+          controller: _companyController,
+          autofillHints: const [AutofillHints.organizationName],
+          textInputAction: TextInputAction.next,
+          textCapitalization: TextCapitalization.words,
+          onChanged: (val) {
+            context.read<ContactInquiryBloc>().add(InquiryCompanyChanged(val));
+          },
+          decoration: const InputDecoration(
+            labelText: 'Company / Org (Optional)',
+            border: OutlineInputBorder(),
+            isDense: true,
+          ),
+        );
         final tracks = state.tracks;
         final selectedTrack = state.selectedTrackIndex;
 
@@ -332,42 +361,21 @@ class _InquiryComposerDialogViewState
                     ],
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  // Contact details inputs
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _nameController,
-                          onChanged: (val) {
-                            context
-                                .read<ContactInquiryBloc>()
-                                .add(InquiryNameChanged(val));
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Your Name (Optional)',
-                            border: OutlineInputBorder(),
-                            isDense: true,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.md),
-                      Expanded(
-                        child: TextField(
-                          controller: _companyController,
-                          onChanged: (val) {
-                            context
-                                .read<ContactInquiryBloc>()
-                                .add(InquiryCompanyChanged(val));
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Company / Org (Optional)',
-                            border: OutlineInputBorder(),
-                            isDense: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Contact details inputs — side by side on desktop,
+                  // stacked on phones where each was only ~150px wide.
+                  if (isDesktop)
+                    Row(
+                      children: [
+                        Expanded(child: nameField),
+                        const SizedBox(width: AppSpacing.md),
+                        Expanded(child: companyField),
+                      ],
+                    )
+                  else ...[
+                    nameField,
+                    const SizedBox(height: AppSpacing.md),
+                    companyField,
+                  ],
                   const SizedBox(height: AppSpacing.md),
                   // Message Body
                   TextField(
@@ -378,25 +386,34 @@ class _InquiryComposerDialogViewState
                           .add(InquiryBodyChanged(val));
                     },
                     maxLines: 5,
-                    decoration: const InputDecoration(
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(
                       labelText: 'Message Body',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       alignLabelWithHint: true,
+                      // Say why the send actions are disabled.
+                      helperText: state.body.trim().isEmpty
+                          ? 'Write a message to enable sending'
+                          : null,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   // Actions
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  // Wrap, not Row: the two labelled buttons overflowed a
+                  // phone-width dialog.
+                  Wrap(
+                    alignment: WrapAlignment.end,
+                    spacing: AppSpacing.md,
+                    runSpacing: AppSpacing.sm,
                     children: [
                       OutlinedButton.icon(
-                        onPressed: () => _copyDraft(state),
+                        onPressed: canSend ? () => _copyDraft(state) : null,
                         icon: const Icon(Icons.copy_rounded, size: 16),
                         label: const Text('COPY DRAFT'),
                       ),
-                      const SizedBox(width: AppSpacing.md),
                       FilledButton.icon(
-                        onPressed: () => _launchEmailClient(state),
+                        onPressed:
+                            canSend ? () => _launchEmailClient(state) : null,
                         icon: const Icon(Icons.mail_outline_rounded, size: 16),
                         label: const Text('OPEN IN EMAIL CLIENT'),
                       ),

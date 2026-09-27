@@ -70,4 +70,21 @@ void main() {
       await bloc.close();
     });
   });
+
+  test('multi-word search matches words across fields, not one phrase',
+      () async {
+    final bloc = SkillsFilterBloc();
+    bloc.add(const SkillSearchQueryChanged('flutter dart'));
+    await Future<void>.delayed(Duration.zero);
+    expect(bloc.state.filteredSkills, isNotEmpty);
+    expect(
+      bloc.state.filteredSkills.any((s) => s.name.contains('Flutter')),
+      isTrue,
+    );
+
+    bloc.add(const SkillSearchQueryChanged('flutter zzzz-not-a-skill'));
+    await Future<void>.delayed(Duration.zero);
+    expect(bloc.state.filteredSkills, isEmpty);
+    await bloc.close();
+  });
 }

@@ -246,7 +246,7 @@ class MobileHomeLayout extends StatelessWidget {
         const Positioned(
           top: 0,
           bottom: 0,
-          right: 4,
+          right: 0,
           child: Center(child: MobileProgressRail()),
         ),
 

@@ -25,7 +25,6 @@ class HeroEmailCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
     final isDark = context.isDarkMode;
-    final accentSoft = accent.withValues(alpha: AppAlpha.border);
     const availabilityGreen = AppColors.accentGreen;
     final l10n = AppLocalizations.of(context)!;
 
@@ -107,7 +106,8 @@ class HeroEmailCard extends StatelessWidget {
         Text(
           l10n.contactHeroEyebrow,
           style: TextStyle(
-            color: isDark ? accentSoft : accent,
+            // Full accent: at border opacity this measured 1.8:1.
+            color: context.adaptiveAccentText(accent),
             fontSize: AppTypography.editorial,
             fontWeight: FontWeight.w900,
             letterSpacing: 2,

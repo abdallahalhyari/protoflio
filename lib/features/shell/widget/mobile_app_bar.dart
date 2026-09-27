@@ -227,7 +227,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                       iconSize: 18,
                       padding: EdgeInsets.zero,
                       constraints:
-                          const BoxConstraints(minWidth: 32, minHeight: 32),
+                          const BoxConstraints(minWidth: 44, minHeight: 44),
                       icon: Icon(
                         dark
                             ? Icons.light_mode_outlined
@@ -255,16 +255,16 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                       button: true,
                       toggled: enabled,
                       label: enabled
-                          ? 'Mute ambient audio'
-                          : 'Enable ambient audio',
+                          ? 'Mute sound effects'
+                          : 'Enable sound effects',
                       child: IconButton(
                         tooltip: enabled
-                            ? 'Mute ambient audio'
-                            : 'Enable ambient audio',
+                            ? 'Mute sound effects'
+                            : 'Enable sound effects',
                         iconSize: 18,
                         padding: EdgeInsets.zero,
                         constraints:
-                            const BoxConstraints(minWidth: 32, minHeight: 32),
+                            const BoxConstraints(minWidth: 44, minHeight: 44),
                         icon: Icon(
                           enabled
                               ? Icons.volume_up_outlined
@@ -288,46 +288,59 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
               Semantics(
                 button: true,
                 label: 'Open navigation menu',
-                child: InkWell(
+                // The pill is ~33px tall; the transparent band around it
+                // takes the tap target to 44px without growing the pill.
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: () {
                     SoundService.instance.playClick();
                     onMenuPressed();
                   },
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: ultraTight ? 8 : 11,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: primary.withValues(alpha: isDark ? 0.22 : 0.15),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: InkWell(
+                      onTap: () {
+                        SoundService.instance.playClick();
+                        onMenuPressed();
+                      },
                       borderRadius: BorderRadius.circular(AppRadius.pill),
-                      border: Border.all(
-                        color: primary.withValues(alpha: 0.6),
-                        width: 1.2,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: primary.withValues(alpha: 0.2),
-                          blurRadius: 8,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ultraTight ? 8 : 11,
+                          vertical: 8,
                         ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.menu_rounded, size: 14, color: primary),
-                        const SizedBox(width: 4),
-                        Text(
-                          'MENU',
-                          style: TextStyle(
-                            color: isDark ? Colors.white : primary,
-                            fontSize: AppTypography.editorial,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 1.2,
+                        decoration: BoxDecoration(
+                          color:
+                              primary.withValues(alpha: isDark ? 0.22 : 0.15),
+                          borderRadius: BorderRadius.circular(AppRadius.pill),
+                          border: Border.all(
+                            color: primary.withValues(alpha: 0.6),
+                            width: 1.2,
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primary.withValues(alpha: 0.2),
+                              blurRadius: 8,
+                            ),
+                          ],
                         ),
-                      ],
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.menu_rounded, size: 14, color: primary),
+                            const SizedBox(width: 4),
+                            Text(
+                              'MENU',
+                              style: TextStyle(
+                                color: isDark ? Colors.white : primary,
+                                fontSize: AppTypography.editorial,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

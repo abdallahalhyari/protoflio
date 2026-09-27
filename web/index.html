@@ -195,8 +195,26 @@
       font: 500 13px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       color: rgba(255, 255, 255, 0.72);
     }
-    .boot-slow a { color: #A5B4FC; }
     #boot-loader.slow .boot-slow { display: block; }
+    .boot-actions {
+      margin-top: 22px;
+      display: flex; gap: 10px; align-items: center; justify-content: center;
+      font: 600 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: rgba(255, 255, 255, 0.45);
+      opacity: 0;
+      animation: boot-actions-in 0.4s ease-out 1.2s forwards;
+      user-select: text; -webkit-user-select: text;
+    }
+    .boot-actions a {
+      color: #A5B4FC; text-decoration: none;
+      padding: 8px 6px; border-radius: 6px;
+    }
+    .boot-actions a:hover { text-decoration: underline; }
+    .boot-actions a:focus-visible { outline: 2px solid #A5B4FC; outline-offset: 2px; }
+    @keyframes boot-actions-in { to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      .boot-actions { animation-duration: 0s; }
+    }
     #consent-banner {
       position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
       z-index: 10000; display: flex; align-items: center; gap: 10px;
@@ -387,9 +405,16 @@
       <div class="boot-progress-track">
         <div class="boot-progress-bar"></div>
       </div>
-      <p class="boot-slow">Still loading &mdash; this can take a moment on a slow connection.
-        Meanwhile: <a href="cv.pdf">CV (PDF)</a> &middot;
-        <a href="mailto:alhyariabdallh@gmail.com">email</a></p>
+      <!-- Quick actions fade in after ~1.2s, so a fast load never sees them
+           but a recruiter on a slow connection can act straight away. -->
+      <nav class="boot-actions" aria-label="Quick links">
+        <a href="cv.pdf">CV (PDF)</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="mailto:alhyariabdallh@gmail.com">Email</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="https://www.linkedin.com/in/abdallah-alhyari-0294791a0/" rel="noopener" target="_blank">LinkedIn</a>
+      </nav>
+      <p class="boot-slow">Still loading &mdash; this can take a moment on a slow connection.</p>
     </div>
   </div>
 

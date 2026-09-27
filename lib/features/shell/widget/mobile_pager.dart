@@ -52,8 +52,9 @@ class _MobilePagerContent extends StatelessWidget {
           child: InkResponse(
             radius: 22,
             onTap: onTap,
+            // 44×44 tap target (was 30×30) around the 18px chevron.
             child: Padding(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(13),
               child: DirIcon(
                 icon,
                 size: 18,

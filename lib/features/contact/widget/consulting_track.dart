@@ -162,24 +162,29 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                   t.onInquire(t.inquirySubject);
                 },
                 borderRadius: BorderRadius.circular(AppRadius.xs),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'INQUIRE TRACK',
-                        style: TextStyle(
-                          color: accentText,
-                          fontSize: AppTypography.micro,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1.4,
+                // Vertical padding lifts the tap target from ~14px (the
+                // micro label alone) past the 24px WCAG 2.2 minimum.
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'INQUIRE TRACK',
+                          style: TextStyle(
+                            color: accentText,
+                            fontSize: AppTypography.micro,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.4,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 4),
-                    Icon(Icons.arrow_forward_rounded,
-                        size: 12, color: accentText),
-                  ],
+                      const SizedBox(width: 4),
+                      Icon(Icons.arrow_forward_rounded,
+                          size: 12, color: accentText),
+                    ],
+                  ),
                 ),
               ),
             ),
