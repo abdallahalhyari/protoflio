@@ -380,4 +380,36 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get continueAction => 'POKRAČOVAT';
+
+  @override
+  String get quickProfile => 'PROFIL ZA 30 S';
+
+  @override
+  String get quickProfileTitle => 'Shrnutí pro nábor';
+
+  @override
+  String get quickProfileRole => 'POZICE';
+
+  @override
+  String get quickProfileExperience => 'PRAXE';
+
+  @override
+  String quickProfileYears(int years) {
+    return '$years+ let v mobilním vývoji';
+  }
+
+  @override
+  String get quickProfileStack => 'HLAVNÍ TECHNOLOGIE';
+
+  @override
+  String get quickProfileRecent => 'POSLEDNÍ POZICE';
+
+  @override
+  String get quickProfileEmail => 'E-mail';
+
+  @override
+  String get quickProfileCopy => 'Kopírovat shrnutí';
+
+  @override
+  String get quickProfileCopied => 'Shrnutí profilu zkopírováno';
 }

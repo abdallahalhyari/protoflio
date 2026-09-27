@@ -259,7 +259,7 @@ class _Masthead extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'MOBILE DEVELOPER (FLUTTER & ANDROID) · 2020 — 2021',
+              'MOBILE DEVELOPER (FLUTTER & ANDROID) · 2021',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

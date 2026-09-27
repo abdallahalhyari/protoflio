@@ -112,5 +112,15 @@
   "folioNext": "DÁLE",
   "folioBackToStart": "ZPĚT NA ZAČÁTEK",
   "welcomeBack": "Vítejte zpět — pokračovat v sekci {section}?",
-  "continueAction": "POKRAČOVAT"
+  "continueAction": "POKRAČOVAT",
+  "quickProfile": "PROFIL ZA 30 S",
+  "quickProfileTitle": "Shrnutí pro nábor",
+  "quickProfileRole": "POZICE",
+  "quickProfileExperience": "PRAXE",
+  "quickProfileYears": "{years}+ let v mobilním vývoji",
+  "quickProfileStack": "HLAVNÍ TECHNOLOGIE",
+  "quickProfileRecent": "POSLEDNÍ POZICE",
+  "quickProfileEmail": "E-mail",
+  "quickProfileCopy": "Kopírovat shrnutí",
+  "quickProfileCopied": "Shrnutí profilu zkopírováno"
 }

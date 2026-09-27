@@ -375,4 +375,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get continueAction => 'متابعة';
+
+  @override
+  String get quickProfile => 'ملف في 30 ثانية';
+
+  @override
+  String get quickProfileTitle => 'ملخص للتوظيف';
+
+  @override
+  String get quickProfileRole => 'الدور';
+
+  @override
+  String get quickProfileExperience => 'الخبرة';
+
+  @override
+  String quickProfileYears(int years) {
+    return 'أكثر من $years سنوات في هندسة تطبيقات الجوال';
+  }
+
+  @override
+  String get quickProfileStack => 'التقنيات الأساسية';
+
+  @override
+  String get quickProfileRecent => 'أحدث المناصب';
+
+  @override
+  String get quickProfileEmail => 'البريد الإلكتروني';
+
+  @override
+  String get quickProfileCopy => 'نسخ الملخص';
+
+  @override
+  String get quickProfileCopied => 'تم نسخ ملخص الملف';
 }

@@ -168,5 +168,26 @@
   },
   "@folioNext": {
     "description": "Desktop footer link to the next section."
+  },
+  "quickProfile": "30-SEC PROFILE",
+  "quickProfileTitle": "Hiring summary",
+  "quickProfileRole": "ROLE",
+  "quickProfileExperience": "EXPERIENCE",
+  "quickProfileYears": "{years}+ years in mobile engineering",
+  "quickProfileStack": "CORE STACK",
+  "quickProfileRecent": "RECENT ROLES",
+  "quickProfileEmail": "Email",
+  "quickProfileCopy": "Copy summary",
+  "quickProfileCopied": "Profile summary copied",
+  "@quickProfile": {
+    "description": "Hero link that opens the recruiter summary sheet."
+  },
+  "@quickProfileYears": {
+    "description": "Years of professional experience.",
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
   }
 }
