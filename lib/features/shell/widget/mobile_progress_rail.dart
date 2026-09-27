@@ -21,62 +21,82 @@ class MobileProgressRail extends StatelessWidget {
     return ValueListenableBuilder<int>(
       valueListenable: controller.pageIndex,
       builder: (context, page, _) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-          decoration: BoxDecoration(
-            color: context.glassSurface,
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            border: Border.all(color: context.glassBorder),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+        // Each dot gets a 24×24 tap target (WCAG 2.2 target-size minimum;
+        // it was 5×11) while the drawn rail stays a slim pill behind them.
+        return SizedBox(
+          width: _kTarget,
+          child: Stack(
+            alignment: Alignment.center,
             children: [
-              for (int i = 0; i < pageCount; i++)
-                Semantics(
-                  button: true,
-                  selected: i == page,
-                  label: i < labels.length
-                      ? 'Go to ${labels[i]}'
-                      : 'Go to page ${i + 1}',
-                  child: InkResponse(
-                    radius: 14,
-                    onTap: i == page
-                        ? null
-                        : () {
-                            SoundService.instance.playSelection();
-                            controller.scrollToMobileSection(i);
-                          },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 3),
-                      child: _HoverScale(
-                        child: AnimatedContainer(
-                          duration: AppMotion.sm,
-                          curve: AppMotion.emphasized,
-                          width: i == page ? 8 : 5,
-                          height: i == page ? 8 : 5,
-                          decoration: BoxDecoration(
-                            color: i == page
-                                ? Theme.of(context).colorScheme.primary
-                                : context.railDot(ThemeBloc.colorForIndex(i)),
-                            shape: BoxShape.circle,
-                            boxShadow: i == page
-                                ? [
-                                    BoxShadow(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary
-                                          .withValues(alpha: 0.7),
-                                      blurRadius: 6,
-                                      spreadRadius: 0.5,
-                                    ),
-                                  ]
-                                : null,
+              Positioned(
+                top: 0,
+                bottom: 0,
+                child: Container(
+                  width: 13,
+                  decoration: BoxDecoration(
+                    color: context.glassSurface,
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                    border: Border.all(color: context.glassBorder),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (int i = 0; i < pageCount; i++)
+                      Semantics(
+                        button: true,
+                        selected: i == page,
+                        label: i < labels.length
+                            ? 'Go to ${labels[i]}'
+                            : 'Go to page ${i + 1}',
+                        child: InkResponse(
+                          radius: 14,
+                          onTap: i == page
+                              ? null
+                              : () {
+                                  SoundService.instance.playSelection();
+                                  controller.scrollToMobileSection(i);
+                                },
+                          child: SizedBox.square(
+                            dimension: _kTarget,
+                            child: Center(
+                              child: _HoverScale(
+                                child: AnimatedContainer(
+                                  duration: AppMotion.sm,
+                                  curve: AppMotion.emphasized,
+                                  width: i == page ? 8 : 5,
+                                  height: i == page ? 8 : 5,
+                                  decoration: BoxDecoration(
+                                    color: i == page
+                                        ? Theme.of(context).colorScheme.primary
+                                        : context.railDot(
+                                            ThemeBloc.colorForIndex(i)),
+                                    shape: BoxShape.circle,
+                                    boxShadow: i == page
+                                        ? [
+                                            BoxShadow(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                                  .withValues(alpha: 0.7),
+                                              blurRadius: 6,
+                                              spreadRadius: 0.5,
+                                            ),
+                                          ]
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                  ],
                 ),
+              ),
             ],
           ),
         );
@@ -84,6 +104,8 @@ class MobileProgressRail extends StatelessWidget {
     );
   }
 }
+
+const double _kTarget = 24;
 
 class _HoverScale extends StatefulWidget {
   final Widget child;

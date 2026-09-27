@@ -175,7 +175,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                         final double textScale =
                             MediaQuery.textScalerOf(context).scale(1);
                         final double itemHeight =
-                            380 + 110 * (textScale - 1).clamp(0.0, 1.0);
+                            392 + 110 * (textScale - 1).clamp(0.0, 1.0);
 
                         return Wrap(
                           spacing: spacing,

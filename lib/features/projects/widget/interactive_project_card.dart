@@ -603,7 +603,8 @@ class _TechTagChipState extends State<_TechTagChip> {
           borderRadius: BorderRadius.circular(AppRadius.xs),
           child: AnimatedContainer(
             duration: AppMotion.snap,
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
+            // 24px+ tall: tags filter the list, so they're tap targets.
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4.5),
             decoration: BoxDecoration(
               color: _isHovered && widget.onTap != null
                   ? widget.scheme.primary

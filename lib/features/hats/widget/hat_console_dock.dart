@@ -75,8 +75,11 @@ class HatConsoleDock extends StatelessWidget {
                             : AppColors.slate300,
                       ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      minimumSize: Size.zero,
+                          horizontal: 12, vertical: 8),
+                      // 32px tall: shrink-wrapped + compact density left
+                      // these ~16px, under the 24px WCAG 2.2 minimum.
+                      minimumSize: const Size(0, 32),
+                      visualDensity: VisualDensity.standard,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     icon: const DirIcon(Icons.arrow_back_rounded, size: 14),
@@ -128,7 +131,9 @@ class HatConsoleDock extends StatelessWidget {
                         '0${selectedIndex + 1} / 0$totalCount',
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
-                          color: currentHat.color,
+                          // Contrast-adjusted: Thinking's charcoal read
+                          // near-invisible on the dark dock.
+                          color: _readable(context, currentHat.color),
                           fontSize: AppTypography.editorialSm,
                           fontWeight: FontWeight.w900,
                         ),
@@ -171,8 +176,11 @@ class HatConsoleDock extends StatelessWidget {
                             : AppColors.slate300,
                       ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      minimumSize: Size.zero,
+                          horizontal: 12, vertical: 8),
+                      // 32px tall: shrink-wrapped + compact density left
+                      // these ~16px, under the 24px WCAG 2.2 minimum.
+                      minimumSize: const Size(0, 32),
+                      visualDensity: VisualDensity.standard,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     label: Text(
@@ -279,4 +287,14 @@ class HatConsoleDock extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A role colour made legible as text on the dock: dark-mode colours too
+/// dim for the near-black dock are lifted toward white; light mode uses
+/// the shared accessible-text mapping.
+Color _readable(BuildContext context, Color color) {
+  if (!context.isDarkMode) return context.adaptiveAccentText(color);
+  return color.computeLuminance() < 0.2
+      ? Color.lerp(color, Colors.white, 0.55)!
+      : color;
 }

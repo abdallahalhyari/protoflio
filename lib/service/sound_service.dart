@@ -11,7 +11,9 @@ class SoundService {
 
   static const String _prefsKey = 'soundEnabled';
 
-  final ValueNotifier<bool> isEnabled = ValueNotifier<bool>(true);
+  // Opt-in: UI sounds on by default surprised visitors browsing at work
+  // (a beep on every click). A saved choice still wins in [load].
+  final ValueNotifier<bool> isEnabled = ValueNotifier<bool>(false);
 
   Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
