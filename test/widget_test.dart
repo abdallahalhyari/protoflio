@@ -148,7 +148,13 @@ void main() {
     }
 
     // Now on Projects page
-    final pageView = tester.widget<PageView>(find.byType(PageView));
-    expect(pageView.controller!.page!.round(), 1);
+    expect(_desktopPages(tester).page!.round(), 1);
   });
 }
+
+/// The desktop page controller. Pages live in a custom Scrollable
+/// (all pages prebuilt) rather than a PageView, keyed 'desktop_pageview'.
+PageController _desktopPages(WidgetTester tester) => tester
+    .widget<Scrollable>(
+        find.byKey(const PageStorageKey<String>('desktop_pageview')))
+    .controller! as PageController;

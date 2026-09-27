@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widget/app_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -648,7 +649,8 @@ class _HomeScreenState extends State<HomeScreen> {
               return Viewport(
                 axisDirection: AxisDirection.down,
                 offset: position,
-                cacheExtent: 100000.0, // Cache 100000 pixels (all pages)
+                // Keep every page laid out (100000px) so turns never stutter.
+                scrollCacheExtent: const ScrollCacheExtent.pixels(100000),
                 slivers: [
                   SliverFillViewport(
                     delegate: SliverChildBuilderDelegate(
