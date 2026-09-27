@@ -45,13 +45,13 @@ abstract class UrlSyncService {
       case 'work/fais':
         return 'FAIS M-Commerce & Streaming Case Study · Abdallah Alhyari';
       case 'engineering':
-        return 'Systems Architecture & Engineering · Abdallah Alhyari';
+        return 'Engineering & Systems Architecture · Abdallah Alhyari';
       case 'experience':
-        return 'Career Trajectory & Roles · Abdallah Alhyari';
+        return 'Experience & Career · Abdallah Alhyari';
       case 'stack':
-        return 'Architectural Mastery & Skills · Abdallah Alhyari';
+        return 'Skills & Stack · Abdallah Alhyari';
       case 'about':
-        return 'Perspectives & Roles · Abdallah Alhyari';
+        return 'Perspectives · Abdallah Alhyari';
       case 'contact':
         return 'Contact & Recruiter Inquiries · Abdallah Alhyari';
       case 'home':

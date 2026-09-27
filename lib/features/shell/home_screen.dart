@@ -109,8 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
         context
             .read<ThemeBloc>()
             .add(ThemeAccentUpdatedFromHash(initialSection));
+        final knownSlug =
+            initialSlug == null || CaseStudyRouter.has(initialSlug);
         UrlSyncService.instance.updateTitle(
-          UrlSyncService.instance.titleForHash(initialHash ?? initialSection),
+          UrlSyncService.instance.titleForHash(
+              knownSlug ? (initialHash ?? initialSection) : initialSection),
         );
       });
     } else {
@@ -123,6 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
     // Deep-link into a case study when the URL had `#work/<slug>`.
     // Deferred until after first frame so the outer section paints
     // behind the pushed page.
+    // An unknown `#work/<slug>` (typo, retired study) shows Work; rewrite
+    // the URL to match so the address bar doesn't claim a missing page.
+    if (initialSlug != null && !CaseStudyRouter.has(initialSlug)) {
+      UrlSyncService.instance.updateHash('work');
+    }
     if (initialSlug != null && CaseStudyRouter.has(initialSlug)) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
@@ -155,6 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       // Back (or a manual edit) moved off `#work/<slug>`.
       CaseStudyRouter.closeFromUrl();
+      if (slug != null) UrlSyncService.instance.updateHash('work');
       if (section != null) {
         final target = UrlSyncService.instance.hashToIndex(section);
         if (target != _pageIndex.value && mounted) {
