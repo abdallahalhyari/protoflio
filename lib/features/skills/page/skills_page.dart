@@ -6,6 +6,7 @@ import 'package:profile/features/skills/bloc/skills_filter_bloc.dart';
 import 'package:profile/features/skills/bloc/skills_filter_event.dart';
 import 'package:profile/features/skills/bloc/skills_filter_state.dart';
 import 'package:profile/features/skills/data/skills_data.dart';
+import 'package:profile/shared/util/grid_math.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
 import 'package:profile/features/skills/widget/bento_skill_tile.dart';
 import 'package:profile/features/skills/widget/skill_category_filters.dart';
@@ -197,7 +198,8 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                 LayoutBuilder(
                   builder: (context, constraints) {
                     const spacing = AppSpacing.smd;
-                    final tileW = (constraints.maxWidth - spacing) / 2;
+                    final tileW = columnWidth(constraints.maxWidth, 2, spacing);
+                    if (tileW <= 0) return const SizedBox.shrink();
                     const tileH = 180.0;
                     return Wrap(
                       spacing: spacing,

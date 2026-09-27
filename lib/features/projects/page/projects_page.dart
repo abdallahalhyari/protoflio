@@ -12,6 +12,7 @@ import 'package:profile/shared/widget/page_activity.dart';
 import 'package:profile/features/projects/widget/interactive_project_card.dart';
 import 'package:profile/features/projects/model/project.dart';
 import 'package:profile/features/projects/widget/project_domain_filters.dart';
+import 'package:profile/shared/util/grid_math.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
 import 'package:profile/shared/widget/section_masthead.dart';
 
@@ -168,7 +169,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                       if (isDesktop) {
                         const double spacing = AppSpacing.lg;
                         final double itemWidth =
-                            (constraints.maxWidth - spacing) / 2;
+                            columnWidth(constraints.maxWidth, 2, spacing);
+                        if (itemWidth <= 0) return const SizedBox.shrink();
                         // Fixed-height grid cells: grow the text area with
                         // the user's text scale (up to 2x) instead of
                         // clipping the card body.
