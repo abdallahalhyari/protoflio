@@ -92,18 +92,20 @@ class _StaggeredEntranceState extends State<StaggeredEntrance>
       return widget.child;
     }
 
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: _slide.value,
-          child: Opacity(
-            opacity: _opacity.value,
-            child: child,
-          ),
-        );
-      },
-      child: widget.child,
+    return RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Transform.translate(
+            offset: _slide.value,
+            child: Opacity(
+              opacity: _opacity.value,
+              child: child,
+            ),
+          );
+        },
+        child: widget.child,
+      ),
     );
   }
 }

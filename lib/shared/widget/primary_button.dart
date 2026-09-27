@@ -198,9 +198,11 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             child: ValueListenableBuilder<Offset>(
               valueListenable: _parallaxOffset,
               builder: (context, parallax, staticChild) {
-                return Transform.translate(
-                  offset: parallax,
-                  child: staticChild,
+                return RepaintBoundary(
+                  child: Transform.translate(
+                    offset: parallax,
+                    child: staticChild,
+                  ),
                 );
               },
               child: AnimatedContainer(

@@ -98,8 +98,10 @@ class _KeyboardFocusRingState extends State<KeyboardFocusRing>
           child: IgnorePointer(
             child: ValueListenableBuilder<Rect?>(
               valueListenable: _rect,
-              builder: (context, rect, _) => CustomPaint(
-                painter: FocusRingPainter(rect: rect, color: accent),
+              builder: (context, rect, _) => RepaintBoundary(
+                child: CustomPaint(
+                  painter: FocusRingPainter(rect: rect, color: accent),
+                ),
               ),
             ),
           ),

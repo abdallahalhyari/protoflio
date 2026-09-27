@@ -356,43 +356,45 @@ class _IntroPageState extends State<IntroPage>
     return Semantics(
       label: AppLocalizations.of(context)!.semanticPortrait,
       image: true,
-      child: AnimatedBuilder(
-        animation: _rimController,
-        child: image,
-        builder: (context, child) {
-          final angle = _rimController.value * 2 * 3.14159265;
-          return Container(
-            width: size,
-            height: size,
-            padding: const EdgeInsets.all(2.5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              gradient: SweepGradient(
-                transform: GradientRotation(angle),
-                colors: [
-                  _accent,
-                  _gold.withValues(alpha: 0.9),
-                  AppColors.accentVioletLight,
-                  _accent,
+      child: RepaintBoundary(
+        child: AnimatedBuilder(
+          animation: _rimController,
+          child: image,
+          builder: (context, child) {
+            final angle = _rimController.value * 2 * 3.14159265;
+            return Container(
+              width: size,
+              height: size,
+              padding: const EdgeInsets.all(2.5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                gradient: SweepGradient(
+                  transform: GradientRotation(angle),
+                  colors: [
+                    _accent,
+                    _gold.withValues(alpha: 0.9),
+                    AppColors.accentVioletLight,
+                    _accent,
+                  ],
+                  stops: const [0.0, 0.3, 0.65, 1.0],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: _accent.withValues(alpha: 0.40),
+                    blurRadius: 36,
+                    spreadRadius: 2,
+                  ),
+                  BoxShadow(
+                    color: AppColors.accentViolet.withValues(alpha: 0.18),
+                    blurRadius: 48,
+                    spreadRadius: 4,
+                  ),
                 ],
-                stops: const [0.0, 0.3, 0.65, 1.0],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: _accent.withValues(alpha: 0.40),
-                  blurRadius: 36,
-                  spreadRadius: 2,
-                ),
-                BoxShadow(
-                  color: AppColors.accentViolet.withValues(alpha: 0.18),
-                  blurRadius: 48,
-                  spreadRadius: 4,
-                ),
-              ],
-            ),
-            child: child,
-          );
-        },
+              child: child,
+            );
+          },
+        ),
       ),
     );
   }

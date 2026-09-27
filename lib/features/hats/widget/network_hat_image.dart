@@ -63,15 +63,17 @@ class _HatImageState extends State<HatImage>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _anim,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, _anim.value * widget.height),
-          child: child,
-        );
-      },
-      child: _buildImage(),
+    return RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: _anim,
+        builder: (context, child) {
+          return Transform.translate(
+            offset: Offset(0, _anim.value * widget.height),
+            child: child,
+          );
+        },
+        child: _buildImage(),
+      ),
     );
   }
 }
