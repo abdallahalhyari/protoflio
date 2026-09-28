@@ -66,7 +66,7 @@ const List<Project> kProjects = [
     context:
         'ESKADENIA Software, a premier enterprise software vendor in the MENA region providing mission-critical systems in education, telecom, and healthcare.',
     role:
-        'Mobile Developer leading architectural refactoring, performance profiling, and modular package extraction.',
+        'Flutter Developer leading architectural refactoring, performance profiling, and modular package extraction.',
     architecture:
         'Decoupled MVVM architecture with service locators, typed REST API data layers, and cached repositories.',
     challenges:
@@ -115,7 +115,7 @@ const List<Project> kProjects = [
     context:
         'Digital consultancy delivering client-facing consumer iOS and Android applications with dynamic real-time features.',
     role:
-        'Flutter Developer establishing core mobile design standards, camera pipelines, and backend integration.',
+        'Mobile Developer establishing core mobile design standards, camera pipelines, and backend integration.',
     architecture:
         'Layered Component Architecture with a reusable UI design system and typed REST consumers.',
     challenges:

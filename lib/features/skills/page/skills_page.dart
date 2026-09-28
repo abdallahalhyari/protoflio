@@ -100,6 +100,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
 
         final grid = displayedSkills.isEmpty
             ? SkillsEmptyState(
+                query: _searchController.text,
                 onShowAll: () {
                   _searchController.clear();
                   context

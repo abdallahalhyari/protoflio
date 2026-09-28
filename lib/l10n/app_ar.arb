@@ -16,6 +16,7 @@
   "contactSendEmailBtn": "أرسل بريدًا",
   "contactCopyAddressBtn": "نسخ العنوان",
   "skillsEmptyTitle": "لا توجد مهارات في هذه الفئة بعد",
+  "skillsNoMatch": "لا توجد مهارات تطابق «{query}»",
   "skillsEmptyShowAll": "عرض الكل",
   "keyboardHintTitle": "اختصارات لوحة المفاتيح",
   "keyboardHintDigits": "1–7   الانتقال إلى قسم",

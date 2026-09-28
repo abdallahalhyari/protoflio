@@ -73,24 +73,33 @@ class _LanguagePickerPuck extends StatelessWidget {
       child: BlocBuilder<LocaleBloc, LocaleState>(
         builder: (context, localeState) {
           final locale = localeState.locale;
-          return Semantics(
-            button: true,
-            label:
-                'Change language. Current: ${locale.languageCode.toUpperCase()}',
-            child: PopupMenuButton<String>(
-              tooltip: 'Change Language',
-              icon: Icon(Icons.language_rounded,
-                  color: dark ? Colors.white : AppColors.slate900),
-              onSelected: (val) {
-                HapticFeedback.lightImpact();
-                SoundService.instance.playClick();
-                context.read<LocaleBloc>().add(LocaleChanged(val));
-              },
-              itemBuilder: (context) => const [
-                PopupMenuItem(value: 'en', child: Text('English')),
-                PopupMenuItem(value: 'ar', child: Text('العربية')),
-                PopupMenuItem(value: 'cs', child: Text('Čeština')),
-              ],
+          // One node, named once: the label merges into the menu button
+          // (which keeps its focus state, so screen readers follow Tab),
+          // and the hover tooltip stays out of the spoken name.
+          return MergeSemantics(
+            child: Semantics(
+              button: true,
+              label:
+                  'Change language. Current: ${locale.languageCode.toUpperCase()}',
+              child: Tooltip(
+                message: 'Change Language',
+                excludeFromSemantics: true,
+                child: PopupMenuButton<String>(
+                  tooltip: '',
+                  icon: Icon(Icons.language_rounded,
+                      color: dark ? Colors.white : AppColors.slate900),
+                  onSelected: (val) {
+                    HapticFeedback.lightImpact();
+                    SoundService.instance.playClick();
+                    context.read<LocaleBloc>().add(LocaleChanged(val));
+                  },
+                  itemBuilder: (context) => const [
+                    PopupMenuItem(value: 'en', child: Text('English')),
+                    PopupMenuItem(value: 'ar', child: Text('العربية')),
+                    PopupMenuItem(value: 'cs', child: Text('Čeština')),
+                  ],
+                ),
+              ),
             ),
           );
         },
@@ -105,23 +114,28 @@ class _ThemeTogglePuck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      toggled: dark,
-      label: dark ? 'Switch to light mode' : 'Switch to dark mode',
-      child: _Puck(
-        dark: dark,
-        child: IconButton(
-          tooltip: dark ? 'Switch to light' : 'Switch to dark',
-          icon: Icon(
-            dark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-            color: dark ? Colors.white : AppColors.slate900,
+    return MergeSemantics(
+      child: Semantics(
+        button: true,
+        toggled: dark,
+        label: dark ? 'Switch to light mode' : 'Switch to dark mode',
+        child: _Puck(
+          dark: dark,
+          child: Tooltip(
+            message: dark ? 'Switch to light' : 'Switch to dark',
+            excludeFromSemantics: true,
+            child: IconButton(
+              icon: Icon(
+                dark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                color: dark ? Colors.white : AppColors.slate900,
+              ),
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                SoundService.instance.playClick();
+                context.read<ThemeBloc>().add(const ThemeModeToggled());
+              },
+            ),
           ),
-          onPressed: () {
-            HapticFeedback.lightImpact();
-            SoundService.instance.playClick();
-            context.read<ThemeBloc>().add(const ThemeModeToggled());
-          },
         ),
       ),
     );
@@ -137,49 +151,54 @@ class _AudioTogglePuck extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: SoundService.instance.isEnabled,
       builder: (context, enabled, _) {
-        return Semantics(
-          button: true,
-          toggled: enabled,
-          label: enabled ? 'Mute sound effects' : 'Enable sound effects',
-          child: _Puck(
-            dark: dark,
-            child: IconButton(
-              tooltip: enabled
-                  ? 'Sound Effects: ON (Click to mute)'
-                  : 'Sound Effects: MUTED (Click to enable)',
-              icon: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Icon(
-                    enabled
-                        ? Icons.volume_up_rounded
-                        : Icons.volume_off_rounded,
-                    color: enabled
-                        ? (dark ? Colors.white : AppColors.slate900)
-                        : (dark
-                            ? Colors.white.withValues(alpha: 0.60)
-                            : AppColors.slate400),
-                    size: 18,
-                  ),
-                  if (enabled)
-                    Positioned(
-                      right: -1,
-                      top: -1,
-                      child: Container(
-                        width: 5,
-                        height: 5,
-                        decoration: const BoxDecoration(
-                          color: AppColors.accentGreen,
-                          shape: BoxShape.circle,
-                        ),
+        return MergeSemantics(
+          child: Semantics(
+            button: true,
+            toggled: enabled,
+            label: enabled ? 'Mute sound effects' : 'Enable sound effects',
+            child: _Puck(
+              dark: dark,
+              child: Tooltip(
+                message: enabled
+                    ? 'Sound Effects: ON (Click to mute)'
+                    : 'Sound Effects: MUTED (Click to enable)',
+                excludeFromSemantics: true,
+                child: IconButton(
+                  icon: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Icon(
+                        enabled
+                            ? Icons.volume_up_rounded
+                            : Icons.volume_off_rounded,
+                        color: enabled
+                            ? (dark ? Colors.white : AppColors.slate900)
+                            : (dark
+                                ? Colors.white.withValues(alpha: 0.60)
+                                : AppColors.slate400),
+                        size: 18,
                       ),
-                    ),
-                ],
+                      if (enabled)
+                        Positioned(
+                          right: -1,
+                          top: -1,
+                          child: Container(
+                            width: 5,
+                            height: 5,
+                            decoration: const BoxDecoration(
+                              color: AppColors.accentGreen,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  onPressed: () {
+                    HapticFeedback.lightImpact();
+                    SoundService.instance.toggle();
+                  },
+                ),
               ),
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                SoundService.instance.toggle();
-              },
             ),
           ),
         );

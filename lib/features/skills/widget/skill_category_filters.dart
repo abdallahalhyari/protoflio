@@ -169,7 +169,8 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
         onFocusChange: (focused) {
           if (focused != _focused) setState(() => _focused = focused);
         },
-        child: AnimatedContainer(
+        child: ExcludeSemantics(
+            child: AnimatedContainer(
           duration: AppMotion.chipHover,
           curve: AppMotion.emphasized,
           padding: EdgeInsets.symmetric(
@@ -258,7 +259,7 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
               ],
             ),
           ),
-        ),
+        )),
       ),
     );
   }

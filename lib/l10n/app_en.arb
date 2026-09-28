@@ -16,6 +16,11 @@
   "contactSendEmailBtn": "SEND EMAIL",
   "contactCopyAddressBtn": "COPY ADDRESS",
   "skillsEmptyTitle": "No skills in this category yet",
+  "skillsNoMatch": "No skills match “{query}”",
+  "@skillsNoMatch": {
+    "description": "Shown in the Skills section when the search finds nothing.",
+    "placeholders": { "query": { "type": "String" } }
+  },
   "skillsEmptyShowAll": "SHOW ALL",
   "keyboardHintTitle": "Keyboard shortcuts",
   "keyboardHintDigits": "1–7   jump to section",

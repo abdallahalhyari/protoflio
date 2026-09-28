@@ -27,6 +27,10 @@ class DesktopKeyboardNav extends StatelessWidget {
     if (modalRoute != null && !modalRoute.isCurrent) {
       return KeyEventResult.ignored;
     }
+    // Typing belongs to the text field: "5" in the skills search jumped to
+    // Engineering, Space paged down. Modified keys stay the browser's
+    // (Ctrl+1 switches tabs).
+    if (_typingInField() || _modified()) return KeyEventResult.ignored;
     final k = event.logicalKey;
     if (k == LogicalKeyboardKey.arrowDown ||
         k == LogicalKeyboardKey.pageDown ||
@@ -58,6 +62,18 @@ class DesktopKeyboardNav extends StatelessWidget {
       return KeyEventResult.handled;
     }
     return KeyEventResult.ignored;
+  }
+
+  static bool _typingInField() {
+    final focused = FocusManager.instance.primaryFocus?.context;
+    if (focused == null) return false;
+    return focused.widget is EditableText ||
+        focused.findAncestorWidgetOfExactType<EditableText>() != null;
+  }
+
+  static bool _modified() {
+    final keys = HardwareKeyboard.instance;
+    return keys.isControlPressed || keys.isMetaPressed || keys.isAltPressed;
   }
 
   int? _digitKeyToIndex(LogicalKeyboardKey k) {

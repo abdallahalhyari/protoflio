@@ -200,17 +200,22 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                   // card sits flat when the user requests less motion.
                   final double hoverLift =
                       (_isHovered && !reduce) ? -10.0 : 0.0;
-                  return RepaintBoundary(
-                    child: Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.identity()
-                        ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
-                        ..rotateZ(widget.isStandalone
-                            ? 0.0
-                            : widget.rotation + _rotationDelta.value)
-                        ..setEntry(3, 2, 0.0015)
-                        ..rotateY(angle),
-                      child: isUnder ? backCard : frontCard,
+                  // The label reads the face; the back's text is read
+                  // once the card is turned to it.
+                  return ExcludeSemantics(
+                    excluding: !isUnder,
+                    child: RepaintBoundary(
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
+                          ..rotateZ(widget.isStandalone
+                              ? 0.0
+                              : widget.rotation + _rotationDelta.value)
+                          ..setEntry(3, 2, 0.0015)
+                          ..rotateY(angle),
+                        child: isUnder ? backCard : frontCard,
+                      ),
                     ),
                   );
                 },

@@ -469,7 +469,7 @@
 
       <article id="case-study-eskadenia">
         <h3><a href="#work/eskadenia">ESKADENIA Healthcare &amp; E-Learning Suite — Case Study</a></h3>
-        <p><strong>Role:</strong> Mobile Developer</p>
+        <p><strong>Role:</strong> Flutter Developer (ESKADENIA Software)</p>
         <p><strong>Technologies:</strong> Flutter, Dart, MVVM, REST APIs, SQL Server, Performance Profiling.</p>
         <p><strong>Problem:</strong> Frame drops and tightly coupled monolithic state in hospital information systems and university portals.</p>
         <p><strong>Solution:</strong> Rebuilt into decoupled, testable packages with memory profiling and lazy-loaded viewports.</p>
@@ -478,7 +478,7 @@
 
       <article id="case-study-solutions">
         <h3><a href="#work/solutions">Loyalty Rewards &amp; Ephemeral Social Media Apps — Case Study</a></h3>
-        <p><strong>Role:</strong> Flutter Developer (Solutions Now IT)</p>
+        <p><strong>Role:</strong> Mobile Developer (Solutions Now IT)</p>
         <p><strong>Technologies:</strong> Flutter, REST APIs, AWS S3, Camera Engine, Design System.</p>
         <p><strong>Outcome:</strong> Reusable design library reduced feature turnaround by 40% with 4.7+ star store ratings.</p>
       </article>
@@ -542,6 +542,28 @@
 
     // Hide loader once Flutter renders first frame
     window.addEventListener('flutter-first-frame', dismissBootLoader);
+
+    // The sr-only copy below serves crawlers, print, and screen readers
+    // until Flutter's own accessibility tree is switched on. Once it is,
+    // hide the copy from assistive tech so nothing is announced twice.
+    (function () {
+      function retire() {
+        if (!document.querySelector('flt-semantics')) return false;
+        var main = document.getElementById('main-content');
+        if (main) main.setAttribute('aria-hidden', 'true');
+        var skip = document.querySelector('.skip-link');
+        if (skip) {
+          skip.setAttribute('aria-hidden', 'true');
+          skip.setAttribute('tabindex', '-1');
+        }
+        return true;
+      }
+      if (retire() || !window.MutationObserver) return;
+      var watch = new MutationObserver(function () {
+        if (retire()) watch.disconnect();
+      });
+      watch.observe(document.body, { childList: true, subtree: true });
+    })();
 
     // Slow-load fallback: never dismiss before Flutter paints — hiding the
     // loader at 8s used to leave slow connections staring at a blank page

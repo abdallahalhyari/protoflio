@@ -48,6 +48,20 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
     super.dispose();
   }
 
+  void _openStudy() {
+    SoundService.instance.playClick();
+    final slug = CaseStudyRouter.slugForCompany(widget.project.company);
+    if (slug != null) {
+      CaseStudyRouter.push(context, slug);
+    } else {
+      showProjectCaseStudy(
+        context,
+        project: widget.project,
+        index: widget.index,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
@@ -154,37 +168,49 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                 ],
               ),
               const SizedBox(height: AppSpacing.xs),
-              AnimatedSlide(
-                offset: _isHovered && widget.isDesktop
-                    ? const Offset(0.05, 0)
-                    : Offset.zero,
-                duration: AppMotion.cardHover,
-                curve: AppMotion.emphasized,
-                child: Builder(
-                  builder: (context) {
-                    final ctaColor = isDark
-                        ? widget.scheme.primary
-                        : AppColors.accentIndigoDeepText;
-                    return Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            'READ CASE STUDY',
-                            style: TextStyle(
-                              fontFamily: AppTypography.monoFont,
-                              color: ctaColor,
-                              fontSize: AppTypography.caption,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.0,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 6),
-                        Icon(Icons.arrow_forward_rounded,
-                            size: 14, color: ctaColor),
-                      ],
-                    );
-                  },
+              Semantics(
+                button: true,
+                label: 'Read case study for ${widget.project.name}',
+                child: InkWell(
+                  onTap: _openStudy,
+                  onFocusChange: (focused) =>
+                      setState(() => _isFocused = focused),
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                  child: ExcludeSemantics(
+                    child: AnimatedSlide(
+                      offset: _isHovered && widget.isDesktop
+                          ? const Offset(0.05, 0)
+                          : Offset.zero,
+                      duration: AppMotion.cardHover,
+                      curve: AppMotion.emphasized,
+                      child: Builder(
+                        builder: (context) {
+                          final ctaColor = isDark
+                              ? widget.scheme.primary
+                              : AppColors.accentIndigoDeepText;
+                          return Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  'READ CASE STUDY',
+                                  style: TextStyle(
+                                    fontFamily: AppTypography.monoFont,
+                                    color: ctaColor,
+                                    fontSize: AppTypography.caption,
+                                    fontWeight: FontWeight.w900,
+                                    letterSpacing: 1.0,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              Icon(Icons.arrow_forward_rounded,
+                                  size: 14, color: ctaColor),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -195,8 +221,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
       final pinFoot = widget.isDesktop && constraints.hasBoundedHeight;
       return RepaintBoundary(
         child: Semantics(
-          button: true,
-          label: 'Read case study for ${widget.project.name}',
+          container: true,
+          explicitChildNodes: true,
           child: MouseRegion(
             onEnter: (_) => setState(() => _isHovered = true),
             onExit: (_) => setState(() => _isHovered = false),
@@ -235,20 +261,13 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                         ? context.cardGlassHover
                         : context.cardGlass,
                     child: InkWell(
-                      onFocusChange: (focused) =>
-                          setState(() => _isFocused = focused),
-                      onTap: () {
-                        SoundService.instance.playClick();
-                        if (caseStudySlug != null) {
-                          CaseStudyRouter.push(context, caseStudySlug);
-                        } else {
-                          showProjectCaseStudy(
-                            context,
-                            project: widget.project,
-                            index: widget.index,
-                          );
-                        }
-                      },
+                      // A pointer opens the study from anywhere on the card.
+                      // Keyboard and screen readers use the "Read case
+                      // study" control below, rather than a card-sized
+                      // button with the tech filters and links inside it.
+                      canRequestFocus: false,
+                      excludeFromSemantics: true,
+                      onTap: _openStudy,
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                           minHeight: widget.isDesktop ? 300 : 270,
@@ -595,43 +614,52 @@ class _TechTagChipState extends State<_TechTagChip> {
             : AppColors.toAccessibleLightText(widget.scheme.primary))
         : (widget.isDark ? Colors.white70 : AppColors.slate700);
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: AnimatedScale(
-        scale: _isHovered && widget.onTap != null ? 1.05 : 1.0,
-        duration: AppMotion.snap,
-        child: InkWell(
-          onTap: widget.onTap,
-          borderRadius: BorderRadius.circular(AppRadius.xs),
-          child: AnimatedContainer(
-            duration: AppMotion.snap,
-            // 24px+ tall: tags filter the list, so they're tap targets.
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4.5),
-            decoration: BoxDecoration(
-              color: _isHovered && widget.onTap != null
-                  ? widget.scheme.primary
-                      .withValues(alpha: widget.isDark ? 0.35 : 0.25)
-                  : bg,
-              borderRadius: BorderRadius.circular(AppRadius.xs),
-              border: Border.all(
+    // A bare "Flutter, button" doesn't say what pressing it does.
+    return Semantics(
+      button: widget.onTap != null,
+      selected: widget.isSelected,
+      label: widget.onTap != null
+          ? 'Show case studies using ${widget.tag}'
+          : widget.tag,
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: AnimatedScale(
+          scale: _isHovered && widget.onTap != null ? 1.05 : 1.0,
+          duration: AppMotion.snap,
+          child: InkWell(
+            onTap: widget.onTap,
+            borderRadius: BorderRadius.circular(AppRadius.xs),
+            child: AnimatedContainer(
+              duration: AppMotion.snap,
+              // 24px+ tall: tags filter the list, so they're tap targets.
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4.5),
+              decoration: BoxDecoration(
                 color: _isHovered && widget.onTap != null
                     ? widget.scheme.primary
-                    : border,
-                width: widget.isSelected ? 1.2 : 0.8,
+                        .withValues(alpha: widget.isDark ? 0.35 : 0.25)
+                    : bg,
+                borderRadius: BorderRadius.circular(AppRadius.xs),
+                border: Border.all(
+                  color: _isHovered && widget.onTap != null
+                      ? widget.scheme.primary
+                      : border,
+                  width: widget.isSelected ? 1.2 : 0.8,
+                ),
               ),
-            ),
-            child: Text(
-              widget.tag,
-              style: TextStyle(
-                fontFamily: AppTypography.monoFont,
-                color: _isHovered && widget.onTap != null && !widget.isDark
-                    ? AppColors.toAccessibleLightText(widget.scheme.primary)
-                    : text,
-                fontSize: AppTypography.editorialSm,
-                fontWeight: widget.isSelected || _isHovered
-                    ? FontWeight.w900
-                    : FontWeight.w600,
+              child: Text(
+                widget.tag,
+                semanticsLabel: '',
+                style: TextStyle(
+                  fontFamily: AppTypography.monoFont,
+                  color: _isHovered && widget.onTap != null && !widget.isDark
+                      ? AppColors.toAccessibleLightText(widget.scheme.primary)
+                      : text,
+                  fontSize: AppTypography.editorialSm,
+                  fontWeight: widget.isSelected || _isHovered
+                      ? FontWeight.w900
+                      : FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -691,70 +719,87 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
     final activeColor =
         widget.isLinkedIn ? AppColors.linkedIn : widget.scheme.primary;
 
-    return Tooltip(
-      message: widget.tooltip,
-      waitDuration: AppMotion.tooltipWait,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit: (_) => setState(() => _hovered = false),
-        child: GestureDetector(
-          onTap: _handleTap,
-          behavior: HitTestBehavior.opaque,
-          child: AnimatedScale(
-            scale: _hovered ? 1.1 : 1.0,
-            duration: AppMotion.snap,
-            child: AnimatedContainer(
-              duration: AppMotion.snap,
-              width: 28,
-              height: 28,
-              decoration: BoxDecoration(
-                color: _hovered
-                    ? activeColor.withValues(alpha: 0.85)
-                    : Colors.black.withValues(alpha: 0.55),
-                borderRadius: BorderRadius.circular(AppRadius.xs),
-                border: Border.all(
-                  color: _hovered
-                      ? Colors.white
-                      : Colors.white.withValues(alpha: AppAlpha.fill),
-                  width: 1.0,
-                ),
-                boxShadow: _hovered
-                    ? [
-                        BoxShadow(
-                          color: activeColor.withValues(alpha: 0.45),
-                          blurRadius: 8,
-                          spreadRadius: 1,
-                        ),
-                      ]
-                    : null,
-              ),
-              alignment: Alignment.center,
-              child: widget.isLinkedIn
-                  ? Container(
-                      width: 15,
-                      height: 15,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: _hovered ? Colors.white : AppColors.linkedIn,
-                        borderRadius: BorderRadius.circular(AppRadius.hairline),
-                      ),
-                      child: Text(
-                        'in',
-                        style: TextStyle(
-                          color: _hovered ? AppColors.linkedIn : Colors.white,
-                          fontSize: AppTypography.editorialSm,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: 'sans-serif',
-                          height: 1.0,
-                        ),
-                      ),
-                    )
-                  : Icon(
-                      widget.icon ?? Icons.language_rounded,
-                      size: 14,
-                      color: Colors.white,
+    // Named once by its tooltip text; a link when it opens a URL. It was a
+    // bare GestureDetector (keyboard could not reach it, and the LinkedIn
+    // one was announced as "in").
+    return Semantics(
+      link: widget.url != null,
+      button: widget.url == null,
+      linkUrl: widget.url == null ? null : Uri.tryParse(widget.url!),
+      label: widget.tooltip,
+      child: Tooltip(
+        message: widget.tooltip,
+        excludeFromSemantics: true,
+        waitDuration: AppMotion.tooltipWait,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => setState(() => _hovered = true),
+          onExit: (_) => setState(() => _hovered = false),
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: _handleTap,
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+              onFocusChange: (focused) => setState(() => _hovered = focused),
+              child: ExcludeSemantics(
+                  child: AnimatedScale(
+                scale: _hovered ? 1.1 : 1.0,
+                duration: AppMotion.snap,
+                child: AnimatedContainer(
+                  duration: AppMotion.snap,
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    color: _hovered
+                        ? activeColor.withValues(alpha: 0.85)
+                        : Colors.black.withValues(alpha: 0.55),
+                    borderRadius: BorderRadius.circular(AppRadius.xs),
+                    border: Border.all(
+                      color: _hovered
+                          ? Colors.white
+                          : Colors.white.withValues(alpha: AppAlpha.fill),
+                      width: 1.0,
                     ),
+                    boxShadow: _hovered
+                        ? [
+                            BoxShadow(
+                              color: activeColor.withValues(alpha: 0.45),
+                              blurRadius: 8,
+                              spreadRadius: 1,
+                            ),
+                          ]
+                        : null,
+                  ),
+                  alignment: Alignment.center,
+                  child: widget.isLinkedIn
+                      ? Container(
+                          width: 15,
+                          height: 15,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: _hovered ? Colors.white : AppColors.linkedIn,
+                            borderRadius:
+                                BorderRadius.circular(AppRadius.hairline),
+                          ),
+                          child: Text(
+                            'in',
+                            style: TextStyle(
+                              color:
+                                  _hovered ? AppColors.linkedIn : Colors.white,
+                              fontSize: AppTypography.editorialSm,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'sans-serif',
+                              height: 1.0,
+                            ),
+                          ),
+                        )
+                      : Icon(
+                          widget.icon ?? Icons.language_rounded,
+                          size: 14,
+                          color: Colors.white,
+                        ),
+                ),
+              )),
             ),
           ),
         ),

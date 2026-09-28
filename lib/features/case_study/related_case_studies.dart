@@ -95,65 +95,75 @@ class _RelatedCardState extends State<_RelatedCard> {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = context.isDarkMode;
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: GestureDetector(
-        onTap: () => CaseStudyRouter.replace(context, widget.slug),
-        child: AnimatedContainer(
-          duration: AppMotion.cardHover,
-          curve: AppMotion.emphasizedDecel,
-          padding: const EdgeInsets.all(AppSpacing.md),
-          decoration: BoxDecoration(
-            color: _hovered
-                ? scheme.primary.withValues(alpha: isDark ? 0.10 : 0.08)
-                : (isDark
-                    ? Colors.white.withValues(alpha: 0.03)
-                    : Colors.white.withValues(alpha: 0.7)),
+    // A button named by its title and subtitle, reachable by keyboard (it
+    // was a bare GestureDetector); focus lights it up like hover.
+    return Semantics(
+      button: true,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            onTap: () => CaseStudyRouter.replace(context, widget.slug),
+            onFocusChange: (focused) => setState(() => _hovered = focused),
             borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(
-              color: scheme.primary
-                  .withValues(alpha: _hovered ? 0.55 : (isDark ? 0.15 : 0.2)),
-              width: _hovered ? 1.5 : 1,
+            child: AnimatedContainer(
+              duration: AppMotion.cardHover,
+              curve: AppMotion.emphasizedDecel,
+              padding: const EdgeInsets.all(AppSpacing.md),
+              decoration: BoxDecoration(
+                color: _hovered
+                    ? scheme.primary.withValues(alpha: isDark ? 0.10 : 0.08)
+                    : (isDark
+                        ? Colors.white.withValues(alpha: 0.03)
+                        : Colors.white.withValues(alpha: 0.7)),
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                border: Border.all(
+                  color: scheme.primary.withValues(
+                      alpha: _hovered ? 0.55 : (isDark ? 0.15 : 0.2)),
+                  width: _hovered ? 1.5 : 1,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.data.title,
+                          style: TextStyle(
+                            fontFamily: AppTypography.displayFont,
+                            fontSize: AppTypography.subtitle + 2,
+                            fontWeight: FontWeight.w900,
+                            color: scheme.onSurface,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          widget.data.subtitle,
+                          style: TextStyle(
+                            fontSize: AppTypography.small,
+                            color: scheme.onSurface.withValues(alpha: 0.7),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  AnimatedRotation(
+                    turns: _hovered ? 0 : -0.02,
+                    duration: AppMotion.cardHover,
+                    child: Icon(
+                      Icons.arrow_forward_rounded,
+                      color: scheme.primary,
+                      size: 20,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.data.title,
-                      style: TextStyle(
-                        fontFamily: AppTypography.displayFont,
-                        fontSize: AppTypography.subtitle + 2,
-                        fontWeight: FontWeight.w900,
-                        color: scheme.onSurface,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      widget.data.subtitle,
-                      style: TextStyle(
-                        fontSize: AppTypography.small,
-                        color: scheme.onSurface.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              AnimatedRotation(
-                turns: _hovered ? 0 : -0.02,
-                duration: AppMotion.cardHover,
-                child: Icon(
-                  Icons.arrow_forward_rounded,
-                  color: scheme.primary,
-                  size: 20,
-                ),
-              ),
-            ],
           ),
         ),
       ),

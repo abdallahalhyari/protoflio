@@ -16,6 +16,7 @@
   "contactSendEmailBtn": "ODESLAT E-MAIL",
   "contactCopyAddressBtn": "KOPÍROVAT ADRESU",
   "skillsEmptyTitle": "V této kategorii zatím nejsou žádné dovednosti",
+  "skillsNoMatch": "Hledání „{query}“ nenašlo žádnou dovednost",
   "skillsEmptyShowAll": "ZOBRAZIT VŠE",
   "keyboardHintTitle": "Klávesové zkratky",
   "keyboardHintDigits": "1–7   přejít na sekci",

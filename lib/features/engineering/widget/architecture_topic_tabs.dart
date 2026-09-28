@@ -57,7 +57,8 @@ class ArchitectureTopicTabs extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.sm),
-        child: AnimatedContainer(
+        child: ExcludeSemantics(
+            child: AnimatedContainer(
           duration: AppMotion.sm,
           curve: AppMotion.emphasized,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -121,7 +122,7 @@ class ArchitectureTopicTabs extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        )),
       ),
     );
   }

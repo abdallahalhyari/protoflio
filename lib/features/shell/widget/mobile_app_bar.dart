@@ -93,7 +93,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           onLogoPressed?.call();
                         },
                         borderRadius: BorderRadius.circular(AppRadius.sm),
-                        child: Padding(
+                        child: ExcludeSemantics(
+                            child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 4, horizontal: 2),
                           child: Row(
@@ -152,7 +153,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ],
                           ),
-                        ),
+                        )),
                       ),
                     ),
                   ),
@@ -172,6 +173,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                       label: 'Change language. Current: $code',
                       child: Tooltip(
                         message: 'Change language ($code)',
+                        excludeFromSemantics: true,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(AppRadius.chip),
                           onTap: () {
@@ -180,7 +182,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 .read<LocaleBloc>()
                                 .add(const NextLocaleRequested());
                           },
-                          child: Container(
+                          child: ExcludeSemantics(
+                              child: Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 7, vertical: 4),
                             decoration: BoxDecoration(
@@ -202,7 +205,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 letterSpacing: 0.8,
                               ),
                             ),
-                          ),
+                          )),
                         ),
                       ),
                     );
@@ -216,28 +219,39 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                 buildWhen: (prev, curr) => prev.mode != curr.mode,
                 builder: (_, themeState) {
                   final dark = themeState.isDark;
-                  return Semantics(
-                    button: true,
-                    toggled: dark,
-                    label:
-                        dark ? 'Switch to light mode' : 'Switch to dark mode',
-                    child: IconButton(
-                      tooltip:
+                  // One node, named once, that keeps the button's focus
+                  // state (screen readers follow Tab); the hover tooltip
+                  // stays out of the spoken name.
+                  return MergeSemantics(
+                    child: Semantics(
+                      button: true,
+                      toggled: dark,
+                      label:
                           dark ? 'Switch to light mode' : 'Switch to dark mode',
-                      iconSize: 18,
-                      padding: EdgeInsets.zero,
-                      constraints:
-                          const BoxConstraints(minWidth: 44, minHeight: 44),
-                      icon: Icon(
-                        dark
-                            ? Icons.light_mode_rounded
-                            : Icons.dark_mode_rounded,
-                        color: context.mutedText,
+                      child: Tooltip(
+                        message: dark
+                            ? 'Switch to light mode'
+                            : 'Switch to dark mode',
+                        excludeFromSemantics: true,
+                        child: IconButton(
+                          iconSize: 18,
+                          padding: EdgeInsets.zero,
+                          constraints:
+                              const BoxConstraints(minWidth: 44, minHeight: 44),
+                          icon: Icon(
+                            dark
+                                ? Icons.light_mode_rounded
+                                : Icons.dark_mode_rounded,
+                            color: context.mutedText,
+                          ),
+                          onPressed: () {
+                            SoundService.instance.playClick();
+                            context
+                                .read<ThemeBloc>()
+                                .add(const ThemeModeToggled());
+                          },
+                        ),
                       ),
-                      onPressed: () {
-                        SoundService.instance.playClick();
-                        context.read<ThemeBloc>().add(const ThemeModeToggled());
-                      },
                     ),
                   );
                 },
@@ -251,31 +265,38 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ValueListenableBuilder<bool>(
                   valueListenable: SoundService.instance.isEnabled,
                   builder: (_, enabled, __) {
-                    return Semantics(
-                      button: true,
-                      toggled: enabled,
-                      label: enabled
-                          ? 'Mute sound effects'
-                          : 'Enable sound effects',
-                      child: IconButton(
-                        tooltip: enabled
+                    return MergeSemantics(
+                      child: Semantics(
+                        button: true,
+                        toggled: enabled,
+                        label: enabled
                             ? 'Mute sound effects'
                             : 'Enable sound effects',
-                        iconSize: 18,
-                        padding: EdgeInsets.zero,
-                        constraints:
-                            const BoxConstraints(minWidth: 44, minHeight: 44),
-                        icon: Icon(
-                          enabled
-                              ? Icons.volume_up_rounded
-                              : Icons.volume_off_rounded,
-                          color: enabled
-                              ? AppColors.accentAmber
-                              : (isDark ? Colors.white38 : AppColors.slate400),
+                        child: Tooltip(
+                          message: enabled
+                              ? 'Mute sound effects'
+                              : 'Enable sound effects',
+                          excludeFromSemantics: true,
+                          child: IconButton(
+                            iconSize: 18,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(
+                                minWidth: 44, minHeight: 44),
+                            icon: Icon(
+                              enabled
+                                  ? Icons.volume_up_rounded
+                                  : Icons.volume_off_rounded,
+                              color: enabled
+                                  ? AppColors.accentAmber
+                                  : (isDark
+                                      ? Colors.white38
+                                      : AppColors.slate400),
+                            ),
+                            onPressed: () {
+                              SoundService.instance.toggle();
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          SoundService.instance.toggle();
-                        },
                       ),
                     );
                   },
@@ -290,7 +311,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                 label: 'Open navigation menu',
                 // The pill is ~33px tall; the transparent band around it
                 // takes the tap target to 44px without growing the pill.
+                // Screen readers get the InkWell (tap + focus) only, under
+                // the label above; its visible "MENU" is left unsaid.
                 child: GestureDetector(
+                  excludeFromSemantics: true,
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
                     SoundService.instance.playClick();
@@ -304,7 +328,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                         onMenuPressed();
                       },
                       borderRadius: BorderRadius.circular(AppRadius.pill),
-                      child: Container(
+                      child: ExcludeSemantics(
+                          child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: ultraTight ? 8 : 11,
                           vertical: 8,
@@ -340,7 +365,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                             ),
                           ],
                         ),
-                      ),
+                      )),
                     ),
                   ),
                 ),

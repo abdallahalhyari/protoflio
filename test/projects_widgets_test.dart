@@ -188,12 +188,16 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      final inkWellFinder = find.byType(InkWell);
-      expect(inkWellFinder, findsWidgets);
-
-      // Focus the InkWell
-      final inkWell = tester.widget<InkWell>(inkWellFinder.first);
-      inkWell.onFocusChange?.call(true);
+      // Keyboard focus lands on the card's "Read case study" control (the
+      // card-wide InkWell is pointer-only).
+      final cta = find.descendant(
+        of: find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            (w.properties.label?.startsWith('Read case study') ?? false)),
+        matching: find.byType(InkWell),
+      );
+      expect(cta, findsOneWidget);
+      tester.widget<InkWell>(cta).onFocusChange?.call(true);
       await tester.pump();
 
       // Card elevation and border should be highlighted

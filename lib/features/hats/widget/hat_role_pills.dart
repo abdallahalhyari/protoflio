@@ -37,7 +37,8 @@ class HatRolePills extends StatelessWidget {
                 onSelectRole(i);
               },
               borderRadius: BorderRadius.circular(AppRadius.chip),
-              child: AnimatedContainer(
+              child: ExcludeSemantics(
+                  child: AnimatedContainer(
                 duration: AppMotion.chipHover,
                 curve: AppMotion.emphasized,
                 padding: EdgeInsets.symmetric(
@@ -98,7 +99,7 @@ class HatRolePills extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
+              )),
             ),
           ),
       ],

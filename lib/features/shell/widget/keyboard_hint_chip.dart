@@ -20,8 +20,11 @@ class KeyboardHintChip extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return Semantics(
       button: true,
-      label: '${l10n.keyboardHintTitle}. Tap to view keyboard shortcuts.',
+      // "Keyboard shortcuts, button" says it all; the tooltip and the
+      // visible "SHORTCUTS [?]" are for sighted pointer users.
+      label: l10n.keyboardHintTitle,
       child: Tooltip(
+        excludeFromSemantics: true,
         preferBelow: false,
         richMessage: TextSpan(
           style: const TextStyle(
@@ -47,7 +50,8 @@ class KeyboardHintChip extends StatelessWidget {
               HapticFeedback.selectionClick();
               onShowHelp();
             },
-            child: Container(
+            child: ExcludeSemantics(
+                child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -85,7 +89,7 @@ class KeyboardHintChip extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            )),
           ),
         ),
       ),

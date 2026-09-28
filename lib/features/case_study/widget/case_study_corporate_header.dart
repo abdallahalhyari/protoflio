@@ -163,120 +163,128 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
     final primary =
         widget.isLinkedIn ? AppColors.linkedIn : widget.scheme.primary;
 
+    // A link named once by its tooltip text, reachable by keyboard (it was
+    // a bare GestureDetector read as "OFFICIAL WEBSITE: Visit … WEBSITE").
     return Semantics(
-      button: true,
-      label: '${widget.label}: ${widget.tooltip}',
+      link: true,
+      linkUrl: Uri.tryParse(widget.url),
+      label: widget.tooltip,
       child: Tooltip(
         message: widget.tooltip,
+        excludeFromSemantics: true,
         waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => setState(() => _hovered = true),
           onExit: (_) => setState(() => _hovered = false),
-          child: GestureDetector(
-            onTap: _handleTap,
-            behavior: HitTestBehavior.opaque,
-            child: AnimatedScale(
-              scale: _hovered ? 1.05 : 1.0,
-              duration: AppMotion.snap,
-              child: AnimatedContainer(
-                duration: AppMotion.snap,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: _hovered
-                      ? (isDark
-                          ? primary.withValues(alpha: 0.22)
-                          : primary.withValues(alpha: AppAlpha.hover))
-                      : (isDark
-                          ? Colors.white.withValues(alpha: AppAlpha.whisper)
-                          : AppColors.slate100),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: _hovered
-                        ? primary.withValues(alpha: isDark ? 0.9 : 0.8)
-                        : (isDark
-                            ? Colors.white.withValues(alpha: 0.2)
-                            : AppColors.slate300),
-                    width: _hovered ? 1.4 : 1.0,
-                  ),
-                  boxShadow: _hovered
-                      ? [
-                          BoxShadow(
-                            color:
-                                primary.withValues(alpha: isDark ? 0.35 : 0.22),
-                            blurRadius: 10,
-                            spreadRadius: 0.5,
-                          ),
-                        ]
-                      : null,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (widget.isLinkedIn) ...[
-                      Container(
-                        width: 13,
-                        height: 13,
-                        decoration: BoxDecoration(
-                          color: AppColors.linkedIn,
-                          borderRadius:
-                              BorderRadius.circular(AppRadius.hairline),
-                        ),
-                        alignment: Alignment.center,
-                        child: const Text(
-                          'in',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: AppTypography.nano,
-                            fontWeight: FontWeight.w900,
-                            fontFamily: 'sans-serif',
-                            height: 1.0,
-                          ),
-                        ),
-                      ),
-                    ] else if (widget.icon != null) ...[
-                      Icon(
-                        widget.icon,
-                        size: 13,
-                        color: _hovered
-                            ? (isDark ? Colors.white : primary)
-                            : (context.mutedText),
-                      ),
-                    ],
-                    const SizedBox(width: 5),
-                    Flexible(
-                      child: Text(
-                        widget.label,
-                        maxLines: 1,
-                        softWrap: false,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          fontSize: AppTypography.micro,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: latinTracking(context, 1.2),
-                          color: _hovered
-                              ? (isDark ? Colors.white : primary)
-                              : (isDark
-                                  ? Colors.white.withValues(alpha: 0.88)
-                                  : AppColors.slate800),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 3),
-                    Icon(
-                      Icons.arrow_outward_rounded,
-                      size: 10,
+          child: Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                onTap: _handleTap,
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                onFocusChange: (focused) => setState(() => _hovered = focused),
+                child: ExcludeSemantics(
+                    child: AnimatedScale(
+                  scale: _hovered ? 1.05 : 1.0,
+                  duration: AppMotion.snap,
+                  child: AnimatedContainer(
+                    duration: AppMotion.snap,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
                       color: _hovered
-                          ? primary
-                          : (isDark ? Colors.white54 : AppColors.slate500),
+                          ? (isDark
+                              ? primary.withValues(alpha: 0.22)
+                              : primary.withValues(alpha: AppAlpha.hover))
+                          : (isDark
+                              ? Colors.white.withValues(alpha: AppAlpha.whisper)
+                              : AppColors.slate100),
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                      border: Border.all(
+                        color: _hovered
+                            ? primary.withValues(alpha: isDark ? 0.9 : 0.8)
+                            : (isDark
+                                ? Colors.white.withValues(alpha: 0.2)
+                                : AppColors.slate300),
+                        width: _hovered ? 1.4 : 1.0,
+                      ),
+                      boxShadow: _hovered
+                          ? [
+                              BoxShadow(
+                                color: primary.withValues(
+                                    alpha: isDark ? 0.35 : 0.22),
+                                blurRadius: 10,
+                                spreadRadius: 0.5,
+                              ),
+                            ]
+                          : null,
                     ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (widget.isLinkedIn) ...[
+                          Container(
+                            width: 13,
+                            height: 13,
+                            decoration: BoxDecoration(
+                              color: AppColors.linkedIn,
+                              borderRadius:
+                                  BorderRadius.circular(AppRadius.hairline),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'in',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: AppTypography.nano,
+                                fontWeight: FontWeight.w900,
+                                fontFamily: 'sans-serif',
+                                height: 1.0,
+                              ),
+                            ),
+                          ),
+                        ] else if (widget.icon != null) ...[
+                          Icon(
+                            widget.icon,
+                            size: 13,
+                            color: _hovered
+                                ? (isDark ? Colors.white : primary)
+                                : (context.mutedText),
+                          ),
+                        ],
+                        const SizedBox(width: 5),
+                        Flexible(
+                          child: Text(
+                            widget.label,
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: AppTypography.monoFont,
+                              fontSize: AppTypography.micro,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: latinTracking(context, 1.2),
+                              color: _hovered
+                                  ? (isDark ? Colors.white : primary)
+                                  : (isDark
+                                      ? Colors.white.withValues(alpha: 0.88)
+                                      : AppColors.slate800),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 3),
+                        Icon(
+                          Icons.arrow_outward_rounded,
+                          size: 10,
+                          color: _hovered
+                              ? primary
+                              : (isDark ? Colors.white54 : AppColors.slate500),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+              )),
         ),
       ),
     );
@@ -313,88 +321,95 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
       label: AppLocalizations.of(context)!.studyShareSemantics(widget.title),
       child: Tooltip(
         message: AppLocalizations.of(context)!.studyShareTooltip,
+        excludeFromSemantics: true,
         waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => setState(() => _hovered = true),
           onExit: (_) => setState(() => _hovered = false),
-          child: GestureDetector(
-            onTap: () =>
-                shareCaseStudy(context, slug: widget.slug, title: widget.title),
-            behavior: HitTestBehavior.opaque,
-            child: AnimatedScale(
-              scale: _hovered ? 1.05 : 1.0,
-              duration: AppMotion.snap,
-              child: AnimatedContainer(
-                duration: AppMotion.snap,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: _hovered
-                      ? (isDark
-                          ? accent.withValues(alpha: 0.22)
-                          : accent.withValues(alpha: AppAlpha.hover))
-                      : (isDark
-                          ? Colors.white.withValues(alpha: AppAlpha.whisper)
-                          : AppColors.slate100),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: _hovered
-                        ? accent.withValues(alpha: isDark ? 0.9 : 0.8)
-                        : (isDark
-                            ? Colors.white.withValues(alpha: 0.2)
-                            : AppColors.slate300),
-                    width: _hovered ? 1.4 : 1.0,
-                  ),
-                  boxShadow: _hovered
-                      ? [
-                          BoxShadow(
-                            color:
-                                accent.withValues(alpha: isDark ? 0.35 : 0.22),
-                            blurRadius: 10,
-                            spreadRadius: 0.5,
-                          ),
-                        ]
-                      : null,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.share_rounded,
-                      size: 13,
+          child: Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                onTap: () => shareCaseStudy(context,
+                    slug: widget.slug, title: widget.title),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                onFocusChange: (focused) => setState(() => _hovered = focused),
+                child: ExcludeSemantics(
+                    child: AnimatedScale(
+                  scale: _hovered ? 1.05 : 1.0,
+                  duration: AppMotion.snap,
+                  child: AnimatedContainer(
+                    duration: AppMotion.snap,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
                       color: _hovered
-                          ? (isDark ? Colors.white : AppColors.accentGreenDeep)
-                          : (context.mutedText),
+                          ? (isDark
+                              ? accent.withValues(alpha: 0.22)
+                              : accent.withValues(alpha: AppAlpha.hover))
+                          : (isDark
+                              ? Colors.white.withValues(alpha: AppAlpha.whisper)
+                              : AppColors.slate100),
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                      border: Border.all(
+                        color: _hovered
+                            ? accent.withValues(alpha: isDark ? 0.9 : 0.8)
+                            : (isDark
+                                ? Colors.white.withValues(alpha: 0.2)
+                                : AppColors.slate300),
+                        width: _hovered ? 1.4 : 1.0,
+                      ),
+                      boxShadow: _hovered
+                          ? [
+                              BoxShadow(
+                                color: accent.withValues(
+                                    alpha: isDark ? 0.35 : 0.22),
+                                blurRadius: 10,
+                                spreadRadius: 0.5,
+                              ),
+                            ]
+                          : null,
                     ),
-                    const SizedBox(width: 5),
-                    // Shrinks with the other pills in long translations.
-                    Flexible(
-                      child: Text(
-                        AppLocalizations.of(context)!.studyShare,
-                        maxLines: 1,
-                        softWrap: false,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          fontSize: AppTypography.micro,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: latinTracking(context, 1.2),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.share_rounded,
+                          size: 13,
                           color: _hovered
                               ? (isDark
                                   ? Colors.white
                                   : AppColors.accentGreenDeep)
-                              : (isDark
-                                  ? Colors.white.withValues(alpha: 0.88)
-                                  : AppColors.slate800),
+                              : (context.mutedText),
                         ),
-                      ),
+                        const SizedBox(width: 5),
+                        // Shrinks with the other pills in long translations.
+                        Flexible(
+                          child: Text(
+                            AppLocalizations.of(context)!.studyShare,
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: AppTypography.monoFont,
+                              fontSize: AppTypography.micro,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: latinTracking(context, 1.2),
+                              color: _hovered
+                                  ? (isDark
+                                      ? Colors.white
+                                      : AppColors.accentGreenDeep)
+                                  : (isDark
+                                      ? Colors.white.withValues(alpha: 0.88)
+                                      : AppColors.slate800),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+                  ),
+                )),
+              )),
         ),
       ),
     );

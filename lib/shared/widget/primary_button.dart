@@ -101,14 +101,18 @@ class _PrimaryButtonState extends State<PrimaryButton> {
     final hover = _isHovered && _enabled;
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
 
-    Widget content = Text(
-      widget.label,
-      style: TextStyle(
-        fontSize: dims.fontSize,
-        color: _enabled
-            ? scheme.onPrimary
-            : scheme.onPrimary.withValues(alpha: 0.7),
-        fontWeight: FontWeight.bold,
+    // The Semantics below already names the button; the visible text would
+    // be read a second time ("VIEW MY WORK VIEW MY WORK").
+    Widget content = ExcludeSemantics(
+      child: Text(
+        widget.label,
+        style: TextStyle(
+          fontSize: dims.fontSize,
+          color: _enabled
+              ? scheme.onPrimary
+              : scheme.onPrimary.withValues(alpha: 0.7),
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
 

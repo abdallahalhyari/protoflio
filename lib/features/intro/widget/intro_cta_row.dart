@@ -48,26 +48,32 @@ class IntroCtaRow extends StatelessWidget {
     final borderColor =
         isDark ? (color ?? Colors.white24) : (color ?? AppColors.slate300);
 
-    return Semantics(
-      button: true,
-      label: label,
-      child: OutlinedButton.icon(
-        onPressed: onPressed,
-        icon: Icon(icon, size: 16),
-        label: Text(
-          label,
-          style: const TextStyle(
-            fontSize: AppTypography.small,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1.2,
+    // One node named once: the label merges into the button, which keeps
+    // its focus state; the visible text is left unsaid.
+    return MergeSemantics(
+      child: Semantics(
+        button: true,
+        label: label,
+        child: OutlinedButton.icon(
+          onPressed: onPressed,
+          icon: Icon(icon, size: 16),
+          label: ExcludeSemantics(
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: AppTypography.small,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+              ),
+            ),
           ),
-        ),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: effectiveColor,
-          side: BorderSide(color: borderColor, width: 1.5),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.pill),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: effectiveColor,
+            side: BorderSide(color: borderColor, width: 1.5),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+            ),
           ),
         ),
       ),
@@ -80,25 +86,29 @@ class IntroCtaRow extends StatelessWidget {
     required IconData icon,
     required VoidCallback onPressed,
   }) {
-    return Semantics(
-      button: true,
-      label: label,
-      child: TextButton.icon(
-        onPressed: onPressed,
-        icon: Icon(icon, size: 15),
-        label: Text(
-          label,
-          style: const TextStyle(
-            fontSize: AppTypography.caption,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1.2,
+    return MergeSemantics(
+      child: Semantics(
+        button: true,
+        label: label,
+        child: TextButton.icon(
+          onPressed: onPressed,
+          icon: Icon(icon, size: 15),
+          label: ExcludeSemantics(
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: AppTypography.caption,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+              ),
+            ),
           ),
-        ),
-        style: TextButton.styleFrom(
-          foregroundColor: isDark ? Colors.white70 : AppColors.slate600,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.pill),
+          style: TextButton.styleFrom(
+            foregroundColor: isDark ? Colors.white70 : AppColors.slate600,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+            ),
           ),
         ),
       ),

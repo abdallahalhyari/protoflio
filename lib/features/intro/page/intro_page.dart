@@ -232,9 +232,13 @@ class _IntroPageState extends State<IntroPage>
             : (size.height * 0.16).clamp(85.0, 160.0));
     return SnappyEntrance(
       delayMs: 0,
+      // The page's one h1 (sections are h2). The wordmark's own text would
+      // otherwise trail the label ("…Senior Mobile Engineer ABDALLAH").
       child: Semantics(
         header: true,
+        headingLevel: 1,
         label: AppLocalizations.of(context)!.semanticTitle,
+        excludeSemantics: true,
         child: SizedBox(
           height: wordmarkHeight,
           child: Padding(
@@ -289,7 +293,8 @@ class _IntroPageState extends State<IntroPage>
             children: [
               _portrait(portraitSize),
               SizedBox(width: portraitSize * 0.26),
-              Text(
+              ExcludeSemantics(
+                  child: Text(
                 'ALHYARI',
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
@@ -304,14 +309,15 @@ class _IntroPageState extends State<IntroPage>
                         ]
                       : const [Shadow(color: Colors.black12, blurRadius: 4)],
                 ),
-              ),
+              )),
             ],
           )
         : Column(
             children: [
               _portrait(portraitSize),
               const SizedBox(height: AppSpacing.smd),
-              Text(
+              ExcludeSemantics(
+                  child: Text(
                 'ALHYARI',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -327,7 +333,7 @@ class _IntroPageState extends State<IntroPage>
                         ]
                       : const [Shadow(color: Colors.black12, blurRadius: 2)],
                 ),
-              ),
+              )),
             ],
           );
 
@@ -353,9 +359,11 @@ class _IntroPageState extends State<IntroPage>
       ),
     );
 
+    // One image node, named here; the image's own label was a second one.
     return Semantics(
       label: AppLocalizations.of(context)!.semanticPortrait,
       image: true,
+      excludeSemantics: true,
       child: Container(
         width: size,
         height: size,
