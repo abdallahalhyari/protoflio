@@ -59,6 +59,9 @@ void main() {
       expect(_meta(html, 'og:description'), isNotEmpty);
       expect(html, contains("#work/$slug')"));
       _expectImageMatches(html);
+      expect(File('web/sitemap.xml').readAsStringSync(),
+          contains('<loc>https://alhyari.web.app/work/$slug/</loc>'),
+          reason: 'listed in the sitemap');
       // Per the owner: no Twitter/X tags anywhere (see seo_audit_test).
       expect(html.toLowerCase(), isNot(contains('twitter')));
     });
