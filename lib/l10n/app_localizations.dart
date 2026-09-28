@@ -837,6 +837,444 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile summary copied'**
   String get quickProfileCopied;
+
+  /// No description provided for @studyCaseStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'CASE STUDY'**
+  String get studyCaseStudy;
+
+  /// No description provided for @studyProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'THE PROBLEM'**
+  String get studyProblem;
+
+  /// No description provided for @studyRole.
+  ///
+  /// In en, this message translates to:
+  /// **'MY ROLE'**
+  String get studyRole;
+
+  /// No description provided for @studyArchitecture.
+  ///
+  /// In en, this message translates to:
+  /// **'SYSTEM ARCHITECTURE'**
+  String get studyArchitecture;
+
+  /// No description provided for @studyOutcomes.
+  ///
+  /// In en, this message translates to:
+  /// **'OUTCOMES'**
+  String get studyOutcomes;
+
+  /// No description provided for @studyLessons.
+  ///
+  /// In en, this message translates to:
+  /// **'LESSONS'**
+  String get studyLessons;
+
+  /// No description provided for @studyMore.
+  ///
+  /// In en, this message translates to:
+  /// **'MORE CASE STUDIES'**
+  String get studyMore;
+
+  /// No description provided for @studyDockProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'PROBLEM'**
+  String get studyDockProblem;
+
+  /// No description provided for @studyDockProblemShort.
+  ///
+  /// In en, this message translates to:
+  /// **'PROB'**
+  String get studyDockProblemShort;
+
+  /// No description provided for @studyDockRole.
+  ///
+  /// In en, this message translates to:
+  /// **'ROLE'**
+  String get studyDockRole;
+
+  /// No description provided for @studyDockArch.
+  ///
+  /// In en, this message translates to:
+  /// **'ARCH'**
+  String get studyDockArch;
+
+  /// No description provided for @studyDockOutcomes.
+  ///
+  /// In en, this message translates to:
+  /// **'OUTCOMES'**
+  String get studyDockOutcomes;
+
+  /// No description provided for @studyDockOutcomesShort.
+  ///
+  /// In en, this message translates to:
+  /// **'RESULTS'**
+  String get studyDockOutcomesShort;
+
+  /// No description provided for @studyDockLessons.
+  ///
+  /// In en, this message translates to:
+  /// **'LESSONS'**
+  String get studyDockLessons;
+
+  /// No description provided for @studyBackToPortfolio.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to portfolio'**
+  String get studyBackToPortfolio;
+
+  /// No description provided for @studyReadPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{pct}% READ'**
+  String studyReadPercent(int pct);
+
+  /// No description provided for @studyTop.
+  ///
+  /// In en, this message translates to:
+  /// **'TOP'**
+  String get studyTop;
+
+  /// No description provided for @studyBackToTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to top'**
+  String get studyBackToTop;
+
+  /// No description provided for @studyJumpTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Jump to {chapter}'**
+  String studyJumpTo(String chapter);
+
+  /// No description provided for @studyChapter.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter {chapter}'**
+  String studyChapter(String chapter);
+
+  /// No description provided for @studyOfficialWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'OFFICIAL WEBSITE'**
+  String get studyOfficialWebsite;
+
+  /// No description provided for @studyVisitWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit {company} official website'**
+  String studyVisitWebsite(String company);
+
+  /// No description provided for @studyCompanyLinkedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'COMPANY LINKEDIN'**
+  String get studyCompanyLinkedIn;
+
+  /// No description provided for @studyViewOnLinkedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'View {company} on LinkedIn'**
+  String studyViewOnLinkedIn(String company);
+
+  /// No description provided for @studyShare.
+  ///
+  /// In en, this message translates to:
+  /// **'SHARE STUDY'**
+  String get studyShare;
+
+  /// No description provided for @studyShareTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy direct link to this case study'**
+  String get studyShareTooltip;
+
+  /// No description provided for @studyShareSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Share direct link to {title} case study'**
+  String studyShareSemantics(String title);
+
+  /// No description provided for @studyShareButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Share case study link'**
+  String get studyShareButton;
+
+  /// No description provided for @studyLinkCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Case study link copied: {url}'**
+  String studyLinkCopied(String url);
+
+  /// No description provided for @studyGlanceKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'AT A GLANCE · 30-SECOND READ'**
+  String get studyGlanceKicker;
+
+  /// No description provided for @studyGlance.
+  ///
+  /// In en, this message translates to:
+  /// **'At a glance'**
+  String get studyGlance;
+
+  /// No description provided for @studyChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'CHALLENGE'**
+  String get studyChallenge;
+
+  /// No description provided for @studyBuilt.
+  ///
+  /// In en, this message translates to:
+  /// **'WHAT I BUILT'**
+  String get studyBuilt;
+
+  /// No description provided for @studyResult.
+  ///
+  /// In en, this message translates to:
+  /// **'RESULT'**
+  String get studyResult;
+
+  /// No description provided for @studySeeOutcomes.
+  ///
+  /// In en, this message translates to:
+  /// **'See all outcomes'**
+  String get studySeeOutcomes;
+
+  /// Shown above the English technical chapters in other locales; empty in English.
+  ///
+  /// In en, this message translates to:
+  /// **''**
+  String get studyEnglishNote;
+
+  /// No description provided for @studyOutcomeSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Key outcome metric: {headline}. {body}'**
+  String studyOutcomeSemantics(String headline, String body);
+
+  /// No description provided for @studyPresent.
+  ///
+  /// In en, this message translates to:
+  /// **'PRESENT'**
+  String get studyPresent;
+
+  /// No description provided for @studyRoleMobileDev.
+  ///
+  /// In en, this message translates to:
+  /// **'MOBILE DEVELOPER'**
+  String get studyRoleMobileDev;
+
+  /// No description provided for @studyRoleFlutterDev.
+  ///
+  /// In en, this message translates to:
+  /// **'FLUTTER DEVELOPER'**
+  String get studyRoleFlutterDev;
+
+  /// No description provided for @studyRoleMobileDevFlutterAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'MOBILE DEVELOPER (FLUTTER & ANDROID)'**
+  String get studyRoleMobileDevFlutterAndroid;
+
+  /// No description provided for @studyNatIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Mission-critical NFC smart-card healthcare platform serving Jordan\'s largest health-insurance TPA. Ring App, E-Health Gate, and Compliance System — shipped as three coordinated clients on a shared architecture.'**
+  String get studyNatIntro;
+
+  /// No description provided for @studyNatChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Paper claims slowed reimbursement and exposed Jordan\'s largest health-insurance TPA to fraud, and many clinics had unreliable connectivity.'**
+  String get studyNatChallenge;
+
+  /// No description provided for @studyNatBuilt.
+  ///
+  /// In en, this message translates to:
+  /// **'A three-app NFC smart-card suite: a native Kotlin APDU bridge, an offline-first WorkManager sync pipeline, and hardware-bound JWT tokens.'**
+  String get studyNatBuilt;
+
+  /// No description provided for @studyNatResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Card verification in under a second, claims that survive connectivity drops, zero security breaches, and three clients shipped on one architecture.'**
+  String get studyNatResult;
+
+  /// No description provided for @studyNatOutcome1.
+  ///
+  /// In en, this message translates to:
+  /// **'contactless card verification, flagship to budget handsets'**
+  String get studyNatOutcome1;
+
+  /// No description provided for @studyNatOutcome2.
+  ///
+  /// In en, this message translates to:
+  /// **'reliable offline batch sync during connectivity drops'**
+  String get studyNatOutcome2;
+
+  /// No description provided for @studyNatOutcome3.
+  ///
+  /// In en, this message translates to:
+  /// **'security breaches under hardware-bound token lifecycle'**
+  String get studyNatOutcome3;
+
+  /// No description provided for @studyNatOutcome4.
+  ///
+  /// In en, this message translates to:
+  /// **'coordinated clients shipped on the shared architecture'**
+  String get studyNatOutcome4;
+
+  /// No description provided for @studyEskIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'High-performance enterprise mobile architecture powering Hospital Information Systems (HIS) and Education platforms across the MENA region. Rebuilt legacy monolithic codebases into decoupled, testable feature packages with zero operational downtime.'**
+  String get studyEskIntro;
+
+  /// No description provided for @studyEskChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy monolithic hospital and university apps stuttered on dense records and crashed on low-spec ward tablets during long shifts.'**
+  String get studyEskChallenge;
+
+  /// No description provided for @studyEskBuilt.
+  ///
+  /// In en, this message translates to:
+  /// **'An incremental MVVM refactor into decoupled feature packages with cached repositories and typed contracts, profiled with DevTools, with zero downtime.'**
+  String get studyEskBuilt;
+
+  /// No description provided for @studyEskResult.
+  ///
+  /// In en, this message translates to:
+  /// **'60 FPS on dense data tables, 35% fewer crashes, 1,000+ records rendered smoothly, and four enterprise platforms deployed.'**
+  String get studyEskResult;
+
+  /// No description provided for @studyEskOutcome1.
+  ///
+  /// In en, this message translates to:
+  /// **'sustained frame rate on dense hospital data tables and medical charts'**
+  String get studyEskOutcome1;
+
+  /// No description provided for @studyEskOutcome2.
+  ///
+  /// In en, this message translates to:
+  /// **'reduction in client-side crash rate across multi-hour clinical shifts'**
+  String get studyEskOutcome2;
+
+  /// No description provided for @studyEskOutcome3.
+  ///
+  /// In en, this message translates to:
+  /// **'patient and student records rendered with zero viewport latency'**
+  String get studyEskOutcome3;
+
+  /// No description provided for @studyEskOutcome4.
+  ///
+  /// In en, this message translates to:
+  /// **'enterprise platforms deployed (HIS, Clinic, University, School)'**
+  String get studyEskOutcome4;
+
+  /// No description provided for @studySolIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'High-throughput consumer iOS and Android applications: a real-time loyalty redemption engine and a Snapchat-style ephemeral video/story camera platform. Built with hardware-accelerated video pipelines and an internal reusable design system.'**
+  String get studySolIntro;
+
+  /// No description provided for @studySolChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Two consumer apps (loyalty rewards and ephemeral video stories) on compressed deadlines, with camera pipelines that leaked and distorted across Android OEMs.'**
+  String get studySolChallenge;
+
+  /// No description provided for @studySolBuilt.
+  ///
+  /// In en, this message translates to:
+  /// **'A hardware-accelerated camera and video engine, background isolates that compress media before S3 upload, and a shared design-token library for both apps.'**
+  String get studySolBuilt;
+
+  /// No description provided for @studySolResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Both apps launched on schedule with a 4.7+ store rating, 40% faster feature turnaround, and zero dropped frames in the story carousel.'**
+  String get studySolResult;
+
+  /// No description provided for @studySolOutcome1.
+  ///
+  /// In en, this message translates to:
+  /// **'average star rating across iOS App Store and Google Play'**
+  String get studySolOutcome1;
+
+  /// No description provided for @studySolOutcome2.
+  ///
+  /// In en, this message translates to:
+  /// **'reduction in subsequent feature turnaround time via shared component library'**
+  String get studySolOutcome2;
+
+  /// No description provided for @studySolOutcome3.
+  ///
+  /// In en, this message translates to:
+  /// **'dropped frames during horizontal story carousel gesture navigation'**
+  String get studySolOutcome3;
+
+  /// No description provided for @studySolOutcome4.
+  ///
+  /// In en, this message translates to:
+  /// **'production consumer applications launched simultaneously on schedule'**
+  String get studySolOutcome4;
+
+  /// No description provided for @studyFaisIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'High-throughput commercial m-commerce checkout funnels and continuous media-streaming fitness applications. Engineered with atomic checkout transactions, defensive network interceptors, and resilient audio/video streaming.'**
+  String get studyFaisIntro;
+
+  /// No description provided for @studyFaisChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout drops on flaky networks caused duplicate charges and abandoned carts, and OEM battery savers killed streaming playback.'**
+  String get studyFaisChallenge;
+
+  /// No description provided for @studyFaisBuilt.
+  ///
+  /// In en, this message translates to:
+  /// **'Idempotent checkout with client-side state reconciliation, defensive network interceptors, and a foreground-service streaming buffer manager.'**
+  String get studyFaisBuilt;
+
+  /// No description provided for @studyFaisResult.
+  ///
+  /// In en, this message translates to:
+  /// **'99.8% checkout completion with zero duplicate charges, 45% fewer support escalations, and cart reconciliation under 200ms.'**
+  String get studyFaisResult;
+
+  /// No description provided for @studyFaisOutcome1.
+  ///
+  /// In en, this message translates to:
+  /// **'successful checkout transaction completion rate with zero duplicate charges'**
+  String get studyFaisOutcome1;
+
+  /// No description provided for @studyFaisOutcome2.
+  ///
+  /// In en, this message translates to:
+  /// **'reduction in customer support escalation tickets for failed checkout orders'**
+  String get studyFaisOutcome2;
+
+  /// No description provided for @studyFaisOutcome3.
+  ///
+  /// In en, this message translates to:
+  /// **'instantaneous cart calculation and state reconciliation latency'**
+  String get studyFaisOutcome3;
+
+  /// No description provided for @studyFaisOutcome4.
+  ///
+  /// In en, this message translates to:
+  /// **'daily active sessions supported across commercial commerce funnels'**
+  String get studyFaisOutcome4;
 }
 
 class _AppLocalizationsDelegate

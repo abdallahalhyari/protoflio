@@ -189,5 +189,140 @@
         "type": "int"
       }
     }
+  },
+  "studyCaseStudy": "CASE STUDY",
+  "studyProblem": "THE PROBLEM",
+  "studyRole": "MY ROLE",
+  "studyArchitecture": "SYSTEM ARCHITECTURE",
+  "studyOutcomes": "OUTCOMES",
+  "studyLessons": "LESSONS",
+  "studyMore": "MORE CASE STUDIES",
+  "studyDockProblem": "PROBLEM",
+  "studyDockProblemShort": "PROB",
+  "studyDockRole": "ROLE",
+  "studyDockArch": "ARCH",
+  "studyDockOutcomes": "OUTCOMES",
+  "studyDockOutcomesShort": "RESULTS",
+  "studyDockLessons": "LESSONS",
+  "studyBackToPortfolio": "Back to portfolio",
+  "studyReadPercent": "{pct}% READ",
+  "@studyReadPercent": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "studyTop": "TOP",
+  "studyBackToTop": "Back to top",
+  "studyJumpTo": "Jump to {chapter}",
+  "@studyJumpTo": {
+    "placeholders": {
+      "chapter": {
+        "type": "String"
+      }
+    }
+  },
+  "studyChapter": "Chapter {chapter}",
+  "@studyChapter": {
+    "placeholders": {
+      "chapter": {
+        "type": "String"
+      }
+    }
+  },
+  "studyOfficialWebsite": "OFFICIAL WEBSITE",
+  "studyVisitWebsite": "Visit {company} official website",
+  "@studyVisitWebsite": {
+    "placeholders": {
+      "company": {
+        "type": "String"
+      }
+    }
+  },
+  "studyCompanyLinkedIn": "COMPANY LINKEDIN",
+  "studyViewOnLinkedIn": "View {company} on LinkedIn",
+  "@studyViewOnLinkedIn": {
+    "placeholders": {
+      "company": {
+        "type": "String"
+      }
+    }
+  },
+  "studyShare": "SHARE STUDY",
+  "studyShareTooltip": "Copy direct link to this case study",
+  "studyShareSemantics": "Share direct link to {title} case study",
+  "@studyShareSemantics": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "studyShareButton": "Share case study link",
+  "studyLinkCopied": "Case study link copied: {url}",
+  "@studyLinkCopied": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "studyGlanceKicker": "AT A GLANCE · 30-SECOND READ",
+  "studyGlance": "At a glance",
+  "studyChallenge": "CHALLENGE",
+  "studyBuilt": "WHAT I BUILT",
+  "studyResult": "RESULT",
+  "studySeeOutcomes": "See all outcomes",
+  "studyEnglishNote": "",
+  "studyOutcomeSemantics": "Key outcome metric: {headline}. {body}",
+  "@studyOutcomeSemantics": {
+    "placeholders": {
+      "headline": {
+        "type": "String"
+      },
+      "body": {
+        "type": "String"
+      }
+    }
+  },
+  "studyPresent": "PRESENT",
+  "studyRoleMobileDev": "MOBILE DEVELOPER",
+  "studyRoleFlutterDev": "FLUTTER DEVELOPER",
+  "studyRoleMobileDevFlutterAndroid": "MOBILE DEVELOPER (FLUTTER & ANDROID)",
+  "studyNatIntro": "Mission-critical NFC smart-card healthcare platform serving Jordan's largest health-insurance TPA. Ring App, E-Health Gate, and Compliance System — shipped as three coordinated clients on a shared architecture.",
+  "studyNatChallenge": "Paper claims slowed reimbursement and exposed Jordan's largest health-insurance TPA to fraud, and many clinics had unreliable connectivity.",
+  "studyNatBuilt": "A three-app NFC smart-card suite: a native Kotlin APDU bridge, an offline-first WorkManager sync pipeline, and hardware-bound JWT tokens.",
+  "studyNatResult": "Card verification in under a second, claims that survive connectivity drops, zero security breaches, and three clients shipped on one architecture.",
+  "studyNatOutcome1": "contactless card verification, flagship to budget handsets",
+  "studyNatOutcome2": "reliable offline batch sync during connectivity drops",
+  "studyNatOutcome3": "security breaches under hardware-bound token lifecycle",
+  "studyNatOutcome4": "coordinated clients shipped on the shared architecture",
+  "studyEskIntro": "High-performance enterprise mobile architecture powering Hospital Information Systems (HIS) and Education platforms across the MENA region. Rebuilt legacy monolithic codebases into decoupled, testable feature packages with zero operational downtime.",
+  "studyEskChallenge": "Legacy monolithic hospital and university apps stuttered on dense records and crashed on low-spec ward tablets during long shifts.",
+  "studyEskBuilt": "An incremental MVVM refactor into decoupled feature packages with cached repositories and typed contracts, profiled with DevTools, with zero downtime.",
+  "studyEskResult": "60 FPS on dense data tables, 35% fewer crashes, 1,000+ records rendered smoothly, and four enterprise platforms deployed.",
+  "studyEskOutcome1": "sustained frame rate on dense hospital data tables and medical charts",
+  "studyEskOutcome2": "reduction in client-side crash rate across multi-hour clinical shifts",
+  "studyEskOutcome3": "patient and student records rendered with zero viewport latency",
+  "studyEskOutcome4": "enterprise platforms deployed (HIS, Clinic, University, School)",
+  "studySolIntro": "High-throughput consumer iOS and Android applications: a real-time loyalty redemption engine and a Snapchat-style ephemeral video/story camera platform. Built with hardware-accelerated video pipelines and an internal reusable design system.",
+  "studySolChallenge": "Two consumer apps (loyalty rewards and ephemeral video stories) on compressed deadlines, with camera pipelines that leaked and distorted across Android OEMs.",
+  "studySolBuilt": "A hardware-accelerated camera and video engine, background isolates that compress media before S3 upload, and a shared design-token library for both apps.",
+  "studySolResult": "Both apps launched on schedule with a 4.7+ store rating, 40% faster feature turnaround, and zero dropped frames in the story carousel.",
+  "studySolOutcome1": "average star rating across iOS App Store and Google Play",
+  "studySolOutcome2": "reduction in subsequent feature turnaround time via shared component library",
+  "studySolOutcome3": "dropped frames during horizontal story carousel gesture navigation",
+  "studySolOutcome4": "production consumer applications launched simultaneously on schedule",
+  "studyFaisIntro": "High-throughput commercial m-commerce checkout funnels and continuous media-streaming fitness applications. Engineered with atomic checkout transactions, defensive network interceptors, and resilient audio/video streaming.",
+  "studyFaisChallenge": "Checkout drops on flaky networks caused duplicate charges and abandoned carts, and OEM battery savers killed streaming playback.",
+  "studyFaisBuilt": "Idempotent checkout with client-side state reconciliation, defensive network interceptors, and a foreground-service streaming buffer manager.",
+  "studyFaisResult": "99.8% checkout completion with zero duplicate charges, 45% fewer support escalations, and cart reconciliation under 200ms.",
+  "studyFaisOutcome1": "successful checkout transaction completion rate with zero duplicate charges",
+  "studyFaisOutcome2": "reduction in customer support escalation tickets for failed checkout orders",
+  "studyFaisOutcome3": "instantaneous cart calculation and state reconciliation latency",
+  "studyFaisOutcome4": "daily active sessions supported across commercial commerce funnels",
+  "@studyEnglishNote": {
+    "description": "Shown above the English technical chapters in other locales; empty in English."
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:profile/service/analytics_service.dart';
@@ -508,7 +509,9 @@ class _ReadingPercentPill extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           Text(
-            isCompact ? '$pct%' : '$pct% READ',
+            isCompact
+                ? '$pct%'
+                : AppLocalizations.of(context)!.studyReadPercent(pct),
             style: TextStyle(
               fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.micro,
@@ -556,9 +559,10 @@ class _ChapterPillState extends State<_ChapterPill> {
     return Semantics(
       button: true,
       selected: isActive,
-      label: 'Chapter ${widget.chapter.label}',
+      label: AppLocalizations.of(context)!.studyChapter(widget.chapter.label),
       child: Tooltip(
-        message: 'Jump to ${widget.chapter.label}',
+        message:
+            AppLocalizations.of(context)!.studyJumpTo(widget.chapter.label),
         waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -681,9 +685,9 @@ class _BackToTopPillState extends State<_BackToTopPill> {
 
     return Semantics(
       button: true,
-      label: 'Back to top',
+      label: AppLocalizations.of(context)!.studyBackToTop,
       child: Tooltip(
-        message: 'Back to top',
+        message: AppLocalizations.of(context)!.studyBackToTop,
         waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -743,7 +747,7 @@ class _BackToTopPillState extends State<_BackToTopPill> {
                     if (!widget.isCompact) ...[
                       const SizedBox(width: 4),
                       Text(
-                        'TOP',
+                        AppLocalizations.of(context)!.studyTop,
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
                           fontSize: AppTypography.micro,

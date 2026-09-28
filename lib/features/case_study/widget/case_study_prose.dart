@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show Bidi;
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -106,6 +107,62 @@ class BulletList extends StatelessWidget {
                 ),
               ))
           .toList(),
+    );
+  }
+}
+
+/// One quiet line telling Czech and Arabic readers that the technical
+/// chapters that follow are in English (only the reading frame and the
+/// summaries are translated). Renders nothing when [text] is empty, which
+/// is the English locale's value.
+class CaseStudyLanguageNote extends StatelessWidget {
+  const CaseStudyLanguageNote(this.text, {super.key});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    if (text.isEmpty) return const SizedBox.shrink();
+    return LocaleDirection(
+      child: Padding(
+        padding: const EdgeInsets.only(top: AppSpacing.md),
+        child: Row(
+          children: [
+            Icon(Icons.translate_rounded, size: 16, color: context.mutedText),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: AppTypography.small,
+                  fontStyle: FontStyle.italic,
+                  color: context.mutedText,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Case studies lay out left-to-right, because their technical chapters are
+/// English (see CaseStudyRouter). Translated parts (summaries, notes,
+/// captions) take the reader's own direction, so an Arabic sentence keeps
+/// its alignment and its punctuation on the right side.
+class LocaleDirection extends StatelessWidget {
+  const LocaleDirection({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final code = Localizations.localeOf(context).languageCode;
+    return Directionality(
+      textDirection:
+          Bidi.isRtlLanguage(code) ? TextDirection.rtl : TextDirection.ltr,
+      child: child,
     );
   }
 }

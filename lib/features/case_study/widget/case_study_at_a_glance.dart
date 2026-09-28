@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'case_study_prose.dart';
 import 'case_study_reveal.dart';
 
 /// The whole case study in three lines — challenge, what was built, result
@@ -41,96 +43,102 @@ class CaseStudyAtAGlance extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = context.isDarkMode;
+    final l10n = AppLocalizations.of(context)!;
     final steps = [
-      _Step(label: 'CHALLENGE', text: challenge, color: context.amberText),
-      _Step(label: 'WHAT I BUILT', text: built, color: context.indigoText),
-      _Step(label: 'RESULT', text: result, color: context.greenText),
+      _Step(
+          label: l10n.studyChallenge,
+          text: challenge,
+          color: context.amberText),
+      _Step(label: l10n.studyBuilt, text: built, color: context.indigoText),
+      _Step(label: l10n.studyResult, text: result, color: context.greenText),
     ];
 
-    return Semantics(
-      container: true,
-      label: 'At a glance',
-      child: Container(
-        key: const Key('case_study_at_a_glance'),
-        padding: EdgeInsets.all(isDesktop ? AppSpacing.lg : AppSpacing.md),
-        decoration: BoxDecoration(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.035)
-              : Colors.white.withValues(alpha: 0.8),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(
-            color: scheme.primary.withValues(alpha: isDark ? 0.22 : 0.25),
+    return LocaleDirection(
+      child: Semantics(
+        container: true,
+        label: l10n.studyGlance,
+        child: Container(
+          key: const Key('case_study_at_a_glance'),
+          padding: EdgeInsets.all(isDesktop ? AppSpacing.lg : AppSpacing.md),
+          decoration: BoxDecoration(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.035)
+                : Colors.white.withValues(alpha: 0.8),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: scheme.primary.withValues(alpha: isDark ? 0.22 : 0.25),
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.bolt_rounded,
-                    size: 16,
-                    color: context.adaptiveAccentText(scheme.primary)),
-                const SizedBox(width: 6),
-                Flexible(
-                  child: Text(
-                    'AT A GLANCE · 30-SECOND READ',
-                    style: TextStyle(
-                      fontSize: AppTypography.micro,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
-                      color: context.mutedText,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.bolt_rounded,
+                      size: 16,
+                      color: context.adaptiveAccentText(scheme.primary)),
+                  const SizedBox(width: 6),
+                  Flexible(
+                    child: Text(
+                      l10n.studyGlanceKicker,
+                      style: TextStyle(
+                        fontSize: AppTypography.micro,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 2,
+                        color: context.mutedText,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            if (isDesktop)
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              if (isDesktop)
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (int i = 0; i < steps.length; i++) ...[
+                        if (i > 0)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.md),
+                            child: Container(width: 1, color: context.divider),
+                          ),
+                        Expanded(child: steps[i]),
+                      ],
+                    ],
+                  ),
+                )
+              else
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     for (int i = 0; i < steps.length; i++) ...[
-                      if (i > 0)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.md),
-                          child: Container(width: 1, color: context.divider),
-                        ),
-                      Expanded(child: steps[i]),
+                      if (i > 0) const SizedBox(height: AppSpacing.md),
+                      steps[i],
                     ],
                   ],
                 ),
-              )
-            else
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (int i = 0; i < steps.length; i++) ...[
-                    if (i > 0) const SizedBox(height: AppSpacing.md),
-                    steps[i],
-                  ],
-                ],
-              ),
-            const SizedBox(height: AppSpacing.sm),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: TextButton.icon(
-                key: const Key('case_study_glance_outcomes'),
-                onPressed: () => _seeOutcomes(context),
-                icon: const Icon(Icons.arrow_downward_rounded, size: 16),
-                label: const Text('See all outcomes'),
-                style: TextButton.styleFrom(
-                  foregroundColor: context.adaptiveAccentText(scheme.primary),
-                  minimumSize: const Size(44, 44),
-                  textStyle: const TextStyle(
-                    fontSize: AppTypography.small,
-                    fontWeight: FontWeight.w800,
+              const SizedBox(height: AppSpacing.sm),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: TextButton.icon(
+                  key: const Key('case_study_glance_outcomes'),
+                  onPressed: () => _seeOutcomes(context),
+                  icon: const Icon(Icons.arrow_downward_rounded, size: 16),
+                  label: Text(l10n.studySeeOutcomes),
+                  style: TextButton.styleFrom(
+                    foregroundColor: context.adaptiveAccentText(scheme.primary),
+                    minimumSize: const Size(44, 44),
+                    textStyle: const TextStyle(
+                      fontSize: AppTypography.small,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

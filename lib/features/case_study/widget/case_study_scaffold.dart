@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -15,35 +16,35 @@ class CaseStudyChapterKeys {
   final GlobalKey outcomesKey = GlobalKey();
   final GlobalKey lessonsKey = GlobalKey();
 
-  List<CaseStudyChapter> buildStandardChapters() => [
+  List<CaseStudyChapter> buildStandardChapters(AppLocalizations l10n) => [
         CaseStudyChapter(
           id: 'problem',
-          label: '01 PROBLEM',
-          shortLabel: 'PROB',
+          label: '01 ${l10n.studyDockProblem}',
+          shortLabel: l10n.studyDockProblemShort,
           key: problemKey,
         ),
         CaseStudyChapter(
           id: 'role',
-          label: '02 ROLE',
-          shortLabel: 'ROLE',
+          label: '02 ${l10n.studyDockRole}',
+          shortLabel: l10n.studyDockRole,
           key: roleKey,
         ),
         CaseStudyChapter(
           id: 'architecture',
-          label: '03 ARCH',
-          shortLabel: 'ARCH',
+          label: '03 ${l10n.studyDockArch}',
+          shortLabel: l10n.studyDockArch,
           key: archKey,
         ),
         CaseStudyChapter(
           id: 'outcomes',
-          label: '07 OUTCOMES',
-          shortLabel: 'RESULTS',
+          label: '07 ${l10n.studyDockOutcomes}',
+          shortLabel: l10n.studyDockOutcomesShort,
           key: outcomesKey,
         ),
         CaseStudyChapter(
           id: 'lessons',
-          label: '08 LESSONS',
-          shortLabel: 'LESSONS',
+          label: '08 ${l10n.studyDockLessons}',
+          shortLabel: l10n.studyDockLessons,
           key: lessonsKey,
         ),
       ];
@@ -102,7 +103,7 @@ class _CaseStudyScaffoldState extends State<CaseStudyScaffold> {
     final hPad = CaseStudyLayout.horizontalPadding(context);
 
     final chapters = widget.customChaptersBuilder?.call(_keys) ??
-        _keys.buildStandardChapters();
+        _keys.buildStandardChapters(AppLocalizations.of(context)!);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -121,7 +122,7 @@ class _CaseStudyScaffoldState extends State<CaseStudyScaffold> {
                 elevation: 0,
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back_rounded),
-                  tooltip: 'Back to portfolio',
+                  tooltip: AppLocalizations.of(context)!.studyBackToPortfolio,
                   onPressed: () {
                     Analytics.event('case_study_back',
                         params: {'study': widget.slug});

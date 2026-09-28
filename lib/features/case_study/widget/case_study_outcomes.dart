@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'case_study_prose.dart';
 
 /// A single outcome metric — big number + short caption.
 class OutcomeCard extends StatelessWidget {
@@ -16,7 +18,8 @@ class OutcomeCard extends StatelessWidget {
     final isDark = context.isDarkMode;
     return Semantics(
       container: true,
-      label: 'Key outcome metric: $headline. $body',
+      label:
+          AppLocalizations.of(context)!.studyOutcomeSemantics(headline, body),
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
@@ -46,14 +49,16 @@ class OutcomeCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
-            Text(
-              body,
-              style: TextStyle(
-                fontSize: AppTypography.small,
-                height: 1.35,
-                color: scheme.onSurface.withValues(alpha: 0.75),
+            LocaleDirection(
+              child: Text(
+                body,
+                style: TextStyle(
+                  fontSize: AppTypography.small,
+                  height: 1.35,
+                  color: scheme.onSurface.withValues(alpha: 0.75),
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),

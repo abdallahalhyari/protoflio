@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -20,9 +21,10 @@ class EskadeniaCaseStudy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return CaseStudyScaffold(
       slug: 'eskadenia',
-      appBarTitle: 'ESKADENIA · CASE STUDY',
+      appBarTitle: 'ESKADENIA · ${l10n.studyCaseStudy}',
       shareTitle: 'E-Learning & Healthcare Enterprise Suite',
       sliversBuilder: (context, keys, isDesktop) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -31,19 +33,17 @@ class EskadeniaCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xl),
           CaseStudyAtAGlance(
             slug: 'eskadenia',
-            challenge:
-                'Legacy monolithic hospital and university apps stuttered on dense records and crashed on low-spec ward tablets during long shifts.',
-            built:
-                'An incremental MVVM refactor into decoupled feature packages with cached repositories and typed contracts, profiled with DevTools, with zero downtime.',
-            result:
-                '60 FPS on dense data tables, 35% fewer crashes, 1,000+ records rendered smoothly, and four enterprise platforms deployed.',
+            challenge: l10n.studyEskChallenge,
+            built: l10n.studyEskBuilt,
+            result: l10n.studyEskResult,
             outcomesKey: keys.outcomesKey,
             isDesktop: isDesktop,
           ),
+          CaseStudyLanguageNote(l10n.studyEnglishNote),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,
-            child: const SectionKicker(number: '01', label: 'THE PROBLEM'),
+            child: SectionKicker(number: '01', label: l10n.studyProblem),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -66,7 +66,7 @@ class EskadeniaCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.roleKey,
-            child: const SectionKicker(number: '02', label: 'MY ROLE'),
+            child: SectionKicker(number: '02', label: l10n.studyRole),
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
@@ -78,8 +78,7 @@ class EskadeniaCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.archKey,
-            child:
-                const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
+            child: SectionKicker(number: '03', label: l10n.studyArchitecture),
           ),
           const SizedBox(height: AppSpacing.md),
           PipelineTopologyDiagram(
@@ -175,34 +174,22 @@ class EskadeniaCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.outcomesKey,
-            child: const SectionKicker(number: '07', label: 'OUTCOMES'),
+            child: SectionKicker(number: '07', label: l10n.studyOutcomes),
           ),
           const SizedBox(height: AppSpacing.md),
           OutcomeGrid(
             isDesktop: isDesktop,
-            items: const [
-              (
-                '60 FPS',
-                'sustained frame rate on dense hospital data tables and medical charts'
-              ),
-              (
-                '-35%',
-                'reduction in client-side crash rate across multi-hour clinical shifts'
-              ),
-              (
-                '1,000+',
-                'patient and student records rendered with zero viewport latency'
-              ),
-              (
-                '4',
-                'enterprise platforms deployed (HIS, Clinic, University, School)'
-              ),
+            items: [
+              ('60 FPS', l10n.studyEskOutcome1),
+              ('-35%', l10n.studyEskOutcome2),
+              ('1,000+', l10n.studyEskOutcome3),
+              ('4', l10n.studyEskOutcome4),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.lessonsKey,
-            child: const SectionKicker(number: '08', label: 'LESSONS'),
+            child: SectionKicker(number: '08', label: l10n.studyLessons),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -226,7 +213,7 @@ class EskadeniaCaseStudy extends StatelessWidget {
               alignment: WrapAlignment.center,
               children: [
                 PrimaryButton(
-                  label: 'Back to portfolio',
+                  label: l10n.studyBackToPortfolio,
                   icon: Icons.arrow_back_rounded,
                   size: PrimaryButtonSize.md,
                   onPressed: () {
@@ -252,6 +239,7 @@ class _Masthead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,7 +249,7 @@ class _Masthead extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'MOBILE DEVELOPER · 2022 — 2024',
+              '${l10n.studyRoleMobileDev} · 2022 — 2024',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -286,12 +274,14 @@ class _Masthead extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        Text(
-          'High-performance enterprise mobile architecture powering Hospital Information Systems (HIS) and Education platforms across the MENA region. Rebuilt legacy monolithic codebases into decoupled, testable feature packages with zero operational downtime.',
-          style: TextStyle(
-            fontSize: AppTypography.subtitle,
-            height: 1.55,
-            color: scheme.onSurface.withValues(alpha: 0.85),
+        LocaleDirection(
+          child: Text(
+            l10n.studyEskIntro,
+            style: TextStyle(
+              fontSize: AppTypography.subtitle,
+              height: 1.55,
+              color: scheme.onSurface.withValues(alpha: 0.85),
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
