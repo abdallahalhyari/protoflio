@@ -10,6 +10,7 @@ import 'package:profile/features/intro/widget/hero_motion.dart';
 import 'package:profile/shared/widget/scrollable_screen_shell.dart';
 import 'package:profile/shared/widget/retrying_asset_image.dart';
 import 'package:profile/features/shell/widget/scroll_explore_hint.dart';
+import 'package:profile/features/intro/widget/intro_constellation.dart';
 
 /// Intro reimagined as a premium magazine cover:
 ///   [issue strip]      TOP — small caps run + registration marks
@@ -135,10 +136,13 @@ class _IntroPageState extends State<IntroPage>
       ],
     );
 
-    return ScrollableAppScreenShell(
-      maxWidth: 1200,
-      isContinuousMobile: widget.isContinuousMobile,
-      child: body,
+    return IntroConstellation(
+      isDark: isDark,
+      child: ScrollableAppScreenShell(
+        maxWidth: 1200,
+        isContinuousMobile: widget.isContinuousMobile,
+        child: body,
+      ),
     );
   }
 
@@ -206,41 +210,17 @@ class _IntroPageState extends State<IntroPage>
   /// The stroke carries a soft sky → indigo → violet sweep of the brand
   /// accents instead of flat grey, so the masthead reads as ink, not a
   /// disabled placeholder — at the same low opacity as before.
-  TextStyle _wordmarkStyle(bool isDark) {
-    final base = TextStyle(
+  TextStyle _wordmarkStyle() {
+    return TextStyle(
       fontFamily: AppTypography.displayFont,
       fontSize: AppTypography.watermark,
       fontWeight: FontWeight.w900,
       letterSpacing: 10,
       height: 1.0,
-    );
-    // Measured in the text's own coordinates (FittedBox scales afterwards),
-    // so the gradient spans exactly the word.
-    final painter = TextPainter(
-      text: TextSpan(text: 'ABDALLAH', style: base),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    final bounds = Offset.zero & painter.size;
-    painter.dispose();
-    // Light mode uses the deeper end of each hue at a higher opacity: the
-    // pale sky/indigo pair at 42% all but vanished on the pearl surface.
-    final alpha = isDark ? 0.46 : 0.7;
-    return base.copyWith(
       foreground: Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3
-        ..shader = LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            (isDark ? Colors.white : AppColors.slate700)
-                .withValues(alpha: alpha),
-            (isDark ? AppColors.accentIndigo : AppColors.accentIndigo600)
-                .withValues(alpha: alpha + 0.08),
-            AppColors.accentViolet.withValues(alpha: alpha),
-          ],
-          stops: const [0.0, 0.55, 1.0],
-        ).createShader(bounds),
+        ..color = Colors.white,
     );
   }
 
@@ -261,9 +241,29 @@ class _IntroPageState extends State<IntroPage>
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: FittedBox(
               fit: BoxFit.contain,
-              child: Text(
-                'ABDALLAH',
-                style: _wordmarkStyle(isDark),
+              child: ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (bounds) {
+                  final alpha = isDark ? 0.46 : 0.7;
+                  return LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      (isDark ? Colors.white : AppColors.slate700)
+                          .withValues(alpha: alpha),
+                      (isDark
+                              ? AppColors.accentIndigo
+                              : AppColors.accentIndigo600)
+                          .withValues(alpha: alpha + 0.08),
+                      AppColors.accentViolet.withValues(alpha: alpha),
+                    ],
+                    stops: const [0.0, 0.55, 1.0],
+                  ).createShader(bounds);
+                },
+                child: Text(
+                  'ABDALLAH',
+                  style: _wordmarkStyle(),
+                ),
               ),
             ),
           ),
@@ -322,10 +322,10 @@ class _IntroPageState extends State<IntroPage>
                   color: context.onSurface,
                   shadows: isDark
                       ? [
-                          const Shadow(color: Colors.black, blurRadius: 16),
-                          Shadow(color: AppColors.glowIndigo, blurRadius: 24),
+                          const Shadow(color: Colors.black, blurRadius: 8),
+                          Shadow(color: AppColors.glowIndigo, blurRadius: 12),
                         ]
-                      : const [Shadow(color: Colors.black12, blurRadius: 4)],
+                      : const [Shadow(color: Colors.black12, blurRadius: 2)],
                 ),
               ),
             ],
@@ -356,44 +356,49 @@ class _IntroPageState extends State<IntroPage>
     return Semantics(
       label: AppLocalizations.of(context)!.semanticPortrait,
       image: true,
-      child: RepaintBoundary(
-        child: AnimatedBuilder(
-          animation: _rimController,
-          child: image,
-          builder: (context, child) {
-            final angle = _rimController.value * 2 * 3.14159265;
-            return Container(
-              width: size,
-              height: size,
-              padding: const EdgeInsets.all(2.5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                gradient: SweepGradient(
-                  transform: GradientRotation(angle),
-                  colors: [
-                    _accent,
-                    _gold.withValues(alpha: 0.9),
-                    AppColors.accentVioletLight,
-                    _accent,
-                  ],
-                  stops: const [0.0, 0.3, 0.65, 1.0],
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          boxShadow: [
+            BoxShadow(
+              color: _accent.withValues(alpha: 0.40),
+              blurRadius: 36,
+              spreadRadius: 2,
+            ),
+            BoxShadow(
+              color: AppColors.accentViolet.withValues(alpha: 0.18),
+              blurRadius: 48,
+              spreadRadius: 4,
+            ),
+          ],
+        ),
+        child: RepaintBoundary(
+          child: AnimatedBuilder(
+            animation: _rimController,
+            child: image,
+            builder: (context, child) {
+              final angle = _rimController.value * 2 * 3.14159265;
+              return Container(
+                padding: const EdgeInsets.all(2.5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppRadius.card),
+                  gradient: SweepGradient(
+                    transform: GradientRotation(angle),
+                    colors: [
+                      _accent,
+                      _gold.withValues(alpha: 0.9),
+                      AppColors.accentVioletLight,
+                      _accent,
+                    ],
+                    stops: const [0.0, 0.3, 0.65, 1.0],
+                  ),
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: _accent.withValues(alpha: 0.40),
-                    blurRadius: 36,
-                    spreadRadius: 2,
-                  ),
-                  BoxShadow(
-                    color: AppColors.accentViolet.withValues(alpha: 0.18),
-                    blurRadius: 48,
-                    spreadRadius: 4,
-                  ),
-                ],
-              ),
-              child: child,
-            );
-          },
+                child: child,
+              );
+            },
+          ),
         ),
       ),
     );
