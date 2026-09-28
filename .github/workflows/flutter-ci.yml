@@ -109,3 +109,15 @@ jobs:
           uploadArtifacts: true
           temporaryPublicStorage: true
           configPath: ./.lighthouserc.json
+      # Mobile (Lighthouse's default: throttled mid-range phone on slow 4G).
+      # Recruiters open links from LinkedIn on phones; desktop alone hid a
+      # 1s freeze as the app appeared.
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://alhyari.web.app/
+          runs: 3
+          uploadArtifacts: true
+          artifactName: lighthouse-results-mobile
+          temporaryPublicStorage: true
+          configPath: ./.lighthouserc.mobile.json

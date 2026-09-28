@@ -46,6 +46,8 @@ class AppMotion {
       Duration(milliseconds: 2600); // floating snack lifetime
   static const Duration tooltipWait =
       Duration(milliseconds: 300); // standard tooltip delay
+  static const Duration idleMount =
+      Duration(milliseconds: 4000); // off-screen sections build after intro
 
   // Material 3 emphasized easing — snappier at the top, decelerates
   // gently. Use for state changes the user drove (tap, hover), so the

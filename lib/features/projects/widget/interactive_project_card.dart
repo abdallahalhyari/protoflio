@@ -307,13 +307,15 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                                       ? constraints.maxHeight
                                                       : 200.0;
                                               return RepaintBoundary(
-                                                child: ValueListenableBuilder<Offset>(
+                                                child: ValueListenableBuilder<
+                                                    Offset>(
                                                   valueListenable: _mousePos,
                                                   builder: (context, pos, _) =>
                                                       Container(
                                                     decoration: BoxDecoration(
                                                       gradient: RadialGradient(
-                                                        center: FractionalOffset(
+                                                        center:
+                                                            FractionalOffset(
                                                           (pos.dx / w)
                                                               .clamp(0.0, 1.0),
                                                           (pos.dy / h)

@@ -469,6 +469,19 @@ class _HomeScreenState extends State<HomeScreen> {
     )
         .whenComplete(() {
       if (!mounted || id != _mobileJumpId) return;
+      // Sections still mounting (one per frame after launch, see
+      // StaggeredMount) can grow what sits above the target: wait for them,
+      // then re-measure. Doesn't spend a correction pass.
+      if (!StaggeredMount.isIdle) {
+        StaggeredMount.idle.then((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              _animateSectionIntoView(target, retry: retry, jumpId: id);
+            }
+          });
+        });
+        return;
+      }
       // Sections passed on the way can mount mid-flight and change height,
       // leaving the target short of the app bar. Re-measure and nudge (up
       // to twice) instead of landing on the previous section.
