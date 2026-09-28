@@ -28,6 +28,18 @@ class SolutionsCaseStudy extends StatelessWidget {
         final isDark = Theme.of(context).brightness == Brightness.dark;
         return [
           _Masthead(isDesktop: isDesktop),
+          const SizedBox(height: AppSpacing.xl),
+          CaseStudyAtAGlance(
+            slug: 'solutions',
+            challenge:
+                'Two consumer apps (loyalty rewards and ephemeral video stories) on compressed deadlines, with camera pipelines that leaked and distorted across Android OEMs.',
+            built:
+                'A hardware-accelerated camera and video engine, background isolates that compress media before S3 upload, and a shared design-token library for both apps.',
+            result:
+                'Both apps launched on schedule with a 4.7+ store rating, 40% faster feature turnaround, and zero dropped frames in the story carousel.',
+            outcomesKey: keys.outcomesKey,
+            isDesktop: isDesktop,
+          ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,

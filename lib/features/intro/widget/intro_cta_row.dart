@@ -6,6 +6,7 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/shared/widget/primary_button.dart';
 import 'package:profile/theme/tokens.dart';
+import 'quick_profile_sheet.dart';
 
 class IntroCtaRow extends StatelessWidget {
   final bool isDark;
@@ -163,6 +164,14 @@ class IntroCtaRow extends StatelessWidget {
               label: loc.copyEmail,
               icon: Icons.content_copy_rounded,
               onPressed: () => _copyEmail(context),
+            ),
+            _linkButton(
+              label: loc.quickProfile,
+              icon: Icons.badge_outlined,
+              onPressed: () => showQuickProfile(
+                context,
+                onDownloadResume: onDownloadResume,
+              ),
             ),
           ],
         ),

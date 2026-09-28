@@ -777,6 +777,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CONTINUE'**
   String get continueAction;
+
+  /// Hero link that opens the recruiter summary sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'30-SEC PROFILE'**
+  String get quickProfile;
+
+  /// No description provided for @quickProfileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hiring summary'**
+  String get quickProfileTitle;
+
+  /// No description provided for @quickProfileRole.
+  ///
+  /// In en, this message translates to:
+  /// **'ROLE'**
+  String get quickProfileRole;
+
+  /// No description provided for @quickProfileExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'EXPERIENCE'**
+  String get quickProfileExperience;
+
+  /// Years of professional experience.
+  ///
+  /// In en, this message translates to:
+  /// **'{years}+ years in mobile engineering'**
+  String quickProfileYears(int years);
+
+  /// No description provided for @quickProfileStack.
+  ///
+  /// In en, this message translates to:
+  /// **'CORE STACK'**
+  String get quickProfileStack;
+
+  /// No description provided for @quickProfileRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'RECENT ROLES'**
+  String get quickProfileRecent;
+
+  /// No description provided for @quickProfileEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get quickProfileEmail;
+
+  /// No description provided for @quickProfileCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy summary'**
+  String get quickProfileCopy;
+
+  /// No description provided for @quickProfileCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile summary copied'**
+  String get quickProfileCopied;
 }
 
 class _AppLocalizationsDelegate

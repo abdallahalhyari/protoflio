@@ -103,6 +103,9 @@ jobs:
         with:
           urls: |
             https://alhyari.web.app/
+          # Median of 3: a single run on a shared runner swung the perf
+          # score 0.62-0.69 between deploys with no relevant change.
+          runs: 3
           uploadArtifacts: true
           temporaryPublicStorage: true
           configPath: ./.lighthouserc.json

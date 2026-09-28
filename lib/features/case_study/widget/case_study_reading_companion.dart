@@ -9,6 +9,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/case_study/bloc/case_study_reader_bloc.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
+import 'case_study_reveal.dart';
 
 /// Representation of a chapter / section anchor in a case study.
 class CaseStudyChapter {
@@ -147,15 +148,11 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
     SoundService.instance.playClick();
     Analytics.event('case_study_chapter_click',
         params: {'chapter': chapter.id});
-    final ctx = chapter.key.currentContext;
-    if (ctx != null) {
-      Scrollable.ensureVisible(
-        ctx,
-        duration: AppMotion.sectionScroll,
-        curve: AppMotion.easeInOutCubic,
-        alignment: 0.08,
-      );
-    }
+    revealCaseStudySection(
+      widget.scrollController,
+      chapter.key,
+      reduceMotion: MediaQuery.disableAnimationsOf(context),
+    );
   }
 
   void _scrollToTop() {
