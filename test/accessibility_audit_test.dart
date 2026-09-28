@@ -275,12 +275,13 @@ void main() {
       );
       expect(cardSemantics, findsOneWidget);
 
-      // Company action pills (e.g. Website or LinkedIn)
+      // Company pills (Website / LinkedIn) are links, named once.
       if (exp.websiteUrl != null || exp.linkedinUrl != null) {
         final actionPillSemantics = find.byWidgetPredicate(
           (w) =>
               w is Semantics &&
-              w.properties.button == true &&
+              w.properties.link == true &&
+              w.properties.linkUrl != null &&
               (w.properties.label?.contains(exp.company) ?? false),
         );
         expect(actionPillSemantics, findsWidgets);
@@ -359,7 +360,8 @@ void main() {
         (w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.contains('keyboard shortcuts') ?? false),
+            (w.properties.label?.toLowerCase().contains('keyboard shortcuts') ??
+                false),
       );
       expect(chipSemantics, findsOneWidget);
     });

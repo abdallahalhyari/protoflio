@@ -8,9 +8,13 @@ import 'package:profile/theme/tokens.dart';
 class SkillsEmptyState extends StatelessWidget {
   final VoidCallback onShowAll;
 
+  /// The search text, when a search (not a category) came up empty.
+  final String query;
+
   const SkillsEmptyState({
     super.key,
     required this.onShowAll,
+    this.query = '',
   });
 
   @override
@@ -43,7 +47,9 @@ class SkillsEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              l10n.skillsEmptyTitle,
+              query.trim().isEmpty
+                  ? l10n.skillsEmptyTitle
+                  : l10n.skillsNoMatch(query.trim()),
               style: TextStyle(
                 color: context.onSurface,
                 fontSize: AppTypography.small,

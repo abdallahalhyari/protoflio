@@ -165,7 +165,8 @@ class _DomainChipState extends State<_DomainChip> {
     return Semantics(
       button: true,
       selected: isSelected,
-      label: '${widget.label} filter, ${widget.count} items',
+      label: '${widget.label} filter, ${widget.count} '
+          '${widget.count == 1 ? 'case study' : 'case studies'}',
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
@@ -180,7 +181,8 @@ class _DomainChipState extends State<_DomainChip> {
               onTap: widget.onTap,
               onFocusChange: (focused) => setState(() => _isFocused = focused),
               borderRadius: BorderRadius.circular(AppRadius.pill),
-              child: AnimatedContainer(
+              child: ExcludeSemantics(
+                  child: AnimatedContainer(
                 duration: AppMotion.snap,
                 curve: AppMotion.standard,
                 padding: EdgeInsets.symmetric(
@@ -256,7 +258,7 @@ class _DomainChipState extends State<_DomainChip> {
                     ),
                   ],
                 ),
-              ),
+              )),
             ),
           ),
         ),

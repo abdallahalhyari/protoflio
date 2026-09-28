@@ -58,6 +58,11 @@ class AppLocalizationsCs extends AppLocalizations {
       'V této kategorii zatím nejsou žádné dovednosti';
 
   @override
+  String skillsNoMatch(String query) {
+    return 'Hledání „$query“ nenašlo žádnou dovednost';
+  }
+
+  @override
   String get skillsEmptyShowAll => 'ZOBRAZIT VŠE';
 
   @override

@@ -139,40 +139,46 @@ class TopNav extends StatelessWidget {
                         color: context.navDivider,
                       ),
                       const SizedBox(width: AppSpacing.sm),
-                      Semantics(
-                        button: true,
-                        label: 'Download Resume PDF',
-                        child: compactResume
-                            // Icon-only below desktop width, so the pill fits
-                            // every section link without clipping Contact.
-                            ? Tooltip(
-                                message: resumeLabel,
-                                child: OutlinedButton(
+                      // Named once, merged into the button so its focus
+                      // state is kept; tooltip and visible text unsaid.
+                      MergeSemantics(
+                        child: Semantics(
+                          button: true,
+                          label: 'Download Resume PDF',
+                          child: compactResume
+                              // Icon-only below desktop width, so the pill fits
+                              // every section link without clipping Contact.
+                              ? Tooltip(
+                                  message: resumeLabel,
+                                  excludeFromSemantics: true,
+                                  child: OutlinedButton(
+                                    onPressed: onResume,
+                                    style: resumeStyle.copyWith(
+                                      padding: const WidgetStatePropertyAll(
+                                          EdgeInsets.all(6)),
+                                      minimumSize: const WidgetStatePropertyAll(
+                                          Size(32, 32)),
+                                    ),
+                                    child: const Icon(Icons.download_rounded,
+                                        size: 16),
+                                  ),
+                                )
+                              : OutlinedButton.icon(
                                   onPressed: onResume,
-                                  style: resumeStyle.copyWith(
-                                    padding: const WidgetStatePropertyAll(
-                                        EdgeInsets.all(6)),
-                                    minimumSize: const WidgetStatePropertyAll(
-                                        Size(32, 32)),
+                                  icon: const Icon(Icons.download_rounded,
+                                      size: 14),
+                                  label: Text(
+                                    resumeLabel,
+                                    semanticsLabel: '',
+                                    style: const TextStyle(
+                                      fontSize: AppTypography.caption,
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 1.0,
+                                    ),
                                   ),
-                                  child: const Icon(Icons.download_rounded,
-                                      size: 16),
+                                  style: resumeStyle,
                                 ),
-                              )
-                            : OutlinedButton.icon(
-                                onPressed: onResume,
-                                icon: const Icon(Icons.download_rounded,
-                                    size: 14),
-                                label: Text(
-                                  resumeLabel,
-                                  style: const TextStyle(
-                                    fontSize: AppTypography.caption,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: 1.0,
-                                  ),
-                                ),
-                                style: resumeStyle,
-                              ),
+                        ),
                       ),
                     ],
                   ),
@@ -216,10 +222,11 @@ class _NavItemState extends State<NavItem> {
     final accent = Theme.of(context).colorScheme.primary;
     final hovered = _isHovered && !widget.active;
 
+    // The visible label names it; a "Go to" label on top was read as
+    // "Go to Home Home".
     return Semantics(
       button: true,
       selected: widget.active,
-      label: 'Go to ${widget.label}',
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
@@ -320,69 +327,77 @@ class PageIndicator extends StatelessWidget {
     final isDark = context.isDarkMode;
     final labels = TopNav.getLabels(context);
 
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(pageCount, (i) {
-          final active = i == current;
-          final label = i < labels.length ? labels[i] : 'Page ${i + 1}';
-          return Tooltip(
-            message: label,
-            preferBelow: false,
-            child: Semantics(
-              button: true,
-              selected: active,
-              label: 'Go to $label',
-              child: SizedBox(
-                width: 44,
-                height: 44,
-                child: InkResponse(
-                  onTap: () {
-                    if (active) return;
-                    HapticFeedback.selectionClick();
-                    HomeController.of(context).goTo(i);
-                  },
-                  radius: 22,
-                  child: Center(
-                    child: _HoverScale(
-                      child: AnimatedContainer(
-                        duration: AppMotion.sm,
-                        curve: AppMotion.emphasized,
-                        width: active ? 12 : 8,
-                        height: active ? 12 : 8,
-                        decoration: BoxDecoration(
-                          color: active
-                              ? (isDark
-                                  ? Colors.white
-                                  : AppColors.accentIndigoDeep)
-                              : (isDark ? Colors.white70 : AppColors.slate400),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: isDark ? Colors.black45 : Colors.white,
-                            width: 1,
+    // A pointer shortcut only: the top nav offers the same seven links, so
+    // keyboard and screen-reader users skip these rather than meeting every
+    // section twice (they were seven extra Tab stops on each page).
+    return ExcludeSemantics(
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(pageCount, (i) {
+            final active = i == current;
+            final label = i < labels.length ? labels[i] : 'Page ${i + 1}';
+            return Tooltip(
+              message: label,
+              preferBelow: false,
+              child: Semantics(
+                button: true,
+                selected: active,
+                label: 'Go to $label',
+                child: SizedBox(
+                  width: 44,
+                  height: 44,
+                  child: InkResponse(
+                    canRequestFocus: false,
+                    onTap: () {
+                      if (active) return;
+                      HapticFeedback.selectionClick();
+                      HomeController.of(context).goTo(i);
+                    },
+                    radius: 22,
+                    child: Center(
+                      child: _HoverScale(
+                        child: AnimatedContainer(
+                          duration: AppMotion.sm,
+                          curve: AppMotion.emphasized,
+                          width: active ? 12 : 8,
+                          height: active ? 12 : 8,
+                          decoration: BoxDecoration(
+                            color: active
+                                ? (isDark
+                                    ? Colors.white
+                                    : AppColors.accentIndigoDeep)
+                                : (isDark
+                                    ? Colors.white70
+                                    : AppColors.slate400),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: isDark ? Colors.black45 : Colors.white,
+                              width: 1,
+                            ),
+                            boxShadow: active
+                                ? [
+                                    BoxShadow(
+                                      color: (isDark
+                                              ? Colors.white
+                                              : AppColors.accentIndigoDeep)
+                                          .withValues(alpha: 0.5),
+                                      blurRadius: 8,
+                                      spreadRadius: 1,
+                                    )
+                                  ]
+                                : null,
                           ),
-                          boxShadow: active
-                              ? [
-                                  BoxShadow(
-                                    color: (isDark
-                                            ? Colors.white
-                                            : AppColors.accentIndigoDeep)
-                                        .withValues(alpha: 0.5),
-                                    blurRadius: 8,
-                                    spreadRadius: 1,
-                                  )
-                                ]
-                              : null,
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }

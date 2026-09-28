@@ -22,6 +22,15 @@ Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   group('Skills Widgets Test Suite', () {
+    testWidgets('empty search result names the search, not a category',
+        (tester) async {
+      await tester
+          .pumpWidget(_wrap(SkillsEmptyState(onShowAll: () {}, query: ' 5G ')));
+      expect(find.text('No skills match “5G”'), findsOneWidget);
+      await tester.pumpWidget(_wrap(SkillsEmptyState(onShowAll: () {})));
+      expect(find.text('No skills in this category yet'), findsOneWidget);
+    });
+
     testWidgets('SkillsHeader renders title, disciplines text, and badge',
         (tester) async {
       await tester.pumpWidget(_wrap(const SkillsHeader(isDesktop: true)));

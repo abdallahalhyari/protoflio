@@ -47,7 +47,8 @@ class FolioBar extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                AnimatedSwitcher(
+                ExcludeSemantics(
+                    child: AnimatedSwitcher(
                   duration: AppMotion.switcher,
                   transitionBuilder: (child, animation) => FadeTransition(
                     opacity: animation,
@@ -72,7 +73,7 @@ class FolioBar extends StatelessWidget {
                       letterSpacing: 1.5,
                     ),
                   ),
-                ),
+                )),
                 const SizedBox(width: 8),
                 Container(
                   width: 1,
@@ -101,7 +102,8 @@ class FolioBar extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 6),
-                AnimatedSwitcher(
+                ExcludeSemantics(
+                    child: AnimatedSwitcher(
                   duration: AppMotion.switcher,
                   transitionBuilder: (child, animation) => FadeTransition(
                     opacity: animation,
@@ -123,7 +125,7 @@ class FolioBar extends StatelessWidget {
                       letterSpacing: 2,
                     ),
                   ),
-                ),
+                )),
                 const SizedBox(width: 8),
                 Container(
                   width: 1,

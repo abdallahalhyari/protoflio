@@ -139,7 +139,8 @@ class _ChannelTileState extends State<ChannelTile> {
             Row(
               children: [
                 Expanded(
-                  child: Semantics(
+                  child: MergeSemantics(
+                      child: Semantics(
                     button: true,
                     label: '${d.label}: ${d.primaryLabel}',
                     child: FilledButton(
@@ -154,6 +155,7 @@ class _ChannelTileState extends State<ChannelTile> {
                       ),
                       child: Text(
                         d.primaryLabel.toUpperCase(),
+                        semanticsLabel: '',
                         style: const TextStyle(
                           fontSize: AppTypography.caption,
                           fontWeight: FontWeight.w900,
@@ -161,10 +163,11 @@ class _ChannelTileState extends State<ChannelTile> {
                         ),
                       ),
                     ),
-                  ),
+                  )),
                 ),
                 const SizedBox(width: AppSpacing.sm),
-                Semantics(
+                MergeSemantics(
+                    child: Semantics(
                   button: true,
                   label: '${d.label}: ${d.secondaryLabel}',
                   child: OutlinedButton(
@@ -184,6 +187,7 @@ class _ChannelTileState extends State<ChannelTile> {
                     ),
                     child: Text(
                       d.secondaryLabel.toUpperCase(),
+                      semanticsLabel: '',
                       style: const TextStyle(
                         fontSize: AppTypography.caption,
                         fontWeight: FontWeight.w800,
@@ -191,7 +195,7 @@ class _ChannelTileState extends State<ChannelTile> {
                       ),
                     ),
                   ),
-                ),
+                )),
               ],
             ),
           ],

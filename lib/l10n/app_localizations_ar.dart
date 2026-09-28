@@ -57,6 +57,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get skillsEmptyTitle => 'لا توجد مهارات في هذه الفئة بعد';
 
   @override
+  String skillsNoMatch(String query) {
+    return 'لا توجد مهارات تطابق «$query»';
+  }
+
+  @override
   String get skillsEmptyShowAll => 'عرض الكل';
 
   @override

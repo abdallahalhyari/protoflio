@@ -204,36 +204,35 @@ class HatConsoleDock extends StatelessWidget {
                 const SizedBox(width: AppSpacing.sm),
 
                 // Quick Shuffle Button
-                Tooltip(
-                  message: '${loc.spreadAction} [S]',
-                  child: IconButton(
-                    onPressed: onShuffle,
-                    iconSize: 16,
-                    padding: const EdgeInsets.all(6),
-                    constraints: const BoxConstraints(),
-                    style: IconButton.styleFrom(
-                      foregroundColor:
-                          isDark ? primary : AppColors.accentSkyDeep,
-                    ),
-                    icon: const Icon(Icons.auto_awesome_motion_rounded),
+                // Its own tooltip names the button; a Tooltip wrapper left
+                // the button itself unnamed for screen readers.
+                IconButton(
+                  tooltip: '${loc.spreadAction} [S]',
+                  onPressed: onShuffle,
+                  iconSize: 16,
+                  padding: const EdgeInsets.all(6),
+                  constraints: const BoxConstraints(),
+                  style: IconButton.styleFrom(
+                    foregroundColor: isDark ? primary : AppColors.accentSkyDeep,
                   ),
+                  icon: const Icon(Icons.auto_awesome_motion_rounded),
                 ),
                 const SizedBox(width: AppSpacing.xs),
 
                 // Quick Reset/Align Button
-                Tooltip(
-                  message: '${loc.alignAction} [R]',
-                  child: IconButton(
-                    onPressed: onReset,
-                    iconSize: 16,
-                    padding: const EdgeInsets.all(6),
-                    constraints: const BoxConstraints(),
-                    style: IconButton.styleFrom(
-                      foregroundColor:
-                          isDark ? Colors.white60 : AppColors.slate500,
-                    ),
-                    icon: const Icon(Icons.layers_clear_rounded),
+                // Its own tooltip names the button; a Tooltip wrapper left
+                // the button itself unnamed for screen readers.
+                IconButton(
+                  tooltip: '${loc.alignAction} [R]',
+                  onPressed: onReset,
+                  iconSize: 16,
+                  padding: const EdgeInsets.all(6),
+                  constraints: const BoxConstraints(),
+                  style: IconButton.styleFrom(
+                    foregroundColor:
+                        isDark ? Colors.white60 : AppColors.slate500,
                   ),
+                  icon: const Icon(Icons.layers_clear_rounded),
                 ),
 
                 const SizedBox(width: AppSpacing.sm),

@@ -196,6 +196,12 @@ abstract class AppLocalizations {
   /// **'No skills in this category yet'**
   String get skillsEmptyTitle;
 
+  /// Shown in the Skills section when the search finds nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No skills match “{query}”'**
+  String skillsNoMatch(String query);
+
   /// No description provided for @skillsEmptyShowAll.
   ///
   /// In en, this message translates to:

@@ -57,6 +57,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillsEmptyTitle => 'No skills in this category yet';
 
   @override
+  String skillsNoMatch(String query) {
+    return 'No skills match “$query”';
+  }
+
+  @override
   String get skillsEmptyShowAll => 'SHOW ALL';
 
   @override

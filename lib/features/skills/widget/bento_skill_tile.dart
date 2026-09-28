@@ -114,10 +114,15 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                     ..setEntry(3, 2, 0.001)
                     ..rotateY(angle);
 
-                  return Transform(
-                    alignment: Alignment.center,
-                    transform: transform,
-                    child: isBack ? backCard : frontCard,
+                  // The label already reads the front face; the back's
+                  // details are read once the card is flipped to them.
+                  return ExcludeSemantics(
+                    excluding: !isBack,
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: transform,
+                      child: isBack ? backCard : frontCard,
+                    ),
                   );
                 },
               ),
