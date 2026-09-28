@@ -23,7 +23,7 @@ class SkillsHeader extends StatelessWidget {
       isDesktop: isDesktop,
       // Icon, not a '✦' glyph: CanvasKit has no system fonts, so the
       // glyph pulled a 374 KB Noto Symbols 2 download.
-      badgeIcon: Icons.auto_awesome,
+      badgeIcon: Icons.auto_awesome_rounded,
       badgeLabel: '${kSkills.length} CORE DISCIPLINES',
     );
   }

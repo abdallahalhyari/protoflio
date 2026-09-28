@@ -45,6 +45,16 @@ void main() {
           reason:
               'Raw Durations must route through AppMotion. Offenders:\n${hits.join('\n')}');
     });
+
+    // One icon family. Rounded, outlined and sharp glyphs differ in corner
+    // and stroke terminals; mixed in one toolbar they read as three sets.
+    test('icons come from the rounded Material family', () {
+      final rx = RegExp(r'Icons\.(?![a-z0-9_]*_rounded\b)[a-z0-9_]+');
+      final hits = _scan(['lib'], rx, allowList: const {});
+      expect(hits, isEmpty,
+          reason: 'Use the Icons.*_rounded variant. Offenders:\n'
+              '${hits.join('\n')}');
+    });
   });
 }
 

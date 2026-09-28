@@ -124,7 +124,7 @@ class QuickProfileCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.badge_outlined, size: 20, color: accent),
+              Icon(Icons.badge_rounded, size: 20, color: accent),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(

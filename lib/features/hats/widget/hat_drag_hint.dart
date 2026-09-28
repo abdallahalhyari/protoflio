@@ -29,7 +29,7 @@ class HatDragHint extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                Icons.back_hand_outlined,
+                Icons.back_hand_rounded,
                 size: 13,
                 color: context.adaptiveAccentText(primary),
               ),

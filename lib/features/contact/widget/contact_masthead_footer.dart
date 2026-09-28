@@ -114,7 +114,7 @@ class ContactMastheadFooter extends StatelessWidget {
               spacing: 6,
               runSpacing: 4,
               children: [
-                Icon(Icons.shield_outlined, size: 13, color: availabilityGreen),
+                Icon(Icons.shield_rounded, size: 13, color: availabilityGreen),
                 Text(
                   'VERIFIED SENIOR MOBILE ARCHITECT · DIRECT COMMUNICATION',
                   textAlign: TextAlign.center,

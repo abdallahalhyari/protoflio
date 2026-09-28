@@ -16,7 +16,6 @@ function patchFile(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
     content = content.replace(/Intl\.v8BreakIterator/g, "Intl['v8BreakIterator']");
     content = content.replace(/\.v8BreakIterator/g, "['v8BreakIterator']");
-    content = content.replace(/hasChromiumBreakIterators:\s*R\(\)/g, 'hasChromiumBreakIterators: false');
     fs.writeFileSync(filePath, content, 'utf8');
     console.log(`Successfully patched ${path.basename(filePath)} for Lighthouse Best Practices.`);
   } catch (e) {
@@ -31,8 +30,6 @@ function patchBootstrap(filePath) {
     // Replace v8BreakIterator references in bootstrap
     content = content.replace(/Intl\.v8BreakIterator/g, "Intl['v8BreakIterator']");
     content = content.replace(/\.v8BreakIterator/g, "['v8BreakIterator']");
-    // Direct Flutter to use native ICU in skwasm_heavy / canvaskit instead of deprecated Intl.v8BreakIterator
-    content = content.replace(/hasChromiumBreakIterators:\s*R\(\)/g, 'hasChromiumBreakIterators: false');
     // Disable deprecated service worker registration
     content = content.replace(/serviceWorkerSettings:\s*\{[\s\S]*?\}/g, 'serviceWorkerSettings: null');
     // Self-host CanvasKit/Skwasm from /canvaskit/ (files ship in build/web/canvaskit/).

@@ -432,7 +432,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                       ? MainAxisAlignment.spaceBetween
                       : MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.touch_app_outlined,
+                    Icon(Icons.touch_app_rounded,
                         size: 12, color: Colors.white.withValues(alpha: 0.60)),
                     if (!widget.isStandalone) const SizedBox(width: 6),
                     // Longer translations (Czech) shrink to fit rather than
@@ -459,7 +459,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                       ),
                     ),
                     if (widget.isStandalone)
-                      Icon(Icons.autorenew,
+                      Icon(Icons.autorenew_rounded,
                           size: 12,
                           color: Colors.white.withValues(alpha: 0.60)),
                   ],
@@ -545,7 +545,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Icon(Icons.autorenew,
+                    Icon(Icons.autorenew_rounded,
                         size: 14, color: Colors.white.withValues(alpha: 0.6)),
                   ],
                 ),
@@ -605,7 +605,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.autorenew,
+                    Icon(Icons.autorenew_rounded,
                         size: 12, color: Colors.white.withValues(alpha: 0.55)),
                     Text(
                       'TAP TO RETURN',
@@ -616,7 +616,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                         letterSpacing: 1.8,
                       ),
                     ),
-                    Icon(Icons.touch_app_outlined,
+                    Icon(Icons.touch_app_rounded,
                         size: 12, color: Colors.white.withValues(alpha: 0.55)),
                   ],
                 ),

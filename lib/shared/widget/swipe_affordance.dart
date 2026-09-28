@@ -9,7 +9,7 @@ class SwipeAffordance extends StatelessWidget {
   const SwipeAffordance({
     super.key,
     required this.label,
-    this.icon = Icons.swipe_outlined,
+    this.icon = Icons.swipe_rounded,
     this.margin,
   });
 

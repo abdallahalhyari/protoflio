@@ -66,7 +66,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.byIcon(Icons.filter_alt_off_outlined), findsOneWidget);
+      expect(find.byIcon(Icons.filter_alt_off_rounded), findsOneWidget);
       await tester.tap(find.byType(TextButton));
       await tester.pumpAndSettle();
 

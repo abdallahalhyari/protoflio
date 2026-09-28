@@ -86,8 +86,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.psychology_outlined,
-                        color: accentText, size: 16),
+                    Icon(Icons.psychology_rounded, color: accentText, size: 16),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
@@ -138,7 +137,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 3, right: 4),
-                    child: Icon(Icons.diamond,
+                    child: Icon(Icons.diamond_rounded,
                         size: AppTypography.caption, color: accentText),
                   ),
                   Expanded(

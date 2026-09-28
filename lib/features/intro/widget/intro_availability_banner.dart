@@ -66,7 +66,7 @@ class IntroAvailabilityBanner extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Icon(Icons.flight_takeoff_outlined, color: accent, size: 14),
+              Icon(Icons.flight_takeoff_rounded, color: accent, size: 14),
               const SizedBox(width: 6),
               Flexible(
                 child: Text(

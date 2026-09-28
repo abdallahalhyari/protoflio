@@ -416,7 +416,7 @@ class _IntroPageState extends State<IntroPage>
             children: [
               _hairlineRow(
                 isDark: isDark,
-                child: Icon(Icons.diamond,
+                child: Icon(Icons.diamond_rounded,
                     size: AppTypography.small, color: _accent),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),

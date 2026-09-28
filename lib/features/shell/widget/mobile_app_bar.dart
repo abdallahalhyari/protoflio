@@ -230,8 +230,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                           const BoxConstraints(minWidth: 44, minHeight: 44),
                       icon: Icon(
                         dark
-                            ? Icons.light_mode_outlined
-                            : Icons.dark_mode_outlined,
+                            ? Icons.light_mode_rounded
+                            : Icons.dark_mode_rounded,
                         color: context.mutedText,
                       ),
                       onPressed: () {
@@ -267,8 +267,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                             const BoxConstraints(minWidth: 44, minHeight: 44),
                         icon: Icon(
                           enabled
-                              ? Icons.volume_up_outlined
-                              : Icons.volume_off_outlined,
+                              ? Icons.volume_up_rounded
+                              : Icons.volume_off_rounded,
                           color: enabled
                               ? AppColors.accentAmber
                               : (isDark ? Colors.white38 : AppColors.slate400),

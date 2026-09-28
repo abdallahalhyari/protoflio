@@ -230,10 +230,8 @@ void main() {
             (w.tooltip == 'Switch to light' ||
                 w.tooltip == 'Switch to dark' ||
                 w.icon is Icon &&
-                    ((w.icon as Icon).icon == Icons.light_mode ||
-                        (w.icon as Icon).icon == Icons.dark_mode ||
-                        (w.icon as Icon).icon == Icons.light_mode_outlined ||
-                        (w.icon as Icon).icon == Icons.dark_mode_outlined)));
+                    ((w.icon as Icon).icon == Icons.light_mode_rounded ||
+                        (w.icon as Icon).icon == Icons.dark_mode_rounded)));
 
         expect(themeBtnFinder, findsOneWidget,
             reason: 'Theme button must exist for size $size');
@@ -276,8 +274,8 @@ void main() {
       final themeBtn = find.byWidgetPredicate((w) =>
           w is IconButton &&
           w.icon is Icon &&
-          ((w.icon as Icon).icon == Icons.light_mode_outlined ||
-              (w.icon as Icon).icon == Icons.dark_mode_outlined));
+          ((w.icon as Icon).icon == Icons.light_mode_rounded ||
+              (w.icon as Icon).icon == Icons.dark_mode_rounded));
       expect(themeBtn, findsOneWidget);
 
       await tester.tap(themeBtn);

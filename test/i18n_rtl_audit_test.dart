@@ -109,7 +109,7 @@ void main() {
         (tester) async {
       // Under RTL
       await tester.pumpWidget(_buildLocalizedHarness(
-        const DirIcon(Icons.chevron_right, size: 24),
+        const DirIcon(Icons.chevron_right_rounded, size: 24),
         const Locale('ar'),
       ));
       final transformFinder = find.descendant(
@@ -124,7 +124,7 @@ void main() {
 
       // Under LTR
       await tester.pumpWidget(_buildLocalizedHarness(
-        const DirIcon(Icons.chevron_right, size: 24),
+        const DirIcon(Icons.chevron_right_rounded, size: 24),
         const Locale('en'),
       ));
       // In LTR, DirIcon returns the bare Icon directly without a Transform wrapper

@@ -407,6 +407,10 @@ class _HomeScreenState extends State<HomeScreen> {
       unawaited(_rememberSection(target));
     }
     if (target == 0 && _mobileScrollController.hasClients) {
+      if (AppMedia.reduceMotion(context)) {
+        _mobileScrollController.jumpTo(0);
+        return;
+      }
       _mobileScrollController.animateTo(
         0,
         duration: AppMotion.sectionScroll,
@@ -460,14 +464,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     _mobileJumpInFlight = true;
-    _mobileScrollController
-        .animateTo(
-      targetOffset,
-      // Correction passes are short nudges, not a second full flight.
-      duration: retry == 0 ? AppMotion.sectionScroll : AppMotion.sm,
-      curve: AppMotion.standard,
-    )
-        .whenComplete(() {
+    // Reduced motion: jump instead of a scroll across several screens.
+    final Future<void> move = AppMedia.reduceMotion(context)
+        ? Future<void>.sync(() => _mobileScrollController.jumpTo(targetOffset))
+        : _mobileScrollController.animateTo(
+            targetOffset,
+            // Correction passes are short nudges, not a second full flight.
+            duration: retry == 0 ? AppMotion.sectionScroll : AppMotion.sm,
+            curve: AppMotion.standard,
+          );
+    move.whenComplete(() {
       if (!mounted || id != _mobileJumpId) return;
       // Sections still mounting (one per frame after launch, see
       // StaggeredMount) can grow what sits above the target: wait for them,
@@ -538,6 +544,14 @@ class _HomeScreenState extends State<HomeScreen> {
         _lastPageTurnCompletedAt.value = DateTime.now();
       }
 
+      // Reduced motion: cut to the page. The transformer already drops its
+      // page-turn effects, but a full-screen slide is the largest motion
+      // on the site.
+      if (AppMedia.reduceMotion(context)) {
+        _controller.jumpToPage(target);
+        settle();
+        return;
+      }
       _controller
           .animateToPage(
             target,

@@ -68,7 +68,7 @@ class KeyboardHintChip extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    Icons.keyboard_alt_outlined,
+                    Icons.keyboard_alt_rounded,
                     size: 14,
                     color: context.mutedText,
                   ),

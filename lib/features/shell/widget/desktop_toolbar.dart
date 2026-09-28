@@ -79,7 +79,7 @@ class _LanguagePickerPuck extends StatelessWidget {
                 'Change language. Current: ${locale.languageCode.toUpperCase()}',
             child: PopupMenuButton<String>(
               tooltip: 'Change Language',
-              icon: Icon(Icons.language,
+              icon: Icon(Icons.language_rounded,
                   color: dark ? Colors.white : AppColors.slate900),
               onSelected: (val) {
                 HapticFeedback.lightImpact();
@@ -114,7 +114,7 @@ class _ThemeTogglePuck extends StatelessWidget {
         child: IconButton(
           tooltip: dark ? 'Switch to light' : 'Switch to dark',
           icon: Icon(
-            dark ? Icons.light_mode : Icons.dark_mode,
+            dark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
             color: dark ? Colors.white : AppColors.slate900,
           ),
           onPressed: () {
@@ -151,7 +151,9 @@ class _AudioTogglePuck extends StatelessWidget {
                 clipBehavior: Clip.none,
                 children: [
                   Icon(
-                    enabled ? Icons.volume_up : Icons.volume_off,
+                    enabled
+                        ? Icons.volume_up_rounded
+                        : Icons.volume_off_rounded,
                     color: enabled
                         ? (dark ? Colors.white : AppColors.slate900)
                         : (dark

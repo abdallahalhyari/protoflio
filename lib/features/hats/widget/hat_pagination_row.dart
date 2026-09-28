@@ -39,7 +39,7 @@ class HatPaginationRow extends StatelessWidget {
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.padded,
           ),
-          icon: const DirIcon(Icons.chevron_left, size: 14),
+          icon: const DirIcon(Icons.chevron_left_rounded, size: 14),
           label: Text(
             l10n?.previousAction ?? 'PREV',
             style: const TextStyle(
@@ -79,7 +79,7 @@ class HatPaginationRow extends StatelessWidget {
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.padded,
           ),
-          icon: const DirIcon(Icons.chevron_right, size: 14),
+          icon: const DirIcon(Icons.chevron_right_rounded, size: 14),
           label: Text(
             l10n?.nextAction ?? 'NEXT',
             style: const TextStyle(
