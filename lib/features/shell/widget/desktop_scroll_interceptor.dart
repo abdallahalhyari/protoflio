@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:profile/theme/tokens.dart';
 
 class DesktopScrollInterceptor extends StatefulWidget {
@@ -45,17 +44,76 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
 
   bool _isIgnoringBurst = false;
 
-  // True once the current wheel burst has scrolled content inside the page.
-  // Momentum that carries past the end of that content must stop there;
-  // turning the page needs a fresh gesture, or a flick through a long
-  // section overshoots straight onto the next one.
-  bool _innerScrolledThisBurst = false;
+  Offset _lastHitTestPosition = const Offset(-1, -1);
+  int _lastHitTestTime = 0;
+  final List<ScrollPosition> _cachedScrollPositions = [];
 
-  // The wheel event currently waiting on the pointer-signal resolver, and
-  // whether this interceptor (rather than scrollable content under the
-  // cursor) ended up handling it.
-  PointerScrollEvent? _pendingEvent;
-  bool _handledPending = false;
+  bool _canInnerScroll(Offset globalPosition, double dy) {
+    if (!mounted) return false;
+
+    final now = DateTime.now().millisecondsSinceEpoch;
+    // Mouse hasn't moved and we checked less than 300ms ago? Use cached scroll positions.
+    if (globalPosition != _lastHitTestPosition || now - _lastHitTestTime > 300) {
+      _lastHitTestPosition = globalPosition;
+      _lastHitTestTime = now;
+      _cachedScrollPositions.clear();
+
+      final result = HitTestResult();
+      final viewId = View.of(context).viewId;
+      RendererBinding.instance.hitTestInView(result, globalPosition, viewId);
+
+      for (final entry in result.path) {
+        final target = entry.target;
+        if (target is! RenderObject) continue;
+
+        RenderObject? currentObj = target;
+        while (currentObj != null) {
+          if (currentObj is RenderAbstractViewport) {
+            ViewportOffset? offset;
+            if (currentObj is RenderViewportBase) {
+              offset = currentObj.offset;
+            } else {
+              try {
+                offset = (currentObj as dynamic).offset as ViewportOffset?;
+              } catch (_) {}
+            }
+
+            if (offset != null) {
+              // If this viewport is the outer PageView, stop ascending this branch
+              if (widget.pageController.hasClients &&
+                  offset == widget.pageController.position) {
+                break;
+              }
+
+              if (offset is ScrollPosition) {
+                _cachedScrollPositions.add(offset);
+              }
+            }
+          }
+          currentObj = currentObj.parent;
+        }
+      }
+    }
+
+    for (final pos in _cachedScrollPositions) {
+      if (pos.axis == Axis.vertical &&
+          pos.hasContentDimensions &&
+          pos.maxScrollExtent > 0) {
+        if (dy > 0) {
+          // Scrolling down: can inner scroll further down?
+          if (pos.pixels < pos.maxScrollExtent - 2.0) {
+            return true;
+          }
+        } else if (dy < 0) {
+          // Scrolling up: can inner scroll further up?
+          if (pos.pixels > pos.minScrollExtent + 2.0) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
 
   void _onPointerSignal(PointerSignalEvent event) {
     if (event is! PointerScrollEvent) return;
@@ -78,7 +136,6 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
     if (timeSinceLastWheel > AppMotion.wheelResetGap) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
-      _innerScrolledThisBurst = false;
     }
     // 2. Sudden velocity spike (new flick in same direction)
     else if (_lastDy != 0 &&
@@ -86,13 +143,11 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
         dy.abs() > _lastDy.abs() + 15.0) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
-      _innerScrolledThisBurst = false;
     }
     // 3. Direction change (flick in opposite direction)
     else if (_lastDy != 0 && dy.sign != _lastDy.sign && dy.abs() > 2.0) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
-      _innerScrolledThisBurst = false;
     }
 
     _lastDy = dy;
@@ -117,34 +172,7 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
 
     if (dy.abs() < 1.0) return;
 
-    // Let scrollable content inside the page take the wheel first. Every
-    // Scrollable under the cursor that can still move registers with the
-    // pointer-signal resolver during dispatch, deepest first; the first
-    // registration wins. The outer page scroller never registers
-    // (NeverScrollableScrollPhysics), so this callback only runs when no
-    // content can scroll in that direction — including over blank space
-    // inside a scroll area, which a render-tree hit test used to miss.
-    _pendingEvent = event;
-    _handledPending = false;
-    GestureBinding.instance.pointerSignalResolver.register(event, (_) {
-      _handledPending = true;
-      _turnPageFor(dy);
-    });
-    scheduleMicrotask(() {
-      if (_pendingEvent != event) return;
-      _pendingEvent = null;
-      if (!_handledPending) {
-        // Content under the cursor scrolled instead.
-        _wheelAccum = 0;
-        _innerScrolledThisBurst = true;
-      }
-    });
-  }
-
-  void _turnPageFor(double dy) {
-    // Content scrolled earlier in this same burst and has just reached its
-    // edge: rest here. Turning the page needs a fresh gesture.
-    if (_innerScrolledThisBurst) {
+    if (_canInnerScroll(event.position, dy)) {
       _wheelAccum = 0;
       return;
     }

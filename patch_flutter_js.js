@@ -4,6 +4,7 @@ const path = require('path');
 const mjsPath = path.join(__dirname, 'build', 'web', 'main.dart.mjs');
 const jsPath = path.join(__dirname, 'build', 'web', 'main.dart.js');
 const bootstrapPath = path.join(__dirname, 'build', 'web', 'flutter_bootstrap.js');
+const flutterJsPath = path.join(__dirname, 'build', 'web', 'flutter.js');
 
 function patchFile(filePath) {
   if (!fs.existsSync(filePath)) {
@@ -15,6 +16,7 @@ function patchFile(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
     content = content.replace(/Intl\.v8BreakIterator/g, "Intl['v8BreakIterator']");
     content = content.replace(/\.v8BreakIterator/g, "['v8BreakIterator']");
+    content = content.replace(/hasChromiumBreakIterators:\s*R\(\)/g, 'hasChromiumBreakIterators: false');
     fs.writeFileSync(filePath, content, 'utf8');
     console.log(`Successfully patched ${path.basename(filePath)} for Lighthouse Best Practices.`);
   } catch (e) {
@@ -26,6 +28,11 @@ function patchBootstrap(filePath) {
   if (!fs.existsSync(filePath)) return;
   try {
     let content = fs.readFileSync(filePath, 'utf8');
+    // Replace v8BreakIterator references in bootstrap
+    content = content.replace(/Intl\.v8BreakIterator/g, "Intl['v8BreakIterator']");
+    content = content.replace(/\.v8BreakIterator/g, "['v8BreakIterator']");
+    // Direct Flutter to use native ICU in skwasm_heavy / canvaskit instead of deprecated Intl.v8BreakIterator
+    content = content.replace(/hasChromiumBreakIterators:\s*R\(\)/g, 'hasChromiumBreakIterators: false');
     // Disable deprecated service worker registration
     content = content.replace(/serviceWorkerSettings:\s*\{[\s\S]*?\}/g, 'serviceWorkerSettings: null');
     // Self-host CanvasKit/Skwasm from /canvaskit/ (files ship in build/web/canvaskit/).
@@ -55,6 +62,7 @@ function patchBootstrap(filePath) {
 
 patchFile(mjsPath);
 patchFile(jsPath);
+patchFile(flutterJsPath);
 patchBootstrap(bootstrapPath);
 
 // Inject <link rel="prefetch"> tags for every deferred `.part.js` chunk.

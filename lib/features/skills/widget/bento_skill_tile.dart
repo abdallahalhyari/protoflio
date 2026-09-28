@@ -152,7 +152,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.tile),
+        borderRadius: BorderRadius.circular(AppRadius.card),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -321,7 +321,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.tile),
+        borderRadius: BorderRadius.circular(AppRadius.card),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

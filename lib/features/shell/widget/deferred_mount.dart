@@ -9,7 +9,7 @@ class DeferredMount extends StatefulWidget {
     required this.sectionIndex,
     required this.placeholderHeight,
     required this.child,
-    this.distance = 10,
+    this.distance = 1,
   });
 
   final int sectionIndex;
