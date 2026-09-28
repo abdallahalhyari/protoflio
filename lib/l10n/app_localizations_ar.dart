@@ -407,4 +407,266 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quickProfileCopied => 'تم نسخ ملخص الملف';
+
+  @override
+  String get studyCaseStudy => 'دراسة حالة';
+
+  @override
+  String get studyProblem => 'المشكلة';
+
+  @override
+  String get studyRole => 'دوري';
+
+  @override
+  String get studyArchitecture => 'بنية النظام';
+
+  @override
+  String get studyOutcomes => 'النتائج';
+
+  @override
+  String get studyLessons => 'الدروس';
+
+  @override
+  String get studyMore => 'دراسات حالة أخرى';
+
+  @override
+  String get studyDockProblem => 'المشكلة';
+
+  @override
+  String get studyDockProblemShort => 'المشكلة';
+
+  @override
+  String get studyDockRole => 'الدور';
+
+  @override
+  String get studyDockArch => 'البنية';
+
+  @override
+  String get studyDockOutcomes => 'النتائج';
+
+  @override
+  String get studyDockOutcomesShort => 'النتائج';
+
+  @override
+  String get studyDockLessons => 'الدروس';
+
+  @override
+  String get studyBackToPortfolio => 'العودة إلى الملف';
+
+  @override
+  String studyReadPercent(int pct) {
+    return 'قُرئ $pct٪';
+  }
+
+  @override
+  String get studyTop => 'للأعلى';
+
+  @override
+  String get studyBackToTop => 'العودة إلى الأعلى';
+
+  @override
+  String studyJumpTo(String chapter) {
+    return 'الانتقال إلى $chapter';
+  }
+
+  @override
+  String studyChapter(String chapter) {
+    return 'الفصل $chapter';
+  }
+
+  @override
+  String get studyOfficialWebsite => 'الموقع الرسمي';
+
+  @override
+  String studyVisitWebsite(String company) {
+    return 'زيارة الموقع الرسمي لـ $company';
+  }
+
+  @override
+  String get studyCompanyLinkedIn => 'LinkedIn الشركة';
+
+  @override
+  String studyViewOnLinkedIn(String company) {
+    return 'عرض $company على LinkedIn';
+  }
+
+  @override
+  String get studyShare => 'مشاركة الدراسة';
+
+  @override
+  String get studyShareTooltip => 'نسخ رابط مباشر لهذه الدراسة';
+
+  @override
+  String studyShareSemantics(String title) {
+    return 'مشاركة رابط مباشر لدراسة $title';
+  }
+
+  @override
+  String get studyShareButton => 'مشاركة رابط الدراسة';
+
+  @override
+  String studyLinkCopied(String url) {
+    return 'تم نسخ رابط الدراسة: $url';
+  }
+
+  @override
+  String get studyGlanceKicker => 'لمحة سريعة · قراءة في 30 ثانية';
+
+  @override
+  String get studyGlance => 'لمحة سريعة';
+
+  @override
+  String get studyChallenge => 'التحدي';
+
+  @override
+  String get studyBuilt => 'ما بنيته';
+
+  @override
+  String get studyResult => 'النتيجة';
+
+  @override
+  String get studySeeOutcomes => 'عرض كل النتائج';
+
+  @override
+  String get studyEnglishNote => 'التفاصيل التقنية أدناه باللغة الإنجليزية.';
+
+  @override
+  String studyOutcomeSemantics(String headline, String body) {
+    return 'مقياس نتيجة رئيسي: $headline. $body';
+  }
+
+  @override
+  String get studyPresent => 'حتى الآن';
+
+  @override
+  String get studyRoleMobileDev => 'مطوّر تطبيقات الجوال';
+
+  @override
+  String get studyRoleFlutterDev => 'مطوّر Flutter';
+
+  @override
+  String get studyRoleMobileDevFlutterAndroid =>
+      'مطوّر تطبيقات الجوال (Flutter وAndroid)';
+
+  @override
+  String get studyNatIntro =>
+      'منصة رعاية صحية حرجة تعتمد بطاقات NFC الذكية لأكبر جهة إدارة تأمين صحي (TPA) في الأردن. ‏Ring App وE-Health Gate وCompliance System — ثلاثة تطبيقات منسّقة على بنية مشتركة.';
+
+  @override
+  String get studyNatChallenge =>
+      'كانت المطالبات الورقية تُبطئ التعويضات وتعرّض أكبر جهة لإدارة التأمين الصحي في الأردن للاحتيال، وكان اتصال كثير من العيادات غير مستقر.';
+
+  @override
+  String get studyNatBuilt =>
+      'مجموعة من ثلاثة تطبيقات لبطاقات NFC الذكية: جسر APDU أصلي بلغة Kotlin، ومزامنة offline-first عبر WorkManager، ورموز JWT مرتبطة بالعتاد.';
+
+  @override
+  String get studyNatResult =>
+      'تحقّق من البطاقة في أقل من ثانية، ومطالبات لا تضيع عند انقطاع الاتصال، وصفر اختراقات أمنية، وثلاثة تطبيقات على بنية واحدة.';
+
+  @override
+  String get studyNatOutcome1 =>
+      'تحقّق لاتلامسي من البطاقة، من الهواتف الرائدة إلى الاقتصادية';
+
+  @override
+  String get studyNatOutcome2 =>
+      'مزامنة دفعية موثوقة دون اتصال أثناء انقطاع الشبكة';
+
+  @override
+  String get studyNatOutcome3 =>
+      'اختراقات أمنية مع دورة حياة رموز مرتبطة بالعتاد';
+
+  @override
+  String get studyNatOutcome4 => 'تطبيقات منسّقة أُطلقت على البنية المشتركة';
+
+  @override
+  String get studyEskIntro =>
+      'بنية جوال مؤسسية عالية الأداء تشغّل أنظمة معلومات المستشفيات (HIS) ومنصات التعليم في منطقة الشرق الأوسط وشمال أفريقيا. أُعيد بناء قواعد الكود القديمة الأحادية إلى حزم ميزات منفصلة قابلة للاختبار دون أي توقف تشغيلي.';
+
+  @override
+  String get studyEskChallenge =>
+      'كانت تطبيقات المستشفيات والجامعات القديمة الأحادية تتلعثم مع السجلات الكثيفة وتنهار على الأجهزة اللوحية الضعيفة في الأجنحة خلال المناوبات الطويلة.';
+
+  @override
+  String get studyEskBuilt =>
+      'إعادة هيكلة تدريجية إلى MVVM بحزم ميزات منفصلة ومستودعات مخزّنة مؤقتًا وعقود بيانات محددة الأنواع، مع قياس الأداء عبر DevTools ودون أي توقف.';
+
+  @override
+  String get studyEskResult =>
+      '‏60 FPS على جداول البيانات الكثيفة، وأعطال أقل بنسبة 35%، وعرض أكثر من 1,000 سجل بسلاسة، ونشر أربع منصات مؤسسية.';
+
+  @override
+  String get studyEskOutcome1 =>
+      'معدل إطارات ثابت على جداول بيانات المستشفى والمخططات الطبية الكثيفة';
+
+  @override
+  String get studyEskOutcome2 =>
+      'انخفاض في معدل الأعطال لدى المستخدم خلال المناوبات السريرية الطويلة';
+
+  @override
+  String get studyEskOutcome3 => 'سجل للمرضى والطلاب يُعرض دون أي تأخير';
+
+  @override
+  String get studyEskOutcome4 =>
+      'منصات مؤسسية منشورة (HIS، العيادة، الجامعة، المدرسة)';
+
+  @override
+  String get studySolIntro =>
+      'تطبيقات استهلاكية عالية الأداء لنظامي iOS وAndroid: محرّك استبدال مكافآت ولاء في الوقت الفعلي ومنصة كاميرا لقصص فيديو مؤقتة على غرار Snapchat. مبنية على معالجة فيديو مسرّعة بالعتاد ونظام تصميم داخلي قابل لإعادة الاستخدام.';
+
+  @override
+  String get studySolChallenge =>
+      'تطبيقان استهلاكيان (مكافآت الولاء وقصص الفيديو المؤقتة) بمواعيد نهائية ضيقة، مع معالجة كاميرا تسرّب الذاكرة وتشوّه الصورة عبر أجهزة Android المختلفة.';
+
+  @override
+  String get studySolBuilt =>
+      'محرّك كاميرا وفيديو مسرّع بالعتاد، وعمليات isolate في الخلفية تضغط الوسائط قبل رفعها إلى S3، ومكتبة design tokens مشتركة للتطبيقين.';
+
+  @override
+  String get studySolResult =>
+      'أُطلق التطبيقان في الموعد بتقييم 4.7+ في المتاجر، وتسليم أسرع للميزات بنسبة 40%، ودون أي إطار مفقود في شريط القصص.';
+
+  @override
+  String get studySolOutcome1 => 'متوسط التقييم في App Store وGoogle Play';
+
+  @override
+  String get studySolOutcome2 =>
+      'تقليص وقت تسليم الميزات اللاحقة بفضل مكتبة مكوّنات مشتركة';
+
+  @override
+  String get studySolOutcome3 =>
+      'إطارات مفقودة أثناء التنقل بالإيماءات في شريط القصص';
+
+  @override
+  String get studySolOutcome4 => 'تطبيقان استهلاكيان أُطلقا معًا في الموعد';
+
+  @override
+  String get studyFaisIntro =>
+      'مسارات دفع تجارية عالية الأداء للتجارة عبر الجوال وتطبيقات لياقة ببث وسائط متواصل. مبنية على معاملات دفع ذرّية، ومعترضات شبكة دفاعية، وبث صوت وفيديو مرن.';
+
+  @override
+  String get studyFaisChallenge =>
+      'كان انقطاع الدفع على الشبكات غير المستقرة يسبب خصومات مكررة وسلال تسوق متروكة، وكانت أنظمة توفير البطارية لدى الشركات المصنّعة توقف تشغيل البث.';
+
+  @override
+  String get studyFaisBuilt =>
+      'دفع idempotent مع مواءمة الحالة لدى العميل، ومعترضات شبكة دفاعية، ومدير ذاكرة تخزين مؤقت للبث يعمل كخدمة في المقدّمة.';
+
+  @override
+  String get studyFaisResult =>
+      'إتمام 99.8% من عمليات الدفع دون أي خصم مكرر، وتصعيدات أقل للدعم بنسبة 45%، ومواءمة السلة في أقل من 200 ms.';
+
+  @override
+  String get studyFaisOutcome1 =>
+      'نسبة إتمام ناجح لمعاملات الدفع دون أي خصم مكرر';
+
+  @override
+  String get studyFaisOutcome2 =>
+      'انخفاض في تذاكر تصعيد الدعم لطلبات الدفع الفاشلة';
+
+  @override
+  String get studyFaisOutcome3 => 'زمن فوري لحساب السلة ومواءمة الحالة';
+
+  @override
+  String get studyFaisOutcome4 => 'جلسة نشطة يوميًا عبر مسارات التجارة';
 }

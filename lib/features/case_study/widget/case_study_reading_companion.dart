@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:profile/service/analytics_service.dart';
@@ -364,10 +366,10 @@ class _FloatingChapterDock extends StatelessWidget {
                 ignoring: !visible,
                 child: Container(
                   key: const Key('case_study_chapter_dock'),
-                  constraints: isCompact
-                      ? BoxConstraints(
-                          maxWidth: math.max(0.0, screenWidth - 24))
-                      : null,
+                  // Never wider than the screen: long translations or large
+                  // text used to push the desktop dock off both edges.
+                  constraints:
+                      BoxConstraints(maxWidth: math.max(0.0, screenWidth - 24)),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                     boxShadow: context.dockShadows,
@@ -412,9 +414,16 @@ class _FloatingChapterDock extends StatelessWidget {
                               ),
                             )
                           else
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: _buildChapters(isCompact: false),
+                            // Natural width when it fits; scrolls when not.
+                            Flexible(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: _buildChapters(isCompact: false),
+                                ),
+                              ),
                             ),
                           const SizedBox(width: 8),
                           _DockDivider(isDark: isDark),
@@ -508,12 +517,14 @@ class _ReadingPercentPill extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           Text(
-            isCompact ? '$pct%' : '$pct% READ',
+            isCompact
+                ? '$pct%'
+                : AppLocalizations.of(context)!.studyReadPercent(pct),
             style: TextStyle(
               fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.micro,
               fontWeight: FontWeight.w900,
-              letterSpacing: 0.8,
+              letterSpacing: latinTracking(context, 0.8),
               color: isDark ? AppColors.accentCyan : AppColors.accentCyanDeep,
             ),
           ),
@@ -556,9 +567,10 @@ class _ChapterPillState extends State<_ChapterPill> {
     return Semantics(
       button: true,
       selected: isActive,
-      label: 'Chapter ${widget.chapter.label}',
+      label: AppLocalizations.of(context)!.studyChapter(widget.chapter.label),
       child: Tooltip(
-        message: 'Jump to ${widget.chapter.label}',
+        message:
+            AppLocalizations.of(context)!.studyJumpTo(widget.chapter.label),
         waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -636,7 +648,7 @@ class _ChapterPillState extends State<_ChapterPill> {
                         fontSize: AppTypography.micro,
                         fontWeight:
                             isActive ? FontWeight.w900 : FontWeight.w700,
-                        letterSpacing: 1.0,
+                        letterSpacing: latinTracking(context, 1.0),
                         color: isActive
                             ? (isDark
                                 ? AppColors.accentCyan
@@ -681,9 +693,9 @@ class _BackToTopPillState extends State<_BackToTopPill> {
 
     return Semantics(
       button: true,
-      label: 'Back to top',
+      label: AppLocalizations.of(context)!.studyBackToTop,
       child: Tooltip(
-        message: 'Back to top',
+        message: AppLocalizations.of(context)!.studyBackToTop,
         waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -743,12 +755,12 @@ class _BackToTopPillState extends State<_BackToTopPill> {
                     if (!widget.isCompact) ...[
                       const SizedBox(width: 4),
                       Text(
-                        'TOP',
+                        AppLocalizations.of(context)!.studyTop,
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
                           fontSize: AppTypography.micro,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
+                          letterSpacing: latinTracking(context, 1.2),
                           color: _hovered
                               ? (isDark
                                   ? Colors.white

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -43,7 +44,8 @@ class RelatedCaseStudies extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionKicker(number: '09', label: 'MORE CASE STUDIES'),
+        SectionKicker(
+            number: '09', label: AppLocalizations.of(context)!.studyMore),
         const SizedBox(height: AppSpacing.md),
         if (isDesktop)
           // Equal-height cards: titles wrap to one or two lines, which

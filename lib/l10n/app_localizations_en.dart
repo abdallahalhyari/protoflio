@@ -412,4 +412,272 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quickProfileCopied => 'Profile summary copied';
+
+  @override
+  String get studyCaseStudy => 'CASE STUDY';
+
+  @override
+  String get studyProblem => 'THE PROBLEM';
+
+  @override
+  String get studyRole => 'MY ROLE';
+
+  @override
+  String get studyArchitecture => 'SYSTEM ARCHITECTURE';
+
+  @override
+  String get studyOutcomes => 'OUTCOMES';
+
+  @override
+  String get studyLessons => 'LESSONS';
+
+  @override
+  String get studyMore => 'MORE CASE STUDIES';
+
+  @override
+  String get studyDockProblem => 'PROBLEM';
+
+  @override
+  String get studyDockProblemShort => 'PROB';
+
+  @override
+  String get studyDockRole => 'ROLE';
+
+  @override
+  String get studyDockArch => 'ARCH';
+
+  @override
+  String get studyDockOutcomes => 'OUTCOMES';
+
+  @override
+  String get studyDockOutcomesShort => 'RESULTS';
+
+  @override
+  String get studyDockLessons => 'LESSONS';
+
+  @override
+  String get studyBackToPortfolio => 'Back to portfolio';
+
+  @override
+  String studyReadPercent(int pct) {
+    return '$pct% READ';
+  }
+
+  @override
+  String get studyTop => 'TOP';
+
+  @override
+  String get studyBackToTop => 'Back to top';
+
+  @override
+  String studyJumpTo(String chapter) {
+    return 'Jump to $chapter';
+  }
+
+  @override
+  String studyChapter(String chapter) {
+    return 'Chapter $chapter';
+  }
+
+  @override
+  String get studyOfficialWebsite => 'OFFICIAL WEBSITE';
+
+  @override
+  String studyVisitWebsite(String company) {
+    return 'Visit $company official website';
+  }
+
+  @override
+  String get studyCompanyLinkedIn => 'COMPANY LINKEDIN';
+
+  @override
+  String studyViewOnLinkedIn(String company) {
+    return 'View $company on LinkedIn';
+  }
+
+  @override
+  String get studyShare => 'SHARE STUDY';
+
+  @override
+  String get studyShareTooltip => 'Copy direct link to this case study';
+
+  @override
+  String studyShareSemantics(String title) {
+    return 'Share direct link to $title case study';
+  }
+
+  @override
+  String get studyShareButton => 'Share case study link';
+
+  @override
+  String studyLinkCopied(String url) {
+    return 'Case study link copied: $url';
+  }
+
+  @override
+  String get studyGlanceKicker => 'AT A GLANCE · 30-SECOND READ';
+
+  @override
+  String get studyGlance => 'At a glance';
+
+  @override
+  String get studyChallenge => 'CHALLENGE';
+
+  @override
+  String get studyBuilt => 'WHAT I BUILT';
+
+  @override
+  String get studyResult => 'RESULT';
+
+  @override
+  String get studySeeOutcomes => 'See all outcomes';
+
+  @override
+  String get studyEnglishNote => '';
+
+  @override
+  String studyOutcomeSemantics(String headline, String body) {
+    return 'Key outcome metric: $headline. $body';
+  }
+
+  @override
+  String get studyPresent => 'PRESENT';
+
+  @override
+  String get studyRoleMobileDev => 'MOBILE DEVELOPER';
+
+  @override
+  String get studyRoleFlutterDev => 'FLUTTER DEVELOPER';
+
+  @override
+  String get studyRoleMobileDevFlutterAndroid =>
+      'MOBILE DEVELOPER (FLUTTER & ANDROID)';
+
+  @override
+  String get studyNatIntro =>
+      'Mission-critical NFC smart-card healthcare platform serving Jordan\'s largest health-insurance TPA. Ring App, E-Health Gate, and Compliance System — shipped as three coordinated clients on a shared architecture.';
+
+  @override
+  String get studyNatChallenge =>
+      'Paper claims slowed reimbursement and exposed Jordan\'s largest health-insurance TPA to fraud, and many clinics had unreliable connectivity.';
+
+  @override
+  String get studyNatBuilt =>
+      'A three-app NFC smart-card suite: a native Kotlin APDU bridge, an offline-first WorkManager sync pipeline, and hardware-bound JWT tokens.';
+
+  @override
+  String get studyNatResult =>
+      'Card verification in under a second, claims that survive connectivity drops, zero security breaches, and three clients shipped on one architecture.';
+
+  @override
+  String get studyNatOutcome1 =>
+      'contactless card verification, flagship to budget handsets';
+
+  @override
+  String get studyNatOutcome2 =>
+      'reliable offline batch sync during connectivity drops';
+
+  @override
+  String get studyNatOutcome3 =>
+      'security breaches under hardware-bound token lifecycle';
+
+  @override
+  String get studyNatOutcome4 =>
+      'coordinated clients shipped on the shared architecture';
+
+  @override
+  String get studyEskIntro =>
+      'High-performance enterprise mobile architecture powering Hospital Information Systems (HIS) and Education platforms across the MENA region. Rebuilt legacy monolithic codebases into decoupled, testable feature packages with zero operational downtime.';
+
+  @override
+  String get studyEskChallenge =>
+      'Legacy monolithic hospital and university apps stuttered on dense records and crashed on low-spec ward tablets during long shifts.';
+
+  @override
+  String get studyEskBuilt =>
+      'An incremental MVVM refactor into decoupled feature packages with cached repositories and typed contracts, profiled with DevTools, with zero downtime.';
+
+  @override
+  String get studyEskResult =>
+      '60 FPS on dense data tables, 35% fewer crashes, 1,000+ records rendered smoothly, and four enterprise platforms deployed.';
+
+  @override
+  String get studyEskOutcome1 =>
+      'sustained frame rate on dense hospital data tables and medical charts';
+
+  @override
+  String get studyEskOutcome2 =>
+      'reduction in client-side crash rate across multi-hour clinical shifts';
+
+  @override
+  String get studyEskOutcome3 =>
+      'patient and student records rendered with zero viewport latency';
+
+  @override
+  String get studyEskOutcome4 =>
+      'enterprise platforms deployed (HIS, Clinic, University, School)';
+
+  @override
+  String get studySolIntro =>
+      'High-throughput consumer iOS and Android applications: a real-time loyalty redemption engine and a Snapchat-style ephemeral video/story camera platform. Built with hardware-accelerated video pipelines and an internal reusable design system.';
+
+  @override
+  String get studySolChallenge =>
+      'Two consumer apps (loyalty rewards and ephemeral video stories) on compressed deadlines, with camera pipelines that leaked and distorted across Android OEMs.';
+
+  @override
+  String get studySolBuilt =>
+      'A hardware-accelerated camera and video engine, background isolates that compress media before S3 upload, and a shared design-token library for both apps.';
+
+  @override
+  String get studySolResult =>
+      'Both apps launched on schedule with a 4.7+ store rating, 40% faster feature turnaround, and zero dropped frames in the story carousel.';
+
+  @override
+  String get studySolOutcome1 =>
+      'average star rating across iOS App Store and Google Play';
+
+  @override
+  String get studySolOutcome2 =>
+      'reduction in subsequent feature turnaround time via shared component library';
+
+  @override
+  String get studySolOutcome3 =>
+      'dropped frames during horizontal story carousel gesture navigation';
+
+  @override
+  String get studySolOutcome4 =>
+      'production consumer applications launched simultaneously on schedule';
+
+  @override
+  String get studyFaisIntro =>
+      'High-throughput commercial m-commerce checkout funnels and continuous media-streaming fitness applications. Engineered with atomic checkout transactions, defensive network interceptors, and resilient audio/video streaming.';
+
+  @override
+  String get studyFaisChallenge =>
+      'Checkout drops on flaky networks caused duplicate charges and abandoned carts, and OEM battery savers killed streaming playback.';
+
+  @override
+  String get studyFaisBuilt =>
+      'Idempotent checkout with client-side state reconciliation, defensive network interceptors, and a foreground-service streaming buffer manager.';
+
+  @override
+  String get studyFaisResult =>
+      '99.8% checkout completion with zero duplicate charges, 45% fewer support escalations, and cart reconciliation under 200ms.';
+
+  @override
+  String get studyFaisOutcome1 =>
+      'successful checkout transaction completion rate with zero duplicate charges';
+
+  @override
+  String get studyFaisOutcome2 =>
+      'reduction in customer support escalation tickets for failed checkout orders';
+
+  @override
+  String get studyFaisOutcome3 =>
+      'instantaneous cart calculation and state reconciliation latency';
+
+  @override
+  String get studyFaisOutcome4 =>
+      'daily active sessions supported across commercial commerce funnels';
 }

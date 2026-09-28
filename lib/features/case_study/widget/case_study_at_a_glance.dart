@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/surface_tone.dart';
@@ -41,15 +43,19 @@ class CaseStudyAtAGlance extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = context.isDarkMode;
+    final l10n = AppLocalizations.of(context)!;
     final steps = [
-      _Step(label: 'CHALLENGE', text: challenge, color: context.amberText),
-      _Step(label: 'WHAT I BUILT', text: built, color: context.indigoText),
-      _Step(label: 'RESULT', text: result, color: context.greenText),
+      _Step(
+          label: l10n.studyChallenge,
+          text: challenge,
+          color: context.amberText),
+      _Step(label: l10n.studyBuilt, text: built, color: context.indigoText),
+      _Step(label: l10n.studyResult, text: result, color: context.greenText),
     ];
 
     return Semantics(
       container: true,
-      label: 'At a glance',
+      label: l10n.studyGlance,
       child: Container(
         key: const Key('case_study_at_a_glance'),
         padding: EdgeInsets.all(isDesktop ? AppSpacing.lg : AppSpacing.md),
@@ -73,11 +79,11 @@ class CaseStudyAtAGlance extends StatelessWidget {
                 const SizedBox(width: 6),
                 Flexible(
                   child: Text(
-                    'AT A GLANCE · 30-SECOND READ',
+                    l10n.studyGlanceKicker,
                     style: TextStyle(
                       fontSize: AppTypography.micro,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
+                      letterSpacing: latinTracking(context, 2),
                       color: context.mutedText,
                     ),
                   ),
@@ -119,7 +125,7 @@ class CaseStudyAtAGlance extends StatelessWidget {
                 key: const Key('case_study_glance_outcomes'),
                 onPressed: () => _seeOutcomes(context),
                 icon: const Icon(Icons.arrow_downward_rounded, size: 16),
-                label: const Text('See all outcomes'),
+                label: Text(l10n.studySeeOutcomes),
                 style: TextButton.styleFrom(
                   foregroundColor: context.adaptiveAccentText(scheme.primary),
                   minimumSize: const Size(44, 44),
@@ -154,7 +160,7 @@ class _Step extends StatelessWidget {
           style: TextStyle(
             fontSize: AppTypography.micro,
             fontWeight: FontWeight.w900,
-            letterSpacing: 1.8,
+            letterSpacing: latinTracking(context, 1.8),
             color: color,
           ),
         ),

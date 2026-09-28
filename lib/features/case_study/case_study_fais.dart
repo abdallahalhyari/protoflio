@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -19,9 +21,10 @@ class FaisCaseStudy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return CaseStudyScaffold(
       slug: 'fais',
-      appBarTitle: 'FAIS · CASE STUDY',
+      appBarTitle: 'FAIS · ${l10n.studyCaseStudy}',
       shareTitle: 'M-Commerce & Media-Streaming Clients',
       sliversBuilder: (context, keys, isDesktop) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -30,19 +33,17 @@ class FaisCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xl),
           CaseStudyAtAGlance(
             slug: 'fais',
-            challenge:
-                'Checkout drops on flaky networks caused duplicate charges and abandoned carts, and OEM battery savers killed streaming playback.',
-            built:
-                'Idempotent checkout with client-side state reconciliation, defensive network interceptors, and a foreground-service streaming buffer manager.',
-            result:
-                '99.8% checkout completion with zero duplicate charges, 45% fewer support escalations, and cart reconciliation under 200ms.',
+            challenge: l10n.studyFaisChallenge,
+            built: l10n.studyFaisBuilt,
+            result: l10n.studyFaisResult,
             outcomesKey: keys.outcomesKey,
             isDesktop: isDesktop,
           ),
+          CaseStudyLanguageNote(l10n.studyEnglishNote),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,
-            child: const SectionKicker(number: '01', label: 'THE PROBLEM'),
+            child: SectionKicker(number: '01', label: l10n.studyProblem),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -64,7 +65,7 @@ class FaisCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.roleKey,
-            child: const SectionKicker(number: '02', label: 'MY ROLE'),
+            child: SectionKicker(number: '02', label: l10n.studyRole),
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
@@ -76,14 +77,15 @@ class FaisCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.archKey,
-            child:
-                const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
+            child: SectionKicker(number: '03', label: l10n.studyArchitecture),
           ),
           const SizedBox(height: AppSpacing.md),
-          PipelineTopologyDiagram(
-            project: kProjects[3],
-            isDesktop: isDesktop,
-            isDark: isDark,
+          EnglishContent(
+            child: PipelineTopologyDiagram(
+              project: kProjects[3],
+              isDesktop: isDesktop,
+              isDark: isDark,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -173,34 +175,22 @@ class FaisCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.outcomesKey,
-            child: const SectionKicker(number: '07', label: 'OUTCOMES'),
+            child: SectionKicker(number: '07', label: l10n.studyOutcomes),
           ),
           const SizedBox(height: AppSpacing.md),
           OutcomeGrid(
             isDesktop: isDesktop,
-            items: const [
-              (
-                '99.8%',
-                'successful checkout transaction completion rate with zero duplicate charges'
-              ),
-              (
-                '-45%',
-                'reduction in customer support escalation tickets for failed checkout orders'
-              ),
-              (
-                '< 200ms',
-                'instantaneous cart calculation and state reconciliation latency'
-              ),
-              (
-                '10k+',
-                'daily active sessions supported across commercial commerce funnels'
-              ),
+            items: [
+              ('99.8%', l10n.studyFaisOutcome1),
+              ('-45%', l10n.studyFaisOutcome2),
+              ('< 200ms', l10n.studyFaisOutcome3),
+              ('10k+', l10n.studyFaisOutcome4),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.lessonsKey,
-            child: const SectionKicker(number: '08', label: 'LESSONS'),
+            child: SectionKicker(number: '08', label: l10n.studyLessons),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -224,7 +214,7 @@ class FaisCaseStudy extends StatelessWidget {
               alignment: WrapAlignment.center,
               children: [
                 PrimaryButton(
-                  label: 'Back to portfolio',
+                  label: l10n.studyBackToPortfolio,
                   icon: Icons.arrow_back_rounded,
                   size: PrimaryButtonSize.md,
                   onPressed: () {
@@ -250,6 +240,7 @@ class _Masthead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,12 +250,12 @@ class _Masthead extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'MOBILE DEVELOPER (FLUTTER & ANDROID) · 2021',
+              '${l10n.studyRoleMobileDevFlutterAndroid} · 2021',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: AppTypography.editorial,
-                letterSpacing: 3,
+                letterSpacing: latinTracking(context, 3),
                 fontWeight: FontWeight.w800,
                 color: scheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -285,7 +276,7 @@ class _Masthead extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.md),
         Text(
-          'High-throughput commercial m-commerce checkout funnels and continuous media-streaming fitness applications. Engineered with atomic checkout transactions, defensive network interceptors, and resilient audio/video streaming.',
+          l10n.studyFaisIntro,
           style: TextStyle(
             fontSize: AppTypography.subtitle,
             height: 1.55,

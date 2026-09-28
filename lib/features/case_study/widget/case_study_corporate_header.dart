@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,7 +28,7 @@ Future<void> shareCaseStudy(
   if (!context.mounted) return;
   AppToast.showGlass(
     context,
-    message: 'Case study link copied: $url',
+    message: AppLocalizations.of(context)!.studyLinkCopied(url),
     status: ToastStatus.ok,
   );
 }
@@ -46,7 +48,7 @@ class CaseStudyToolbarShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.share_rounded, size: 20),
-      tooltip: 'Share case study link',
+      tooltip: AppLocalizations.of(context)!.studyShareButton,
       onPressed: () => shareCaseStudy(context, slug: slug, title: title),
     );
   }
@@ -73,6 +75,7 @@ class CaseStudyCorporateHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = context.isDarkMode;
+    final l10n = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.md),
@@ -82,8 +85,8 @@ class CaseStudyCorporateHeader extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           _CaseStudyActionPill(
-            label: 'OFFICIAL WEBSITE',
-            tooltip: 'Visit $company official website',
+            label: l10n.studyOfficialWebsite,
+            tooltip: l10n.studyVisitWebsite(company),
             icon: Icons.language_rounded,
             url: websiteUrl,
             company: company,
@@ -92,8 +95,8 @@ class CaseStudyCorporateHeader extends StatelessWidget {
             isDark: isDark,
           ),
           _CaseStudyActionPill(
-            label: 'COMPANY LINKEDIN',
-            tooltip: 'View $company on LinkedIn',
+            label: l10n.studyCompanyLinkedIn,
+            tooltip: l10n.studyViewOnLinkedIn(company),
             isLinkedIn: true,
             url: linkedinUrl,
             company: company,
@@ -252,7 +255,7 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                           fontFamily: AppTypography.monoFont,
                           fontSize: AppTypography.micro,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
+                          letterSpacing: latinTracking(context, 1.2),
                           color: _hovered
                               ? (isDark ? Colors.white : primary)
                               : (isDark
@@ -307,9 +310,9 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
 
     return Semantics(
       button: true,
-      label: 'Share direct link to ${widget.title} case study',
+      label: AppLocalizations.of(context)!.studyShareSemantics(widget.title),
       child: Tooltip(
-        message: 'Copy direct link to this case study',
+        message: AppLocalizations.of(context)!.studyShareTooltip,
         waitDuration: AppMotion.tooltipWait,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -365,20 +368,26 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
                           : (context.mutedText),
                     ),
                     const SizedBox(width: 5),
-                    Text(
-                      'SHARE STUDY',
-                      style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        fontSize: AppTypography.micro,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.2,
-                        color: _hovered
-                            ? (isDark
-                                ? Colors.white
-                                : AppColors.accentGreenDeep)
-                            : (isDark
-                                ? Colors.white.withValues(alpha: 0.88)
-                                : AppColors.slate800),
+                    // Shrinks with the other pills in long translations.
+                    Flexible(
+                      child: Text(
+                        AppLocalizations.of(context)!.studyShare,
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: AppTypography.monoFont,
+                          fontSize: AppTypography.micro,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: latinTracking(context, 1.2),
+                          color: _hovered
+                              ? (isDark
+                                  ? Colors.white
+                                  : AppColors.accentGreenDeep)
+                              : (isDark
+                                  ? Colors.white.withValues(alpha: 0.88)
+                                  : AppColors.slate800),
+                        ),
                       ),
                     ),
                   ],

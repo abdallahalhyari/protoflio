@@ -3,12 +3,12 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://alhyari.web.app/</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://alhyari.web.app/"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://alhyari.web.app/"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://alhyari.web.app/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://alhyari.web.app/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://alhyari.web.app/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://alhyari.web.app/"/>
   </url>
   <url>
@@ -16,5 +16,29 @@
     <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alhyari.web.app/work/nathealth/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://alhyari.web.app/work/eskadenia/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://alhyari.web.app/work/solutions/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://alhyari.web.app/work/fais/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

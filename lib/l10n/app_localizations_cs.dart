@@ -412,4 +412,271 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get quickProfileCopied => 'Shrnutí profilu zkopírováno';
+
+  @override
+  String get studyCaseStudy => 'PŘÍPADOVÁ STUDIE';
+
+  @override
+  String get studyProblem => 'PROBLÉM';
+
+  @override
+  String get studyRole => 'MOJE ROLE';
+
+  @override
+  String get studyArchitecture => 'ARCHITEKTURA SYSTÉMU';
+
+  @override
+  String get studyOutcomes => 'VÝSLEDKY';
+
+  @override
+  String get studyLessons => 'PONAUČENÍ';
+
+  @override
+  String get studyMore => 'DALŠÍ PŘÍPADOVÉ STUDIE';
+
+  @override
+  String get studyDockProblem => 'PROBLÉM';
+
+  @override
+  String get studyDockProblemShort => 'PROBL.';
+
+  @override
+  String get studyDockRole => 'ROLE';
+
+  @override
+  String get studyDockArch => 'ARCH.';
+
+  @override
+  String get studyDockOutcomes => 'VÝSLEDKY';
+
+  @override
+  String get studyDockOutcomesShort => 'VÝSL.';
+
+  @override
+  String get studyDockLessons => 'PONAUČENÍ';
+
+  @override
+  String get studyBackToPortfolio => 'Zpět na portfolio';
+
+  @override
+  String studyReadPercent(int pct) {
+    return 'PŘEČTENO $pct %';
+  }
+
+  @override
+  String get studyTop => 'NAHORU';
+
+  @override
+  String get studyBackToTop => 'Zpět nahoru';
+
+  @override
+  String studyJumpTo(String chapter) {
+    return 'Přejít na $chapter';
+  }
+
+  @override
+  String studyChapter(String chapter) {
+    return 'Kapitola $chapter';
+  }
+
+  @override
+  String get studyOfficialWebsite => 'OFICIÁLNÍ WEB';
+
+  @override
+  String studyVisitWebsite(String company) {
+    return 'Navštívit oficiální web $company';
+  }
+
+  @override
+  String get studyCompanyLinkedIn => 'LINKEDIN FIRMY';
+
+  @override
+  String studyViewOnLinkedIn(String company) {
+    return 'Zobrazit $company na LinkedIn';
+  }
+
+  @override
+  String get studyShare => 'SDÍLET STUDII';
+
+  @override
+  String get studyShareTooltip => 'Zkopírovat přímý odkaz na tuto studii';
+
+  @override
+  String studyShareSemantics(String title) {
+    return 'Sdílet přímý odkaz na studii $title';
+  }
+
+  @override
+  String get studyShareButton => 'Sdílet odkaz na studii';
+
+  @override
+  String studyLinkCopied(String url) {
+    return 'Odkaz na studii zkopírován: $url';
+  }
+
+  @override
+  String get studyGlanceKicker => 'V KOSTCE · ČTENÍ NA 30 SEKUND';
+
+  @override
+  String get studyGlance => 'V kostce';
+
+  @override
+  String get studyChallenge => 'VÝZVA';
+
+  @override
+  String get studyBuilt => 'CO JSEM VYTVOŘIL';
+
+  @override
+  String get studyResult => 'VÝSLEDEK';
+
+  @override
+  String get studySeeOutcomes => 'Zobrazit všechny výsledky';
+
+  @override
+  String get studyEnglishNote =>
+      'Podrobný technický rozbor níže je v angličtině.';
+
+  @override
+  String studyOutcomeSemantics(String headline, String body) {
+    return 'Klíčový výsledek: $headline. $body';
+  }
+
+  @override
+  String get studyPresent => 'SOUČASNOST';
+
+  @override
+  String get studyRoleMobileDev => 'MOBILNÍ VÝVOJÁŘ';
+
+  @override
+  String get studyRoleFlutterDev => 'FLUTTER VÝVOJÁŘ';
+
+  @override
+  String get studyRoleMobileDevFlutterAndroid =>
+      'MOBILNÍ VÝVOJÁŘ (FLUTTER & ANDROID)';
+
+  @override
+  String get studyNatIntro =>
+      'Kritická zdravotnická platforma s NFC čipovými kartami pro největšího správce zdravotního pojištění (TPA) v Jordánsku. Ring App, E-Health Gate a Compliance System — tři koordinovaní klienti na společné architektuře.';
+
+  @override
+  String get studyNatChallenge =>
+      'Papírové nároky zpomalovaly proplácení a vystavovaly největšího jordánského správce zdravotního pojištění podvodům; mnoho klinik navíc mělo nespolehlivé připojení.';
+
+  @override
+  String get studyNatBuilt =>
+      'Sadu tří aplikací s NFC čipovými kartami: nativní most APDU v Kotlinu, offline-first synchronizaci přes WorkManager a JWT tokeny vázané na hardware.';
+
+  @override
+  String get studyNatResult =>
+      'Ověření karty za méně než sekundu, nároky, které přežijí výpadky připojení, nula bezpečnostních incidentů a tři klienti na jedné architektuře.';
+
+  @override
+  String get studyNatOutcome1 =>
+      'bezkontaktní ověření karty, od vlajkových po levné telefony';
+
+  @override
+  String get studyNatOutcome2 =>
+      'spolehlivá offline dávková synchronizace při výpadcích připojení';
+
+  @override
+  String get studyNatOutcome3 =>
+      'bezpečnostních incidentů díky tokenům vázaným na hardware';
+
+  @override
+  String get studyNatOutcome4 =>
+      'koordinovaní klienti na společné architektuře';
+
+  @override
+  String get studyEskIntro =>
+      'Výkonná podniková mobilní architektura pro nemocniční informační systémy (HIS) a vzdělávací platformy v regionu MENA. Přestavba monolitického kódu na oddělené, testovatelné balíčky funkcí bez jakéhokoli výpadku provozu.';
+
+  @override
+  String get studyEskChallenge =>
+      'Starší monolitické nemocniční a univerzitní aplikace se na rozsáhlých záznamech zadrhávaly a na slabých tabletech na odděleních během dlouhých směn padaly.';
+
+  @override
+  String get studyEskBuilt =>
+      'Postupný refaktoring na MVVM s oddělenými balíčky funkcí, cachovanými repozitáři a typovými kontrakty, profilovaný v DevTools, bez výpadku.';
+
+  @override
+  String get studyEskResult =>
+      '60 FPS na rozsáhlých tabulkách, o 35 % méně pádů, plynulé vykreslení 1 000+ záznamů a čtyři nasazené podnikové platformy.';
+
+  @override
+  String get studyEskOutcome1 =>
+      'stabilní snímková frekvence na rozsáhlých nemocničních tabulkách a grafech';
+
+  @override
+  String get studyEskOutcome2 =>
+      'snížení míry pádů aplikace během mnohahodinových klinických směn';
+
+  @override
+  String get studyEskOutcome3 =>
+      'záznamů pacientů a studentů vykreslených bez prodlevy';
+
+  @override
+  String get studyEskOutcome4 =>
+      'nasazené podnikové platformy (HIS, klinika, univerzita, škola)';
+
+  @override
+  String get studySolIntro =>
+      'Výkonné spotřebitelské aplikace pro iOS a Android: věrnostní systém s uplatňováním odměn v reálném čase a platforma pro pomíjivá videa a příběhy ve stylu Snapchatu. Postavené na hardwarově akcelerovaném zpracování videa a interním znovupoužitelném design systému.';
+
+  @override
+  String get studySolChallenge =>
+      'Dvě spotřebitelské aplikace (věrnostní odměny a pomíjivé video příběhy) v napjatých termínech, s kamerovým zpracováním, které na různých zařízeních Android unikalo paměť a deformovalo obraz.';
+
+  @override
+  String get studySolBuilt =>
+      'Hardwarově akcelerovaný kamerový a video engine, izoláty na pozadí komprimující média před nahráním do S3 a sdílenou knihovnu design tokenů pro obě aplikace.';
+
+  @override
+  String get studySolResult =>
+      'Obě aplikace vyšly včas s hodnocením 4,7+ v obchodech, o 40 % rychlejším dodáváním funkcí a bez ztracených snímků v karuselu příběhů.';
+
+  @override
+  String get studySolOutcome1 => 'průměrné hodnocení v App Store a Google Play';
+
+  @override
+  String get studySolOutcome2 =>
+      'rychlejší dodávání dalších funkcí díky sdílené knihovně komponent';
+
+  @override
+  String get studySolOutcome3 =>
+      'ztracených snímků při posouvání karuselu příběhů';
+
+  @override
+  String get studySolOutcome4 =>
+      'produkční spotřebitelské aplikace spuštěné současně a včas';
+
+  @override
+  String get studyFaisIntro =>
+      'Výkonné nákupní procesy pro m-commerce a fitness aplikace s nepřetržitým streamováním médií. Postavené na atomických platebních transakcích, defenzivních síťových interceptorech a odolném audio/video streamování.';
+
+  @override
+  String get studyFaisChallenge =>
+      'Výpadky při placení na nestabilních sítích způsobovaly dvojí platby a opuštěné košíky a úsporné režimy výrobců telefonů ukončovaly přehrávání streamů.';
+
+  @override
+  String get studyFaisBuilt =>
+      'Idempotentní placení se sladěním stavu na klientu, defenzivní síťové interceptory a správce vyrovnávací paměti streamu běžící jako služba na popředí.';
+
+  @override
+  String get studyFaisResult =>
+      '99,8 % dokončených plateb bez dvojích plateb, o 45 % méně eskalací na podporu a sladění košíku pod 200 ms.';
+
+  @override
+  String get studyFaisOutcome1 =>
+      'úspěšně dokončených plateb bez jediné dvojí platby';
+
+  @override
+  String get studyFaisOutcome2 =>
+      'snížení eskalací na zákaznickou podporu kvůli neúspěšným objednávkám';
+
+  @override
+  String get studyFaisOutcome3 => 'okamžitý výpočet košíku a sladění stavu';
+
+  @override
+  String get studyFaisOutcome4 =>
+      'denních aktivních relací v nákupních procesech';
 }

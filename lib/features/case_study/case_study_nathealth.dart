@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -22,9 +24,10 @@ class NatHealthCaseStudy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return CaseStudyScaffold(
       slug: 'nathealth',
-      appBarTitle: 'NATHEALTH · CASE STUDY',
+      appBarTitle: 'NATHEALTH · ${l10n.studyCaseStudy}',
       shareTitle: 'NatHealth Mobile Suite',
       sliversBuilder: (context, keys, isDesktop) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -33,19 +36,17 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xl),
           CaseStudyAtAGlance(
             slug: 'nathealth',
-            challenge:
-                'Paper claims slowed reimbursement and exposed Jordan\'s largest health-insurance TPA to fraud, and many clinics had unreliable connectivity.',
-            built:
-                'A three-app NFC smart-card suite: a native Kotlin APDU bridge, an offline-first WorkManager sync pipeline, and hardware-bound JWT tokens.',
-            result:
-                'Card verification in under a second, claims that survive connectivity drops, zero security breaches, and three clients shipped on one architecture.',
+            challenge: l10n.studyNatChallenge,
+            built: l10n.studyNatBuilt,
+            result: l10n.studyNatResult,
             outcomesKey: keys.outcomesKey,
             isDesktop: isDesktop,
           ),
+          CaseStudyLanguageNote(l10n.studyEnglishNote),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,
-            child: const SectionKicker(number: '01', label: 'THE PROBLEM'),
+            child: SectionKicker(number: '01', label: l10n.studyProblem),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -68,7 +69,7 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.roleKey,
-            child: const SectionKicker(number: '02', label: 'MY ROLE'),
+            child: SectionKicker(number: '02', label: l10n.studyRole),
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
@@ -80,11 +81,12 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.archKey,
-            child:
-                const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
+            child: SectionKicker(number: '03', label: l10n.studyArchitecture),
           ),
           const SizedBox(height: AppSpacing.md),
-          NfcArchitectureDiagram(isDesktop: isDesktop, isDark: isDark),
+          EnglishContent(
+            child: NfcArchitectureDiagram(isDesktop: isDesktop, isDark: isDark),
+          ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
             'Clean Architecture with strict boundary isolation. '
@@ -179,24 +181,21 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.outcomesKey,
-            child: const SectionKicker(number: '07', label: 'OUTCOMES'),
+            child: SectionKicker(number: '07', label: l10n.studyOutcomes),
           ),
           OutcomeGrid(
             isDesktop: isDesktop,
-            items: const [
-              (
-                '< 1s',
-                'contactless card verification, flagship to budget handsets'
-              ),
-              ('100%', 'reliable offline batch sync during connectivity drops'),
-              ('0', 'security breaches under hardware-bound token lifecycle'),
-              ('3', 'coordinated clients shipped on the shared architecture'),
+            items: [
+              ('< 1s', l10n.studyNatOutcome1),
+              ('100%', l10n.studyNatOutcome2),
+              ('0', l10n.studyNatOutcome3),
+              ('3', l10n.studyNatOutcome4),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.lessonsKey,
-            child: const SectionKicker(number: '08', label: 'LESSONS'),
+            child: SectionKicker(number: '08', label: l10n.studyLessons),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -223,7 +222,7 @@ class NatHealthCaseStudy extends StatelessWidget {
               alignment: WrapAlignment.center,
               children: [
                 PrimaryButton(
-                  label: 'Back to portfolio',
+                  label: l10n.studyBackToPortfolio,
                   icon: Icons.arrow_back_rounded,
                   size: PrimaryButtonSize.md,
                   onPressed: () {
@@ -249,6 +248,7 @@ class _Masthead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,12 +258,12 @@ class _Masthead extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'SENIOR MOBILE ENGINEER · 2024 — PRESENT',
+              '${l10n.introSeniorEngineer} · 2024 — ${l10n.studyPresent}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: AppTypography.editorial,
-                letterSpacing: 3,
+                letterSpacing: latinTracking(context, 3),
                 fontWeight: FontWeight.w800,
                 color: scheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -283,7 +283,7 @@ class _Masthead extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.md),
         Text(
-          'Mission-critical NFC smart-card healthcare platform serving Jordan\'s largest health-insurance TPA. Ring App, E-Health Gate, and Compliance System — shipped as three coordinated clients on a shared architecture.',
+          l10n.studyNatIntro,
           style: TextStyle(
             fontSize: AppTypography.subtitle,
             height: 1.55,

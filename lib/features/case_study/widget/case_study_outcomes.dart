@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -16,7 +17,8 @@ class OutcomeCard extends StatelessWidget {
     final isDark = context.isDarkMode;
     return Semantics(
       container: true,
-      label: 'Key outcome metric: $headline. $body',
+      label:
+          AppLocalizations.of(context)!.studyOutcomeSemantics(headline, body),
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
@@ -33,9 +35,12 @@ class OutcomeCard extends StatelessWidget {
           children: [
             FittedBox(
               fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
+              alignment: AlignmentDirectional.centerStart,
               child: Text(
                 headline,
+                // Metrics ("< 1s", "-35%") are left-to-right tokens; inside
+                // an Arabic line the sign would jump to the wrong end.
+                textDirection: TextDirection.ltr,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   fontSize: AppTypography.statDisplay,

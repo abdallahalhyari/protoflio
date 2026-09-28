@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/tokens.dart';
@@ -20,9 +22,10 @@ class SolutionsCaseStudy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return CaseStudyScaffold(
       slug: 'solutions',
-      appBarTitle: 'SOLUTIONS NOW · CASE STUDY',
+      appBarTitle: 'SOLUTIONS NOW · ${l10n.studyCaseStudy}',
       shareTitle: 'Loyalty Rewards & Ephemeral Social Media Apps',
       sliversBuilder: (context, keys, isDesktop) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -31,19 +34,17 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xl),
           CaseStudyAtAGlance(
             slug: 'solutions',
-            challenge:
-                'Two consumer apps (loyalty rewards and ephemeral video stories) on compressed deadlines, with camera pipelines that leaked and distorted across Android OEMs.',
-            built:
-                'A hardware-accelerated camera and video engine, background isolates that compress media before S3 upload, and a shared design-token library for both apps.',
-            result:
-                'Both apps launched on schedule with a 4.7+ store rating, 40% faster feature turnaround, and zero dropped frames in the story carousel.',
+            challenge: l10n.studySolChallenge,
+            built: l10n.studySolBuilt,
+            result: l10n.studySolResult,
             outcomesKey: keys.outcomesKey,
             isDesktop: isDesktop,
           ),
+          CaseStudyLanguageNote(l10n.studyEnglishNote),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,
-            child: const SectionKicker(number: '01', label: 'THE PROBLEM'),
+            child: SectionKicker(number: '01', label: l10n.studyProblem),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -65,7 +66,7 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.roleKey,
-            child: const SectionKicker(number: '02', label: 'MY ROLE'),
+            child: SectionKicker(number: '02', label: l10n.studyRole),
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
@@ -77,14 +78,15 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.archKey,
-            child:
-                const SectionKicker(number: '03', label: 'SYSTEM ARCHITECTURE'),
+            child: SectionKicker(number: '03', label: l10n.studyArchitecture),
           ),
           const SizedBox(height: AppSpacing.md),
-          PipelineTopologyDiagram(
-            project: kProjects[2],
-            isDesktop: isDesktop,
-            isDark: isDark,
+          EnglishContent(
+            child: PipelineTopologyDiagram(
+              project: kProjects[2],
+              isDesktop: isDesktop,
+              isDark: isDark,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -173,34 +175,22 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.outcomesKey,
-            child: const SectionKicker(number: '07', label: 'OUTCOMES'),
+            child: SectionKicker(number: '07', label: l10n.studyOutcomes),
           ),
           const SizedBox(height: AppSpacing.md),
           OutcomeGrid(
             isDesktop: isDesktop,
-            items: const [
-              (
-                '4.7+',
-                'average star rating across iOS App Store and Google Play'
-              ),
-              (
-                '40%',
-                'reduction in subsequent feature turnaround time via shared component library'
-              ),
-              (
-                '0',
-                'dropped frames during horizontal story carousel gesture navigation'
-              ),
-              (
-                '2',
-                'production consumer applications launched simultaneously on schedule'
-              ),
+            items: [
+              ('4.7+', l10n.studySolOutcome1),
+              ('40%', l10n.studySolOutcome2),
+              ('0', l10n.studySolOutcome3),
+              ('2', l10n.studySolOutcome4),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.lessonsKey,
-            child: const SectionKicker(number: '08', label: 'LESSONS'),
+            child: SectionKicker(number: '08', label: l10n.studyLessons),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -224,7 +214,7 @@ class SolutionsCaseStudy extends StatelessWidget {
               alignment: WrapAlignment.center,
               children: [
                 PrimaryButton(
-                  label: 'Back to portfolio',
+                  label: l10n.studyBackToPortfolio,
                   icon: Icons.arrow_back_rounded,
                   size: PrimaryButtonSize.md,
                   onPressed: () {
@@ -250,6 +240,7 @@ class _Masthead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,12 +250,12 @@ class _Masthead extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'FLUTTER DEVELOPER · 2021 — 2022',
+              '${l10n.studyRoleFlutterDev} · 2021 — 2022',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: AppTypography.editorial,
-                letterSpacing: 3,
+                letterSpacing: latinTracking(context, 3),
                 fontWeight: FontWeight.w800,
                 color: scheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -285,7 +276,7 @@ class _Masthead extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.md),
         Text(
-          'High-throughput consumer iOS and Android applications: a real-time loyalty redemption engine and a Snapchat-style ephemeral video/story camera platform. Built with hardware-accelerated video pipelines and an internal reusable design system.',
+          l10n.studySolIntro,
           style: TextStyle(
             fontSize: AppTypography.subtitle,
             height: 1.55,
