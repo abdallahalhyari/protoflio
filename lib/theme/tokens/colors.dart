@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 /// Colors. Brand seed + semantic surface tones + hat palette (with overlay alpha baked in).
@@ -95,15 +97,16 @@ class AppColors {
   static const Color statusOkLight = accentGreenLight; // emerald 400
   static const Color statusInfo = accentSky; // sky 400
 
-  // Accessible high-contrast Light Mode accent counterparts (>4.5:1 on white/slate50)
-  static const Color accentAmberDeep = Color(0xFFB45309); // Amber 700 (5.8:1)
-  static const Color accentGreenDeep = Color(0xFF047857); // Emerald 700 (6.1:1)
-  static const Color accentSkyDeep = Color(0xFF0284C7); // Sky 700 (4.6:1)
+  // Accessible Light Mode accent counterparts. Ratios are on white; each
+  // keeps >4.5:1 on the accent-tinted chips they label, not just on white.
+  static const Color accentAmberDeep = Color(0xFF92400E); // Amber 800 (7.1:1)
+  static const Color accentGreenDeep = Color(0xFF065F46); // Emerald 800 (7.7:1)
+  static const Color accentSkyDeep = Color(0xFF0369A1); // Sky 700 (5.9:1)
   static const Color accentIndigoDeepText =
-      Color(0xFF4338CA); // Indigo 700 (8.0:1)
-  static const Color accentVioletDeep = Color(0xFF6D28D9); // Violet 700 (6.8:1)
-  static const Color accentRoseDeep = Color(0xFFBE123C); // Rose 700 (5.9:1)
-  static const Color accentCyanDeep = Color(0xFF0E7490); // Cyan 700 (5.5:1)
+      Color(0xFF4338CA); // Indigo 700 (7.9:1)
+  static const Color accentVioletDeep = Color(0xFF6D28D9); // Violet 700 (7.1:1)
+  static const Color accentRoseDeep = Color(0xFFBE123C); // Rose 700 (6.3:1)
+  static const Color accentCyanDeep = Color(0xFF155E75); // Cyan 800 (7.3:1)
 
   /// Returns a luminous pastel tone in dark mode, or a high-contrast deep tone in light mode.
   static Color adaptive({
@@ -114,7 +117,7 @@ class AppColors {
       isDark ? dark : light;
 
   /// Maps a vibrant or pastel accent tone into an accessible, high-contrast
-  /// deep tone (>4.5:1, typical >5.5:1) for text/icons on white/slate50 in light mode.
+  /// deep tone (>5:1 on slate-100) for text/icons in light mode.
   static Color toAccessibleLightText(Color color) {
     final argb = color.toARGB32();
     if (color == accentAmber ||
@@ -164,7 +167,44 @@ class AppColors {
         argb == 0xFFA5B4FC) {
       return accentIndigoDeepText;
     }
-    return color;
+    // Anything else (a section accent, a hue-shifted neighbour) is
+    // deepened just enough rather than passed through unchecked.
+    return legibleOn(color, slate100, target: 5.0);
+  }
+
+  /// Text colour for content sitting on a solid [background]: white when
+  /// it clears WCAG AA (4.5:1), otherwise whichever of white and black
+  /// reads better. Bright section accents (amber, cyan, green) need dark
+  /// text; deep ones keep white. Mid-tones like the brand indigo sit near
+  /// 4.5:1 either way, so even slate-950 falls short there; black clears it.
+  static Color onAccent(Color background) {
+    final bg = background.withValues(alpha: 1);
+    if (contrastRatio(Colors.white, bg) >= 4.5) return Colors.white;
+    return contrastRatio(Colors.black, bg) > contrastRatio(Colors.white, bg)
+        ? Colors.black
+        : Colors.white;
+  }
+
+  /// [color] with its lightness moved away from [surface] just far enough
+  /// to reach [target] contrast on it; hue and saturation are kept, so the
+  /// accent still reads as itself. Unchanged when it already passes.
+  static Color legibleOn(Color color, Color surface, {double target = 4.5}) {
+    if (contrastRatio(color, surface) >= target) return color;
+    final lighten = surface.computeLuminance() < 0.5;
+    var hsl = HSLColor.fromColor(color);
+    for (var i = 0; i < 100; i++) {
+      final next = (hsl.lightness + (lighten ? 0.01 : -0.01)).clamp(0.0, 1.0);
+      hsl = hsl.withLightness(next);
+      if (contrastRatio(hsl.toColor(), surface) >= target) break;
+    }
+    return hsl.toColor();
+  }
+
+  /// WCAG 2 contrast ratio between two opaque colours (1 to 21).
+  static double contrastRatio(Color a, Color b) {
+    final la = a.computeLuminance();
+    final lb = b.computeLuminance();
+    return (math.max(la, lb) + 0.05) / (math.min(la, lb) + 0.05);
   }
 
   // Neutral slate palette

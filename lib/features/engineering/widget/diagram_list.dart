@@ -22,21 +22,6 @@ class DiagramList extends StatelessWidget {
     this.shrinkWrap = false,
   });
 
-  Color _adaptiveAccent(BuildContext context, Color color) {
-    if (context.isDarkMode) return color;
-    final val = color.toARGB32();
-    if (val == 0xFF38BDF8) return AppColors.accentSkyDeep;
-    if (val == 0xFF34D399) return AppColors.accentGreenDeep;
-    if (val == 0xFF818CF8) return AppColors.accentIndigoDeepText;
-    if (val == 0xFF8B5CF6 || val == 0xFFA78BFA) {
-      return AppColors.accentVioletDeep;
-    }
-    if (val == 0xFFF59E0B || val == 0xFFFBBF24) {
-      return AppColors.accentAmberDeep;
-    }
-    return color;
-  }
-
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
@@ -50,9 +35,11 @@ class DiagramList extends StatelessWidget {
       separatorBuilder: (context, index) {
         final isConnectorActive =
             activeStepIndex != null && activeStepIndex == index;
+        // The flow arrows carry the diagram's direction, so even idle ones
+        // keep 3:1 (half alpha fell to 2.2:1).
         final connColor = isConnectorActive
             ? scheme.primary
-            : scheme.primary.withValues(alpha: 0.5);
+            : scheme.primary.withValues(alpha: 0.75);
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 4),
@@ -85,7 +72,7 @@ class DiagramList extends StatelessWidget {
       },
       itemBuilder: (context, index) {
         final step = topic.diagramSteps[index];
-        final accent = _adaptiveAccent(context, step.color);
+        final accent = context.adaptiveAccentText(step.color);
         final isActive = activeStepIndex != null && activeStepIndex == index;
 
         final cardBg = isActive
@@ -173,9 +160,11 @@ class DiagramList extends StatelessWidget {
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 5, vertical: 1.5),
+                                  // Solid: an accent tint on the already
+                                  // tinted active row left the label at
+                                  // 3.7:1.
                                   decoration: BoxDecoration(
-                                    color:
-                                        accent.withValues(alpha: AppAlpha.fill),
+                                    color: accent,
                                     borderRadius:
                                         BorderRadius.circular(AppRadius.chip),
                                   ),
@@ -185,7 +174,7 @@ class DiagramList extends StatelessWidget {
                                       fontFamily: AppTypography.monoFont,
                                       fontSize: AppTypography.nano,
                                       fontWeight: FontWeight.w900,
-                                      color: accent,
+                                      color: AppColors.onAccent(accent),
                                       letterSpacing: 0.8,
                                     ),
                                   ),

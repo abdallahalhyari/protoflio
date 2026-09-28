@@ -39,21 +39,11 @@ class BentoTrackCard extends StatefulWidget {
 class _BentoTrackCardState extends State<BentoTrackCard> {
   bool _hover = false;
 
-  Color _adaptiveAccent(BuildContext context, Color color) {
-    if (context.isDarkMode) return color;
-    final val = color.toARGB32();
-    if (val == 0xFF38BDF8) return AppColors.accentSkyDeep;
-    if (val == 0xFF34D399) return AppColors.accentGreenDeep;
-    if (val == 0xFF818CF8) return AppColors.accentIndigoDeepText;
-    if (val == 0xFF8B5CF6) return AppColors.accentVioletDeep;
-    return color;
-  }
-
   @override
   Widget build(BuildContext context) {
     final t = widget.track;
     final isDark = context.isDarkMode;
-    final accentText = _adaptiveAccent(context, t.accent);
+    final accentText = context.adaptiveAccentText(t.accent);
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),

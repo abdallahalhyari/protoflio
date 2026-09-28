@@ -28,6 +28,46 @@ class AppTheme {
           ? _defaultDark
           : _base(Brightness.dark, seedColor);
 
+  static Color _shift(Color c, double delta) {
+    final hsl = HSLColor.fromColor(c);
+    return hsl
+        .withHue((hsl.hue + delta) % 360)
+        .withSaturation(hsl.saturation.clamp(0.0, 1.0))
+        .toColor();
+  }
+
+  /// [base] recoloured for a section accent: [seed] becomes the primary
+  /// and its hue neighbours the secondary/tertiary.
+  ///
+  /// The primary doubles as a text colour (eyebrows, links, chip labels),
+  /// so each accent is tuned to stay legible on the mode's cards: bright
+  /// ones deepen on light surfaces (amber was 1.7:1 on white), mid ones
+  /// lift a touch on dark ones (indigo was 4.4:1). Text on the accent as a
+  /// fill is then picked for contrast rather than fixed white.
+  static ThemeData withAccent(ThemeData base, Color seed) {
+    Color legible(Color c) => base.brightness == Brightness.dark
+        ? AppColors.legibleOn(c, AppColors.darkCard, target: _accentContrast)
+        : AppColors.legibleOn(c, AppColors.slate100, target: _accentContrast);
+    final primary = legible(seed);
+    final secondary = legible(_shift(seed, 24));
+    final tertiary = legible(_shift(seed, -24));
+    final scheme = base.colorScheme.copyWith(
+      primary: primary,
+      onPrimary: AppColors.onAccent(primary),
+      secondary: secondary,
+      onSecondary: AppColors.onAccent(secondary),
+      tertiary: tertiary,
+      onTertiary: AppColors.onAccent(tertiary),
+      surfaceTint: primary,
+    );
+    return base.copyWith(colorScheme: scheme);
+  }
+
+  /// Contrast an accent keeps against the plain card surface. Above the
+  /// 4.5:1 minimum so it still passes on the accent-tinted chips and
+  /// badges drawn on those cards.
+  static const double _accentContrast = 5.5;
+
   static ThemeData _base(Brightness brightness, Color seedColor) {
     final isDark = brightness == Brightness.dark;
     final dynamicLightSurface = Color.alphaBlend(
@@ -42,11 +82,11 @@ class AppTheme {
     );
 
     // In dark mode, ColorScheme.fromSeed washes out the primary into a muted tone-80 pastel.
-    // We preserve the punchy, luminous seed color with pure white onPrimary (>7:1 contrast).
+    // We preserve the punchy, luminous seed color, with text picked for contrast.
     final scheme = isDark
         ? baseScheme.copyWith(
             primary: seedColor,
-            onPrimary: Colors.white,
+            onPrimary: AppColors.onAccent(seedColor),
             surface: AppColors.darkSurface,
             onSurface: Colors.white,
             surfaceContainer: AppColors.darkCard,

@@ -65,7 +65,7 @@ class SkillSearchBar extends StatelessWidget {
                   size: 18,
                   color: isFiltered
                       ? scheme.primary
-                      : scheme.onSurface.withValues(alpha: 0.45),
+                      : scheme.onSurface.withValues(alpha: 0.6),
                 ),
               ),
               Expanded(
@@ -84,7 +84,8 @@ class SkillSearchBar extends StatelessWidget {
                       fontSize: isDesktop
                           ? AppTypography.small
                           : AppTypography.caption,
-                      color: scheme.onSurface.withValues(alpha: 0.4),
+                      // 0.4 was 2.5:1 in light mode; 0.62 clears 4.5:1.
+                      color: scheme.onSurface.withValues(alpha: 0.62),
                       fontWeight: FontWeight.w500,
                     ),
                     border: InputBorder.none,
@@ -158,7 +159,7 @@ class SkillSearchBar extends StatelessWidget {
                             letterSpacing: 0.8,
                             color: isFiltered
                                 ? scheme.primary
-                                : scheme.onSurface.withValues(alpha: 0.6),
+                                : scheme.onSurface.withValues(alpha: 0.7),
                           ),
                         ),
                       ),

@@ -80,8 +80,10 @@ extension SurfaceTone on BuildContext {
 
   /// Very-muted meta text (folio bar counter, timestamp). Passes
   /// AA-large only — reserve for 11pt+ semibold.
+  /// Quiet secondary text. Slate-600 in light mode: slate-500 fell to
+  /// 4.3:1 on the slate-100 panels it sits on.
   Color get subtleText =>
-      isDarkMode ? Colors.white.withValues(alpha: 0.55) : AppColors.slate500;
+      isDarkMode ? Colors.white.withValues(alpha: 0.55) : AppColors.slate600;
 
   /// Divider hairline between rows / puck separators.
   Color get divider =>
@@ -112,9 +114,12 @@ extension SurfaceTone on BuildContext {
   Color get cyanText =>
       isDarkMode ? AppColors.accentCyanLight : AppColors.accentCyanDeep;
 
-  /// Returns [color] in dark mode, or its accessible high-contrast counterpart in light mode.
-  Color adaptiveAccentText(Color color) =>
-      isDarkMode ? color : AppColors.toAccessibleLightText(color);
+  /// [color] as legible text: its accessible deep counterpart in light
+  /// mode; in dark mode lifted just enough to clear 5:1 on the card
+  /// surface (mid-tones like violet sat at 4.3:1).
+  Color adaptiveAccentText(Color color) => isDarkMode
+      ? AppColors.legibleOn(color, AppColors.darkCard, target: 5.0)
+      : AppColors.toAccessibleLightText(color);
 
   // ---------------------------------------------------------------------------
   // Top Nav & Chip Helpers (Migrated from inline `isDark` checks)

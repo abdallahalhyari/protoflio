@@ -43,23 +43,16 @@ class ChannelTile extends StatefulWidget {
 class _ChannelTileState extends State<ChannelTile> {
   bool _hover = false;
 
-  Color _adaptiveAccent(BuildContext context, Color color) {
-    final isDark = context.isDarkMode;
-    if (isDark) return color;
-    if (color.toARGB32() == 0xFF38BDF8) return AppColors.accentSkyDeep;
-    if (color.toARGB32() == 0xFF34D399) return AppColors.accentGreenDeep;
-    if (color.toARGB32() == 0xFF818CF8) return AppColors.accentIndigoDeepText;
-    if (color.toARGB32() == 0xFF8B5CF6) return AppColors.accentVioletDeep;
-    return color;
-  }
-
   @override
   Widget build(BuildContext context) {
     final d = widget.data;
     final isDark = context.isDarkMode;
-    final labelColor = _adaptiveAccent(context, d.accent);
-    final buttonTextColor =
-        d.accent.computeLuminance() > 0.35 ? Colors.black : Colors.white;
+    final labelColor = context.adaptiveAccentText(d.accent);
+    // Light mode fills with the deep tone the label uses; dark mode keeps
+    // the bright accent. Either way the text is picked for contrast: white
+    // on the bright indigo and violet was 3.0:1 and 4.2:1.
+    final buttonFill = isDark ? d.accent : labelColor;
+    final buttonTextColor = AppColors.onAccent(buttonFill);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
@@ -152,7 +145,7 @@ class _ChannelTileState extends State<ChannelTile> {
                     child: FilledButton(
                       onPressed: d.primaryAction,
                       style: FilledButton.styleFrom(
-                        backgroundColor: d.accent,
+                        backgroundColor: buttonFill,
                         foregroundColor: buttonTextColor,
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         shape: RoundedRectangleBorder(

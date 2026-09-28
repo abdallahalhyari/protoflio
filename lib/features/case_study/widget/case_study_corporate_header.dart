@@ -270,7 +270,7 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                       size: 10,
                       color: _hovered
                           ? primary
-                          : (isDark ? Colors.white38 : AppColors.slate400),
+                          : (isDark ? Colors.white54 : AppColors.slate500),
                     ),
                   ],
                 ),

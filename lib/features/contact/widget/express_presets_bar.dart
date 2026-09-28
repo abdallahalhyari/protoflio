@@ -45,7 +45,6 @@ class ExpressPresetsBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
-    final accentSoft = accent.withValues(alpha: AppAlpha.border);
     final isDark = context.isDarkMode;
 
     return RepaintBoundary(
@@ -105,7 +104,7 @@ class ExpressPresetsBar extends StatelessWidget {
                     trailing: Icon(
                       Icons.arrow_forward_rounded,
                       size: 12,
-                      color: isDark ? accentSoft : accent,
+                      color: accent,
                     ),
                     onTap: () => onSelectPreset(p.$3, p.$4),
                   ),

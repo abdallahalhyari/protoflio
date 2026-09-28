@@ -161,32 +161,9 @@ class _AccentTheme extends StatelessWidget {
 
   final Widget child;
 
-  static Color _shift(Color c, double delta) {
-    final hsl = HSLColor.fromColor(c);
-    return hsl
-        .withHue((hsl.hue + delta) % 360)
-        .withSaturation(hsl.saturation.clamp(0.0, 1.0))
-        .toColor();
-  }
-
   Widget _buildThemed(BuildContext context, Color seed, Widget staticChild) {
-    final base = Theme.of(context);
-    final onPrimary = base.brightness == Brightness.dark
-        ? Colors.white
-        : base.colorScheme.onPrimary;
-
-    final scheme = base.colorScheme.copyWith(
-      primary: seed,
-      onPrimary: onPrimary,
-      secondary: _shift(seed, 24),
-      onSecondary: onPrimary,
-      tertiary: _shift(seed, -24),
-      onTertiary: onPrimary,
-      surfaceTint: seed,
-    );
-
     return Theme(
-      data: base.copyWith(colorScheme: scheme),
+      data: AppTheme.withAccent(Theme.of(context), seed),
       child: staticChild,
     );
   }

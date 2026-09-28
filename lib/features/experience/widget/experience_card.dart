@@ -534,8 +534,8 @@ class _CompanyActionPillState extends State<_CompanyActionPill> {
                       Icons.arrow_outward_rounded,
                       size: 10,
                       color: _hovered
-                          ? (isDark ? primary : primary)
-                          : (isDark ? Colors.white38 : AppColors.slate400),
+                          ? primary
+                          : (isDark ? Colors.white54 : AppColors.slate500),
                     ),
                   ],
                 ),

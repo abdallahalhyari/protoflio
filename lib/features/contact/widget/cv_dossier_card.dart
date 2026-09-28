@@ -123,7 +123,7 @@ class CvDossierCard extends StatelessWidget {
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: accent,
-                    foregroundColor: Colors.black,
+                    foregroundColor: scheme.onPrimary,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 14),
                     shape: RoundedRectangleBorder(

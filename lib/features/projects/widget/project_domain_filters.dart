@@ -233,9 +233,11 @@ class _DomainChipState extends State<_DomainChip> {
                       duration: AppMotion.snap,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5, vertical: 1.5),
+                      // Selected: a solid count. A primary tint on the
+                      // already tinted chip left the number at 3:1.
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? scheme.primary.withValues(alpha: AppAlpha.fill)
+                            ? scheme.primary
                             : (isInteractive
                                 ? scheme.primary
                                     .withValues(alpha: isDark ? 0.15 : 0.1)
@@ -246,7 +248,7 @@ class _DomainChipState extends State<_DomainChip> {
                         '${widget.count}',
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
-                          color: textColor,
+                          color: isSelected ? scheme.onPrimary : textColor,
                           fontSize: AppTypography.editorialSm,
                           fontWeight: FontWeight.w900,
                         ),

@@ -34,7 +34,7 @@ class HeroEmailCard extends StatelessWidget {
       label: Text(l10n.contactSendEmailBtn),
       style: FilledButton.styleFrom(
         backgroundColor: accent,
-        foregroundColor: Colors.black,
+        foregroundColor: scheme.onPrimary,
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
         textStyle: const TextStyle(
           fontSize: AppTypography.overline,
@@ -131,8 +131,8 @@ class HeroEmailCard extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.check_circle_rounded,
-                color: availabilityGreen, size: 14),
+            Icon(Icons.check_circle_rounded,
+                color: context.adaptiveAccentText(availabilityGreen), size: 14),
             const SizedBox(width: 6),
             Flexible(
               child: Text(

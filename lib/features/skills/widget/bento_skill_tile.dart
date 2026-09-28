@@ -270,7 +270,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                                         color: isDark
                                             ? Colors.white
                                                 .withValues(alpha: 0.6)
-                                            : AppColors.slate500,
+                                            : AppColors.slate600,
                                         fontSize: widget.isDesktop ? 9.5 : 10,
                                         fontWeight: FontWeight.w800,
                                         letterSpacing: 0.8,
