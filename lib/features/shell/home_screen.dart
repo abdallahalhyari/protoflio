@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widget/app_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -593,6 +594,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       case 1:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: experience_lib.loadLibrary,
           builder: () => experience_lib.ExperiencePage(
             controller: _controller,
@@ -601,26 +603,31 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       case 2:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: projects_lib.loadLibrary,
           builder: () => projects_lib.ProjectsPage(),
         );
       case 3:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: skills_lib.loadLibrary,
           builder: () => skills_lib.SkillsPage(),
         );
       case 4:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: engineering_lib.loadLibrary,
           builder: () => engineering_lib.EngineeringPage(),
         );
       case 5:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: hats_lib.loadLibrary,
           builder: () => hats_lib.HatsGridPage(),
         );
       case 6:
         return DeferredPage(
+          mountPriority: (index - _pageIndex.value).abs(),
           loader: contact_lib.loadLibrary,
           builder: () => contact_lib.ContactPage(),
         );
@@ -648,7 +655,8 @@ class _HomeScreenState extends State<HomeScreen> {
               return Viewport(
                 axisDirection: AxisDirection.down,
                 offset: position,
-                cacheExtent: 100000.0, // Cache 100000 pixels (all pages)
+                // Keep every page laid out (100000px) so turns never stutter.
+                scrollCacheExtent: const ScrollCacheExtent.pixels(100000),
                 slivers: [
                   SliverFillViewport(
                     delegate: SliverChildBuilderDelegate(

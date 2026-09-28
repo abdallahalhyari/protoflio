@@ -86,7 +86,6 @@ class MobileHomeLayout extends StatelessWidget {
               key: sectionKeys[1],
               child: DeferredMount(
                 sectionIndex: 1,
-                distance: 2,
                 placeholderHeight: 720,
                 child: RepaintBoundary(
                   child: DeferredPage(
@@ -102,7 +101,6 @@ class MobileHomeLayout extends StatelessWidget {
               key: sectionKeys[2],
               child: DeferredMount(
                 sectionIndex: 2,
-                distance: 2,
                 placeholderHeight: 720,
                 child: RepaintBoundary(
                   child: DeferredPage(
@@ -118,7 +116,6 @@ class MobileHomeLayout extends StatelessWidget {
               key: sectionKeys[3],
               child: DeferredMount(
                 sectionIndex: 3,
-                distance: 2,
                 placeholderHeight: 720,
                 child: RepaintBoundary(
                   child: DeferredPage(
@@ -134,7 +131,6 @@ class MobileHomeLayout extends StatelessWidget {
               key: sectionKeys[4],
               child: DeferredMount(
                 sectionIndex: 4,
-                distance: 2,
                 placeholderHeight: 720,
                 child: RepaintBoundary(
                   child: DeferredPage(
@@ -150,7 +146,6 @@ class MobileHomeLayout extends StatelessWidget {
               key: sectionKeys[5],
               child: DeferredMount(
                 sectionIndex: 5,
-                distance: 2,
                 placeholderHeight: 720,
                 child: RepaintBoundary(
                   child: DeferredPage(
@@ -166,7 +161,6 @@ class MobileHomeLayout extends StatelessWidget {
               key: sectionKeys[6],
               child: DeferredMount(
                 sectionIndex: 6,
-                distance: 2,
                 placeholderHeight: 720,
                 child: RepaintBoundary(
                   child: DeferredPage(
