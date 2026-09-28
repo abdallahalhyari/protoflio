@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
@@ -83,7 +84,9 @@ class NatHealthCaseStudy extends StatelessWidget {
             child: SectionKicker(number: '03', label: l10n.studyArchitecture),
           ),
           const SizedBox(height: AppSpacing.md),
-          NfcArchitectureDiagram(isDesktop: isDesktop, isDark: isDark),
+          EnglishContent(
+            child: NfcArchitectureDiagram(isDesktop: isDesktop, isDark: isDark),
+          ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
             'Clean Architecture with strict boundary isolation. '
@@ -260,7 +263,7 @@ class _Masthead extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: AppTypography.editorial,
-                letterSpacing: 3,
+                letterSpacing: latinTracking(context, 3),
                 fontWeight: FontWeight.w800,
                 color: scheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -279,14 +282,12 @@ class _Masthead extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        LocaleDirection(
-          child: Text(
-            l10n.studyNatIntro,
-            style: TextStyle(
-              fontSize: AppTypography.subtitle,
-              height: 1.55,
-              color: scheme.onSurface.withValues(alpha: 0.85),
-            ),
+        Text(
+          l10n.studyNatIntro,
+          style: TextStyle(
+            fontSize: AppTypography.subtitle,
+            height: 1.55,
+            color: scheme.onSurface.withValues(alpha: 0.85),
           ),
         ),
         const SizedBox(height: AppSpacing.lg),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
@@ -79,10 +80,12 @@ class FaisCaseStudy extends StatelessWidget {
             child: SectionKicker(number: '03', label: l10n.studyArchitecture),
           ),
           const SizedBox(height: AppSpacing.md),
-          PipelineTopologyDiagram(
-            project: kProjects[3],
-            isDesktop: isDesktop,
-            isDark: isDark,
+          EnglishContent(
+            child: PipelineTopologyDiagram(
+              project: kProjects[3],
+              isDesktop: isDesktop,
+              isDark: isDark,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -252,7 +255,7 @@ class _Masthead extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: AppTypography.editorial,
-                letterSpacing: 3,
+                letterSpacing: latinTracking(context, 3),
                 fontWeight: FontWeight.w800,
                 color: scheme.onSurface.withValues(alpha: 0.6),
               ),
@@ -272,14 +275,12 @@ class _Masthead extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        LocaleDirection(
-          child: Text(
-            l10n.studyFaisIntro,
-            style: TextStyle(
-              fontSize: AppTypography.subtitle,
-              height: 1.55,
-              color: scheme.onSurface.withValues(alpha: 0.85),
-            ),
+        Text(
+          l10n.studyFaisIntro,
+          style: TextStyle(
+            fontSize: AppTypography.subtitle,
+            height: 1.55,
+            color: scheme.onSurface.withValues(alpha: 0.85),
           ),
         ),
         const SizedBox(height: AppSpacing.lg),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
@@ -60,7 +61,6 @@ class CaseStudyScaffold extends StatefulWidget {
     required this.appBarTitle,
     required this.shareTitle,
     required this.sliversBuilder,
-    this.customChaptersBuilder,
   });
 
   final String slug;
@@ -71,8 +71,6 @@ class CaseStudyScaffold extends StatefulWidget {
     CaseStudyChapterKeys keys,
     bool isDesktop,
   ) sliversBuilder;
-  final List<CaseStudyChapter> Function(CaseStudyChapterKeys keys)?
-      customChaptersBuilder;
 
   @override
   State<CaseStudyScaffold> createState() => _CaseStudyScaffoldState();
@@ -102,8 +100,7 @@ class _CaseStudyScaffoldState extends State<CaseStudyScaffold> {
     final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
     final hPad = CaseStudyLayout.horizontalPadding(context);
 
-    final chapters = widget.customChaptersBuilder?.call(_keys) ??
-        _keys.buildStandardChapters(AppLocalizations.of(context)!);
+    final chapters = _keys.buildStandardChapters(AppLocalizations.of(context)!);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -134,7 +131,7 @@ class _CaseStudyScaffoldState extends State<CaseStudyScaffold> {
                   style: TextStyle(
                     fontSize: AppTypography.overline,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 2.4,
+                    letterSpacing: latinTracking(context, 2.4),
                     color: scheme.onSurface.withValues(alpha: 0.8),
                   ),
                 ),

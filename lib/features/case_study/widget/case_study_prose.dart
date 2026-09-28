@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' show Bidi;
+import 'package:profile/shared/util/bidi.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
@@ -30,7 +30,7 @@ class SectionKicker extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: AppTypography.overline,
-            letterSpacing: 3,
+            letterSpacing: latinTracking(context, 3),
             fontWeight: FontWeight.w800,
             color: scheme.onSurface.withValues(alpha: 0.9),
           ),
@@ -54,12 +54,14 @@ class Prose extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: AppTypography.body + 1,
-        height: 1.65,
-        color: scheme.onSurface.withValues(alpha: 0.85),
+    return EnglishContent(
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: AppTypography.body + 1,
+          height: 1.65,
+          color: scheme.onSurface.withValues(alpha: 0.85),
+        ),
       ),
     );
   }
@@ -73,40 +75,42 @@ class BulletList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: items
-          .map((t) => Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.smd),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Container(
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: context.adaptiveAccentText(scheme.primary),
-                          borderRadius: BorderRadius.circular(AppRadius.xxs),
+    return EnglishContent(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: items
+            .map((t) => Padding(
+                  padding: const EdgeInsets.only(bottom: AppSpacing.smd),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Container(
+                          width: 6,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            color: context.adaptiveAccentText(scheme.primary),
+                            borderRadius: BorderRadius.circular(AppRadius.xxs),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.smd),
-                    Expanded(
-                      child: Text(
-                        t,
-                        style: TextStyle(
-                          fontSize: AppTypography.body,
-                          height: 1.55,
-                          color: scheme.onSurface.withValues(alpha: 0.82),
+                      const SizedBox(width: AppSpacing.smd),
+                      Expanded(
+                        child: Text(
+                          t,
+                          style: TextStyle(
+                            fontSize: AppTypography.body,
+                            height: 1.55,
+                            color: scheme.onSurface.withValues(alpha: 0.82),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ))
-          .toList(),
+                    ],
+                  ),
+                ))
+            .toList(),
+      ),
     );
   }
 }
@@ -123,46 +127,38 @@ class CaseStudyLanguageNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (text.isEmpty) return const SizedBox.shrink();
-    return LocaleDirection(
-      child: Padding(
-        padding: const EdgeInsets.only(top: AppSpacing.md),
-        child: Row(
-          children: [
-            Icon(Icons.translate_rounded, size: 16, color: context.mutedText),
-            const SizedBox(width: AppSpacing.sm),
-            Expanded(
-              child: Text(
-                text,
-                style: TextStyle(
-                  fontSize: AppTypography.small,
-                  fontStyle: FontStyle.italic,
-                  color: context.mutedText,
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.md),
+      child: Row(
+        children: [
+          Icon(Icons.translate_rounded, size: 16, color: context.mutedText),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: AppTypography.small,
+                fontStyle: FontStyle.italic,
+                color: context.mutedText,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-/// Case studies lay out left-to-right, because their technical chapters are
-/// English (see CaseStudyRouter). Translated parts (summaries, notes,
-/// captions) take the reader's own direction, so an Arabic sentence keeps
-/// its alignment and its punctuation on the right side.
-class LocaleDirection extends StatelessWidget {
-  const LocaleDirection({super.key, required this.child});
+/// The case studies' technical body is English, while the page follows the
+/// reader's direction (Arabic lays the frame and summaries out right to
+/// left). English blocks stay left to right so their sentences, punctuation
+/// and alignment read correctly.
+class EnglishContent extends StatelessWidget {
+  const EnglishContent({super.key, required this.child});
 
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
-    final code = Localizations.localeOf(context).languageCode;
-    return Directionality(
-      textDirection:
-          Bidi.isRtlLanguage(code) ? TextDirection.rtl : TextDirection.ltr,
-      child: child,
-    );
-  }
+  Widget build(BuildContext context) =>
+      Directionality(textDirection: TextDirection.ltr, child: child);
 }

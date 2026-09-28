@@ -19,3 +19,9 @@ bool needsLtrIsolate(BuildContext context, String text) =>
 /// [text] wrapped in an LTR isolate when [needsLtrIsolate]; otherwise as-is.
 String ltrContent(BuildContext context, String text) =>
     needsLtrIsolate(context, text) ? '$kLri$text$kPdi' : text;
+
+/// Letter spacing for uppercase label styles. Arabic is a joined script:
+/// tracking pulls its letters apart and breaks the joins, so right-to-left
+/// text gets none.
+double latinTracking(BuildContext context, double spacing) =>
+    Directionality.of(context) == TextDirection.rtl ? 0 : spacing;

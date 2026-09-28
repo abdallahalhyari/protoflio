@@ -104,12 +104,10 @@ class CaseStudyRouter {
     final route = PageRouteBuilder<void>(
       transitionDuration: AppMotion.md,
       reverseTransitionDuration: AppMotion.sm,
-      // Case studies are English-only documents; under `ar` an RTL layout
-      // mirrored them and flipped every sentence's punctuation.
-      pageBuilder: (ctx, __, ___) => Directionality(
-        textDirection: TextDirection.ltr,
-        child: Builder(builder: builder),
-      ),
+      // The page follows the reader's direction: its frame and summaries
+      // are translated. The technical body is English and marks itself
+      // left-to-right (EnglishContent, in case_study_prose.dart).
+      pageBuilder: (ctx, __, ___) => Builder(builder: builder),
       transitionsBuilder: (context, animation, __, child) {
         // Reduced motion: fade the study in rather than sliding a whole
         // screen up.

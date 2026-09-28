@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/shared/util/bidi.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -254,7 +255,7 @@ class _CaseStudyActionPillState extends State<_CaseStudyActionPill> {
                           fontFamily: AppTypography.monoFont,
                           fontSize: AppTypography.micro,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
+                          letterSpacing: latinTracking(context, 1.2),
                           color: _hovered
                               ? (isDark ? Colors.white : primary)
                               : (isDark
@@ -378,7 +379,7 @@ class _CaseStudySharePillState extends State<_CaseStudySharePill> {
                           fontFamily: AppTypography.monoFont,
                           fontSize: AppTypography.micro,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
+                          letterSpacing: latinTracking(context, 1.2),
                           color: _hovered
                               ? (isDark
                                   ? Colors.white

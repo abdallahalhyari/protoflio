@@ -22,9 +22,8 @@ Future<List<String>> _open(
     locale: locale,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
-    // As CaseStudyRouter presents it: the page is left-to-right because
-    // the technical body is English.
-    home: Directionality(textDirection: TextDirection.ltr, child: study),
+    // As CaseStudyRouter presents it: in the reader's own direction.
+    home: study,
   ));
   await tester.pump(const Duration(seconds: 1));
   FlutterError.onError = previous;
@@ -79,14 +78,44 @@ void main() {
     'solutions': SolutionsCaseStudy(),
     'fais': FaisCaseStudy(),
   };
-  for (final locale in const [Locale('cs'), Locale('ar')]) {
+  // Every section, not just the first screen: the article is a lazy list,
+  // so scroll to the end while collecting errors. 900-1024 is the desktop
+  // band where the chapter dock is at its widest relative to the screen.
+  const configs = <(Size, double)>[
+    (Size(1280, 900), 1.0),
+    (Size(900, 700), 1.0),
+    (Size(1024, 700), 2.0),
+    (Size(360, 740), 1.0),
+    (Size(360, 740), 2.0),
+  ];
+  for (final locale in const [Locale('en'), Locale('cs'), Locale('ar')]) {
     for (final entry in studies.entries) {
-      for (final size in const [Size(1280, 900), Size(360, 740)]) {
+      for (final (size, scale) in configs) {
         testWidgets(
             '${entry.key} lays out cleanly in ${locale.languageCode} '
-            '@ ${size.width.toInt()}', (tester) async {
-          final errors = await _open(tester, entry.value, locale, size);
-          expect(errors, isEmpty);
+            '@ ${size.width.toInt()} x$scale', (tester) async {
+          tester.platformDispatcher.textScaleFactorTestValue = scale;
+          addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+          final errors = <String>[];
+          final previous = FlutterError.onError;
+          FlutterError.onError = (d) => errors.add(
+              '${d.exceptionAsString().split('\n').first} @ '
+              '${RegExp(r'lib/[\w/]+\.dart:\d+').firstMatch(d.toString())?.group(0)}');
+          addTearDown(() => FlutterError.onError = previous);
+          await _open(tester, entry.value, locale, size);
+          FlutterError.onError = (d) => errors.add(
+              '${d.exceptionAsString().split('\n').first} @ '
+              '${RegExp(r'lib/[\w/]+\.dart:\d+').firstMatch(d.toString())?.group(0)}');
+          final scrollable = find.byType(Scrollable).first;
+          for (var i = 0; i < 80; i++) {
+            final position = tester.state<ScrollableState>(scrollable).position;
+            if (position.pixels >= position.maxScrollExtent) break;
+            await tester.drag(scrollable, const Offset(0, -500));
+            await tester.pump(const Duration(milliseconds: 60));
+          }
+          await tester.pump(const Duration(milliseconds: 400));
+          FlutterError.onError = previous;
+          expect(errors.toSet(), isEmpty);
         });
       }
     }

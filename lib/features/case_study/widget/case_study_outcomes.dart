@@ -3,7 +3,6 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
-import 'case_study_prose.dart';
 
 /// A single outcome metric — big number + short caption.
 class OutcomeCard extends StatelessWidget {
@@ -36,9 +35,12 @@ class OutcomeCard extends StatelessWidget {
           children: [
             FittedBox(
               fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
+              alignment: AlignmentDirectional.centerStart,
               child: Text(
                 headline,
+                // Metrics ("< 1s", "-35%") are left-to-right tokens; inside
+                // an Arabic line the sign would jump to the wrong end.
+                textDirection: TextDirection.ltr,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   fontSize: AppTypography.statDisplay,
@@ -49,16 +51,14 @@ class OutcomeCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
-            LocaleDirection(
-              child: Text(
-                body,
-                style: TextStyle(
-                  fontSize: AppTypography.small,
-                  height: 1.35,
-                  color: scheme.onSurface.withValues(alpha: 0.75),
-                ),
+            Text(
+              body,
+              style: TextStyle(
+                fontSize: AppTypography.small,
+                height: 1.35,
+                color: scheme.onSurface.withValues(alpha: 0.75),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -556,7 +556,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get studyNatIntro =>
-      'Kritická zdravotnická platforma s NFC čipovými kartami pro největšího správce zdravotního pojištění (TPA) v Jordánsku. Ring App, E-Health Gate a Compliance System — tři koordinované klienty na společné architektuře.';
+      'Kritická zdravotnická platforma s NFC čipovými kartami pro největšího správce zdravotního pojištění (TPA) v Jordánsku. Ring App, E-Health Gate a Compliance System — tři koordinovaní klienti na společné architektuře.';
 
   @override
   String get studyNatChallenge =>
@@ -568,7 +568,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get studyNatResult =>
-      'Ověření karty za méně než sekundu, nároky, které přežijí výpadky připojení, nula bezpečnostních incidentů a tři klienty na jedné architektuře.';
+      'Ověření karty za méně než sekundu, nároky, které přežijí výpadky připojení, nula bezpečnostních incidentů a tři klienti na jedné architektuře.';
 
   @override
   String get studyNatOutcome1 =>
@@ -584,7 +584,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get studyNatOutcome4 =>
-      'koordinované klienty na společné architektuře';
+      'koordinovaní klienti na společné architektuře';
 
   @override
   String get studyEskIntro =>

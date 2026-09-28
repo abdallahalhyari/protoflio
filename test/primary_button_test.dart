@@ -93,4 +93,33 @@ void main() {
     // Just verify it builds and semantic label is intact.
     expect(find.text('DEL'), findsOneWidget);
   });
+
+  testWidgets('icon + long label wraps instead of overflowing when narrow',
+      (tester) async {
+    await tester.pumpWidget(_host(SizedBox(
+      width: 160,
+      child: PrimaryButton(
+        label: 'Back to portfolio and all case studies',
+        icon: Icons.arrow_back_rounded,
+        onPressed: () {},
+      ),
+    )));
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('icon + label still lays out in an unbounded row',
+      (tester) async {
+    await tester.pumpWidget(_host(SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(children: [
+        PrimaryButton(
+          label: 'Back to portfolio',
+          icon: Icons.arrow_back_rounded,
+          onPressed: () {},
+        ),
+      ]),
+    )));
+    expect(tester.takeException(), isNull);
+    expect(find.text('Back to portfolio'), findsOneWidget);
+  });
 }

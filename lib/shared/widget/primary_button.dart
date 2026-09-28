@@ -122,7 +122,10 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                   ? scheme.onPrimary
                   : scheme.onPrimary.withValues(alpha: 0.7)),
           const SizedBox(width: AppSpacing.sm),
-          content,
+          // Wraps instead of overflowing when the button is narrower than
+          // its label (phones at large text sizes, long translations).
+          // Unbounded parents keep the old single-line layout.
+          Flexible(child: content),
         ],
       );
     }

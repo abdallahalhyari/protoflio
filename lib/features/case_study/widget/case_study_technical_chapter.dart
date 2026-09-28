@@ -31,20 +31,23 @@ class TechnicalChapter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionKicker(number: number, label: title),
-        const SizedBox(height: AppSpacing.md),
-        ...List.generate(steps.length, (i) {
-          final s = steps[i];
-          return Padding(
-            padding: EdgeInsets.only(
-                bottom: i == steps.length - 1 ? 0 : AppSpacing.md),
-            child: TechStepCard(index: i + 1, step: s),
-          );
-        }),
-      ],
+    // An English chapter, heading included.
+    return EnglishContent(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionKicker(number: number, label: title),
+          const SizedBox(height: AppSpacing.md),
+          ...List.generate(steps.length, (i) {
+            final s = steps[i];
+            return Padding(
+              padding: EdgeInsets.only(
+                  bottom: i == steps.length - 1 ? 0 : AppSpacing.md),
+              child: TechStepCard(index: i + 1, step: s),
+            );
+          }),
+        ],
+      ),
     );
   }
 }
