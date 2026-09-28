@@ -49,7 +49,7 @@ class CredentialsBentoCard extends StatelessWidget {
       child: AnimatedSlide(
         duration: AppMotion.entry,
         curve: AppMotion.emphasized,
-        offset: isVisible
+        offset: isVisible || AppMedia.reduceMotion(context)
             ? Offset.zero
             : (isDesktop ? const Offset(0.2, 0) : const Offset(0, 0.2)),
         child: Container(
@@ -152,7 +152,7 @@ class CredentialsBentoCard extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 3),
                                     child: Icon(
-                                      Icons.diamond,
+                                      Icons.diamond_rounded,
                                       size: AppTypography.overline,
                                       color: context.amberText,
                                     ),

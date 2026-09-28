@@ -37,7 +37,7 @@ class SkillsEmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.filter_alt_off_outlined,
+              Icons.filter_alt_off_rounded,
               size: 28,
               color: scheme.onSurface.withValues(alpha: 0.4),
             ),

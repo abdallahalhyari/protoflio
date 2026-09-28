@@ -232,7 +232,7 @@ class HatConsoleDock extends StatelessWidget {
                       foregroundColor:
                           isDark ? Colors.white60 : AppColors.slate500,
                     ),
-                    icon: const Icon(Icons.layers_clear_outlined),
+                    icon: const Icon(Icons.layers_clear_rounded),
                   ),
                 ),
 
@@ -263,7 +263,7 @@ class HatConsoleDock extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.keyboard_outlined,
+                        Icons.keyboard_rounded,
                         size: 13,
                         color: context.subtleText,
                       ),

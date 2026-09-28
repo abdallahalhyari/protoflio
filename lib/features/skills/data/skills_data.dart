@@ -4,7 +4,7 @@ import '../model/skill.dart';
 const List<Skill> kSkills = [
   Skill(
     name: 'Flutter / Dart',
-    icon: Icons.flutter_dash,
+    icon: Icons.flutter_dash_rounded,
     level: 0.96,
     category: 'Mobile Systems',
     provenIn: 'NatHealth, Eskadenia Health, Eskadenia Care',
@@ -19,7 +19,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'Android (Kotlin)',
-    icon: Icons.android,
+    icon: Icons.android_rounded,
     level: 0.92,
     category: 'Mobile Systems',
     provenIn: 'NatHealth Smart-Card & Eskadenia Suites',
@@ -34,7 +34,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'NFC & Smart Cards',
-    icon: Icons.contactless,
+    icon: Icons.contactless_rounded,
     level: 0.95,
     category: 'Security & Protocols',
     provenIn: 'NatHealth Contactless Medical Insurance',
@@ -49,7 +49,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'QR & Barcode Systems',
-    icon: Icons.qr_code_scanner,
+    icon: Icons.qr_code_scanner_rounded,
     level: 0.92,
     category: 'Mobile Systems',
     provenIn: 'Ticketing, Claims, and Identity Verification Flows',
@@ -64,7 +64,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'JWT & Secure Auth',
-    icon: Icons.lock,
+    icon: Icons.lock_rounded,
     level: 0.94,
     category: 'Security & Protocols',
     provenIn: 'NatHealth, Eskadenia Broker & Care',
@@ -79,7 +79,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'MVVM & Clean Arch',
-    icon: Icons.architecture,
+    icon: Icons.architecture_rounded,
     level: 0.93,
     category: 'Architecture & State',
     provenIn: 'Enterprise Multi-Module Codebases',
@@ -94,7 +94,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'Offline-First & Sync',
-    icon: Icons.sync,
+    icon: Icons.sync_rounded,
     level: 0.93,
     category: 'Architecture & State',
     provenIn: 'Eskadenia Health Medical Dispatch',
@@ -109,7 +109,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'REST APIs & Network',
-    icon: Icons.cloud,
+    icon: Icons.cloud_rounded,
     level: 0.91,
     category: 'Cloud & Infrastructure',
     provenIn: 'All Enterprise Mobile Solutions',
@@ -124,7 +124,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'Firebase Platform',
-    icon: Icons.local_fire_department,
+    icon: Icons.local_fire_department_rounded,
     level: 0.88,
     category: 'Cloud & Infrastructure',
     provenIn: 'Production Apps & Portals',
@@ -139,7 +139,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'AWS CloudFront & CDN',
-    icon: Icons.cloud_queue,
+    icon: Icons.cloud_queue_rounded,
     level: 0.78,
     category: 'Cloud & Infrastructure',
     provenIn: 'Asset Streaming & Global Distribution',
@@ -149,7 +149,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'MySQL & SQL Server',
-    icon: Icons.storage,
+    icon: Icons.storage_rounded,
     level: 0.84,
     category: 'Architecture & State',
     provenIn: 'Relational Database Backends',
@@ -164,7 +164,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'Git & CI/CD Pipelines',
-    icon: Icons.merge_type,
+    icon: Icons.merge_type_rounded,
     level: 0.92,
     category: 'Architecture & State',
     provenIn: 'Trunk-Based Engineering Teams',
@@ -179,7 +179,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'Algorithms & DS',
-    icon: Icons.data_object,
+    icon: Icons.data_object_rounded,
     level: 0.86,
     category: 'Mobile Systems',
     provenIn: 'System Optimization & Tree Traversal',
@@ -194,7 +194,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'Healthcare & Smart-ID',
-    icon: Icons.health_and_safety_outlined,
+    icon: Icons.health_and_safety_rounded,
     level: 0.95,
     category: 'Domain Expertise',
     provenIn: 'NatHealth & Eskadenia Suites',
@@ -209,7 +209,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'E-Commerce & Enterprise',
-    icon: Icons.storefront_outlined,
+    icon: Icons.storefront_rounded,
     level: 0.90,
     category: 'Domain Expertise',
     provenIn: 'Solutions Now & Future Advanced',
@@ -219,7 +219,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'Multinational Comm.',
-    icon: Icons.language_outlined,
+    icon: Icons.language_rounded,
     level: 0.95,
     category: 'Languages & Comm',
     provenIn: 'Global Engineering Teams',
@@ -234,7 +234,7 @@ const List<Skill> kSkills = [
   ),
   Skill(
     name: 'iOS & Swift (Foundations)',
-    icon: Icons.apple,
+    icon: Icons.apple_rounded,
     level: 0.82,
     category: 'Mobile Systems',
     provenIn: 'Cross-platform native bridging',

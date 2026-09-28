@@ -35,7 +35,7 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.keyboard_alt_outlined,
+                    Icon(Icons.keyboard_alt_rounded,
                         size: 22, color: scheme.primary),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(

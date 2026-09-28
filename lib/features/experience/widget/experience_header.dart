@@ -20,7 +20,7 @@ class ExperienceHeader extends StatelessWidget {
       title: AppLocalizations.of(context)!.navExperience.toUpperCase(),
       subtitle: AppLocalizations.of(context)!.sectionSubtitleExperience,
       isDesktop: isDesktop,
-      badgeIcon: Icons.auto_awesome,
+      badgeIcon: Icons.auto_awesome_rounded,
       badgeLabel: '4 ROLES · ENTERPRISE IMPACT',
     );
   }

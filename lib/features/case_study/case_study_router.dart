@@ -110,7 +110,12 @@ class CaseStudyRouter {
         textDirection: TextDirection.ltr,
         child: Builder(builder: builder),
       ),
-      transitionsBuilder: (_, animation, __, child) {
+      transitionsBuilder: (context, animation, __, child) {
+        // Reduced motion: fade the study in rather than sliding a whole
+        // screen up.
+        if (AppMedia.reduceMotion(context)) {
+          return FadeTransition(opacity: animation, child: child);
+        }
         return SlideTransition(
           position: Tween<Offset>(
             begin: const Offset(0, 1),

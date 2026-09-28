@@ -480,7 +480,7 @@ class MobileNavSheet extends StatelessWidget {
                                 )
                               else
                                 DirIcon(
-                                  Icons.chevron_right,
+                                  Icons.chevron_right_rounded,
                                   size: 16,
                                   color: isDark
                                       ? Colors.white24

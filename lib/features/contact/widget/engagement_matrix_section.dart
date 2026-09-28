@@ -32,7 +32,7 @@ class EngagementMatrixSection extends StatelessWidget {
         title: 'Architecture & Resilience Audit',
         description:
             'Clean Architecture restructuring, state-machine resilience, concurrency bottleneck triage, and multi-package decoupling.',
-        icon: Icons.account_tree_outlined,
+        icon: Icons.account_tree_rounded,
         accent: _sky,
         inquirySubject:
             '[Architecture Audit Inquiry] Mobile System Audit - Abdallah Alhyari',
@@ -60,7 +60,7 @@ class EngagementMatrixSection extends StatelessWidget {
         title: 'Fractional Lead & Mentorship',
         description:
             'Code review governance, automated UI & integration test harnesses, mobile CI/CD pipelines, and upskilling engineering squads.',
-        icon: Icons.military_tech_outlined,
+        icon: Icons.military_tech_rounded,
         accent: _availabilityGreen,
         inquirySubject:
             '[Advisory Inquiry] Mobile Leadership & Mentorship - Abdallah Alhyari',

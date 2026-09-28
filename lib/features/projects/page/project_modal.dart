@@ -305,7 +305,8 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                                   ),
                                                 ),
                                                 const SizedBox(width: 3),
-                                                Icon(Icons.arrow_outward,
+                                                Icon(
+                                                    Icons.arrow_outward_rounded,
                                                     size: 11,
                                                     color: scheme.primary),
                                               ],
@@ -371,7 +372,8 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                                   ),
                                                 ),
                                                 const SizedBox(width: 3),
-                                                const Icon(Icons.arrow_outward,
+                                                const Icon(
+                                                    Icons.arrow_outward_rounded,
                                                     size: 11,
                                                     color: AppColors.linkedIn),
                                               ],
@@ -509,7 +511,8 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(top: 1.5),
-                                    child: Icon(Icons.check_circle_outline,
+                                    child: Icon(
+                                        Icons.check_circle_outline_rounded,
                                         color: AppColors.accentGreen,
                                         size: isDesktop ? 13 : 11),
                                   ),

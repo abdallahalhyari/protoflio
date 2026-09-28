@@ -293,7 +293,7 @@ void main() {
         tag: 'ARCHITECTURE',
         title: 'Full Engine Audit',
         description: 'Comprehensive evaluation of code quality and scale.',
-        icon: Icons.architecture,
+        icon: Icons.architecture_rounded,
         accent: Colors.amber,
         inquirySubject: 'Engine Audit',
         onInquire: (_) {},

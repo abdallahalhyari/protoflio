@@ -166,7 +166,7 @@ void main() {
       expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
       expect(find.byIcon(Icons.arrow_forward_rounded), findsOneWidget);
       expect(find.byIcon(Icons.auto_awesome_motion_rounded), findsOneWidget);
-      expect(find.byIcon(Icons.layers_clear_outlined), findsOneWidget);
+      expect(find.byIcon(Icons.layers_clear_rounded), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.arrow_back_rounded));
       await tester.pumpAndSettle();
@@ -180,7 +180,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(shuffle, isTrue);
 
-      await tester.tap(find.byIcon(Icons.layers_clear_outlined));
+      await tester.tap(find.byIcon(Icons.layers_clear_rounded));
       await tester.pumpAndSettle();
       expect(reset, isTrue);
     });

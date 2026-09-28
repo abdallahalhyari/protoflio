@@ -117,7 +117,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.touch_app_outlined,
+                  Icon(Icons.touch_app_rounded,
                       size: 12, color: theme.colorScheme.primary),
                   const SizedBox(width: 5),
                   Flexible(

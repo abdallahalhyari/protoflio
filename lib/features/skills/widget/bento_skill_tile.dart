@@ -254,7 +254,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(
-                                      Icons.touch_app_outlined,
+                                      Icons.touch_app_rounded,
                                       size: 11,
                                       color: isDark
                                           ? Colors.white.withValues(alpha: 0.6)

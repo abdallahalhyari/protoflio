@@ -167,7 +167,7 @@ class IntroCtaRow extends StatelessWidget {
             ),
             _linkButton(
               label: loc.quickProfile,
-              icon: Icons.badge_outlined,
+              icon: Icons.badge_rounded,
               onPressed: () => showQuickProfile(
                 context,
                 onDownloadResume: onDownloadResume,

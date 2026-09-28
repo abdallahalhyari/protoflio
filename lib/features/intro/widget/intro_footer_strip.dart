@@ -49,7 +49,7 @@ class IntroFooterStrip extends StatelessWidget {
               ),
               if (onTap != null) ...[
                 const SizedBox(width: 4),
-                Icon(Icons.arrow_outward,
+                Icon(Icons.arrow_outward_rounded,
                     size: 9,
                     color: valueColor ??
                         (isDark ? Colors.white70 : AppColors.slate500)),
