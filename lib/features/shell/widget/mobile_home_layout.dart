@@ -87,8 +87,16 @@ class MobileHomeLayout extends StatelessWidget {
               child: DeferredMount(
                 sectionIndex: 1,
                 placeholderHeight: 720,
+                // Build the section ahead of the reader right away and the
+                // rest once the intro has settled, one per frame, instead of
+                // all seven while a phone is still loading the page.
+                distance: 1,
+                mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
+                    // Top to bottom, one per frame: the first frame shows the
+                    // cover instead of waiting for every section to build.
+                    mountPriority: 1,
                     loader: experience_lib.loadLibrary,
                     builder: () =>
                         experience_lib.ExperiencePage(isContinuousMobile: true),
@@ -102,8 +110,11 @@ class MobileHomeLayout extends StatelessWidget {
               child: DeferredMount(
                 sectionIndex: 2,
                 placeholderHeight: 720,
+                distance: 1,
+                mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
+                    mountPriority: 2,
                     loader: projects_lib.loadLibrary,
                     builder: () =>
                         projects_lib.ProjectsPage(isContinuousMobile: true),
@@ -117,8 +128,11 @@ class MobileHomeLayout extends StatelessWidget {
               child: DeferredMount(
                 sectionIndex: 3,
                 placeholderHeight: 720,
+                distance: 1,
+                mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
+                    mountPriority: 3,
                     loader: skills_lib.loadLibrary,
                     builder: () =>
                         skills_lib.SkillsPage(isContinuousMobile: true),
@@ -132,8 +146,11 @@ class MobileHomeLayout extends StatelessWidget {
               child: DeferredMount(
                 sectionIndex: 4,
                 placeholderHeight: 720,
+                distance: 1,
+                mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
+                    mountPriority: 4,
                     loader: engineering_lib.loadLibrary,
                     builder: () => engineering_lib.EngineeringPage(
                         isContinuousMobile: true),
@@ -147,8 +164,11 @@ class MobileHomeLayout extends StatelessWidget {
               child: DeferredMount(
                 sectionIndex: 5,
                 placeholderHeight: 720,
+                distance: 1,
+                mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
+                    mountPriority: 5,
                     loader: hats_lib.loadLibrary,
                     builder: () =>
                         hats_lib.HatsGridPage(isContinuousMobile: true),
@@ -162,8 +182,11 @@ class MobileHomeLayout extends StatelessWidget {
               child: DeferredMount(
                 sectionIndex: 6,
                 placeholderHeight: 720,
+                distance: 1,
+                mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
+                    mountPriority: 6,
                     loader: contact_lib.loadLibrary,
                     builder: () =>
                         contact_lib.ContactPage(isContinuousMobile: true),

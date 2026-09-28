@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:profile/theme/tokens.dart';
@@ -26,7 +28,9 @@ class DeferredPage extends StatefulWidget {
   /// (lowest priority first, one page per frame) instead of building the
   /// moment its code arrives. Use for independent full-screen pages that
   /// all load at once: in the wasm build every chunk resolves together,
-  /// and building six sections in one frame was a 400ms+ main-thread task.
+  /// and building six sections in one frame was a 400ms+ main-thread task
+  /// on desktop and a 1.2s one on a mid-range phone, where it also held
+  /// back the first frame.
   final int? mountPriority;
 
   /// Warms [loader]'s chunk ahead of time and records it, so a later
@@ -145,6 +149,18 @@ class StaggeredMount {
 
   static final List<(int, VoidCallback)> _pending = [];
   static bool _draining = false;
+  static Completer<void>? _idle;
+
+  /// True when nothing is queued or mounting.
+  static bool get isIdle => !_draining && _pending.isEmpty;
+
+  /// Completes once every queued page has mounted. Layout that measures
+  /// positions (mobile section jumps) waits on this before its final pass,
+  /// since each mount can change the height of what sits above a target.
+  static Future<void> get idle {
+    if (isIdle) return Future<void>.value();
+    return (_idle ??= Completer<void>()).future;
+  }
 
   static void request(int priority, VoidCallback mount) {
     // Stable insert: equal priorities keep request order.
@@ -167,6 +183,9 @@ class StaggeredMount {
       }
     } finally {
       _draining = false;
+      final idle = _idle;
+      _idle = null;
+      idle?.complete();
     }
   }
 }

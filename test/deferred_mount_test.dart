@@ -138,4 +138,56 @@ void main() {
 
     expect(row.offset, 0.0);
   });
+
+  // Continuous mobile column: a section growing from its placeholder above
+  // the viewport would shove what's being read and land deep links short.
+  testWidgets('sections above the reader always mount', (tester) async {
+    await tester.pumpWidget(_wrap(
+      pageIndex: ValueNotifier<int>(6), // deep link to Contact
+      child: const DeferredMount(
+        sectionIndex: 1,
+        placeholderHeight: 720,
+        distance: 1,
+        child: Text('mounted'),
+      ),
+    ));
+    expect(find.text('mounted'), findsOneWidget);
+  });
+
+  testWidgets('mounts in the background after the idle delay', (tester) async {
+    await tester.pumpWidget(_wrap(
+      pageIndex: ValueNotifier<int>(0),
+      child: const DeferredMount(
+        sectionIndex: 5,
+        placeholderHeight: 720,
+        distance: 1,
+        mountWhenIdleAfter: Duration(seconds: 4),
+        child: Text('mounted'),
+      ),
+    ));
+    expect(find.text('mounted'), findsNothing);
+
+    await tester.pump(const Duration(seconds: 3));
+    expect(find.text('mounted'), findsNothing, reason: 'not while loading');
+
+    await tester.pump(const Duration(seconds: 1)); // timer fires, queues
+    await tester.pump(); // StaggeredMount: end of the current frame
+    await tester.pump(); // ...its mount frame
+    expect(find.text('mounted'), findsOneWidget);
+  });
+
+  testWidgets('no pending timer once disposed early', (tester) async {
+    await tester.pumpWidget(_wrap(
+      pageIndex: ValueNotifier<int>(0),
+      child: const DeferredMount(
+        sectionIndex: 5,
+        placeholderHeight: 720,
+        distance: 1,
+        mountWhenIdleAfter: Duration(seconds: 4),
+        child: Text('mounted'),
+      ),
+    ));
+    await tester.pumpWidget(const SizedBox());
+    // The test binding fails the test if a Timer is still pending here.
+  });
 }

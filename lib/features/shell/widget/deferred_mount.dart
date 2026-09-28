@@ -1,8 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/shell/widget/deferred_page.dart';
 
-/// Delays mounting of a heavy section widget until the user is within
-/// [distance] pages of it, according to [HomeController.pageIndex].
+/// Delays mounting of a heavy section widget until the reader is within
+/// [distance] sections of it, according to [HomeController.pageIndex].
+///
+/// Sections *above* the reader always mount: in a continuous column, a
+/// section growing from its placeholder above the viewport would shove the
+/// content being read (and land deep-link jumps short).
 class DeferredMount extends StatefulWidget {
   const DeferredMount({
     super.key,
@@ -10,12 +17,19 @@ class DeferredMount extends StatefulWidget {
     required this.placeholderHeight,
     required this.child,
     this.distance = 10,
+    this.mountWhenIdleAfter,
   });
 
   final int sectionIndex;
   final double placeholderHeight;
   final int distance;
   final Widget child;
+
+  /// Also mount this long after launch even if the reader hasn't come
+  /// near — queued through [StaggeredMount], one section per frame, so
+  /// everything is ready before it's reached without building it all while
+  /// the page is still loading.
+  final Duration? mountWhenIdleAfter;
 
   @override
   State<DeferredMount> createState() => _DeferredMountState();
@@ -25,6 +39,22 @@ class _DeferredMountState extends State<DeferredMount>
     with AutomaticKeepAliveClientMixin {
   bool _mounted = false;
   bool _initializedFromScope = false;
+  Timer? _idleTimer;
+
+  bool _isNear(int pageIndex) =>
+      widget.sectionIndex <= pageIndex + widget.distance;
+
+  void _mountNow() {
+    if (!mounted || _mounted) return;
+    setState(() => _mounted = true);
+  }
+
+  @override
+  void dispose() {
+    _idleTimer?.cancel();
+    StaggeredMount.cancel(_mountNow);
+    super.dispose();
+  }
 
   @override
   bool get wantKeepAlive => true;
@@ -38,10 +68,17 @@ class _DeferredMountState extends State<DeferredMount>
     if (_initializedFromScope) return;
     _initializedFromScope = true;
     final controller = HomeController.maybeOf(context);
-    if (controller == null ||
-        (widget.sectionIndex - controller.pageIndex.value).abs() <=
-            widget.distance) {
+    if (controller == null || _isNear(controller.pageIndex.value)) {
       _mounted = true;
+      return;
+    }
+    final delay = widget.mountWhenIdleAfter;
+    if (delay != null) {
+      _idleTimer = Timer(delay, () {
+        if (mounted && !_mounted) {
+          StaggeredMount.request(widget.sectionIndex, _mountNow);
+        }
+      });
     }
   }
 
@@ -66,9 +103,10 @@ class _DeferredMountState extends State<DeferredMount>
     return ValueListenableBuilder<int>(
       valueListenable: controller.pageIndex,
       builder: (context, pageIndex, child) {
-        if (!_mounted &&
-            (widget.sectionIndex - pageIndex).abs() <= widget.distance) {
+        if (!_mounted && _isNear(pageIndex)) {
           _mounted = true;
+          _idleTimer?.cancel();
+          StaggeredMount.cancel(_mountNow);
         }
         if (_mounted) return child!;
         return SizedBox(height: widget.placeholderHeight);
