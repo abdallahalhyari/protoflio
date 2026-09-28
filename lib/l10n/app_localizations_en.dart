@@ -126,7 +126,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSystemArchitect => 'SYSTEM ARCHITECT';
 
   @override
-  String get introEuEligibility => 'EU WORK ELIGIBILITY';
+  String get introWorkEligibility => 'CZ WORK ELIGIBLE · STUDENT';
 
   @override
   String get introAvailableContracts => 'AVAILABLE FOR CONTRACTS';
@@ -548,10 +548,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get studyRoleFlutterDev => 'FLUTTER DEVELOPER';
-
-  @override
-  String get studyRoleMobileDevFlutterAndroid =>
-      'MOBILE DEVELOPER (FLUTTER & ANDROID)';
 
   @override
   String get studyNatIntro =>

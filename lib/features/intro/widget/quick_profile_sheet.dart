@@ -71,7 +71,7 @@ class QuickProfileCard extends StatelessWidget {
         (
           l10n.introStatus,
           '${l10n.introOpenForRoles} · ${l10n.introAvailableContracts} · '
-              '${l10n.introEuEligibility}',
+              '${l10n.introWorkEligibility}',
         ),
       ];
 

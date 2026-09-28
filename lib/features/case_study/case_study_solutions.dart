@@ -70,7 +70,7 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
-            'Core Flutter Developer architecting cross-platform mobile standards and engineering core media and transaction pipelines.',
+            'Mobile Developer architecting cross-platform mobile standards and engineering core media and transaction pipelines.',
             'Engineered the native camera capture and video recording engine with hardware codec acceleration.',
             'Built background Dart isolates for image and video compression prior to AWS S3 multi-part uploads, preserving UI responsiveness.',
             'Designed and implemented an internal atomic design token library shared between both consumer client applications.',
@@ -250,7 +250,7 @@ class _Masthead extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.studyRoleFlutterDev} · 2021 — 2022',
+              '${l10n.studyRoleMobileDev} · 2021 — 2022',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

@@ -70,7 +70,7 @@ class IntroAvailabilityBanner extends StatelessWidget {
               const SizedBox(width: 6),
               Flexible(
                 child: Text(
-                  loc.introEuEligibility,
+                  loc.introWorkEligibility,
                   style: TextStyle(
                     color: context.onSurface,
                     fontSize: isWide ? 11 : 10,

@@ -127,7 +127,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introSystemArchitect => 'SYSTÉMOVÝ ARCHITEKT';
 
   @override
-  String get introEuEligibility => 'OPRÁVNĚNÍ K PRÁCI V EU';
+  String get introWorkEligibility => 'OPRÁVNĚNÍ K PRÁCI V ČR · STUDENT';
 
   @override
   String get introAvailableContracts => 'K DISPOZICI PRO KONTRAKTY';
@@ -549,10 +549,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get studyRoleFlutterDev => 'FLUTTER VÝVOJÁŘ';
-
-  @override
-  String get studyRoleMobileDevFlutterAndroid =>
-      'MOBILNÍ VÝVOJÁŘ (FLUTTER & ANDROID)';
 
   @override
   String get studyNatIntro =>

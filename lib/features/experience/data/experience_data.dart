@@ -4,7 +4,7 @@ const List<Experience> kExperience = [
   Experience(
     role: 'Senior Mobile Engineer',
     company: 'NatHealth',
-    period: '10/2024 – Present',
+    period: '11/2024 – Present',
     websiteUrl: 'https://www.nathealth.net',
     linkedinUrl: 'https://www.linkedin.com/company/nathealth',
     highlights: [
@@ -15,9 +15,9 @@ const List<Experience> kExperience = [
     ],
   ),
   Experience(
-    role: 'Mobile Developer',
+    role: 'Flutter Developer',
     company: 'ESKADENIA Software',
-    period: '11/2022 – 10/2024',
+    period: '12/2022 – 11/2024',
     websiteUrl: 'https://www.eskadenia.com',
     linkedinUrl: 'https://www.linkedin.com/company/eskadenia-software',
     highlights: [
@@ -27,9 +27,9 @@ const List<Experience> kExperience = [
     ],
   ),
   Experience(
-    role: 'Flutter Developer',
+    role: 'Mobile Developer',
     company: 'Solutions Now IT',
-    period: '11/2021 – 11/2022',
+    period: '11/2021 – 12/2022',
     websiteUrl: 'https://itsolutions-now.com',
     linkedinUrl: 'https://www.linkedin.com/company/solutionsnowit',
     highlights: [
@@ -39,9 +39,9 @@ const List<Experience> kExperience = [
     ],
   ),
   Experience(
-    role: 'Mobile Developer (Flutter & Android)',
+    role: 'Mobile Developer',
     company: 'Future Advanced Internet Solutions',
-    period: '07/2021 – 12/2021',
+    period: '07/2021 – 11/2021',
     websiteUrl: 'http://www.fuais.com/',
     linkedinUrl: 'https://www.linkedin.com/company/futureadvnced',
     highlights: [

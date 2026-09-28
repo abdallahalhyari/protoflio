@@ -66,7 +66,7 @@ class ContactMastheadFooter extends StatelessWidget {
 
     final blocks = [
       block('PRIMARY LOCATION', 'AMMAN · RELOCATING BRNO 2027'),
-      block('EU WORK STATUS', 'ELIGIBLE / NO PERMIT REQ.'),
+      block('CZ WORK STATUS', 'ELIGIBLE AS STUDENT · NO PERMIT'),
       block('RESPONSE SLA', 'GUARANTEED WITHIN 24 HOURS'),
       block('ENGAGEMENT SCOPE', 'SENIOR ROLES · ADVISORY'),
     ];
