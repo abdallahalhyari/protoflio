@@ -71,7 +71,7 @@ class EskadeniaCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
-            'Mobile Developer heading architectural refactoring, modular package extraction, and performance profiling across the Healthcare and Education software divisions.',
+            'Flutter Developer heading architectural refactoring, modular package extraction, and performance profiling across the Healthcare and Education software divisions.',
             'Profiled memory allocations, widget rebuild trees, and GPU raster bottlenecks using Flutter DevTools and Android Profiler.',
             'Rebuilt monolithic state into decoupled MVVM presentation pipelines backed by cached repositories and typed data contracts.',
             'Engineered an incremental refactoring strategy allowing continuous production updates to hospital and campus systems with zero operational downtime.',
@@ -252,7 +252,7 @@ class _Masthead extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.studyRoleMobileDev} · 2022 — 2024',
+              '${l10n.studyRoleFlutterDev} · 2022 — 2024',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

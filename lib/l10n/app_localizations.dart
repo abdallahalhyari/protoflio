@@ -322,11 +322,11 @@ abstract class AppLocalizations {
   /// **'SYSTEM ARCHITECT'**
   String get introSystemArchitect;
 
-  /// No description provided for @introEuEligibility.
+  /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
-  /// **'EU WORK ELIGIBILITY'**
-  String get introEuEligibility;
+  /// **'CZ WORK ELIGIBLE · STUDENT'**
+  String get introWorkEligibility;
 
   /// No description provided for @introAvailableContracts.
   ///
@@ -1077,12 +1077,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'FLUTTER DEVELOPER'**
   String get studyRoleFlutterDev;
-
-  /// No description provided for @studyRoleMobileDevFlutterAndroid.
-  ///
-  /// In en, this message translates to:
-  /// **'MOBILE DEVELOPER (FLUTTER & ANDROID)'**
-  String get studyRoleMobileDevFlutterAndroid;
 
   /// No description provided for @studyNatIntro.
   ///

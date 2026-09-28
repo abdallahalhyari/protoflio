@@ -126,7 +126,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSystemArchitect => 'مهندس نظم';
 
   @override
-  String get introEuEligibility => 'مؤهل للعمل في أوروبا';
+  String get introWorkEligibility => 'مؤهل للعمل في التشيك · طالب';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
@@ -543,10 +543,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get studyRoleFlutterDev => 'مطوّر Flutter';
-
-  @override
-  String get studyRoleMobileDevFlutterAndroid =>
-      'مطوّر تطبيقات الجوال (Flutter وAndroid)';
 
   @override
   String get studyNatIntro =>
