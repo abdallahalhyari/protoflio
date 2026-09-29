@@ -258,7 +258,9 @@ class _Masthead extends StatelessWidget {
           Expanded(
             child: Text(
               '${l10n.introSeniorEngineer} · 2024 — ${l10n.studyPresent}',
-              maxLines: 1,
+              // Two lines on phones rather than clipping the end date
+              // ("2024 — PRES…").
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: AppTypography.editorial,

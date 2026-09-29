@@ -59,8 +59,8 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.smd),
-                _shortcutRow(
-                    scheme, _keyText(scheme, '1–7'), l10n.keyboardHintDigits),
+                _shortcutRow(scheme, _keyText(scheme, '1–7'),
+                    _withoutKey(l10n.keyboardHintDigits, '1–7')),
                 // Icons, not '↑ ↓': Roboto has no arrow glyphs, so the text pulled
                 // a 68 KB Noto Sans Symbols fallback font at runtime.
                 _shortcutRow(
@@ -69,11 +69,11 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                       Icons.arrow_upward_rounded,
                       Icons.arrow_downward_rounded,
                     ]),
-                    l10n.keyboardHintArrows),
-                _shortcutRow(
-                    scheme, _keyText(scheme, 'Home'), l10n.keyboardHintHome),
-                _shortcutRow(
-                    scheme, _keyText(scheme, 'End'), l10n.keyboardHintEnd),
+                    _withoutKey(l10n.keyboardHintArrows, 'Up / Down arrows')),
+                _shortcutRow(scheme, _keyText(scheme, 'Home'),
+                    _withoutKey(l10n.keyboardHintHome, 'Home')),
+                _shortcutRow(scheme, _keyText(scheme, 'End'),
+                    _withoutKey(l10n.keyboardHintEnd, 'End')),
                 _shortcutRow(
                     scheme, _keyText(scheme, '?'), l10n.showHelpShortcut),
               ],
@@ -83,6 +83,18 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
       );
     },
   );
+}
+
+/// The hint strings are shared with the compact hint chip, which has no
+/// key badge and so spells the key out ("End   last page"). Here the badge
+/// already shows it; drop the leading key (and any "·") so rows don't read
+/// "End  End last page".
+String _withoutKey(String hint, String key) {
+  var rest = hint.trimLeft();
+  if (!rest.startsWith(key)) return hint;
+  rest = rest.substring(key.length).trimLeft();
+  if (rest.startsWith('·')) rest = rest.substring(1).trimLeft();
+  return rest.isEmpty ? hint : rest;
 }
 
 Widget _keyText(ColorScheme scheme, String key) => Text(
