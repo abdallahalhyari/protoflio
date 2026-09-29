@@ -20,6 +20,11 @@ class PrimaryButton extends StatefulWidget {
   final IconData? icon;
   final bool isPill;
 
+  /// Tracking for all-caps labels, to match the tracked caps of the
+  /// buttons around them. Null (default) keeps natural spacing, which
+  /// mixed-case labels like "Back to portfolio" need.
+  final double? letterSpacing;
+
   const PrimaryButton({
     super.key,
     required this.label,
@@ -29,6 +34,7 @@ class PrimaryButton extends StatefulWidget {
     this.loading = false,
     this.icon,
     this.isPill = false,
+    this.letterSpacing,
   });
 
   @override
@@ -112,6 +118,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
               ? scheme.onPrimary
               : scheme.onPrimary.withValues(alpha: 0.7),
           fontWeight: FontWeight.bold,
+          letterSpacing: widget.letterSpacing,
         ),
       ),
     );

@@ -133,6 +133,8 @@ class IntroCtaRow extends StatelessWidget {
             PrimaryButton(
               label: loc.viewMyWork,
               isPill: true,
+              // Same tracked caps as the CONTACT ME pill beside it.
+              letterSpacing: 1.2,
               onPressed: () {
                 SoundService.instance.playClick();
                 onViewWork();
