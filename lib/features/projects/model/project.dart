@@ -12,7 +12,6 @@ class Project {
   final String? context;
   final String? role;
   final String? architecture;
-  final String? challenges;
   final String? solution;
   final List<String>? results;
   final List<String>? technicalDecisions;
@@ -23,7 +22,6 @@ class Project {
   // Domain & Production Metrics
   final String domain;
   final String? metricBadge;
-  final String? metricLabel;
 
   const Project({
     required this.name,
@@ -33,14 +31,12 @@ class Project {
     required this.stack,
     this.domain = 'Enterprise Mobile',
     this.metricBadge,
-    this.metricLabel,
     this.url,
     this.linkedinUrl,
     this.problem,
     this.context,
     this.role,
     this.architecture,
-    this.challenges,
     this.solution,
     this.results,
     this.technicalDecisions,

@@ -21,7 +21,6 @@ Future<void> showInquiryComposerDialog(
 }) {
   return showDialog(
     context: context,
-    barrierDismissible: true,
     builder: (ctx) => InquiryComposerDialog(
       initialTrackIndex: initialTrackIndex,
       onCopy: onCopy,
@@ -297,7 +296,6 @@ class _InquiryComposerDialogViewState
                                 ? AppColors.accentGreen
                                 : AppColors.accentAmber)
                             .withValues(alpha: 0.3),
-                        width: 1,
                       ),
                     ),
                     child: Row(

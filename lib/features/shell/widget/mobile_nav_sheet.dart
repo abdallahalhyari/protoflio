@@ -191,7 +191,7 @@ class MobileNavSheet extends StatelessWidget {
     final navItems = getSections(context);
 
     return RepaintBoundary(
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: isDark
               ? AppColors.slate900.withValues(alpha: 0.95)
@@ -201,7 +201,6 @@ class MobileNavSheet extends StatelessWidget {
             color: isDark
                 ? Colors.white.withValues(alpha: 0.15)
                 : Colors.black.withValues(alpha: 0.08),
-            width: 1.0,
           ),
           boxShadow: [
             BoxShadow(
@@ -581,7 +580,6 @@ class MobileNavSheet extends StatelessWidget {
     AppToast.showGlass(
       context,
       message: 'Link copied · $link',
-      status: ToastStatus.ok,
     );
   }
 }

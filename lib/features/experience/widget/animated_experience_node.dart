@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/experience/model/experience.dart';
-import 'experience_card.dart';
+import 'package:profile/features/experience/widget/experience_card.dart';
 
 /// Wraps an [ExperienceCard] with staggered entry fade and slide animations.
 class AnimatedExperienceNode extends StatelessWidget {
   final Experience exp;
-  final int index;
   final bool isVisible;
   final bool isDesktop;
 
@@ -17,7 +16,6 @@ class AnimatedExperienceNode extends StatelessWidget {
   const AnimatedExperienceNode({
     super.key,
     required this.exp,
-    required this.index,
     required this.isVisible,
     required this.isDesktop,
     this.isSelected = false,

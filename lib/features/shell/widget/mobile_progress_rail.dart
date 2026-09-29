@@ -4,8 +4,8 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
-import '../home_controller.dart';
-import 'portfolio_nav.dart' show TopNav;
+import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/shell/widget/portfolio_nav.dart' show TopNav;
 
 /// Vertical dot column pinned to the right edge on mobile. Each dot
 /// jumps to its section.

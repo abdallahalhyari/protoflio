@@ -69,17 +69,14 @@ class EditorialChip extends StatelessWidget {
         bg = tint.withValues(alpha: isDark ? 0.18 : 0.14);
         border = tint.withValues(alpha: isDark ? 0.5 : 0.4);
         fg = tint;
-        break;
       case ChipVariant.outline:
         bg = Colors.transparent;
         border = tint.withValues(alpha: isDark ? 0.6 : 0.5);
         fg = tint;
-        break;
       case ChipVariant.glass:
         bg = context.cardGlass;
         border = context.divider;
         fg = context.onSurface;
-        break;
     }
 
     final hPad = dense ? 8.0 : 10.0;
@@ -118,7 +115,7 @@ class EditorialChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(color: border, width: 1),
+        border: Border.all(color: border),
       ),
       child: row,
     );

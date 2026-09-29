@@ -1,7 +1,7 @@
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 import 'package:flutter/services.dart';
-import 'url_sync_service.dart';
+import 'package:profile/service/url_sync_service.dart';
 
 UrlSyncService createUrlSyncService() => UrlSyncServiceWeb();
 

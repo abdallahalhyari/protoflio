@@ -58,7 +58,7 @@ class ContactHeader extends StatelessWidget {
           color: context.onSurface,
           height: 1.05,
           shadows: isDark
-              ? const [Shadow(color: Colors.black, blurRadius: 20)]
+              ? const [Shadow(blurRadius: 20)]
               : const [Shadow(color: Colors.black12, blurRadius: 6)],
         ),
       ),

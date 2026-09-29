@@ -172,7 +172,6 @@ class HeroEmailCard extends StatelessWidget {
       // Side-by-side only while the buttons fit; large text stacks them.
       child: isDesktop && MediaQuery.textScalerOf(context).scale(1) <= 1.4
           ? Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(child: emailBlock),
                 const SizedBox(width: AppSpacing.lg),

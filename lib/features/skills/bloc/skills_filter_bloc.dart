@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../data/skills_data.dart';
-import '../model/skill.dart';
-import 'skills_filter_event.dart';
-import 'skills_filter_state.dart';
+import 'package:profile/features/skills/data/skills_data.dart';
+import 'package:profile/features/skills/model/skill.dart';
+import 'package:profile/features/skills/bloc/skills_filter_event.dart';
+import 'package:profile/features/skills/bloc/skills_filter_state.dart';
 
 class SkillsFilterBloc extends Bloc<SkillsFilterEvent, SkillsFilterState> {
   SkillsFilterBloc({List<Skill>? skills})
@@ -15,8 +15,6 @@ class SkillsFilterBloc extends Bloc<SkillsFilterEvent, SkillsFilterState> {
   static SkillsFilterState _createInitialState(List<Skill> allSkills) {
     return SkillsFilterState(
       allSkills: allSkills,
-      selectedCategory: 'ALL',
-      searchQuery: '',
       filteredSkills: allSkills,
       categoryCounts: _computeCategoryCounts(allSkills),
     );

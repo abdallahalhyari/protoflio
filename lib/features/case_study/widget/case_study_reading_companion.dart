@@ -11,7 +11,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/case_study/bloc/case_study_reader_bloc.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
-import 'case_study_reveal.dart';
+import 'package:profile/features/case_study/widget/case_study_reveal.dart';
 
 /// Representation of a chapter / section anchor in a case study.
 class CaseStudyChapter {
@@ -259,7 +259,7 @@ class _TopReadingProgressBar extends StatelessWidget {
       left: 0,
       right: 0,
       height: 3.5,
-      child: Container(
+      child: ColoredBox(
         color: context.progressTrack,
         child: LayoutBuilder(
           builder: (context, constraints) {

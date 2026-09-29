@@ -111,8 +111,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      await tester.pumpWidget(const PortfolioApp(
-          initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
+      await tester.pumpWidget(const PortfolioApp());
       for (var i = 0; i < 20; i++) {
         await tester.pump(const Duration(milliseconds: 200));
       }

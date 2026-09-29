@@ -1,4 +1,4 @@
-import '../model/project.dart';
+import 'package:profile/features/projects/model/project.dart';
 
 const List<Project> kProjects = [
   Project(
@@ -14,8 +14,6 @@ const List<Project> kProjects = [
         'Senior Mobile Engineer leading mobile architecture, native Kotlin NFC integrations, and enterprise security frameworks.',
     architecture:
         'Modular Clean Architecture (Presentation / Domain / Data) with native Android NFC Host Card Emulation / APDU channels, local SQLite caching, and background WorkManager pipelines.',
-    challenges:
-        'Managing ISO-7816 APDU NFC transceive timing constraints, handling lost connectivity mid-transaction, and securing medical claims against unauthorized tampering.',
     solution:
         'Designed the NFCCardReader interface supporting diverse smart-card specs, built a 2-step JWT issuance framework with hardware GUID binding, and established an offline-first WorkManager queue with exponential backoff.',
     results: [
@@ -54,7 +52,6 @@ const List<Project> kProjects = [
     hasArchitectureDiagram: true,
     domain: 'Healthcare & Smart Cards',
     metricBadge: '100% Offline SLA',
-    metricLabel: 'Zero Medical Data Loss',
   ),
   Project(
     name: 'E-Learning & Healthcare Enterprise Suite',
@@ -69,8 +66,6 @@ const List<Project> kProjects = [
         'Flutter Developer leading architectural refactoring, performance profiling, and modular package extraction.',
     architecture:
         'Decoupled MVVM architecture with service locators, typed REST API data layers, and cached repositories.',
-    challenges:
-        'Refactoring production enterprise applications without disrupting ongoing clinical and academic operations; eliminating UI jank on data-dense medical charts.',
     solution:
         'Rebuilt legacy monoliths into isolated, testable feature packages; implemented memory profiling, lazy-loading viewports, and custom cached view models.',
     results: [
@@ -103,7 +98,6 @@ const List<Project> kProjects = [
     heroImagePath: 'assets/images/projects/eskadenia.webp',
     domain: 'Enterprise HIS & LMS',
     metricBadge: 'Sustained 60 FPS',
-    metricLabel: 'Zero UI Frame Drops',
   ),
   Project(
     name: 'Loyalty Rewards & Ephemeral Social Media Apps',
@@ -118,8 +112,6 @@ const List<Project> kProjects = [
         'Mobile Developer establishing core mobile design standards, camera pipelines, and backend integration.',
     architecture:
         'Layered Component Architecture with a reusable UI design system and typed REST consumers.',
-    challenges:
-        'Managing camera hardware lifecycles, ephemeral video caching/compression, and real-time loyalty balance synchronization.',
     solution:
         'Authored a unified reusable Flutter component library; built hardware-accelerated video/camera pipelines and dynamic REST models.',
     results: [
@@ -145,7 +137,6 @@ const List<Project> kProjects = [
     heroImagePath: 'assets/images/projects/solutions.webp',
     domain: 'Fleet & Telematics',
     metricBadge: 'Real-Time Queues',
-    metricLabel: 'Atomic Dispatch',
   ),
   Project(
     name: 'M-Commerce & Media-Streaming Clients',
@@ -160,8 +151,6 @@ const List<Project> kProjects = [
         'Mobile Developer (Flutter & Android) coordinating backend–frontend integration and issue resolution.',
     architecture:
         'Service-oriented client architecture with REST APIs, SQL database storage, and reactive event streams.',
-    challenges:
-        'Preventing shopping cart inconsistency during intermittent drops; audio-visual streaming buffering optimization.',
     solution:
         'Coordinated end-to-end checkout API integrations with idempotency keys; diagnosed and resolved live runtime issues via telemetry data.',
     results: [
@@ -191,6 +180,5 @@ const List<Project> kProjects = [
     heroImagePath: 'assets/images/projects/fais.webp',
     domain: 'M-Commerce & Streaming',
     metricBadge: 'High-Throughput',
-    metricLabel: 'Idempotent Checkout',
   ),
 ];

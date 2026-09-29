@@ -5,7 +5,7 @@ import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
-import 'portfolio_nav.dart' show TopNav;
+import 'package:profile/features/shell/widget/portfolio_nav.dart' show TopNav;
 
 /// Desktop bottom-left "05 / 07 · SKILLS" folio bar. Reads pageIndex from
 /// [HomeController]; pageCount is constant for the app's lifetime.

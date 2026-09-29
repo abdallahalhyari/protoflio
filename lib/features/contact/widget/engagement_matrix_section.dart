@@ -4,7 +4,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/shared/util/grid_math.dart';
 import 'package:profile/theme/tokens.dart';
-import 'consulting_track.dart';
+import 'package:profile/features/contact/widget/consulting_track.dart';
 
 /// Executive engagement scopes (Architecture Audit, Full-Lifecycle App Engineering, Tech Leadership).
 class EngagementMatrixSection extends StatelessWidget {

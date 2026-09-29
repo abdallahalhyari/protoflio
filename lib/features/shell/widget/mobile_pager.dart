@@ -4,7 +4,7 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
-import '../home_controller.dart';
+import 'package:profile/features/shell/home_controller.dart';
 
 /// Bottom-of-screen prev/next pager pill for the mobile continuous
 /// scroll layout. Reads page state from [HomeController].

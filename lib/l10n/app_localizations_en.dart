@@ -128,17 +128,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSeniorEngineer => 'SENIOR MOBILE ENGINEER';
 
   @override
-  String get introSystemArchitect => 'SYSTEM ARCHITECT';
-
-  @override
   String get introWorkEligibility => 'CZ WORK ELIGIBLE · STUDENT';
 
   @override
   String get introAvailableContracts => 'AVAILABLE FOR CONTRACTS';
-
-  @override
-  String get introMeticulouslyEngineered =>
-      'A meticulously engineered portfolio.';
 
   @override
   String get contactEngagementScopes =>
@@ -166,12 +159,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get footerRightsReserved => '© 2026 · ALL RIGHTS RESERVED';
-
-  @override
-  String get contactInitiateEncrypted => 'INITIATE ENCRYPTED THREAD';
-
-  @override
-  String get contactStartConversation => 'START A CONVERSATION';
 
   @override
   String get contactPhone => 'PHONE';
@@ -210,34 +197,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String folioIndicator(Object current, Object total) {
     return 'FOLIO $current / $total';
   }
-
-  @override
-  String get blocSectionTitle => 'BLoC / CLEAN ARCHITECTURE';
-
-  @override
-  String get blocSectionSubtitle =>
-      'Predictable state mutation via unidirectional data flow';
-
-  @override
-  String get blocStep1Title => 'Dispatch Event';
-
-  @override
-  String get blocStep1Desc =>
-      'UI triggers an event. No business logic in widgets.';
-
-  @override
-  String get blocStep2Title => 'Map to State';
-
-  @override
-  String get blocStep2Desc =>
-      'BLoC processes event, yields new immutable state.';
-
-  @override
-  String get blocStep3Title => 'Render Output';
-
-  @override
-  String get blocStep3Desc =>
-      'UI efficiently rebuilds based on strict state diffs.';
 
   @override
   String get introIssueStrip => 'ISSUE 01 · PORTFOLIO EDITION · MMXXVI';

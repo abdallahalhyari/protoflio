@@ -128,16 +128,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
 
   @override
-  String get introSystemArchitect => 'مهندس نظم';
-
-  @override
   String get introWorkEligibility => 'مؤهل للعمل في التشيك · طالب';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
-
-  @override
-  String get introMeticulouslyEngineered => 'معرض أعمال مصمم هندسياً بعناية.';
 
   @override
   String get contactEngagementScopes => '// مجالات المشاركة وأساليب التعاون';
@@ -163,12 +157,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get footerRightsReserved => '© 2026 · جميع الحقوق محفوظة';
-
-  @override
-  String get contactInitiateEncrypted => 'بدء محادثة مشفرة';
-
-  @override
-  String get contactStartConversation => 'بدء محادثة';
 
   @override
   String get contactPhone => 'هاتف';
@@ -207,33 +195,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String folioIndicator(Object current, Object total) {
     return 'الصحيفة $current / $total';
   }
-
-  @override
-  String get blocSectionTitle => 'عمارة BLoC / التصميم النظيف';
-
-  @override
-  String get blocSectionSubtitle =>
-      'تغيرات حالة متوقعة عبر تدفق بيانات أحادي الاتجاه';
-
-  @override
-  String get blocStep1Title => 'إرسال حدث';
-
-  @override
-  String get blocStep1Desc =>
-      'واجهة المستخدم تطلق حدثاً. لا يوجد منطق أعمال في الواجهات.';
-
-  @override
-  String get blocStep2Title => 'تعيين الحالة';
-
-  @override
-  String get blocStep2Desc => 'BLoC يعالج الحدث وينتج حالة جديدة ثابتة.';
-
-  @override
-  String get blocStep3Title => 'عرض المخرجات';
-
-  @override
-  String get blocStep3Desc =>
-      'يتم إعادة بناء الواجهة بكفاءة بناءً على فروق الحالة الدقيقة.';
 
   @override
   String get introIssueStrip => 'الإصدار 01 · نسخة معرض الأعمال · 2026';

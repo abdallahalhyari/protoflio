@@ -29,7 +29,6 @@ Future<void> shareCaseStudy(
   AppToast.showGlass(
     context,
     message: AppLocalizations.of(context)!.studyLinkCopied(url),
-    status: ToastStatus.ok,
   );
 }
 

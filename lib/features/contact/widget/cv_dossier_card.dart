@@ -56,7 +56,6 @@ class CvDossierCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppRadius.xs),
                         border: Border.all(
                           color: accent.withValues(alpha: 0.4),
-                          width: 1,
                         ),
                       ),
                       child: Text(
@@ -152,7 +151,6 @@ class CvDossierCard extends StatelessWidget {
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.3)
                           : AppColors.slate300,
-                      width: 1,
                     ),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 14),

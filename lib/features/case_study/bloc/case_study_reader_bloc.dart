@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'case_study_reader_event.dart';
-import 'case_study_reader_state.dart';
+import 'package:profile/features/case_study/bloc/case_study_reader_event.dart';
+import 'package:profile/features/case_study/bloc/case_study_reader_state.dart';
 
 export 'case_study_reader_event.dart';
 export 'case_study_reader_state.dart';

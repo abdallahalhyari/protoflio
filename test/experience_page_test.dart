@@ -48,8 +48,7 @@ void main() {
     testWidgets('keyboard navigation updates selected experience node',
         (tester) async {
       await tester.pumpWidget(_wrap(
-        const ExperiencePage(isContinuousMobile: false),
-        scrollable: false,
+        const ExperiencePage(),
       ));
       await tester.pumpAndSettle();
 

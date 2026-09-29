@@ -33,7 +33,6 @@ class IntroAvailabilityBanner extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.smd),
             border: Border.all(
               color: accent.withValues(alpha: isDark ? 0.32 : 0.22),
-              width: 1.0,
             ),
             boxShadow: [
               BoxShadow(

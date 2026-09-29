@@ -53,7 +53,6 @@ class _TelemetryBarState extends State<TelemetryBar> {
             borderRadius: BorderRadius.circular(AppRadius.pill),
             border: Border.all(
               color: border ?? context.glassBorder,
-              width: 1,
             ),
           ),
           child: child,
@@ -104,7 +103,6 @@ class _TelemetryBarState extends State<TelemetryBar> {
           const EditorialChip(
             label: 'RELOCATING BRNO 2027',
             icon: Icons.flight_takeoff_rounded,
-            variant: ChipVariant.filled,
             tone: ChipTone.amber,
           ),
         ],

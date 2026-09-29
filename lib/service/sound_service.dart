@@ -3,7 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'sound_service_web.dart' if (dart.library.io) 'sound_service_io.dart';
+import 'package:profile/service/sound_service_web.dart'
+    if (dart.library.io) 'sound_service_io.dart';
 
 class SoundService {
   SoundService._();

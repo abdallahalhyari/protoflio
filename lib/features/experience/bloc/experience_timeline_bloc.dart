@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'experience_timeline_event.dart';
-import 'experience_timeline_state.dart';
+import 'package:profile/features/experience/bloc/experience_timeline_event.dart';
+import 'package:profile/features/experience/bloc/experience_timeline_state.dart';
 
 export 'experience_timeline_event.dart';
 export 'experience_timeline_state.dart';

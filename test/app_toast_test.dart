@@ -74,7 +74,6 @@ void main() {
           onPressed: () => AppToast.show(
             ctx,
             message: 'Draft saved',
-            status: ToastStatus.neutral,
           ),
           child: const Text('go'),
         ),

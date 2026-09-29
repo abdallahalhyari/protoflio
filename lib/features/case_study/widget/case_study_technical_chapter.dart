@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
-import 'case_study_prose.dart';
+import 'package:profile/features/case_study/widget/case_study_prose.dart';
 
 /// Data for a single ordered step inside a `TechnicalChapter`.
 class TechStep {

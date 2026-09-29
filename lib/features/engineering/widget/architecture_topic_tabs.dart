@@ -10,14 +10,12 @@ class ArchitectureTopicTabs extends StatelessWidget {
   final List<ArchitectureTopic> topics;
   final int selectedIndex;
   final ValueChanged<int> onSelectTopic;
-  final bool isDesktop;
 
   const ArchitectureTopicTabs({
     super.key,
     required this.topics,
     required this.selectedIndex,
     required this.onSelectTopic,
-    required this.isDesktop,
   });
 
   @override

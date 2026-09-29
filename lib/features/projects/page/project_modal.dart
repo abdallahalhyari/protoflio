@@ -7,7 +7,7 @@ import 'package:profile/theme/tokens.dart';
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/features/case_study/case_study_router.dart';
-import '../model/project.dart';
+import 'package:profile/features/projects/model/project.dart';
 import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
 import 'package:profile/features/projects/widget/nfc_architecture_diagram.dart';
@@ -172,7 +172,6 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                             image: DecorationImage(
                               image: AssetImage(project.heroImagePath!),
                               fit: BoxFit.cover,
-                              alignment: Alignment.center,
                             ),
                           ),
                           child: Container(

@@ -19,7 +19,11 @@
   "skillsNoMatch": "No skills match “{query}”",
   "@skillsNoMatch": {
     "description": "Shown in the Skills section when the search finds nothing.",
-    "placeholders": { "query": { "type": "String" } }
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
   },
   "skillsEmptyShowAll": "SHOW ALL",
   "keyboardHintTitle": "Keyboard shortcuts",
@@ -41,10 +45,8 @@
   "contactMe": "CONTACT ME",
   "copyEmail": "COPY EMAIL",
   "introSeniorEngineer": "SENIOR MOBILE ENGINEER",
-  "introSystemArchitect": "SYSTEM ARCHITECT",
   "introWorkEligibility": "CZ WORK ELIGIBLE · STUDENT",
   "introAvailableContracts": "AVAILABLE FOR CONTRACTS",
-  "introMeticulouslyEngineered": "A meticulously engineered portfolio.",
   "contactEngagementScopes": "// ENGAGEMENT SCOPES & COLLABORATION MODES",
   "contactAtsVerified": "ATS-VERIFIED · 2026 EDITION",
   "contactPdfSize": "PDF · 22 KB",
@@ -53,8 +55,6 @@
   "contactDownloadCvPdf": "DOWNLOAD CV · PDF",
   "contactPreview": "PREVIEW",
   "footerRightsReserved": "© 2026 · ALL RIGHTS RESERVED",
-  "contactInitiateEncrypted": "INITIATE ENCRYPTED THREAD",
-  "contactStartConversation": "START A CONVERSATION",
   "contactPhone": "PHONE",
   "contactCall": "Call",
   "contactWhatsapp": "WHATSAPP",
@@ -73,14 +73,6 @@
       "total": {}
     }
   },
-  "blocSectionTitle": "BLoC / CLEAN ARCHITECTURE",
-  "blocSectionSubtitle": "Predictable state mutation via unidirectional data flow",
-  "blocStep1Title": "Dispatch Event",
-  "blocStep1Desc": "UI triggers an event. No business logic in widgets.",
-  "blocStep2Title": "Map to State",
-  "blocStep2Desc": "BLoC processes event, yields new immutable state.",
-  "blocStep3Title": "Render Output",
-  "blocStep3Desc": "UI efficiently rebuilds based on strict state diffs.",
   "introIssueStrip": "ISSUE 01 · PORTFOLIO EDITION · MMXXVI",
   "introBuildsComplex": "BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS",
   "introTechStack": "Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems",

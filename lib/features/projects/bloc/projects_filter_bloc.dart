@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/projects/data/projects_data.dart';
 import 'package:profile/features/projects/model/project.dart';
-import 'projects_filter_event.dart';
-import 'projects_filter_state.dart';
+import 'package:profile/features/projects/bloc/projects_filter_event.dart';
+import 'package:profile/features/projects/bloc/projects_filter_state.dart';
 
 class ProjectsFilterBloc
     extends Bloc<ProjectsFilterEvent, ProjectsFilterState> {
@@ -17,8 +17,6 @@ class ProjectsFilterBloc
   static ProjectsFilterState _createInitialState(List<Project> projects) {
     return ProjectsFilterState(
       allProjects: projects,
-      selectedDomain: 'ALL',
-      selectedTech: null,
       filteredProjects: List.unmodifiable(projects),
       domainCounts: _calculateCounts(projects),
     );

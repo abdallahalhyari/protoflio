@@ -12,8 +12,7 @@ void main() {
     testWidgets(
         'MaterialApp uses SmoothScrollBehavior with normal deceleration',
         (tester) async {
-      await tester.pumpWidget(const PortfolioApp(
-          initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
+      await tester.pumpWidget(const PortfolioApp());
       await tester.pump(const Duration(milliseconds: 100));
 
       final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
@@ -53,7 +52,6 @@ void main() {
           home: const Scaffold(
             body: AnimatedExperienceNode(
               exp: exp,
-              index: 0,
               isVisible: true,
               isDesktop: true,
             ),
@@ -116,8 +114,7 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
 
-      await tester.pumpWidget(const PortfolioApp(
-          initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
+      await tester.pumpWidget(const PortfolioApp());
       await tester.pump(const Duration(milliseconds: 300));
 
       final pages = _desktopPages(tester);

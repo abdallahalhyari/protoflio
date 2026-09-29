@@ -55,7 +55,6 @@ class NfcArchitectureDiagram extends StatelessWidget {
           const SizedBox(height: 16),
           FittedBox(
             fit: BoxFit.scaleDown,
-            alignment: Alignment.center,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

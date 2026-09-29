@@ -54,7 +54,6 @@ void main() {
       await tester.pumpWidget(_wrap(
         AnimatedExperienceNode(
           exp: exp,
-          index: 0,
           isVisible: true,
           isDesktop: true,
         ),
@@ -72,7 +71,6 @@ void main() {
       await tester.pumpWidget(_wrap(
         AnimatedExperienceNode(
           exp: exp,
-          index: 0,
           isVisible: true,
           isDesktop: true,
         ),

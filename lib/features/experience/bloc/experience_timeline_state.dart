@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../model/experience.dart';
-import '../data/experience_data.dart';
+import 'package:profile/features/experience/model/experience.dart';
+import 'package:profile/features/experience/data/experience_data.dart';
 
 class ExperienceTimelineState extends Equatable {
   final bool isVisible;

@@ -5,7 +5,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/shared/util/grid_math.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/service/analytics_service.dart';
-import 'channel_tile.dart';
+import 'package:profile/features/contact/widget/channel_tile.dart';
 
 /// 2x2 responsive communication channel tiles (Phone, WhatsApp, LinkedIn, GitHub).
 class ContactChannelsGrid extends StatelessWidget {
@@ -46,8 +46,6 @@ class ContactChannelsGrid extends StatelessWidget {
 
     final channels = [
       ChannelData(
-        badge: 'DIRECT LINE',
-        badgeColor: _sky,
         label: l10n.contactPhone,
         value: phone,
         icon: Icons.phone_iphone_rounded,
@@ -64,8 +62,6 @@ class ContactChannelsGrid extends StatelessWidget {
         accent: _sky,
       ),
       ChannelData(
-        badge: 'QUICK CHAT',
-        badgeColor: _availabilityGreen,
         label: l10n.contactWhatsapp,
         value: 'wa.me/962787032264',
         icon: Icons.chat_bubble_rounded,
@@ -79,8 +75,6 @@ class ContactChannelsGrid extends StatelessWidget {
         accent: _availabilityGreen,
       ),
       ChannelData(
-        badge: '500+ NETWORK',
-        badgeColor: _indigo,
         label: l10n.contactLinkedin,
         value: 'in/$linkedInHandle',
         icon: Icons.link_rounded,
@@ -94,8 +88,6 @@ class ContactChannelsGrid extends StatelessWidget {
         accent: _indigo,
       ),
       ChannelData(
-        badge: 'REPOSITORIES',
-        badgeColor: _accent,
         label: l10n.contactGithub,
         value: '@$githubHandle',
         icon: Icons.code_rounded,

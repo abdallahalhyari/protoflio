@@ -5,9 +5,9 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/shell/widget/page_background.dart';
-import 'case_study_corporate_header.dart';
-import 'case_study_layout.dart';
-import 'case_study_reading_companion.dart';
+import 'package:profile/features/case_study/widget/case_study_corporate_header.dart';
+import 'package:profile/features/case_study/widget/case_study_layout.dart';
+import 'package:profile/features/case_study/widget/case_study_reading_companion.dart';
 
 /// Encapsulates the GlobalKeys for standard case study chapters.
 class CaseStudyChapterKeys {

@@ -24,7 +24,7 @@ void main() {
 
     blocTest<ExperienceTimelineBloc, ExperienceTimelineState>(
       'emits updated visibility when ExperienceVisibilityChanged is added',
-      build: () => ExperienceTimelineBloc(),
+      build: ExperienceTimelineBloc.new,
       act: (b) => b.add(const ExperienceVisibilityChanged(true)),
       expect: () => [
         const ExperienceTimelineState(isVisible: true),
@@ -33,33 +33,33 @@ void main() {
 
     blocTest<ExperienceTimelineBloc, ExperienceTimelineState>(
       'emits hoveredIndex when ExperienceNodeHovered is added',
-      build: () => ExperienceTimelineBloc(),
+      build: ExperienceTimelineBloc.new,
       act: (b) {
         b.add(const ExperienceNodeHovered(1));
         b.add(const ExperienceNodeHovered(null));
       },
       expect: () => [
         const ExperienceTimelineState(hoveredIndex: 1),
-        const ExperienceTimelineState(hoveredIndex: null),
+        const ExperienceTimelineState(),
       ],
     );
 
     blocTest<ExperienceTimelineBloc, ExperienceTimelineState>(
       'toggles selectedIndex when ExperienceNodeSelected is added',
-      build: () => ExperienceTimelineBloc(),
+      build: ExperienceTimelineBloc.new,
       act: (b) {
         b.add(const ExperienceNodeSelected(0));
         b.add(const ExperienceNodeSelected(0)); // deselect
       },
       expect: () => [
         const ExperienceTimelineState(selectedIndex: 0),
-        const ExperienceTimelineState(selectedIndex: null),
+        const ExperienceTimelineState(),
       ],
     );
 
     blocTest<ExperienceTimelineBloc, ExperienceTimelineState>(
       'navigates with keyboard direction events correctly',
-      build: () => ExperienceTimelineBloc(),
+      build: ExperienceTimelineBloc.new,
       act: (b) {
         b.add(const ExperienceKeyboardNavigated(1)); // moves to 0
         b.add(const ExperienceKeyboardNavigated(1)); // moves to 1

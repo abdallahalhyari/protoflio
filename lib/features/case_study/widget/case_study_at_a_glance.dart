@@ -5,7 +5,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
-import 'case_study_reveal.dart';
+import 'package:profile/features/case_study/widget/case_study_reveal.dart';
 
 /// The whole case study in three lines — challenge, what was built, result
 /// — right under the masthead, for readers who decide in seconds whether

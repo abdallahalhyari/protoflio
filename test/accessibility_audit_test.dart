@@ -270,7 +270,7 @@ void main() {
       final cardSemantics = find.byWidgetPredicate(
         (w) =>
             w is Semantics &&
-            w.container == true &&
+            w.container &&
             (w.properties.label?.contains(exp.company) ?? false),
       );
       expect(cardSemantics, findsOneWidget);
@@ -318,8 +318,6 @@ void main() {
         'ChannelTile declares button semantics for primary and secondary actions',
         (tester) async {
       final data = ChannelData(
-        badge: 'PRIMARY',
-        badgeColor: Colors.blue,
         label: 'TELEGRAM',
         value: '@alhyari',
         icon: Icons.send,
@@ -480,7 +478,7 @@ void main() {
       final diagramFinder = find.byWidgetPredicate(
         (w) =>
             w is Semantics &&
-            w.container == true &&
+            w.container &&
             (w.properties.label?.contains('Architecture flowchart diagram') ??
                 false),
       );
@@ -503,7 +501,7 @@ void main() {
       final pipelineFinder = find.byWidgetPredicate(
         (w) =>
             w is Semantics &&
-            w.container == true &&
+            w.container &&
             (w.properties.label?.contains('Pipeline architecture') ?? false),
       );
       expect(pipelineFinder, findsOneWidget);
@@ -525,7 +523,7 @@ void main() {
       final outcomeFinder = find.byWidgetPredicate(
         (w) =>
             w is Semantics &&
-            w.container == true &&
+            w.container &&
             (w.properties.label?.contains('Key outcome metric: 99.98%') ??
                 false),
       );
@@ -545,7 +543,7 @@ void main() {
       final folioFinder = find.byWidgetPredicate(
         (w) =>
             w is Semantics &&
-            w.container == true &&
+            w.container &&
             (w.properties.label?.contains('Current section:') ?? false) &&
             (w.properties.label?.contains('page 3 of 7') ?? false),
       );
@@ -562,7 +560,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final shellFinder = find.byWidgetPredicate(
-        (w) => w is Semantics && w.container == true,
+        (w) => w is Semantics && w.container,
       );
       expect(shellFinder, findsWidgets);
     });

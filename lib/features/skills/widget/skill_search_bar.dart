@@ -127,7 +127,6 @@ class SkillSearchBar extends StatelessWidget {
                       color: isFiltered
                           ? scheme.primary.withValues(alpha: AppAlpha.border)
                           : Colors.transparent,
-                      width: 1,
                     ),
                   ),
                   child: Row(

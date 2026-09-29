@@ -125,7 +125,7 @@ void main() {
       await tester.binding.setSurfaceSize(const Size(1200, 800));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
-      final controller = PageController(initialPage: 0);
+      final controller = PageController();
       addTearDown(controller.dispose);
 
       await tester.pumpWidget(

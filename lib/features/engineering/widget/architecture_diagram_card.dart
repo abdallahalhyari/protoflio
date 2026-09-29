@@ -4,7 +4,7 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
-import 'diagram_list.dart';
+import 'package:profile/features/engineering/widget/diagram_list.dart';
 
 /// Card container displaying the interactive flowchart tiers for an architecture topic.
 class ArchitectureDiagramCard extends StatelessWidget {

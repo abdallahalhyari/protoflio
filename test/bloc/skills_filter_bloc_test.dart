@@ -25,7 +25,7 @@ void main() {
         bloc.stream,
         emits(predicate<SkillsFilterState>((state) =>
             state.selectedCategory == 'Mobile Systems' &&
-            state.hasActiveFilter == true &&
+            state.hasActiveFilter &&
             state.filteredSkills.every((s) => s.category == 'Mobile Systems'))),
       );
 
@@ -41,7 +41,7 @@ void main() {
         bloc.stream,
         emits(predicate<SkillsFilterState>((state) =>
             state.searchQuery == 'NFC' &&
-            state.hasActiveFilter == true &&
+            state.hasActiveFilter &&
             state.filteredSkills.any((s) => s.name.contains('NFC')))),
       );
 
