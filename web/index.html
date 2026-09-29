@@ -51,10 +51,46 @@
   <!-- Performance Preconnect & Preloads -->
   <link rel="preload" href="assets/fonts/Tenada.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
+  <link rel="preload" href="canvaskit/skwasm.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="modulepreload" href="main.dart.mjs" crossorigin>
+  <link rel="preload" href="canvaskit/skwasm.js" as="script" crossorigin>
   <link rel="preload" href="assets/assets/my_image.webp" as="image" type="image/webp" fetchpriority="high">
   <link rel="prefetch" href="assets/assets/hat.webp" as="image">
   <script>
+    // Modern Intl.v8BreakIterator polyfill using web-standard Intl.Segmenter.
+    // Replaces Chrome's deprecated V8 API getter cleanly to avoid console warnings,
+    // while providing high-performance word/line break analysis for Flutter Web.
+    try {
+      if (typeof Intl !== 'undefined' && typeof Intl.Segmenter !== 'undefined') {
+        Intl.v8BreakIterator = function(locales, options) {
+          var type = (options && options.type) || 'word';
+          var granularity = type === 'character' ? 'grapheme' : (type === 'sentence' ? 'sentence' : 'word');
+          var segmenter = new Intl.Segmenter(locales, { granularity: granularity });
+          var text = '', breaks = [0], pos = 0;
+          return {
+            adoptText: function(t) {
+              text = String(t);
+              breaks = [0];
+              var segs = segmenter.segment(text);
+              for (var it = segs[Symbol.iterator](), step; !(step = it.next()).done;) {
+                var idx = step.value.index;
+                if (idx > 0 && breaks[breaks.length - 1] !== idx) breaks.push(idx);
+              }
+              if (breaks[breaks.length - 1] !== text.length) breaks.push(text.length);
+              pos = 0;
+            },
+            first: function() { pos = 0; return breaks[0] || 0; },
+            next: function() {
+              pos++;
+              if (pos >= breaks.length) { pos = breaks.length - 1; return -1; }
+              return breaks[pos];
+            },
+            current: function() { return breaks[pos] !== undefined ? breaks[pos] : -1; },
+            breakType: function() { return 'none'; }
+          };
+        };
+      }
+    } catch (_) {}
     // Warm image cache so browser consumes the image preload
     try { new Image().src = "assets/assets/my_image.webp"; } catch(_) {}
   </script>

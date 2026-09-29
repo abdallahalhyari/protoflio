@@ -5,6 +5,7 @@
       "numberOfRuns": 3,
       "settings": {
         "formFactor": "mobile",
+        "screenEmulation": { "mobile": true },
         "onlyCategories": ["performance", "accessibility", "best-practices", "seo"]
       }
     },
