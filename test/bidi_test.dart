@@ -26,4 +26,25 @@ void main() {
     expect(
         await render(tester, TextDirection.ltr, 'Built apps.'), 'Built apps.');
   });
+
+  testWidgets('ltrAlways isolates numbers and URLs only under RTL',
+      (tester) async {
+    late String rtl, ltr;
+    await tester.pumpWidget(Directionality(
+      textDirection: TextDirection.rtl,
+      child: Builder(builder: (context) {
+        rtl = ltrAlways(context, '+962-787032264');
+        return const SizedBox();
+      }),
+    ));
+    await tester.pumpWidget(Directionality(
+      textDirection: TextDirection.ltr,
+      child: Builder(builder: (context) {
+        ltr = ltrAlways(context, '+962-787032264');
+        return const SizedBox();
+      }),
+    ));
+    expect(rtl, '$kLri+962-787032264$kPdi');
+    expect(ltr, '+962-787032264');
+  });
 }

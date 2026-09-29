@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 class ChannelData {
   final String label;
@@ -116,7 +117,7 @@ class _ChannelTileState extends State<ChannelTile> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        d.value,
+                        ltrAlways(context, d.value),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

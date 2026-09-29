@@ -20,6 +20,12 @@ bool needsLtrIsolate(BuildContext context, String text) =>
 String ltrContent(BuildContext context, String text) =>
     needsLtrIsolate(context, text) ? '$kLri$text$kPdi' : text;
 
+/// [text] always isolated as LTR inside an RTL layout — for phone numbers,
+/// URLs and handles, which have no Latin letter for [needsLtrIsolate] to
+/// detect ("+962-787…" otherwise renders as "962-787…+").
+String ltrAlways(BuildContext context, String text) =>
+    Directionality.of(context) == TextDirection.rtl ? '$kLri$text$kPdi' : text;
+
 /// Letter spacing for uppercase label styles. Arabic is a joined script:
 /// tracking pulls its letters apart and breaks the joins, so right-to-left
 /// text gets none.

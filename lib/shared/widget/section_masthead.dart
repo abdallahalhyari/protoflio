@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Editorial section header shared by the paged sections: a heavy accent
 /// rule, a letter-spaced "FEATURE 0X · …" kicker, the display-font title,
@@ -104,7 +105,8 @@ class SectionMasthead extends StatelessWidget {
                       const SizedBox(width: 6),
                     ],
                     Text(
-                      badgeLabel!,
+                      // "4 ROLES · …" — keep the count in front under RTL.
+                      ltrContent(context, badgeLabel!),
                       style: TextStyle(
                         color: accentText,
                         fontSize: AppTypography.editorial,

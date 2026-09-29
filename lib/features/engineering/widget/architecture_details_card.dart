@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Card container displaying architecture rationale, summary, and technical safeguards.
 class ArchitectureDetailsCard extends StatelessWidget {
@@ -60,7 +61,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            topic.summary,
+            ltrContent(context, topic.summary),
             style: TextStyle(
               fontSize: AppTypography.small,
               color: isDark
@@ -104,7 +105,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  topic.whyChosen,
+                  ltrContent(context, topic.whyChosen),
                   style: TextStyle(
                     color: isDark ? Colors.white : AppColors.slate800,
                     fontSize: AppTypography.overline,
@@ -142,7 +143,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      item,
+                      ltrContent(context, item),
                       style: TextStyle(
                         color: isDark
                             ? Colors.white.withValues(alpha: 0.8)
@@ -216,7 +217,8 @@ class _BudgetRow extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-            step.latencyBudget!,
+            // '< 16ms' — the '<' mirrors to '>' under RTL without isolation.
+            ltrAlways(context, step.latencyBudget!),
             style: TextStyle(
               fontFamily: AppTypography.monoFont,
               color: tone,

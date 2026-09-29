@@ -4,6 +4,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/hats/data/hats_data.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 class HatRolePills extends StatelessWidget {
   final int selectedIndex;
@@ -82,7 +83,8 @@ class HatRolePills extends StatelessWidget {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      '0${i + 1} ${kHats[i].title.toUpperCase()}',
+                      ltrAlways(
+                          context, '0${i + 1} ${kHats[i].title.toUpperCase()}'),
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
                         color: selectedIndex == i

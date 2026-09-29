@@ -5,6 +5,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
 import 'package:profile/features/engineering/widget/diagram_list.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Card container displaying the interactive flowchart tiers for an architecture topic.
 class ArchitectureDiagramCard extends StatelessWidget {
@@ -98,7 +99,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
                               isDark ? Colors.transparent : AppColors.slate200),
                     ),
                     child: Text(
-                      '${topic.diagramSteps.length} TIERS',
+                      ltrAlways(context, '${topic.diagramSteps.length} TIERS'),
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
                         color: context.mutedText,

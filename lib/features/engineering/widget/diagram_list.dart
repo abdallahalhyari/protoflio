@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 class DiagramList extends StatelessWidget {
   final ArchitectureTopic topic;
@@ -195,7 +196,7 @@ class DiagramList extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        step.details,
+                        ltrContent(context, step.details),
                         style: TextStyle(
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.7)

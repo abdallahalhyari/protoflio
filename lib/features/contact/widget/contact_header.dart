@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/shared/util/career_facts.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Top header banner, display headline, and lede paragraph for the Contact & Reach Out section.
 class ContactHeader extends StatelessWidget {
@@ -70,9 +71,12 @@ class ContactHeader extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 720),
         child: Text(
-          'Senior Mobile Engineer with ${CareerFacts.yearsOfExperience()}+ years delivering resilient '
-          'production Flutter engines, offline-first sync protocols, and native iOS/Android bridges. '
-          'Available for senior full-time leadership, architectural audits, and technical partnerships.',
+          ltrContent(
+            context,
+            'Senior Mobile Engineer with ${CareerFacts.yearsOfExperience()}+ years delivering resilient '
+            'production Flutter engines, offline-first sync protocols, and native iOS/Android bridges. '
+            'Available for senior full-time leadership, architectural audits, and technical partnerships.',
+          ),
           textAlign: TextAlign.center,
           style: TextStyle(
             color: context.mutedText,

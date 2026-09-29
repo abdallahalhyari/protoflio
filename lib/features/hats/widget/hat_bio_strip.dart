@@ -4,6 +4,7 @@ import 'package:profile/shared/util/career_facts.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 class HatBioStrip extends StatelessWidget {
   final bool isMobile;
@@ -42,7 +43,7 @@ class HatBioStrip extends StatelessWidget {
           ],
         ),
         child: Text(
-          bio,
+          ltrContent(context, bio),
           // Phones show the whole bio (it was cut at "WorkMa…"); the
           // desktop header keeps its height bounded for the card felt.
           maxLines: isMobile ? null : 3,
@@ -79,7 +80,7 @@ class HatBioStrip extends StatelessWidget {
                   const BorderRadius.horizontal(right: Radius.circular(8)),
             ),
             child: Text(
-              bio,
+              ltrContent(context, bio),
               style: TextStyle(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.92)
