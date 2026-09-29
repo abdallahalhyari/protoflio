@@ -195,8 +195,7 @@ void main() {
     testWidgets(
         'InquiryComposerDialog renders header, tracks, and switches templates',
         (tester) async {
-      await tester
-          .pumpWidget(_wrap(const InquiryComposerDialog(initialTrackIndex: 0)));
+      await tester.pumpWidget(_wrap(const InquiryComposerDialog()));
       await tester.pumpAndSettle();
 
       expect(find.text('DIRECT INQUIRY COMPOSER'), findsOneWidget);
@@ -321,8 +320,7 @@ void main() {
       (tester) async {
     await tester.binding.setSurfaceSize(const Size(1200, 1000));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester
-        .pumpWidget(_wrap(const InquiryComposerDialog(initialTrackIndex: 0)));
+    await tester.pumpWidget(_wrap(const InquiryComposerDialog()));
     await tester.pumpAndSettle();
 
     FilledButton sendButton() => tester.widget<FilledButton>(find.ancestor(

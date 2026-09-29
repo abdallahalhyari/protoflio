@@ -84,7 +84,6 @@ class _PageBackgroundState extends State<PageBackground> {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: RadialGradient(
-                    center: Alignment.center,
                     radius: 1.25,
                     colors: [
                       Colors.transparent,

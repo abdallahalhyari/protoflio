@@ -36,7 +36,7 @@ void main() {
 
     test('playClick is a no-op when disabled', () {
       SoundService.instance.isEnabled.value = false;
-      expect(() => SoundService.instance.playClick(), returnsNormally);
+      expect(SoundService.instance.playClick, returnsNormally);
       SoundService.instance.isEnabled.value = true;
     });
   });
@@ -45,8 +45,8 @@ void main() {
     test('event does not throw without Firebase initialized', () {
       expect(() => Analytics.event('test_event'), returnsNormally);
       expect(() => Analytics.screen('TestScreen'), returnsNormally);
-      expect(() => Analytics.ctaEmail(), returnsNormally);
-      expect(() => Analytics.ctaCvDownload(), returnsNormally);
+      expect(Analytics.ctaEmail, returnsNormally);
+      expect(Analytics.ctaCvDownload, returnsNormally);
       expect(() => Analytics.ctaProject('TestCo'), returnsNormally);
     });
 

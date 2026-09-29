@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 class AppSurfaceTheme {
   AppSurfaceTheme._();
@@ -12,7 +12,7 @@ class AppSurfaceTheme {
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.card),
-        side: BorderSide(color: glassBorderColor, width: 1),
+        side: BorderSide(color: glassBorderColor),
       ),
     );
   }
@@ -24,7 +24,7 @@ class AppSurfaceTheme {
       elevation: isDark ? 0 : 8,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: BorderSide(color: glassBorderColor, width: 1),
+        side: BorderSide(color: glassBorderColor),
       ),
     );
   }
@@ -45,7 +45,7 @@ class AppSurfaceTheme {
       backgroundColor: isDark
           ? Colors.white.withValues(alpha: 0.06)
           : Colors.black.withValues(alpha: 0.04),
-      side: BorderSide(color: glassBorderColor, width: 1),
+      side: BorderSide(color: glassBorderColor),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.chip)),
       labelStyle: textTheme.labelMedium,

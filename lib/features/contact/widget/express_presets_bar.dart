@@ -59,7 +59,6 @@ class ExpressPresetsBar extends StatelessWidget {
             color: isDark
                 ? Colors.white.withValues(alpha: 0.08)
                 : AppColors.slate200,
-            width: 1,
           ),
         ),
         child: Column(
@@ -100,7 +99,6 @@ class ExpressPresetsBar extends StatelessWidget {
                     label: p.$2,
                     icon: p.$1,
                     variant: ChipVariant.glass,
-                    tone: ChipTone.primary,
                     trailing: Icon(
                       Icons.arrow_forward_rounded,
                       size: 12,

@@ -104,7 +104,6 @@ class _ExperiencePageState extends State<ExperiencePage>
       child: BlocBuilder<ExperienceTimelineBloc, ExperienceTimelineState>(
         builder: (context, state) {
           return Focus(
-            autofocus: false,
             onKeyEvent: _handleKeyEvent,
             child: AppScreenShell(
               maxWidth: 1600, // Wider for horizontal scroll
@@ -157,7 +156,6 @@ class _ExperiencePageState extends State<ExperiencePage>
         for (int i = 0; i < experiences.length; i++) ...[
           AnimatedExperienceNode(
             exp: experiences[i],
-            index: i,
             isVisible: state.isVisible,
             isSelected: state.selectedIndex == i,
             onSelect: () => _bloc.add(ExperienceNodeSelected(i)),
@@ -187,7 +185,6 @@ class _ExperiencePageState extends State<ExperiencePage>
           flex: 5,
           child: StaggeredEntrance(
             isVisible: state.isVisible,
-            delayMs: 0,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -196,7 +193,6 @@ class _ExperiencePageState extends State<ExperiencePage>
                     flex: 5,
                     child: AnimatedExperienceNode(
                       exp: experiences[0],
-                      index: 0,
                       isVisible: state.isVisible,
                       isSelected: state.selectedIndex == 0,
                       onSelect: () =>
@@ -210,7 +206,6 @@ class _ExperiencePageState extends State<ExperiencePage>
                     flex: 4,
                     child: AnimatedExperienceNode(
                       exp: experiences[2],
-                      index: 2,
                       isVisible: state.isVisible,
                       isSelected: state.selectedIndex == 2,
                       onSelect: () =>
@@ -238,7 +233,6 @@ class _ExperiencePageState extends State<ExperiencePage>
                     flex: 5,
                     child: AnimatedExperienceNode(
                       exp: experiences[1],
-                      index: 1,
                       isVisible: state.isVisible,
                       isSelected: state.selectedIndex == 1,
                       onSelect: () =>
@@ -252,7 +246,6 @@ class _ExperiencePageState extends State<ExperiencePage>
                     flex: 4,
                     child: AnimatedExperienceNode(
                       exp: experiences[3],
-                      index: 3,
                       isVisible: state.isVisible,
                       isSelected: state.selectedIndex == 3,
                       onSelect: () =>
@@ -301,7 +294,6 @@ class _ExperiencePageState extends State<ExperiencePage>
         }
         return AnimatedExperienceNode(
           exp: experiences[index],
-          index: index,
           isVisible: state.isVisible,
           isSelected: state.selectedIndex == index,
           onSelect: () => _bloc.add(ExperienceNodeSelected(index)),

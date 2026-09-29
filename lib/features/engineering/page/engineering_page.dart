@@ -6,8 +6,8 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/features/engineering/bloc/architecture_simulator_bloc.dart';
 import 'package:profile/features/engineering/bloc/architecture_simulator_event.dart';
 import 'package:profile/features/engineering/bloc/architecture_simulator_state.dart';
-import '../data/architecture_data.dart';
-import '../model/architecture_topic.dart';
+import 'package:profile/features/engineering/data/architecture_data.dart';
+import 'package:profile/features/engineering/model/architecture_topic.dart';
 import 'package:profile/features/engineering/widget/architecture_details_card.dart';
 import 'package:profile/features/engineering/widget/architecture_diagram_card.dart';
 import 'package:profile/features/engineering/widget/architecture_inspect_modal.dart';
@@ -133,7 +133,6 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                       .read<ArchitectureSimulatorBloc>()
                       .add(SimulatorTopicSelected(index));
                 },
-                isDesktop: isDesktop,
               ),
               if (!isDesktop) _buildSwipeAffordance(selectedTopicIndex),
               const SizedBox(height: AppSpacing.md),

@@ -152,35 +152,32 @@ void main() {
           jsonDecode(rawJson) as Map<String, dynamic>;
 
       expect(schema['@context'], 'https://schema.org');
-      final graph = schema['@graph'] as List<dynamic>;
+      final graph =
+          (schema['@graph'] as List<dynamic>).cast<Map<String, dynamic>>();
       expect(graph, isNotEmpty);
+      Map<String, dynamic>? nodeOf(String type) =>
+          graph.where((node) => node['@type'] == type).firstOrNull;
 
       // Verify ProfilePage
-      final profilePage = graph.firstWhere(
-        (node) => node['@type'] == 'ProfilePage',
-        orElse: () => null,
-      );
+      final profilePage = nodeOf('ProfilePage');
       expect(profilePage, isNotNull);
-      expect(profilePage['url'], 'https://alhyari.web.app/');
+      expect(profilePage!['url'], 'https://alhyari.web.app/');
 
       // Verify WebSite
-      final webSite = graph.firstWhere(
-        (node) => node['@type'] == 'WebSite',
-        orElse: () => null,
-      );
-      expect(webSite, isNotNull);
+      expect(nodeOf('WebSite'), isNotNull);
 
       // Verify Person
-      final person = graph.firstWhere(
-        (node) => node['@type'] == 'Person',
-        orElse: () => null,
-      );
+      final person = nodeOf('Person');
       expect(person, isNotNull);
-      expect(person['name'], 'Abdallah Alhyari');
+      expect(person!['name'], 'Abdallah Alhyari');
       expect(person['jobTitle'], contains('Flutter'));
       expect(person['email'], 'mailto:alhyariabdallh@gmail.com');
-      expect(person['worksFor']?['name'], 'NatHealth');
-      expect(person['hasOccupation']?['occupationalCategory'], '15-1252.00');
+      expect(
+          (person['worksFor'] as Map<String, dynamic>?)?['name'], 'NatHealth');
+      expect(
+          (person['hasOccupation']
+              as Map<String, dynamic>?)?['occupationalCategory'],
+          '15-1252.00');
 
       // Verify SoftwareApplications
       final softwareApps = graph
@@ -231,7 +228,10 @@ void main() {
       expect(shortcuts, isNotNull);
       expect(shortcuts!.length, greaterThanOrEqualTo(4));
 
-      final urls = shortcuts.map((s) => s['url'].toString()).toList();
+      final urls = shortcuts
+          .cast<Map<String, dynamic>>()
+          .map((s) => s['url'].toString())
+          .toList();
       expect(urls, contains('./#work'));
       expect(urls, contains('./#engineering'));
       expect(urls, contains('./#contact'));

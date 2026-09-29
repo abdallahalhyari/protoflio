@@ -91,7 +91,6 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                     border: Border.all(
                       color: (isDark ? t.accent : accentText)
                           .withValues(alpha: isDark ? 0.35 : 0.4),
-                      width: 1,
                     ),
                   ),
                   child: Icon(t.icon, size: 18, color: accentText),

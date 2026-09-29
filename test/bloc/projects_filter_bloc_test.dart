@@ -28,7 +28,7 @@ void main() {
         bloc.stream,
         emits(predicate<ProjectsFilterState>((state) =>
             state.selectedDomain == 'Healthcare & Smart Cards' &&
-            state.hasActiveFilters == true &&
+            state.hasActiveFilters &&
             state.filteredProjects
                 .every((p) => p.domain == 'Healthcare & Smart Cards'))),
       );

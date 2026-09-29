@@ -126,7 +126,6 @@ class _IntroPageState extends State<IntroPage>
         if (isWide && !widget.isContinuousMobile && size.height >= 1000) ...[
           const SizedBox(height: AppSpacing.md),
           ScrollExploreHint(
-            isDark: isDark,
             onTap: () {
               SoundService.instance.playClick();
               widget.onScrollDown();
@@ -191,7 +190,7 @@ class _IntroPageState extends State<IntroPage>
         height: 12,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: _accent.withValues(alpha: 0.7), width: 1),
+          border: Border.all(color: _accent.withValues(alpha: 0.7)),
         ),
         child: Center(
           child: Container(
@@ -231,7 +230,6 @@ class _IntroPageState extends State<IntroPage>
             ? (size.height * 0.21).clamp(120.0, 240.0)
             : (size.height * 0.16).clamp(85.0, 160.0));
     return SnappyEntrance(
-      delayMs: 0,
       // The page's one h1 (sections are h2). The wordmark's own text would
       // otherwise trail the label ("…Senior Mobile Engineer ABDALLAH").
       child: Semantics(
@@ -244,7 +242,6 @@ class _IntroPageState extends State<IntroPage>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: FittedBox(
-              fit: BoxFit.contain,
               child: ShaderMask(
                 blendMode: BlendMode.srcIn,
                 shaderCallback: (bounds) {
@@ -289,7 +286,6 @@ class _IntroPageState extends State<IntroPage>
     final content = isWide
         ? Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _portrait(portraitSize),
               SizedBox(width: portraitSize * 0.26),
@@ -304,7 +300,7 @@ class _IntroPageState extends State<IntroPage>
                   color: context.onSurface,
                   shadows: isDark
                       ? [
-                          const Shadow(color: Colors.black, blurRadius: 16),
+                          const Shadow(blurRadius: 16),
                           Shadow(color: AppColors.glowIndigo, blurRadius: 24),
                         ]
                       : const [Shadow(color: Colors.black12, blurRadius: 4)],
@@ -328,7 +324,7 @@ class _IntroPageState extends State<IntroPage>
                   color: context.onSurface,
                   shadows: isDark
                       ? [
-                          const Shadow(color: Colors.black, blurRadius: 8),
+                          const Shadow(blurRadius: 8),
                           Shadow(color: AppColors.glowIndigo, blurRadius: 12),
                         ]
                       : const [Shadow(color: Colors.black12, blurRadius: 2)],
@@ -346,7 +342,7 @@ class _IntroPageState extends State<IntroPage>
   Widget _portrait(double size) {
     final image = ClipRRect(
       borderRadius: BorderRadius.circular(13.5),
-      child: Container(
+      child: ColoredBox(
         color: Colors.black.withValues(alpha: 0.4),
         child: RetryingAssetImage(
           'assets/my_image.webp',

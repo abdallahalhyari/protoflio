@@ -21,8 +21,7 @@ Widget createTestApp(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   testWidgets('Portfolio smoke test - renders intro', (tester) async {
-    await tester.pumpWidget(const PortfolioApp(
-        initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
+    await tester.pumpWidget(const PortfolioApp());
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);
@@ -34,8 +33,7 @@ void main() {
       (tester) async {
     // Desktop layout
     await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester
-        .pumpWidget(createTestApp(const HatsGridPage(), const Size(1200, 900)));
+    await tester.pumpWidget(createTestApp(const HatsGridPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('PERSPECTIVES'), findsOneWidget);
@@ -68,8 +66,7 @@ void main() {
       (tester) async {
     // Desktop layout
     await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester
-        .pumpWidget(createTestApp(const ProjectsPage(), const Size(1200, 900)));
+    await tester.pumpWidget(createTestApp(const ProjectsPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('NATHEALTH'), findsWidgets);
@@ -93,8 +90,7 @@ void main() {
   testWidgets('SkillsPage renders kinetic cloud and category filters',
       (tester) async {
     await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester
-        .pumpWidget(createTestApp(const SkillsPage(), const Size(1200, 900)));
+    await tester.pumpWidget(createTestApp(const SkillsPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('SKILLS'), findsWidgets);
@@ -105,8 +101,7 @@ void main() {
       'EngineeringPage renders 4 production architectures and tabs work',
       (tester) async {
     await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester.pumpWidget(
-        createTestApp(const EngineeringPage(), const Size(1200, 900)));
+    await tester.pumpWidget(createTestApp(const EngineeringPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('ENGINEERING'), findsOneWidget);
@@ -130,8 +125,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await tester.pumpWidget(const PortfolioApp(
-        initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
+    await tester.pumpWidget(const PortfolioApp());
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);

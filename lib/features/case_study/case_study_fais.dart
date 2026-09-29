@@ -9,8 +9,8 @@ import 'package:profile/shared/widget/editorial_chip.dart';
 import 'package:profile/shared/widget/primary_button.dart';
 import 'package:profile/features/projects/widget/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widget/pulsing_dot.dart';
-import 'case_study_widgets.dart';
-import 'related_case_studies.dart';
+import 'package:profile/features/case_study/case_study_widgets.dart';
+import 'package:profile/features/case_study/related_case_studies.dart';
 
 /// Deep-dive case study on FAIS's M-Commerce & Media-Streaming Clients.
 /// Full-screen scrollable narrative matching the NatHealth case-study pattern.
@@ -216,7 +216,6 @@ class FaisCaseStudy extends StatelessWidget {
                 PrimaryButton(
                   label: l10n.studyBackToPortfolio,
                   icon: Icons.arrow_back_rounded,
-                  size: PrimaryButtonSize.md,
                   onPressed: () {
                     Analytics.event('case_study_cta',
                         params: {'study': 'fais', 'cta': 'back'});
@@ -292,7 +291,7 @@ class _Masthead extends StatelessWidget {
             EditorialChip(label: 'Android (Kotlin/Java)', tone: ChipTone.amber),
             EditorialChip(label: 'REST APIs', tone: ChipTone.neutral),
             EditorialChip(label: 'SQL Database', tone: ChipTone.sky),
-            EditorialChip(label: 'Media Streaming', tone: ChipTone.primary),
+            EditorialChip(label: 'Media Streaming'),
             EditorialChip(label: 'Payment Gateways', tone: ChipTone.green),
             EditorialChip(label: 'Idempotency', tone: ChipTone.indigo),
           ],

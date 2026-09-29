@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import 'analytics_service_stub.dart'
+import 'package:profile/service/analytics_service_stub.dart'
     if (dart.library.js_interop) 'analytics_service_web.dart';
 
 /// Public analytics facade. On web, forwards to the lazily-loaded

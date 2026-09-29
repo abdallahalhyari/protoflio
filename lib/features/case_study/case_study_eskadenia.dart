@@ -9,8 +9,8 @@ import 'package:profile/shared/widget/editorial_chip.dart';
 import 'package:profile/shared/widget/primary_button.dart';
 import 'package:profile/features/projects/widget/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widget/pulsing_dot.dart';
-import 'case_study_widgets.dart';
-import 'related_case_studies.dart';
+import 'package:profile/features/case_study/case_study_widgets.dart';
+import 'package:profile/features/case_study/related_case_studies.dart';
 
 /// Deep-dive case study on ESKADENIA Software's E-Learning & Healthcare
 /// Enterprise Suite.
@@ -218,7 +218,6 @@ class EskadeniaCaseStudy extends StatelessWidget {
                 PrimaryButton(
                   label: l10n.studyBackToPortfolio,
                   icon: Icons.arrow_back_rounded,
-                  size: PrimaryButtonSize.md,
                   onPressed: () {
                     Analytics.event('case_study_cta',
                         params: {'study': 'eskadenia', 'cta': 'back'});
@@ -292,7 +291,7 @@ class _Masthead extends StatelessWidget {
           children: [
             EditorialChip(label: 'Flutter', tone: ChipTone.indigo),
             EditorialChip(label: 'Dart', tone: ChipTone.sky),
-            EditorialChip(label: 'MVVM Architecture', tone: ChipTone.primary),
+            EditorialChip(label: 'MVVM Architecture'),
             EditorialChip(label: 'REST APIs', tone: ChipTone.neutral),
             EditorialChip(label: 'SQL Server', tone: ChipTone.amber),
             EditorialChip(label: 'DevTools Profiling', tone: ChipTone.green),

@@ -98,8 +98,7 @@ class QuickProfileCard extends StatelessWidget {
     Analytics.event('quick_profile_copy');
     await Clipboard.setData(ClipboardData(text: summaryText(l10n)));
     if (!context.mounted) return;
-    AppToast.showGlass(context,
-        message: l10n.quickProfileCopied, status: ToastStatus.ok);
+    AppToast.showGlass(context, message: l10n.quickProfileCopied);
   }
 
   Future<void> _open(Uri uri, String event) async {

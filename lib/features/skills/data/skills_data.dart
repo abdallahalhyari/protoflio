@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import '../model/skill.dart';
+import 'package:profile/features/skills/model/skill.dart';
 
 const List<Skill> kSkills = [
   Skill(
     name: 'Flutter / Dart',
     icon: Icons.flutter_dash_rounded,
     level: 0.96,
-    category: 'Mobile Systems',
     provenIn: 'NatHealth, Eskadenia Health, Eskadenia Care',
     description:
         'Enterprise cross-platform architecture, custom render objects, reactive state management pipelines, native platform channels, and 60fps frame-budget animations.',
@@ -21,7 +20,6 @@ const List<Skill> kSkills = [
     name: 'Android (Kotlin)',
     icon: Icons.android_rounded,
     level: 0.92,
-    category: 'Mobile Systems',
     provenIn: 'NatHealth Smart-Card & Eskadenia Suites',
     description:
         'Native Kotlin platform channels, Coroutines & Flow concurrency, WorkManager background processing, custom view groups, and native hardware bindings.',
@@ -51,7 +49,6 @@ const List<Skill> kSkills = [
     name: 'QR & Barcode Systems',
     icon: Icons.qr_code_scanner_rounded,
     level: 0.92,
-    category: 'Mobile Systems',
     provenIn: 'Ticketing, Claims, and Identity Verification Flows',
     description:
         'End-to-end QR & 1D/2D barcode pipelines: high-throughput camera scanning with autofocus & torch control, offline decoding, dynamic QR generation with logo overlay, error-correction tuning, colored/branded styling, and secure signed-payload verification.',
@@ -181,7 +178,6 @@ const List<Skill> kSkills = [
     name: 'Algorithms & DS',
     icon: Icons.data_object_rounded,
     level: 0.86,
-    category: 'Mobile Systems',
     provenIn: 'System Optimization & Tree Traversal',
     description:
         'Space-time algorithmic complexity minimization, graph traversals, LRU memory caching policies, and high-efficiency tree data structures.',
@@ -236,7 +232,6 @@ const List<Skill> kSkills = [
     name: 'iOS & Swift (Foundations)',
     icon: Icons.apple_rounded,
     level: 0.82,
-    category: 'Mobile Systems',
     provenIn: 'Cross-platform native bridging',
     description:
         'Foundational iOS ecosystem knowledge. Competent in writing and debugging Swift MethodChannels to bridge Flutter applications to native iOS Core Bluetooth and Keychain services.',

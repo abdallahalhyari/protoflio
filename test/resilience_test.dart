@@ -170,7 +170,7 @@ void main() {
         Size(1440, 900),
         Size(820, 1180),
         Size(0, 900),
-        Size(0, 0),
+        Size.zero,
         Size(1, 1),
         Size(1024, 700),
         Size(360, 740),

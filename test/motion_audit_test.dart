@@ -109,8 +109,6 @@ void main() {
 
       await tester.pumpWidget(
         _wrapWithMedia(
-          disableAnimations: false,
-          accessibleNavigation: false,
           child: Builder(
             builder: (ctx) {
               normalMotion = AppMedia.reduceMotion(ctx);
@@ -124,7 +122,6 @@ void main() {
       await tester.pumpWidget(
         _wrapWithMedia(
           disableAnimations: true,
-          accessibleNavigation: false,
           child: Builder(
             builder: (ctx) {
               reducedDisabledAnim = AppMedia.reduceMotion(ctx);
@@ -137,7 +134,6 @@ void main() {
 
       await tester.pumpWidget(
         _wrapWithMedia(
-          disableAnimations: false,
           accessibleNavigation: true,
           child: Builder(
             builder: (ctx) {
@@ -247,7 +243,7 @@ void main() {
 
     testWidgets('MobileProgressRail triggers section scroll on tap',
         (tester) async {
-      final controller = _mockController(initialPage: 0);
+      final controller = _mockController();
 
       await tester.pumpWidget(
         _wrapWithMedia(

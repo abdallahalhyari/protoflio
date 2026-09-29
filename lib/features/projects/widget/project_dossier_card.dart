@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
 
@@ -20,25 +21,9 @@ class ProjectDossierCard extends StatelessWidget {
     required this.isDark,
   });
 
-  Color _resolveAdaptiveAccent(Color color) {
-    if (isDark) return color;
-    final val = color.toARGB32();
-    if (val == 0xFFF87171 || val == 0xFFEF4444) return AppColors.accentRoseDeep;
-    if (val == 0xFF818CF8 || val == 0xFF6366F1) {
-      return AppColors.accentIndigoDeepText;
-    }
-    if (val == 0xFF10B981 || val == 0xFF34D399) {
-      return AppColors.accentGreenDeep;
-    }
-    if (val == 0xFFFDE68A || val == 0xFFFBBF24 || val == 0xFFF59E0B) {
-      return AppColors.accentAmberDeep;
-    }
-    return color;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final effectiveAccent = _resolveAdaptiveAccent(accentColor);
+    final effectiveAccent = context.adaptiveAccentText(accentColor);
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
@@ -50,8 +35,7 @@ class ProjectDossierCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppRadius.smd),
           border: Border.all(
               color: (isDark ? accentColor : effectiveAccent)
-                  .withValues(alpha: isDark ? 0.28 : 0.4),
-              width: 1.0),
+                  .withValues(alpha: isDark ? 0.28 : 0.4)),
           boxShadow: [
             BoxShadow(
               color: (isDark ? accentColor : effectiveAccent)

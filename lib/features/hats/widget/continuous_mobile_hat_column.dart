@@ -5,9 +5,9 @@ import 'package:profile/shared/widget/section_masthead.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/hats/data/hats_data.dart';
 import 'package:profile/features/hats/widget/hat_playing_card.dart';
-import 'hat_bio_strip.dart';
-import 'hat_pagination_row.dart';
-import 'hat_role_pills.dart';
+import 'package:profile/features/hats/widget/hat_bio_strip.dart';
+import 'package:profile/features/hats/widget/hat_pagination_row.dart';
+import 'package:profile/features/hats/widget/hat_role_pills.dart';
 
 /// Single-column mobile view for continuous-scroll mobile mode, with gesture-based
 /// swipe between cards and flip-card preview.

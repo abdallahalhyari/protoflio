@@ -123,7 +123,6 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             return KeyEventResult.ignored;
           },
           child: AppScreenShell(
-            maxWidth: 1200,
             verticalPadding: AppSpacing.xl,
             reserveBottomNav: !widget.isContinuousMobile,
             reserveMobileTop: !widget.isContinuousMobile,

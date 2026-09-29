@@ -11,7 +11,7 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
-import 'portfolio_nav.dart';
+import 'package:profile/features/shell/widget/portfolio_nav.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// Public constant so callers (mobile scroll snap, section anchors)
@@ -62,7 +62,6 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
             border: Border(
               bottom: BorderSide(
                 color: primary.withValues(alpha: isDark ? 0.28 : 0.16),
-                width: 1.0,
               ),
             ),
             boxShadow: [
@@ -292,9 +291,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                                       ? Colors.white38
                                       : AppColors.slate400),
                             ),
-                            onPressed: () {
-                              SoundService.instance.toggle();
-                            },
+                            onPressed: SoundService.instance.toggle,
                           ),
                         ),
                       ),

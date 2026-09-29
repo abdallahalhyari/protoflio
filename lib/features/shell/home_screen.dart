@@ -29,21 +29,21 @@ import 'package:profile/features/experience/page/experience_page.dart'
 import 'package:profile/features/contact/page/contact_page.dart'
     deferred as contact_lib;
 
-import 'home_controller.dart';
-import 'widget/custom_cursor.dart';
-import 'widget/deferred_page.dart';
-import 'widget/desktop_toolbar.dart';
-import 'widget/folio_bar.dart';
-import 'widget/keyboard_hint_chip.dart';
-import 'widget/mobile_home_layout.dart';
-import 'widget/progress_bar.dart';
-import 'widget/shortcut_help_dialog.dart';
-import 'widget/magazine_page_transformer.dart';
-import 'widget/portfolio_nav.dart';
-import 'widget/page_background.dart';
-import 'widget/mobile_app_bar.dart';
-import 'widget/desktop_keyboard_nav.dart';
-import 'widget/desktop_scroll_interceptor.dart';
+import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/shell/widget/custom_cursor.dart';
+import 'package:profile/features/shell/widget/deferred_page.dart';
+import 'package:profile/features/shell/widget/desktop_toolbar.dart';
+import 'package:profile/features/shell/widget/folio_bar.dart';
+import 'package:profile/features/shell/widget/keyboard_hint_chip.dart';
+import 'package:profile/features/shell/widget/mobile_home_layout.dart';
+import 'package:profile/features/shell/widget/progress_bar.dart';
+import 'package:profile/features/shell/widget/shortcut_help_dialog.dart';
+import 'package:profile/features/shell/widget/magazine_page_transformer.dart';
+import 'package:profile/features/shell/widget/portfolio_nav.dart';
+import 'package:profile/features/shell/widget/page_background.dart';
+import 'package:profile/features/shell/widget/mobile_app_bar.dart';
+import 'package:profile/features/shell/widget/desktop_keyboard_nav.dart';
+import 'package:profile/features/shell/widget/desktop_scroll_interceptor.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -597,7 +597,7 @@ class _HomeScreenState extends State<HomeScreen> {
             pageCount: _pageCount,
             onNext: _next,
             onPrev: _prev,
-            onGoTo: (page) => _goTo(page),
+            onGoTo: _goTo,
             onShowHelp: _showShortcutHelp,
             child: PageBackground(
               child: isDesktop
@@ -665,8 +665,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildDesktopLayout(BuildContext context) {
     return DesktopScrollInterceptor(
-      pageController: _controller,
-      pageIndex: _pageIndex,
       onNext: _next,
       onPrev: _prev,
       isPageTransitioning: _isPageTransitioning,
@@ -676,11 +674,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Scrollable(
             key: const PageStorageKey<String>('desktop_pageview'),
             controller: _controller,
-            axisDirection: AxisDirection.down,
             physics: const NeverScrollableScrollPhysics(),
             viewportBuilder: (context, position) {
               return Viewport(
-                axisDirection: AxisDirection.down,
                 offset: position,
                 // Keep every page laid out (100000px) so turns never stutter.
                 scrollCacheExtent: const ScrollCacheExtent.pixels(100000),

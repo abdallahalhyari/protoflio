@@ -1,4 +1,4 @@
-import '../model/experience.dart';
+import 'package:profile/features/experience/model/experience.dart';
 
 const List<Experience> kExperience = [
   Experience(

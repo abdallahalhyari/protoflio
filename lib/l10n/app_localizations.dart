@@ -322,12 +322,6 @@ abstract class AppLocalizations {
   /// **'SENIOR MOBILE ENGINEER'**
   String get introSeniorEngineer;
 
-  /// No description provided for @introSystemArchitect.
-  ///
-  /// In en, this message translates to:
-  /// **'SYSTEM ARCHITECT'**
-  String get introSystemArchitect;
-
   /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
@@ -339,12 +333,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'AVAILABLE FOR CONTRACTS'**
   String get introAvailableContracts;
-
-  /// No description provided for @introMeticulouslyEngineered.
-  ///
-  /// In en, this message translates to:
-  /// **'A meticulously engineered portfolio.'**
-  String get introMeticulouslyEngineered;
 
   /// No description provided for @contactEngagementScopes.
   ///
@@ -393,18 +381,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'© 2026 · ALL RIGHTS RESERVED'**
   String get footerRightsReserved;
-
-  /// No description provided for @contactInitiateEncrypted.
-  ///
-  /// In en, this message translates to:
-  /// **'INITIATE ENCRYPTED THREAD'**
-  String get contactInitiateEncrypted;
-
-  /// No description provided for @contactStartConversation.
-  ///
-  /// In en, this message translates to:
-  /// **'START A CONVERSATION'**
-  String get contactStartConversation;
 
   /// No description provided for @contactPhone.
   ///
@@ -477,54 +453,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'FOLIO {current} / {total}'**
   String folioIndicator(Object current, Object total);
-
-  /// No description provided for @blocSectionTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'BLoC / CLEAN ARCHITECTURE'**
-  String get blocSectionTitle;
-
-  /// No description provided for @blocSectionSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Predictable state mutation via unidirectional data flow'**
-  String get blocSectionSubtitle;
-
-  /// No description provided for @blocStep1Title.
-  ///
-  /// In en, this message translates to:
-  /// **'Dispatch Event'**
-  String get blocStep1Title;
-
-  /// No description provided for @blocStep1Desc.
-  ///
-  /// In en, this message translates to:
-  /// **'UI triggers an event. No business logic in widgets.'**
-  String get blocStep1Desc;
-
-  /// No description provided for @blocStep2Title.
-  ///
-  /// In en, this message translates to:
-  /// **'Map to State'**
-  String get blocStep2Title;
-
-  /// No description provided for @blocStep2Desc.
-  ///
-  /// In en, this message translates to:
-  /// **'BLoC processes event, yields new immutable state.'**
-  String get blocStep2Desc;
-
-  /// No description provided for @blocStep3Title.
-  ///
-  /// In en, this message translates to:
-  /// **'Render Output'**
-  String get blocStep3Title;
-
-  /// No description provided for @blocStep3Desc.
-  ///
-  /// In en, this message translates to:
-  /// **'UI efficiently rebuilds based on strict state diffs.'**
-  String get blocStep3Desc;
 
   /// No description provided for @introIssueStrip.
   ///

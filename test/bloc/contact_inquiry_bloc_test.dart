@@ -55,8 +55,7 @@ void main() {
       bloc.add(const InquiryCopiedEvent());
       await expectLater(
         bloc.stream,
-        emits(
-            predicate<ContactInquiryState>((state) => state.isCopied == true)),
+        emits(predicate<ContactInquiryState>((state) => state.isCopied)),
       );
 
       await bloc.close();

@@ -7,8 +7,6 @@ import 'package:profile/theme/tokens.dart';
 
 class DesktopScrollInterceptor extends StatefulWidget {
   final Widget child;
-  final PageController pageController;
-  final ValueNotifier<int> pageIndex;
   final VoidCallback onNext;
   final VoidCallback onPrev;
   // ValueListenables, not plain bool/DateTime — read via `.value` at the
@@ -21,8 +19,6 @@ class DesktopScrollInterceptor extends StatefulWidget {
   const DesktopScrollInterceptor({
     super.key,
     required this.child,
-    required this.pageController,
-    required this.pageIndex,
     required this.onNext,
     required this.onPrev,
     required this.isPageTransitioning,

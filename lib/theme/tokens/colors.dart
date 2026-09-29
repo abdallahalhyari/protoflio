@@ -8,11 +8,6 @@ class AppColors {
 
   static const Color seed = Color(0xFF6366F1); // Vibrant Electric Indigo
 
-  /// Alias: seed brand color. Kept for semantic clarity when referring to
-  /// the primary brand hue in accent contexts (e.g. section indigo).
-  /// Same value as [seed] — pick whichever reads clearer at the callsite.
-  static const Color brandPrimary = seed;
-
   /// Official LinkedIn corporate brand identity color.
   static const Color linkedIn = Color(0xFF0A66C2);
 
@@ -33,9 +28,6 @@ class AppColors {
   static Color hatGreen = const Color(0xFF1B5E20).withValues(alpha: _hatAlpha);
   static Color hatPurple = const Color(0xFF4527A0).withValues(alpha: _hatAlpha);
 
-  // Scrim overlay applied on top of photo backgrounds (deep obsidian tint)
-  static Color scrimMedium = const Color(0xFF080C14).withValues(alpha: 0.88);
-
   // Curated luminous section accents
   static const Color accentIndigo = Color(0xFF818CF8);
   static const Color accentIndigoSoft = Color(0xFFA5B4FC);
@@ -53,7 +45,6 @@ class AppColors {
   static const Color accentSky = Color(0xFF38BDF8);
   static const Color accentSkySoft = Color(0xFF7DD3FC);
   static const Color accentIndigo600 = Color(0xFF4F46E5);
-  static const Color accentIndigo700 = Color(0xFF4338CA);
   static const Color hatGold = Color(0xFFC8A951);
 
   // Extended palette — one-off tints reused just enough to name.
@@ -78,15 +69,11 @@ class AppColors {
       Color(0xFF141B2A); // one tier above canvas
   static const Color darkNight =
       Color(0xFF0B101D); // page bg midnight blue-black
-  static const Color lightMist =
-      Color(0xFFFAFBFC); // pearl white background wash
 
-  // Modal & terminal surfaces — denser obsidian for full-screen dialogs
-  // (opaque, so no cardGlass see-through) and CLI-styled chrome.
+  // Modal surface — denser obsidian for full-screen dialogs (opaque, so
+  // no cardGlass see-through).
   static const Color darkModal =
       Color(0xFF0C101B); // solid modal fill between darkCanvas + darkNight
-  static const Color darkTerminal =
-      Color(0xFF090D16); // near-black terminal chrome
 
   // Semantic status tokens — traffic-light role labels. Aliases to
   // existing accent hues so a rebrand cascades. Use these for indicators
@@ -94,7 +81,6 @@ class AppColors {
   static const Color statusCritical = Color(0xFFEF4444); // red 500
   static const Color statusWarn = accentAmberMid; // amber 500
   static const Color statusOk = accentGreen; // emerald 500
-  static const Color statusOkLight = accentGreenLight; // emerald 400
   static const Color statusInfo = accentSky; // sky 400
 
   // Accessible Light Mode accent counterparts. Ratios are on white; each
@@ -107,14 +93,6 @@ class AppColors {
   static const Color accentVioletDeep = Color(0xFF6D28D9); // Violet 700 (7.1:1)
   static const Color accentRoseDeep = Color(0xFFBE123C); // Rose 700 (6.3:1)
   static const Color accentCyanDeep = Color(0xFF155E75); // Cyan 800 (7.3:1)
-
-  /// Returns a luminous pastel tone in dark mode, or a high-contrast deep tone in light mode.
-  static Color adaptive({
-    required bool isDark,
-    required Color dark,
-    required Color light,
-  }) =>
-      isDark ? dark : light;
 
   /// Maps a vibrant or pastel accent tone into an accessible, high-contrast
   /// deep tone (>5:1 on slate-100) for text/icons in light mode.
@@ -225,16 +203,6 @@ class AppColors {
   // Colored shadows read as "premium" where black shadows read as "flat
   // material" — use these on hero cards, primary CTAs, hovered chips.
   static Color glowIndigo = const Color(0xFF6366F1).withValues(alpha: 0.32);
-  static Color glowIndigoSoft = const Color(0xFF6366F1).withValues(alpha: 0.16);
-  static Color glowAmber = const Color(0xFFFBBF24).withValues(alpha: 0.30);
-  static Color glowRose = const Color(0xFFF43F5E).withValues(alpha: 0.28);
-  static Color glowCyan = const Color(0xFF06B6D4).withValues(alpha: 0.26);
-  static Color glowGreen = const Color(0xFF10B981).withValues(alpha: 0.28);
-
-  // Rim lights — thin bright borders that give glass surfaces a lifted
-  // edge under the dark obsidian canvas.
-  static Color rimLight = Colors.white.withValues(alpha: 0.10);
-  static Color rimLightStrong = Colors.white.withValues(alpha: 0.18);
 
   // Neutral shadow tokens — use `shadowSoft` for resting cards,
   // `shadowMedium` under hovered / lifted surfaces.

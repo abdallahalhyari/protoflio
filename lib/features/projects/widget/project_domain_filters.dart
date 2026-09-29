@@ -65,7 +65,6 @@ class ProjectDomainFilters extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.sm),
               border: Border.all(
                 color: scheme.primary.withValues(alpha: AppAlpha.border),
-                width: 1,
               ),
             ),
             child: Row(

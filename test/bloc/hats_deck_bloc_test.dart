@@ -62,7 +62,7 @@ void main() {
       await expectLater(
         bloc.stream,
         emits(predicate<HatsDeckState>((state) =>
-            state.isInitialized == true &&
+            state.isInitialized &&
             state.cardPositions.every((pos) => pos != Offset.zero))),
       );
 

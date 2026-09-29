@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/service/url_sync_service.dart';
 import 'package:profile/theme/tokens.dart';
-import 'case_study_eskadenia.dart';
-import 'case_study_fais.dart';
-import 'case_study_nathealth.dart';
-import 'case_study_solutions.dart';
+import 'package:profile/features/case_study/case_study_eskadenia.dart';
+import 'package:profile/features/case_study/case_study_fais.dart';
+import 'package:profile/features/case_study/case_study_nathealth.dart';
+import 'package:profile/features/case_study/case_study_solutions.dart';
 
 /// URL slug ↔ case-study page mapping. Slugs live under `#work/<slug>`
 /// so recruiters can deep-link to a specific case study, and the

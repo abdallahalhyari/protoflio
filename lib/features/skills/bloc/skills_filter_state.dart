@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../model/skill.dart';
+import 'package:profile/features/skills/model/skill.dart';
 
 class SkillsFilterState extends Equatable {
   final List<Skill> allSkills;

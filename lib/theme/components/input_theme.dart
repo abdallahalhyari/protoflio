@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 class AppInputTheme {
   AppInputTheme._();
@@ -21,7 +21,7 @@ class AppInputTheme {
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.sm),
-        borderSide: BorderSide(color: glassBorderColor, width: 1),
+        borderSide: BorderSide(color: glassBorderColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.sm),

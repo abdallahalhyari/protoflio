@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../data/hats_data.dart';
-import 'hats_deck_event.dart';
-import 'hats_deck_state.dart';
+import 'package:profile/features/hats/data/hats_data.dart';
+import 'package:profile/features/hats/bloc/hats_deck_event.dart';
+import 'package:profile/features/hats/bloc/hats_deck_state.dart';
 
 const double kCardW = 255;
 const double kCardH = 370;

@@ -8,8 +8,6 @@ import 'package:profile/features/shell/widget/desktop_scroll_interceptor.dart';
 Widget _harness(PageController pages, void Function() onNext) {
   return MaterialApp(
     home: DesktopScrollInterceptor(
-      pageController: pages,
-      pageIndex: ValueNotifier<int>(0),
       onNext: onNext,
       onPrev: () {},
       isPageTransitioning: ValueNotifier<bool>(false),

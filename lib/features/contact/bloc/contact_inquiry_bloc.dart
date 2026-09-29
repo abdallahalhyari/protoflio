@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'contact_inquiry_event.dart';
-import 'contact_inquiry_state.dart';
+import 'package:profile/features/contact/bloc/contact_inquiry_event.dart';
+import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
 
 class ContactInquiryBloc
     extends Bloc<ContactInquiryEvent, ContactInquiryState> {
@@ -25,10 +25,7 @@ class ContactInquiryBloc
     return ContactInquiryState(
       tracks: tracks,
       selectedTrackIndex: trackIdx,
-      name: '',
-      company: '',
       body: tracks[trackIdx].defaultBody,
-      isCopied: false,
     );
   }
 

@@ -4,8 +4,6 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 
 class ChannelData {
-  final String badge;
-  final Color badgeColor;
   final String label;
   final String value;
   final IconData icon;
@@ -16,8 +14,6 @@ class ChannelData {
   final Color accent;
 
   const ChannelData({
-    required this.badge,
-    required this.badgeColor,
     required this.label,
     required this.value,
     required this.icon,

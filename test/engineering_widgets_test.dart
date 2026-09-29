@@ -45,7 +45,6 @@ void main() {
               topics: kArchitectureTopics,
               selectedIndex: selected,
               onSelectTopic: (i) => setState(() => selected = i),
-              isDesktop: true,
             );
           },
         ),

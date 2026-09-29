@@ -5,7 +5,7 @@ import 'package:profile/service/analytics_service.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
-import 'social_chip.dart';
+import 'package:profile/features/contact/widget/social_chip.dart';
 
 class ContactMastheadFooter extends StatelessWidget {
   final String linkedInHandle;
@@ -105,7 +105,6 @@ class ContactMastheadFooter extends StatelessWidget {
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.1)
                     : AppColors.slate200,
-                width: 1,
               ),
             ),
             child: Wrap(

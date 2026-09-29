@@ -4,7 +4,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
-import 'diagram_list.dart';
+import 'package:profile/features/engineering/widget/diagram_list.dart';
 
 Future<void> showArchitectureInspectModal(
   BuildContext context, {
@@ -14,7 +14,6 @@ Future<void> showArchitectureInspectModal(
 }) {
   return showDialog(
     context: context,
-    barrierDismissible: true,
     builder: (ctx) => _ArchitectureInspectDialog(
       topic: topic,
       initialStep: currentStep,
@@ -152,7 +151,6 @@ class _ArchitectureInspectDialogState
               child: InteractiveViewer(
                 transformationController: _transformController,
                 boundaryMargin: const EdgeInsets.all(40),
-                minScale: 0.8,
                 maxScale: 3.0,
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(AppSpacing.lg),

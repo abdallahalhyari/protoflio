@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'analytics_service.dart';
-import 'sound_service.dart';
+import 'package:profile/service/analytics_service.dart';
+import 'package:profile/service/sound_service.dart';
 
 /// Central CV/resume download entry point.
 ///

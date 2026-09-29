@@ -57,8 +57,7 @@ void main() {
         'ExperiencePage does not double-pad horizontally inside AppScreenShell',
         (tester) async {
       await tester.binding.setSurfaceSize(const Size(1200, 900));
-      await tester
-          .pumpWidget(_wrap(const ExperiencePage(isContinuousMobile: false)));
+      await tester.pumpWidget(_wrap(const ExperiencePage()));
       await tester.pumpAndSettle();
 
       final shellFinder = find.byType(AppScreenShell);

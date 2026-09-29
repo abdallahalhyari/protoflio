@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
-import 'network_hat_image.dart';
+import 'package:profile/features/hats/widget/network_hat_image.dart';
 import 'package:profile/shared/widget/holographic_physics.dart';
 
-import '../model/hat_info.dart';
+import 'package:profile/features/hats/model/hat_info.dart';
 
 /// Width of a fanned card left uncovered by its neighbour (fan spacing
 /// tops out at 170px) minus the face's inner padding.
@@ -175,7 +175,6 @@ class _HatPlayingCardState extends State<HatPlayingCard>
           }
         },
         child: HolographicCardPhysics(
-          borderRadius: AppRadius.card,
           enableGlare:
               false, // HatPlayingCard uses its own custom gold specular gleam
           maxTiltAngle: 0.25, // Exaggerated tilt for the poker cards
@@ -240,7 +239,6 @@ class _HatPlayingCardState extends State<HatPlayingCard>
       // scales down when the viewport is narrower than 255px or the
       // available height is under 370px, instead of overflowing.
       return FittedBox(
-        fit: BoxFit.contain,
         child: SizedBox(
           width: 255,
           height: 370,

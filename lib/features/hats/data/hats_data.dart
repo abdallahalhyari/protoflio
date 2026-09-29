@@ -1,5 +1,5 @@
 import 'package:profile/theme/tokens.dart';
-import '../model/hat_info.dart';
+import 'package:profile/features/hats/model/hat_info.dart';
 
 final List<HatInfo> kHats = [
   HatInfo(

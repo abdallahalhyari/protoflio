@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/engineering/data/architecture_data.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
-import 'architecture_simulator_event.dart';
-import 'architecture_simulator_state.dart';
+import 'package:profile/features/engineering/bloc/architecture_simulator_event.dart';
+import 'package:profile/features/engineering/bloc/architecture_simulator_state.dart';
 
 class ArchitectureSimulatorBloc
     extends Bloc<ArchitectureSimulatorEvent, ArchitectureSimulatorState> {

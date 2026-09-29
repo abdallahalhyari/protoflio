@@ -88,7 +88,6 @@ class _ContactPageState extends State<ContactPage>
       context,
       message:
           AppLocalizations.of(context)?.emailCopied(value) ?? 'Copied: $value',
-      status: ToastStatus.ok,
     );
   }
 
@@ -118,7 +117,7 @@ class _ContactPageState extends State<ContactPage>
           ),
           onCopyEmail: () => _copy(context, _email),
           onComposeInquiry: () => unawaited(
-            showInquiryComposerDialog(context, initialTrackIndex: 0),
+            showInquiryComposerDialog(context),
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
@@ -186,7 +185,6 @@ class _ContactPageState extends State<ContactPage>
     );
 
     return ScrollableAppScreenShell(
-      maxWidth: 1040,
       isContinuousMobile: widget.isContinuousMobile,
       child: body,
     );

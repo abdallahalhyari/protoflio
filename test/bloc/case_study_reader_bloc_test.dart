@@ -23,7 +23,7 @@ void main() {
 
     blocTest<CaseStudyReaderBloc, CaseStudyReaderState>(
       'updates progress, dock visibility, and completion flag',
-      build: () => CaseStudyReaderBloc(),
+      build: CaseStudyReaderBloc.new,
       act: (b) {
         b.add(const CaseStudyScrollProgressUpdated(
             progress: 0.5, showDock: true));
@@ -31,8 +31,7 @@ void main() {
             progress: 0.98, showDock: true));
       },
       expect: () => [
-        const CaseStudyReaderState(
-            progress: 0.5, showDock: true, isCompleted: false),
+        const CaseStudyReaderState(progress: 0.5, showDock: true),
         const CaseStudyReaderState(
             progress: 0.98, showDock: true, isCompleted: true),
       ],
@@ -53,11 +52,11 @@ void main() {
 
     blocTest<CaseStudyReaderBloc, CaseStudyReaderState>(
       'resets progress and dock on back to top requested',
-      build: () => CaseStudyReaderBloc(),
+      build: CaseStudyReaderBloc.new,
       seed: () => const CaseStudyReaderState(progress: 0.8, showDock: true),
       act: (b) => b.add(const CaseStudyBackToTopRequested()),
       expect: () => [
-        const CaseStudyReaderState(progress: 0.0, showDock: false),
+        const CaseStudyReaderState(),
       ],
     );
   });

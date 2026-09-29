@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-import 'tokens.dart';
+import 'package:profile/theme/tokens.dart';
 
 /// Extension on [BuildContext] that resolves the "glass surface" recipe
 /// widgets across `lib/module/home/` were previously hand-rolling via
@@ -42,11 +42,6 @@ extension SurfaceTone on BuildContext {
   Color get glassBorderStrong =>
       isDarkMode ? Colors.white.withValues(alpha: 0.24) : AppColors.slate300;
 
-  /// Card fill used for resting cards on the canvas — slightly warmer
-  /// than [glassSurface] to sit "below" the floating chrome.
-  Color get raisedCard =>
-      isDarkMode ? AppColors.darkCard : Theme.of(this).scaffoldBackgroundColor;
-
   /// Dense frosted glass fill for content cards across all sections.
   /// Balanced at 88% in Dark and 92% in Light so background orbs
   /// peek through without compromising text legibility or WCAG contrast.
@@ -63,12 +58,6 @@ extension SurfaceTone on BuildContext {
   /// dialogs should not let the canvas show through. Use on `Dialog`,
   /// full-page modals, floating dock panels.
   Color get modalSurface => isDarkMode ? AppColors.darkModal : Colors.white;
-
-  /// Near-black terminal chrome for CLI-styled panels (telemetry strips,
-  /// code readouts). Denser than [modalSurface] to feel like a headless
-  /// shell.
-  Color get terminalSurface =>
-      isDarkMode ? AppColors.darkTerminal : AppColors.slate900;
 
   /// Primary body text on the current canvas.
   Color get onSurface => isDarkMode ? Colors.white : AppColors.slate900;
@@ -103,16 +92,8 @@ extension SurfaceTone on BuildContext {
       isDarkMode ? AppColors.accentAmberSoft : AppColors.accentAmberDeep;
   Color get greenText =>
       isDarkMode ? AppColors.accentGreenLight : AppColors.accentGreenDeep;
-  Color get skyText =>
-      isDarkMode ? AppColors.accentSkySoft : AppColors.accentSkyDeep;
   Color get indigoText =>
       isDarkMode ? AppColors.accentIndigoSoft : AppColors.accentIndigoDeepText;
-  Color get violetText =>
-      isDarkMode ? AppColors.accentVioletLight : AppColors.accentVioletDeep;
-  Color get roseText =>
-      isDarkMode ? AppColors.accentRoseLight : AppColors.accentRoseDeep;
-  Color get cyanText =>
-      isDarkMode ? AppColors.accentCyanLight : AppColors.accentCyanDeep;
 
   /// [color] as legible text: its accessible deep counterpart in light
   /// mode; in dark mode lifted just enough to clear 5:1 on the card

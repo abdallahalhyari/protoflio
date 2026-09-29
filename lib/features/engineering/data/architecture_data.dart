@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:profile/theme/tokens.dart';
-import '../model/architecture_topic.dart';
+import 'package:profile/features/engineering/model/architecture_topic.dart';
 
 final List<ArchitectureTopic> kArchitectureTopics = [
   const ArchitectureTopic(

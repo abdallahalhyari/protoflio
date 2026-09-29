@@ -375,7 +375,6 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                               border: Border.all(
                                                 color: widget.scheme.primary
                                                     .withValues(alpha: 0.6),
-                                                width: 1,
                                               ),
                                             ),
                                             child: Row(
@@ -432,7 +431,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                                 _ProjectCardLinkIcon(
                                                   tooltip:
                                                       'Visit ${widget.project.company} official website',
-                                                  url: widget.project.url!,
+                                                  url: widget.project.url,
                                                   icon: Icons.language_rounded,
                                                   company:
                                                       widget.project.company,
@@ -446,7 +445,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                                   tooltip:
                                                       'View ${widget.project.company} on LinkedIn',
                                                   url: widget
-                                                      .project.linkedinUrl!,
+                                                      .project.linkedinUrl,
                                                   isLinkedIn: true,
                                                   company:
                                                       widget.project.company,
@@ -513,7 +512,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                               _ProjectCardLinkIcon(
                                                 tooltip:
                                                     'Visit ${widget.project.company} official website',
-                                                url: widget.project.url!,
+                                                url: widget.project.url,
                                                 icon: Icons.language_rounded,
                                                 company: widget.project.company,
                                                 type: 'website',
@@ -525,8 +524,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                               _ProjectCardLinkIcon(
                                                 tooltip:
                                                     'View ${widget.project.company} on LinkedIn',
-                                                url:
-                                                    widget.project.linkedinUrl!,
+                                                url: widget.project.linkedinUrl,
                                                 isLinkedIn: true,
                                                 company: widget.project.company,
                                                 type: 'linkedin',
@@ -758,7 +756,6 @@ class _ProjectCardLinkIconState extends State<_ProjectCardLinkIcon> {
                       color: _hovered
                           ? Colors.white
                           : Colors.white.withValues(alpha: AppAlpha.fill),
-                      width: 1.0,
                     ),
                     boxShadow: _hovered
                         ? [

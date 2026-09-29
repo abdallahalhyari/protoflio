@@ -16,17 +16,17 @@ import 'package:profile/features/projects/page/projects_page.dart'
     deferred as projects_lib;
 import 'package:profile/features/skills/page/skills_page.dart'
     deferred as skills_lib;
-import '../home_controller.dart';
-import 'deferred_mount.dart';
-import 'deferred_page.dart';
-import 'mobile_app_bar.dart';
-import 'mobile_footer.dart';
-import 'mobile_nav_sheet.dart';
-import 'mobile_pager.dart';
-import 'mobile_progress_rail.dart';
-import 'mobile_section_divider.dart';
-import 'portfolio_nav.dart' show TopNav;
-import 'scroll_to_top_button.dart';
+import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/shell/widget/deferred_mount.dart';
+import 'package:profile/features/shell/widget/deferred_page.dart';
+import 'package:profile/features/shell/widget/mobile_app_bar.dart';
+import 'package:profile/features/shell/widget/mobile_footer.dart';
+import 'package:profile/features/shell/widget/mobile_nav_sheet.dart';
+import 'package:profile/features/shell/widget/mobile_pager.dart';
+import 'package:profile/features/shell/widget/mobile_progress_rail.dart';
+import 'package:profile/features/shell/widget/mobile_section_divider.dart';
+import 'package:profile/features/shell/widget/portfolio_nav.dart' show TopNav;
+import 'package:profile/features/shell/widget/scroll_to_top_button.dart';
 
 /// Mobile continuous-scroll layout for the portfolio. Owns the Stack
 /// with the scrollable section column + 5 positioned overlay layers
@@ -209,7 +209,7 @@ class MobileHomeLayout extends StatelessWidget {
               MobileNavSheet.show(
                 context,
                 activeIndex: controller.pageIndex.value,
-                onSelectSection: (idx) => controller.scrollToMobileSection(idx),
+                onSelectSection: controller.scrollToMobileSection,
                 onDownloadResume: () => CvService.open(context),
               );
             },

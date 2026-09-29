@@ -75,7 +75,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
       label:
           '${widget.skill.name} skill, ${_masteryLabel(widget.skill.level)} mastery level. Tap to flip and view details.',
       child: HolographicCardPhysics(
-        borderRadius: 14,
+        borderRadius: AppRadius.tile,
         // Keyboard: Tab reaches the tile, Enter / Space flips it (the
         // same toggle a tap does), leaving it turns it back, and a focus
         // ring marks where the keyboard is.
@@ -136,7 +136,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
   Widget _buildFront() {
     final isDark = context.isDarkMode;
     final accentText = context.adaptiveAccentText(widget.categoryColor);
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: _isHovered ? context.cardGlassHover : context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.card),
@@ -177,7 +177,6 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                 child: LayoutBuilder(
                   builder: (context, constraints) => FittedBox(
                     fit: BoxFit.scaleDown,
-                    alignment: Alignment.center,
                     child: SizedBox(
                       width: constraints.maxWidth,
                       child: Column(
@@ -310,7 +309,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
   Widget _buildBack() {
     final isDark = context.isDarkMode;
     final accentText = context.adaptiveAccentText(widget.categoryColor);
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: context.cardGlassHover,
         borderRadius: BorderRadius.circular(AppRadius.card),

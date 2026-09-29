@@ -3,8 +3,8 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
-import 'case_study_router.dart';
-import 'case_study_widgets.dart';
+import 'package:profile/features/case_study/case_study_router.dart';
+import 'package:profile/features/case_study/case_study_widgets.dart';
 
 /// Bottom-of-page navigation: shows the three sibling case studies with
 /// tap-to-navigate cards. Encourages recruiters to keep reading after

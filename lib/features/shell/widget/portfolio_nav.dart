@@ -6,7 +6,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
-import '../home_controller.dart';
+import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/shared/widget/edge_fade_scroller.dart';
 
 /// Below this width the section links use [NavItem.dense] so the full
@@ -86,7 +86,6 @@ class TopNav extends StatelessWidget {
             ),
             child: RepaintBoundary(
               child: ConditionalBlur(
-                sigma: 12,
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 child: Container(
                   margin: const EdgeInsets.only(top: AppSpacing.smd),
@@ -98,7 +97,6 @@ class TopNav extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                     border: Border.all(
                       color: context.navSurfaceBorder(accent),
-                      width: 1,
                     ),
                     boxShadow: context.ambientGlow(accent),
                   ),
@@ -251,8 +249,7 @@ class _NavItemState extends State<NavItem> {
                         : Colors.transparent,
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: widget.active
-                    ? Border.all(
-                        color: context.activeChipBorder(accent), width: 1)
+                    ? Border.all(color: context.activeChipBorder(accent))
                     : null,
                 boxShadow: widget.active
                     ? context.activeChipShadow(accent)
@@ -374,7 +371,6 @@ class PageIndicator extends StatelessWidget {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: isDark ? Colors.black45 : Colors.white,
-                              width: 1,
                             ),
                             boxShadow: active
                                 ? [

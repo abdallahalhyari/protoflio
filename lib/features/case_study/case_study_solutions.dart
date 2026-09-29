@@ -9,8 +9,8 @@ import 'package:profile/shared/widget/editorial_chip.dart';
 import 'package:profile/shared/widget/primary_button.dart';
 import 'package:profile/features/projects/widget/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widget/pulsing_dot.dart';
-import 'case_study_widgets.dart';
-import 'related_case_studies.dart';
+import 'package:profile/features/case_study/case_study_widgets.dart';
+import 'package:profile/features/case_study/related_case_studies.dart';
 
 /// Deep-dive case study on Solutions Now IT's Loyalty Rewards & Ephemeral
 /// Social Media Apps.
@@ -216,7 +216,6 @@ class SolutionsCaseStudy extends StatelessWidget {
                 PrimaryButton(
                   label: l10n.studyBackToPortfolio,
                   icon: Icons.arrow_back_rounded,
-                  size: PrimaryButtonSize.md,
                   onPressed: () {
                     Analytics.event('case_study_cta',
                         params: {'study': 'solutions', 'cta': 'back'});
@@ -292,7 +291,7 @@ class _Masthead extends StatelessWidget {
             EditorialChip(label: 'Camera Engine', tone: ChipTone.amber),
             EditorialChip(label: 'AWS S3', tone: ChipTone.sky),
             EditorialChip(label: 'REST APIs', tone: ChipTone.neutral),
-            EditorialChip(label: 'Design System', tone: ChipTone.primary),
+            EditorialChip(label: 'Design System'),
             EditorialChip(label: 'Isolate Compression', tone: ChipTone.green),
             EditorialChip(label: 'Real-Time Feeds', tone: ChipTone.indigo),
           ],

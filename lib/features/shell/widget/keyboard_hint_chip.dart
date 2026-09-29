@@ -57,7 +57,7 @@ class KeyboardHintChip extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 color: context.glassSurface,
-                border: Border.all(color: context.glassBorderStrong, width: 1),
+                border: Border.all(color: context.glassBorderStrong),
                 boxShadow: isDark
                     ? null
                     : [

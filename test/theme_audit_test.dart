@@ -75,7 +75,6 @@ void main() {
         await tester.pumpWidget(createThemedTestApp(
           child: const ProjectsPage(),
           brightness: brightness,
-          size: const Size(1200, 900),
         ));
         await tester.pump(const Duration(milliseconds: 300));
         expect(find.textContaining('CASE STUDIES'), findsWidgets);
@@ -147,7 +146,6 @@ void main() {
         await tester.pumpWidget(createThemedTestApp(
           child: const HatsGridPage(),
           brightness: brightness,
-          size: const Size(1200, 900),
         ));
         await tester.pump(const Duration(milliseconds: 300));
 
@@ -219,10 +217,7 @@ void main() {
       ]) {
         tester.view.devicePixelRatio = 1.0;
         tester.view.physicalSize = size;
-        await tester.pumpWidget(PortfolioApp(
-            key: ValueKey(size),
-            initialTheme: ThemeMode.dark,
-            initialLocale: const Locale('en')));
+        await tester.pumpWidget(PortfolioApp(key: ValueKey(size)));
         await tester.pump(const Duration(milliseconds: 300));
 
         final themeBtnFinder = find.byWidgetPredicate((w) =>
@@ -252,8 +247,7 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
       tester.view.physicalSize = const Size(400, 800);
 
-      await tester.pumpWidget(const PortfolioApp(
-          initialTheme: ThemeMode.dark, initialLocale: Locale('en')));
+      await tester.pumpWidget(const PortfolioApp());
       await tester.pump(const Duration(milliseconds: 300));
 
       final scrollable = find.byWidgetPredicate((w) =>
