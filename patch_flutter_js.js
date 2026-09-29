@@ -63,7 +63,11 @@ function patchMjs(filePath) {
     // Minify with terser to eliminate Lighthouse unminified-javascript warning
     let minified = false;
     try {
-      execSync(`npx --yes terser "${filePath}" -o "${filePath}" --module -c -m`, { stdio: 'pipe' });
+      const terserBin = path.join(__dirname, 'node_modules', '.bin', 'terser');
+      const cmd = fs.existsSync(terserBin)
+        ? `"${terserBin}" "${filePath}" -o "${filePath}" --module -c -m`
+        : `npx --yes terser "${filePath}" -o "${filePath}" --module -c -m`;
+      execSync(cmd, { stdio: 'pipe' });
       console.log(`Successfully patched and minified ${path.basename(filePath)} with terser.`);
       minified = true;
     } catch (e) {
@@ -91,15 +95,15 @@ function patchBootstrap(filePath) {
     content = content.replace(/serviceWorkerSettings:\s*\{[\s\S]*?\}/g, 'serviceWorkerSettings: null');
     // Self-host CanvasKit/Skwasm from /canvaskit/ (files ship in build/web/canvaskit/).
     if (!/config:\s*\{\s*canvasKitBaseUrl/.test(content)) {
-      const before = content;
-      content = content.replace(
-        /(\n_flutter\.loader\.load\(\s*)\{/,
-        "$1{\n  config: { canvasKitBaseUrl: '/canvaskit/' },"
-      );
-      if (content === before) {
-        throw new Error(
-          `${path.basename(filePath)}: could not locate _flutter.loader.load({ ... }) — ` +
-          `canvasKitBaseUrl patch skipped. Flutter loader shape may have changed; update patch_flutter_js.js.`
+      if (/\n_flutter\.loader\.load\(\s*\{/.test(content)) {
+        content = content.replace(
+          /(\n_flutter\.loader\.load\(\s*)\{/,
+          "$1{\n  config: { canvasKitBaseUrl: '/canvaskit/' },"
+        );
+      } else if (/\n_flutter\.loader\.load\(\s*\)/.test(content)) {
+        content = content.replace(
+          /(\n_flutter\.loader\.load\(\s*)\)/,
+          "$1{\n  config: { canvasKitBaseUrl: '/canvaskit/' },\n  serviceWorkerSettings: null\n})"
         );
       }
     }
