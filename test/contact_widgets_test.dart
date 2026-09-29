@@ -82,7 +82,7 @@ void main() {
       await tester.tap(find.text('Senior Role'));
       await tester.pumpAndSettle();
 
-      expect(selectedSubject, contains('Senior Mobile Architect'));
+      expect(selectedSubject, contains('Senior Mobile Engineer'));
     });
 
     testWidgets('CvDossierCard renders ATS badge and CV download triggers',
@@ -209,8 +209,7 @@ void main() {
       expect(find.text('OPEN IN EMAIL CLIENT'), findsOneWidget);
 
       // Verify initial body contains Role Opportunity template
-      expect(
-          find.textContaining('Senior Mobile Architect / Flutter Engineering'),
+      expect(find.textContaining('Senior Mobile Engineer (Flutter)'),
           findsOneWidget);
 
       // Tap Architecture Audit track

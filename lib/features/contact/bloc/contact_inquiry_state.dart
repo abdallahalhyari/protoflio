@@ -22,9 +22,9 @@ const List<InquiryTrackInfo> kDefaultInquiryTracks = [
   InquiryTrackInfo(
     title: 'Role Opportunity',
     icon: Icons.work_outline_rounded,
-    subject: '[Role Opportunity] Senior Mobile Architect - Abdallah Alhyari',
+    subject: '[Role Opportunity] Senior Mobile Engineer - Abdallah Alhyari',
     defaultBody:
-        'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Architect / Flutter Engineering position at our company.\n\nLooking forward to scheduling an introductory conversation.',
+        'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Engineer (Flutter) position at our company.\n\nLooking forward to scheduling an introductory conversation.',
   ),
   InquiryTrackInfo(
     title: 'Architecture Audit',

@@ -11,7 +11,7 @@ void main() {
       expect(bloc.state.selectedTrackIndex, equals(0));
       expect(bloc.state.name, isEmpty);
       expect(bloc.state.company, isEmpty);
-      expect(bloc.state.body, contains('Senior Mobile Architect'));
+      expect(bloc.state.body, contains('Senior Mobile Engineer'));
       expect(bloc.state.isCopied, isFalse);
     });
 

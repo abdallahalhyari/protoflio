@@ -18,8 +18,8 @@ class ExpressPresetsBar extends StatelessWidget {
     (
       Icons.work_outline_rounded,
       'Senior Role',
-      '[Role Opportunity] Senior Mobile Architect - Abdallah Alhyari',
-      'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Architect / Engineering role at our company...',
+      '[Role Opportunity] Senior Mobile Engineer - Abdallah Alhyari',
+      'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Engineer role at our company...',
     ),
     (
       Icons.architecture_rounded,
