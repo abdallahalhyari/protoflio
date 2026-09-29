@@ -261,9 +261,17 @@ class _IntroPageState extends State<IntroPage>
                     stops: const [0.0, 0.55, 1.0],
                   ).createShader(bounds);
                 },
-                child: Text(
-                  'ABDALLAH',
-                  style: _wordmarkStyle(),
+                // Tenada's caps paint a little above their 1.0 line box.
+                // ShaderMask only tints inside its child's bounds, so without
+                // this top inset the letter tops rendered as raw white bars.
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: AppTypography.watermark * 0.12,
+                  ),
+                  child: Text(
+                    'ABDALLAH',
+                    style: _wordmarkStyle(),
+                  ),
                 ),
               ),
             ),
