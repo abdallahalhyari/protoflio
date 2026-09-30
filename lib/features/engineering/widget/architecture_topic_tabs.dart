@@ -4,6 +4,9 @@ import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/features/engineering/data/architecture_labels.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Horizontal pill tab bar to switch between production architecture blueprints.
 class ArchitectureTopicTabs extends StatelessWidget {
@@ -51,7 +54,8 @@ class ArchitectureTopicTabs extends StatelessWidget {
     return Semantics(
       button: true,
       selected: isSelected,
-      label: 'Select ${topic.title}',
+      label:
+          'Select ${architectureTopicLabel(AppLocalizations.of(context)!, topic.title)}',
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadius.sm),
@@ -108,14 +112,16 @@ class ArchitectureTopicTabs extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                topic.title.toUpperCase(),
+                architectureTopicLabel(
+                        AppLocalizations.of(context)!, topic.title)
+                    .toUpperCase(),
                 style: TextStyle(
                   color: isSelected
                       ? (isDark ? Colors.white : scheme.primary)
                       : (context.mutedText),
                   fontSize: AppTypography.captionSm,
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                  letterSpacing: 0.8,
+                  letterSpacing: latinTracking(context, 0.8),
                 ),
               ),
             ],

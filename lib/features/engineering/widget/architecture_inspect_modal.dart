@@ -5,6 +5,8 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
 import 'package:profile/features/engineering/widget/diagram_list.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/features/engineering/data/architecture_labels.dart';
 
 Future<void> showArchitectureInspectModal(
   BuildContext context, {
@@ -115,7 +117,8 @@ class _ArchitectureInspectDialogState
                           ),
                         ),
                         Text(
-                          widget.topic.title,
+                          architectureTopicLabel(AppLocalizations.of(context)!,
+                              widget.topic.title),
                           style: TextStyle(
                             fontFamily: AppTypography.displayFont,
                             color: context.onSurface,

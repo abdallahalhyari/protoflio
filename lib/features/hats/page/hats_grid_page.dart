@@ -19,6 +19,7 @@ import 'package:profile/features/hats/widget/hat_playing_card.dart';
 import 'package:profile/features/hats/widget/hat_role_pills.dart';
 import 'package:profile/shared/widget/page_activity.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
+import 'package:profile/features/hats/data/hat_labels.dart';
 
 /// Height the fan needs at full scale: one card, the fan arc, and room
 /// for the tilted corners and hover lift above and below it.
@@ -130,7 +131,8 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
     SoundService.instance.playPageTurn();
     context.read<HatsDeckBloc>().add(HatRoleSelected(index));
 
-    final roleTitle = kHats[index].title;
+    final roleTitle =
+        hatTitleLabel(AppLocalizations.of(context)!, kHats[index].title);
     final announcement =
         AppLocalizations.of(context)?.selectedRoleAnnouncement(roleTitle) ??
             'Selected role: $roleTitle';

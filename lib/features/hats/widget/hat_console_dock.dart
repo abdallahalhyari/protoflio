@@ -5,6 +5,8 @@ import 'package:profile/shared/widget/conditional_blur.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/hats/data/hat_labels.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Floating interactive bottom console dock on desktop for navigating roles,
 /// triggering deck shuffle/align, and showing active keyboard shortcuts.
@@ -128,7 +130,8 @@ class HatConsoleDock extends StatelessWidget {
                       ),
                       const SizedBox(width: 7),
                       Text(
-                        '0${selectedIndex + 1} / 0$totalCount',
+                        ltrAlways(
+                            context, '0${selectedIndex + 1} / 0$totalCount'),
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
                           // Contrast-adjusted: Thinking's charcoal read
@@ -148,7 +151,7 @@ class HatConsoleDock extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        currentHat.title.toUpperCase(),
+                        hatTitleLabel(loc, currentHat.title).toUpperCase(),
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
                           color: context.onSurface,

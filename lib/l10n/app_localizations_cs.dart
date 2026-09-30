@@ -640,4 +640,59 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get studyFaisOutcome4 =>
       'denních aktivních relací v nákupních procesech';
+
+  @override
+  String get skillCatAll => 'Vše';
+
+  @override
+  String get skillCatDomain => 'Oborová expertíza';
+
+  @override
+  String get skillCatMobile => 'Mobilní systémy';
+
+  @override
+  String get skillCatSecurity => 'Bezpečnost a protokoly';
+
+  @override
+  String get skillCatArchitecture => 'Architektura a stav';
+
+  @override
+  String get skillCatCloud => 'Cloud a infrastruktura';
+
+  @override
+  String get skillCatLanguages => 'Jazyky a komunikace';
+
+  @override
+  String get hatThinking => 'Myšlení';
+
+  @override
+  String get hatCommunicating => 'Komunikace';
+
+  @override
+  String get hatSorting => 'Třídění';
+
+  @override
+  String get hatBuilding => 'Stavění';
+
+  @override
+  String get hatFixing => 'Opravování';
+
+  @override
+  String get hatCompassion => 'Soucit';
+
+  @override
+  String get archTopicClean => 'Čistá mobilní architektura';
+
+  @override
+  String get archTopicOffline => 'Synchronizace offline-first';
+
+  @override
+  String get archTopicNfc => 'Zpracování čipových karet ISO-7816 a NFC';
+
+  @override
+  String get archTopicKeystore =>
+      'Hardwarové úložiště klíčů a životní cyklus JWT';
+
+  @override
+  String get archTopicState => 'Reaktivní správa stavu (BLoC)';
 }

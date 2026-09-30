@@ -631,4 +631,59 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get studyFaisOutcome4 => 'جلسة نشطة يوميًا عبر مسارات التجارة';
+
+  @override
+  String get skillCatAll => 'الكل';
+
+  @override
+  String get skillCatDomain => 'الخبرة المتخصصة';
+
+  @override
+  String get skillCatMobile => 'أنظمة الهاتف المحمول';
+
+  @override
+  String get skillCatSecurity => 'الأمان والبروتوكولات';
+
+  @override
+  String get skillCatArchitecture => 'البنية وإدارة الحالة';
+
+  @override
+  String get skillCatCloud => 'السحابة والبنية التحتية';
+
+  @override
+  String get skillCatLanguages => 'اللغات والتواصل';
+
+  @override
+  String get hatThinking => 'التفكير';
+
+  @override
+  String get hatCommunicating => 'التواصل';
+
+  @override
+  String get hatSorting => 'الفرز';
+
+  @override
+  String get hatBuilding => 'البناء';
+
+  @override
+  String get hatFixing => 'الإصلاح';
+
+  @override
+  String get hatCompassion => 'التعاطف';
+
+  @override
+  String get archTopicClean => 'البنية النظيفة لتطبيقات الهاتف';
+
+  @override
+  String get archTopicOffline => 'المزامنة بأولوية العمل دون اتصال';
+
+  @override
+  String get archTopicNfc => 'مسار البطاقات الذكية ISO-7816 وNFC';
+
+  @override
+  String get archTopicKeystore =>
+      'مخزن المفاتيح المدعوم بالعتاد ودورة حياة JWT';
+
+  @override
+  String get archTopicState => 'إدارة الحالة التفاعلية (BLoC)';
 }

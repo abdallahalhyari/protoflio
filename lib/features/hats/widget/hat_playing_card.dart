@@ -7,6 +7,8 @@ import 'package:profile/features/hats/widget/network_hat_image.dart';
 import 'package:profile/shared/widget/holographic_physics.dart';
 
 import 'package:profile/features/hats/model/hat_info.dart';
+import 'package:profile/features/hats/data/hat_labels.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Width of a fanned card left uncovered by its neighbour (fan spacing
 /// tops out at 170px) minus the face's inner padding.
@@ -229,7 +231,8 @@ class _HatPlayingCardState extends State<HatPlayingCard>
     // gesture-only drag isn't the only affordance.
     final semantics = Semantics(
       button: true,
-      label: '${widget.hat.title} role card. Tap to flip; drag to rotate.',
+      label:
+          '${hatTitleLabel(AppLocalizations.of(context)!, widget.hat.title)} role card. Tap to flip; drag to rotate.',
       child: cardContent,
     );
 
@@ -260,15 +263,16 @@ class _HatPlayingCardState extends State<HatPlayingCard>
   /// the standalone (mobile) card keeps it centred at full size.
   Widget _buildTitle() {
     final text = Text(
-      widget.hat.title.toUpperCase(),
+      hatTitleLabel(AppLocalizations.of(context)!, widget.hat.title)
+          .toUpperCase(),
       textAlign: TextAlign.center,
       maxLines: 1,
-      style: const TextStyle(
+      style: TextStyle(
         fontFamily: AppTypography.displayFont,
         color: Colors.white,
         fontSize: AppTypography.title + 1,
         fontWeight: FontWeight.w900,
-        letterSpacing: 2.2,
+        letterSpacing: latinTracking(context, 2.2),
       ),
     );
     if (widget.isStandalone) return text;
@@ -402,7 +406,8 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                       child: HatImage(
                         path: widget.hat.image,
                         height: 148,
-                        semanticLabel: widget.hat.title,
+                        semanticLabel: hatTitleLabel(
+                            AppLocalizations.of(context)!, widget.hat.title),
                       ),
                     ),
                   ),
@@ -536,7 +541,9 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                             ),
                           ),
                           TextSpan(
-                            text: widget.hat.title.toUpperCase(),
+                            text: hatTitleLabel(AppLocalizations.of(context)!,
+                                    widget.hat.title)
+                                .toUpperCase(),
                             style: TextStyle(
                               color: accent,
                               fontSize: AppTypography.overline,

@@ -640,4 +640,58 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get studyFaisOutcome4 =>
       'daily active sessions supported across commercial commerce funnels';
+
+  @override
+  String get skillCatAll => 'All';
+
+  @override
+  String get skillCatDomain => 'Domain Expertise';
+
+  @override
+  String get skillCatMobile => 'Mobile Systems';
+
+  @override
+  String get skillCatSecurity => 'Security & Protocols';
+
+  @override
+  String get skillCatArchitecture => 'Architecture & State';
+
+  @override
+  String get skillCatCloud => 'Cloud & Infrastructure';
+
+  @override
+  String get skillCatLanguages => 'Languages & Comm';
+
+  @override
+  String get hatThinking => 'Thinking';
+
+  @override
+  String get hatCommunicating => 'Communicating';
+
+  @override
+  String get hatSorting => 'Sorting';
+
+  @override
+  String get hatBuilding => 'Building';
+
+  @override
+  String get hatFixing => 'Fixing';
+
+  @override
+  String get hatCompassion => 'Compassion';
+
+  @override
+  String get archTopicClean => 'Clean Mobile Architecture';
+
+  @override
+  String get archTopicOffline => 'Offline-First Synchronization';
+
+  @override
+  String get archTopicNfc => 'ISO-7816 Smart-Card & NFC Pipeline';
+
+  @override
+  String get archTopicKeystore => 'Hardware-Backed Keystore & JWT Lifecycle';
+
+  @override
+  String get archTopicState => 'Reactive State Management (BLoC)';
 }

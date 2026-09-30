@@ -320,5 +320,23 @@
   "studyFaisOutcome4": "daily active sessions supported across commercial commerce funnels",
   "@studyEnglishNote": {
     "description": "Shown above the English technical chapters in other locales; empty in English."
-  }
+  },
+  "skillCatAll": "All",
+  "skillCatDomain": "Domain Expertise",
+  "skillCatMobile": "Mobile Systems",
+  "skillCatSecurity": "Security & Protocols",
+  "skillCatArchitecture": "Architecture & State",
+  "skillCatCloud": "Cloud & Infrastructure",
+  "skillCatLanguages": "Languages & Comm",
+  "hatThinking": "Thinking",
+  "hatCommunicating": "Communicating",
+  "hatSorting": "Sorting",
+  "hatBuilding": "Building",
+  "hatFixing": "Fixing",
+  "hatCompassion": "Compassion",
+  "archTopicClean": "Clean Mobile Architecture",
+  "archTopicOffline": "Offline-First Synchronization",
+  "archTopicNfc": "ISO-7816 Smart-Card & NFC Pipeline",
+  "archTopicKeystore": "Hardware-Backed Keystore & JWT Lifecycle",
+  "archTopicState": "Reactive State Management (BLoC)"
 }

@@ -5,6 +5,8 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/hats/data/hats_data.dart';
 import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/features/hats/data/hat_labels.dart';
 
 class HatRolePills extends StatelessWidget {
   final int selectedIndex;
@@ -31,7 +33,8 @@ class HatRolePills extends StatelessWidget {
           Semantics(
             button: true,
             selected: selectedIndex == i,
-            label: 'Role ${i + 1} of ${kHats.length}: ${kHats[i].title}',
+            label: 'Role ${i + 1} of ${kHats.length}: '
+                '${hatTitleLabel(AppLocalizations.of(context)!, kHats[i].title)}',
             child: InkWell(
               onTap: () {
                 SoundService.instance.playSelection();
@@ -83,8 +86,8 @@ class HatRolePills extends StatelessWidget {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      ltrAlways(
-                          context, '0${i + 1} ${kHats[i].title.toUpperCase()}'),
+                      ltrContent(context,
+                          '0${i + 1} ${hatTitleLabel(AppLocalizations.of(context)!, kHats[i].title).toUpperCase()}'),
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
                         color: selectedIndex == i

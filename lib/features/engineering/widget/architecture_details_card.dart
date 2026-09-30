@@ -4,6 +4,8 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
 import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/features/engineering/data/architecture_labels.dart';
 
 /// Card container displaying architecture rationale, summary, and technical safeguards.
 class ArchitectureDetailsCard extends StatelessWidget {
@@ -51,7 +53,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
         children: [
           // Section Title
           Text(
-            topic.title,
+            architectureTopicLabel(AppLocalizations.of(context)!, topic.title),
             style: TextStyle(
               fontSize: AppTypography.titleSm,
               fontWeight: FontWeight.w800,

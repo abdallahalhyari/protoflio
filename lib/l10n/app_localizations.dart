@@ -1203,6 +1203,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'daily active sessions supported across commercial commerce funnels'**
   String get studyFaisOutcome4;
+
+  /// No description provided for @skillCatAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get skillCatAll;
+
+  /// No description provided for @skillCatDomain.
+  ///
+  /// In en, this message translates to:
+  /// **'Domain Expertise'**
+  String get skillCatDomain;
+
+  /// No description provided for @skillCatMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile Systems'**
+  String get skillCatMobile;
+
+  /// No description provided for @skillCatSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security & Protocols'**
+  String get skillCatSecurity;
+
+  /// No description provided for @skillCatArchitecture.
+  ///
+  /// In en, this message translates to:
+  /// **'Architecture & State'**
+  String get skillCatArchitecture;
+
+  /// No description provided for @skillCatCloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud & Infrastructure'**
+  String get skillCatCloud;
+
+  /// No description provided for @skillCatLanguages.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages & Comm'**
+  String get skillCatLanguages;
+
+  /// No description provided for @hatThinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking'**
+  String get hatThinking;
+
+  /// No description provided for @hatCommunicating.
+  ///
+  /// In en, this message translates to:
+  /// **'Communicating'**
+  String get hatCommunicating;
+
+  /// No description provided for @hatSorting.
+  ///
+  /// In en, this message translates to:
+  /// **'Sorting'**
+  String get hatSorting;
+
+  /// No description provided for @hatBuilding.
+  ///
+  /// In en, this message translates to:
+  /// **'Building'**
+  String get hatBuilding;
+
+  /// No description provided for @hatFixing.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixing'**
+  String get hatFixing;
+
+  /// No description provided for @hatCompassion.
+  ///
+  /// In en, this message translates to:
+  /// **'Compassion'**
+  String get hatCompassion;
+
+  /// No description provided for @archTopicClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean Mobile Architecture'**
+  String get archTopicClean;
+
+  /// No description provided for @archTopicOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline-First Synchronization'**
+  String get archTopicOffline;
+
+  /// No description provided for @archTopicNfc.
+  ///
+  /// In en, this message translates to:
+  /// **'ISO-7816 Smart-Card & NFC Pipeline'**
+  String get archTopicNfc;
+
+  /// No description provided for @archTopicKeystore.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware-Backed Keystore & JWT Lifecycle'**
+  String get archTopicKeystore;
+
+  /// No description provided for @archTopicState.
+  ///
+  /// In en, this message translates to:
+  /// **'Reactive State Management (BLoC)'**
+  String get archTopicState;
 }
 
 class _AppLocalizationsDelegate
