@@ -143,6 +143,26 @@ patchMainJs(jsPath);
 patchFlutterJs(flutterJsPath);
 patchBootstrap(bootstrapPath);
 
+// index.html preloads the engine's fallback Roboto by exact URL. If a Flutter
+// upgrade changes that URL, the preload becomes a wasted 62 KB download, so
+// fail the build instead of shipping it silently.
+function checkRobotoPreload() {
+  const wasmPath = path.join(__dirname, 'build', 'web', 'main.dart.wasm');
+  const indexPath = path.join(__dirname, 'build', 'web', 'index.html');
+  if (!fs.existsSync(wasmPath) || !fs.existsSync(indexPath)) return;
+  const m = fs.readFileSync(indexPath, 'utf8')
+    .match(/fonts\.gstatic\.com\/s\/(roboto\/[^"]+\.woff2)/);
+  if (!m) return;
+  if (!fs.readFileSync(wasmPath).includes(Buffer.from(m[1]))) {
+    throw new Error(
+      `index.html preloads ${m[1]}, but main.dart.wasm no longer references ` +
+      'it. Update the Roboto preload URL in web/index.html.'
+    );
+  }
+  console.log('Roboto preload URL matches the engine.');
+}
+checkRobotoPreload();
+
 // Inject <link rel="prefetch"> tags for every deferred `.part.js` chunk.
 function injectPartPrefetch() {
   const indexPath = path.join(__dirname, 'build', 'web', 'index.html');
