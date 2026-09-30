@@ -5,6 +5,7 @@ import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
+import 'package:profile/shared/util/bidi.dart';
 import 'package:profile/features/shell/widget/portfolio_nav.dart' show TopNav;
 
 /// Desktop bottom-left "05 / 07 · SKILLS" folio bar. Reads pageIndex from
@@ -61,9 +62,13 @@ class FolioBar extends StatelessWidget {
                     ),
                   ),
                   child: Text(
+                    // "01 / 07" wrapped in one LTR isolate: under RTL the
+                    // run otherwise renders reversed ("07 / 01").
                     AppLocalizations.of(context)!.folioIndicator(
-                      (page + 1).toString().padLeft(2, '0'),
-                      pageCount.toString().padLeft(2, '0'),
+                      '${_rtl(context) ? kLri : ''}'
+                          '${(page + 1).toString().padLeft(2, '0')}',
+                      '${pageCount.toString().padLeft(2, '0')}'
+                          '${_rtl(context) ? kPdi : ''}',
                     ),
                     key: ValueKey<int>(page),
                     style: TextStyle(
@@ -236,3 +241,6 @@ class _NextStepState extends State<_NextStep> {
     );
   }
 }
+
+bool _rtl(BuildContext context) =>
+    Directionality.of(context) == TextDirection.rtl;

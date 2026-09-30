@@ -4,6 +4,7 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 class HatPaginationRow extends StatelessWidget {
   final int selectedIndex;
@@ -55,7 +56,7 @@ class HatPaginationRow extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                'ROLE 0${selectedIndex + 1} / 0$totalCount',
+                ltrAlways(context, 'ROLE 0${selectedIndex + 1} / 0$totalCount'),
                 style: TextStyle(
                   fontFamily: AppTypography.monoFont,
                   color: primary,

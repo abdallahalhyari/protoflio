@@ -5,6 +5,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
 import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Bottom-of-screen prev/next pager pill for the mobile continuous
 /// scroll layout. Reads page state from [HomeController].
@@ -107,8 +108,12 @@ class _MobilePagerContent extends StatelessWidget {
               transitionBuilder: (child, animation) =>
                   FadeTransition(opacity: animation, child: child),
               child: Text(
-                '${(page + 1).toString().padLeft(2, '0')} / '
-                '${pageCount.toString().padLeft(2, '0')}',
+                // Isolated: under RTL "06 / 07" otherwise renders "07 / 06".
+                ltrAlways(
+                  context,
+                  '${(page + 1).toString().padLeft(2, '0')} / '
+                  '${pageCount.toString().padLeft(2, '0')}',
+                ),
                 key: ValueKey<int>(page),
                 style: TextStyle(
                   fontFamily: AppTypography.monoFont,
