@@ -23,10 +23,17 @@ extension SurfaceTone on BuildContext {
   /// ConditionalBlur skips the blur on web (too costly in CanvasKit), so
   /// there scrolling copy read crisply straight through the chrome. Without
   /// a blur the dark glass is denser.
-  Color get glassSurface => isDarkMode
-      ? AppColors.darkSurface
-          .withValues(alpha: kIsWeb || AppMedia.reduceBlur(this) ? 0.92 : 0.78)
-      : Theme.of(this).scaffoldBackgroundColor.withValues(alpha: 0.92);
+  Color get glassSurface {
+    // No backdrop blur on web (ConditionalBlur skips it), so the glass has
+    // to hide scrolled copy on its own: at 92% headings still read through
+    // the app bar in both themes.
+    final unblurred = kIsWeb || AppMedia.reduceBlur(this);
+    return isDarkMode
+        ? AppColors.darkSurface.withValues(alpha: unblurred ? 0.97 : 0.78)
+        : Theme.of(this)
+            .scaffoldBackgroundColor
+            .withValues(alpha: unblurred ? 0.97 : 0.92);
+  }
 
   /// Slightly denser glass — used for raised toggles (theme puck,
   /// audio puck) that sit on top of `glassSurface` panels.
