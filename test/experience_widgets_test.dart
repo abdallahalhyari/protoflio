@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/experience/data/experience_data.dart';
-import 'package:profile/features/experience/widget/animated_experience_node.dart';
-import 'package:profile/features/experience/widget/credentials_bento_card.dart';
-import 'package:profile/features/experience/widget/experience_header.dart';
+
+import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
+import 'package:profile/features/experience/presentation/widgets/credentials_bento_card.dart';
+import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
@@ -50,7 +51,7 @@ void main() {
 
     testWidgets('AnimatedExperienceNode renders experience card content',
         (tester) async {
-      final exp = kExperience.first;
+      final exp = testExperience.first;
       await tester.pumpWidget(_wrap(
         AnimatedExperienceNode(
           exp: exp,
@@ -67,7 +68,7 @@ void main() {
     testWidgets(
         'AnimatedExperienceNode renders company website and linkedin action pills',
         (tester) async {
-      final exp = kExperience.first;
+      final exp = testExperience.first;
       await tester.pumpWidget(_wrap(
         AnimatedExperienceNode(
           exp: exp,

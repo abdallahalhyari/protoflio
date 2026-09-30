@@ -4,10 +4,11 @@ import 'package:profile/features/hats/bloc/hats_deck_bloc.dart';
 import 'package:profile/features/hats/bloc/hats_deck_event.dart';
 import 'package:profile/features/hats/bloc/hats_deck_state.dart';
 
+
 void main() {
   group('HatsDeckBloc Test Suite', () {
     test('initial state is properly configured', () {
-      final bloc = HatsDeckBloc(hatCount: 6);
+      final bloc = HatsDeckBloc(repository: TestHatRepository());
       expect(bloc.state.selectedHatIndex, equals(0));
       expect(bloc.state.renderOrder, equals([0, 1, 2, 3, 4, 5]));
       expect(bloc.state.cardPositions.length, equals(6));
@@ -17,7 +18,7 @@ void main() {
 
     test('HatRoleSelected updates selectedHatIndex and brings card to front',
         () async {
-      final bloc = HatsDeckBloc(hatCount: 6);
+      final bloc = HatsDeckBloc(repository: TestHatRepository());
 
       bloc.add(const HatRoleSelected(2));
       await expectLater(
@@ -30,7 +31,7 @@ void main() {
     });
 
     test('HatNextRole and HatPrevRole cycle through roles', () async {
-      final bloc = HatsDeckBloc(hatCount: 6);
+      final bloc = HatsDeckBloc(repository: TestHatRepository());
 
       bloc.add(const HatNextRole());
       await expectLater(
@@ -56,7 +57,7 @@ void main() {
 
     test('HatLayoutInitialized sets fan positions and initializes deck',
         () async {
-      final bloc = HatsDeckBloc(hatCount: 6);
+      final bloc = HatsDeckBloc(repository: TestHatRepository());
 
       bloc.add(const HatLayoutInitialized(Size(1200, 800)));
       await expectLater(
@@ -70,7 +71,7 @@ void main() {
     });
 
     test('HatCardPositionSet updates position of designated card', () async {
-      final bloc = HatsDeckBloc(hatCount: 6);
+      final bloc = HatsDeckBloc(repository: TestHatRepository());
 
       bloc.add(const HatCardPositionSet(3, Offset(150, 220)));
       await expectLater(

@@ -1,11 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/features/engineering/data/architecture_data.dart';
 import 'package:profile/features/engineering/data/architecture_labels.dart';
 import 'package:profile/features/hats/data/hat_labels.dart';
-import 'package:profile/features/hats/data/hats_data.dart';
-import 'package:profile/features/skills/data/skill_category_labels.dart';
-import 'package:profile/features/skills/data/skills_data.dart';
+
+import 'package:profile/features/skills/data/datasources/skill_category_labels.dart';
+
 import 'package:profile/l10n/app_localizations.dart';
 
 void main() {
@@ -16,14 +17,14 @@ void main() {
     final l10n = lookupAppLocalizations(Locale(code));
 
     test('$code: every skill category is translated', () {
-      final categories = {'ALL', ...kSkills.map((s) => s.category)};
+      final categories = {'ALL', ...testSkills.map((s) => s.category)};
       for (final c in categories) {
         expect(skillCategoryLabel(l10n, c), isNot(c), reason: c);
       }
     });
 
     test('$code: every perspective role is translated', () {
-      for (final h in kHats) {
+      for (final h in testHats) {
         expect(hatTitleLabel(l10n, h.title), isNot(h.title), reason: h.title);
       }
     });

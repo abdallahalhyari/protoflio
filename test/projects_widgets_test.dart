@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/projects/data/projects_data.dart';
-import 'package:profile/features/projects/widget/interactive_project_card.dart';
-import 'package:profile/features/projects/widget/nfc_architecture_diagram.dart';
-import 'package:profile/features/projects/widget/pipeline_topology_diagram.dart';
-import 'package:profile/features/projects/page/projects_page.dart';
-import 'package:profile/features/projects/widget/project_dossier_card.dart';
+
+import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
+import 'package:profile/features/projects/presentation/widgets/nfc_architecture_diagram.dart';
+
+import 'package:profile/features/projects/domain/repositories/project_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
+import 'package:profile/features/projects/presentation/pages/projects_page.dart';
+import 'package:profile/features/projects/presentation/widgets/project_dossier_card.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child,
@@ -18,8 +22,11 @@ Widget _wrap(Widget child,
     supportedLocales: AppLocalizations.supportedLocales,
     home: MediaQuery(
       data: MediaQueryData(size: size),
-      child: Scaffold(
-        body: scrollable ? SingleChildScrollView(child: child) : child,
+      child: RepositoryProvider<ProjectRepository>(
+        create: (_) => TestProjectRepository(),
+        child: Scaffold(
+          body: scrollable ? SingleChildScrollView(child: child) : child,
+        ),
       ),
     ),
   );
@@ -29,7 +36,7 @@ void main() {
   group('Projects Widgets Test Suite', () {
     testWidgets('PipelineTopologyDiagram renders pipeline topology stages',
         (tester) async {
-      final project = kProjects.first; // NatHealth
+      final project = testProjects.first; // NatHealth
       await tester.pumpWidget(_wrap(
         PipelineTopologyDiagram(
           project: project,
@@ -101,7 +108,7 @@ void main() {
     testWidgets(
         'InteractiveProjectCard renders company website and linkedin quick-link buttons',
         (tester) async {
-      final project = kProjects.first;
+      final project = testProjects.first;
       await tester.pumpWidget(_wrap(
         InteractiveProjectCard(
           project: project,
@@ -121,7 +128,7 @@ void main() {
 
     testWidgets('InteractiveProjectCard renders interactive tech stack chips',
         (tester) async {
-      final project = kProjects.first;
+      final project = testProjects.first;
       String? tappedTech;
       await tester.pumpWidget(_wrap(
         InteractiveProjectCard(
@@ -177,7 +184,7 @@ void main() {
     testWidgets(
         'InteractiveProjectCard activates focus styling when keyboard focused',
         (tester) async {
-      final project = kProjects.first;
+      final project = testProjects.first;
       await tester.pumpWidget(_wrap(
         InteractiveProjectCard(
           project: project,

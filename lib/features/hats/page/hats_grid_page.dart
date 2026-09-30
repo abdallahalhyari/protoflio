@@ -9,7 +9,7 @@ import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/hats/bloc/hats_deck_bloc.dart';
 import 'package:profile/features/hats/bloc/hats_deck_event.dart';
 import 'package:profile/features/hats/bloc/hats_deck_state.dart';
-import 'package:profile/features/hats/data/hats_data.dart';
+import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/hats/widget/continuous_mobile_hat_column.dart';
 import 'package:profile/features/hats/widget/hat_bio_strip.dart';
 import 'package:profile/features/hats/widget/hat_console_dock.dart';
@@ -54,7 +54,7 @@ class HatsGridPage extends StatelessWidget {
     }
 
     return BlocProvider<HatsDeckBloc>(
-      create: (_) => HatsDeckBloc(),
+      create: (ctx) => HatsDeckBloc(repository: ctx.read<HatRepository>()),
       child: _HatsGridPageView(isContinuousMobile: isContinuousMobile),
     );
   }
@@ -131,8 +131,9 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
     SoundService.instance.playPageTurn();
     context.read<HatsDeckBloc>().add(HatRoleSelected(index));
 
+    final hats = context.read<HatRepository>().getHats();
     final roleTitle =
-        hatTitleLabel(AppLocalizations.of(context)!, kHats[index].title);
+        hatTitleLabel(AppLocalizations.of(context)!, hats[index].title);
     final announcement =
         AppLocalizations.of(context)?.selectedRoleAnnouncement(roleTitle) ??
             'Selected role: $roleTitle';
@@ -172,6 +173,9 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
     final isMobile = size.width < AppBreakpoints.tablet;
+
+    final repo = context.read<HatRepository>();
+    final hats = repo.getHats();
 
     return BlocBuilder<HatsDeckBloc, HatsDeckState>(
       builder: (context, deckState) {
@@ -268,8 +272,8 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
                   children: [
                     for (final i in renderOrder)
                       HatPlayingCard(
-                        key: ValueKey('hat_card_${kHats[i].title}'),
-                        hat: kHats[i],
+                        key: ValueKey('hat_card_${hats[i].title}'),
+                        hat: hats[i],
                         index: i,
                         position: i < cardPositions.length
                             ? cardPositions[i]
@@ -356,9 +360,9 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
                     top: false,
                     child: HatConsoleDock(
                       selectedIndex: selectedHatIndex,
-                      totalCount: kHats.length,
+                      totalCount: hats.length,
                       currentHat:
-                          kHats[selectedHatIndex.clamp(0, kHats.length - 1)],
+                          hats[selectedHatIndex.clamp(0, hats.length - 1)],
                       onPrev: () => _prevRole(size, false),
                       onNext: () => _nextRole(size, false),
                       onShuffle: _shuffleDeck,

@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
-import 'package:profile/features/projects/data/projects_data.dart';
+
 import 'package:profile/features/shell/widget/custom_cursor.dart';
 import 'package:profile/features/shell/widget/desktop_toolbar.dart';
 import 'package:profile/features/shell/widget/magazine_page_transformer.dart';
-import 'package:profile/features/projects/widget/interactive_project_card.dart';
+import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
 
 void main() {
   group('Asset Size Budget & Format Audit', () {
@@ -60,7 +61,7 @@ void main() {
       await tester.binding.setSurfaceSize(const Size(1200, 800));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
-      final testProject = kProjects.first;
+      final testProject = testProjects.first;
       const scheme = ColorScheme.dark();
 
       await tester.pumpWidget(

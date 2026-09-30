@@ -7,11 +7,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/contact/page/contact_page.dart';
 import 'package:profile/features/engineering/page/engineering_page.dart';
-import 'package:profile/features/experience/page/experience_page.dart';
+import 'package:profile/features/experience/presentation/pages/experience_page.dart';
 import 'package:profile/features/hats/page/hats_grid_page.dart';
 import 'package:profile/features/intro/page/intro_page.dart';
-import 'package:profile/features/projects/page/projects_page.dart';
-import 'package:profile/features/skills/page/skills_page.dart';
+import 'package:profile/features/projects/presentation/pages/projects_page.dart';
+import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/shared/widget/directional_icon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

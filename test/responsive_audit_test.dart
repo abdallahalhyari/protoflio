@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/projects/data/projects_data.dart';
+
 import 'package:profile/features/contact/page/contact_page.dart';
 import 'package:profile/features/engineering/page/engineering_page.dart';
-import 'package:profile/features/experience/page/experience_page.dart';
+import 'package:profile/features/experience/presentation/pages/experience_page.dart';
 import 'package:profile/features/hats/page/hats_grid_page.dart';
 import 'package:profile/features/intro/page/intro_page.dart';
-import 'package:profile/features/projects/page/project_modal.dart';
-import 'package:profile/features/projects/page/projects_page.dart';
-import 'package:profile/features/skills/page/skills_page.dart';
+import 'package:profile/features/projects/presentation/pages/project_modal.dart';
+import 'package:profile/features/projects/presentation/pages/projects_page.dart';
+import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/features/shell/widget/mobile_app_bar.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
 import 'package:profile/features/shell/widget/shortcut_help_dialog.dart';
@@ -451,7 +452,7 @@ void main() {
         'showProjectCaseStudy opens and renders without overflow on 320x568 screen',
         (tester) async {
       _setViewport(tester, const Size(320, 568));
-      final project = kProjects.first;
+      final project = testProjects.first;
       late BuildContext rootCtx;
       await tester.pumpWidget(_buildViewportHarness(
         Builder(builder: (ctx) {

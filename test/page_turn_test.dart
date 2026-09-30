@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/features/hats/page/hats_grid_page.dart';
-import 'package:profile/features/projects/page/projects_page.dart';
+import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/home_screen.dart';
 import 'package:profile/features/shell/widget/folio_bar.dart';

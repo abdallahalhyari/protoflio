@@ -10,7 +10,15 @@ import 'package:profile/core/bloc/locale/locale_state.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
+import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
+import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
+import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
+import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
+import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
+import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/shell/home_screen.dart';
+import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
+import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,13 +44,26 @@ Future<void> main() async {
   final Locale initLocale =
       localeStr != null ? Locale(localeStr) : const Locale('en');
 
+  final projectRepo = LocalProjectRepository();
+  final experienceRepo = LocalExperienceRepository();
+  final hatRepo = LocalHatRepository();
+  final skillRepo = LocalSkillRepository();
+
   await Future.wait([
     SoundService.instance.load(),
+    projectRepo.load(),
+    experienceRepo.load(),
+    hatRepo.load(),
+    skillRepo.load(),
   ]);
 
   runApp(PortfolioApp(
     initialTheme: initTheme,
     initialLocale: initLocale,
+    projectRepo: projectRepo,
+    experienceRepo: experienceRepo,
+    hatRepo: hatRepo,
+    skillRepo: skillRepo,
   ));
 
   // Analytics: `web/index.html` sets up `window.gtag` synchronously and
@@ -82,66 +103,90 @@ class PortfolioApp extends StatelessWidget {
     super.key,
     this.initialTheme = ThemeMode.dark,
     this.initialLocale = const Locale('en'),
+    required this.projectRepo,
+    required this.experienceRepo,
+    required this.hatRepo,
+    required this.skillRepo,
   });
 
   final ThemeMode initialTheme;
   final Locale initialLocale;
+  final ProjectRepository projectRepo;
+  final ExperienceRepository experienceRepo;
+  final HatRepository hatRepo;
+  final SkillRepository skillRepo;
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider<ThemeBloc>(
-          create: (_) =>
-              ThemeBloc(initialMode: initialTheme)..add(const ThemeStarted()),
+        RepositoryProvider<ProjectRepository>.value(
+          value: projectRepo,
         ),
-        BlocProvider<LocaleBloc>(
-          create: (_) => LocaleBloc(initialLocale: initialLocale)
-            ..add(const LocaleStarted()),
+        RepositoryProvider<ExperienceRepository>.value(
+          value: experienceRepo,
+        ),
+        RepositoryProvider<HatRepository>.value(
+          value: hatRepo,
+        ),
+        RepositoryProvider<SkillRepository>.value(
+          value: skillRepo,
         ),
       ],
-      child: BlocBuilder<LocaleBloc, LocaleState>(
-        builder: (context, localeState) {
-          return BlocBuilder<ThemeBloc, ThemeState>(
-            buildWhen: (previous, current) => previous.mode != current.mode,
-            builder: (context, themeState) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                scrollBehavior: const _SmoothScrollBehavior(),
-                title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
-                themeMode: themeState.mode,
-                theme: AppTheme.light(),
-                darkTheme: AppTheme.dark(),
-                themeAnimationDuration: AppMotion.heroEntry,
-                themeAnimationCurve: AppMotion.standard,
-                locale: localeState.locale,
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale('en'),
-                  Locale('ar'),
-                  Locale('cs'),
-                ],
-                builder: (context, child) {
-                  final media = MediaQuery.of(context);
-                  return MediaQuery(
-                    data: media.copyWith(
-                      textScaler: AppMedia.clampTextScale(media.textScaler),
-                    ),
-                    // Above the Navigator, so dialogs and case-study
-                    // routes get the keyboard focus ring too.
-                    child: KeyboardFocusRing(child: child!),
-                  );
-                },
-                home: const _AccentTheme(child: HomeScreen()),
-              );
-            },
-          );
-        },
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeBloc>(
+            create: (_) =>
+                ThemeBloc(initialMode: initialTheme)..add(const ThemeStarted()),
+          ),
+          BlocProvider<LocaleBloc>(
+            create: (_) => LocaleBloc(initialLocale: initialLocale)
+              ..add(const LocaleStarted()),
+          ),
+        ],
+        child: BlocBuilder<LocaleBloc, LocaleState>(
+          builder: (context, localeState) {
+            return BlocBuilder<ThemeBloc, ThemeState>(
+              buildWhen: (previous, current) => previous.mode != current.mode,
+              builder: (context, themeState) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  scrollBehavior: const _SmoothScrollBehavior(),
+                  title: 'Abdallah Alhyari — Senior Flutter & Android Engineer',
+                  themeMode: themeState.mode,
+                  theme: AppTheme.light(),
+                  darkTheme: AppTheme.dark(),
+                  themeAnimationDuration: AppMotion.heroEntry,
+                  themeAnimationCurve: AppMotion.standard,
+                  locale: localeState.locale,
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: const [
+                    Locale('en'),
+                    Locale('ar'),
+                    Locale('cs'),
+                  ],
+                  builder: (context, child) {
+                    final media = MediaQuery.of(context);
+                    return MediaQuery(
+                      data: media.copyWith(
+                        textScaler: AppMedia.clampTextScale(media.textScaler),
+                      ),
+                      // Above the Navigator, so dialogs and case-study
+                      // routes get the keyboard focus ring too.
+                      child: KeyboardFocusRing(child: child!),
+                    );
+                  },
+                  home: const _AccentTheme(child: HomeScreen()),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

@@ -3,7 +3,8 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widget/section_masthead.dart';
 
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/features/hats/data/hats_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/hats/widget/hat_playing_card.dart';
 import 'package:profile/features/hats/widget/hat_bio_strip.dart';
 import 'package:profile/features/hats/widget/hat_pagination_row.dart';
@@ -31,6 +32,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final hats = context.read<HatRepository>().getHats();
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -83,7 +85,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
                   ),
                   child: HatPlayingCard(
                     key: ValueKey('mobile_hat_card_$selectedHatIndex'),
-                    hat: kHats[selectedHatIndex],
+                    hat: hats[selectedHatIndex],
                     index: selectedHatIndex,
                     position: Offset.zero,
                     isStandalone: true,
@@ -96,7 +98,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
           const SizedBox(height: 12),
           HatPaginationRow(
             selectedIndex: selectedHatIndex,
-            totalCount: kHats.length,
+            totalCount: hats.length,
             onPrev: onPrevRole,
             onNext: onNextRole,
           ),

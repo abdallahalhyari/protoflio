@@ -3,7 +3,8 @@ import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/features/hats/data/hats_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/shared/util/bidi.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/hats/data/hat_labels.dart';
@@ -24,17 +25,18 @@ class HatRolePills extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primary = Theme.of(context).colorScheme.primary;
+    final hats = context.read<HatRepository>().getHats();
 
     return Wrap(
       spacing: 6,
       runSpacing: 5,
       children: [
-        for (int i = 0; i < kHats.length; i++)
+        for (int i = 0; i < hats.length; i++)
           Semantics(
             button: true,
             selected: selectedIndex == i,
-            label: 'Role ${i + 1} of ${kHats.length}: '
-                '${hatTitleLabel(AppLocalizations.of(context)!, kHats[i].title)}',
+            label: 'Role ${i + 1} of ${hats.length}: '
+                '${hatTitleLabel(AppLocalizations.of(context)!, hats[i].title)}',
             child: InkWell(
               onTap: () {
                 SoundService.instance.playSelection();
@@ -80,14 +82,14 @@ class HatRolePills extends StatelessWidget {
                       width: 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: kHats[i].color,
+                        color: hats[i].color,
                         shape: BoxShape.circle,
                       ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       ltrContent(context,
-                          '0${i + 1} ${hatTitleLabel(AppLocalizations.of(context)!, kHats[i].title).toUpperCase()}'),
+                          '0${i + 1} ${hatTitleLabel(AppLocalizations.of(context)!, hats[i].title).toUpperCase()}'),
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
                         color: selectedIndex == i

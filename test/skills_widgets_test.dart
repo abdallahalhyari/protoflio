@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/skills/data/skills_data.dart';
-import 'package:profile/features/skills/widget/skill_category_filters.dart';
-import 'package:profile/features/skills/widget/skill_search_bar.dart';
-import 'package:profile/features/skills/widget/skills_empty_state.dart';
-import 'package:profile/features/skills/widget/skills_header.dart';
+
+import 'package:profile/features/skills/presentation/widgets/skill_category_filters.dart';
+import 'package:profile/features/skills/presentation/widgets/skill_search_bar.dart';
+import 'package:profile/features/skills/presentation/widgets/skills_empty_state.dart';
+import 'package:profile/features/skills/presentation/widgets/skills_header.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
@@ -37,7 +38,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('FEATURE 04 · ARCHITECTURAL MASTERY'), findsOneWidget);
-      expect(find.text('${kSkills.length} CORE DISCIPLINES'), findsOneWidget);
+      expect(find.text('${testSkills.length} CORE DISCIPLINES'), findsOneWidget);
     });
 
     testWidgets(

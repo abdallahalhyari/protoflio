@@ -1,0 +1,261 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/service/sound_service.dart';
+import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
+import 'package:profile/features/projects/presentation/bloc/projects_filter_event.dart';
+import 'package:profile/features/projects/presentation/bloc/projects_filter_state.dart';
+import 'package:profile/features/projects/domain/entities/project.dart';
+import 'package:profile/features/projects/domain/repositories/project_repository.dart';
+import 'package:profile/shared/widget/page_activity.dart';
+import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
+import 'package:profile/features/projects/presentation/widgets/project_domain_filters.dart';
+import 'package:profile/shared/util/grid_math.dart';
+import 'package:profile/shared/widget/screen_shell.dart';
+import 'package:profile/shared/widget/section_masthead.dart';
+import 'package:profile/features/projects/presentation/widgets/projects_empty_state.dart';
+
+class ProjectsPage extends StatelessWidget {
+  final bool isContinuousMobile;
+
+  const ProjectsPage({
+    super.key,
+    this.isContinuousMobile = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // If an external ProjectsFilterBloc is already provided (e.g. in tests), reuse it.
+    ProjectsFilterBloc? bloc;
+    try {
+      bloc = context.read<ProjectsFilterBloc>();
+    } catch (_) {
+      bloc = null;
+    }
+
+    if (bloc != null) {
+      return _ProjectsPageView(isContinuousMobile: isContinuousMobile);
+    }
+
+    return BlocProvider<ProjectsFilterBloc>(
+      create: (ctx) => ProjectsFilterBloc(
+        repository: ctx.read<ProjectRepository>(),
+      ),
+      child: _ProjectsPageView(isContinuousMobile: isContinuousMobile),
+    );
+  }
+}
+
+class _ProjectsPageView extends StatefulWidget {
+  final bool isContinuousMobile;
+
+  const _ProjectsPageView({required this.isContinuousMobile});
+
+  @override
+  State<_ProjectsPageView> createState() => _ProjectsPageViewState();
+}
+
+class _ProjectsPageViewState extends State<_ProjectsPageView>
+    with AutomaticKeepAliveClientMixin, ActivePageFocusMixin {
+  final FocusNode _keyboardFocusNode = FocusNode(debugLabel: 'ProjectsPage');
+
+  static const List<String> _domains = [
+    'ALL',
+    'Healthcare & Smart Cards',
+    'Enterprise HIS & LMS',
+    'Fleet & Telematics',
+    'M-Commerce & Streaming',
+  ];
+
+  @override
+  bool get wantKeepAlive => true;
+
+  // `autofocus` only wins when nothing in the enclosing scope already has
+  // focus — DesktopKeyboardNav's app-wide Focus claims it first, so this
+  // page's arrow-key filter shortcut would otherwise never fire. The mixin
+  // requests focus explicitly whenever this page becomes the visible one.
+  @override
+  FocusNode get pageFocusNode => _keyboardFocusNode;
+
+  @override
+  void dispose() {
+    _keyboardFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final size = MediaQuery.sizeOf(context);
+    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final loc = AppLocalizations.of(context)!;
+
+    return BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
+      builder: (context, filterState) {
+        final filteredProjects = filterState.filteredProjects;
+        final selectedDomain = filterState.selectedDomain;
+        final selectedTech = filterState.selectedTech;
+
+        return Focus(
+          focusNode: _keyboardFocusNode,
+          onKeyEvent: (node, event) {
+            if (event is KeyDownEvent) {
+              if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+                final curIdx = _domains.indexOf(selectedDomain);
+                final nextIdx =
+                    (curIdx - 1 + _domains.length) % _domains.length;
+                SoundService.instance.playSelection();
+                context
+                    .read<ProjectsFilterBloc>()
+                    .add(DomainFilterSelected(_domains[nextIdx]));
+                return KeyEventResult.handled;
+              } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+                final curIdx = _domains.indexOf(selectedDomain);
+                final nextIdx = (curIdx + 1) % _domains.length;
+                SoundService.instance.playSelection();
+                context
+                    .read<ProjectsFilterBloc>()
+                    .add(DomainFilterSelected(_domains[nextIdx]));
+                return KeyEventResult.handled;
+              }
+            }
+            return KeyEventResult.ignored;
+          },
+          child: AppScreenShell(
+            verticalPadding: AppSpacing.xl,
+            reserveBottomNav: !widget.isContinuousMobile,
+            reserveMobileTop: !widget.isContinuousMobile,
+            child: CustomScrollView(
+              shrinkWrap: widget.isContinuousMobile,
+              physics: widget.isContinuousMobile
+                  ? const NeverScrollableScrollPhysics()
+                  : null,
+              slivers: [
+                SliverToBoxAdapter(
+                  child: _buildHeader(scheme, loc, size, isDesktop),
+                ),
+                const SliverToBoxAdapter(
+                    child: SizedBox(height: AppSpacing.md)),
+                SliverToBoxAdapter(
+                  child: ProjectDomainFilters(
+                    domains: _domains,
+                    selectedDomain: selectedDomain,
+                    selectedTech: selectedTech,
+                    domainCounts: filterState.domainCounts,
+                    isDesktop: isDesktop,
+                    onSelectDomain: (domain) {
+                      context
+                          .read<ProjectsFilterBloc>()
+                          .add(DomainFilterSelected(domain));
+                    },
+                    onClearTech: () {
+                      context
+                          .read<ProjectsFilterBloc>()
+                          .add(const ProjectsFilterReset());
+                    },
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                    child: SizedBox(height: AppSpacing.lg)),
+                SliverToBoxAdapter(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (filteredProjects.isEmpty) {
+                        return ProjectsEmptyState(
+                          scheme: scheme,
+                          isDesktop: isDesktop,
+                        );
+                      }
+
+                      if (isDesktop) {
+                        const double spacing = AppSpacing.lg;
+                        final double itemWidth =
+                            columnWidth(constraints.maxWidth, 2, spacing);
+                        if (itemWidth <= 0) return const SizedBox.shrink();
+                        // Fixed-height grid cells: grow the text area with
+                        // the user's text scale (up to 2x) instead of
+                        // clipping the card body.
+                        final double textScale =
+                            MediaQuery.textScalerOf(context).scale(1);
+                        final double itemHeight =
+                            392 + 110 * (textScale - 1).clamp(0.0, 1.0);
+
+                        return Wrap(
+                          spacing: spacing,
+                          runSpacing: spacing,
+                          children: [
+                            for (int i = 0; i < filteredProjects.length; i++)
+                              SizedBox(
+                                width: itemWidth,
+                                height: itemHeight,
+                                child: _buildProjectItem(
+                                  project: filteredProjects[i],
+                                  scheme: scheme,
+                                  isDesktop: isDesktop,
+                                  selectedTech: selectedTech,
+                                ),
+                              ),
+                          ],
+                        );
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          for (int i = 0; i < filteredProjects.length; i++) ...[
+                            _buildProjectItem(
+                              project: filteredProjects[i],
+                              scheme: scheme,
+                              isDesktop: isDesktop,
+                              selectedTech: selectedTech,
+                            ),
+                            if (i < filteredProjects.length - 1)
+                              const SizedBox(height: AppSpacing.md),
+                          ],
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildHeader(
+      ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
+    return SectionMasthead(
+      kicker: 'FEATURE 03 · CASE STUDIES',
+      title: loc.navWork.toUpperCase(),
+      subtitle: loc.sectionSubtitleWork,
+      isDesktop: isDesktop,
+      badgeIcon: Icons.work_outline_rounded,
+      badgeLabel: '${context.read<ProjectRepository>().getProjectCount()} CASE STUDIES',
+    );
+  }
+
+  Widget _buildProjectItem({
+    required Project project,
+    required ColorScheme scheme,
+    required bool isDesktop,
+    required String? selectedTech,
+  }) {
+    return InteractiveProjectCard(
+      project: project,
+      index: context.read<ProjectRepository>().getProjects().indexOf(project),
+      scheme: scheme,
+      isDesktop: isDesktop,
+      selectedTech: selectedTech,
+      onSelectTech: (tech) {
+        context.read<ProjectsFilterBloc>().add(TechFilterToggled(tech));
+      },
+    );
+  }
+}

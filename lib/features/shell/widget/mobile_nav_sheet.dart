@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/cv_service.dart';
 import 'package:profile/service/sound_service.dart';
@@ -9,7 +8,10 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
-import 'package:profile/shared/widget/directional_icon.dart';
+
+import 'package:profile/features/shell/widget/nav_sheet/nav_sheet_header.dart';
+import 'package:profile/features/shell/widget/nav_sheet/nav_sheet_section_row.dart';
+import 'package:profile/features/shell/widget/nav_sheet/nav_sheet_bottom_actions.dart';
 
 class NavSectionItem {
   final int index;
@@ -41,7 +43,6 @@ class MobileNavSheet extends StatelessWidget {
     required this.onDownloadResume,
   });
 
-  /// Resolves localized section titles and subtitles based on the current [BuildContext].
   static List<NavSectionItem> getSections(BuildContext context) {
     final l = AppLocalizations.of(context);
     return [
@@ -220,7 +221,6 @@ class MobileNavSheet extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Drag Handle
                 const SizedBox(height: 10),
                 Center(
                   child: Container(
@@ -234,70 +234,11 @@ class MobileNavSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 14),
 
-                // Header
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            '// DIRECTORY',
-                            style: TextStyle(
-                              color: AppColors.accentIndigo,
-                              fontSize: AppTypography.caption,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 2.0,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            'PORTFOLIO SECTIONS',
-                            style: TextStyle(
-                              fontFamily: AppTypography.displayFont,
-                              color: context.onSurface,
-                              fontSize: AppTypography.subtitle,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                      InkWell(
-                        onTap: () {
-                          SoundService.instance.playClick();
-                          Navigator.of(context).pop();
-                        },
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                        child: Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.08)
-                                : AppColors.slate100,
-                            borderRadius: BorderRadius.circular(AppRadius.sm),
-                          ),
-                          child: Icon(
-                            Icons.close_rounded,
-                            size: 18,
-                            color: isDark ? Colors.white70 : AppColors.slate900,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                SheetHeader(isDark: isDark),
 
                 const SizedBox(height: 14),
-                Container(
-                  height: 1,
-                  color: context.divider,
-                ),
+                Container(height: 1, color: context.divider),
 
-                // Section items
                 ConstrainedBox(
                   constraints: BoxConstraints(
                     maxHeight: MediaQuery.sizeOf(context).height * 0.52,
@@ -312,250 +253,25 @@ class MobileNavSheet extends StatelessWidget {
                     separatorBuilder: (_, __) => const SizedBox(height: 8),
                     itemBuilder: (context, index) {
                       final item = navItems[index];
-                      final isActive = activeIndex == item.index;
-                      final activeColor = isDark
-                          ? item.accentColor
-                          : switch (item.accentColor.toARGB32()) {
-                              0xFF06B6D4 => AppColors.accentSkyDeep,
-                              0xFF10B981 => AppColors.accentGreenDeep,
-                              0xFF8B5CF6 => AppColors.accentVioletDeep,
-                              0xFFFBBF24 => AppColors.accentAmberDeep,
-                              0xFFF43F5E => AppColors.accentRoseDeep,
-                              _ => item.accentColor,
-                            };
-
-                      return InkWell(
-                        onTap: () {
+                      return NavSectionRow(
+                        item: item,
+                        isActive: activeIndex == item.index,
+                        isDark: isDark,
+                        onSelect: () {
                           HapticFeedback.selectionClick();
                           SoundService.instance.playClick();
                           Navigator.of(context).pop();
                           onSelectSection(item.index);
                         },
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        child: AnimatedContainer(
-                          duration: AppMotion.chipHover,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: isActive
-                                ? item.accentColor
-                                    .withValues(alpha: isDark ? 0.18 : 0.12)
-                                : (isDark
-                                    ? Colors.white.withValues(alpha: 0.04)
-                                    : AppColors.slate50),
-                            borderRadius: BorderRadius.circular(AppRadius.md),
-                            border: Border.all(
-                              color: isActive
-                                  ? activeColor.withValues(
-                                      alpha: isDark ? 0.6 : 0.55)
-                                  : (isDark
-                                      ? Colors.white.withValues(alpha: 0.07)
-                                      : AppColors.slate200),
-                              width: isActive ? 1.5 : 1.0,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              // Number badge
-                              Container(
-                                width: 28,
-                                height: 28,
-                                decoration: BoxDecoration(
-                                  color: isActive
-                                      ? item.accentColor
-                                      : (isDark
-                                          ? Colors.white.withValues(alpha: 0.08)
-                                          : AppColors.slate200),
-                                  borderRadius:
-                                      BorderRadius.circular(AppRadius.chip),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    item.number,
-                                    style: TextStyle(
-                                      color: isActive
-                                          ? Colors.black
-                                          : (context.mutedText),
-                                      fontSize: AppTypography.caption,
-                                      fontWeight: FontWeight.w900,
-                                      fontFamily: AppTypography.monoFont,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Icon(
-                                item.icon,
-                                size: 18,
-                                color: isActive
-                                    ? activeColor
-                                    : (isDark
-                                        ? Colors.white60
-                                        : AppColors.slate500),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      item.title,
-                                      style: TextStyle(
-                                        color: isActive
-                                            ? (context.onSurface)
-                                            : (isDark
-                                                ? Colors.white
-                                                    .withValues(alpha: 0.85)
-                                                : AppColors.slate800),
-                                        fontSize: AppTypography.small,
-                                        fontWeight: FontWeight.w800,
-                                        letterSpacing: 1.0,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 1),
-                                    Text(
-                                      item.subtitle,
-                                      style: TextStyle(
-                                        color: isActive
-                                            ? item.accentColor
-                                                .withValues(alpha: 0.9)
-                                            : (isDark
-                                                ? Colors.white38
-                                                : AppColors.slate500),
-                                        fontSize: AppTypography.editorial,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // Copy deep-link button. Doesn't dismiss the
-                              // sheet so users can grab the URL and keep
-                              // browsing.
-                              Semantics(
-                                button: true,
-                                label: 'Copy link to ${item.title}',
-                                child: Tooltip(
-                                  message: 'Copy link',
-                                  child: InkResponse(
-                                    radius: 18,
-                                    onTap: () => _copySectionLink(
-                                      context,
-                                      item,
-                                      isDark: isDark,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4),
-                                      child: Icon(
-                                        Icons.link_rounded,
-                                        size: 16,
-                                        color: isDark
-                                            ? Colors.white38
-                                            : AppColors.slate400,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              if (isActive)
-                                Container(
-                                  width: 8,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    color: item.accentColor,
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: item.accentColor
-                                            .withValues(alpha: 0.6),
-                                        blurRadius: 8,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              else
-                                DirIcon(
-                                  Icons.chevron_right_rounded,
-                                  size: 16,
-                                  color: isDark
-                                      ? Colors.white24
-                                      : AppColors.slate400,
-                                ),
-                            ],
-                          ),
-                        ),
                       );
                     },
                   ),
                 ),
 
-                Container(
-                  height: 1,
-                  color: context.divider,
-                ),
+                Container(height: 1, color: context.divider),
                 const SizedBox(height: 12),
 
-                // Bottom Action: Download CV & Socials
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            SoundService.instance.playClick();
-                            Navigator.of(context).pop();
-                            onDownloadResume();
-                          },
-                          icon: const Icon(Icons.download_rounded, size: 18),
-                          label: const Text(
-                            'DOWNLOAD RESUME · PDF',
-                            style: TextStyle(
-                              fontSize: AppTypography.overlineTight,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.4,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.accentAmber,
-                            foregroundColor: Colors.black,
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(AppRadius.pill),
-                            ),
-                            elevation: 4,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _SocialButton(
-                            label: 'LinkedIn',
-                            icon: Icons.link_rounded,
-                            url:
-                                'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/',
-                          ),
-                          SizedBox(width: 12),
-                          _SocialButton(
-                            label: 'GitHub',
-                            icon: Icons.code_rounded,
-                            url: 'https://github.com/abdallahalhyari',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                    ],
-                  ),
-                ),
+                BottomActions(onDownloadResume: onDownloadResume),
               ],
             ),
           ),
@@ -564,10 +280,7 @@ class MobileNavSheet extends StatelessWidget {
     );
   }
 
-  /// Copies a shareable absolute URL for a section (e.g.
-  /// `https://alhyari.web.app/#contact`) to the clipboard so mobile users
-  /// can hand off deep links without leaving the nav sheet.
-  Future<void> _copySectionLink(
+  static Future<void> copySectionLink(
     BuildContext context,
     NavSectionItem item, {
     required bool isDark,
@@ -580,56 +293,6 @@ class MobileNavSheet extends StatelessWidget {
     AppToast.showGlass(
       context,
       message: 'Link copied · $link',
-    );
-  }
-}
-
-class _SocialButton extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final String url;
-
-  const _SocialButton({
-    required this.label,
-    required this.icon,
-    required this.url,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = context.isDarkMode;
-
-    return InkWell(
-      onTap: () async {
-        SoundService.instance.playClick();
-        final uri = Uri.parse(url);
-        if (await canLaunchUrl(uri)) {
-          await launchUrl(uri, mode: LaunchMode.externalApplication);
-        }
-      },
-      borderRadius: BorderRadius.circular(AppRadius.chip),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 14,
-              color: isDark ? Colors.white60 : AppColors.slate500,
-            ),
-            const SizedBox(width: 4),
-            Text(
-              label,
-              style: TextStyle(
-                color: context.mutedText,
-                fontSize: AppTypography.caption,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

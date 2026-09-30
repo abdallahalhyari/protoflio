@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widget/app_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,17 +13,16 @@ import 'package:profile/service/cv_service.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/service/url_sync_service.dart';
 import 'package:profile/features/case_study/case_study_router.dart';
-import 'package:profile/shared/widget/page_activity.dart';
 import 'package:profile/features/intro/page/intro_page.dart';
 import 'package:profile/features/hats/page/hats_grid_page.dart'
     deferred as hats_lib;
-import 'package:profile/features/skills/page/skills_page.dart'
+import 'package:profile/features/skills/presentation/pages/skills_page.dart'
     deferred as skills_lib;
-import 'package:profile/features/projects/page/projects_page.dart'
+import 'package:profile/features/projects/presentation/pages/projects_page.dart'
     deferred as projects_lib;
 import 'package:profile/features/engineering/page/engineering_page.dart'
     deferred as engineering_lib;
-import 'package:profile/features/experience/page/experience_page.dart'
+import 'package:profile/features/experience/presentation/pages/experience_page.dart'
     deferred as experience_lib;
 import 'package:profile/features/contact/page/contact_page.dart'
     deferred as contact_lib;
@@ -32,18 +30,13 @@ import 'package:profile/features/contact/page/contact_page.dart'
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/custom_cursor.dart';
 import 'package:profile/features/shell/widget/deferred_page.dart';
-import 'package:profile/features/shell/widget/desktop_toolbar.dart';
-import 'package:profile/features/shell/widget/folio_bar.dart';
-import 'package:profile/features/shell/widget/keyboard_hint_chip.dart';
 import 'package:profile/features/shell/widget/mobile_home_layout.dart';
-import 'package:profile/features/shell/widget/progress_bar.dart';
 import 'package:profile/features/shell/widget/shortcut_help_dialog.dart';
-import 'package:profile/features/shell/widget/magazine_page_transformer.dart';
 import 'package:profile/features/shell/widget/portfolio_nav.dart';
 import 'package:profile/features/shell/widget/page_background.dart';
 import 'package:profile/features/shell/widget/mobile_app_bar.dart';
 import 'package:profile/features/shell/widget/desktop_keyboard_nav.dart';
-import 'package:profile/features/shell/widget/desktop_scroll_interceptor.dart';
+import 'package:profile/features/shell/widget/desktop_home_layout.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -601,8 +594,21 @@ class _HomeScreenState extends State<HomeScreen> {
             onShowHelp: _showShortcutHelp,
             child: PageBackground(
               child: isDesktop
-                  ? _buildDesktopLayout(context)
-                  : _buildMobileLayout(context),
+                  ? DesktopHomeLayout(
+                      controller: _controller,
+                      pageIndex: _pageIndex,
+                      pageCount: _pageCount,
+                      isPageTransitioning: _isPageTransitioning,
+                      lastPageTurnCompletedAt: _lastPageTurnCompletedAt,
+                      onNext: _next,
+                      onPrev: _prev,
+                      onShowHelp: _showShortcutHelp,
+                      buildDesktopPage: _buildDesktopPage,
+                    )
+                  : MobileHomeLayout(
+                      scrollController: _mobileScrollController,
+                      sectionKeys: _sectionKeys,
+                    ),
             ),
           ),
         ),
@@ -663,109 +669,4 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildDesktopLayout(BuildContext context) {
-    return DesktopScrollInterceptor(
-      onNext: _next,
-      onPrev: _prev,
-      isPageTransitioning: _isPageTransitioning,
-      lastPageTurnCompletedAt: _lastPageTurnCompletedAt,
-      child: Stack(
-        children: [
-          Scrollable(
-            key: const PageStorageKey<String>('desktop_pageview'),
-            controller: _controller,
-            physics: const NeverScrollableScrollPhysics(),
-            viewportBuilder: (context, position) {
-              return Viewport(
-                offset: position,
-                // Keep every page laid out (100000px) so turns never stutter.
-                scrollCacheExtent: const ScrollCacheExtent.pixels(100000),
-                slivers: [
-                  SliverFillViewport(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return MagazinePageTransformer(
-                          controller: _controller,
-                          index: index,
-                          // Pre-built neighbours and kept-alive pages stay mounted, so
-                          // only the visible page may hold keyboard focus.
-                          child: ValueListenableBuilder<int>(
-                            valueListenable: _pageIndex,
-                            builder: (context, active, page) => ExcludeFocus(
-                              excluding: active != index,
-                              child: PageActivity(
-                                  isActive: active == index, child: page!),
-                            ),
-                            child: RepaintBoundary(
-                              key: ValueKey('desktop_page_repaint_$index'),
-                              child: _buildDesktopPage(index),
-                            ),
-                          ),
-                        );
-                      },
-                      childCount: _pageCount,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-          if (MediaQuery.sizeOf(context).height >= 340)
-            const Positioned(
-              right: 12,
-              top: 0,
-              bottom: 0,
-              child: RepaintBoundary(
-                child: Center(child: PageIndicator()),
-              ),
-            ),
-          const Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(child: TopNav()),
-          ),
-          const Positioned(
-            top: 12,
-            right: 12,
-            child: SafeArea(
-              child: RepaintBoundary(child: DesktopToolbar()),
-            ),
-          ),
-          const Positioned(
-            bottom: 12,
-            left: 16,
-            child: SafeArea(
-              child: RepaintBoundary(child: FolioBar()),
-            ),
-          ),
-          Positioned(
-            bottom: 12,
-            right: 12,
-            child: SafeArea(
-              child: KeyboardHintChip(onShowHelp: _showShortcutHelp),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: RepaintBoundary(
-              child: PortfolioProgressBar(
-                controller: _controller,
-                pageCount: _pageCount,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMobileLayout(BuildContext context) {
-    return MobileHomeLayout(
-      scrollController: _mobileScrollController,
-      sectionKeys: _sectionKeys,
-    );
-  }
 }

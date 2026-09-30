@@ -63,149 +63,32 @@ class HatConsoleDock extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // PREV ROLE Button
-                Tooltip(
-                  message: '${loc.perspectivePrev} (Left arrow / A)',
-                  child: OutlinedButton.icon(
-                    onPressed: onPrev,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor:
-                          isDark ? Colors.white70 : AppColors.slate700,
-                      side: BorderSide(
-                        color: isDark
-                            ? Colors.white.withValues(alpha: 0.2)
-                            : AppColors.slate300,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      // 32px tall: shrink-wrapped + compact density left
-                      // these ~16px, under the 24px WCAG 2.2 minimum.
-                      minimumSize: const Size(0, 32),
-                      visualDensity: VisualDensity.standard,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    icon: const DirIcon(Icons.arrow_back_rounded, size: 14),
-                    label: Text(
-                      loc.perspectivePrev,
-                      style: const TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        fontSize: AppTypography.editorialSm,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
+                _DockNavButton(
+                  label: loc.perspectivePrev,
+                  tooltip: '${loc.perspectivePrev} (Left arrow / A)',
+                  icon: const DirIcon(Icons.arrow_back_rounded, size: 14),
+                  onPressed: onPrev,
+                  isDark: isDark,
+                  iconLeading: true,
                 ),
                 const SizedBox(width: AppSpacing.sm),
-
-                // Active Role Pill
-                AnimatedContainer(
-                  duration: AppMotion.sm,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: currentHat.color.withValues(alpha: 0.14),
-                    borderRadius: BorderRadius.circular(AppRadius.pill),
-                    border: Border.all(
-                      color: currentHat.color.withValues(alpha: 0.55),
-                      width: 1.2,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 7,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: currentHat.color,
-                          boxShadow: [
-                            BoxShadow(
-                              color: currentHat.color.withValues(alpha: 0.6),
-                              blurRadius: 6,
-                              spreadRadius: 1,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 7),
-                      Text(
-                        ltrAlways(
-                            context, '0${selectedIndex + 1} / 0$totalCount'),
-                        style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          // Contrast-adjusted: Thinking's charcoal read
-                          // near-invisible on the dark dock.
-                          color: _readable(context, currentHat.color),
-                          fontSize: AppTypography.editorialSm,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        '·',
-                        style: TextStyle(
-                          color: currentHat.color.withValues(alpha: 0.6),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        hatTitleLabel(loc, currentHat.title).toUpperCase(),
-                        style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          color: context.onSurface,
-                          fontSize: AppTypography.editorialSm,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 1.0,
-                        ),
-                      ),
-                    ],
-                  ),
+                _ActiveRolePill(
+                  currentHat: currentHat,
+                  selectedIndex: selectedIndex,
+                  totalCount: totalCount,
                 ),
                 const SizedBox(width: AppSpacing.sm),
-
-                // NEXT ROLE Button
-                Tooltip(
-                  message: '${loc.perspectiveNext} (Right arrow / D)',
-                  child: OutlinedButton.icon(
-                    onPressed: onNext,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor:
-                          isDark ? Colors.white70 : AppColors.slate700,
-                      side: BorderSide(
-                        color: isDark
-                            ? Colors.white.withValues(alpha: 0.2)
-                            : AppColors.slate300,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      // 32px tall: shrink-wrapped + compact density left
-                      // these ~16px, under the 24px WCAG 2.2 minimum.
-                      minimumSize: const Size(0, 32),
-                      visualDensity: VisualDensity.standard,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    label: Text(
-                      loc.perspectiveNext,
-                      style: const TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        fontSize: AppTypography.editorialSm,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    icon: const DirIcon(Icons.arrow_forward_rounded, size: 14),
-                  ),
-                ),
-
-                const SizedBox(width: AppSpacing.sm),
-                Container(
-                  width: 1,
-                  height: 18,
-                  color: context.glassBorderStrong,
+                _DockNavButton(
+                  label: loc.perspectiveNext,
+                  tooltip: '${loc.perspectiveNext} (Right arrow / D)',
+                  icon: const DirIcon(Icons.arrow_forward_rounded, size: 14),
+                  onPressed: onNext,
+                  isDark: isDark,
+                  iconLeading: false,
                 ),
                 const SizedBox(width: AppSpacing.sm),
-
+                const _DockDivider(),
+                const SizedBox(width: AppSpacing.sm),
                 // Quick Shuffle Button
                 // Its own tooltip names the button; a Tooltip wrapper left
                 // the button itself unnamed for screen readers.
@@ -221,7 +104,6 @@ class HatConsoleDock extends StatelessWidget {
                   icon: const Icon(Icons.auto_awesome_motion_rounded),
                 ),
                 const SizedBox(width: AppSpacing.xs),
-
                 // Quick Reset/Align Button
                 // Its own tooltip names the button; a Tooltip wrapper left
                 // the button itself unnamed for screen readers.
@@ -237,55 +119,217 @@ class HatConsoleDock extends StatelessWidget {
                   ),
                   icon: const Icon(Icons.layers_clear_rounded),
                 ),
-
                 const SizedBox(width: AppSpacing.sm),
-                Container(
-                  width: 1,
-                  height: 18,
-                  color: context.glassBorderStrong,
-                ),
+                const _DockDivider(),
                 const SizedBox(width: AppSpacing.sm),
-
-                // Keyboard Shortcut Badge
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.05)
-                        : AppColors.slate100,
-                    borderRadius: BorderRadius.circular(AppRadius.xs),
-                    border: Border.all(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.08)
-                          : AppColors.slate200,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.keyboard_rounded,
-                        size: 13,
-                        color: context.subtleText,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        loc.perspectiveShortcutsHint,
-                        style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          fontSize: AppTypography.micro,
-                          color: context.subtleText,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                const _ShortcutBadge(),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Extracted widgets
+// ---------------------------------------------------------------------------
+
+/// Prev / Next navigation button — shared style, parameterised direction.
+class _DockNavButton extends StatelessWidget {
+  const _DockNavButton({
+    required this.label,
+    required this.tooltip,
+    required this.icon,
+    required this.onPressed,
+    required this.isDark,
+    required this.iconLeading,
+  });
+
+  final String label;
+  final String tooltip;
+  final Widget icon;
+  final VoidCallback onPressed;
+  final bool isDark;
+
+  /// When `true` the icon appears before the label (prev); when `false`
+  /// it appears after (next). `OutlinedButton.icon` always places the icon
+  /// before the label, so we swap the arguments for the next button's
+  /// visual order by relying on DirIcon + RTL layout.
+  final bool iconLeading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: tooltip,
+      child: OutlinedButton.icon(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: isDark ? Colors.white70 : AppColors.slate700,
+          side: BorderSide(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.2)
+                : AppColors.slate300,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          // 32px tall: shrink-wrapped + compact density left
+          // these ~16px, under the 24px WCAG 2.2 minimum.
+          minimumSize: const Size(0, 32),
+          visualDensity: VisualDensity.standard,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        icon: icon,
+        label: Text(
+          label,
+          style: const TextStyle(
+            fontFamily: AppTypography.monoFont,
+            fontSize: AppTypography.editorialSm,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Animated pill showing the glowing dot, ordinal counter, and role title.
+class _ActiveRolePill extends StatelessWidget {
+  const _ActiveRolePill({
+    required this.currentHat,
+    required this.selectedIndex,
+    required this.totalCount,
+  });
+
+  final HatInfo currentHat;
+  final int selectedIndex;
+  final int totalCount;
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
+    return AnimatedContainer(
+      duration: AppMotion.sm,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: currentHat.color.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(
+          color: currentHat.color.withValues(alpha: 0.55),
+          width: 1.2,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 7,
+            height: 7,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: currentHat.color,
+              boxShadow: [
+                BoxShadow(
+                  color: currentHat.color.withValues(alpha: 0.6),
+                  blurRadius: 6,
+                  spreadRadius: 1,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 7),
+          Text(
+            ltrAlways(context, '0${selectedIndex + 1} / 0$totalCount'),
+            style: TextStyle(
+              fontFamily: AppTypography.monoFont,
+              // Contrast-adjusted: Thinking's charcoal read
+              // near-invisible on the dark dock.
+              color: _readable(context, currentHat.color),
+              fontSize: AppTypography.editorialSm,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            '·',
+            style: TextStyle(
+              color: currentHat.color.withValues(alpha: 0.6),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            hatTitleLabel(loc, currentHat.title).toUpperCase(),
+            style: TextStyle(
+              fontFamily: AppTypography.monoFont,
+              color: context.onSurface,
+              fontSize: AppTypography.editorialSm,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.0,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Thin vertical separator between dock sections.
+class _DockDivider extends StatelessWidget {
+  const _DockDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 1,
+      height: 18,
+      color: context.glassBorderStrong,
+    );
+  }
+}
+
+/// Keyboard shortcut hint badge (⌨ A/D/S/R).
+class _ShortcutBadge extends StatelessWidget {
+  const _ShortcutBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context)!;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.05)
+            : AppColors.slate100,
+        borderRadius: BorderRadius.circular(AppRadius.xs),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.08)
+              : AppColors.slate200,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.keyboard_rounded,
+            size: 13,
+            color: context.subtleText,
+          ),
+          const SizedBox(width: 5),
+          Text(
+            loc.perspectiveShortcutsHint,
+            style: TextStyle(
+              fontFamily: AppTypography.monoFont,
+              fontSize: AppTypography.micro,
+              color: context.subtleText,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }

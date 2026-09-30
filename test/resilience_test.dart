@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/features/case_study/case_study_nathealth.dart';
-import 'package:profile/features/hats/data/hats_data.dart';
+
 import 'package:profile/features/hats/widget/hat_playing_card.dart';
 import 'package:profile/features/shell/widget/shortcut_help_dialog.dart';
-import 'package:profile/features/skills/widget/skill_search_bar.dart';
+import 'package:profile/features/skills/presentation/widgets/skill_search_bar.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/main.dart';
 import 'package:profile/theme/app_theme.dart';
@@ -118,7 +119,7 @@ void main() {
           body: Stack(
             children: [
               HatPlayingCard(
-                hat: kHats.first,
+                hat: testHats.first,
                 index: 0,
                 position: const Offset(100, 100),
               ),
@@ -161,7 +162,12 @@ void main() {
       (tester) async {
     final errors =
         await _errorsDuring(tester, const Size(1440, 900), 1.0, () async {
-      await tester.pumpWidget(const PortfolioApp());
+      await tester.pumpWidget(PortfolioApp(
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
       await _settle(tester);
       await tester.sendKeyEvent(LogicalKeyboardKey.digit4);
       await _settle(tester, 8);

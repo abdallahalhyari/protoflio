@@ -2,17 +2,18 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
-import 'package:profile/features/projects/data/projects_data.dart';
+
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/home_controller.dart';
-import 'package:profile/features/projects/page/project_modal.dart';
+import 'package:profile/features/projects/presentation/pages/project_modal.dart';
 import 'package:profile/features/hats/widget/hat_role_pills.dart';
 import 'package:profile/features/shell/widget/mobile_pager.dart';
 import 'package:profile/features/shell/widget/mobile_progress_rail.dart';
 import 'package:profile/features/shell/widget/portfolio_nav.dart';
-import 'package:profile/features/projects/widget/interactive_project_card.dart';
+import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
@@ -171,7 +172,7 @@ void main() {
     testWidgets(
         'InteractiveProjectCard does not scale on hover when reduceMotion is active',
         (tester) async {
-      final project = kProjects.first;
+      final project = testProjects.first;
 
       await tester.pumpWidget(
         _wrapWithMedia(
@@ -320,7 +321,7 @@ void main() {
     testWidgets(
         'ProjectModal opens with pure FadeTransition under reduced motion',
         (tester) async {
-      final project = kProjects.first;
+      final project = testProjects.first;
 
       await tester.pumpWidget(
         _wrapWithMedia(

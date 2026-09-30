@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/features/contact/widget/contact_header.dart';
-import 'package:profile/features/experience/widget/experience_header.dart';
+import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/mobile_pager.dart';
-import 'package:profile/features/skills/widget/skills_header.dart';
+import 'package:profile/features/skills/presentation/widgets/skills_header.dart';
 import 'package:profile/main.dart';
 
 void main() {
@@ -17,7 +17,12 @@ void main() {
     tester.view.physicalSize = const Size(390, 844);
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPhysicalSize);
-    await tester.pumpWidget(const PortfolioApp());
+    await tester.pumpWidget(PortfolioApp(
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
     for (int i = 0; i < 6; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }

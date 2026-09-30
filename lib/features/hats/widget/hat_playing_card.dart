@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/features/hats/widget/network_hat_image.dart';
 import 'package:profile/shared/widget/holographic_physics.dart';
 
 import 'package:profile/features/hats/model/hat_info.dart';
 import 'package:profile/features/hats/data/hat_labels.dart';
-import 'package:profile/shared/util/bidi.dart';
 
-/// Width of a fanned card left uncovered by its neighbour (fan spacing
-/// tops out at 170px) minus the face's inner padding.
-const double _kFanVisibleWidth = 140;
+import 'package:profile/features/hats/widget/card/hat_card_front_face.dart';
+import 'package:profile/features/hats/widget/card/hat_card_back_face.dart';
 
 class HatPlayingCard extends StatefulWidget {
   final HatInfo hat;
@@ -49,9 +46,6 @@ class _HatPlayingCardState extends State<HatPlayingCard>
   bool _isHovered = false;
   final ValueNotifier<Offset> _tiltOffset = ValueNotifier(Offset.zero);
   late Offset _currentOffset;
-  // Additive rotation applied on top of `widget.rotation` when the user
-  // drags the card. Drag now rotates in place instead of translating,
-  // so `_currentOffset` never changes during a pan.
   final ValueNotifier<double> _rotationDelta = ValueNotifier(0.0);
 
   @override
@@ -73,8 +67,6 @@ class _HatPlayingCardState extends State<HatPlayingCard>
     if (oldWidget.position != widget.position) {
       _currentOffset = widget.position;
     }
-    // External rotation change (parent shuffle / reset) — clear the
-    // local drag delta so the card lands exactly where the parent asked.
     if (oldWidget.rotation != widget.rotation) {
       _rotationDelta.value = 0.0;
     }
@@ -99,39 +91,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
     setState(() => _isFlipped = !_isFlipped);
   }
 
-  Widget _buildSpecularGleam() {
-    if (!_isHovered) return const SizedBox.shrink();
-    return Positioned.fill(
-      child: IgnorePointer(
-        child: ValueListenableBuilder<Offset>(
-          valueListenable: _tiltOffset,
-          builder: (context, tilt, _) {
-            return RepaintBoundary(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  gradient: RadialGradient(
-                    center: Alignment(tilt.dx, tilt.dy),
-                    radius: 0.9,
-                    colors: [
-                      AppColors.accentAmber.withValues(alpha: 0.2),
-                      Colors.white.withValues(alpha: AppAlpha.whisper),
-                      Colors.transparent,
-                    ],
-                    stops: const [0.0, 0.45, 1.0],
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
   @override
-  // Playing cards are fixed-size artwork in a fanned deck; cap text scale
-  // locally so large accessibility text doesn't overflow the card face.
   Widget build(BuildContext context) => MediaQuery.withClampedTextScaling(
         maxScaleFactor: 1.35,
         child: Builder(builder: _buildCard),
@@ -145,14 +105,8 @@ class _HatPlayingCardState extends State<HatPlayingCard>
       onPanUpdate: widget.isStandalone
           ? null
           : (details) {
-              // Rotate in place: horizontal drag = spin around the card
-              // center. Position (`_currentOffset`) is intentionally left
-              // untouched so the card doesn't slide across the felt.
               _rotationDelta.value += details.delta.dx * 0.006;
             },
-      // Position never changes during drag, so we still report the
-      // original offset to the parent — it just persists whatever
-      // position the card had at deal time.
       onPanEnd: widget.isStandalone
           ? null
           : (_) => widget.onDragEnd?.call(_currentOffset),
@@ -177,19 +131,27 @@ class _HatPlayingCardState extends State<HatPlayingCard>
           }
         },
         child: HolographicCardPhysics(
-          enableGlare:
-              false, // HatPlayingCard uses its own custom gold specular gleam
-          maxTiltAngle: 0.25, // Exaggerated tilt for the poker cards
+          enableGlare: false,
+          maxTiltAngle: 0.25,
           child: Builder(
             builder: (context) {
-              // Pre-build the complex front and back card layouts outside the AnimatedBuilder
-              // so they are cached and only rebuilt when hover state changes (setState on enter/exit),
-              // not on every single mouse movement or flip frame.
-              final Widget frontCard = _buildCardFront(context);
+              final Widget frontCard = CardFrontFace(
+                hat: widget.hat,
+                index: widget.index,
+                isHovered: _isHovered,
+                isStandalone: widget.isStandalone,
+                tiltOffset: _tiltOffset,
+                onTap: _toggleFlip,
+              );
               final Widget backCard = Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()..rotateY(math.pi),
-                child: _buildCardBack(context),
+                child: CardBackFace(
+                  hat: widget.hat,
+                  isHovered: _isHovered,
+                  tiltOffset: _tiltOffset,
+                  onTap: _toggleFlip,
+                ),
               );
 
               return AnimatedBuilder(
@@ -197,12 +159,8 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                 builder: (context, _) {
                   final angle = _flipAnimation.value;
                   final isUnder = angle > math.pi / 2;
-                  // reduce-motion strips the hover lift + parallax tilt so the
-                  // card sits flat when the user requests less motion.
                   final double hoverLift =
                       (_isHovered && !reduce) ? -10.0 : 0.0;
-                  // The label reads the face; the back's text is read
-                  // once the card is turned to it.
                   return ExcludeSemantics(
                     excluding: !isUnder,
                     child: RepaintBoundary(
@@ -227,8 +185,6 @@ class _HatPlayingCardState extends State<HatPlayingCard>
       ),
     );
 
-    // Screen readers announce the card as a button + its role title so
-    // gesture-only drag isn't the only affordance.
     final semantics = Semantics(
       button: true,
       label:
@@ -237,10 +193,6 @@ class _HatPlayingCardState extends State<HatPlayingCard>
     );
 
     if (widget.isStandalone) {
-      // Standalone mode is used by the mobile Hats page (single card
-      // showcase). Wrap the fixed-size card in a FittedBox so it
-      // scales down when the viewport is narrower than 255px or the
-      // available height is under 370px, instead of overflowing.
       return FittedBox(
         child: SizedBox(
           width: 255,
@@ -254,388 +206,6 @@ class _HatPlayingCardState extends State<HatPlayingCard>
       left: _currentOffset.dx,
       top: _currentOffset.dy,
       child: semantics,
-    );
-  }
-
-  /// In the fanned deck each card covers the right third of the one
-  /// before it, so a centred title read as "THINKIN" / "COMMUNICA". Fanned
-  /// cards start-align the title and scale it into the uncovered strip;
-  /// the standalone (mobile) card keeps it centred at full size.
-  Widget _buildTitle() {
-    final text = Text(
-      hatTitleLabel(AppLocalizations.of(context)!, widget.hat.title)
-          .toUpperCase(),
-      textAlign: TextAlign.center,
-      maxLines: 1,
-      style: TextStyle(
-        fontFamily: AppTypography.displayFont,
-        color: Colors.white,
-        fontSize: AppTypography.title + 1,
-        fontWeight: FontWeight.w900,
-        letterSpacing: latinTracking(context, 2.2),
-      ),
-    );
-    if (widget.isStandalone) return text;
-    return Align(
-      alignment: AlignmentDirectional.centerStart,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: _kFanVisibleWidth),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: AlignmentDirectional.centerStart,
-          child: text,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCardFront(BuildContext context) {
-    final accent = widget.hat.color;
-    final ordinal = (widget.index + 1).toString().padLeft(2, '0');
-    return GestureDetector(
-      onTap: _toggleFlip,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: 255,
-            height: 370,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppRadius.playingCard),
-              border: Border.all(
-                color: _isHovered
-                    ? accent.withValues(alpha: 1)
-                    : accent.withValues(alpha: 0.55),
-                width: _isHovered ? 2.2 : 1.4,
-              ),
-              // Single-layer gradient reads cleaner than the old
-              // nested containers/gradients.
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.darkCanvasElevated,
-                  AppColors.darkCanvas,
-                  accent.withValues(alpha: 0.22),
-                ],
-                stops: const [0.0, 0.55, 1.0],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color:
-                      Colors.black.withValues(alpha: _isHovered ? 0.72 : 0.55),
-                  blurRadius: _isHovered ? 30 : 18,
-                  offset: Offset(0, _isHovered ? 14 : 8),
-                ),
-                BoxShadow(
-                  color: accent.withValues(alpha: _isHovered ? 0.45 : 0.28),
-                  blurRadius: _isHovered ? 24 : 16,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                // Header: ordinal (left) + accent dot (right). Kills the
-                // old duplicate "NO. 0X" + "CARD 0X" pair.
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ShaderMask(
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [
-                              AppColors.accentAmberSoft,
-                              AppColors.hatGold,
-                              AppColors.accentAmberSoft,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ).createShader(bounds),
-                          child: Text(
-                            ordinal,
-                            style: const TextStyle(
-                              fontFamily: AppTypography.displayFont,
-                              color: Colors.white,
-                              fontSize: AppTypography.titleLg,
-                              fontWeight: FontWeight.w900,
-                              height: 1,
-                              letterSpacing: 1,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'ROLE',
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.6),
-                            fontSize: AppTypography.micro,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 3,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: accent,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: accent.withValues(alpha: 0.65),
-                            blurRadius: 8,
-                            spreadRadius: 1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                // Hat image — larger, no nested wrapper, subtle
-                // top-to-bottom vignette straight on the card gradient.
-                Expanded(
-                  child: Center(
-                    child: Hero(
-                      tag: 'hat_card_${widget.hat.heroTag}',
-                      child: HatImage(
-                        path: widget.hat.image,
-                        height: 148,
-                        semanticLabel: hatTitleLabel(
-                            AppLocalizations.of(context)!, widget.hat.title),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                _buildTitle(),
-                const SizedBox(height: 6),
-                // Accent under-rule — width scales with the title font.
-                Container(
-                  alignment: widget.isStandalone
-                      ? null
-                      : AlignmentDirectional.centerStart,
-                  height: 1.5,
-                  width: 64,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        accent.withValues(alpha: 0),
-                        accent,
-                        accent.withValues(alpha: 0),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                // Single meta row — was two rows previously. Fanned cards
-                // keep it in the uncovered start strip, like the title.
-                Row(
-                  mainAxisAlignment: widget.isStandalone
-                      ? MainAxisAlignment.spaceBetween
-                      : MainAxisAlignment.start,
-                  children: [
-                    Icon(Icons.touch_app_rounded,
-                        size: 12, color: Colors.white.withValues(alpha: 0.60)),
-                    if (!widget.isStandalone) const SizedBox(width: 6),
-                    // Longer translations (Czech) shrink to fit rather than
-                    // overflow or cut off the instruction.
-                    Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: AlignmentDirectional.centerStart,
-                        child: Text(
-                          // The fanned deck is desktop-only; the standalone
-                          // card is the touch (mobile) presentation.
-                          widget.isStandalone
-                              ? (AppLocalizations.of(context)?.flipHintTap ??
-                                  'TAP TO FLIP')
-                              : (AppLocalizations.of(context)?.flipHintClick ??
-                                  'CLICK TO FLIP'),
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.82),
-                            fontSize: AppTypography.editorial,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 1.8,
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (widget.isStandalone)
-                      Icon(Icons.autorenew_rounded,
-                          size: 12,
-                          color: Colors.white.withValues(alpha: 0.60)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          _buildSpecularGleam(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCardBack(BuildContext context) {
-    final accent = widget.hat.color;
-    return GestureDetector(
-      onTap: _toggleFlip,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: 255,
-            height: 370,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppRadius.playingCard),
-              // Border now uses the hat's own accent instead of the
-              // universal yellow — makes the back read as the "same
-              // card" flipped rather than a different card entirely.
-              border:
-                  Border.all(color: accent.withValues(alpha: 0.65), width: 1.4),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.darkCanvas,
-                  accent.withValues(alpha: 0.14),
-                  AppColors.darkCanvasElevated,
-                ],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.65),
-                  blurRadius: 22,
-                  offset: const Offset(0, 10),
-                ),
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.28),
-                  blurRadius: 18,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Header: kicker `REVERSE · <title>` + flip icon.
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Text.rich(
-                        TextSpan(children: [
-                          TextSpan(
-                            text: 'REVERSE · ',
-                            style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.5),
-                              fontSize: AppTypography.caption,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 2,
-                            ),
-                          ),
-                          TextSpan(
-                            text: hatTitleLabel(AppLocalizations.of(context)!,
-                                    widget.hat.title)
-                                .toUpperCase(),
-                            style: TextStyle(
-                              color: accent,
-                              fontSize: AppTypography.overline,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.8,
-                            ),
-                          ),
-                        ]),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Icon(Icons.autorenew_rounded,
-                        size: 14, color: Colors.white.withValues(alpha: 0.6)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                // Under-rule tinted with the accent.
-                Container(
-                  height: 1,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.transparent,
-                        accent.withValues(alpha: 0.7),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                // Tagline block — subtle left-border accent, no amber
-                // battle with the body text below.
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.04),
-                    borderRadius: BorderRadius.circular(AppRadius.chip),
-                    border: Border(
-                      left: BorderSide(color: accent, width: 2.5),
-                    ),
-                  ),
-                  child: Text(
-                    widget.hat.titleDesc,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: AppTypography.overline,
-                      fontWeight: FontWeight.w800,
-                      height: 1.4,
-                      letterSpacing: 0.3,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                // Body description.
-                Expanded(
-                  child: Text(
-                    widget.hat.desc,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.92),
-                      fontSize: AppTypography.overlineTight,
-                      height: 1.55,
-                      letterSpacing: 0.15,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                // Single meta row mirrors the front's affordance.
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(Icons.autorenew_rounded,
-                        size: 12, color: Colors.white.withValues(alpha: 0.55)),
-                    Text(
-                      'TAP TO RETURN',
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.82),
-                        fontSize: AppTypography.editorial,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.8,
-                      ),
-                    ),
-                    Icon(Icons.touch_app_rounded,
-                        size: 12, color: Colors.white.withValues(alpha: 0.55)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          _buildSpecularGleam(),
-        ],
-      ),
     );
   }
 }

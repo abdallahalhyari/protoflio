@@ -4,10 +4,11 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:profile/features/projects/data/projects_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/shared/widget/editorial_chip.dart';
 import 'package:profile/shared/widget/primary_button.dart';
-import 'package:profile/features/projects/widget/pipeline_topology_diagram.dart';
+import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widget/pulsing_dot.dart';
 import 'package:profile/features/case_study/case_study_widgets.dart';
 import 'package:profile/features/case_study/related_case_studies.dart';
@@ -84,7 +85,7 @@ class EskadeniaCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           EnglishContent(
             child: PipelineTopologyDiagram(
-              project: kProjects[1],
+              project: context.read<ProjectRepository>().getProjectByIndex(1)!,
               isDesktop: isDesktop,
               isDark: isDark,
             ),

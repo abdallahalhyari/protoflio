@@ -21,7 +21,12 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
 
-    await tester.pumpWidget(const PortfolioApp());
+    await tester.pumpWidget(PortfolioApp(
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
     for (var i = 0; i < 6; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }

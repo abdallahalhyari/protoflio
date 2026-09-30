@@ -13,6 +13,11 @@ import 'package:profile/features/contact/bloc/contact_inquiry_event.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
 import 'package:profile/shared/util/mailto.dart';
 
+import 'package:profile/features/contact/widget/inquiry/inquiry_dialog_header.dart';
+import 'package:profile/features/contact/widget/inquiry/inquiry_timezone_banner.dart';
+import 'package:profile/features/contact/widget/inquiry/inquiry_track_selector.dart';
+import 'package:profile/features/contact/widget/inquiry/inquiry_dialog_actions.dart';
+
 Future<void> showInquiryComposerDialog(
   BuildContext context, {
   int initialTrackIndex = 0,
@@ -164,18 +169,6 @@ class _InquiryComposerDialogViewState
     final size = MediaQuery.sizeOf(context);
     final isDesktop = size.width >= AppBreakpoints.tablet;
 
-    // Timezone computation
-    final nowUtc = DateTime.now().toUtc();
-    final ammanTime = nowUtc.add(const Duration(hours: 3));
-    final localTime = DateTime.now();
-    final ammanHour = ammanTime.hour;
-    final isAmmanActive = ammanHour >= 9 && ammanHour < 19;
-
-    final ammanFormatted =
-        '${ammanTime.hour.toString().padLeft(2, '0')}:${ammanTime.minute.toString().padLeft(2, '0')}';
-    final localFormatted =
-        '${localTime.hour.toString().padLeft(2, '0')}:${localTime.minute.toString().padLeft(2, '0')}';
-
     return BlocBuilder<ContactInquiryBloc, ContactInquiryState>(
       builder: (context, state) {
         final canSend = state.body.trim().isNotEmpty;
@@ -207,8 +200,6 @@ class _InquiryComposerDialogViewState
             isDense: true,
           ),
         );
-        final tracks = state.tracks;
-        final selectedTrack = state.selectedTrackIndex;
 
         return Dialog(
           backgroundColor: context.modalSurface,
@@ -232,131 +223,14 @@ class _InquiryComposerDialogViewState
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Header
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: scheme.primary.withValues(alpha: 0.15),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(Icons.send_rounded,
-                            color: scheme.primary, size: 20),
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'DIRECT INQUIRY COMPOSER',
-                              style: TextStyle(
-                                fontFamily: AppTypography.monoFont,
-                                color: scheme.primary,
-                                fontSize: AppTypography.micro,
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 1.4,
-                              ),
-                            ),
-                            Text(
-                              'Reach Abdallah Alhyari',
-                              style: TextStyle(
-                                fontFamily: AppTypography.displayFont,
-                                color: context.onSurface,
-                                fontSize: isDesktop ? 20 : 18,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        tooltip: 'Close',
-                        onPressed: () {
-                          SoundService.instance.playClick();
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Icon(Icons.close_rounded),
-                      ),
-                    ],
-                  ),
+                  InquiryDialogHeader(scheme: scheme, isDesktop: isDesktop),
                   const SizedBox(height: AppSpacing.md),
-                  // Timezone Overlap Banner
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? Colors.black.withValues(alpha: 0.3)
-                          : AppColors.slate50,
-                      borderRadius: BorderRadius.circular(AppRadius.md),
-                      border: Border.all(
-                        color: (isAmmanActive
-                                ? AppColors.accentGreen
-                                : AppColors.accentAmber)
-                            .withValues(alpha: 0.3),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: isAmmanActive
-                                ? AppColors.accentGreen
-                                : AppColors.accentAmber,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'AMMAN (UTC+3): $ammanFormatted · YOUR TIME: $localFormatted — ${isAmmanActive ? "ACTIVE RESPONSE WINDOW" : "ASYNC INQUIRY (REPLY WITHIN 24H)"}',
-                            style: TextStyle(
-                              fontFamily: AppTypography.monoFont,
-                              color:
-                                  isDark ? Colors.white70 : AppColors.slate700,
-                              fontSize: AppTypography.micro,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  InquiryTimezoneBanner(isDark: isDark),
                   const SizedBox(height: AppSpacing.md),
-                  // Track Selector Chips
-                  Text(
-                    'SELECT ENGAGEMENT TRACK',
-                    style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
-                      color: scheme.primary,
-                      fontSize: AppTypography.micro,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      for (int i = 0; i < tracks.length; i++)
-                        ChoiceChip(
-                          avatar: Icon(tracks[i].icon, size: 16),
-                          label: Text(tracks[i].title),
-                          selected: selectedTrack == i,
-                          onSelected: (_) => _onTrackChanged(i, state),
-                          selectedColor: scheme.primary.withValues(alpha: 0.2),
-                          side: BorderSide(
-                            color: selectedTrack == i
-                                ? scheme.primary
-                                : (context.divider),
-                          ),
-                        ),
-                    ],
+                  InquiryTrackSelector(
+                    state: state,
+                    scheme: scheme,
+                    onTrackChanged: (idx) => _onTrackChanged(idx, state),
                   ),
                   const SizedBox(height: AppSpacing.md),
                   // Contact details inputs — side by side on desktop,
@@ -396,26 +270,10 @@ class _InquiryComposerDialogViewState
                     ),
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  // Actions
-                  // Wrap, not Row: the two labelled buttons overflowed a
-                  // phone-width dialog.
-                  Wrap(
-                    alignment: WrapAlignment.end,
-                    spacing: AppSpacing.md,
-                    runSpacing: AppSpacing.sm,
-                    children: [
-                      OutlinedButton.icon(
-                        onPressed: canSend ? () => _copyDraft(state) : null,
-                        icon: const Icon(Icons.copy_rounded, size: 16),
-                        label: const Text('COPY DRAFT'),
-                      ),
-                      FilledButton.icon(
-                        onPressed:
-                            canSend ? () => _launchEmailClient(state) : null,
-                        icon: const Icon(Icons.mail_outline_rounded, size: 16),
-                        label: const Text('OPEN IN EMAIL CLIENT'),
-                      ),
-                    ],
+                  InquiryDialogActions(
+                    canSend: canSend,
+                    onCopy: () => _copyDraft(state),
+                    onSend: () => _launchEmailClient(state),
                   ),
                 ],
               ),

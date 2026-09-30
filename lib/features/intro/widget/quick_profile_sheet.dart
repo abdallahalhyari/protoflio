@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:profile/features/experience/data/experience_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/service/sound_service.dart';
-import 'package:profile/shared/util/career_facts.dart';
-import 'package:profile/shared/util/mailto.dart';
 import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/intro/widget/quick_profile_actions.dart';
 
 const String _kEmail = 'alhyariabdallh@gmail.com';
 const String _kLinkedIn =
@@ -60,11 +58,11 @@ class QuickProfileCard extends StatelessWidget {
 
   final VoidCallback onDownloadResume;
 
-  static List<(String, String)> _facts(AppLocalizations l10n) => [
+  static List<(String, String)> _facts(AppLocalizations l10n, int years) => [
         (l10n.quickProfileRole, l10n.introSeniorEngineer),
         (
           l10n.quickProfileExperience,
-          l10n.quickProfileYears(CareerFacts.yearsOfExperience()),
+          l10n.quickProfileYears(years),
         ),
         (l10n.quickProfileStack, l10n.introTechStack),
         (l10n.introBasedIn, l10n.introLocation),
@@ -76,14 +74,17 @@ class QuickProfileCard extends StatelessWidget {
       ];
 
   /// Plain text for a recruiter's notes: no formatting to lose on paste.
-  static String summaryText(AppLocalizations l10n) {
-    final recent = kExperience
+  static String summaryText(
+      AppLocalizations l10n, ExperienceRepository repo) {
+    final recent = repo
+        .getExperiences()
         .take(3)
         .map((e) => '- ${e.role}, ${e.company} (${e.period})')
         .join('\n');
     return [
       'Abdallah Alhyari',
-      for (final (label, value) in _facts(l10n)) '$label: $value',
+      for (final (label, value) in _facts(l10n, repo.getYearsOfExperience()))
+        '$label: $value',
       '${l10n.quickProfileRecent}:',
       recent,
       '${l10n.quickProfileEmail}: $_kEmail',
@@ -96,22 +97,22 @@ class QuickProfileCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     SoundService.instance.playClick();
     Analytics.event('quick_profile_copy');
-    await Clipboard.setData(ClipboardData(text: summaryText(l10n)));
+    await Clipboard.setData(ClipboardData(
+        text: summaryText(l10n, context.read<ExperienceRepository>())));
     if (!context.mounted) return;
     AppToast.showGlass(context, message: l10n.quickProfileCopied);
   }
 
-  Future<void> _open(Uri uri, String event) async {
-    SoundService.instance.playClick();
-    Analytics.event(event);
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
-  }
+
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
     final accent = context.adaptiveAccentText(scheme.primary);
+
+    final repo = context.read<ExperienceRepository>();
+    final experiences = repo.getExperiences();
 
     return SingleChildScrollView(
       key: const Key('quick_profile'),
@@ -142,14 +143,15 @@ class QuickProfileCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
-          for (final (label, value) in _facts(l10n)) _Fact(label, value),
+          for (final (label, value) in _facts(l10n, repo.getYearsOfExperience()))
+            _Fact(label, value),
           _Fact(
             l10n.quickProfileRecent,
             null,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for (final e in kExperience.take(3))
+                for (final e in experiences.take(3))
                   Padding(
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text.rich(
@@ -171,42 +173,11 @@ class QuickProfileCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            children: [
-              FilledButton.icon(
-                key: const Key('quick_profile_cv'),
-                onPressed: () {
-                  SoundService.instance.playClick();
-                  onDownloadResume();
-                },
-                icon: const Icon(Icons.download_rounded, size: 18),
-                label: Text(l10n.downloadResume),
-                style: FilledButton.styleFrom(minimumSize: const Size(0, 44)),
-              ),
-              OutlinedButton.icon(
-                onPressed: () =>
-                    _open(mailtoUri(_kEmail), 'quick_profile_email'),
-                icon: const Icon(Icons.mail_outline_rounded, size: 18),
-                label: Text(l10n.quickProfileEmail),
-                style: OutlinedButton.styleFrom(minimumSize: const Size(0, 44)),
-              ),
-              OutlinedButton.icon(
-                onPressed: () =>
-                    _open(Uri.parse(_kLinkedIn), 'quick_profile_linkedin'),
-                icon: const Icon(Icons.open_in_new_rounded, size: 18),
-                label: const Text('LinkedIn'),
-                style: OutlinedButton.styleFrom(minimumSize: const Size(0, 44)),
-              ),
-              TextButton.icon(
-                key: const Key('quick_profile_copy'),
-                onPressed: () => _copySummary(context),
-                icon: const Icon(Icons.content_copy_rounded, size: 18),
-                label: Text(l10n.quickProfileCopy),
-                style: TextButton.styleFrom(minimumSize: const Size(0, 44)),
-              ),
-            ],
+          QuickProfileActions(
+            onDownloadResume: onDownloadResume,
+            onCopySummary: () => _copySummary(context),
+            email: _kEmail,
+            linkedIn: _kLinkedIn,
           ),
         ],
       ),

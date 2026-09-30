@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/features/intro/widget/intro_availability_banner.dart';
 import 'package:profile/features/intro/widget/intro_cta_row.dart';
 import 'package:profile/features/intro/widget/intro_footer_strip.dart';
-import 'package:profile/features/intro/widget/hero_motion.dart';
 import 'package:profile/shared/widget/scrollable_screen_shell.dart';
-import 'package:profile/shared/widget/retrying_asset_image.dart';
 import 'package:profile/features/shell/widget/scroll_explore_hint.dart';
 import 'package:profile/features/intro/widget/intro_constellation.dart';
+
+import 'package:profile/features/intro/widget/hero/hero_issue_strip.dart';
+import 'package:profile/features/intro/widget/hero/hero_wordmark.dart';
+import 'package:profile/features/intro/widget/hero/hero_subline.dart';
+import 'package:profile/features/intro/widget/hero/hero_role_block.dart';
 
 /// Intro reimagined as a premium magazine cover:
 ///   [issue strip]      TOP — small caps run + registration marks
@@ -41,9 +42,6 @@ class IntroPage extends StatefulWidget {
 
 class _IntroPageState extends State<IntroPage>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
-  Color get _accent => Theme.of(context).colorScheme.primary;
-  static const _gold = AppColors.accentAmberSoft;
-
   late final AnimationController _rimController;
 
   @override
@@ -79,26 +77,32 @@ class _IntroPageState extends State<IntroPage>
     super.build(context);
     final size = MediaQuery.sizeOf(context);
     final isWide = size.width >= AppBreakpoints.tablet;
-    final isDark = context.isDarkMode;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isCompactH = isWide && size.height < 920;
 
     final body = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _issueStrip(size, isDark),
+        HeroIssueStrip(size: size, isDark: isDark),
         SizedBox(
             height:
                 isCompactH ? 8.0 : (isWide ? AppSpacing.md : AppSpacing.sm)),
-        _wordmark(size, isDark, isCompactH, isWide),
+        HeroWordmark(
+            size: size, isDark: isDark, isCompactH: isCompactH, isWide: isWide),
         SizedBox(
             height:
                 isCompactH ? 8.0 : (isWide ? AppSpacing.smd : AppSpacing.xs)),
-        _subline(size, isWide, isDark, isCompactH),
+        HeroSubline(
+            size: size,
+            isWide: isWide,
+            isDark: isDark,
+            isCompactH: isCompactH,
+            rimAnimation: _rimController),
         SizedBox(
             height:
                 isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
-        _roleBlock(size, isDark, isCompactH),
+        HeroRoleBlock(size: size, isDark: isDark, isCompactH: isCompactH),
         SizedBox(
             height:
                 isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
@@ -120,9 +124,6 @@ class _IntroPageState extends State<IntroPage>
           onContactMe: widget.onContactMe,
           onViewWork: widget.onViewWork,
         ),
-        // Desktop scroll hint. Skipped on compact viewports so the
-        // intro column doesn't overflow and steal the outer wheel-scroll
-        // gesture from the PageView (see _canInnerScroll in home_screen).
         if (isWide && !widget.isContinuousMobile && size.height >= 1000) ...[
           const SizedBox(height: AppSpacing.md),
           ScrollExploreHint(
@@ -142,353 +143,6 @@ class _IntroPageState extends State<IntroPage>
         isContinuousMobile: widget.isContinuousMobile,
         child: body,
       ),
-    );
-  }
-
-  // ---- Cover elements ----
-
-  Widget _issueStrip(Size size, bool isDark) {
-    final fs = (size.width * 0.011).clamp(10.0, 13.0);
-    Widget rule() =>
-        Container(width: 32, height: 1, color: _accent.withValues(alpha: 0.7));
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _cornerMark(),
-        const Spacer(),
-        rule(),
-        const SizedBox(width: AppSpacing.sm),
-        // flex 8: the two Spacers used to take two thirds of the free width,
-        // so on phones the FittedBox shrank the strip to ~5px type.
-        Flexible(
-          flex: 8,
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              AppLocalizations.of(context)!.introIssueStrip,
-              style: TextStyle(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.85)
-                    : AppColors.slate600,
-                fontSize: fs,
-                fontWeight: FontWeight.w800,
-                letterSpacing: size.width < AppBreakpoints.tablet ? 2.5 : 4,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.sm),
-        rule(),
-        const Spacer(),
-        _cornerMark(),
-      ],
-    );
-  }
-
-  Widget _cornerMark() => Container(
-        width: 12,
-        height: 12,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: _accent.withValues(alpha: 0.7)),
-        ),
-        child: Center(
-          child: Container(
-            width: 3,
-            height: 3,
-            decoration: BoxDecoration(
-              color: _accent,
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-      );
-
-  /// Outlined display wordmark. Line height 1.0 (was 0.9): the squeezed
-  /// line box let Tenada's caps paint above it, through the issue strip.
-  /// The stroke carries a soft sky → indigo → violet sweep of the brand
-  /// accents instead of flat grey, so the masthead reads as ink, not a
-  /// disabled placeholder — at the same low opacity as before.
-  TextStyle _wordmarkStyle() {
-    return TextStyle(
-      fontFamily: AppTypography.displayFont,
-      fontSize: AppTypography.watermark,
-      fontWeight: FontWeight.w900,
-      letterSpacing: 10,
-      height: 1.0,
-      foreground: Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 3
-        ..color = Colors.white,
-    );
-  }
-
-  Widget _wordmark(Size size, bool isDark, bool isCompactH, bool isWide) {
-    final wordmarkHeight = isCompactH
-        ? (size.height * 0.17).clamp(95.0, 165.0)
-        : (isWide
-            ? (size.height * 0.21).clamp(120.0, 240.0)
-            : (size.height * 0.16).clamp(85.0, 160.0));
-    return SnappyEntrance(
-      // The page's one h1 (sections are h2). The wordmark's own text would
-      // otherwise trail the label ("…Senior Mobile Engineer ABDALLAH").
-      child: Semantics(
-        header: true,
-        headingLevel: 1,
-        label: AppLocalizations.of(context)!.semanticTitle,
-        excludeSemantics: true,
-        child: SizedBox(
-          height: wordmarkHeight,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: FittedBox(
-              child: ShaderMask(
-                blendMode: BlendMode.srcIn,
-                shaderCallback: (bounds) {
-                  final alpha = isDark ? 0.46 : 0.7;
-                  return LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      (isDark ? Colors.white : AppColors.slate700)
-                          .withValues(alpha: alpha),
-                      (isDark
-                              ? AppColors.accentIndigo
-                              : AppColors.accentIndigo600)
-                          .withValues(alpha: alpha + 0.08),
-                      AppColors.accentViolet.withValues(alpha: alpha),
-                    ],
-                    stops: const [0.0, 0.55, 1.0],
-                  ).createShader(bounds);
-                },
-                // Tenada's caps paint a little above their 1.0 line box.
-                // ShaderMask only tints inside its child's bounds, so without
-                // this top inset the letter tops rendered as raw white bars.
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: AppTypography.watermark * 0.12,
-                  ),
-                  child: Text(
-                    'ABDALLAH',
-                    style: _wordmarkStyle(),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _subline(Size size, bool isWide, bool isDark, bool isCompactH) {
-    final letterSize = isCompactH
-        ? (size.width * 0.03).clamp(18.0, 32.0)
-        : (size.width * 0.035).clamp(20.0, 40.0);
-    final portraitSize = isCompactH
-        ? (size.height * 0.082).clamp(52.0, 78.0)
-        : (isWide
-            ? (size.height * 0.095).clamp(60.0, 96.0)
-            : (size.width * 0.12).clamp(56.0, 80.0));
-
-    final content = isWide
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _portrait(portraitSize),
-              SizedBox(width: portraitSize * 0.26),
-              ExcludeSemantics(
-                  child: Text(
-                'ALHYARI',
-                style: TextStyle(
-                  fontFamily: AppTypography.displayFont,
-                  fontSize: letterSize,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 12,
-                  color: context.onSurface,
-                  shadows: isDark
-                      ? [
-                          const Shadow(blurRadius: 16),
-                          Shadow(color: AppColors.glowIndigo, blurRadius: 24),
-                        ]
-                      : const [Shadow(color: Colors.black12, blurRadius: 4)],
-                ),
-              )),
-            ],
-          )
-        : Column(
-            children: [
-              _portrait(portraitSize),
-              const SizedBox(height: AppSpacing.smd),
-              ExcludeSemantics(
-                  child: Text(
-                'ALHYARI',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: AppTypography.displayFont,
-                  fontSize: letterSize,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 10,
-                  color: context.onSurface,
-                  shadows: isDark
-                      ? [
-                          const Shadow(blurRadius: 8),
-                          Shadow(color: AppColors.glowIndigo, blurRadius: 12),
-                        ]
-                      : const [Shadow(color: Colors.black12, blurRadius: 2)],
-                ),
-              )),
-            ],
-          );
-
-    return SnappyEntrance(
-      delayMs: 30,
-      child: isWide ? HeroParallax(child: content) : content,
-    );
-  }
-
-  Widget _portrait(double size) {
-    final image = ClipRRect(
-      borderRadius: BorderRadius.circular(13.5),
-      child: ColoredBox(
-        color: Colors.black.withValues(alpha: 0.4),
-        child: RetryingAssetImage(
-          'assets/my_image.webp',
-          fit: BoxFit.cover,
-          cacheWidth: 280,
-          cacheHeight: 280,
-          filterQuality: FilterQuality.high,
-          semanticLabel: AppLocalizations.of(context)!.semanticPortrait,
-        ),
-      ),
-    );
-
-    // One image node, named here; the image's own label was a second one.
-    return Semantics(
-      label: AppLocalizations.of(context)!.semanticPortrait,
-      image: true,
-      excludeSemantics: true,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          boxShadow: [
-            BoxShadow(
-              color: _accent.withValues(alpha: 0.40),
-              blurRadius: 36,
-              spreadRadius: 2,
-            ),
-            BoxShadow(
-              color: AppColors.accentViolet.withValues(alpha: 0.18),
-              blurRadius: 48,
-              spreadRadius: 4,
-            ),
-          ],
-        ),
-        child: RepaintBoundary(
-          child: AnimatedBuilder(
-            animation: _rimController,
-            child: image,
-            builder: (context, child) {
-              final angle = _rimController.value * 2 * 3.14159265;
-              return Container(
-                padding: const EdgeInsets.all(2.5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppRadius.card),
-                  gradient: SweepGradient(
-                    transform: GradientRotation(angle),
-                    colors: [
-                      _accent,
-                      _gold.withValues(alpha: 0.9),
-                      AppColors.accentVioletLight,
-                      _accent,
-                    ],
-                    stops: const [0.0, 0.3, 0.65, 1.0],
-                  ),
-                ),
-                child: child,
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _roleBlock(Size size, bool isDark, bool isCompactH) {
-    return SnappyEntrance(
-      delayMs: 60,
-      child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: (size.width * 0.78).clamp(320.0, 700.0),
-          ),
-          child: Column(
-            children: [
-              _hairlineRow(
-                isDark: isDark,
-                child: Icon(Icons.diamond_rounded,
-                    size: AppTypography.small, color: _accent),
-              ),
-              SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
-              Text(
-                AppLocalizations.of(context)!.introSeniorEngineer.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: isCompactH
-                      ? (size.width * 0.016).clamp(15.0, 19.0)
-                      : (size.width * 0.018).clamp(16.0, 22.0),
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 3,
-                  color: context.onSurface,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                AppLocalizations.of(context)!.introBuildsComplex,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: isCompactH
-                      ? (size.width * 0.0105).clamp(12.0, 15.0)
-                      : (size.width * 0.0115).clamp(12.5, 18.0),
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.5,
-                  color: isDark ? AppColors.accentIndigoSoft : _accent,
-                ),
-              ),
-              SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
-              Text(
-                AppLocalizations.of(context)!.introTechStack,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: isCompactH
-                      ? (size.width * 0.01).clamp(11.0, 12.5)
-                      : (size.width * 0.011).clamp(11.5, 13.5),
-                  fontWeight: FontWeight.w600,
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.82)
-                      : AppColors.slate600,
-                  height: 1.45,
-                  letterSpacing: 0.8,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _hairlineRow({required Widget child, required bool isDark}) {
-    final ruleColor = context.glassBorderStrong;
-    return Row(
-      children: [
-        Expanded(child: Container(height: 1, color: ruleColor)),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12), child: child),
-        Expanded(child: Container(height: 1, color: ruleColor)),
-      ],
     );
   }
 }

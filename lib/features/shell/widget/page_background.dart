@@ -1,7 +1,9 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+
+import 'package:profile/features/shell/widget/background/page_background_canvases.dart';
+import 'package:profile/features/shell/widget/background/page_background_orbs.dart';
 
 class PageBackground extends StatefulWidget {
   final Widget child;
@@ -41,235 +43,6 @@ class _PageBackgroundState extends State<PageBackground> {
     );
   }
 
-  Widget _buildDarkBaseCanvas(bool showDecoLayers) {
-    return Stack(
-      children: [
-        // 1. Base Deep Obsidian Midnight Canvas
-        const Positioned.fill(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.slate950,
-                  AppColors.darkNight,
-                  AppColors.slate950,
-                ],
-                stops: [0.0, 0.55, 1.0],
-              ),
-            ),
-          ),
-        ),
-
-        // Optional overlay tint
-        if (widget.overlay != null)
-          Positioned.fill(child: ColoredBox(color: widget.overlay!)),
-
-        // 2. Architectural Precision Micro-Dot Matrix (desktop only)
-        if (showDecoLayers)
-          const Positioned.fill(
-            child: IgnorePointer(
-              child: CustomPaint(
-                painter: _DarkGridPainter(),
-              ),
-            ),
-          ),
-
-        // 3. Subtle Edge Vignette (desktop only — saves full-screen fill
-        // on mobile where the LinearGradient base already provides depth)
-        if (showDecoLayers)
-          Positioned.fill(
-            child: IgnorePointer(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    radius: 1.25,
-                    colors: [
-                      Colors.transparent,
-                      AppColors.slate950.withValues(alpha: 0.65),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildLightBaseCanvas(
-      bool showDecoLayers, Color primary, Color surface) {
-    return Stack(
-      children: [
-        // Base flat solid surface for Unified Tint
-        Positioned.fill(
-          child: ColoredBox(color: surface),
-        ),
-
-        // Optional overlay tint
-        if (widget.overlay != null)
-          Positioned.fill(child: ColoredBox(color: widget.overlay!)),
-
-        // Subtle warm accent wash — barely-perceptible color breath
-        // that shifts per section, mirroring dark mode orb behavior.
-        if (showDecoLayers)
-          Positioned(
-            top: -120,
-            left: 0,
-            right: 0,
-            height: 500,
-            child: IgnorePointer(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    center: Alignment.topCenter,
-                    radius: 1.2,
-                    colors: [
-                      primary.withValues(alpha: 0.05),
-                      primary.withValues(alpha: 0.0),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-        // Tactile micro-dot architectural pattern (desktop only)
-        if (showDecoLayers)
-          const Positioned.fill(
-            child: IgnorePointer(
-              child: CustomPaint(
-                painter: _LightGridPainter(),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildDarkGlowOrbs(Size size, Color primary, Color secondary) {
-    return Stack(
-      children: [
-        // Top-right dynamic active accent glow (harmonizes with current section)
-        Positioned(
-          top: -100,
-          right: -80,
-          width: 540,
-          height: 540,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  primary.withValues(alpha: 0.16),
-                  primary.withValues(alpha: 0.0),
-                ],
-              ),
-            ),
-          ),
-        ),
-        // Bottom-left harmonic secondary ambient glow
-        Positioned(
-          bottom: -120,
-          left: -100,
-          width: 580,
-          height: 580,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  secondary.withValues(alpha: AppAlpha.hover),
-                  secondary.withValues(alpha: 0.0),
-                ],
-              ),
-            ),
-          ),
-        ),
-        // Center-right electric violet depth aura
-        Positioned(
-          top: size.height * 0.35,
-          left: size.width * 0.4,
-          width: 440,
-          height: 440,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  AppColors.accentViolet.withValues(alpha: 0.08),
-                  AppColors.accentViolet.withValues(alpha: 0.0),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLightGlowOrbs(Size size, Color primary, Color secondary) {
-    return Stack(
-      children: [
-        // Top-right dynamic active accent glow (harmonizes with current section)
-        Positioned(
-          top: -80,
-          right: -60,
-          width: 480,
-          height: 480,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  primary.withValues(alpha: AppAlpha.hover),
-                  primary.withValues(alpha: 0.0),
-                ],
-              ),
-            ),
-          ),
-        ),
-        // Bottom-left harmonic secondary soft glow
-        Positioned(
-          bottom: -100,
-          left: -80,
-          width: 520,
-          height: 520,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  secondary.withValues(alpha: 0.10),
-                  secondary.withValues(alpha: 0.0),
-                ],
-              ),
-            ),
-          ),
-        ),
-        // Center warm gold accent glow
-        Positioned(
-          top: size.height * 0.35,
-          left: size.width * 0.45,
-          width: 380,
-          height: 380,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                colors: [
-                  AppColors.accentAmber.withValues(alpha: 0.07),
-                  AppColors.accentAmber.withValues(alpha: 0.0),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
@@ -287,8 +60,6 @@ class _PageBackgroundState extends State<PageBackground> {
         }
         final center = Offset(size.width / 2, size.height / 2);
         final next = event.localPosition - center;
-        // Skip micro-jitter rebuilds: only repaint when the delta is
-        // large enough to actually shift the parallax visibly.
         if ((next - _mouseOffset.value).distanceSquared < 36) {
           return;
         }
@@ -302,8 +73,6 @@ class _PageBackgroundState extends State<PageBackground> {
       },
       child: Stack(
         children: [
-          // 1. Static base gradient canvas + architectural dot matrix + vignette.
-          // Wrapped in RepaintBoundary — completely immune to mouse hover events!
           Positioned.fill(
             child: RepaintBoundary(
               child: AnimatedCrossFade(
@@ -311,17 +80,18 @@ class _PageBackgroundState extends State<PageBackground> {
                 crossFadeState: isDark
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,
-                firstChild: _buildDarkBaseCanvas(showDecoLayers),
-                secondChild:
-                    _buildLightBaseCanvas(showDecoLayers, primary, surface),
+                firstChild: DarkBaseCanvas(
+                    showDecoLayers: showDecoLayers, overlay: widget.overlay),
+                secondChild: LightBaseCanvas(
+                  showDecoLayers: showDecoLayers,
+                  primary: primary,
+                  surface: surface,
+                  overlay: widget.overlay,
+                ),
                 layoutBuilder: _crossFadeLayout,
               ),
             ),
           ),
-
-          // 2. Parallax floating ambient glow orbs.
-          // Colors lerp smoothly via TweenAnimationBuilder so section
-          // transitions produce a graceful hue shift, not a snap.
           Positioned.fill(
             child: RepaintBoundary(
               child: TweenAnimationBuilder<Color?>(
@@ -342,10 +112,14 @@ class _PageBackgroundState extends State<PageBackground> {
                           crossFadeState: isDark
                               ? CrossFadeState.showFirst
                               : CrossFadeState.showSecond,
-                          firstChild: _buildDarkGlowOrbs(
-                              size, safePrimary, safeSecondary),
-                          secondChild: _buildLightGlowOrbs(
-                              size, safePrimary, safeSecondary),
+                          firstChild: DarkGlowOrbs(
+                              size: size,
+                              primary: safePrimary,
+                              secondary: safeSecondary),
+                          secondChild: LightGlowOrbs(
+                              size: size,
+                              primary: safePrimary,
+                              secondary: safeSecondary),
                           layoutBuilder: _crossFadeLayout,
                         ),
                       );
@@ -354,9 +128,6 @@ class _PageBackgroundState extends State<PageBackground> {
                         child: orbsWidget,
                         builder: (context, mouseOffset, staticOrbs) {
                           final maxShift = isDark ? 24.0 : 20.0;
-                          // An empty view (hot restart, minimised tab)
-                          // would make this 0 / 0 = NaN: an invalid
-                          // transform that breaks layer compositing.
                           final still = reduceMotion || size.isEmpty;
                           final shiftX = still
                               ? 0.0
@@ -376,8 +147,6 @@ class _PageBackgroundState extends State<PageBackground> {
               ),
             ),
           ),
-
-          // 3. Foreground content
           Positioned.fill(
             child: RepaintBoundary(
               child: widget.child,
@@ -387,52 +156,4 @@ class _PageBackgroundState extends State<PageBackground> {
       ),
     );
   }
-}
-
-class _DarkGridPainter extends CustomPainter {
-  const _DarkGridPainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final dotPaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.045)
-      ..strokeWidth = 1.5
-      ..strokeCap = StrokeCap.round;
-
-    const step = 32.0;
-    final points = <Offset>[];
-    for (double x = 16; x < size.width; x += step) {
-      for (double y = 16; y < size.height; y += step) {
-        points.add(Offset(x, y));
-      }
-    }
-    canvas.drawPoints(ui.PointMode.points, points, dotPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-class _LightGridPainter extends CustomPainter {
-  const _LightGridPainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final dotPaint = Paint()
-      ..color = AppColors.slate400.withValues(alpha: 0.20)
-      ..strokeWidth = 1.6
-      ..strokeCap = StrokeCap.round;
-
-    const step = 28.0;
-    final points = <Offset>[];
-    for (double x = 14; x < size.width; x += step) {
-      for (double y = 14; y < size.height; y += step) {
-        points.add(Offset(x, y));
-      }
-    }
-    canvas.drawPoints(ui.PointMode.points, points, dotPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

@@ -2,33 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/case_study/case_study_widgets.dart';
 import 'package:profile/features/engineering/data/architecture_data.dart';
-import 'package:profile/features/experience/data/experience_data.dart';
-import 'package:profile/features/projects/data/projects_data.dart';
-import 'package:profile/features/skills/data/skills_data.dart';
+
+
+
 import 'package:profile/features/shell/home_controller.dart';
-import 'package:profile/features/projects/page/projects_page.dart';
+import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/contact/widget/channel_tile.dart';
 import 'package:profile/features/contact/widget/consulting_track.dart';
 import 'package:profile/features/contact/widget/contact_header.dart';
 import 'package:profile/features/shell/widget/desktop_toolbar.dart';
 import 'package:profile/features/engineering/widget/architecture_diagram_card.dart';
 import 'package:profile/features/engineering/widget/engineering_header.dart';
-import 'package:profile/features/experience/widget/experience_card.dart';
-import 'package:profile/features/experience/widget/experience_header.dart';
+import 'package:profile/features/experience/presentation/widgets/experience_card.dart';
+import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
 import 'package:profile/features/shell/widget/folio_bar.dart';
 import 'package:profile/features/hats/widget/hat_role_pills.dart';
 import 'package:profile/features/intro/widget/intro_cta_row.dart';
 import 'package:profile/features/shell/widget/keyboard_hint_chip.dart';
 import 'package:profile/features/shell/widget/mobile_app_bar.dart';
-import 'package:profile/features/projects/widget/pipeline_topology_diagram.dart';
+import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widget/screen_shell.dart';
-import 'package:profile/features/skills/widget/bento_skill_tile.dart';
-import 'package:profile/features/skills/widget/skills_header.dart';
+import 'package:profile/features/skills/presentation/widgets/bento_skill_tile.dart';
+import 'package:profile/features/skills/presentation/widgets/skills_header.dart';
 import 'package:profile/theme/app_theme.dart';
 
 HomeController _mockController({int initialPage = 0}) {
@@ -202,7 +203,7 @@ void main() {
     testWidgets(
         'BentoSkillTile announces skill name, mastery level, and flip hint',
         (tester) async {
-      final skill = kSkills.first;
+      final skill = testSkills.first;
       await tester.pumpWidget(_wrapWithHarness(
         child: BentoSkillTile(
           skill: skill,
@@ -225,7 +226,7 @@ void main() {
 
     testWidgets('BentoSkillTile flips with the keyboard (Tab, then Enter)',
         (tester) async {
-      final skill = kSkills.first;
+      final skill = testSkills.first;
       await tester.pumpWidget(_wrapWithHarness(
         child: SizedBox(
           width: 260,
@@ -256,7 +257,7 @@ void main() {
     testWidgets(
         'ExperienceCard declares container semantics and action buttons',
         (tester) async {
-      final exp = kExperience.first;
+      final exp = testExperience.first;
       await tester.pumpWidget(_wrapWithHarness(
         child: ExperienceCard(
           exp: exp,
@@ -488,7 +489,7 @@ void main() {
     testWidgets(
         'PipelineTopologyDiagram declares container semantics with stage flow',
         (tester) async {
-      final project = kProjects.first;
+      final project = testProjects.first;
       await tester.pumpWidget(_wrapWithHarness(
         child: PipelineTopologyDiagram(
           project: project,

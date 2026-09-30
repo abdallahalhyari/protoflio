@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:profile/features/hats/data/hats_data.dart';
+import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/hats/bloc/hats_deck_event.dart';
 import 'package:profile/features/hats/bloc/hats_deck_state.dart';
 
@@ -16,9 +16,9 @@ const double kShuffleDrop = 100;
 class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
   final int count;
 
-  HatsDeckBloc({int? hatCount})
-      : count = hatCount ?? kHats.length,
-        super(_createInitialState(hatCount ?? kHats.length)) {
+  HatsDeckBloc({required HatRepository repository})
+      : count = repository.getHatCount(),
+        super(_createInitialState(repository.getHatCount())) {
     on<HatRoleSelected>(_onRoleSelected);
     on<HatNextRole>(_onNextRole);
     on<HatPrevRole>(_onPrevRole);

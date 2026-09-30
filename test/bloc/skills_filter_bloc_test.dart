@@ -1,24 +1,26 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/skills/bloc/skills_filter_bloc.dart';
-import 'package:profile/features/skills/bloc/skills_filter_event.dart';
-import 'package:profile/features/skills/bloc/skills_filter_state.dart';
-import 'package:profile/features/skills/data/skills_data.dart';
+import '../helpers/test_data.dart';
+import 'package:profile/features/skills/presentation/bloc/skills_filter_bloc.dart';
+import 'package:profile/features/skills/presentation/bloc/skills_filter_event.dart';
+import 'package:profile/features/skills/presentation/bloc/skills_filter_state.dart';
+
+
 
 void main() {
   group('SkillsFilterBloc Test Suite', () {
-    test('initial state contains all kSkills and default ALL category', () {
-      final bloc = SkillsFilterBloc();
-      expect(bloc.state.allSkills, equals(kSkills));
+    test('initial state contains all testSkills and default ALL category', () {
+      final bloc = SkillsFilterBloc(repository: TestSkillRepository());
+      expect(bloc.state.allSkills, equals(testSkills));
       expect(bloc.state.selectedCategory, equals('ALL'));
       expect(bloc.state.searchQuery, isEmpty);
-      expect(bloc.state.filteredSkills.length, equals(kSkills.length));
-      expect(bloc.state.categoryCounts['ALL'], equals(kSkills.length));
+      expect(bloc.state.filteredSkills.length, equals(testSkills.length));
+      expect(bloc.state.categoryCounts['ALL'], equals(testSkills.length));
       expect(bloc.state.hasActiveFilter, isFalse);
     });
 
     test('SkillCategorySelected narrows skills to specified category',
         () async {
-      final bloc = SkillsFilterBloc();
+      final bloc = SkillsFilterBloc(repository: TestSkillRepository());
 
       bloc.add(const SkillCategorySelected('Mobile Systems'));
       await expectLater(
@@ -34,7 +36,7 @@ void main() {
 
     test('SkillSearchQueryChanged filters skills across name and tags',
         () async {
-      final bloc = SkillsFilterBloc();
+      final bloc = SkillsFilterBloc(repository: TestSkillRepository());
 
       bloc.add(const SkillSearchQueryChanged('NFC'));
       await expectLater(
@@ -49,7 +51,7 @@ void main() {
     });
 
     test('SkillsFilterReset restores all skills and clears filters', () async {
-      final bloc = SkillsFilterBloc();
+      final bloc = SkillsFilterBloc(repository: TestSkillRepository());
 
       bloc.add(const SkillCategorySelected('Security & Protocols'));
       await expectLater(
@@ -64,7 +66,7 @@ void main() {
         emits(predicate<SkillsFilterState>((state) =>
             state.selectedCategory == 'ALL' &&
             state.searchQuery.isEmpty &&
-            state.filteredSkills.length == kSkills.length)),
+            state.filteredSkills.length == testSkills.length)),
       );
 
       await bloc.close();
@@ -73,7 +75,7 @@ void main() {
 
   test('multi-word search matches words across fields, not one phrase',
       () async {
-    final bloc = SkillsFilterBloc();
+    final bloc = SkillsFilterBloc(repository: TestSkillRepository());
     bloc.add(const SkillSearchQueryChanged('flutter dart'));
     await Future<void>.delayed(Duration.zero);
     expect(bloc.state.filteredSkills, isNotEmpty);

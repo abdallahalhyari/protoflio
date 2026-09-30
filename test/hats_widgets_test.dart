@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'helpers/test_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/hats/data/hats_data.dart';
+
 import 'package:profile/features/hats/page/hats_grid_page.dart';
 import 'package:profile/features/hats/widget/continuous_mobile_hat_column.dart';
 import 'package:profile/features/hats/widget/hat_bio_strip.dart';
@@ -151,8 +152,8 @@ void main() {
       await tester.pumpWidget(_wrap(
         HatConsoleDock(
           selectedIndex: 0,
-          totalCount: kHats.length,
-          currentHat: kHats[0],
+          totalCount: testHats.length,
+          currentHat: testHats[0],
           onPrev: () => prev = true,
           onNext: () => next = true,
           onShuffle: () => shuffle = true,

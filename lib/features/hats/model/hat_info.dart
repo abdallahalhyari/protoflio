@@ -16,4 +16,26 @@ class HatInfo {
     required this.titleDesc,
     required this.desc,
   });
+
+  factory HatInfo.fromJson(Map<String, dynamic> json) {
+    return HatInfo(
+      title: json['title'] as String,
+      heroTag: json['heroTag'] as String,
+      image: json['image'] as String,
+      color: Color(json['colorValue'] as int),
+      titleDesc: json['titleDesc'] as String,
+      desc: json['desc'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'heroTag': heroTag,
+      'image': image,
+      'colorValue': color.toARGB32(),
+      'titleDesc': titleDesc,
+      'desc': desc,
+    };
+  }
 }

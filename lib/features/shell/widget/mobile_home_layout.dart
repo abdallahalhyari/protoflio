@@ -7,14 +7,14 @@ import 'package:profile/features/contact/page/contact_page.dart'
     deferred as contact_lib;
 import 'package:profile/features/engineering/page/engineering_page.dart'
     deferred as engineering_lib;
-import 'package:profile/features/experience/page/experience_page.dart'
+import 'package:profile/features/experience/presentation/pages/experience_page.dart'
     deferred as experience_lib;
 import 'package:profile/features/hats/page/hats_grid_page.dart'
     deferred as hats_lib;
 import 'package:profile/features/intro/page/intro_page.dart';
-import 'package:profile/features/projects/page/projects_page.dart'
+import 'package:profile/features/projects/presentation/pages/projects_page.dart'
     deferred as projects_lib;
-import 'package:profile/features/skills/page/skills_page.dart'
+import 'package:profile/features/skills/presentation/pages/skills_page.dart'
     deferred as skills_lib;
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/deferred_mount.dart';

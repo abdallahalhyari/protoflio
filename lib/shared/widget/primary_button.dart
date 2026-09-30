@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/theme/tokens.dart';
 
-/// Compact size preset for `PrimaryButton`.
-enum PrimaryButtonSize { sm, md, lg }
+import 'package:profile/shared/widget/primary_button_parallax_layer.dart';
+import 'package:profile/shared/widget/primary_button_gradient_shell.dart';
 
-/// Semantic color intent.
+enum PrimaryButtonSize { sm, md, lg }
 enum PrimaryButtonVariant { primary, destructive }
 
-/// Portfolio hero CTA — gradient fill, hover parallax, and press haptics.
-/// Supports size / variant tokens, a `loading` spinner, and a disabled
-/// state (pass `onPressed: null`).
 class PrimaryButton extends StatefulWidget {
   final String label;
   final VoidCallback? onPressed;
@@ -19,10 +16,6 @@ class PrimaryButton extends StatefulWidget {
   final bool loading;
   final IconData? icon;
   final bool isPill;
-
-  /// Tracking for all-caps labels, to match the tracked caps of the
-  /// buttons around them. Null (default) keeps natural spacing, which
-  /// mixed-case labels like "Back to portfolio" need.
   final double? letterSpacing;
 
   const PrimaryButton({
@@ -107,8 +100,6 @@ class _PrimaryButtonState extends State<PrimaryButton> {
     final hover = _isHovered && _enabled;
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
 
-    // The Semantics below already names the button; the visible text would
-    // be read a second time ("VIEW MY WORK VIEW MY WORK").
     Widget content = ExcludeSemantics(
       child: Text(
         widget.label,
@@ -133,9 +124,6 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                   ? scheme.onPrimary
                   : scheme.onPrimary.withValues(alpha: 0.7)),
           const SizedBox(width: AppSpacing.sm),
-          // Wraps instead of overflowing when the button is narrower than
-          // its label (phones at large text sizes, long translations).
-          // Unbounded parents keep the old single-line layout.
           Flexible(child: content),
         ],
       );
@@ -209,66 +197,17 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                     widget.onPressed!();
                   }
                 : null,
-            child: ValueListenableBuilder<Offset>(
-              valueListenable: _parallaxOffset,
-              builder: (context, parallax, staticChild) {
-                return RepaintBoundary(
-                  child: Transform.translate(
-                    offset: parallax,
-                    child: staticChild,
-                  ),
-                );
-              },
-              child: AnimatedContainer(
-                key: _key,
-                duration: AppMotion.xs,
-                curve: Curves.easeOut,
-                transform: Matrix4.identity()
-                  ..scaleByDouble(
-                    hover && !reduceMotion ? 1.05 : 1.0,
-                    hover && !reduceMotion ? 1.05 : 1.0,
-                    1.0,
-                    1.0,
-                  ),
-                transformAlignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                      widget.isPill ? AppRadius.pill : AppRadius.sm),
-                  boxShadow: [
-                    BoxShadow(
-                      color: base.withValues(alpha: hover ? 0.55 : 0.28),
-                      blurRadius: hover ? 18 : 10,
-                      spreadRadius: hover ? 2 : 0,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: !_enabled
-                        ? [
-                            base.withValues(alpha: AppAlpha.border),
-                            base.withValues(alpha: AppAlpha.fill),
-                          ]
-                        : hover
-                            ? [
-                                Color.lerp(base, scheme.onPrimary, 0.15)!,
-                                base,
-                              ]
-                            : [
-                                Color.lerp(base, scheme.onPrimary, 0.08)!,
-                                Color.lerp(base, scheme.shadow, 0.12)!,
-                              ],
-                  ),
-                  border: Border.all(
-                    color: _isFocused
-                        ? scheme.onPrimary
-                        : hover
-                            ? Color.lerp(base, scheme.onPrimary, 0.40)!
-                            : scheme.onPrimary.withValues(alpha: 0.22),
-                    width: _isFocused ? 2 : (hover ? 1.5 : 1),
-                  ),
-                ),
+            child: PrimaryButtonParallaxLayer(
+              parallaxOffset: _parallaxOffset,
+              child: PrimaryButtonGradientShell(
+                containerKey: _key,
+                base: base,
+                scheme: scheme,
+                hover: hover,
+                enabled: _enabled,
+                isFocused: _isFocused,
+                isPill: widget.isPill,
+                reduceMotion: reduceMotion,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: dims.hPad,

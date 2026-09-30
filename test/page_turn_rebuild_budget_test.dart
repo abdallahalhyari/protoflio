@@ -13,7 +13,12 @@ void main() {
     tester.view.physicalSize = const Size(1400, 900);
     addTearDown(tester.view.resetDevicePixelRatio);
     addTearDown(tester.view.resetPhysicalSize);
-    await tester.pumpWidget(const PortfolioApp());
+    await tester.pumpWidget(PortfolioApp(
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
     for (int i = 0; i < 6; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }

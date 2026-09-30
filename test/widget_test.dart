@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/main.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/hats/page/hats_grid_page.dart';
-import 'package:profile/features/projects/page/projects_page.dart';
-import 'package:profile/features/skills/page/skills_page.dart';
+import 'package:profile/features/projects/presentation/pages/projects_page.dart';
+import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/features/engineering/page/engineering_page.dart';
 
 Widget createTestApp(Widget child, [Size size = const Size(1200, 900)]) {
@@ -21,7 +21,12 @@ Widget createTestApp(Widget child, [Size size = const Size(1200, 900)]) {
 
 void main() {
   testWidgets('Portfolio smoke test - renders intro', (tester) async {
-    await tester.pumpWidget(const PortfolioApp());
+    await tester.pumpWidget(PortfolioApp(
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);
@@ -125,7 +130,12 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await tester.pumpWidget(const PortfolioApp());
+    await tester.pumpWidget(PortfolioApp(
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);

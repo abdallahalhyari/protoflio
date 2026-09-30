@@ -6,10 +6,10 @@ import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/main.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/intro/page/intro_page.dart';
-import 'package:profile/features/projects/page/projects_page.dart';
+import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/engineering/page/engineering_page.dart';
-import 'package:profile/features/experience/page/experience_page.dart';
-import 'package:profile/features/skills/page/skills_page.dart';
+import 'package:profile/features/experience/presentation/pages/experience_page.dart';
+import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/features/hats/page/hats_grid_page.dart';
 import 'package:profile/features/contact/page/contact_page.dart';
 import 'package:profile/features/shell/home_controller.dart';
@@ -247,7 +247,12 @@ void main() {
       tester.view.devicePixelRatio = 1.0;
       tester.view.physicalSize = const Size(400, 800);
 
-      await tester.pumpWidget(const PortfolioApp());
+      await tester.pumpWidget(PortfolioApp(
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
       await tester.pump(const Duration(milliseconds: 300));
 
       final scrollable = find.byWidgetPredicate((w) =>

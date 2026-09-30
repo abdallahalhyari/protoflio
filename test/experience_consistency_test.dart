@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/experience/data/experience_data.dart';
-import 'package:profile/features/projects/data/projects_data.dart';
+import 'helpers/test_data.dart';
+
+
 
 /// web/index.html repeats the work history for crawlers and no-JS readers.
 /// It drifted from the app (every date off by a month, two titles swapped)
@@ -10,7 +11,7 @@ import 'package:profile/features/projects/data/projects_data.dart';
 void main() {
   test('index.html work history matches the Experience section', () {
     final html = File('web/index.html').readAsStringSync();
-    final jobs = kExperience.where((e) => e.company.isNotEmpty).toList();
+    final jobs = testExperience.where((e) => e.company.isNotEmpty).toList();
     for (final e in jobs.where((e) => e.period.contains('/'))) {
       expect(
         html,
@@ -24,8 +25,8 @@ void main() {
   // old titles after the Experience section moved to the CV's.
   test('case-study roles open with the Experience title', () {
     final html = File('web/index.html').readAsStringSync();
-    for (final p in kProjects) {
-      final job = kExperience.firstWhere((e) => e.company == p.company);
+    for (final p in testProjects) {
+      final job = testExperience.firstWhere((e) => e.company == p.company);
       expect(p.role, startsWith(job.role), reason: '${p.company} role');
       if (p.company != 'NatHealth') {
         expect(
