@@ -18,6 +18,7 @@ import 'package:profile/features/shell/widget/mobile_app_bar.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/theme/surface_tone.dart';
+import 'helpers/test_data.dart';
 
 Widget createThemedTestApp({
   required Widget child,
@@ -217,7 +218,13 @@ void main() {
       ]) {
         tester.view.devicePixelRatio = 1.0;
         tester.view.physicalSize = size;
-        await tester.pumpWidget(PortfolioApp(key: ValueKey(size)));
+        await tester.pumpWidget(PortfolioApp(
+          key: ValueKey(size),
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
         await tester.pump(const Duration(milliseconds: 300));
 
         final themeBtnFinder = find.byWidgetPredicate((w) =>

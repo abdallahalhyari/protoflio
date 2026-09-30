@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/features/hats/bloc/hats_deck_bloc.dart';
 import 'package:profile/features/hats/bloc/hats_deck_event.dart';
 import 'package:profile/features/hats/bloc/hats_deck_state.dart';
-
+import '../helpers/test_data.dart';
 
 void main() {
   group('HatsDeckBloc Test Suite', () {

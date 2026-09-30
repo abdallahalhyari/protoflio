@@ -5,7 +5,6 @@ import 'package:profile/theme/app_theme.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_tech_chip.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_outcome_line.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
-import 'package:profile/features/projects/domain/entities/project.dart';
 
 Widget _wrap(Widget child,
     [Size size = const Size(1200, 900), bool scrollable = true]) {

@@ -7,6 +7,7 @@ import 'package:profile/features/hats/page/hats_grid_page.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/features/engineering/page/engineering_page.dart';
+import 'helpers/test_data.dart';
 
 Widget createTestApp(Widget child, [Size size = const Size(1200, 900)]) {
   return MaterialApp(

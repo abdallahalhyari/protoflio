@@ -18,7 +18,6 @@ final List<Project> testProjects = [
       tagline: 'Tagline $i',
       highlights: ['Highlight 1', 'Highlight 2'],
       stack: ['Flutter', 'Dart'],
-      domain: 'Enterprise Mobile',
       role: 'Mobile Engineer',
       problem: 'Problem $i',
       solution: 'Solution $i',
@@ -44,7 +43,6 @@ final List<Skill> testSkills = [
       name: 'Skill $i',
       icon: Icons.code,
       level: 0.9,
-      category: 'Mobile Systems',
     )
 ];
 

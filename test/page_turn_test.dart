@@ -10,18 +10,31 @@ import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/home_screen.dart';
 import 'package:profile/features/shell/widget/folio_bar.dart';
 import 'package:profile/features/shell/widget/magazine_page_transformer.dart';
+import 'package:profile/features/projects/domain/repositories/project_repository.dart';
+import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
+import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
+import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
+import 'helpers/test_data.dart';
 
 Widget _wrapHome() {
-  return MultiBlocProvider(
+  return MultiRepositoryProvider(
     providers: [
-      BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
-      BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
+      RepositoryProvider<ProjectRepository>(create: (_) => TestProjectRepository()),
+      RepositoryProvider<ExperienceRepository>(create: (_) => TestExperienceRepository()),
+      RepositoryProvider<HatRepository>(create: (_) => TestHatRepository()),
+      RepositoryProvider<SkillRepository>(create: (_) => TestSkillRepository()),
     ],
-    child: const MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: HomeScreen(),
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider<ThemeBloc>(create: (_) => ThemeBloc()),
+        BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
+      ],
+      child: const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: HomeScreen(),
+      ),
     ),
   );
 }

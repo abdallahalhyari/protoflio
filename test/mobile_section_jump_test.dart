@@ -6,6 +6,7 @@ import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/shell/widget/mobile_pager.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_header.dart';
 import 'package:profile/main.dart';
+import 'helpers/test_data.dart';
 
 void main() {
   // Menu / hash jumps on phones used to do nothing: ListView builds lazily

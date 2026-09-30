@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/hats/model/hat_info.dart';
 import 'package:profile/features/hats/bloc/hats_deck_bloc.dart';
 import 'package:profile/features/hats/bloc/hats_deck_event.dart';
 import 'package:profile/features/hats/bloc/hats_deck_state.dart';
@@ -180,9 +181,6 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
     return BlocBuilder<HatsDeckBloc, HatsDeckState>(
       builder: (context, deckState) {
         final selectedHatIndex = deckState.selectedHatIndex;
-        final renderOrder = deckState.renderOrder;
-        final cardPositions = deckState.cardPositions;
-        final cardRotations = deckState.cardRotations;
 
         if (widget.isContinuousMobile) {
           return ContinuousMobileHatColumn(
@@ -206,41 +204,12 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
           );
         }
 
-        final header = SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 14 + kTopNavReserve, 24, 0),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1200),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    HatDeckHeader(
-                      isMobile: false,
-                      onShuffle: _shuffleDeck,
-                      onReset: _resetSpread,
-                    ),
-                    const SizedBox(height: AppSpacing.smd),
-                    // The bio repeats the hero masthead and contact page;
-                    // on short viewports its height goes to the cards.
-                    if (size.height >= _kBioMinViewportHeight) ...[
-                      const HatBioStrip(isMobile: false),
-                      const SizedBox(height: AppSpacing.smd),
-                    ],
-                    const HatDragHint(),
-                    const SizedBox(height: AppSpacing.sm),
-                    HatRolePills(
-                      selectedIndex: selectedHatIndex,
-                      isDesktop: true,
-                      onSelectRole: (index) => _selectRole(index, size, false),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+        final header = _DesktopHeader(
+          selectedHatIndex: selectedHatIndex,
+          size: size,
+          onShuffle: _shuffleDeck,
+          onReset: _resetSpread,
+          onSelectRole: (index) => _selectRole(index, size, false),
         );
 
         // The fan lives in the space left between the header block and
@@ -248,51 +217,22 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
         // shorter than a card. Laying it out against the whole viewport
         // made it paint over the header and under the dock on 13-14"
         // laptop viewports (~650px tall).
-        final felt = LayoutBuilder(
-          builder: (context, constraints) {
-            final available = constraints.biggest;
-            final scale = (available.height / _kFeltMinHeight).clamp(0.5, 1.0);
-            final feltSize = available / scale;
+        final felt = _CardFeltLayer(
+          deckState: deckState,
+          hats: hats,
+          size: size,
+          onLayoutInitialized: (feltSize) {
             _feltSize = feltSize;
             if (!deckState.isInitialized || _lastLayoutSize != feltSize) {
               _lastLayoutSize = feltSize;
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (!mounted) return;
-                context
-                    .read<HatsDeckBloc>()
-                    .add(HatLayoutInitialized(feltSize));
+                context.read<HatsDeckBloc>().add(HatLayoutInitialized(feltSize));
               });
             }
-            return FittedBox(
-              fit: BoxFit.fill,
-              child: SizedBox.fromSize(
-                size: feltSize,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    for (final i in renderOrder)
-                      HatPlayingCard(
-                        key: ValueKey('hat_card_${hats[i].title}'),
-                        hat: hats[i],
-                        index: i,
-                        position: i < cardPositions.length
-                            ? cardPositions[i]
-                            : Offset.zero,
-                        rotation:
-                            i < cardRotations.length ? cardRotations[i] : 0.0,
-                        onCardTap: () => _selectRole(i, size, false),
-                        onDragStart: () => _bringToFront(i),
-                        onDragEnd: (newPos) {
-                          context
-                              .read<HatsDeckBloc>()
-                              .add(HatCardPositionSet(i, newPos));
-                        },
-                      ),
-                  ],
-                ),
-              ),
-            );
           },
+          onSelectRole: (index) => _selectRole(index, size, false),
+          onBringToFront: _bringToFront,
         );
 
         return Focus(
@@ -301,24 +241,7 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
           child: SizedBox.expand(
             child: Stack(
               children: [
-                // Enterprise Architectural Inlay Border
-                Positioned.fill(
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppRadius.lg),
-                        border: Border.all(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withValues(alpha: 0.18),
-                          width: 1.5,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                const _EnterpriseBorder(),
 
                 // Header, then the card felt in whatever height is left
                 // above the console dock. On a viewport too short for the
@@ -378,3 +301,148 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
     );
   }
 }
+
+class _DesktopHeader extends StatelessWidget {
+  final int selectedHatIndex;
+  final Size size;
+  final VoidCallback onShuffle;
+  final VoidCallback onReset;
+  final void Function(int) onSelectRole;
+
+  const _DesktopHeader({
+    required this.selectedHatIndex,
+    required this.size,
+    required this.onShuffle,
+    required this.onReset,
+    required this.onSelectRole,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      bottom: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 14 + kTopNavReserve, 24, 0),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                HatDeckHeader(
+                  isMobile: false,
+                  onShuffle: onShuffle,
+                  onReset: onReset,
+                ),
+                const SizedBox(height: AppSpacing.smd),
+                if (size.height >= _kBioMinViewportHeight) ...[
+                  const HatBioStrip(isMobile: false),
+                  const SizedBox(height: AppSpacing.smd),
+                ],
+                const HatDragHint(),
+                const SizedBox(height: AppSpacing.sm),
+                HatRolePills(
+                  selectedIndex: selectedHatIndex,
+                  isDesktop: true,
+                  onSelectRole: onSelectRole,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CardFeltLayer extends StatelessWidget {
+  final HatsDeckState deckState;
+  final List<HatInfo> hats;
+  final Size size;
+  final void Function(Size) onLayoutInitialized;
+  final void Function(int) onSelectRole;
+  final void Function(int) onBringToFront;
+
+  const _CardFeltLayer({
+    required this.deckState,
+    required this.hats,
+    required this.size,
+    required this.onLayoutInitialized,
+    required this.onSelectRole,
+    required this.onBringToFront,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final renderOrder = deckState.renderOrder;
+    final cardPositions = deckState.cardPositions;
+    final cardRotations = deckState.cardRotations;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final available = constraints.biggest;
+        final scale = (available.height / _kFeltMinHeight).clamp(0.5, 1.0);
+        final feltSize = available / scale;
+        
+        onLayoutInitialized(feltSize);
+        
+        return FittedBox(
+          fit: BoxFit.fill,
+          child: SizedBox.fromSize(
+            size: feltSize,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                for (final i in renderOrder)
+                  HatPlayingCard(
+                    key: ValueKey('hat_card_${hats[i].title}'),
+                    hat: hats[i],
+                    index: i,
+                    position: i < cardPositions.length
+                        ? cardPositions[i]
+                        : Offset.zero,
+                    rotation:
+                        i < cardRotations.length ? cardRotations[i] : 0.0,
+                    onCardTap: () => onSelectRole(i),
+                    onDragStart: () => onBringToFront(i),
+                    onDragEnd: (newPos) {
+                      context
+                          .read<HatsDeckBloc>()
+                          .add(HatCardPositionSet(i, newPos));
+                    },
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _EnterpriseBorder extends StatelessWidget {
+  const _EnterpriseBorder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            border: Border.all(
+              color: Theme.of(context)
+                  .colorScheme
+                  .primary
+                  .withValues(alpha: 0.18),
+              width: 1.5,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+

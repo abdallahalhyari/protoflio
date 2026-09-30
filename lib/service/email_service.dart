@@ -20,7 +20,7 @@ class EmailService {
   }) async {
     if (_serviceId == 'SERVICE_ID_HERE') {
       // Short-circuit if credentials aren't set
-      print('EmailJS credentials missing, cannot send email.');
+      // Short-circuit if credentials aren't set
       return false;
     }
 
@@ -46,7 +46,7 @@ class EmailService {
 
       return response.statusCode == 200;
     } catch (e) {
-      print('Error sending email: $e');
+      // Silently fail if email fails
       return false;
     }
   }

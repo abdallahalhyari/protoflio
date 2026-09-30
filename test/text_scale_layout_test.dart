@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/main.dart';
+import 'helpers/test_data.dart';
 
 /// Renders the whole app at a given viewport and OS text scale, visits every
 /// section, and returns the layout errors (overflows) reported on the way.

@@ -29,7 +29,7 @@ void main() {
       build: () => ExperienceTimelineBloc(repository: TestExperienceRepository()),
       act: (b) => b.add(const ExperienceVisibilityChanged(true)),
       expect: () => [
-        const ExperienceTimelineState(isVisible: true, experiences: testExperience),
+        ExperienceTimelineState(isVisible: true, experiences: testExperience),
       ],
     );
 
@@ -41,8 +41,8 @@ void main() {
         b.add(const ExperienceNodeHovered(null));
       },
       expect: () => [
-        const ExperienceTimelineState(hoveredIndex: 1, experiences: testExperience),
-        const ExperienceTimelineState(experiences: testExperience),
+        ExperienceTimelineState(hoveredIndex: 1, experiences: testExperience),
+        ExperienceTimelineState(experiences: testExperience),
       ],
     );
 
@@ -54,8 +54,8 @@ void main() {
         b.add(const ExperienceNodeSelected(0)); // deselect
       },
       expect: () => [
-        const ExperienceTimelineState(selectedIndex: 0, experiences: testExperience),
-        const ExperienceTimelineState(experiences: testExperience),
+        ExperienceTimelineState(selectedIndex: 0, experiences: testExperience),
+        ExperienceTimelineState(experiences: testExperience),
       ],
     );
 
@@ -68,9 +68,9 @@ void main() {
         b.add(const ExperienceKeyboardNavigated(-1)); // moves to 0
       },
       expect: () => [
-        const ExperienceTimelineState(selectedIndex: 0, experiences: testExperience),
-        const ExperienceTimelineState(selectedIndex: 1, experiences: testExperience),
-        const ExperienceTimelineState(selectedIndex: 0, experiences: testExperience),
+        ExperienceTimelineState(selectedIndex: 0, experiences: testExperience),
+        ExperienceTimelineState(selectedIndex: 1, experiences: testExperience),
+        ExperienceTimelineState(selectedIndex: 0, experiences: testExperience),
       ],
     );
   });

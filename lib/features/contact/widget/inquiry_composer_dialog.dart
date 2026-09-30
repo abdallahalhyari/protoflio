@@ -3,7 +3,6 @@ import 'package:profile/shared/widget/app_toast.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:profile/service/analytics_service.dart';
 import 'package:profile/service/sound_service.dart';
@@ -11,7 +10,6 @@ import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_bloc.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_event.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
-import 'package:profile/shared/util/mailto.dart';
 import 'package:profile/service/email_service.dart';
 
 import 'package:profile/features/contact/widget/inquiry/inquiry_dialog_header.dart';
@@ -93,7 +91,6 @@ class _InquiryComposerDialogView extends StatefulWidget {
 
 class _InquiryComposerDialogViewState
     extends State<_InquiryComposerDialogView> {
-  static const String _recipientEmail = 'alhyariabdallh@gmail.com';
 
   late final TextEditingController _nameController;
   late final TextEditingController _companyController;
@@ -200,34 +197,8 @@ class _InquiryComposerDialogViewState
     return BlocBuilder<ContactInquiryBloc, ContactInquiryState>(
       builder: (context, state) {
         final canSend = state.body.trim().isNotEmpty;
-        final nameField = TextField(
-          controller: _nameController,
-          autofillHints: const [AutofillHints.name],
-          textInputAction: TextInputAction.next,
-          textCapitalization: TextCapitalization.words,
-          onChanged: (val) {
-            context.read<ContactInquiryBloc>().add(InquiryNameChanged(val));
-          },
-          decoration: const InputDecoration(
-            labelText: 'Your Name (Optional)',
-            border: OutlineInputBorder(),
-            isDense: true,
-          ),
-        );
-        final companyField = TextField(
-          controller: _companyController,
-          autofillHints: const [AutofillHints.organizationName],
-          textInputAction: TextInputAction.next,
-          textCapitalization: TextCapitalization.words,
-          onChanged: (val) {
-            context.read<ContactInquiryBloc>().add(InquiryCompanyChanged(val));
-          },
-          decoration: const InputDecoration(
-            labelText: 'Company / Org (Optional)',
-            border: OutlineInputBorder(),
-            isDense: true,
-          ),
-        );
+        final nameField = _InquiryNameField(controller: _nameController);
+        final companyField = _InquiryCompanyField(controller: _companyController);
 
         return Dialog(
           backgroundColor: context.modalSurface,
@@ -278,25 +249,7 @@ class _InquiryComposerDialogViewState
                   ],
                   const SizedBox(height: AppSpacing.md),
                   // Message Body
-                  TextField(
-                    controller: _bodyController,
-                    onChanged: (val) {
-                      context
-                          .read<ContactInquiryBloc>()
-                          .add(InquiryBodyChanged(val));
-                    },
-                    maxLines: 5,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                      labelText: 'Message Body',
-                      border: const OutlineInputBorder(),
-                      alignLabelWithHint: true,
-                      // Say why the send actions are disabled.
-                      helperText: state.body.trim().isEmpty
-                          ? 'Write a message to enable sending'
-                          : null,
-                    ),
-                  ),
+                  _InquiryBodyField(controller: _bodyController, state: state),
                   const SizedBox(height: AppSpacing.lg),
                   InquiryDialogActions(
                     canSend: canSend,
@@ -310,6 +263,81 @@ class _InquiryComposerDialogViewState
           ),
         );
       },
+    );
+  }
+}
+
+class _InquiryNameField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _InquiryNameField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      autofillHints: const [AutofillHints.name],
+      textInputAction: TextInputAction.next,
+      textCapitalization: TextCapitalization.words,
+      onChanged: (val) {
+        context.read<ContactInquiryBloc>().add(InquiryNameChanged(val));
+      },
+      decoration: const InputDecoration(
+        labelText: 'Your Name (Optional)',
+        border: OutlineInputBorder(),
+        isDense: true,
+      ),
+    );
+  }
+}
+
+class _InquiryCompanyField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const _InquiryCompanyField({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      autofillHints: const [AutofillHints.organizationName],
+      textInputAction: TextInputAction.next,
+      textCapitalization: TextCapitalization.words,
+      onChanged: (val) {
+        context.read<ContactInquiryBloc>().add(InquiryCompanyChanged(val));
+      },
+      decoration: const InputDecoration(
+        labelText: 'Company / Org (Optional)',
+        border: OutlineInputBorder(),
+        isDense: true,
+      ),
+    );
+  }
+}
+
+class _InquiryBodyField extends StatelessWidget {
+  final TextEditingController controller;
+  final ContactInquiryState state;
+
+  const _InquiryBodyField({required this.controller, required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      onChanged: (val) {
+        context.read<ContactInquiryBloc>().add(InquiryBodyChanged(val));
+      },
+      maxLines: 5,
+      textCapitalization: TextCapitalization.sentences,
+      decoration: InputDecoration(
+        labelText: 'Message Body',
+        border: const OutlineInputBorder(),
+        alignLabelWithHint: true,
+        helperText: state.body.trim().isEmpty
+            ? 'Write a message to enable sending'
+            : null,
+      ),
     );
   }
 }

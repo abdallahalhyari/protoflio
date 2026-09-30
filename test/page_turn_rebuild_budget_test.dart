@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/main.dart';
+import 'helpers/test_data.dart';
 
 void main() {
   // Guards against whole-app rebuild storms during a page turn — e.g. an

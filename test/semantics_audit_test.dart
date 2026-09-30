@@ -17,6 +17,7 @@ import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/main.dart';
 import 'package:profile/theme/app_theme.dart';
+import 'helpers/test_data.dart';
 
 /// What a screen reader announces for each control, section by section.
 ///

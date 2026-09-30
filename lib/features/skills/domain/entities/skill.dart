@@ -22,6 +22,7 @@ class Skill {
   factory Skill.fromJson(Map<String, dynamic> json) {
     return Skill(
       name: json['name'] as String,
+      // ignore: non_const_argument_for_const_parameter
       icon: IconData(json['iconCodePoint'] as int, fontFamily: json['iconFontFamily'] as String? ?? 'MaterialIcons'),
       level: (json['level'] as num).toDouble(),
       category: json['category'] as String? ?? 'Mobile Systems',

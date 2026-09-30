@@ -6,6 +6,7 @@ import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
 import 'package:profile/features/shell/widget/custom_cursor.dart';
 import 'package:profile/features/shell/widget/page_background.dart';
+import 'helpers/test_data.dart';
 
 void main() {
   group('Scroll Behaviors & Performance Optimizations', () {

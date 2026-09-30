@@ -201,7 +201,13 @@ void main() {
     testWidgets('whole app lays out cleanly — ${entry.key}', (tester) async {
       final (size, locale, scale) = entry.value;
       final errors = await _errorsDuring(tester, size, scale, () async {
-        await tester.pumpWidget(PortfolioApp(initialLocale: locale));
+        await tester.pumpWidget(PortfolioApp(
+          initialLocale: locale,
+          projectRepo: TestProjectRepository(),
+          experienceRepo: TestExperienceRepository(),
+          hatRepo: TestHatRepository(),
+          skillRepo: TestSkillRepository(),
+        ));
         await _tourApp(tester, size);
       });
       expect(errors, isEmpty);
