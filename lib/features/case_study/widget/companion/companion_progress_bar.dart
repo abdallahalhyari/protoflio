@@ -32,7 +32,7 @@ class CompanionTopReadingProgressBar extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 AnimatedContainer(
-                  duration: const Duration(milliseconds: 60),
+                  duration: AppMotion.micro,
                   curve: Curves.easeOut,
                   width: filledWidth,
                   height: double.infinity,

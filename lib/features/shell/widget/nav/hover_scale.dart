@@ -18,7 +18,7 @@ class _HoverScaleState extends State<HoverScale> {
       onExit: (_) => setState(() => _hovering = false),
       child: AnimatedScale(
         scale: _hovering ? 1.3 : 1.0,
-        duration: const Duration(milliseconds: 200),
+        duration: AppMotion.snap,
         curve: Curves.easeOutCubic,
         child: widget.child,
       ),
