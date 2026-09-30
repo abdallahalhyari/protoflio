@@ -12,6 +12,7 @@ import 'package:profile/features/contact/bloc/contact_inquiry_bloc.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_event.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
 import 'package:profile/shared/util/mailto.dart';
+import 'package:profile/service/email_service.dart';
 
 import 'package:profile/features/contact/widget/inquiry/inquiry_dialog_header.dart';
 import 'package:profile/features/contact/widget/inquiry/inquiry_timezone_banner.dart';
@@ -97,6 +98,7 @@ class _InquiryComposerDialogViewState
   late final TextEditingController _nameController;
   late final TextEditingController _companyController;
   late final TextEditingController _bodyController;
+  bool _isSending = false;
 
   @override
   void initState() {
@@ -125,7 +127,7 @@ class _InquiryComposerDialogViewState
     _bodyController.text = newDefaultBody;
   }
 
-  Future<void> _launchEmailClient(ContactInquiryState state) async {
+  Future<void> _sendEmail(ContactInquiryState state) async {
     SoundService.instance.playClick();
     Analytics.ctaEmail();
     final subject = state.activeSubject;
@@ -136,8 +138,34 @@ class _InquiryComposerDialogViewState
       return;
     }
 
-    final mailUri = mailtoUri(_recipientEmail, subject: subject, body: body);
-    await launchUrl(mailUri, mode: LaunchMode.externalApplication);
+    setState(() => _isSending = true);
+
+    final success = await EmailService.instance.sendEmail(
+      subject: subject,
+      body: body,
+      name: _nameController.text,
+      company: _companyController.text,
+    );
+
+    if (!mounted) return;
+    setState(() => _isSending = false);
+
+    if (success) {
+      AppToast.show(
+        context,
+        message: 'Message sent successfully!',
+        status: ToastStatus.ok,
+        duration: const Duration(seconds: 3),
+      );
+      Navigator.of(context).pop();
+    } else {
+      AppToast.show(
+        context,
+        message: 'Delivery failed. Try copying the draft instead.',
+        status: ToastStatus.critical,
+        duration: const Duration(seconds: 4),
+      );
+    }
   }
 
   Future<void> _copyDraft(ContactInquiryState state) async {
@@ -272,8 +300,9 @@ class _InquiryComposerDialogViewState
                   const SizedBox(height: AppSpacing.lg),
                   InquiryDialogActions(
                     canSend: canSend,
+                    isSending: _isSending,
                     onCopy: () => _copyDraft(state),
-                    onSend: () => _launchEmailClient(state),
+                    onSend: () => _sendEmail(state),
                   ),
                 ],
               ),

@@ -3,12 +3,14 @@ import 'package:profile/theme/tokens.dart';
 
 class InquiryDialogActions extends StatelessWidget {
   final bool canSend;
+  final bool isSending;
   final VoidCallback onCopy;
   final VoidCallback onSend;
 
   const InquiryDialogActions({
     super.key,
     required this.canSend,
+    this.isSending = false,
     required this.onCopy,
     required this.onSend,
   });
@@ -26,9 +28,15 @@ class InquiryDialogActions extends StatelessWidget {
           label: const Text('COPY DRAFT'),
         ),
         FilledButton.icon(
-          onPressed: canSend ? onSend : null,
-          icon: const Icon(Icons.mail_outline_rounded, size: 16),
-          label: const Text('OPEN IN EMAIL CLIENT'),
+          onPressed: (canSend && !isSending) ? onSend : null,
+          icon: isSending
+              ? const SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : const Icon(Icons.send_rounded, size: 16),
+          label: Text(isSending ? 'SENDING...' : 'SEND SECURE MESSAGE'),
         ),
       ],
     );
