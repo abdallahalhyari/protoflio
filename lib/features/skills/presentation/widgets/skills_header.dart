@@ -16,11 +16,11 @@ class SkillsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SectionMasthead(
-      kicker: 'FEATURE 04 · SYSTEMS & DELIVERY',
-      title: 'STACK & ENGINEERING',
-      subtitle:
-          'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.',
+      kicker: loc.skillsHeaderKicker,
+      title: loc.skillsHeaderTitle,
+      subtitle: loc.skillsHeaderSubtitle,
       isDesktop: isDesktop,
       // Icon, not a '✦' glyph: CanvasKit has no system fonts, so the
       // glyph pulled a 374 KB Noto Symbols 2 download.

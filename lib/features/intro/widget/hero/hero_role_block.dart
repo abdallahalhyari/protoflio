@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/intro/widget/hero_motion.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 class HeroRoleBlock extends StatelessWidget {
   final Size size;
@@ -18,6 +20,7 @@ class HeroRoleBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
+    final loc = AppLocalizations.of(context)!;
 
     return SnappyEntrance(
       delayMs: 60,
@@ -35,27 +38,27 @@ class HeroRoleBlock extends StatelessWidget {
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
               Text(
-                'SENIOR MOBILE ENGINEER',
+                loc.introRoleHeading,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: isCompactH
                       ? (size.width * 0.016).clamp(15.0, 19.0)
                       : (size.width * 0.018).clamp(16.0, 22.0),
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 3,
+                  letterSpacing: latinTracking(context, 3),
                   color: context.onSurface,
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.',
+                loc.introValueProposition,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: isCompactH
                       ? (size.width * 0.0105).clamp(12.0, 15.0)
                       : (size.width * 0.0115).clamp(12.5, 18.0),
                   fontWeight: FontWeight.w800,
-                  letterSpacing: 1.2,
+                  letterSpacing: latinTracking(context, 1.2),
                   color: isDark ? AppColors.accentIndigoSoft : accent,
                   height: 1.45,
                 ),
@@ -65,11 +68,11 @@ class HeroRoleBlock extends StatelessWidget {
                 alignment: WrapAlignment.center,
                 spacing: 8,
                 runSpacing: 8,
-                children: const [
+                children: [
                   _MiniPill('Flutter'),
                   _MiniPill('Android'),
-                  _MiniPill('Architecture'),
-                  _MiniPill('Product delivery'),
+                  _MiniPill(loc.introSkillArchitecture),
+                  _MiniPill(loc.introSkillProductDelivery),
                 ],
               ),
             ],
@@ -110,7 +113,7 @@ class _MiniPill extends StatelessWidget {
             color: context.onSurface,
             fontSize: AppTypography.micro,
             fontWeight: FontWeight.w800,
-            letterSpacing: 1.1,
+            letterSpacing: latinTracking(context, 1.1),
           ),
         ),
       ),

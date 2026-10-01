@@ -42,6 +42,20 @@ void main() {
           find.text('${testSkills.length} CORE DISCIPLINES'), findsOneWidget);
     });
 
+    test('Skills header copy is translated in every supported locale',
+        () async {
+      final english = await AppLocalizations.delegate.load(const Locale('en'));
+      expect(english.skillsHeaderTitle, 'STACK & ENGINEERING');
+
+      final arabic = await AppLocalizations.delegate.load(const Locale('ar'));
+      expect(arabic.skillsHeaderTitle, 'المهارات والهندسة');
+      expect(arabic.skillsHeaderSubtitle, contains('أندرويد'));
+
+      final czech = await AppLocalizations.delegate.load(const Locale('cs'));
+      expect(czech.skillsHeaderTitle, 'DOVEDNOSTI A INŽENÝRSTVÍ');
+      expect(czech.skillsHeaderSubtitle, contains('Flutter'));
+    });
+
     testWidgets(
         'SkillCategoryFilters renders categories and triggers selection',
         (tester) async {

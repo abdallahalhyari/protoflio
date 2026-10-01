@@ -14,14 +14,15 @@ class ExperienceHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SectionMasthead(
-      kicker: 'FEATURE 02 · CAREER TRAJECTORY',
+      kicker: loc.experienceHeaderKicker,
       // Heading = nav label, so nav, menu and page say the same thing.
-      title: AppLocalizations.of(context)!.navExperience.toUpperCase(),
-      subtitle: AppLocalizations.of(context)!.sectionSubtitleExperience,
+      title: loc.navExperience.toUpperCase(),
+      subtitle: loc.sectionSubtitleExperience,
       isDesktop: isDesktop,
       badgeIcon: Icons.auto_awesome_rounded,
-      badgeLabel: '4 ROLES · ENTERPRISE IMPACT',
+      badgeLabel: loc.badgeRoles(4),
     );
   }
 }

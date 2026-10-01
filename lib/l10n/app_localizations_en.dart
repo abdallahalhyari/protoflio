@@ -128,6 +128,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSeniorEngineer => 'SENIOR MOBILE ENGINEER';
 
   @override
+  String get introRoleHeading => 'SENIOR MOBILE ENGINEER';
+
+  @override
+  String get introValueProposition =>
+      'I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.';
+
+  @override
+  String get introSkillArchitecture => 'Architecture';
+
+  @override
+  String get introSkillProductDelivery => 'Product delivery';
+
+  @override
   String get introWorkEligibility => 'CZ WORK ELIGIBLE · STUDENT';
 
   @override
@@ -312,6 +325,46 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get sectionSubtitleExperience =>
       'Multi-year development of enterprise mobile systems';
+
+  @override
+  String get projectsHeaderKicker => 'FEATURE 03 · SELECTED WORK';
+
+  @override
+  String get experienceHeaderKicker => 'FEATURE 02 · CAREER TRAJECTORY';
+
+  @override
+  String get engineeringHeaderKicker => 'FEATURE 05 · SYSTEMS ARCHITECTURE';
+
+  @override
+  String get hatsHeaderKickerMobile => 'FEATURE 06 · 6 ROLES';
+
+  @override
+  String get hatsHeaderKickerDesktop =>
+      'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP';
+
+  @override
+  String get hatsHeaderSubtitle =>
+      'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.';
+
+  @override
+  String get contactHeaderKicker => 'FEATURE 07 · DIRECT LINE & REACH OUT';
+
+  @override
+  String get contactHeaderTitle => 'LET\'S BUILD WHAT\'S NEXT.';
+
+  @override
+  String get contactHeaderSubtitle =>
+      'I help teams ship complex mobile products with calmer architecture, stronger execution, and more confidence in production. Available for senior engineering leadership, technical strategy, and product-critical delivery work.';
+
+  @override
+  String get skillsHeaderKicker => 'FEATURE 04 · SYSTEMS & DELIVERY';
+
+  @override
+  String get skillsHeaderTitle => 'STACK & ENGINEERING';
+
+  @override
+  String get skillsHeaderSubtitle =>
+      'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.';
 
   @override
   String get sectionSubtitleSkills =>

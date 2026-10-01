@@ -32,6 +32,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context)!;
     final hats = context.read<HatRepository>().getHats();
 
     return Padding(
@@ -45,9 +46,9 @@ class ContinuousMobileHatColumn extends StatelessWidget {
           // Same masthead as the other sections; the hand-rolled one drew
           // its kicker at border opacity, which barely read on dark.
           SectionMasthead(
-            kicker: 'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP',
-            title: AppLocalizations.of(context)!.navAbout.toUpperCase(),
-            subtitle: AppLocalizations.of(context)!.sectionSubtitleAbout,
+            kicker: loc.hatsHeaderKickerMobile,
+            title: loc.navAbout.toUpperCase(),
+            subtitle: loc.hatsHeaderSubtitle,
             isDesktop: false,
           ),
           const SizedBox(height: AppSpacing.sm),

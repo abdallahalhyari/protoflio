@@ -134,8 +134,7 @@ void main() {
       ));
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.text('FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP'),
-          findsOneWidget);
+      expect(find.text('FEATURE 06 · 6 ROLES'), findsOneWidget);
       expect(find.text('PERSPECTIVES'), findsOneWidget);
       expect(find.textContaining('TAP CARD TO FLIP'), findsOneWidget);
       expect(tester.takeException(), isNull);

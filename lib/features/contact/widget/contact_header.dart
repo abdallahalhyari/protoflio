@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/util/bidi.dart';
@@ -11,7 +12,7 @@ class ContactHeader extends StatelessWidget {
   static const _accent = AppColors.accentViolet;
   static const _accentSoft = AppColors.accentVioletLight;
 
-  Widget _issueStrip(bool isDark) {
+  Widget _issueStrip(BuildContext context, bool isDark, AppLocalizations loc) {
     Widget rule() => Container(
           width: 36,
           height: 1.5,
@@ -26,12 +27,12 @@ class ContactHeader extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              'FEATURE 07 · DIRECT LINE & REACH OUT',
+              loc.contactHeaderKicker,
               style: TextStyle(
                 color: isDark ? _accentSoft : AppColors.accentVioletDeep,
                 fontSize: AppTypography.caption,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 4,
+                letterSpacing: latinTracking(context, 4),
               ),
             ),
           ),
@@ -42,19 +43,19 @@ class ContactHeader extends StatelessWidget {
     );
   }
 
-  Widget _headline(Size size, BuildContext context) {
+  Widget _headline(Size size, BuildContext context, AppLocalizations loc) {
     final isDark = context.isDarkMode;
     final fs = (size.width * 0.055).clamp(32.0, 68.0);
     return Semantics(
       header: true,
       child: Text(
-        "LET'S BUILD WHAT'S NEXT.",
+        loc.contactHeaderTitle,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: AppTypography.displayFont,
           fontSize: fs,
           fontWeight: FontWeight.w900,
-          letterSpacing: 2.5,
+          letterSpacing: latinTracking(context, 2.5),
           color: context.onSurface,
           height: 1.05,
           shadows: isDark
@@ -65,22 +66,21 @@ class ContactHeader extends StatelessWidget {
     );
   }
 
-  Widget _lede(Size size, BuildContext context) {
+  Widget _lede(Size size, BuildContext context, AppLocalizations loc) {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 760),
         child: Text(
           ltrContent(
             context,
-            'I help teams ship complex mobile products with calmer architecture, stronger execution, and more confidence in production. '
-            'Available for senior engineering leadership, technical strategy, and product-critical delivery work.',
+            loc.contactHeaderSubtitle,
           ),
           textAlign: TextAlign.center,
           style: TextStyle(
             color: context.mutedText,
             fontSize: (size.width * 0.014).clamp(13.5, 17.0),
             height: 1.6,
-            letterSpacing: 0.3,
+            letterSpacing: latinTracking(context, 0.3),
           ),
         ),
       ),
@@ -91,15 +91,16 @@ class ContactHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final isDark = context.isDarkMode;
+    final loc = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _issueStrip(isDark),
+        _issueStrip(context, isDark, loc),
         const SizedBox(height: AppSpacing.xl),
-        _headline(size, context),
+        _headline(size, context, loc),
         const SizedBox(height: AppSpacing.md),
-        _lede(size, context),
+        _lede(size, context, loc),
       ],
     );
   }

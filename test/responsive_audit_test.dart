@@ -273,7 +273,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.textContaining('SELECTED WORK'), findsOneWidget);
+      expect(find.text('FEATURE 03 · SELECTED WORK'), findsOneWidget);
     });
 
     testWidgets('SkillsPage renders cleanly on compact 320x568',
