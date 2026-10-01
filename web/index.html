@@ -63,6 +63,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="assets/FontManifest.json" as="fetch" crossorigin>
   <link rel="preload" href="assets/AssetManifest.bin.json" as="fetch" crossorigin>
+  <!-- Portfolio content: main() waits for these before the first frame,
+       so fetch them alongside the app instead of after it boots. -->
+  <link rel="preload" href="assets/assets/data/projects.json" as="fetch" crossorigin>
+  <link rel="preload" href="assets/assets/data/skills.json" as="fetch" crossorigin>
+  <link rel="preload" href="assets/assets/data/experience.json" as="fetch" crossorigin>
+  <link rel="preload" href="assets/assets/data/hats.json" as="fetch" crossorigin>
+  <link rel="preload" href="assets/assets/data/education.json" as="fetch" crossorigin>
+  <link rel="preload" href="assets/assets/data/certifications.json" as="fetch" crossorigin>
   <link rel="preload" href="assets/fonts/MaterialIcons-Regular.otf" as="fetch" crossorigin>
   <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Me4GZLCzYlKw.woff2" as="fetch" crossorigin>
   <link rel="prefetch" href="assets/assets/hat.webp" as="image">

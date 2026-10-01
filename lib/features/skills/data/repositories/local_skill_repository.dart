@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:profile/shared/util/bundled_json.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 
@@ -7,10 +6,9 @@ class LocalSkillRepository implements SkillRepository {
   List<Skill> _skills = [];
 
   Future<void> load() async {
-    final jsonStr = await rootBundle.loadString('assets/data/skills.json');
-    final List<dynamic> jsonList = jsonDecode(jsonStr) as List<dynamic>;
-    _skills =
-        jsonList.map((e) => Skill.fromJson(e as Map<String, dynamic>)).toList();
+    final list = await loadBundledJsonList('assets/data/skills.json');
+    _skills = List.unmodifiable(
+        list.map((e) => Skill.fromJson(e as Map<String, dynamic>)));
   }
 
   @override

@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:profile/shared/util/bundled_json.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 
@@ -7,11 +6,9 @@ class LocalProjectRepository implements ProjectRepository {
   List<Project> _projects = [];
 
   Future<void> load() async {
-    final jsonStr = await rootBundle.loadString('assets/data/projects.json');
-    final List<dynamic> jsonList = jsonDecode(jsonStr) as List<dynamic>;
-    _projects = jsonList
-        .map((e) => Project.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final list = await loadBundledJsonList('assets/data/projects.json');
+    _projects = List.unmodifiable(
+        list.map((e) => Project.fromJson(e as Map<String, dynamic>)));
   }
 
   @override
