@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/intro/widget/hero_motion.dart';
@@ -36,7 +35,7 @@ class HeroRoleBlock extends StatelessWidget {
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
               Text(
-                AppLocalizations.of(context)!.introSeniorEngineer.toUpperCase(),
+                'SENIOR MOBILE ENGINEER',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: isCompactH
@@ -49,34 +48,69 @@ class HeroRoleBlock extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                AppLocalizations.of(context)!.introBuildsComplex,
+                'I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: isCompactH
                       ? (size.width * 0.0105).clamp(12.0, 15.0)
                       : (size.width * 0.0115).clamp(12.5, 18.0),
                   fontWeight: FontWeight.w800,
-                  letterSpacing: 1.5,
+                  letterSpacing: 1.2,
                   color: isDark ? AppColors.accentIndigoSoft : accent,
+                  height: 1.45,
                 ),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
-              Text(
-                AppLocalizations.of(context)!.introTechStack,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: isCompactH
-                      ? (size.width * 0.01).clamp(11.0, 12.5)
-                      : (size.width * 0.011).clamp(11.5, 13.5),
-                  fontWeight: FontWeight.w600,
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.82)
-                      : AppColors.slate600,
-                  height: 1.45,
-                  letterSpacing: 0.8,
-                ),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8,
+                runSpacing: 8,
+                children: const [
+                  _MiniPill('Flutter'),
+                  _MiniPill('Android'),
+                  _MiniPill('Architecture'),
+                  _MiniPill('Product delivery'),
+                ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MiniPill extends StatelessWidget {
+  final String label;
+
+  const _MiniPill(this.label);
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final isDark = scheme.brightness == Brightness.dark;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color:
+            isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100,
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.12)
+              : AppColors.slate200,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        child: Text(
+          label.toUpperCase(),
+          style: TextStyle(
+            fontFamily: AppTypography.monoFont,
+            color: context.onSurface,
+            fontSize: AppTypography.micro,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.1,
           ),
         ),
       ),

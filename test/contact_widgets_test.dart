@@ -9,7 +9,6 @@ import 'package:profile/features/contact/widget/engagement_matrix_section.dart';
 import 'package:profile/features/contact/widget/express_presets_bar.dart';
 import 'package:profile/features/contact/widget/hero_email_card.dart';
 import 'package:profile/features/contact/widget/inquiry_composer_dialog.dart';
-import 'package:profile/shared/util/career_facts.dart';
 import 'package:profile/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
@@ -32,11 +31,11 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('FEATURE 07 · DIRECT LINE & REACH OUT'), findsOneWidget);
-      expect(find.text("LET'S BUILD SOMETHING EXTRAORDINARY"), findsOneWidget);
+      expect(find.text("LET'S BUILD WHAT'S NEXT."), findsOneWidget);
       expect(
-          find.textContaining(
-              'Senior Mobile Engineer with ${CareerFacts.yearsOfExperience()}+ years'),
-          findsOneWidget);
+        find.textContaining('I help teams ship complex mobile products'),
+        findsOneWidget,
+      );
     });
 
     testWidgets('HeroEmailCard renders email and triggers action callbacks',

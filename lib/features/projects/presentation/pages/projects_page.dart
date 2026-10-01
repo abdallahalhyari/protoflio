@@ -237,8 +237,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
       subtitle: loc.sectionSubtitleWork,
       isDesktop: isDesktop,
       badgeIcon: Icons.work_outline_rounded,
-      badgeLabel: AppLocalizations.of(context)!.badgeCaseStudies(
-          context.read<ProjectRepository>().getProjectCount()),
+      badgeLabel:
+          '${context.read<ProjectRepository>().getProjectCount()} CASE STUDIES',
     );
   }
 

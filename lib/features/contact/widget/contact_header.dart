@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:profile/shared/util/career_facts.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/util/bidi.dart';
@@ -49,7 +48,7 @@ class ContactHeader extends StatelessWidget {
     return Semantics(
       header: true,
       child: Text(
-        "LET'S BUILD SOMETHING EXTRAORDINARY",
+        "LET'S BUILD WHAT'S NEXT.",
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: AppTypography.displayFont,
@@ -69,13 +68,12 @@ class ContactHeader extends StatelessWidget {
   Widget _lede(Size size, BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 720),
+        constraints: const BoxConstraints(maxWidth: 760),
         child: Text(
           ltrContent(
             context,
-            'Senior Mobile Engineer with ${CareerFacts.yearsOfExperience()}+ years delivering resilient '
-            'production Flutter engines, offline-first sync protocols, and native iOS/Android bridges. '
-            'Available for senior full-time leadership, architectural audits, and technical partnerships.',
+            'I help teams ship complex mobile products with calmer architecture, stronger execution, and more confidence in production. '
+            'Available for senior engineering leadership, technical strategy, and product-critical delivery work.',
           ),
           textAlign: TextAlign.center,
           style: TextStyle(

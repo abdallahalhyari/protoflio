@@ -21,8 +21,7 @@ class EngineeringHeader extends StatelessWidget {
       subtitle: AppLocalizations.of(context)!.sectionSubtitleEngineering,
       isDesktop: isDesktop,
       badgeIcon: Icons.hub_rounded,
-      badgeLabel: AppLocalizations.of(context)!
-          .badgeArchitectures(kArchitectureTopics.length),
+      badgeLabel: '${kArchitectureTopics.length} ARCHITECTURES',
     );
   }
 }

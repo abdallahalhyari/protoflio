@@ -49,11 +49,9 @@ class HatDeckHeader extends StatelessWidget {
                   letterSpacing: 3,
                 ),
               ),
-              // Tenada caps fill a 1.0 line box; 4px read as ~2px under the kicker.
               const SizedBox(height: 8),
               Text(
-                // Heading = nav label, so nav, menu and page agree.
-                loc.navAbout.toUpperCase(),
+                'PERSPECTIVES',
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,
@@ -65,7 +63,7 @@ class HatDeckHeader extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                loc.sectionSubtitleAbout,
+                'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.',
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.75)

@@ -287,7 +287,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('SKILLS & STACK'), findsOneWidget);
+      expect(find.text('STACK & ENGINEERING'), findsOneWidget);
     });
 
     testWidgets('EngineeringPage renders cleanly on compact 320x568',
@@ -329,7 +329,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text("LET'S BUILD SOMETHING EXTRAORDINARY"), findsOneWidget);
+      expect(find.text("LET'S BUILD WHAT'S NEXT."), findsOneWidget);
     });
   });
 

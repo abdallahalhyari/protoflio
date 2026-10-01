@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widget/section_masthead.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 
 /// Top editorial header for the Career Trajectory / Experience section.
 class ExperienceHeader extends StatelessWidget {
@@ -23,8 +21,7 @@ class ExperienceHeader extends StatelessWidget {
       subtitle: AppLocalizations.of(context)!.sectionSubtitleExperience,
       isDesktop: isDesktop,
       badgeIcon: Icons.auto_awesome_rounded,
-      badgeLabel: AppLocalizations.of(context)!.badgeRoles(
-          context.read<ExperienceRepository>().getExperiences().length),
+      badgeLabel: '4 ROLES · ENTERPRISE IMPACT',
     );
   }
 }
