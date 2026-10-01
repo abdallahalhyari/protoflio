@@ -1,8 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:profile/app/bootstrap.dart';
+import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
+import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
+import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
+import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
+
+/// A content repository whose load fails, like a request that is still
+/// dropped after the loader's retries.
+class _FailingProjectRepository extends LocalProjectRepository {
+  @override
+  Future<void> load() => Future.error(StateError('projects.json unreachable'));
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -81,5 +94,44 @@ void main() {
 
     expect(find.text('Loading portfolio…'), findsOneWidget);
     expect(find.text('ABDALLAH ALHYARI'), findsOneWidget);
+  });
+
+  // A failed content load must reach the retry screen. It used to be
+  // swallowed, and the site opened with empty sections instead.
+  test('loadInitialData fails when content cannot load', () async {
+    await expectLater(
+      loadInitialData(
+        projectRepo: _FailingProjectRepository(),
+        experienceRepo: LocalExperienceRepository(),
+        hatRepo: LocalHatRepository(),
+        skillRepo: LocalSkillRepository(),
+      ),
+      throwsA(isA<StateError>()),
+    );
+  });
+
+  test('loadInitialData succeeds with the bundled content', () async {
+    final projects = LocalProjectRepository();
+    await loadInitialData(
+      projectRepo: projects,
+      experienceRepo: LocalExperienceRepository(),
+      hatRepo: LocalHatRepository(),
+      skillRepo: LocalSkillRepository(),
+    );
+    expect(projects.getProjects(), isNotEmpty);
+  });
+
+  testWidgets('a failed startup shows the retry screen', (tester) async {
+    final startup = Completer<AppBootstrapData>();
+    await tester.pumpWidget(MaterialApp(
+      home: AppBootstrapper(
+        builder: (_) => const SizedBox(),
+        bootstrapOverride: startup.future,
+      ),
+    ));
+    startup.completeError(StateError('projects.json unreachable'));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('Startup failed'), findsOneWidget);
+    expect(find.text('Retry'), findsOneWidget);
   });
 }
