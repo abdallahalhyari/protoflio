@@ -6,13 +6,15 @@ import 'package:profile/features/projects/presentation/widgets/projects_empty_st
 import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'helpers/test_data.dart';
+
 Widget _wrap(Widget child) {
   return MaterialApp(
     theme: AppTheme.dark(),
     home: RepositoryProvider<ProjectRepository>(
       create: (_) => TestProjectRepository(),
       child: BlocProvider<ProjectsFilterBloc>(
-        create: (context) => ProjectsFilterBloc(repository: context.read<ProjectRepository>()),
+        create: (context) =>
+            ProjectsFilterBloc(repository: context.read<ProjectRepository>()),
         child: Scaffold(body: child),
       ),
     ),
@@ -45,14 +47,15 @@ void main() {
       await tester.pumpAndSettle();
 
       // Retrieve the bloc from the context
-      final BuildContext context = tester.element(find.byType(ProjectsEmptyState));
+      final BuildContext context =
+          tester.element(find.byType(ProjectsEmptyState));
       final bloc = context.read<ProjectsFilterBloc>();
-      
+
       // We assume it's initially with no filters if no event was fired.
       // So tapping reset should fire ProjectsFilterReset.
       await tester.tap(find.text('RESET FILTERS'));
       await tester.pumpAndSettle();
-      
+
       // Since it resets, selectedDomain should be 'ALL' and activeTechFilters should be empty.
       expect(bloc.state.selectedDomain, equals('ALL'));
       expect(bloc.state.selectedTech, isNull);

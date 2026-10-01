@@ -255,11 +255,11 @@ void main() {
       tester.view.physicalSize = const Size(400, 800);
 
       await tester.pumpWidget(PortfolioApp(
-          projectRepo: TestProjectRepository(),
-          experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
-          skillRepo: TestSkillRepository(),
-        ));
+        projectRepo: TestProjectRepository(),
+        experienceRepo: TestExperienceRepository(),
+        hatRepo: TestHatRepository(),
+        skillRepo: TestSkillRepository(),
+      ));
       await tester.pump(const Duration(milliseconds: 300));
 
       final scrollable = find.byWidgetPredicate((w) =>

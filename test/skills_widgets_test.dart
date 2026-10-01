@@ -38,7 +38,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('FEATURE 04 · ARCHITECTURAL MASTERY'), findsOneWidget);
-      expect(find.text('${testSkills.length} CORE DISCIPLINES'), findsOneWidget);
+      expect(
+          find.text('${testSkills.length} CORE DISCIPLINES'), findsOneWidget);
     });
 
     testWidgets(

@@ -23,11 +23,11 @@ Widget createTestApp(Widget child, [Size size = const Size(1200, 900)]) {
 void main() {
   testWidgets('Portfolio smoke test - renders intro', (tester) async {
     await tester.pumpWidget(PortfolioApp(
-          projectRepo: TestProjectRepository(),
-          experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
-          skillRepo: TestSkillRepository(),
-        ));
+      projectRepo: TestProjectRepository(),
+      experienceRepo: TestExperienceRepository(),
+      hatRepo: TestHatRepository(),
+      skillRepo: TestSkillRepository(),
+    ));
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);
@@ -132,11 +132,11 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await tester.pumpWidget(PortfolioApp(
-          projectRepo: TestProjectRepository(),
-          experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
-          skillRepo: TestSkillRepository(),
-        ));
+      projectRepo: TestProjectRepository(),
+      experienceRepo: TestExperienceRepository(),
+      hatRepo: TestHatRepository(),
+      skillRepo: TestSkillRepository(),
+    ));
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);

@@ -26,11 +26,11 @@ Future<List<String>> _layoutErrors(
   addTearDown(() => FlutterError.onError = previous);
 
   await tester.pumpWidget(PortfolioApp(
-          projectRepo: TestProjectRepository(),
-          experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
-          skillRepo: TestSkillRepository(),
-        ));
+    projectRepo: TestProjectRepository(),
+    experienceRepo: TestExperienceRepository(),
+    hatRepo: TestHatRepository(),
+    skillRepo: TestSkillRepository(),
+  ));
   for (int i = 0; i < 6; i++) {
     await tester.pump(const Duration(milliseconds: 200));
   }

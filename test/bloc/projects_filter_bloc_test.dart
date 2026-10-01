@@ -4,8 +4,6 @@ import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc
 import 'package:profile/features/projects/presentation/bloc/projects_filter_event.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_state.dart';
 
-
-
 void main() {
   group('ProjectsFilterBloc Test Suite', () {
     test(

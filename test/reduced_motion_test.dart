@@ -23,11 +23,11 @@ void main() {
     addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
 
     await tester.pumpWidget(PortfolioApp(
-          projectRepo: TestProjectRepository(),
-          experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
-          skillRepo: TestSkillRepository(),
-        ));
+      projectRepo: TestProjectRepository(),
+      experienceRepo: TestExperienceRepository(),
+      hatRepo: TestHatRepository(),
+      skillRepo: TestSkillRepository(),
+    ));
     for (var i = 0; i < 6; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }

@@ -163,11 +163,11 @@ void main() {
     final errors =
         await _errorsDuring(tester, const Size(1440, 900), 1.0, () async {
       await tester.pumpWidget(PortfolioApp(
-          projectRepo: TestProjectRepository(),
-          experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
-          skillRepo: TestSkillRepository(),
-        ));
+        projectRepo: TestProjectRepository(),
+        experienceRepo: TestExperienceRepository(),
+        hatRepo: TestHatRepository(),
+        skillRepo: TestSkillRepository(),
+      ));
       await _settle(tester);
       await tester.sendKeyEvent(LogicalKeyboardKey.digit4);
       await _settle(tester, 8);

@@ -4,8 +4,6 @@ import 'package:profile/features/skills/presentation/bloc/skills_filter_bloc.dar
 import 'package:profile/features/skills/presentation/bloc/skills_filter_event.dart';
 import 'package:profile/features/skills/presentation/bloc/skills_filter_state.dart';
 
-
-
 void main() {
   group('SkillsFilterBloc Test Suite', () {
     test('initial state contains all testSkills and default ALL category', () {

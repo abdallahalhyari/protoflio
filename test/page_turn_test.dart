@@ -20,8 +20,10 @@ import 'helpers/test_data.dart';
 Widget _wrapHome() {
   return MultiRepositoryProvider(
     providers: [
-      RepositoryProvider<ProjectRepository>(create: (_) => TestProjectRepository()),
-      RepositoryProvider<ExperienceRepository>(create: (_) => TestExperienceRepository()),
+      RepositoryProvider<ProjectRepository>(
+          create: (_) => TestProjectRepository()),
+      RepositoryProvider<ExperienceRepository>(
+          create: (_) => TestExperienceRepository()),
       RepositoryProvider<HatRepository>(create: (_) => TestHatRepository()),
       RepositoryProvider<SkillRepository>(create: (_) => TestSkillRepository()),
     ],

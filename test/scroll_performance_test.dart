@@ -14,11 +14,11 @@ void main() {
         'MaterialApp uses SmoothScrollBehavior with normal deceleration',
         (tester) async {
       await tester.pumpWidget(PortfolioApp(
-          projectRepo: TestProjectRepository(),
-          experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
-          skillRepo: TestSkillRepository(),
-        ));
+        projectRepo: TestProjectRepository(),
+        experienceRepo: TestExperienceRepository(),
+        hatRepo: TestHatRepository(),
+        skillRepo: TestSkillRepository(),
+      ));
       await tester.pump(const Duration(milliseconds: 100));
 
       final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
@@ -121,11 +121,11 @@ void main() {
       addTearDown(tester.view.resetDevicePixelRatio);
 
       await tester.pumpWidget(PortfolioApp(
-          projectRepo: TestProjectRepository(),
-          experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
-          skillRepo: TestSkillRepository(),
-        ));
+        projectRepo: TestProjectRepository(),
+        experienceRepo: TestExperienceRepository(),
+        hatRepo: TestHatRepository(),
+        skillRepo: TestSkillRepository(),
+      ));
       await tester.pump(const Duration(milliseconds: 300));
 
       final pages = _desktopPages(tester);

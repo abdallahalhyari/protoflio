@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/test_data.dart';
 
-
-
 /// web/index.html repeats the work history for crawlers and no-JS readers.
 /// It drifted from the app (every date off by a month, two titles swapped)
 /// while the CV said otherwise; keep the two in lockstep.

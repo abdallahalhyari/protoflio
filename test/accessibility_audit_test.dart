@@ -9,8 +9,6 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/case_study/case_study_widgets.dart';
 import 'package:profile/features/engineering/data/architecture_data.dart';
 
-
-
 import 'package:profile/features/shell/home_controller.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/contact/widget/channel_tile.dart';

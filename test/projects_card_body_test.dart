@@ -83,7 +83,8 @@ void main() {
       expect(find.byIcon(Icons.trending_up_rounded), findsOneWidget);
     });
 
-    testWidgets('ReadCaseStudyCta renders correctly and responds to focus', (tester) async {
+    testWidgets('ReadCaseStudyCta renders correctly and responds to focus',
+        (tester) async {
       bool tapped = false;
       bool focused = false;
 
