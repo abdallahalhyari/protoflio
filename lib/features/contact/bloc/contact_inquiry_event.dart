@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class ContactInquiryEvent extends Equatable {
+sealed class ContactInquiryEvent extends Equatable {
   const ContactInquiryEvent();
 
   @override
@@ -41,12 +41,4 @@ class InquiryBodyChanged extends ContactInquiryEvent {
 
   @override
   List<Object?> get props => [body];
-}
-
-class InquiryCopiedEvent extends ContactInquiryEvent {
-  const InquiryCopiedEvent();
-}
-
-class InquiryResetEvent extends ContactInquiryEvent {
-  const InquiryResetEvent();
 }

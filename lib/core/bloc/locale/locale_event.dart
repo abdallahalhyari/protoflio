@@ -7,10 +7,6 @@ sealed class LocaleEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LocaleStarted extends LocaleEvent {
-  const LocaleStarted();
-}
-
 class LocaleChanged extends LocaleEvent {
   final String languageCode;
 

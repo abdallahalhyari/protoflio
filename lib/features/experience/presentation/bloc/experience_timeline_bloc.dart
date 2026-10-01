@@ -16,7 +16,6 @@ class ExperienceTimelineBloc
           experiences: repository.getExperiences(),
         )) {
     on<ExperienceVisibilityChanged>(_onVisibilityChanged);
-    on<ExperienceNodeHovered>(_onNodeHovered);
     on<ExperienceNodeSelected>(_onNodeSelected);
     on<ExperienceKeyboardNavigated>(_onKeyboardNavigated);
   }
@@ -27,15 +26,6 @@ class ExperienceTimelineBloc
   ) {
     if (state.isVisible != event.isVisible) {
       emit(state.copyWith(isVisible: event.isVisible));
-    }
-  }
-
-  void _onNodeHovered(
-    ExperienceNodeHovered event,
-    Emitter<ExperienceTimelineState> emit,
-  ) {
-    if (state.hoveredIndex != event.index) {
-      emit(state.copyWith(hoveredIndex: () => event.index));
     }
   }
 

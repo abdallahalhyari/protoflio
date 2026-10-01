@@ -187,7 +187,6 @@ class _InquiryComposerDialogViewState
 
   Future<void> _copyDraft(ContactInquiryState state) async {
     SoundService.instance.playClick();
-    context.read<ContactInquiryBloc>().add(const InquiryCopiedEvent());
     final body = state.formattedMessage;
 
     if (widget.onCopy != null) {

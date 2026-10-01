@@ -25,7 +25,7 @@ class SkillsFilterBloc extends Bloc<SkillsFilterEvent, SkillsFilterState> {
     for (final skill in skills) {
       counts[skill.category] = (counts[skill.category] ?? 0) + 1;
     }
-    return counts;
+    return Map.unmodifiable(counts);
   }
 
   void _onCategorySelected(

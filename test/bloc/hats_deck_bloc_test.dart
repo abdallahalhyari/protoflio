@@ -30,6 +30,26 @@ void main() {
       await bloc.close();
     });
 
+    // Keyboard A/D repeats: each press must move one role, even when the
+    // next press lands before the previous one has been handled.
+    test('rapid HatNextRole presses each advance one role', () async {
+      final bloc = HatsDeckBloc(repository: TestHatRepository());
+      bloc
+        ..add(const HatNextRole())
+        ..add(const HatNextRole())
+        ..add(const HatNextRole());
+      await Future<void>.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
+      expect(bloc.state.selectedHatIndex, 3);
+      bloc
+        ..add(const HatPrevRole())
+        ..add(const HatPrevRole());
+      await Future<void>.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
+      expect(bloc.state.selectedHatIndex, 1);
+      await bloc.close();
+    });
+
     test('HatNextRole and HatPrevRole cycle through roles', () async {
       final bloc = HatsDeckBloc(repository: TestHatRepository());
 

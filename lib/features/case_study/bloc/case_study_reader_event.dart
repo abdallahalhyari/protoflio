@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class CaseStudyReaderEvent extends Equatable {
+sealed class CaseStudyReaderEvent extends Equatable {
   const CaseStudyReaderEvent();
 
   @override

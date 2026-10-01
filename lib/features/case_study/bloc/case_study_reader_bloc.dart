@@ -19,12 +19,7 @@ class CaseStudyReaderBloc
     CaseStudyScrollProgressUpdated event,
     Emitter<CaseStudyReaderState> emit,
   ) {
-    final isCompleted = state.isCompleted || event.progress >= 0.95;
-    emit(state.copyWith(
-      progress: event.progress,
-      showDock: event.showDock,
-      isCompleted: isCompleted,
-    ));
+    emit(state.copyWith(progress: event.progress, showDock: event.showDock));
   }
 
   void _onChapterDetected(

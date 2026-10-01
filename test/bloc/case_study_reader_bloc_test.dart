@@ -18,11 +18,10 @@ void main() {
       expect(bloc.state.progress, 0.0);
       expect(bloc.state.showDock, isFalse);
       expect(bloc.state.activeChapterId, 'overview');
-      expect(bloc.state.isCompleted, isFalse);
     });
 
     blocTest<CaseStudyReaderBloc, CaseStudyReaderState>(
-      'updates progress, dock visibility, and completion flag',
+      'updates progress and dock visibility',
       build: CaseStudyReaderBloc.new,
       act: (b) {
         b.add(const CaseStudyScrollProgressUpdated(
@@ -32,8 +31,7 @@ void main() {
       },
       expect: () => [
         const CaseStudyReaderState(progress: 0.5, showDock: true),
-        const CaseStudyReaderState(
-            progress: 0.98, showDock: true, isCompleted: true),
+        const CaseStudyReaderState(progress: 0.98, showDock: true),
       ],
     );
 

@@ -101,7 +101,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
 
         final grid = displayedSkills.isEmpty
             ? SkillsEmptyState(
-                query: _searchController.text,
+                query: state.searchQuery,
                 onShowAll: () {
                   _searchController.clear();
                   context
@@ -190,6 +190,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                       .add(SkillCategorySelected(cat));
                 },
                 isDesktop: isDesktop,
+                counts: state.categoryCounts,
               ),
               const SizedBox(height: AppSpacing.smd),
               Container(

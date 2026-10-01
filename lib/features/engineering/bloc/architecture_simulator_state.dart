@@ -14,8 +14,6 @@ class ArchitectureSimulatorState extends Equatable {
 
   ArchitectureTopic get currentTopic => topics[selectedTopicIndex];
   int get totalSteps => currentTopic.diagramSteps.length;
-  DiagramStep get currentStep =>
-      currentTopic.diagramSteps[currentStepIndex.clamp(0, totalSteps - 1)];
 
   ArchitectureSimulatorState copyWith({
     List<ArchitectureTopic>? topics,

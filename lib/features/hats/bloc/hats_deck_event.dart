@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-abstract class HatsDeckEvent extends Equatable {
+sealed class HatsDeckEvent extends Equatable {
   const HatsDeckEvent();
 
   @override
@@ -32,16 +32,6 @@ class HatCardBroughtToFront extends HatsDeckEvent {
 
   @override
   List<Object?> get props => [index];
-}
-
-class HatCardMoved extends HatsDeckEvent {
-  final int index;
-  final Offset delta;
-
-  const HatCardMoved(this.index, this.delta);
-
-  @override
-  List<Object?> get props => [index, delta];
 }
 
 class HatCardPositionSet extends HatsDeckEvent {
