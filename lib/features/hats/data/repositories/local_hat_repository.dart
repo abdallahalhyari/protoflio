@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:profile/shared/util/bundled_json.dart';
 import 'package:profile/features/hats/model/hat_info.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 
@@ -7,11 +6,9 @@ class LocalHatRepository implements HatRepository {
   List<HatInfo> _hats = [];
 
   Future<void> load() async {
-    final jsonStr = await rootBundle.loadString('assets/data/hats.json');
-    final List<dynamic> jsonList = jsonDecode(jsonStr) as List<dynamic>;
-    _hats = jsonList
-        .map((e) => HatInfo.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final list = await loadBundledJsonList('assets/data/hats.json');
+    _hats = List.unmodifiable(
+        list.map((e) => HatInfo.fromJson(e as Map<String, dynamic>)));
   }
 
   @override
