@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class ReadCaseStudyCta extends StatelessWidget {
   const ReadCaseStudyCta({
@@ -42,7 +43,7 @@ class ReadCaseStudyCta extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    'READ CASE STUDY',
+                    AppLocalizations.of(context)!.uiReadCaseStudy,
                     style: TextStyle(
                       fontFamily: AppTypography.monoFont,
                       color: ctaColor,

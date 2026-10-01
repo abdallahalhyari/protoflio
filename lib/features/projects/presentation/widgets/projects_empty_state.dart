@@ -4,6 +4,7 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_event.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class ProjectsEmptyState extends StatelessWidget {
   const ProjectsEmptyState({
@@ -31,7 +32,7 @@ class ProjectsEmptyState extends StatelessWidget {
               size: 48, color: scheme.primary.withValues(alpha: 0.6)),
           const SizedBox(height: AppSpacing.md),
           Text(
-            'NO CASE STUDIES MATCHED',
+            AppLocalizations.of(context)!.uiNoCaseStudies,
             style: TextStyle(
               fontFamily: AppTypography.displayFont,
               fontSize: isDesktop ? 20 : 16,
@@ -57,7 +58,7 @@ class ProjectsEmptyState extends StatelessWidget {
                   .add(const ProjectsFilterReset());
             },
             icon: const Icon(Icons.refresh_rounded, size: 16),
-            label: const Text('RESET FILTERS'),
+            label: Text(AppLocalizations.of(context)!.uiResetFilters),
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class SheetHeader extends StatelessWidget {
   const SheetHeader({super.key, required this.isDark});
@@ -29,7 +30,7 @@ class SheetHeader extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                'PORTFOLIO SECTIONS',
+                AppLocalizations.of(context)!.uiPortfolioSections,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,

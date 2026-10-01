@@ -74,7 +74,7 @@ class HeroEmailCard extends StatelessWidget {
         ? FilledButton.tonalIcon(
             onPressed: onComposeInquiry,
             icon: const Icon(Icons.edit_note_rounded, size: 16),
-            label: const Text('COMPOSE INQUIRY'),
+            label: Text(AppLocalizations.of(context)!.uiComposeInquiry),
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
               textStyle: const TextStyle(

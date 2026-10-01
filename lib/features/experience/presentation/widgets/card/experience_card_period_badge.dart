@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 const Color kNowAccent = AppColors.accentGreen;
 
@@ -55,7 +56,7 @@ class PeriodBadgeRow extends StatelessWidget {
               ),
             ),
             child: Text(
-              'LATEST DISPATCH',
+              AppLocalizations.of(context)!.uiLatestDispatch,
               style: TextStyle(
                 color: isDark ? kNowAccent : AppColors.accentGreenDeep,
                 fontSize: AppTypography.micro,

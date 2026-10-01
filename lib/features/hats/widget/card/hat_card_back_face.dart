@@ -135,8 +135,8 @@ class CardBackFace extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const FlipHintRow(
-                  text: 'TAP TO RETURN',
+                FlipHintRow(
+                  text: AppLocalizations.of(context)!.uiTapToReturn,
                   isStandalone: false,
                   showTrailingIcon: true,
                   leadingIcon: Icons.autorenew_rounded,

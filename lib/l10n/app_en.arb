@@ -338,5 +338,64 @@
   "archTopicOffline": "Offline-First Synchronization",
   "archTopicNfc": "ISO-7816 Smart-Card & NFC Pipeline",
   "archTopicKeystore": "Hardware-Backed Keystore & JWT Lifecycle",
-  "archTopicState": "Reactive State Management (BLoC)"
+  "archTopicState": "Reactive State Management (BLoC)",
+  "uiComposeInquiry": "COMPOSE INQUIRY",
+  "uiPresetsTitle": "ONE-TAP EXPRESS REACH-OUT PRESETS",
+  "uiActiveHours": "ACTIVE WORKING HOURS",
+  "uiStandbyAsync": "STANDBY · ASYNC",
+  "uiRelocating": "RELOCATING BRNO 2027",
+  "uiInquireTrack": "INQUIRE TRACK",
+  "uiComposerTitle": "DIRECT INQUIRY COMPOSER",
+  "uiSelectTrack": "SELECT ENGAGEMENT TRACK",
+  "uiCopyDraft": "COPY DRAFT",
+  "uiSending": "SENDING...",
+  "uiSendMessage": "SEND MESSAGE",
+  "uiOpenEmailClient": "OPEN IN EMAIL CLIENT",
+  "uiReadCaseStudy": "READ CASE STUDY",
+  "uiNoCaseStudies": "NO CASE STUDIES MATCHED",
+  "uiResetFilters": "RESET FILTERS",
+  "uiScrollToExplore": "SCROLL TO EXPLORE",
+  "uiPortfolioSections": "PORTFOLIO SECTIONS",
+  "uiDownloadResumePdf": "DOWNLOAD RESUME · PDF",
+  "uiDragCardsHint": "DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE",
+  "uiTapSwipeHint": "TAP CARD TO FLIP · SWIPE TO CHANGE ROLE",
+  "uiTapToReturn": "TAP TO RETURN",
+  "uiArchFlowchart": "ARCHITECTURE FLOWCHART",
+  "uiArchRationale": "ARCHITECTURAL RATIONALE (WHY THIS CHOICE)",
+  "uiKeySafeguards": "KEY IMPLEMENTATION SAFEGUARDS",
+  "uiLatencyBudget": "LATENCY BUDGET PER TIER",
+  "uiActiveTrace": "ACTIVE TRACE",
+  "uiLatestDispatch": "LATEST DISPATCH",
+  "badgeSkills": "{count} CORE DISCIPLINES",
+  "@badgeSkills": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "badgeCaseStudies": "{count} CASE STUDIES",
+  "@badgeCaseStudies": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "badgeArchitectures": "{count} ARCHITECTURES",
+  "@badgeArchitectures": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "badgeRoles": "{count} ROLES · ENTERPRISE IMPACT",
+  "@badgeRoles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class HatDragHint extends StatelessWidget {
   const HatDragHint({super.key});
@@ -35,7 +36,7 @@ class HatDragHint extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               Text(
-                'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE',
+                AppLocalizations.of(context)!.uiDragCardsHint,
                 style: TextStyle(
                   fontFamily: AppTypography.monoFont,
                   // Full-strength accent: at border opacity this

@@ -695,4 +695,106 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get archTopicState => 'Reaktivní správa stavu (BLoC)';
+
+  @override
+  String get uiComposeInquiry => 'NAPSAT POPTÁVKU';
+
+  @override
+  String get uiPresetsTitle => 'RYCHLÉ ŠABLONY ZPRÁV';
+
+  @override
+  String get uiActiveHours => 'PRACOVNÍ DOBA';
+
+  @override
+  String get uiStandbyAsync => 'MIMO PRACOVNÍ DOBU · ODPOVÍM POZDĚJI';
+
+  @override
+  String get uiRelocating => 'STĚHOVÁNÍ DO BRNA 2027';
+
+  @override
+  String get uiInquireTrack => 'POPTAT TENTO SMĚR';
+
+  @override
+  String get uiComposerTitle => 'PŘÍMÁ POPTÁVKA';
+
+  @override
+  String get uiSelectTrack => 'VYBERTE TYP SPOLUPRÁCE';
+
+  @override
+  String get uiCopyDraft => 'KOPÍROVAT KONCEPT';
+
+  @override
+  String get uiSending => 'ODESÍLÁNÍ...';
+
+  @override
+  String get uiSendMessage => 'ODESLAT ZPRÁVU';
+
+  @override
+  String get uiOpenEmailClient => 'OTEVŘÍT V E-MAILU';
+
+  @override
+  String get uiReadCaseStudy => 'ČÍST PŘÍPADOVOU STUDII';
+
+  @override
+  String get uiNoCaseStudies => 'ŽÁDNÉ ODPOVÍDAJÍCÍ STUDIE';
+
+  @override
+  String get uiResetFilters => 'ZRUŠIT FILTRY';
+
+  @override
+  String get uiScrollToExplore => 'POSUŇTE A PROZKOUMEJTE';
+
+  @override
+  String get uiPortfolioSections => 'SEKCE PORTFOLIA';
+
+  @override
+  String get uiDownloadResumePdf => 'STÁHNOUT ŽIVOTOPIS · PDF';
+
+  @override
+  String get uiDragCardsHint =>
+      'PŘETÁHNĚTE KARTY · KLIKNUTÍM OTOČÍTE · ZAMÍCHÁNÍM PŘESKUPÍTE';
+
+  @override
+  String get uiTapSwipeHint => 'KLEPNUTÍM OTOČÍTE · PŘEJETÍM ZMĚNÍTE ROLI';
+
+  @override
+  String get uiTapToReturn => 'KLEPNUTÍM ZPĚT';
+
+  @override
+  String get uiArchFlowchart => 'DIAGRAM ARCHITEKTURY';
+
+  @override
+  String get uiArchRationale => 'ZDŮVODNĚNÍ ARCHITEKTURY (PROČ TATO VOLBA)';
+
+  @override
+  String get uiKeySafeguards => 'KLÍČOVÉ POJISTKY IMPLEMENTACE';
+
+  @override
+  String get uiLatencyBudget => 'ROZPOČET LATENCE PRO KAŽDOU VRSTVU';
+
+  @override
+  String get uiActiveTrace => 'AKTIVNÍ STOPA';
+
+  @override
+  String get uiLatestDispatch => 'AKTUÁLNÍ';
+
+  @override
+  String badgeSkills(int count) {
+    return '$count KLÍČOVÝCH DISCIPLÍN';
+  }
+
+  @override
+  String badgeCaseStudies(int count) {
+    return '$count PŘÍPADOVÉ STUDIE';
+  }
+
+  @override
+  String badgeArchitectures(int count) {
+    return '$count ARCHITEKTUR';
+  }
+
+  @override
+  String badgeRoles(int count) {
+    return '$count ROLE · PODNIKOVÝ DOPAD';
+  }
 }

@@ -126,7 +126,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        'TAP CARD TO FLIP · SWIPE TO CHANGE ROLE',
+                        AppLocalizations.of(context)!.uiTapSwipeHint,
                         style: TextStyle(
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.72)

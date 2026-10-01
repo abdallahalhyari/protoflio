@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class ConsultingTrack {
   final String tag;
@@ -160,7 +161,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                     children: [
                       Flexible(
                         child: Text(
-                          'INQUIRE TRACK',
+                          AppLocalizations.of(context)!.uiInquireTrack,
                           style: TextStyle(
                             color: accentText,
                             fontSize: AppTypography.micro,

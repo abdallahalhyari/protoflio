@@ -1311,6 +1311,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reactive State Management (BLoC)'**
   String get archTopicState;
+
+  /// No description provided for @uiComposeInquiry.
+  ///
+  /// In en, this message translates to:
+  /// **'COMPOSE INQUIRY'**
+  String get uiComposeInquiry;
+
+  /// No description provided for @uiPresetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ONE-TAP EXPRESS REACH-OUT PRESETS'**
+  String get uiPresetsTitle;
+
+  /// No description provided for @uiActiveHours.
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE WORKING HOURS'**
+  String get uiActiveHours;
+
+  /// No description provided for @uiStandbyAsync.
+  ///
+  /// In en, this message translates to:
+  /// **'STANDBY · ASYNC'**
+  String get uiStandbyAsync;
+
+  /// No description provided for @uiRelocating.
+  ///
+  /// In en, this message translates to:
+  /// **'RELOCATING BRNO 2027'**
+  String get uiRelocating;
+
+  /// No description provided for @uiInquireTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'INQUIRE TRACK'**
+  String get uiInquireTrack;
+
+  /// No description provided for @uiComposerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'DIRECT INQUIRY COMPOSER'**
+  String get uiComposerTitle;
+
+  /// No description provided for @uiSelectTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT ENGAGEMENT TRACK'**
+  String get uiSelectTrack;
+
+  /// No description provided for @uiCopyDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'COPY DRAFT'**
+  String get uiCopyDraft;
+
+  /// No description provided for @uiSending.
+  ///
+  /// In en, this message translates to:
+  /// **'SENDING...'**
+  String get uiSending;
+
+  /// No description provided for @uiSendMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'SEND MESSAGE'**
+  String get uiSendMessage;
+
+  /// No description provided for @uiOpenEmailClient.
+  ///
+  /// In en, this message translates to:
+  /// **'OPEN IN EMAIL CLIENT'**
+  String get uiOpenEmailClient;
+
+  /// No description provided for @uiReadCaseStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'READ CASE STUDY'**
+  String get uiReadCaseStudy;
+
+  /// No description provided for @uiNoCaseStudies.
+  ///
+  /// In en, this message translates to:
+  /// **'NO CASE STUDIES MATCHED'**
+  String get uiNoCaseStudies;
+
+  /// No description provided for @uiResetFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'RESET FILTERS'**
+  String get uiResetFilters;
+
+  /// No description provided for @uiScrollToExplore.
+  ///
+  /// In en, this message translates to:
+  /// **'SCROLL TO EXPLORE'**
+  String get uiScrollToExplore;
+
+  /// No description provided for @uiPortfolioSections.
+  ///
+  /// In en, this message translates to:
+  /// **'PORTFOLIO SECTIONS'**
+  String get uiPortfolioSections;
+
+  /// No description provided for @uiDownloadResumePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'DOWNLOAD RESUME · PDF'**
+  String get uiDownloadResumePdf;
+
+  /// No description provided for @uiDragCardsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE'**
+  String get uiDragCardsHint;
+
+  /// No description provided for @uiTapSwipeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'TAP CARD TO FLIP · SWIPE TO CHANGE ROLE'**
+  String get uiTapSwipeHint;
+
+  /// No description provided for @uiTapToReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'TAP TO RETURN'**
+  String get uiTapToReturn;
+
+  /// No description provided for @uiArchFlowchart.
+  ///
+  /// In en, this message translates to:
+  /// **'ARCHITECTURE FLOWCHART'**
+  String get uiArchFlowchart;
+
+  /// No description provided for @uiArchRationale.
+  ///
+  /// In en, this message translates to:
+  /// **'ARCHITECTURAL RATIONALE (WHY THIS CHOICE)'**
+  String get uiArchRationale;
+
+  /// No description provided for @uiKeySafeguards.
+  ///
+  /// In en, this message translates to:
+  /// **'KEY IMPLEMENTATION SAFEGUARDS'**
+  String get uiKeySafeguards;
+
+  /// No description provided for @uiLatencyBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'LATENCY BUDGET PER TIER'**
+  String get uiLatencyBudget;
+
+  /// No description provided for @uiActiveTrace.
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE TRACE'**
+  String get uiActiveTrace;
+
+  /// No description provided for @uiLatestDispatch.
+  ///
+  /// In en, this message translates to:
+  /// **'LATEST DISPATCH'**
+  String get uiLatestDispatch;
+
+  /// No description provided for @badgeSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} CORE DISCIPLINES'**
+  String badgeSkills(int count);
+
+  /// No description provided for @badgeCaseStudies.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} CASE STUDIES'**
+  String badgeCaseStudies(int count);
+
+  /// No description provided for @badgeArchitectures.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} ARCHITECTURES'**
+  String badgeArchitectures(int count);
+
+  /// No description provided for @badgeRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} ROLES · ENTERPRISE IMPACT'**
+  String badgeRoles(int count);
 }
 
 class _AppLocalizationsDelegate

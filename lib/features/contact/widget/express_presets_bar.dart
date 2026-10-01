@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/editorial_chip.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class ExpressPresetsBar extends StatelessWidget {
   final void Function(String subject, String body) onSelectPreset;
@@ -77,7 +78,7 @@ class ExpressPresetsBar extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                     alignment: AlignmentDirectional.centerStart,
                     child: Text(
-                      'ONE-TAP EXPRESS REACH-OUT PRESETS',
+                      AppLocalizations.of(context)!.uiPresetsTitle,
                       style: TextStyle(
                         color: context.amberText,
                         fontSize: AppTypography.editorial,

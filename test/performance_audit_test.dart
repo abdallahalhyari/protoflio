@@ -11,6 +11,7 @@ import 'package:profile/features/shell/widget/custom_cursor.dart';
 import 'package:profile/features/shell/widget/desktop_toolbar.dart';
 import 'package:profile/features/shell/widget/magazine_page_transformer.dart';
 import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 void main() {
   group('Asset Size Budget & Format Audit', () {
@@ -66,6 +67,8 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: SizedBox(
               width: 400,
@@ -110,6 +113,8 @@ void main() {
             BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
           ],
           child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
               body: DesktopToolbar(),
             ),
@@ -131,6 +136,8 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: PageView.builder(
               controller: controller,
@@ -163,6 +170,8 @@ void main() {
 
       await tester.pumpWidget(
         const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: CustomCursor(
               child: Text('Cursor Test Target'),

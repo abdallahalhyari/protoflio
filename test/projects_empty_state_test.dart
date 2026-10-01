@@ -6,9 +6,12 @@ import 'package:profile/features/projects/presentation/widgets/projects_empty_st
 import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'helpers/test_data.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 Widget _wrap(Widget child) {
   return MaterialApp(
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
     theme: AppTheme.dark(),
     home: RepositoryProvider<ProjectRepository>(
       create: (_) => TestProjectRepository(),

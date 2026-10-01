@@ -686,4 +686,106 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get archTopicState => 'إدارة الحالة التفاعلية (BLoC)';
+
+  @override
+  String get uiComposeInquiry => 'كتابة استفسار';
+
+  @override
+  String get uiPresetsTitle => 'قوالب تواصل سريعة بلمسة واحدة';
+
+  @override
+  String get uiActiveHours => 'ضمن ساعات العمل';
+
+  @override
+  String get uiStandbyAsync => 'خارج الدوام · رد لاحق';
+
+  @override
+  String get uiRelocating => 'الانتقال إلى برنو 2027';
+
+  @override
+  String get uiInquireTrack => 'استفسر عن هذا المسار';
+
+  @override
+  String get uiComposerTitle => 'نموذج الاستفسار المباشر';
+
+  @override
+  String get uiSelectTrack => 'اختر نوع التعاون';
+
+  @override
+  String get uiCopyDraft => 'نسخ المسودة';
+
+  @override
+  String get uiSending => 'جارٍ الإرسال...';
+
+  @override
+  String get uiSendMessage => 'إرسال الرسالة';
+
+  @override
+  String get uiOpenEmailClient => 'فتح في تطبيق البريد';
+
+  @override
+  String get uiReadCaseStudy => 'قراءة دراسة الحالة';
+
+  @override
+  String get uiNoCaseStudies => 'لا توجد دراسات حالة مطابقة';
+
+  @override
+  String get uiResetFilters => 'إعادة ضبط الفلاتر';
+
+  @override
+  String get uiScrollToExplore => 'مرّر للاستكشاف';
+
+  @override
+  String get uiPortfolioSections => 'أقسام الملف';
+
+  @override
+  String get uiDownloadResumePdf => 'تنزيل السيرة الذاتية · PDF';
+
+  @override
+  String get uiDragCardsHint =>
+      'اسحب البطاقات · انقر للقلب · اخلط لإعادة الترتيب';
+
+  @override
+  String get uiTapSwipeHint => 'اضغط للقلب · اسحب لتغيير الدور';
+
+  @override
+  String get uiTapToReturn => 'اضغط للعودة';
+
+  @override
+  String get uiArchFlowchart => 'مخطط البنية';
+
+  @override
+  String get uiArchRationale => 'مبررات البنية (لماذا هذا الخيار)';
+
+  @override
+  String get uiKeySafeguards => 'ضمانات التنفيذ الأساسية';
+
+  @override
+  String get uiLatencyBudget => 'ميزانية زمن الاستجابة لكل طبقة';
+
+  @override
+  String get uiActiveTrace => 'المسار النشط';
+
+  @override
+  String get uiLatestDispatch => 'الأحدث';
+
+  @override
+  String badgeSkills(int count) {
+    return '$count تخصصًا أساسيًا';
+  }
+
+  @override
+  String badgeCaseStudies(int count) {
+    return '$count دراسات حالة';
+  }
+
+  @override
+  String badgeArchitectures(int count) {
+    return '$count هياكل معمارية';
+  }
+
+  @override
+  String badgeRoles(int count) {
+    return '$count أدوار · أثر مؤسسي';
+  }
 }

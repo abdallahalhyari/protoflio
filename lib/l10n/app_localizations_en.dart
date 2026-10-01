@@ -694,4 +694,106 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get archTopicState => 'Reactive State Management (BLoC)';
+
+  @override
+  String get uiComposeInquiry => 'COMPOSE INQUIRY';
+
+  @override
+  String get uiPresetsTitle => 'ONE-TAP EXPRESS REACH-OUT PRESETS';
+
+  @override
+  String get uiActiveHours => 'ACTIVE WORKING HOURS';
+
+  @override
+  String get uiStandbyAsync => 'STANDBY · ASYNC';
+
+  @override
+  String get uiRelocating => 'RELOCATING BRNO 2027';
+
+  @override
+  String get uiInquireTrack => 'INQUIRE TRACK';
+
+  @override
+  String get uiComposerTitle => 'DIRECT INQUIRY COMPOSER';
+
+  @override
+  String get uiSelectTrack => 'SELECT ENGAGEMENT TRACK';
+
+  @override
+  String get uiCopyDraft => 'COPY DRAFT';
+
+  @override
+  String get uiSending => 'SENDING...';
+
+  @override
+  String get uiSendMessage => 'SEND MESSAGE';
+
+  @override
+  String get uiOpenEmailClient => 'OPEN IN EMAIL CLIENT';
+
+  @override
+  String get uiReadCaseStudy => 'READ CASE STUDY';
+
+  @override
+  String get uiNoCaseStudies => 'NO CASE STUDIES MATCHED';
+
+  @override
+  String get uiResetFilters => 'RESET FILTERS';
+
+  @override
+  String get uiScrollToExplore => 'SCROLL TO EXPLORE';
+
+  @override
+  String get uiPortfolioSections => 'PORTFOLIO SECTIONS';
+
+  @override
+  String get uiDownloadResumePdf => 'DOWNLOAD RESUME · PDF';
+
+  @override
+  String get uiDragCardsHint =>
+      'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE';
+
+  @override
+  String get uiTapSwipeHint => 'TAP CARD TO FLIP · SWIPE TO CHANGE ROLE';
+
+  @override
+  String get uiTapToReturn => 'TAP TO RETURN';
+
+  @override
+  String get uiArchFlowchart => 'ARCHITECTURE FLOWCHART';
+
+  @override
+  String get uiArchRationale => 'ARCHITECTURAL RATIONALE (WHY THIS CHOICE)';
+
+  @override
+  String get uiKeySafeguards => 'KEY IMPLEMENTATION SAFEGUARDS';
+
+  @override
+  String get uiLatencyBudget => 'LATENCY BUDGET PER TIER';
+
+  @override
+  String get uiActiveTrace => 'ACTIVE TRACE';
+
+  @override
+  String get uiLatestDispatch => 'LATEST DISPATCH';
+
+  @override
+  String badgeSkills(int count) {
+    return '$count CORE DISCIPLINES';
+  }
+
+  @override
+  String badgeCaseStudies(int count) {
+    return '$count CASE STUDIES';
+  }
+
+  @override
+  String badgeArchitectures(int count) {
+    return '$count ARCHITECTURES';
+  }
+
+  @override
+  String badgeRoles(int count) {
+    return '$count ROLES · ENTERPRISE IMPACT';
+  }
 }

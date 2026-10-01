@@ -6,6 +6,7 @@ import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/editorial_chip.dart';
 import 'package:profile/shared/widget/pulsing_dot.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class TelemetryBar extends StatefulWidget {
   const TelemetryBar({super.key});
@@ -81,8 +82,8 @@ class _TelemetryBarState extends State<TelemetryBar> {
                     fit: BoxFit.scaleDown,
                     child: Text(
                       isOfficeHours
-                          ? 'ACTIVE WORKING HOURS'
-                          : 'STANDBY · ASYNC',
+                          ? AppLocalizations.of(context)!.uiActiveHours
+                          : AppLocalizations.of(context)!.uiStandbyAsync,
                       style: TextStyle(
                         color: context.greenText,
                         fontSize: AppTypography.editorial,
@@ -100,8 +101,8 @@ class _TelemetryBarState extends State<TelemetryBar> {
             icon: Icons.access_time_rounded,
             variant: ChipVariant.glass,
           ),
-          const EditorialChip(
-            label: 'RELOCATING BRNO 2027',
+          EditorialChip(
+            label: AppLocalizations.of(context)!.uiRelocating,
             icon: Icons.flight_takeoff_rounded,
             tone: ChipTone.amber,
           ),

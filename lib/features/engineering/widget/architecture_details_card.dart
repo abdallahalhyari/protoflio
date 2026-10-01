@@ -93,7 +93,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
-                        'ARCHITECTURAL RATIONALE (WHY THIS CHOICE)',
+                        AppLocalizations.of(context)!.uiArchRationale,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: accentText,
@@ -122,7 +122,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
 
           // Technical Highlights
           Text(
-            'KEY IMPLEMENTATION SAFEGUARDS',
+            AppLocalizations.of(context)!.uiKeySafeguards,
             style: TextStyle(
               fontFamily: AppTypography.monoFont,
               color: accentText,
@@ -162,7 +162,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
           if (budgets.isNotEmpty) ...[
             const SizedBox(height: 14),
             Text(
-              'LATENCY BUDGET PER TIER',
+              AppLocalizations.of(context)!.uiLatencyBudget,
               style: TextStyle(
                 fontFamily: AppTypography.monoFont,
                 color: accentText,

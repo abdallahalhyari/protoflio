@@ -7,6 +7,7 @@ import 'package:profile/features/experience/presentation/widgets/animated_experi
 import 'package:profile/features/shell/widget/custom_cursor.dart';
 import 'package:profile/features/shell/widget/page_background.dart';
 import 'helpers/test_data.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 void main() {
   group('Scroll Behaviors & Performance Optimizations', () {
@@ -54,6 +55,8 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData.dark(),
           home: const Scaffold(
             body: AnimatedExperienceNode(
@@ -75,6 +78,8 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: PageBackground(
               child: Text('Test Content'),
@@ -99,6 +104,8 @@ void main() {
 
       await tester.pumpWidget(
         const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: CustomCursor(
               child: Text('Cursor Test'),

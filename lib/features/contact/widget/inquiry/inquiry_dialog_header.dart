@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/service/sound_service.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class InquiryDialogHeader extends StatelessWidget {
   final ColorScheme scheme;
@@ -28,7 +29,7 @@ class InquiryDialogHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'DIRECT INQUIRY COMPOSER',
+                AppLocalizations.of(context)!.uiComposerTitle,
                 style: TextStyle(
                   fontFamily: AppTypography.monoFont,
                   color: scheme.primary,

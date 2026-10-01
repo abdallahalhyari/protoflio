@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class BottomActions extends StatelessWidget {
   const BottomActions({super.key, required this.onDownloadResume});
@@ -24,9 +25,9 @@ class BottomActions extends StatelessWidget {
                 onDownloadResume();
               },
               icon: const Icon(Icons.download_rounded, size: 18),
-              label: const Text(
-                'DOWNLOAD RESUME · PDF',
-                style: TextStyle(
+              label: Text(
+                AppLocalizations.of(context)!.uiDownloadResumePdf,
+                style: const TextStyle(
                   fontSize: AppTypography.overlineTight,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.4,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class InquiryDialogActions extends StatelessWidget {
   final bool canSend;
@@ -30,7 +31,7 @@ class InquiryDialogActions extends StatelessWidget {
         OutlinedButton.icon(
           onPressed: canSend ? onCopy : null,
           icon: const Icon(Icons.copy_rounded, size: 16),
-          label: const Text('COPY DRAFT'),
+          label: Text(AppLocalizations.of(context)!.uiCopyDraft),
         ),
         FilledButton.icon(
           onPressed: (canSend && !isSending) ? onSend : null,
@@ -48,8 +49,10 @@ class InquiryDialogActions extends StatelessWidget {
                 ),
           label: Text(
             isSending
-                ? 'SENDING...'
-                : (sendsDirectly ? 'SEND MESSAGE' : 'OPEN IN EMAIL CLIENT'),
+                ? AppLocalizations.of(context)!.uiSending
+                : (sendsDirectly
+                    ? AppLocalizations.of(context)!.uiSendMessage
+                    : AppLocalizations.of(context)!.uiOpenEmailClient),
           ),
         ),
       ],

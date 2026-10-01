@@ -6,6 +6,7 @@ import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/engineering/model/architecture_topic.dart';
 import 'package:profile/features/engineering/widget/diagram_list.dart';
 import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 /// Card container displaying the interactive flowchart tiers for an architecture topic.
 class ArchitectureDiagramCard extends StatelessWidget {
@@ -60,7 +61,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'ARCHITECTURE FLOWCHART',
+                      AppLocalizations.of(context)!.uiArchFlowchart,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,

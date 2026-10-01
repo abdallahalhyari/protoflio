@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class InquiryTrackSelector extends StatelessWidget {
   final ContactInquiryState state;
@@ -24,7 +25,7 @@ class InquiryTrackSelector extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'SELECT ENGAGEMENT TRACK',
+          AppLocalizations.of(context)!.uiSelectTrack,
           style: TextStyle(
             fontFamily: AppTypography.monoFont,
             color: scheme.primary,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/theme/surface_tone.dart';
 
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 /// Bouncing chevron + "SCROLL TO EXPLORE" label. Auto-loops when motion is
 /// allowed; renders static when the user prefers reduced motion.
@@ -59,7 +60,7 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'SCROLL TO EXPLORE',
+                  AppLocalizations.of(context)!.uiScrollToExplore,
                   style: TextStyle(
                     color: tint,
                     fontSize: AppTypography.editorial,
