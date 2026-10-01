@@ -105,39 +105,43 @@ class CredentialsBentoCard extends StatelessWidget {
                           accentText,
                         ),
                         const SizedBox(height: 12),
-                        ...context.read<ExperienceRepository>().getEducation().map((edu) => Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    edu.degree,
-                                    style: TextStyle(
-                                      color: scheme.onSurface,
-                                      fontSize: AppTypography.bodyLoose,
-                                      fontWeight: FontWeight.w900,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${edu.institution} · ${edu.period}',
-                                    style: TextStyle(
-                                      color: accentText,
-                                      fontSize: AppTypography.overlineTight,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  if (edu.note != null)
-                                    Text(
-                                      edu.note!,
-                                      style: TextStyle(
-                                        color: scheme.onSurface
-                                            .withValues(alpha: 0.7),
-                                        fontSize: AppTypography.overline,
+                        ...context
+                            .read<ExperienceRepository>()
+                            .getEducation()
+                            .map((edu) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        edu.degree,
+                                        style: TextStyle(
+                                          color: scheme.onSurface,
+                                          fontSize: AppTypography.bodyLoose,
+                                          fontWeight: FontWeight.w900,
+                                        ),
                                       ),
-                                    ),
-                                ],
-                              ),
-                            )),
+                                      Text(
+                                        '${edu.institution} · ${edu.period}',
+                                        style: TextStyle(
+                                          color: accentText,
+                                          fontSize: AppTypography.overlineTight,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      if (edu.note != null)
+                                        Text(
+                                          edu.note!,
+                                          style: TextStyle(
+                                            color: scheme.onSurface
+                                                .withValues(alpha: 0.7),
+                                            fontSize: AppTypography.overline,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                )),
                         const SizedBox(height: AppSpacing.md),
                         _buildSectionHeader(
                           certTitle,
@@ -145,34 +149,38 @@ class CredentialsBentoCard extends StatelessWidget {
                           accentText,
                         ),
                         const SizedBox(height: 12),
-                        ...context.read<ExperienceRepository>().getCertifications().map((cert) => Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 3),
-                                    child: Icon(
-                                      Icons.diamond_rounded,
-                                      size: AppTypography.overline,
-                                      color: context.amberText,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Expanded(
-                                    child: Text(
-                                      cert,
-                                      style: TextStyle(
-                                        color: scheme.onSurface
-                                            .withValues(alpha: 0.9),
-                                        fontSize: AppTypography.small,
-                                        height: 1.4,
+                        ...context
+                            .read<ExperienceRepository>()
+                            .getCertifications()
+                            .map((cert) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 3),
+                                        child: Icon(
+                                          Icons.diamond_rounded,
+                                          size: AppTypography.overline,
+                                          color: context.amberText,
+                                        ),
                                       ),
-                                    ),
+                                      const SizedBox(width: 6),
+                                      Expanded(
+                                        child: Text(
+                                          cert,
+                                          style: TextStyle(
+                                            color: scheme.onSurface
+                                                .withValues(alpha: 0.9),
+                                            fontSize: AppTypography.small,
+                                            height: 1.4,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            )),
+                                )),
                       ],
                     ),
                   );

@@ -10,15 +10,22 @@ class LocalExperienceRepository implements ExperienceRepository {
   List<String> _certifications = [];
 
   Future<void> load() async {
-    final expJson = await RemoteDataService.instance.fetchJson('assets/data/experience.json');
+    final expJson = await RemoteDataService.instance
+        .fetchJson('assets/data/experience.json');
     final List<dynamic> expList = jsonDecode(expJson) as List<dynamic>;
-    _experiences = expList.map((e) => Experience.fromJson(e as Map<String, dynamic>)).toList();
+    _experiences = expList
+        .map((e) => Experience.fromJson(e as Map<String, dynamic>))
+        .toList();
 
-    final eduJson = await RemoteDataService.instance.fetchJson('assets/data/education.json');
+    final eduJson = await RemoteDataService.instance
+        .fetchJson('assets/data/education.json');
     final List<dynamic> eduList = jsonDecode(eduJson) as List<dynamic>;
-    _education = eduList.map((e) => Education.fromJson(e as Map<String, dynamic>)).toList();
+    _education = eduList
+        .map((e) => Education.fromJson(e as Map<String, dynamic>))
+        .toList();
 
-    final certJson = await RemoteDataService.instance.fetchJson('assets/data/certifications.json');
+    final certJson = await RemoteDataService.instance
+        .fetchJson('assets/data/certifications.json');
     final List<dynamic> certList = jsonDecode(certJson) as List<dynamic>;
     _certifications = certList.map((e) => e as String).toList();
   }

@@ -25,7 +25,8 @@ class SkillsHeader extends StatelessWidget {
       // Icon, not a '✦' glyph: CanvasKit has no system fonts, so the
       // glyph pulled a 374 KB Noto Symbols 2 download.
       badgeIcon: Icons.auto_awesome_rounded,
-      badgeLabel: '${context.read<SkillRepository>().getSkillCount()} CORE DISCIPLINES',
+      badgeLabel:
+          '${context.read<SkillRepository>().getSkillCount()} CORE DISCIPLINES',
     );
   }
 }

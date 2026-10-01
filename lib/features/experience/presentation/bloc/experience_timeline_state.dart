@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 
-
 class ExperienceTimelineState extends Equatable {
   final bool isVisible;
   final int? hoveredIndex;

@@ -227,7 +227,9 @@ class _HatsGridPageViewState extends State<_HatsGridPageView>
               _lastLayoutSize = feltSize;
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (!mounted) return;
-                context.read<HatsDeckBloc>().add(HatLayoutInitialized(feltSize));
+                context
+                    .read<HatsDeckBloc>()
+                    .add(HatLayoutInitialized(feltSize));
               });
             }
           },
@@ -384,9 +386,9 @@ class _CardFeltLayer extends StatelessWidget {
         final available = constraints.biggest;
         final scale = (available.height / _kFeltMinHeight).clamp(0.5, 1.0);
         final feltSize = available / scale;
-        
+
         onLayoutInitialized(feltSize);
-        
+
         return FittedBox(
           fit: BoxFit.fill,
           child: SizedBox.fromSize(
@@ -402,8 +404,7 @@ class _CardFeltLayer extends StatelessWidget {
                     position: i < cardPositions.length
                         ? cardPositions[i]
                         : Offset.zero,
-                    rotation:
-                        i < cardRotations.length ? cardRotations[i] : 0.0,
+                    rotation: i < cardRotations.length ? cardRotations[i] : 0.0,
                     onCardTap: () => onSelectRole(i),
                     onDragStart: () => onBringToFront(i),
                     onDragEnd: (newPos) {
@@ -433,10 +434,8 @@ class _EnterpriseBorder extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.lg),
             border: Border.all(
-              color: Theme.of(context)
-                  .colorScheme
-                  .primary
-                  .withValues(alpha: 0.18),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.18),
               width: 1.5,
             ),
           ),
@@ -445,4 +444,3 @@ class _EnterpriseBorder extends StatelessWidget {
     );
   }
 }
-

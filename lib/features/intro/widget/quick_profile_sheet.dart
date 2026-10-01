@@ -74,8 +74,7 @@ class QuickProfileCard extends StatelessWidget {
       ];
 
   /// Plain text for a recruiter's notes: no formatting to lose on paste.
-  static String summaryText(
-      AppLocalizations l10n, ExperienceRepository repo) {
+  static String summaryText(AppLocalizations l10n, ExperienceRepository repo) {
     final recent = repo
         .getExperiences()
         .take(3)
@@ -102,8 +101,6 @@ class QuickProfileCard extends StatelessWidget {
     if (!context.mounted) return;
     AppToast.showGlass(context, message: l10n.quickProfileCopied);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +140,8 @@ class QuickProfileCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
-          for (final (label, value) in _facts(l10n, repo.getYearsOfExperience()))
+          for (final (label, value)
+              in _facts(l10n, repo.getYearsOfExperience()))
             _Fact(label, value),
           _Fact(
             l10n.quickProfileRecent,

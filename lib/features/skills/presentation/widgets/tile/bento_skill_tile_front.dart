@@ -72,16 +72,15 @@ class TileFrontFace extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.all(isDesktop ? 12 : 6),
                             decoration: BoxDecoration(
-                              color: categoryColor
-                                  .withValues(alpha: isDark ? 0.15 : 0.10),
+                              color: categoryColor.withValues(
+                                  alpha: isDark ? 0.15 : 0.10),
                               shape: BoxShape.circle,
                               border: Border.all(
-                                  color: categoryColor
-                                      .withValues(alpha: isDark ? 0.3 : 0.4)),
+                                  color: categoryColor.withValues(
+                                      alpha: isDark ? 0.3 : 0.4)),
                             ),
                             child: Icon(skill.icon,
-                                color: accentText,
-                                size: isDesktop ? 36 : 20),
+                                color: accentText, size: isDesktop ? 36 : 20),
                           ),
                           SizedBox(height: isDesktop ? 16 : 8),
                           Text(
@@ -102,10 +101,9 @@ class TileFrontFace extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
-                              color: categoryColor
-                                  .withValues(alpha: isDark ? 0.2 : 0.12),
-                              borderRadius:
-                                  BorderRadius.circular(AppRadius.xs),
+                              color: categoryColor.withValues(
+                                  alpha: isDark ? 0.2 : 0.12),
+                              borderRadius: BorderRadius.circular(AppRadius.xs),
                             ),
                             child: Text(
                               masteryLabel(skill.level),

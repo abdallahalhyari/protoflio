@@ -111,8 +111,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                           BoxShadow(
                               color: isDark
                                   ? AppColors.shadowSoft
-                                  : AppColors.slate900
-                                      .withValues(alpha: 0.04),
+                                  : AppColors.slate900.withValues(alpha: 0.04),
                               blurRadius: 10,
                               offset: const Offset(0, 4)),
                         ],

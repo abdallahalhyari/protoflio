@@ -53,8 +53,7 @@ class HighlightBullet extends StatelessWidget {
                           text: prefix,
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
-                            color:
-                                context.adaptiveAccentText(scheme.primary),
+                            color: context.adaptiveAccentText(scheme.primary),
                             fontSize: AppTypography.editorial,
                             height: 1.5,
                           ),

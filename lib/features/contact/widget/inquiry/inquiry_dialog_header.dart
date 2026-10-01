@@ -7,7 +7,8 @@ class InquiryDialogHeader extends StatelessWidget {
   final ColorScheme scheme;
   final bool isDesktop;
 
-  const InquiryDialogHeader({super.key, required this.scheme, required this.isDesktop});
+  const InquiryDialogHeader(
+      {super.key, required this.scheme, required this.isDesktop});
 
   @override
   Widget build(BuildContext context) {

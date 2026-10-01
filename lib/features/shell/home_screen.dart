@@ -668,5 +668,4 @@ class _HomeScreenState extends State<HomeScreen> {
         return const SizedBox.shrink();
     }
   }
-
 }

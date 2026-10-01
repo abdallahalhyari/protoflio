@@ -76,8 +76,8 @@ class CardBackFace extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: hatTitleLabel(AppLocalizations.of(context)!,
-                                    hat.title)
+                            text: hatTitleLabel(
+                                    AppLocalizations.of(context)!, hat.title)
                                 .toUpperCase(),
                             style: TextStyle(
                               color: accent,

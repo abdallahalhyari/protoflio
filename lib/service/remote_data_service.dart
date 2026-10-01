@@ -11,7 +11,8 @@ class RemoteDataService {
   // Currently points to the raw main branch of the GitHub repository.
   // When you commit changes to assets/data/*.json, the app will automatically
   // fetch them without needing a new deployment.
-  static const String _baseUrl = 'https://raw.githubusercontent.com/abdallahalhyari/protoflio/main/';
+  static const String _baseUrl =
+      'https://raw.githubusercontent.com/abdallahalhyari/protoflio/main/';
 
   Future<String> fetchJson(String assetPath) async {
     try {

@@ -133,9 +133,8 @@ class CardFrontFace extends StatelessWidget {
                 const SizedBox(height: 6),
                 AccentUnderRule(
                   accent: accent,
-                  alignment: isStandalone
-                      ? null
-                      : AlignmentDirectional.centerStart,
+                  alignment:
+                      isStandalone ? null : AlignmentDirectional.centerStart,
                 ),
                 const SizedBox(height: 10),
                 FlipHintRow(

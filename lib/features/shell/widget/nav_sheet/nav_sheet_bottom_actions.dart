@@ -50,8 +50,7 @@ class BottomActions extends StatelessWidget {
               SocialButton(
                 label: 'LinkedIn',
                 icon: Icons.link_rounded,
-                url:
-                    'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/',
+                url: 'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/',
               ),
               SizedBox(width: 12),
               SocialButton(

@@ -7,9 +7,11 @@ class LocalSkillRepository implements SkillRepository {
   List<Skill> _skills = [];
 
   Future<void> load() async {
-    final jsonStr = await RemoteDataService.instance.fetchJson('assets/data/skills.json');
+    final jsonStr =
+        await RemoteDataService.instance.fetchJson('assets/data/skills.json');
     final List<dynamic> jsonList = jsonDecode(jsonStr) as List<dynamic>;
-    _skills = jsonList.map((e) => Skill.fromJson(e as Map<String, dynamic>)).toList();
+    _skills =
+        jsonList.map((e) => Skill.fromJson(e as Map<String, dynamic>)).toList();
   }
 
   @override

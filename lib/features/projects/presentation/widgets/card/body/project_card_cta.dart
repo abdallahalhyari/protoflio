@@ -34,9 +34,8 @@ class ReadCaseStudyCta extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.xs),
         child: ExcludeSemantics(
           child: AnimatedSlide(
-            offset: isHovered && isDesktop
-                ? const Offset(0.05, 0)
-                : Offset.zero,
+            offset:
+                isHovered && isDesktop ? const Offset(0.05, 0) : Offset.zero,
             duration: AppMotion.cardHover,
             curve: AppMotion.emphasized,
             child: Row(

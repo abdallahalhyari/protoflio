@@ -62,7 +62,9 @@ class Project {
       architecture: json['architecture'] as String?,
       solution: json['solution'] as String?,
       results: (json['results'] as List?)?.map((e) => e as String).toList(),
-      technicalDecisions: (json['technicalDecisions'] as List?)?.map((e) => e as String).toList(),
+      technicalDecisions: (json['technicalDecisions'] as List?)
+          ?.map((e) => e as String)
+          .toList(),
       lessonsLearned: json['lessonsLearned'] as String?,
       heroImagePath: json['heroImagePath'] as String?,
       hasArchitectureDiagram: json['hasArchitectureDiagram'] as bool? ?? false,

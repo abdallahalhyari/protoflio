@@ -326,7 +326,8 @@ class _CompanionBackToTopPillState extends State<CompanionBackToTopPill> {
 }
 
 class CompanionMiniCircularProgressPainter extends CustomPainter {
-  CompanionMiniCircularProgressPainter({required this.progress, required this.isDark});
+  CompanionMiniCircularProgressPainter(
+      {required this.progress, required this.isDark});
 
   final double progress;
   final bool isDark;

@@ -6,6 +6,7 @@ import 'package:profile/shared/widget/primary_button_parallax_layer.dart';
 import 'package:profile/shared/widget/primary_button_gradient_shell.dart';
 
 enum PrimaryButtonSize { sm, md, lg }
+
 enum PrimaryButtonVariant { primary, destructive }
 
 class PrimaryButton extends StatefulWidget {

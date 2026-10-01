@@ -7,9 +7,12 @@ class LocalProjectRepository implements ProjectRepository {
   List<Project> _projects = [];
 
   Future<void> load() async {
-    final jsonStr = await RemoteDataService.instance.fetchJson('assets/data/projects.json');
+    final jsonStr =
+        await RemoteDataService.instance.fetchJson('assets/data/projects.json');
     final List<dynamic> jsonList = jsonDecode(jsonStr) as List<dynamic>;
-    _projects = jsonList.map((e) => Project.fromJson(e as Map<String, dynamic>)).toList();
+    _projects = jsonList
+        .map((e) => Project.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   @override

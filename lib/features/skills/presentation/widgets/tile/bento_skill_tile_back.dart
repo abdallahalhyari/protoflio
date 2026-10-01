@@ -77,10 +77,9 @@ class TileBackFace extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 2),
                           decoration: BoxDecoration(
-                            color: categoryColor
-                                .withValues(alpha: isDark ? 0.12 : 0.10),
-                            borderRadius:
-                                BorderRadius.circular(AppRadius.xs),
+                            color: categoryColor.withValues(
+                                alpha: isDark ? 0.12 : 0.10),
+                            borderRadius: BorderRadius.circular(AppRadius.xs),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

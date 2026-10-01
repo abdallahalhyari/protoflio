@@ -7,9 +7,12 @@ class LocalHatRepository implements HatRepository {
   List<HatInfo> _hats = [];
 
   Future<void> load() async {
-    final jsonStr = await RemoteDataService.instance.fetchJson('assets/data/hats.json');
+    final jsonStr =
+        await RemoteDataService.instance.fetchJson('assets/data/hats.json');
     final List<dynamic> jsonList = jsonDecode(jsonStr) as List<dynamic>;
-    _hats = jsonList.map((e) => HatInfo.fromJson(e as Map<String, dynamic>)).toList();
+    _hats = jsonList
+        .map((e) => HatInfo.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   @override

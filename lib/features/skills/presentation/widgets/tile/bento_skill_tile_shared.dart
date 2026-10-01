@@ -94,12 +94,10 @@ class SkillTagChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.08)
-            : AppColors.slate100,
+        color:
+            isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate100,
         borderRadius: BorderRadius.circular(AppRadius.xs),
-        border: Border.all(
-            color: isDark ? Colors.white24 : AppColors.slate200),
+        border: Border.all(color: isDark ? Colors.white24 : AppColors.slate200),
       ),
       child: Text(
         tag,

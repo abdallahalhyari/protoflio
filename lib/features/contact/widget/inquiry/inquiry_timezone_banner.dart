@@ -35,9 +35,8 @@ class InquiryTimezoneBanner extends StatelessWidget {
             width: 8,
             height: 8,
             decoration: BoxDecoration(
-              color: isAmmanActive
-                  ? AppColors.accentGreen
-                  : AppColors.accentAmber,
+              color:
+                  isAmmanActive ? AppColors.accentGreen : AppColors.accentAmber,
               shape: BoxShape.circle,
             ),
           ),

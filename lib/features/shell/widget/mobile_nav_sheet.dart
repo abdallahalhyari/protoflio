@@ -233,12 +233,9 @@ class MobileNavSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 14),
-
                 SheetHeader(isDark: isDark),
-
                 const SizedBox(height: 14),
                 Container(height: 1, color: context.divider),
-
                 ConstrainedBox(
                   constraints: BoxConstraints(
                     maxHeight: MediaQuery.sizeOf(context).height * 0.52,
@@ -267,10 +264,8 @@ class MobileNavSheet extends StatelessWidget {
                     },
                   ),
                 ),
-
                 Container(height: 1, color: context.divider),
                 const SizedBox(height: 12),
-
                 BottomActions(onDownloadResume: onDownloadResume),
               ],
             ),

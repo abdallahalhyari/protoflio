@@ -36,7 +36,8 @@ class SkillsPage extends StatelessWidget {
     }
 
     return BlocProvider<SkillsFilterBloc>(
-      create: (ctx) => SkillsFilterBloc(repository: ctx.read<SkillRepository>()),
+      create: (ctx) =>
+          SkillsFilterBloc(repository: ctx.read<SkillRepository>()),
       child: _SkillsPageView(isContinuousMobile: isContinuousMobile),
     );
   }

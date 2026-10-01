@@ -125,7 +125,8 @@ class _ExperiencePageState extends State<ExperiencePage>
                       ),
                       child: ExperienceContinuousMobileList(
                         state: state,
-                        onSelect: (idx) => _bloc.add(ExperienceNodeSelected(idx)),
+                        onSelect: (idx) =>
+                            _bloc.add(ExperienceNodeSelected(idx)),
                       ),
                     )
                   else
@@ -137,11 +138,13 @@ class _ExperiencePageState extends State<ExperiencePage>
                         child: isDesktop
                             ? ExperienceDesktopGrid(
                                 state: state,
-                                onSelect: (idx) => _bloc.add(ExperienceNodeSelected(idx)),
+                                onSelect: (idx) =>
+                                    _bloc.add(ExperienceNodeSelected(idx)),
                               )
                             : ExperienceMobileList(
                                 state: state,
-                                onSelect: (idx) => _bloc.add(ExperienceNodeSelected(idx)),
+                                onSelect: (idx) =>
+                                    _bloc.add(ExperienceNodeSelected(idx)),
                               ),
                       ),
                     ),
