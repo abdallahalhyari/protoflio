@@ -12,7 +12,6 @@ void main() {
       expect(bloc.state.name, isEmpty);
       expect(bloc.state.company, isEmpty);
       expect(bloc.state.body, contains('Senior Mobile Engineer'));
-      expect(bloc.state.isCopied, isFalse);
     });
 
     test('InquiryTrackChanged updates track and default body', () async {
@@ -44,18 +43,6 @@ void main() {
                 .contains('FROM: Sarah Connor (Cyberdyne Systems)') &&
             state.formattedMessage
                 .contains('We need urgent mobile security audit.'))),
-      );
-
-      await bloc.close();
-    });
-
-    test('InquiryCopiedEvent updates isCopied flag', () async {
-      final bloc = ContactInquiryBloc();
-
-      bloc.add(const InquiryCopiedEvent());
-      await expectLater(
-        bloc.stream,
-        emits(predicate<ContactInquiryState>((state) => state.isCopied)),
       );
 
       await bloc.close();

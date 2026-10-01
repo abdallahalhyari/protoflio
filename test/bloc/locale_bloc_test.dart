@@ -1,92 +1,73 @@
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_event.dart';
 import 'package:profile/core/bloc/locale/locale_state.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+  setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  setUp(() {
-    SharedPreferences.setMockInitialValues({});
+  test('supports exactly the languages the app is translated into', () {
+    expect(
+      LocaleBloc.supportedLanguages.toSet(),
+      AppLocalizations.supportedLocales.map((l) => l.languageCode).toSet(),
+    );
   });
 
-  group('LocaleBloc Test Suite', () {
-    test('initial state defaults to English LTR locale', () {
-      final bloc = LocaleBloc();
-      expect(bloc.state.locale.languageCode, equals('en'));
-      expect(bloc.state.isRtl, isFalse);
-      bloc.close();
+  group('LocaleBloc.resolveInitial', () {
+    Locale resolve(String url, [String? stored]) =>
+        LocaleBloc.resolveInitial(uri: Uri.parse(url), stored: stored);
+
+    test('defaults to English', () {
+      expect(resolve('https://a.app/'), const Locale('en'));
     });
 
-    test('LocaleChanged updates locale for supported language codes', () async {
-      final bloc = LocaleBloc();
-
-      bloc.add(const LocaleChanged('ar'));
-      await expectLater(
-        bloc.stream,
-        emits(predicate<LocaleState>(
-            (s) => s.locale.languageCode == 'ar' && s.isRtl)),
-      );
-
-      bloc.add(const LocaleChanged('cs'));
-      await expectLater(
-        bloc.stream,
-        emits(predicate<LocaleState>(
-            (s) => s.locale.languageCode == 'cs' && !s.isRtl)),
-      );
-
-      await bloc.close();
+    test('uses a saved, supported choice', () {
+      expect(resolve('https://a.app/', 'cs'), const Locale('cs'));
+      expect(resolve('https://a.app/', 'fr'), const Locale('en'));
     });
 
-    test('LocaleChanged rejects unsupported language code', () async {
-      final bloc = LocaleBloc();
-
-      bloc.add(const LocaleChanged('fr'));
-      // No emission expected for unsupported language
-      await Future<void>.delayed(const Duration(milliseconds: 50));
-      expect(bloc.state.locale.languageCode, equals('en'));
-
-      await bloc.close();
+    test('a ?lang= link wins over the saved choice', () {
+      expect(resolve('https://a.app/?lang=ar', 'cs'), const Locale('ar'));
+      expect(resolve('https://a.app/?lang=AR'), const Locale('ar'));
     });
 
-    test('NextLocaleRequested cycles through en -> ar -> cs -> en', () async {
-      final bloc = LocaleBloc();
-
-      bloc.add(const NextLocaleRequested());
-      await expectLater(
-        bloc.stream,
-        emits(predicate<LocaleState>((s) => s.locale.languageCode == 'ar')),
-      );
-
-      bloc.add(const NextLocaleRequested());
-      await expectLater(
-        bloc.stream,
-        emits(predicate<LocaleState>((s) => s.locale.languageCode == 'cs')),
-      );
-
-      bloc.add(const NextLocaleRequested());
-      await expectLater(
-        bloc.stream,
-        emits(predicate<LocaleState>((s) => s.locale.languageCode == 'en')),
-      );
-
-      await bloc.close();
+    test('an unsupported ?lang= falls back to the saved choice', () {
+      expect(resolve('https://a.app/?lang=de', 'cs'), const Locale('cs'));
+      expect(LocaleBloc.languageFromUrl(Uri.parse('https://a.app/?lang=de')),
+          isNull);
     });
+  });
 
-    test('LocaleStarted loads persisted locale from SharedPreferences',
-        () async {
-      SharedPreferences.setMockInitialValues({'localeCode': 'ar'});
-      final bloc = LocaleBloc();
+  group('LocaleBloc', () {
+    blocTest<LocaleBloc, LocaleState>(
+      'changes to a supported language and saves it; ignores others',
+      build: LocaleBloc.new,
+      act: (b) => b
+        ..add(const LocaleChanged('ar'))
+        ..add(const LocaleChanged('xx')),
+      expect: () => const [LocaleState(locale: Locale('ar'))],
+      verify: (_) async {
+        final prefs = await SharedPreferences.getInstance();
+        expect(prefs.getString(LocaleBloc.prefsKey), 'ar');
+      },
+    );
 
-      bloc.add(const LocaleStarted());
-      await expectLater(
-        bloc.stream,
-        emits(predicate<LocaleState>(
-            (s) => s.locale.languageCode == 'ar' && s.isRtl)),
-      );
-
-      await bloc.close();
-    });
+    blocTest<LocaleBloc, LocaleState>(
+      'next language cycles English → Arabic → Czech → English',
+      build: LocaleBloc.new,
+      act: (b) => b
+        ..add(const NextLocaleRequested())
+        ..add(const NextLocaleRequested())
+        ..add(const NextLocaleRequested()),
+      expect: () => const [
+        LocaleState(locale: Locale('ar')),
+        LocaleState(locale: Locale('cs')),
+        LocaleState(),
+      ],
+    );
   });
 }

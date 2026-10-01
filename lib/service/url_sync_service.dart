@@ -15,8 +15,10 @@ abstract class UrlSyncService {
     'contact',
   ];
 
+  /// Section index for [hash]; a sub-route (`work/nathealth`) maps to its
+  /// section, anything unknown to home.
   int hashToIndex(String hash) {
-    final clean = hash.replaceAll('#', '').toLowerCase();
+    final clean = hash.replaceAll('#', '').split('/').first.toLowerCase();
     final idx = sectionHashes.indexOf(clean);
     return idx != -1 ? idx : 0;
   }

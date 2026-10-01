@@ -103,9 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (initialSection != null) {
       _pageIndex.value = UrlSyncService.instance.hashToIndex(initialSection);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        context
-            .read<ThemeBloc>()
-            .add(ThemeAccentUpdatedFromHash(initialSection));
+        context.read<ThemeBloc>().add(ThemeAccentUpdated(_pageIndex.value));
         final knownSlug =
             initialSlug == null || CaseStudyRouter.has(initialSlug);
         UrlSyncService.instance.updateTitle(
@@ -115,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.read<ThemeBloc>().add(const ThemeAccentUpdatedFromHash('home'));
+        context.read<ThemeBloc>().add(const ThemeAccentUpdated(0));
         UrlSyncService.instance.updateTitle(UrlSyncService.baseTitle);
       });
     }
@@ -292,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // A case study owns the URL while open; replacing it would clobber
       // the `#work/<slug>` entry Back relies on.
       if (!CaseStudyRouter.hasOpen) UrlSyncService.instance.updateHash(hash);
-      context.read<ThemeBloc>().add(ThemeAccentUpdatedFromHash(hash));
+      context.read<ThemeBloc>().add(ThemeAccentUpdated(page));
       unawaited(_rememberSection(page));
       final labels = TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {

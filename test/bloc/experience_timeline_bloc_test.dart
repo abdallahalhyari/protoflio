@@ -17,7 +17,6 @@ void main() {
 
     test('initial state has default experiences and not visible', () {
       expect(bloc.state.isVisible, isFalse);
-      expect(bloc.state.hoveredIndex, isNull);
       expect(bloc.state.selectedIndex, isNull);
       expect(bloc.state.experiences, equals(testExperience));
     });
@@ -29,20 +28,6 @@ void main() {
       act: (b) => b.add(const ExperienceVisibilityChanged(true)),
       expect: () => [
         ExperienceTimelineState(isVisible: true, experiences: testExperience),
-      ],
-    );
-
-    blocTest<ExperienceTimelineBloc, ExperienceTimelineState>(
-      'emits hoveredIndex when ExperienceNodeHovered is added',
-      build: () =>
-          ExperienceTimelineBloc(repository: TestExperienceRepository()),
-      act: (b) {
-        b.add(const ExperienceNodeHovered(1));
-        b.add(const ExperienceNodeHovered(null));
-      },
-      expect: () => [
-        ExperienceTimelineState(hoveredIndex: 1, experiences: testExperience),
-        ExperienceTimelineState(experiences: testExperience),
       ],
     );
 

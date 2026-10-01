@@ -23,7 +23,6 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
     on<HatNextRole>(_onNextRole);
     on<HatPrevRole>(_onPrevRole);
     on<HatCardBroughtToFront>(_onCardBroughtToFront);
-    on<HatCardMoved>(_onCardMoved);
     on<HatCardPositionSet>(_onCardPositionSet);
     on<HatLayoutInitialized>(_onLayoutInitialized);
     on<HatDeckShuffled>(_onDeckShuffled);
@@ -49,26 +48,25 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
     });
   }
 
-  void _onRoleSelected(HatRoleSelected event, Emitter<HatsDeckState> emit) {
+  void _onRoleSelected(HatRoleSelected event, Emitter<HatsDeckState> emit) =>
+      _select(event.index, emit);
+
+  // Next / previous update the state here rather than re-dispatching a
+  // HatRoleSelected: a queued event read the index before the one ahead of
+  // it had landed, so quick key repeats moved one role instead of several.
+  void _onNextRole(HatNextRole event, Emitter<HatsDeckState> emit) =>
+      _select((state.selectedHatIndex + 1) % count, emit);
+
+  void _onPrevRole(HatPrevRole event, Emitter<HatsDeckState> emit) =>
+      _select((state.selectedHatIndex - 1 + count) % count, emit);
+
+  void _select(int index, Emitter<HatsDeckState> emit) {
     final newOrder = List<int>.from(state.renderOrder);
-    if (newOrder.isNotEmpty && newOrder.last != event.index) {
-      newOrder.remove(event.index);
-      newOrder.add(event.index);
+    if (newOrder.isNotEmpty && newOrder.last != index) {
+      newOrder.remove(index);
+      newOrder.add(index);
     }
-    emit(state.copyWith(
-      selectedHatIndex: event.index,
-      renderOrder: newOrder,
-    ));
-  }
-
-  void _onNextRole(HatNextRole event, Emitter<HatsDeckState> emit) {
-    final nextIdx = (state.selectedHatIndex + 1) % count;
-    add(HatRoleSelected(nextIdx));
-  }
-
-  void _onPrevRole(HatPrevRole event, Emitter<HatsDeckState> emit) {
-    final prevIdx = (state.selectedHatIndex - 1 + count) % count;
-    add(HatRoleSelected(prevIdx));
+    emit(state.copyWith(selectedHatIndex: index, renderOrder: newOrder));
   }
 
   void _onCardBroughtToFront(
@@ -80,12 +78,6 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
     newOrder.remove(event.index);
     newOrder.add(event.index);
     emit(state.copyWith(renderOrder: newOrder));
-  }
-
-  void _onCardMoved(HatCardMoved event, Emitter<HatsDeckState> emit) {
-    final positions = List<Offset>.from(state.cardPositions);
-    positions[event.index] = positions[event.index] + event.delta;
-    emit(state.copyWith(cardPositions: positions));
   }
 
   void _onCardPositionSet(

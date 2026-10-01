@@ -1,20 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:profile/features/projects/domain/entities/project.dart';
 
 sealed class ProjectsFilterEvent extends Equatable {
   const ProjectsFilterEvent();
 
   @override
   List<Object?> get props => [];
-}
-
-class ProjectsFilterStarted extends ProjectsFilterEvent {
-  final List<Project>? initialProjects;
-
-  const ProjectsFilterStarted({this.initialProjects});
-
-  @override
-  List<Object?> get props => [initialProjects];
 }
 
 class DomainFilterSelected extends ProjectsFilterEvent {

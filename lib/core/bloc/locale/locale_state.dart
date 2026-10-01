@@ -8,8 +8,6 @@ class LocaleState extends Equatable {
     this.locale = const Locale('en'),
   });
 
-  bool get isRtl => locale.languageCode == 'ar';
-
   LocaleState copyWith({
     Locale? locale,
   }) {

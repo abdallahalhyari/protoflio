@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class SkillsFilterEvent extends Equatable {
+sealed class SkillsFilterEvent extends Equatable {
   const SkillsFilterEvent();
 
   @override

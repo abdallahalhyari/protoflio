@@ -55,7 +55,6 @@ class ContactInquiryState extends Equatable {
   final String name;
   final String company;
   final String body;
-  final bool isCopied;
 
   const ContactInquiryState({
     this.tracks = kDefaultInquiryTracks,
@@ -63,7 +62,6 @@ class ContactInquiryState extends Equatable {
     this.name = '',
     this.company = '',
     required this.body,
-    this.isCopied = false,
   });
 
   InquiryTrackInfo get currentTrack =>
@@ -92,7 +90,6 @@ class ContactInquiryState extends Equatable {
     String? name,
     String? company,
     String? body,
-    bool? isCopied,
   }) {
     return ContactInquiryState(
       tracks: tracks ?? this.tracks,
@@ -100,7 +97,6 @@ class ContactInquiryState extends Equatable {
       name: name ?? this.name,
       company: company ?? this.company,
       body: body ?? this.body,
-      isCopied: isCopied ?? this.isCopied,
     );
   }
 
@@ -111,6 +107,5 @@ class ContactInquiryState extends Equatable {
         name,
         company,
         body,
-        isCopied,
       ];
 }

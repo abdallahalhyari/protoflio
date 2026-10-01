@@ -150,67 +150,76 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
 
+    // Progress changes every scroll frame; only what shows it (the top bar
+    // and the dock's percent pill) follows it. The dock and its chapter
+    // chips rebuild when it shows or hides, or the chapter changes.
     return BlocProvider.value(
       value: _bloc,
-      child: BlocBuilder<CaseStudyReaderBloc, CaseStudyReaderState>(
-        builder: (context, state) {
-          return NotificationListener<ScrollNotification>(
-            onNotification: (notification) {
-              if (notification is ScrollUpdateNotification ||
-                  notification is OverscrollNotification) {
-                _onScroll();
-              }
-              return false;
-            },
-            child: Stack(
-              children: [
-                widget.child,
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: 96 + MediaQuery.paddingOf(context).bottom,
-                  child: IgnorePointer(
-                    child: AnimatedOpacity(
-                      opacity: state.showDock ? 1 : 0,
-                      duration: AppMotion.sm,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Theme.of(context)
-                                  .scaffoldBackgroundColor
-                                  .withValues(alpha: 0.0),
-                              Theme.of(context)
-                                  .scaffoldBackgroundColor
-                                  .withValues(alpha: 0.92),
-                            ],
-                            stops: const [0.0, 0.6],
-                          ),
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          if (notification is ScrollUpdateNotification ||
+              notification is OverscrollNotification) {
+            _onScroll();
+          }
+          return false;
+        },
+        child: Stack(
+          children: [
+            widget.child,
+            BlocSelector<CaseStudyReaderBloc, CaseStudyReaderState, bool>(
+              selector: (state) => state.showDock,
+              builder: (context, showDock) => Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 96 + MediaQuery.paddingOf(context).bottom,
+                child: IgnorePointer(
+                  child: AnimatedOpacity(
+                    opacity: showDock ? 1 : 0,
+                    duration: AppMotion.sm,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withValues(alpha: 0.0),
+                            Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withValues(alpha: 0.92),
+                          ],
+                          stops: const [0.0, 0.6],
                         ),
                       ),
                     ),
                   ),
                 ),
-                CompanionTopReadingProgressBar(
-                  progress: state.progress,
-                  isDark: isDark,
-                ),
-                CompanionFloatingChapterDock(
-                  visible: state.showDock,
-                  progress: state.progress,
-                  chapters: widget.chapters,
-                  activeChapterId: state.activeChapterId,
-                  onChapterTap: _scrollToChapter,
-                  onBackToTop: _scrollToTop,
-                  isDark: isDark,
-                ),
-              ],
+              ),
             ),
-          );
-        },
+            BlocSelector<CaseStudyReaderBloc, CaseStudyReaderState, double>(
+              selector: (state) => state.progress,
+              builder: (context, progress) => CompanionTopReadingProgressBar(
+                progress: progress,
+                isDark: isDark,
+              ),
+            ),
+            BlocBuilder<CaseStudyReaderBloc, CaseStudyReaderState>(
+              buildWhen: (prev, curr) =>
+                  prev.showDock != curr.showDock ||
+                  prev.activeChapterId != curr.activeChapterId,
+              builder: (context, state) => CompanionFloatingChapterDock(
+                visible: state.showDock,
+                chapters: widget.chapters,
+                activeChapterId: state.activeChapterId,
+                onChapterTap: _scrollToChapter,
+                onBackToTop: _scrollToTop,
+                isDark: isDark,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

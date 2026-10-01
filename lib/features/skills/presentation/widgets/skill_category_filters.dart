@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/service/sound_service.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/util/bidi.dart';
 import 'package:profile/features/skills/data/datasources/skill_category_labels.dart';
@@ -76,12 +74,16 @@ class SkillCategoryFilters extends StatelessWidget {
   final ValueChanged<String> onSelectCategory;
   final bool isDesktop;
 
+  /// Skills per category (and 'ALL'), from the filter bloc's state.
+  final Map<String, int> counts;
+
   const SkillCategoryFilters({
     super.key,
     required this.categories,
     required this.selectedCategory,
     required this.onSelectCategory,
     required this.isDesktop,
+    required this.counts,
   });
 
   @override
@@ -114,6 +116,7 @@ class SkillCategoryFilters extends StatelessWidget {
       isDesktop: isDesktop,
       selectedCategory: selectedCategory,
       onSelectCategory: onSelectCategory,
+      count: counts[cat] ?? 0,
     );
   }
 }
@@ -124,9 +127,11 @@ class _SkillFilterChip extends StatefulWidget {
     required this.isDesktop,
     required this.selectedCategory,
     required this.onSelectCategory,
+    required this.count,
   });
 
   final String cat;
+  final int count;
   final bool isDesktop;
   final String selectedCategory;
   final ValueChanged<String> onSelectCategory;
@@ -155,11 +160,7 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
             ? scheme.primary
             : AppColors.toAccessibleLightText(scheme.primary))
         : SkillCategoryStyle.getTextColor(cat, scheme, isDark);
-    final skillsRepo = context.read<SkillRepository>();
-    final allSkills = skillsRepo.getSkills();
-    final count = cat == 'ALL'
-        ? allSkills.length
-        : allSkills.where((s) => s.category == cat).length;
+    final count = widget.count;
 
     return Semantics(
       button: true,

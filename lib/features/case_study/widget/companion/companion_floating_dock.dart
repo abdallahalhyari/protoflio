@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/case_study/bloc/case_study_reader_bloc.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/shared/widget/conditional_blur.dart';
@@ -10,7 +12,6 @@ class CompanionFloatingChapterDock extends StatelessWidget {
   const CompanionFloatingChapterDock({
     super.key,
     required this.visible,
-    required this.progress,
     required this.chapters,
     required this.activeChapterId,
     required this.onChapterTap,
@@ -19,7 +20,6 @@ class CompanionFloatingChapterDock extends StatelessWidget {
   });
 
   final bool visible;
-  final double progress;
   final List<CaseStudyChapter> chapters;
   final String? activeChapterId;
   final ValueChanged<CaseStudyChapter> onChapterTap;
@@ -75,10 +75,17 @@ class CompanionFloatingChapterDock extends StatelessWidget {
                         mainAxisSize:
                             isCompact ? MainAxisSize.max : MainAxisSize.min,
                         children: [
-                          CompanionReadingPercentPill(
-                            progress: progress,
-                            isDark: isDark,
-                            isCompact: isCompact,
+                          // Only the percent follows every scroll frame; the dock around it
+                          // rebuilds when it shows, hides or the chapter changes.
+                          BlocSelector<CaseStudyReaderBloc,
+                              CaseStudyReaderState, double>(
+                            selector: (state) => state.progress,
+                            builder: (context, progress) =>
+                                CompanionReadingPercentPill(
+                              progress: progress,
+                              isDark: isDark,
+                              isCompact: isCompact,
+                            ),
                           ),
                           const SizedBox(width: 8),
                           CompanionDockDivider(isDark: isDark),

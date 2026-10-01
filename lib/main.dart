@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:profile/shared/widget/keyboard_focus_ring.dart';
@@ -5,10 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
-import 'package:profile/core/bloc/locale/locale_event.dart';
 import 'package:profile/core/bloc/locale/locale_state.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
-import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
 import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
@@ -35,14 +35,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
 
-  final themeStr = prefs.getString('themeMode');
-  ThemeMode initTheme = ThemeMode.dark;
-  if (themeStr == 'light') initTheme = ThemeMode.light;
-  if (themeStr == 'system') initTheme = ThemeMode.system;
-
-  final localeStr = prefs.getString('localeCode');
-  final Locale initLocale =
-      localeStr != null ? Locale(localeStr) : const Locale('en');
+  // Resolved here, before the first frame, from the URL then the saved
+  // choice: resolving them in the blocs after startup painted a shared
+  // `?lang=ar` link in English (left-to-right) first, then flipped.
+  final initTheme = ThemeBloc.resolveInitial(
+      uri: Uri.base, stored: prefs.getString(ThemeBloc.prefsKey));
+  final initLocale = LocaleBloc.resolveInitial(
+      uri: Uri.base, stored: prefs.getString(LocaleBloc.prefsKey));
+  // A language picked by link becomes the visitor's choice.
+  if (LocaleBloc.languageFromUrl(Uri.base) case final code?) {
+    unawaited(LocaleBloc.persist(code));
+  }
 
   final projectRepo = LocalProjectRepository();
   final experienceRepo = LocalExperienceRepository();
@@ -136,12 +139,10 @@ class PortfolioApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<ThemeBloc>(
-            create: (_) =>
-                ThemeBloc(initialMode: initialTheme)..add(const ThemeStarted()),
+            create: (_) => ThemeBloc(initialMode: initialTheme),
           ),
           BlocProvider<LocaleBloc>(
-            create: (_) => LocaleBloc(initialLocale: initialLocale)
-              ..add(const LocaleStarted()),
+            create: (_) => LocaleBloc(initialLocale: initialLocale),
           ),
         ],
         child: BlocBuilder<LocaleBloc, LocaleState>(
@@ -165,11 +166,7 @@ class PortfolioApp extends StatelessWidget {
                     GlobalWidgetsLocalizations.delegate,
                     GlobalCupertinoLocalizations.delegate,
                   ],
-                  supportedLocales: const [
-                    Locale('en'),
-                    Locale('ar'),
-                    Locale('cs'),
-                  ],
+                  supportedLocales: AppLocalizations.supportedLocales,
                   builder: (context, child) {
                     final media = MediaQuery.of(context);
                     return MediaQuery(

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class ExperienceTimelineEvent extends Equatable {
+sealed class ExperienceTimelineEvent extends Equatable {
   const ExperienceTimelineEvent();
 
   @override
@@ -15,16 +15,6 @@ class ExperienceVisibilityChanged extends ExperienceTimelineEvent {
 
   @override
   List<Object?> get props => [isVisible];
-}
-
-/// Triggered when the cursor hovers over an experience node.
-class ExperienceNodeHovered extends ExperienceTimelineEvent {
-  final int? index;
-
-  const ExperienceNodeHovered(this.index);
-
-  @override
-  List<Object?> get props => [index];
 }
 
 /// Triggered when an experience node is clicked or expanded.

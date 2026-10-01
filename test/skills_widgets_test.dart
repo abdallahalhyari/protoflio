@@ -56,6 +56,11 @@ void main() {
               selectedCategory: selected,
               onSelectCategory: (cat) => setState(() => selected = cat),
               isDesktop: true,
+              counts: const {
+                'ALL': 7,
+                'Mobile Systems': 5,
+                'Security & Protocols': 2,
+              },
             );
           },
         ),

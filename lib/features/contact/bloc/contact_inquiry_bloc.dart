@@ -13,8 +13,6 @@ class ContactInquiryBloc
     on<InquiryNameChanged>(_onNameChanged);
     on<InquiryCompanyChanged>(_onCompanyChanged);
     on<InquiryBodyChanged>(_onBodyChanged);
-    on<InquiryCopiedEvent>(_onCopied);
-    on<InquiryResetEvent>(_onReset);
   }
 
   static ContactInquiryState _createInitialState(
@@ -37,7 +35,6 @@ class ContactInquiryBloc
     emit(state.copyWith(
       selectedTrackIndex: trackIdx,
       body: state.tracks[trackIdx].defaultBody,
-      isCopied: false,
     ));
   }
 
@@ -60,19 +57,5 @@ class ContactInquiryBloc
     Emitter<ContactInquiryState> emit,
   ) {
     emit(state.copyWith(body: event.body));
-  }
-
-  void _onCopied(
-    InquiryCopiedEvent event,
-    Emitter<ContactInquiryState> emit,
-  ) {
-    emit(state.copyWith(isCopied: true));
-  }
-
-  void _onReset(
-    InquiryResetEvent event,
-    Emitter<ContactInquiryState> emit,
-  ) {
-    emit(_createInitialState(0, state.tracks));
   }
 }

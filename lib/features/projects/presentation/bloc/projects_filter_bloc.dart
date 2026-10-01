@@ -6,12 +6,8 @@ import 'package:profile/features/projects/presentation/bloc/projects_filter_stat
 
 class ProjectsFilterBloc
     extends Bloc<ProjectsFilterEvent, ProjectsFilterState> {
-  final ProjectRepository _repository;
-
   ProjectsFilterBloc({required ProjectRepository repository})
-      : _repository = repository,
-        super(_createInitialState(repository.getProjects())) {
-    on<ProjectsFilterStarted>(_onStarted);
+      : super(_createInitialState(repository.getProjects())) {
     on<DomainFilterSelected>(_onDomainSelected);
     on<TechFilterToggled>(_onTechToggled);
     on<ProjectsFilterReset>(_onReset);
@@ -43,14 +39,6 @@ class ProjectsFilterBloc
       final techMatch = tech == null || p.stack.contains(tech);
       return domainMatch && techMatch;
     }).toList();
-  }
-
-  void _onStarted(
-    ProjectsFilterStarted event,
-    Emitter<ProjectsFilterState> emit,
-  ) {
-    final projects = event.initialProjects ?? _repository.getProjects();
-    emit(_createInitialState(projects));
   }
 
   void _onDomainSelected(
