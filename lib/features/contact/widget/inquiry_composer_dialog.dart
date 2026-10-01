@@ -11,6 +11,8 @@ import 'package:profile/features/contact/bloc/contact_inquiry_bloc.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_event.dart';
 import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
 import 'package:profile/service/email_service.dart';
+import 'package:profile/shared/util/mailto.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:profile/features/contact/widget/inquiry/inquiry_dialog_header.dart';
 import 'package:profile/features/contact/widget/inquiry/inquiry_timezone_banner.dart';
@@ -32,6 +34,8 @@ Future<void> showInquiryComposerDialog(
     ),
   );
 }
+
+const String _kInquiryEmail = 'alhyariabdallh@gmail.com';
 
 class InquiryComposerDialog extends StatelessWidget {
   final int initialTrackIndex;
@@ -91,7 +95,6 @@ class _InquiryComposerDialogView extends StatefulWidget {
 
 class _InquiryComposerDialogViewState
     extends State<_InquiryComposerDialogView> {
-
   late final TextEditingController _nameController;
   late final TextEditingController _companyController;
   late final TextEditingController _bodyController;
@@ -135,6 +138,11 @@ class _InquiryComposerDialogViewState
       return;
     }
 
+    if (!EmailService.instance.isConfigured) {
+      await _openInEmailClient(subject, body);
+      return;
+    }
+
     setState(() => _isSending = true);
 
     final success = await EmailService.instance.sendEmail(
@@ -156,9 +164,21 @@ class _InquiryComposerDialogViewState
       );
       Navigator.of(context).pop();
     } else {
+      // Don't strand the visitor with a failed send: hand the same draft to
+      // their email app.
+      await _openInEmailClient(subject, body);
+    }
+  }
+
+  Future<void> _openInEmailClient(String subject, String body) async {
+    final opened = await launchUrl(
+      mailtoUri(_kInquiryEmail, subject: subject, body: body),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!opened && mounted) {
       AppToast.show(
         context,
-        message: 'Delivery failed. Try copying the draft instead.',
+        message: 'Could not open an email app. Copy the draft instead.',
         status: ToastStatus.critical,
         duration: const Duration(seconds: 4),
       );
@@ -198,7 +218,8 @@ class _InquiryComposerDialogViewState
       builder: (context, state) {
         final canSend = state.body.trim().isNotEmpty;
         final nameField = _InquiryNameField(controller: _nameController);
-        final companyField = _InquiryCompanyField(controller: _companyController);
+        final companyField =
+            _InquiryCompanyField(controller: _companyController);
 
         return Dialog(
           backgroundColor: context.modalSurface,
@@ -254,6 +275,7 @@ class _InquiryComposerDialogViewState
                   InquiryDialogActions(
                     canSend: canSend,
                     isSending: _isSending,
+                    sendsDirectly: EmailService.instance.isConfigured,
                     onCopy: () => _copyDraft(state),
                     onSend: () => _sendEmail(state),
                   ),

@@ -9,8 +9,13 @@ class EmailService {
   static const String _serviceId = 'SERVICE_ID_HERE';
   static const String _templateId = 'TEMPLATE_ID_HERE';
   static const String _publicKey = 'PUBLIC_KEY_HERE';
-  
+
   static const String _endpoint = 'https://api.emailjs.com/api/v1.0/email/send';
+
+  /// False until real EmailJS credentials replace the placeholders. The
+  /// inquiry composer then hands the draft to the visitor's email app
+  /// instead of reporting every send as failed.
+  bool get isConfigured => _serviceId != 'SERVICE_ID_HERE';
 
   Future<bool> sendEmail({
     required String subject,
@@ -18,11 +23,7 @@ class EmailService {
     required String name,
     required String company,
   }) async {
-    if (_serviceId == 'SERVICE_ID_HERE') {
-      // Short-circuit if credentials aren't set
-      // Short-circuit if credentials aren't set
-      return false;
-    }
+    if (!isConfigured) return false;
 
     try {
       final response = await http.post(

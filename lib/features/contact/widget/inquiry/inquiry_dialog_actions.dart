@@ -4,6 +4,10 @@ import 'package:profile/theme/tokens.dart';
 class InquiryDialogActions extends StatelessWidget {
   final bool canSend;
   final bool isSending;
+
+  /// True when messages go straight through EmailJS; false when the button
+  /// opens the visitor's email app with the draft.
+  final bool sendsDirectly;
   final VoidCallback onCopy;
   final VoidCallback onSend;
 
@@ -11,6 +15,7 @@ class InquiryDialogActions extends StatelessWidget {
     super.key,
     required this.canSend,
     this.isSending = false,
+    this.sendsDirectly = false,
     required this.onCopy,
     required this.onSend,
   });
@@ -35,8 +40,17 @@ class InquiryDialogActions extends StatelessWidget {
                   height: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Icon(Icons.send_rounded, size: 16),
-          label: Text(isSending ? 'SENDING...' : 'SEND SECURE MESSAGE'),
+              : Icon(
+                  sendsDirectly
+                      ? Icons.send_rounded
+                      : Icons.mail_outline_rounded,
+                  size: 16,
+                ),
+          label: Text(
+            isSending
+                ? 'SENDING...'
+                : (sendsDirectly ? 'SEND MESSAGE' : 'OPEN IN EMAIL CLIENT'),
+          ),
         ),
       ],
     );
