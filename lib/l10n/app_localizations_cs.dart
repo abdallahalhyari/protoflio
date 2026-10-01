@@ -129,6 +129,19 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introSeniorEngineer => 'SENIOR MOBILNÍ VÝVOJÁŘ';
 
   @override
+  String get introRoleHeading => 'SENIOR VÝVOJÁŘ MOBILNÍCH APLIKACÍ';
+
+  @override
+  String get introValueProposition =>
+      'Navrhuji a dodávám odolné mobilní produkty, které mění složité systémy v přehledné a důvěryhodné uživatelské prostředí.';
+
+  @override
+  String get introSkillArchitecture => 'Architektura';
+
+  @override
+  String get introSkillProductDelivery => 'Dodávání produktů';
+
+  @override
   String get introWorkEligibility => 'OPRÁVNĚNÍ K PRÁCI V ČR · STUDENT';
 
   @override
@@ -313,6 +326,45 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get sectionSubtitleExperience =>
       'Víceletý vývoj podnikových mobilních systémů';
+
+  @override
+  String get projectsHeaderKicker => 'ČÁST 03 · VYBRANÉ PROJEKTY';
+
+  @override
+  String get experienceHeaderKicker => 'ČÁST 02 · PROFESNÍ DRÁHA';
+
+  @override
+  String get engineeringHeaderKicker => 'ČÁST 05 · SYSTÉMOVÁ ARCHITEKTURA';
+
+  @override
+  String get hatsHeaderKickerMobile => 'ČÁST 06 · 6 ROLÍ';
+
+  @override
+  String get hatsHeaderKickerDesktop => 'ČÁST 06 · MEZIOBOROVÉ VEDENÍ';
+
+  @override
+  String get hatsHeaderSubtitle =>
+      'Inženýrství zaměřené na produkt, srozumitelná komunikace a praktické vedení napříč týmy, omezeními a klíčovými dodávkami.';
+
+  @override
+  String get contactHeaderKicker => 'ČÁST 07 · PŘÍMÝ KONTAKT';
+
+  @override
+  String get contactHeaderTitle => 'POJĎME VYTVOŘIT, CO PŘIJDE.';
+
+  @override
+  String get contactHeaderSubtitle =>
+      'Pomáhám týmům dodávat komplexní mobilní produkty s přehlednější architekturou, důslednějším provedením a větší jistotou v produkci. Jsem k dispozici pro seniorní technické vedení, technickou strategii a klíčové produktové dodávky.';
+
+  @override
+  String get skillsHeaderKicker => 'ČÁST 04 · SYSTÉMY A DODÁVKA';
+
+  @override
+  String get skillsHeaderTitle => 'DOVEDNOSTI A INŽENÝRSTVÍ';
+
+  @override
+  String get skillsHeaderSubtitle =>
+      'Flutter, Android, architektura platforem, zabezpečení a systémy dodávání pro odolné produktové týmy a důvěryhodné aplikace.';
 
   @override
   String get sectionSubtitleSkills =>

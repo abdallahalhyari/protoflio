@@ -3,6 +3,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/intro/widget/hero_motion.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 class HeroRoleBlock extends StatelessWidget {
   final Size size;
@@ -19,6 +20,7 @@ class HeroRoleBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
+    final loc = AppLocalizations.of(context)!;
 
     return SnappyEntrance(
       delayMs: 60,
@@ -36,47 +38,82 @@ class HeroRoleBlock extends StatelessWidget {
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
               Text(
-                AppLocalizations.of(context)!.introSeniorEngineer.toUpperCase(),
+                loc.introRoleHeading,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: isCompactH
                       ? (size.width * 0.016).clamp(15.0, 19.0)
                       : (size.width * 0.018).clamp(16.0, 22.0),
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 3,
+                  letterSpacing: latinTracking(context, 3),
                   color: context.onSurface,
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                AppLocalizations.of(context)!.introBuildsComplex,
+                loc.introValueProposition,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: isCompactH
                       ? (size.width * 0.0105).clamp(12.0, 15.0)
                       : (size.width * 0.0115).clamp(12.5, 18.0),
                   fontWeight: FontWeight.w800,
-                  letterSpacing: 1.5,
+                  letterSpacing: latinTracking(context, 1.2),
                   color: isDark ? AppColors.accentIndigoSoft : accent,
+                  height: 1.45,
                 ),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
-              Text(
-                AppLocalizations.of(context)!.introTechStack,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: isCompactH
-                      ? (size.width * 0.01).clamp(11.0, 12.5)
-                      : (size.width * 0.011).clamp(11.5, 13.5),
-                  fontWeight: FontWeight.w600,
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.82)
-                      : AppColors.slate600,
-                  height: 1.45,
-                  letterSpacing: 0.8,
-                ),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  _MiniPill('Flutter'),
+                  _MiniPill('Android'),
+                  _MiniPill(loc.introSkillArchitecture),
+                  _MiniPill(loc.introSkillProductDelivery),
+                ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MiniPill extends StatelessWidget {
+  final String label;
+
+  const _MiniPill(this.label);
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final isDark = scheme.brightness == Brightness.dark;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color:
+            isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100,
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.12)
+              : AppColors.slate200,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        child: Text(
+          label.toUpperCase(),
+          style: TextStyle(
+            fontFamily: AppTypography.monoFont,
+            color: context.onSurface,
+            fontSize: AppTypography.micro,
+            fontWeight: FontWeight.w800,
+            letterSpacing: latinTracking(context, 1.1),
           ),
         ),
       ),

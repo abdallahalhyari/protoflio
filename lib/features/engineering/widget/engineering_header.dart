@@ -15,14 +15,14 @@ class EngineeringHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return SectionMasthead(
-      kicker: 'FEATURE 05 · SYSTEMS ARCHITECTURE',
-      title: AppLocalizations.of(context)!.navEngineering.toUpperCase(),
-      subtitle: AppLocalizations.of(context)!.sectionSubtitleEngineering,
+      kicker: loc.engineeringHeaderKicker,
+      title: loc.navEngineering.toUpperCase(),
+      subtitle: loc.sectionSubtitleEngineering,
       isDesktop: isDesktop,
       badgeIcon: Icons.hub_rounded,
-      badgeLabel: AppLocalizations.of(context)!
-          .badgeArchitectures(kArchitectureTopics.length),
+      badgeLabel: loc.badgeArchitectures(kArchitectureTopics.length),
     );
   }
 }

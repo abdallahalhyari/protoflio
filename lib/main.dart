@@ -1,30 +1,23 @@
-import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:profile/shared/widget/keyboard_focus_ring.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
+import 'package:profile/app/bootstrap.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_state.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
-import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
-import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
-import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/shell/home_screen.dart';
-import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/widget/keyboard_focus_ring.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/service/sound_service.dart';
 
 Future<void> main() async {
   // UrlSyncService owns the URL hash (`#work`, `#work/<slug>`). Flutter's
@@ -33,41 +26,19 @@ Future<void> main() async {
   // (null-check crash, then a jump to Home). No-op off the web.
   setUrlStrategy(null);
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
 
-  // Resolved here, before the first frame, from the URL then the saved
-  // choice: resolving them in the blocs after startup painted a shared
-  // `?lang=ar` link in English (left-to-right) first, then flipped.
-  final initTheme = ThemeBloc.resolveInitial(
-      uri: Uri.base, stored: prefs.getString(ThemeBloc.prefsKey));
-  final initLocale = LocaleBloc.resolveInitial(
-      uri: Uri.base, stored: prefs.getString(LocaleBloc.prefsKey));
-  // A language picked by link becomes the visitor's choice.
-  if (LocaleBloc.languageFromUrl(Uri.base) case final code?) {
-    unawaited(LocaleBloc.persist(code));
-  }
-
-  final projectRepo = LocalProjectRepository();
-  final experienceRepo = LocalExperienceRepository();
-  final hatRepo = LocalHatRepository();
-  final skillRepo = LocalSkillRepository();
-
-  await Future.wait([
-    SoundService.instance.load(),
-    projectRepo.load(),
-    experienceRepo.load(),
-    hatRepo.load(),
-    skillRepo.load(),
-  ]);
-
-  runApp(PortfolioApp(
-    initialTheme: initTheme,
-    initialLocale: initLocale,
-    projectRepo: projectRepo,
-    experienceRepo: experienceRepo,
-    hatRepo: hatRepo,
-    skillRepo: skillRepo,
-  ));
+  runApp(
+    AppBootstrapper(
+      builder: (data) => PortfolioApp(
+        initialTheme: data.initialTheme,
+        initialLocale: data.initialLocale,
+        projectRepo: data.projectRepo,
+        experienceRepo: data.experienceRepo,
+        hatRepo: data.hatRepo,
+        skillRepo: data.skillRepo,
+      ),
+    ),
+  );
 
   // Analytics: `web/index.html` sets up `window.gtag` synchronously and
   // lazy-loads `gtag.js` on first user interaction. No Dart-side init is

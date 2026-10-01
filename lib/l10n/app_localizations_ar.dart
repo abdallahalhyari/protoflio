@@ -128,6 +128,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
 
   @override
+  String get introRoleHeading => 'مهندس تطبيقات هواتف أول';
+
+  @override
+  String get introValueProposition =>
+      'أصمم وأطلق منتجات جوال مرنة تحوّل الأنظمة المعقدة إلى تجارب استخدام واضحة وجديرة بالثقة.';
+
+  @override
+  String get introSkillArchitecture => 'هندسة الأنظمة';
+
+  @override
+  String get introSkillProductDelivery => 'تسليم المنتجات';
+
+  @override
   String get introWorkEligibility => 'مؤهل للعمل في التشيك · طالب';
 
   @override
@@ -310,6 +323,45 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get sectionSubtitleExperience =>
       'سنوات من تطوير أنظمة الهاتف المحمول للمؤسسات';
+
+  @override
+  String get projectsHeaderKicker => 'القسم 03 · أعمال مختارة';
+
+  @override
+  String get experienceHeaderKicker => 'القسم 02 · المسيرة المهنية';
+
+  @override
+  String get engineeringHeaderKicker => 'القسم 05 · هندسة الأنظمة';
+
+  @override
+  String get hatsHeaderKickerMobile => 'القسم 06 · 6 أدوار';
+
+  @override
+  String get hatsHeaderKickerDesktop => 'القسم 06 · قيادة متعددة التخصصات';
+
+  @override
+  String get hatsHeaderSubtitle =>
+      'هندسة تضع المنتج في المقدمة، وتواصل واضح، وقيادة عملية عبر الفرق والقيود ومراحل التسليم الحساسة.';
+
+  @override
+  String get contactHeaderKicker => 'القسم 07 · تواصل مباشر';
+
+  @override
+  String get contactHeaderTitle => 'لنبنِ ما هو قادم.';
+
+  @override
+  String get contactHeaderSubtitle =>
+      'أساعد الفرق على إطلاق منتجات جوال معقدة ببنية أوضح وتنفيذ أقوى وثقة أكبر في بيئة الإنتاج. متاح للقيادة الهندسية والاستراتيجية التقنية ومهام التسليم الحيوية للمنتج.';
+
+  @override
+  String get skillsHeaderKicker => 'القسم 04 · الأنظمة والتسليم';
+
+  @override
+  String get skillsHeaderTitle => 'المهارات والهندسة';
+
+  @override
+  String get skillsHeaderSubtitle =>
+      'فلاتر وأندرويد، وبنية المنصات، والأمان، وأنظمة التسليم لبناء منتجات مرنة وتجارب جديرة بالثقة.';
 
   @override
   String get sectionSubtitleSkills =>

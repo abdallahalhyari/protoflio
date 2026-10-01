@@ -119,9 +119,6 @@ class IntroCtaRow extends StatelessWidget {
     final accent = Theme.of(context).colorScheme.primary;
     final loc = AppLocalizations.of(context)!;
 
-    // Hierarchy: one primary + one secondary action, then the utility
-    // actions as quiet links. Four equal-weight pills made every option
-    // read as the main one.
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -133,15 +130,25 @@ class IntroCtaRow extends StatelessWidget {
             PrimaryButton(
               label: loc.viewMyWork,
               isPill: true,
-              // Same tracked caps as the CONTACT ME pill beside it.
               letterSpacing: 1.2,
               onPressed: () {
                 SoundService.instance.playClick();
                 onViewWork();
               },
             ),
-            // Match the primary pill's height so the pair reads as one
-            // row; a min (not fixed) height still grows with text scale.
+            ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 40),
+              child: _ghostButton(
+                label: loc.downloadResume,
+                icon: Icons.download_rounded,
+                color: accent,
+                isDark: isDark,
+                onPressed: () {
+                  SoundService.instance.playClick();
+                  onDownloadResume();
+                },
+              ),
+            ),
             ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 40),
               child: _ghostButton(
@@ -159,18 +166,10 @@ class IntroCtaRow extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.xs),
         Wrap(
-          spacing: 4,
+          spacing: 8,
           alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            _linkButton(
-              label: loc.downloadResume,
-              icon: Icons.download_rounded,
-              onPressed: () {
-                SoundService.instance.playClick();
-                onDownloadResume();
-              },
-            ),
             _linkButton(
               label: loc.copyEmail,
               icon: Icons.content_copy_rounded,

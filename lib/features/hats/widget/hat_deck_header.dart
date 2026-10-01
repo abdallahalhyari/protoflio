@@ -3,6 +3,7 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/util/bidi.dart';
 
 /// Top header for the Hats & Perspectives section, including title, subtitle,
 /// and desktop deck shuffle/align action buttons.
@@ -40,39 +41,37 @@ class HatDeckHeader extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 isMobile
-                    ? 'FEATURE 06 · 6 ROLES'
-                    : 'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP',
+                    ? loc.hatsHeaderKickerMobile
+                    : loc.hatsHeaderKickerDesktop,
                 style: TextStyle(
                   color: context.adaptiveAccentText(scheme.primary),
                   fontSize: AppTypography.editorial,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 3,
+                  letterSpacing: latinTracking(context, 3),
                 ),
               ),
-              // Tenada caps fill a 1.0 line box; 4px read as ~2px under the kicker.
               const SizedBox(height: 8),
               Text(
-                // Heading = nav label, so nav, menu and page agree.
                 loc.navAbout.toUpperCase(),
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,
                   fontSize: isMobile ? 24 : 40,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 4,
+                  letterSpacing: latinTracking(context, 4),
                   height: 1,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                loc.sectionSubtitleAbout,
+                loc.hatsHeaderSubtitle,
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.75)
                       : AppColors.slate600,
                   fontSize: isMobile ? 11 : 12.5,
                   fontStyle: FontStyle.italic,
-                  letterSpacing: 0.5,
+                  letterSpacing: latinTracking(context, 0.5),
                 ),
               ),
             ],

@@ -109,7 +109,7 @@ class TileFrontFace extends StatelessWidget {
                               masteryLabel(skill.level),
                               style: TextStyle(
                                 fontFamily: AppTypography.monoFont,
-                                color: accentText,
+                                color: context.onSurface,
                                 fontSize: isDesktop ? 11 : 9,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.2,

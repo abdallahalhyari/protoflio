@@ -322,6 +322,30 @@ abstract class AppLocalizations {
   /// **'SENIOR MOBILE ENGINEER'**
   String get introSeniorEngineer;
 
+  /// No description provided for @introRoleHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'SENIOR MOBILE ENGINEER'**
+  String get introRoleHeading;
+
+  /// No description provided for @introValueProposition.
+  ///
+  /// In en, this message translates to:
+  /// **'I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.'**
+  String get introValueProposition;
+
+  /// No description provided for @introSkillArchitecture.
+  ///
+  /// In en, this message translates to:
+  /// **'Architecture'**
+  String get introSkillArchitecture;
+
+  /// No description provided for @introSkillProductDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Product delivery'**
+  String get introSkillProductDelivery;
+
   /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
@@ -657,6 +681,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Multi-year development of enterprise mobile systems'**
   String get sectionSubtitleExperience;
+
+  /// No description provided for @projectsHeaderKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURE 03 · SELECTED WORK'**
+  String get projectsHeaderKicker;
+
+  /// No description provided for @experienceHeaderKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURE 02 · CAREER TRAJECTORY'**
+  String get experienceHeaderKicker;
+
+  /// No description provided for @engineeringHeaderKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURE 05 · SYSTEMS ARCHITECTURE'**
+  String get engineeringHeaderKicker;
+
+  /// No description provided for @hatsHeaderKickerMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURE 06 · 6 ROLES'**
+  String get hatsHeaderKickerMobile;
+
+  /// No description provided for @hatsHeaderKickerDesktop.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP'**
+  String get hatsHeaderKickerDesktop;
+
+  /// No description provided for @hatsHeaderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.'**
+  String get hatsHeaderSubtitle;
+
+  /// No description provided for @contactHeaderKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURE 07 · DIRECT LINE & REACH OUT'**
+  String get contactHeaderKicker;
+
+  /// No description provided for @contactHeaderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'LET\'S BUILD WHAT\'S NEXT.'**
+  String get contactHeaderTitle;
+
+  /// No description provided for @contactHeaderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'I help teams ship complex mobile products with calmer architecture, stronger execution, and more confidence in production. Available for senior engineering leadership, technical strategy, and product-critical delivery work.'**
+  String get contactHeaderSubtitle;
+
+  /// No description provided for @skillsHeaderKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'FEATURE 04 · SYSTEMS & DELIVERY'**
+  String get skillsHeaderKicker;
+
+  /// No description provided for @skillsHeaderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'STACK & ENGINEERING'**
+  String get skillsHeaderTitle;
+
+  /// No description provided for @skillsHeaderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.'**
+  String get skillsHeaderSubtitle;
 
   /// No description provided for @sectionSubtitleSkills.
   ///
