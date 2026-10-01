@@ -31,6 +31,7 @@ class SectionMasthead extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final width = MediaQuery.sizeOf(context).width;
     final accentText = context.adaptiveAccentText(scheme.primary);
+    final titleSize = (width * 0.05).clamp(24.0, 48.0);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,7 +55,9 @@ class SectionMasthead extends StatelessWidget {
                       letterSpacing: 3,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  // Tenada caps fill their 1.0 line box, so a fixed 4px read
+                  // as touching on wide screens; scale with the title.
+                  SizedBox(height: (titleSize * 0.2).clamp(6.0, 10.0)),
                   Semantics(
                     header: true,
                     child: FittedBox(
@@ -65,7 +68,7 @@ class SectionMasthead extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: AppTypography.displayFont,
                           color: scheme.onSurface,
-                          fontSize: (width * 0.05).clamp(24.0, 48.0),
+                          fontSize: titleSize,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 4,
                           height: 1,
