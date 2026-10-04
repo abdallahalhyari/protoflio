@@ -1,7 +1,6 @@
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
+import 'package:profile/shared/util/bundled_json.dart';
 import 'package:profile/shared/util/career_facts.dart';
 
 class LocalExperienceRepository implements ExperienceRepository {
@@ -9,23 +8,19 @@ class LocalExperienceRepository implements ExperienceRepository {
   List<Education> _education = [];
   List<String> _certifications = [];
 
+  /// The three files load in parallel (they used to load one after
+  /// another, three round trips before the first frame).
   Future<void> load() async {
-    final expJson = await rootBundle.loadString('assets/data/experience.json');
-    final List<dynamic> expList = jsonDecode(expJson) as List<dynamic>;
-    _experiences = expList
-        .map((e) => Experience.fromJson(e as Map<String, dynamic>))
-        .toList();
-
-    final eduJson = await rootBundle.loadString('assets/data/education.json');
-    final List<dynamic> eduList = jsonDecode(eduJson) as List<dynamic>;
-    _education = eduList
-        .map((e) => Education.fromJson(e as Map<String, dynamic>))
-        .toList();
-
-    final certJson =
-        await rootBundle.loadString('assets/data/certifications.json');
-    final List<dynamic> certList = jsonDecode(certJson) as List<dynamic>;
-    _certifications = certList.map((e) => e as String).toList();
+    final [exp, edu, certs] = await Future.wait([
+      loadBundledJsonList('assets/data/experience.json'),
+      loadBundledJsonList('assets/data/education.json'),
+      loadBundledJsonList('assets/data/certifications.json'),
+    ]);
+    _experiences = List.unmodifiable(
+        exp.map((e) => Experience.fromJson(e as Map<String, dynamic>)));
+    _education = List.unmodifiable(
+        edu.map((e) => Education.fromJson(e as Map<String, dynamic>)));
+    _certifications = List.unmodifiable(certs.cast<String>());
   }
 
   @override

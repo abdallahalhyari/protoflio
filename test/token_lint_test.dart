@@ -39,6 +39,7 @@ void main() {
         'lib/features/shell/widget/desktop_scroll_interceptor.dart', // wheel cooldown, 320ms
         'lib/features/case_study/widget/case_study_reading_companion.dart', // typewriter tick, 60ms
         'lib/features/engineering/bloc/architecture_simulator_bloc.dart', // simulation ticker, 2200ms
+        'lib/shared/util/bundled_json.dart', // network retry pause, 400ms
       };
       final hits = _scan(scanRoots, rx, allowList: allow);
       expect(hits, isEmpty,

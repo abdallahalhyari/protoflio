@@ -35,27 +35,26 @@ Future<void> loadInitialData({
   required LocalHatRepository hatRepo,
   required LocalSkillRepository skillRepo,
 }) async {
-  final tasks = <Future<void>>[
-    SoundService.instance.load(),
+  // Sound is optional: the site works muted. Content is not: swallowing a
+  // failed content load started the app with empty sections and never
+  // showed the retry screen, so those errors propagate to it (after the
+  // loader's own retries).
+  final sound =
+      SoundService.instance.load().catchError((Object error, StackTrace st) {
+    FlutterError.reportError(FlutterErrorDetails(
+      exception: error,
+      stack: st,
+      library: 'profile',
+      context: ErrorDescription('Failed to load sound effects.'),
+    ));
+  });
+  await Future.wait([
+    sound,
     projectRepo.load(),
     experienceRepo.load(),
     hatRepo.load(),
     skillRepo.load(),
-  ];
-
-  await Future.wait(
-    tasks.map((task) => task.catchError((Object error, StackTrace stackTrace) {
-          FlutterError.reportError(
-            FlutterErrorDetails(
-              exception: error,
-              stack: stackTrace,
-              library: 'profile',
-              context: ErrorDescription('Failed to initialize app data.'),
-            ),
-          );
-          return Future<void>.value();
-        })),
-  );
+  ]);
 }
 
 class AppBootstrapData {
@@ -92,7 +91,6 @@ class AppBootstrapper extends StatefulWidget {
 
 class _AppBootstrapperState extends State<AppBootstrapper> {
   late Future<AppBootstrapData> _bootstrapFuture;
-  bool _showLoading = true;
   bool _didMinimumSplashTimePass = false;
   Timer? _minimumSplashTimer;
 
@@ -121,7 +119,6 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
 
   Future<void> _retry() async {
     setState(() {
-      _showLoading = true;
       _didMinimumSplashTimePass = false;
       _bootstrapFuture = widget.bootstrapOverride ?? _bootstrap();
     });
@@ -179,24 +176,12 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
     return FutureBuilder<AppBootstrapData>(
       future: _bootstrapFuture,
       builder: (context, snapshot) {
-        final isLoading = snapshot.connectionState != ConnectionState.done ||
-            !snapshot.hasData;
-        final shouldShowLoading =
-            isLoading && _showLoading && !_didMinimumSplashTimePass;
-
-        if (shouldShowLoading) {
-          return const _StartupLoadingScreen();
-        }
-
-        if (isLoading && _showLoading) {
-          return const _StartupLoadingScreen();
-        }
-
-        if (snapshot.hasError) {
-          _showLoading = false;
-          return _StartupErrorScreen(onRetry: _retry);
-        }
-
+        // A failed future has no data, so it used to count as still
+        // loading: the retry screen was unreachable and a failed start
+        // showed "Loading portfolio…" for good.
+        if (!_didMinimumSplashTimePass) return const _StartupLoadingScreen();
+        if (snapshot.hasError) return _StartupErrorScreen(onRetry: _retry);
+        if (!snapshot.hasData) return const _StartupLoadingScreen();
         return widget.builder(snapshot.data!);
       },
     );
