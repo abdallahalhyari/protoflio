@@ -233,6 +233,16 @@ class _HomeScreenState extends State<HomeScreen> {
           const AssetImage('assets/images/projects/solutions.webp'), context);
       precacheImage(
           const AssetImage('assets/images/projects/fais.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/hats/comms_hat.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/hats/dt_hat.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/hats/grad_cap.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/hats/hard_hat.webp'), context);
+      precacheImage(
+          const AssetImage('assets/images/hats/nurses_cap.webp'), context);
     });
   }
 

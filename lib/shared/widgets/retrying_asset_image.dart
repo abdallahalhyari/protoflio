@@ -63,19 +63,21 @@ class _RetryingAssetImageState extends State<RetryingAssetImage> {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      widget.path,
-      key: ValueKey(_attempt),
-      fit: widget.fit,
-      cacheWidth: widget.cacheWidth,
-      cacheHeight: widget.cacheHeight,
-      filterQuality: widget.filterQuality,
-      semanticLabel: widget.semanticLabel,
-      gaplessPlayback: widget.gaplessPlayback,
-      errorBuilder: (context, error, stackTrace) {
-        _scheduleRetry();
-        return const SizedBox.expand();
-      },
+    return RepaintBoundary(
+      child: Image.asset(
+        widget.path,
+        key: ValueKey(_attempt),
+        fit: widget.fit,
+        cacheWidth: widget.cacheWidth,
+        cacheHeight: widget.cacheHeight,
+        filterQuality: widget.filterQuality,
+        semanticLabel: widget.semanticLabel,
+        gaplessPlayback: widget.gaplessPlayback,
+        errorBuilder: (context, error, stackTrace) {
+          _scheduleRetry();
+          return const SizedBox.expand();
+        },
+      ),
     );
   }
 }
