@@ -29,8 +29,20 @@ class _PageBackgroundState extends State<PageBackground>
     super.initState();
     _breathController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
-    )..repeat(reverse: true);
+      duration: AppMotion.idleMount,
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!MediaQuery.disableAnimationsOf(context)) {
+      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
+        _breathController.value = 0.5;
+      } else if (!_breathController.isAnimating) {
+        _breathController.repeat(reverse: true);
+      }
+    }
   }
 
   @override
@@ -202,11 +214,7 @@ class _PageBackgroundState extends State<PageBackground>
               ),
             ),
           ),
-          Positioned.fill(
-            child: RepaintBoundary(
-              child: widget.child,
-            ),
-          ),
+          widget.child,
         ],
       ),
     );

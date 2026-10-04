@@ -149,13 +149,15 @@ class _AnimatedNfcArrowState extends State<_AnimatedNfcArrow>
     vsync: this,
     duration: AppMotion.ambient,
   );
+  bool _started = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!_controller.isAnimating && !MediaQuery.disableAnimationsOf(context)) {
+    if (!_started && !MediaQuery.disableAnimationsOf(context)) {
+      _started = true;
       if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
-        _controller.forward();
+        _controller.value = 1.0;
       } else {
         _controller.repeat();
       }

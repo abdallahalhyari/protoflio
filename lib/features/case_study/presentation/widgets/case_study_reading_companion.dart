@@ -81,9 +81,8 @@ class _CaseStudyReadingCompanionState extends State<CaseStudyReadingCompanion> {
     _spyScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _spyScheduled = false;
-      _measure();
+      if (mounted) _measure();
     });
-    WidgetsBinding.instance.scheduleFrame();
   }
 
   void _measure() {

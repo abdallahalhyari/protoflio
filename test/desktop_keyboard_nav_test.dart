@@ -37,6 +37,31 @@ void main() {
     expect(calls, ['goTo 4', 'next']);
   });
 
+  testWidgets('mnemonic section hotkeys W, E, X, S, H, C navigate correctly',
+      (tester) async {
+    final focus = FocusNode();
+    addTearDown(focus.dispose);
+    await tester.pumpWidget(app(pageFocus: focus));
+    focus.requestFocus();
+    await tester.pump();
+
+    await tester.sendKeyEvent(LogicalKeyboardKey.keyW);
+    await tester.sendKeyEvent(LogicalKeyboardKey.keyE);
+    await tester.sendKeyEvent(LogicalKeyboardKey.keyX);
+    await tester.sendKeyEvent(LogicalKeyboardKey.keyS);
+    await tester.sendKeyEvent(LogicalKeyboardKey.keyH);
+    await tester.sendKeyEvent(LogicalKeyboardKey.keyC);
+
+    expect(calls, [
+      'goTo 2', // W -> Work
+      'goTo 4', // E -> Engineering
+      'goTo 1', // X -> Experience
+      'goTo 3', // S -> Skills
+      'goTo 5', // H -> Hats
+      'goTo 6', // C -> Contact
+    ]);
+  });
+
   testWidgets('typing in a text field does not trigger them', (tester) async {
     final focus = FocusNode();
     addTearDown(focus.dispose);

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_event.dart';
+import 'package:profile/core/services/cv_service.dart';
 import 'package:profile/core/services/sound_service.dart';
 
 class DesktopKeyboardNav extends StatelessWidget {
@@ -50,29 +51,36 @@ class DesktopKeyboardNav extends StatelessWidget {
       return KeyEventResult.handled;
     }
 
+    // Hotkey: R downloads / opens CV dossier
+    if (k == LogicalKeyboardKey.keyR) {
+      SoundService.instance.playClick();
+      CvService.open(context);
+      return KeyEventResult.handled;
+    }
+
     // Section Mnemonic Hotkeys: W, E, X, S, H, C
-    if (k == LogicalKeyboardKey.keyW && pageCount > 1) {
-      onGoTo(1);
+    if (k == LogicalKeyboardKey.keyW && pageCount > 2) {
+      onGoTo(2); // Selected Work / Projects
       return KeyEventResult.handled;
     }
-    if (k == LogicalKeyboardKey.keyE && pageCount > 2) {
-      onGoTo(2);
+    if (k == LogicalKeyboardKey.keyE && pageCount > 4) {
+      onGoTo(4); // Engineering
       return KeyEventResult.handled;
     }
-    if (k == LogicalKeyboardKey.keyX && pageCount > 3) {
-      onGoTo(3);
+    if (k == LogicalKeyboardKey.keyX && pageCount > 1) {
+      onGoTo(1); // Experience
       return KeyEventResult.handled;
     }
-    if (k == LogicalKeyboardKey.keyS && pageCount > 4) {
-      onGoTo(4);
+    if (k == LogicalKeyboardKey.keyS && pageCount > 3) {
+      onGoTo(3); // Skills & Stack
       return KeyEventResult.handled;
     }
     if (k == LogicalKeyboardKey.keyH && pageCount > 5) {
-      onGoTo(5);
+      onGoTo(5); // Hats / Perspectives
       return KeyEventResult.handled;
     }
     if (k == LogicalKeyboardKey.keyC && pageCount > 6) {
-      onGoTo(6);
+      onGoTo(6); // Contact
       return KeyEventResult.handled;
     }
 
