@@ -39,7 +39,7 @@ void main() {
         'lib/features/shell/presentation/widgets/desktop_scroll_interceptor.dart', // wheel cooldown, 320ms
         'lib/features/case_study/presentation/widgets/case_study_reading_companion.dart', // typewriter tick, 60ms
         'lib/features/engineering/presentation/bloc/architecture_simulator_bloc.dart', // simulation ticker, 2200ms
-        'lib/shared/util/bundled_json.dart', // network retry pause, 400ms
+        'lib/shared/utils/bundled_json.dart', // network retry pause, 400ms
         'lib/features/hats/presentation/widgets/hat_playing_card.dart', // staggered intro entrance, dynamic 80ms increments
       };
       final hits = _scan(scanRoots, rx, allowList: allow);
