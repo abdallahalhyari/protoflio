@@ -12,17 +12,17 @@ class PrimaryButtonParallaxLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Offset>(
-      valueListenable: parallaxOffset,
-      builder: (context, parallax, staticChild) {
-        return RepaintBoundary(
-          child: Transform.translate(
+    return RepaintBoundary(
+      child: ValueListenableBuilder<Offset>(
+        valueListenable: parallaxOffset,
+        builder: (context, parallax, staticChild) {
+          return Transform.translate(
             offset: parallax,
             child: staticChild,
-          ),
-        );
-      },
-      child: child,
+          );
+        },
+        child: RepaintBoundary(child: child),
+      ),
     );
   }
 }

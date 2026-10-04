@@ -87,7 +87,7 @@ class _SnappyEntranceState extends State<SnappyEntrance>
             ),
           );
         },
-        child: widget.child,
+        child: RepaintBoundary(child: widget.child),
       ),
     );
   }
@@ -173,7 +173,7 @@ class _HeroParallaxState extends State<HeroParallax>
                   ),
                 );
               },
-              child: widget.child,
+              child: RepaintBoundary(child: widget.child),
             ),
           ),
         );

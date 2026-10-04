@@ -43,21 +43,16 @@ class CardHeroImage extends StatelessWidget {
                 final rx = hovered ? (pos.dx / 400 - 0.5) * -16 : 0.0;
                 final ry = hovered ? (pos.dy / 200 - 0.5) * -16 : 0.0;
 
-                return AnimatedContainer(
-                  duration: AppMotion.micro,
-                  curve: Curves.easeOutCubic,
-                  transform: Matrix4.translationValues(rx, ry, 0.0),
+                return Transform.translate(
+                  offset: Offset(rx, ry),
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
                       child!,
                       if (hovered) ...[
                         // Crazy Chromatic Aberration - Cyan Channel
-                        AnimatedContainer(
-                          duration: AppMotion.xs,
-                          curve: Curves.easeOutBack,
-                          transform: Matrix4.translationValues(
-                              rx * -1.5, ry * -0.5, 0.0),
+                        Transform.translate(
+                          offset: Offset(rx * -1.5, ry * -0.5),
                           child: Opacity(
                             opacity: 0.5,
                             child: ColorFiltered(
@@ -68,11 +63,8 @@ class CardHeroImage extends StatelessWidget {
                           ),
                         ),
                         // Crazy Chromatic Aberration - Red Channel
-                        AnimatedContainer(
-                          duration: AppMotion.micro,
-                          curve: Curves.easeOut,
-                          transform: Matrix4.translationValues(
-                              rx * 2.0, ry * 1.5, 0.0),
+                        Transform.translate(
+                          offset: Offset(rx * 2.0, ry * 1.5),
                           child: Opacity(
                             opacity: 0.4,
                             child: ColorFiltered(

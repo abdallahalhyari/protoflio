@@ -186,16 +186,16 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                       (_isHovered && !reduce) ? -10.0 : 0.0;
                   return ExcludeSemantics(
                     excluding: !isUnder,
-                    child: RepaintBoundary(
-                      child: Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()
-                          ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
-                          ..rotateZ(widget.isStandalone
-                              ? 0.0
-                              : widget.rotation + _rotationDelta.value)
-                          ..setEntry(3, 2, 0.0015)
-                          ..rotateY(angle + entranceAngle),
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()
+                        ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
+                        ..rotateZ(widget.isStandalone
+                            ? 0.0
+                            : widget.rotation + _rotationDelta.value)
+                        ..setEntry(3, 2, 0.0015)
+                        ..rotateY(angle + entranceAngle),
+                      child: RepaintBoundary(
                         child: isUnder ? backCard : frontCard,
                       ),
                     ),

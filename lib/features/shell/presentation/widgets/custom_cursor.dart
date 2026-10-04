@@ -31,6 +31,7 @@ class _CustomCursorState extends State<CustomCursor>
     with SingleTickerProviderStateMixin {
   final ValueNotifier<Offset> _mousePos = ValueNotifier(Offset.zero);
   final List<CursorParticle> _particles = [];
+  final ValueNotifier<int> _frame = ValueNotifier(0);
   late final Ticker _ticker;
   final _random = math.Random();
   Offset _lastPos = Offset.zero;
@@ -47,16 +48,15 @@ class _CustomCursorState extends State<CustomCursor>
       return;
     }
 
-    setState(() {
-      for (int i = _particles.length - 1; i >= 0; i--) {
-        final p = _particles[i];
-        p.position += p.velocity;
-        p.life -= 0.02; // fade speed
-        if (p.life <= 0) {
-          _particles.removeAt(i);
-        }
+    for (int i = _particles.length - 1; i >= 0; i--) {
+      final p = _particles[i];
+      p.position += p.velocity;
+      p.life -= 0.02; // fade speed
+      if (p.life <= 0) {
+        _particles.removeAt(i);
       }
-    });
+    }
+    _frame.value++;
   }
 
   void _spawnParticles(Offset pos, Offset delta) {
@@ -127,8 +127,15 @@ class _CustomCursorState extends State<CustomCursor>
           ),
           Positioned.fill(
             child: IgnorePointer(
-              child: CustomPaint(
-                painter: _ParticlePainter(_particles, scheme.primary, isDark),
+              child: AnimatedBuilder(
+                animation: _frame,
+                builder: (context, _) {
+                  if (_particles.isEmpty) return const SizedBox.shrink();
+                  return CustomPaint(
+                    painter:
+                        _ParticlePainter(_particles, scheme.primary, isDark),
+                  );
+                },
               ),
             ),
           ),
