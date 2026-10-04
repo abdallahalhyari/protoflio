@@ -100,13 +100,13 @@ class CardFrontFace extends StatelessWidget {
                 BoxShadow(
                   color:
                       Colors.black.withValues(alpha: isHovered ? 0.72 : 0.55),
-                  blurRadius: isHovered ? 30 : 18,
+                  blurRadius: isHovered ? 32 : 18,
                   offset: Offset(0, isHovered ? 14 : 8),
                 ),
                 BoxShadow(
-                  color: accent.withValues(alpha: isHovered ? 0.45 : 0.28),
-                  blurRadius: isHovered ? 24 : 16,
-                  spreadRadius: 1,
+                  color: accent.withValues(alpha: isHovered ? 0.55 : 0.32),
+                  blurRadius: isHovered ? 28 : 16,
+                  spreadRadius: isHovered ? 2 : 1,
                 ),
               ],
             ),

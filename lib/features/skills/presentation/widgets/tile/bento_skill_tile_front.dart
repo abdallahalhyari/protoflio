@@ -37,18 +37,19 @@ class TileFrontFace extends StatelessWidget {
               ? categoryColor
               : categoryColor.withValues(
                   alpha: isDark
-                      ? (isHovered ? 0.65 : 0.3)
-                      : (isHovered ? 0.70 : 0.4)),
+                      ? (isHovered ? 0.75 : 0.35)
+                      : (isHovered ? 0.75 : 0.45)),
           width: showFocus ? 2.5 : (isHovered ? 2.0 : 1.5),
         ),
         boxShadow: [
           BoxShadow(
             color: isDark
-                ? categoryColor.withValues(alpha: isHovered ? 0.28 : 0.1)
+                ? categoryColor.withValues(alpha: isHovered ? 0.35 : 0.12)
                 : (isHovered
-                    ? categoryColor.withValues(alpha: 0.20)
+                    ? categoryColor.withValues(alpha: 0.25)
                     : AppColors.slate900.withValues(alpha: 0.05)),
-            blurRadius: isHovered ? 20 : 12,
+            blurRadius: isHovered ? 24 : 12,
+            spreadRadius: isHovered ? 1 : 0,
             offset: Offset(0, isHovered ? 6 : 4),
           ),
         ],
@@ -80,11 +81,11 @@ class TileFrontFace extends StatelessWidget {
                             padding: EdgeInsets.all(isDesktop ? 12 : 6),
                             decoration: BoxDecoration(
                               color: categoryColor.withValues(
-                                  alpha: isDark ? 0.15 : 0.10),
+                                  alpha: isDark ? 0.18 : 0.12),
                               shape: BoxShape.circle,
                               border: Border.all(
                                   color: categoryColor.withValues(
-                                      alpha: isDark ? 0.3 : 0.4)),
+                                      alpha: isDark ? 0.4 : 0.5)),
                             ),
                             child: Icon(skill.icon,
                                 color: accentText, size: isDesktop ? 36 : 20),

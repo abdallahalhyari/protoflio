@@ -134,6 +134,24 @@ class _ExperienceCardState extends State<ExperienceCard> {
                         ),
                       ),
                       Positioned(
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: 4,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: _isCurrent
+                                ? AppColors.accentGreen
+                                : scheme.primary
+                                    .withValues(alpha: active ? 0.85 : 0.45),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(AppRadius.lg),
+                              bottomLeft: Radius.circular(AppRadius.lg),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
                         right: -10,
                         bottom: -20,
                         child: Text(
