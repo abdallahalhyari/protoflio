@@ -134,4 +134,29 @@ void main() {
     expect(find.text('Startup failed'), findsOneWidget);
     expect(find.text('Retry'), findsOneWidget);
   });
+
+  // The minimum splash must not hold back content that is already
+  // loaded: it delayed the live site's first content by ~570ms.
+  testWidgets('loaded content shows without waiting for the minimum splash',
+      (tester) async {
+    final startup = Completer<AppBootstrapData>();
+    await tester.pumpWidget(MaterialApp(
+      home: AppBootstrapper(
+        builder: (_) => const Text('content'),
+        bootstrapOverride: startup.future,
+      ),
+    ));
+    startup.complete(AppBootstrapData(
+      initialTheme: ThemeMode.dark,
+      initialLocale: const Locale('en'),
+      projectRepo: LocalProjectRepository(),
+      experienceRepo: LocalExperienceRepository(),
+      hatRepo: LocalHatRepository(),
+      skillRepo: LocalSkillRepository(),
+    ));
+    await tester.pump();
+    expect(find.text('content'), findsOneWidget);
+    // Let the pending splash timer fire so the test ends cleanly.
+    await tester.pump(const Duration(seconds: 1));
+  });
 }

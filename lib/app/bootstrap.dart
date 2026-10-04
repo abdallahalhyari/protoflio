@@ -176,13 +176,15 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
     return FutureBuilder<AppBootstrapData>(
       future: _bootstrapFuture,
       builder: (context, snapshot) {
-        // A failed future has no data, so it used to count as still
-        // loading: the retry screen was unreachable and a failed start
-        // showed "Loading portfolio…" for good.
-        if (!_didMinimumSplashTimePass) return const _StartupLoadingScreen();
-        if (snapshot.hasError) return _StartupErrorScreen(onRetry: _retry);
-        if (!snapshot.hasData) return const _StartupLoadingScreen();
-        return widget.builder(snapshot.data!);
+        // Content shows as soon as it's ready: holding it for the minimum
+        // splash cost ~570ms of first content on the live site. The
+        // minimum only fronts the error screen, so a quick failure (or
+        // a retry) doesn't flash between loading and error.
+        if (snapshot.hasData) return widget.builder(snapshot.data!);
+        if (snapshot.hasError && _didMinimumSplashTimePass) {
+          return _StartupErrorScreen(onRetry: _retry);
+        }
+        return const _StartupLoadingScreen();
       },
     );
   }
