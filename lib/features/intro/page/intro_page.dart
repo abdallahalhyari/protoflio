@@ -76,7 +76,7 @@ class _IntroPageState extends State<IntroPage>
   Widget build(BuildContext context) {
     super.build(context);
     final size = MediaQuery.sizeOf(context);
-    final isWide = size.width >= AppBreakpoints.tablet;
+    final isWide = AppBreakpoints.isDesktop(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isCompactH = isWide && size.height < 920;
 

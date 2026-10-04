@@ -91,7 +91,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
     final loc = AppLocalizations.of(context)!;
 
     return BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(

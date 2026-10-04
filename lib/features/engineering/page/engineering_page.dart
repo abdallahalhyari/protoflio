@@ -101,7 +101,7 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
   Widget build(BuildContext context) {
     super.build(context);
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocConsumer<ArchitectureSimulatorBloc, ArchitectureSimulatorState>(
       listenWhen: (prev, curr) =>

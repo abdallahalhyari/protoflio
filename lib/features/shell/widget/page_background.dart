@@ -51,7 +51,7 @@ class _PageBackgroundState extends State<PageBackground> {
     final primary = Theme.of(context).colorScheme.primary;
     final secondary = Theme.of(context).colorScheme.secondary;
     final surface = Theme.of(context).scaffoldBackgroundColor;
-    final showDecoLayers = size.width >= AppBreakpoints.tablet;
+    final showDecoLayers = AppBreakpoints.isDesktop(context);
 
     return MouseRegion(
       onHover: (event) {

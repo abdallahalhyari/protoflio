@@ -97,7 +97,7 @@ class _CaseStudyScaffoldState extends State<CaseStudyScaffold> {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
     final hPad = CaseStudyLayout.horizontalPadding(context);
 
     final chapters = _keys.buildStandardChapters(AppLocalizations.of(context)!);

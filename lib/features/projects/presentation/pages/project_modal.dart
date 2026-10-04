@@ -82,7 +82,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
     final isDark = scheme.brightness == Brightness.dark;
 
     return Stack(

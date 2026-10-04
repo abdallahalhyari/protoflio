@@ -265,17 +265,17 @@ class _HomeScreenState extends State<HomeScreen> {
       message: l10n.welcomeBack(labels[target]),
       icon: Icons.history_rounded,
       duration: const Duration(seconds: 7),
-      width: MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet
+      width: AppBreakpoints.isDesktop(context)
           ? 460
           : null,
       action: SnackBarAction(
         label: l10n.continueAction,
         onPressed: () {
           if (!mounted) return;
-          if (MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
-            _scrollToMobileSection(target);
-          } else {
+          if (AppBreakpoints.isDesktop(context)) {
             _goTo(target);
+          } else {
+            _scrollToMobileSection(target);
           }
         },
       ),
@@ -576,7 +576,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktop = MediaQuery.sizeOf(context).width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
 
     return HomeControllerScope(
       controller: _homeController,

@@ -92,7 +92,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final scheme = Theme.of(context).colorScheme;
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocBuilder<SkillsFilterBloc, SkillsFilterState>(
       builder: (context, state) {

@@ -95,7 +95,7 @@ class _ContactPageState extends State<ContactPage>
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
 
     // Redesigned flow — hero above the fold, recruiter-friendly path
     // (email + CV) prioritized, dense sections regrouped into a

@@ -97,7 +97,7 @@ class _ExperiencePageState extends State<ExperiencePage>
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocProvider.value(
       value: _bloc,

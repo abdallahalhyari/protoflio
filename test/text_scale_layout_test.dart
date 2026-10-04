@@ -66,6 +66,7 @@ void main() {
     'phone 360': Size(360, 740),
     'phone 390': Size(390, 844),
     'tablet 820': Size(820, 1180),
+    'tablet 1024 portrait': Size(1024, 1366),
     'desktop 1440': Size(1440, 900),
   };
   for (final scale in [1.0, 2.0]) {

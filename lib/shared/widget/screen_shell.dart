@@ -72,7 +72,7 @@ class AppScreenShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final wide = width >= AppBreakpoints.tablet;
+    final wide = AppBreakpoints.isDesktop(context);
     final topExtra = wide
         ? (reserveTopNav ? kTopNavReserve : 0.0)
         : (reserveMobileTop ? kMobileTopReserve : 0.0);

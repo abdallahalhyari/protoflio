@@ -36,10 +36,13 @@ class AppBreakpoints {
     return w >= tablet && w < desktop;
   }
 
-  /// Whether the screen uses the desktop magazine presentation (>= 900px)
-  static bool isDesktop(BuildContext context) =>
-      MediaQuery.sizeOf(context).width >= tablet;
-
+  /// Whether the screen uses the desktop magazine presentation (>= 900px).
+  /// Enforces landscape orientation so that tall tablets (e.g. iPad Pro in
+  /// portrait) fall back to the mobile continuous scroll layout.
+  static bool isDesktop(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    return size.width >= tablet && size.width > size.height;
+  }
   /// Whether the screen is a wide desktop (>= 1440px)
   static bool isWideDesktop(BuildContext context) =>
       MediaQuery.sizeOf(context).width >= desktopWide;

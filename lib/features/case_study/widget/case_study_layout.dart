@@ -15,7 +15,7 @@ class CaseStudyLayout {
   /// on smaller screens.
   static double horizontalPadding(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    if (width >= AppBreakpoints.tablet) {
+    if (AppBreakpoints.isDesktop(context)) {
       return math.max(48.0, (width - maxContentWidth) / 2);
     }
     if (width < 360) {

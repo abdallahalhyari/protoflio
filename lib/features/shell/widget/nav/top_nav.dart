@@ -41,10 +41,11 @@ class TopNav extends StatelessWidget {
     final accent = Theme.of(context).colorScheme.primary;
 
     final width = MediaQuery.sizeOf(context).width;
+    final isDesktop = AppBreakpoints.isDesktop(context);
     final horizontalReserve =
-        width >= AppBreakpoints.tablet ? 320.0 : AppSpacing.xl;
+        isDesktop ? 320.0 : AppSpacing.xl;
     final offsetForToolbar =
-        width >= AppBreakpoints.tablet && width < AppBreakpoints.desktop;
+        isDesktop && width < AppBreakpoints.desktop;
 
     final compactResume = width < AppBreakpoints.desktop;
     final denseLinks = width < kDenseNavBelow;

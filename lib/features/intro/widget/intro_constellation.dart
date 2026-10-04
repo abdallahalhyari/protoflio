@@ -146,7 +146,7 @@ class IntroConstellationState extends State<IntroConstellation>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final isWide = size.width >= AppBreakpoints.tablet;
+    final isWide = AppBreakpoints.isDesktop(context);
     final primary = Theme.of(context).colorScheme.primary;
 
     if (_particles == null || _bounds != size) {

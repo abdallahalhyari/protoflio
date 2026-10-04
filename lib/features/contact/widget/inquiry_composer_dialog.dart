@@ -211,7 +211,7 @@ class _InquiryComposerDialogViewState
     final scheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocBuilder<ContactInquiryBloc, ContactInquiryState>(
       builder: (context, state) {
