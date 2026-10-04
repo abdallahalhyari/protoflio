@@ -32,6 +32,7 @@ class _StaggeredEntranceState extends State<StaggeredEntrance>
   late final AnimationController _controller;
   late final Animation<double> _opacity;
   late final Animation<Offset> _slide;
+  late final Animation<double> _scale;
   bool _hasTriggered = false;
   Timer? _delayTimer;
 
@@ -50,6 +51,10 @@ class _StaggeredEntranceState extends State<StaggeredEntrance>
       begin: Offset(0, widget.slideOffset),
       end: Offset.zero,
     ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: AppMotion.emphasizedDecel,
+    ));
+    _scale = Tween<double>(begin: 0.95, end: 1.0).animate(CurvedAnimation(
       parent: _controller,
       curve: AppMotion.emphasizedDecel,
     ));
@@ -98,9 +103,12 @@ class _StaggeredEntranceState extends State<StaggeredEntrance>
         builder: (context, child) {
           return Transform.translate(
             offset: _slide.value,
-            child: Opacity(
-              opacity: _opacity.value,
-              child: child,
+            child: Transform.scale(
+              scale: _scale.value,
+              child: Opacity(
+                opacity: _opacity.value,
+                child: child,
+              ),
             ),
           );
         },

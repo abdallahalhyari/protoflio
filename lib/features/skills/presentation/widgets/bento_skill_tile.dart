@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
@@ -57,6 +58,7 @@ class _BentoSkillTileState extends State<BentoSkillTile>
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     final Widget frontCard = TileFrontFace(
       skill: widget.skill,
       categoryColor: widget.categoryColor,
@@ -78,8 +80,10 @@ class _BentoSkillTileState extends State<BentoSkillTile>
 
     return Semantics(
       button: true,
-      label:
-          '${widget.skill.name} skill, ${masteryLabel(widget.skill.level)} mastery level. Tap to flip and view details.',
+      label: loc.skillCardSemantics(
+        widget.skill.name,
+        masteryLabel(widget.skill.level, loc),
+      ),
       child: HolographicCardPhysics(
         borderRadius: AppRadius.tile,
         child: FocusableActionDetector(

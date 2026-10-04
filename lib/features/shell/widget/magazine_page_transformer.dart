@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/shell/widget/desktop_scroll_interceptor.dart';
 
 class MagazinePageTransformer extends StatelessWidget {
   final Widget child;
@@ -23,6 +24,9 @@ class MagazinePageTransformer extends StatelessWidget {
       return child;
     }
 
+    // Read the momentum tease value which represents accumulated wheel scroll before a page turn
+    final double momentumTease = MomentumTeaseProvider.of(context);
+
     return AnimatedBuilder(
       animation: controller,
       builder: (context, staticChild) {
@@ -42,17 +46,24 @@ class MagazinePageTransformer extends StatelessWidget {
         double dy = 0.0;
         double scale = 1.0;
         double shade = 0.0;
+        double rotateX = 0.0;
         if (!offscreen && position > 0.0) {
-          // Page is scrolling away (moving up) — scales down into the
-          // background.
+          // Page is scrolling away (moving up) — scales down and rotates slightly 
+          // backwards into the background for a 3D 'falling away' effect.
           final turnProgress = AppMotion.emphasizedDecel.transform(position);
-          dy = turnProgress * 40.0;
-          scale = 1.0 - (turnProgress * 0.08);
+          dy = turnProgress * -30.0; // move slightly up
+          scale = 1.0 - (turnProgress * 0.12); // deeper scale
+          rotateX = turnProgress * -0.05; // tilt back slightly
         } else if (!offscreen && position < 0.0) {
-          // Incoming page from below, with a soft shadow on its top edge.
+          // Incoming page from below, entering with a soft shadow on its top edge.
+          // Starts slightly larger and scales down to 1.0 to meet the viewport.
           final emergeProgress = AppMotion.emphasizedDecel.transform(-position);
-          dy = emergeProgress * 20.0;
-          shade = emergeProgress * 0.35;
+          dy = emergeProgress * 60.0; // Start lower down
+          scale = 1.0 + (emergeProgress * 0.02); // start slightly larger, settle to 1
+          shade = emergeProgress * 0.45; // slightly darker shadow
+        } else if (!offscreen && position == 0.0) {
+          // Current page: apply the momentum tease to stretch it subtly
+          dy = -momentumTease; // Negative so scrolling down (momentum > 0) pulls page up
         }
 
         // The widget tree shape must stay identical across every phase —
@@ -65,9 +76,11 @@ class MagazinePageTransformer extends StatelessWidget {
           child: TickerMode(
             enabled: !offscreen,
             child: Transform(
-              alignment: Alignment.center,
+              alignment: Alignment.topCenter, // rotate around the top edge
               transform: Matrix4.translationValues(0.0, dy, 0.0)
-                ..scaleByDouble(scale, scale, 1.0, 1.0),
+                ..setEntry(3, 2, 0.001) // perspective
+                ..scaleByDouble(scale, scale, 1.0, 1.0)
+                ..rotateX(rotateX),
               child: CustomPaint(
                 foregroundPainter: _TopShadePainter(shade),
                 child: staticChild,

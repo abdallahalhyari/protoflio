@@ -8,7 +8,10 @@ import 'package:profile/shared/util/bidi.dart';
 /// rule, a letter-spaced "FEATURE 0X · …" kicker, the display-font title,
 /// an italic subtitle, an optional count badge on the right (desktop),
 /// and a hairline rule underneath.
-class SectionMasthead extends StatelessWidget {
+///
+/// The top accent rule plays a one-shot specular shimmer sweep on mount
+/// to signal each new section landing.
+class SectionMasthead extends StatefulWidget {
   const SectionMasthead({
     super.key,
     required this.kicker,
@@ -27,16 +30,87 @@ class SectionMasthead extends StatelessWidget {
   final String? badgeLabel;
 
   @override
+  State<SectionMasthead> createState() => _SectionMastheadState();
+}
+
+class _SectionMastheadState extends State<SectionMasthead>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _shimmer;
+
+  @override
+  void initState() {
+    super.initState();
+    _shimmer = AnimationController(
+      vsync: this,
+      duration: AppMotion.entry,
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!AppMedia.reduceMotion(context) && !_shimmer.isCompleted) {
+      _shimmer.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _shimmer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final width = MediaQuery.sizeOf(context).width;
     final accentText = context.adaptiveAccentText(scheme.primary);
     final titleSize = (width * 0.05).clamp(24.0, 48.0);
+    final reduceMotion = AppMedia.reduceMotion(context);
+
+    // The accent rule: solid fill with a shimmer gradient overlay.
+    Widget accentRule = Container(
+      height: 2,
+      color: scheme.primary.withValues(alpha: 0.9),
+    );
+
+    if (!reduceMotion) {
+      accentRule = Stack(
+        children: [
+          accentRule,
+          Positioned.fill(
+            child: RepaintBoundary(
+              child: AnimatedBuilder(
+                animation: _shimmer,
+                builder: (context, _) {
+                  // Sweep a specular highlight from -100% to +200%
+                  final t = _shimmer.value;
+                  final center = -1.0 + t * 3.0;
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(center - 0.3, 0),
+                        end: Alignment(center + 0.3, 0),
+                        colors: [
+                          Colors.transparent,
+                          scheme.onPrimary.withValues(alpha: 0.6),
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(height: 2, color: scheme.primary.withValues(alpha: 0.9)),
+        accentRule,
         const SizedBox(height: 6),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -47,10 +121,10 @@ class SectionMasthead extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    kicker,
+                    widget.kicker,
                     style: TextStyle(
                       color: accentText,
-                      fontSize: isDesktop ? 11 : 10,
+                      fontSize: widget.isDesktop ? 11 : 10,
                       fontWeight: FontWeight.w900,
                       letterSpacing: latinTracking(context, 3),
                     ),
@@ -64,7 +138,7 @@ class SectionMasthead extends StatelessWidget {
                       fit: BoxFit.scaleDown,
                       alignment: AlignmentDirectional.centerStart,
                       child: Text(
-                        title,
+                        widget.title,
                         style: TextStyle(
                           fontFamily: AppTypography.displayFont,
                           color: scheme.onSurface,
@@ -78,10 +152,10 @@ class SectionMasthead extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    subtitle,
+                    widget.subtitle,
                     style: TextStyle(
                       color: scheme.onSurface.withValues(alpha: 0.75),
-                      fontSize: isDesktop ? 12.5 : 11.5,
+                      fontSize: widget.isDesktop ? 12.5 : 11.5,
                       fontStyle: FontStyle.italic,
                       letterSpacing: latinTracking(context, 0.5),
                     ),
@@ -89,7 +163,7 @@ class SectionMasthead extends StatelessWidget {
                 ],
               ),
             ),
-            if (isDesktop && badgeLabel != null)
+            if (widget.isDesktop && widget.badgeLabel != null)
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -102,14 +176,14 @@ class SectionMasthead extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (badgeIcon != null) ...[
-                      Icon(badgeIcon,
+                    if (widget.badgeIcon != null) ...[
+                      Icon(widget.badgeIcon,
                           size: AppTypography.caption + 1, color: accentText),
                       const SizedBox(width: 6),
                     ],
                     Text(
                       // "4 ROLES · …" — keep the count in front under RTL.
-                      ltrContent(context, badgeLabel!),
+                      ltrContent(context, widget.badgeLabel!),
                       style: TextStyle(
                         color: accentText,
                         fontSize: AppTypography.editorial,

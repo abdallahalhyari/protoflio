@@ -688,6 +688,126 @@ abstract class AppLocalizations {
   /// **'FEATURE 03 · SELECTED WORK'**
   String get projectsHeaderKicker;
 
+  /// No description provided for @projectDomainAll.
+  ///
+  /// In en, this message translates to:
+  /// **'ALL'**
+  String get projectDomainAll;
+
+  /// No description provided for @projectDomainHealthcare.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthcare & Smart Cards'**
+  String get projectDomainHealthcare;
+
+  /// No description provided for @projectDomainEnterprise.
+  ///
+  /// In en, this message translates to:
+  /// **'Enterprise HIS & LMS'**
+  String get projectDomainEnterprise;
+
+  /// No description provided for @projectDomainFleet.
+  ///
+  /// In en, this message translates to:
+  /// **'Fleet & Telematics'**
+  String get projectDomainFleet;
+
+  /// No description provided for @projectDomainCommerce.
+  ///
+  /// In en, this message translates to:
+  /// **'M-Commerce & Streaming'**
+  String get projectDomainCommerce;
+
+  /// No description provided for @projectTechFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'TECH FILTER: {technology}'**
+  String projectTechFilter(String technology);
+
+  /// No description provided for @readCaseStudyFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Read case study for {project}'**
+  String readCaseStudyFor(String project);
+
+  /// No description provided for @projectTaglineNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Mission-critical NFC smart-card healthcare platform for mobile care, digital claims, and regulatory compliance.'**
+  String get projectTaglineNatHealth;
+
+  /// No description provided for @projectTaglineEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'High-performance enterprise mobile applications for hospital information systems and education platforms.'**
+  String get projectTaglineEskadenia;
+
+  /// No description provided for @projectTaglineSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'A loyalty rewards platform and an ephemeral video and stories experience, built for consumer scale.'**
+  String get projectTaglineSolutions;
+
+  /// No description provided for @projectTaglineFais.
+  ///
+  /// In en, this message translates to:
+  /// **'High-throughput commerce checkouts and continuous media-streaming applications.'**
+  String get projectTaglineFais;
+
+  /// No description provided for @projectOutcomeNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Replaced paper claim submissions with instant contactless smart-card validation.'**
+  String get projectOutcomeNatHealth;
+
+  /// No description provided for @projectOutcomeEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustained 60fps across complex, data-heavy hospital and university workflows.'**
+  String get projectOutcomeEskadenia;
+
+  /// No description provided for @projectOutcomeSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipped both applications on time with 4.7+ star store ratings.'**
+  String get projectOutcomeSolutions;
+
+  /// No description provided for @projectOutcomeFais.
+  ///
+  /// In en, this message translates to:
+  /// **'Improved checkout completion and reduced abandoned transactions.'**
+  String get projectOutcomeFais;
+
+  /// No description provided for @skillMasteryLead.
+  ///
+  /// In en, this message translates to:
+  /// **'LEAD'**
+  String get skillMasteryLead;
+
+  /// No description provided for @skillMasteryCore.
+  ///
+  /// In en, this message translates to:
+  /// **'CORE'**
+  String get skillMasteryCore;
+
+  /// No description provided for @skillMasterySolid.
+  ///
+  /// In en, this message translates to:
+  /// **'SOLID'**
+  String get skillMasterySolid;
+
+  /// No description provided for @skillMasteryGrowing.
+  ///
+  /// In en, this message translates to:
+  /// **'GROWING'**
+  String get skillMasteryGrowing;
+
+  /// No description provided for @skillCardSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'{skill}, {level} proficiency. Activate to flip and view details.'**
+  String skillCardSemantics(String skill, String level);
+
   /// No description provided for @experienceHeaderKicker.
   ///
   /// In en, this message translates to:

@@ -120,15 +120,24 @@ class FolioBar extends StatelessWidget {
                       child: child,
                     ),
                   ),
-                  child: Text(
-                    currentLabel,
+                  child: TweenAnimationBuilder<int>(
                     key: ValueKey<String>(currentLabel),
-                    style: TextStyle(
-                      color: context.onSurface,
-                      fontSize: AppTypography.micro,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
-                    ),
+                    duration: AppMotion.switcher,
+                    tween: IntTween(begin: 0, end: currentLabel.length),
+                    builder: (context, length, child) {
+                      final text = currentLabel.isEmpty
+                          ? ''
+                          : currentLabel.substring(0, length);
+                      return Text(
+                        text,
+                        style: TextStyle(
+                          color: context.onSurface,
+                          fontSize: AppTypography.micro,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 2,
+                        ),
+                      );
+                    },
                   ),
                 )),
                 const SizedBox(width: 8),

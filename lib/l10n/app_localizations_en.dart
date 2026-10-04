@@ -330,6 +330,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get projectsHeaderKicker => 'FEATURE 03 · SELECTED WORK';
 
   @override
+  String get projectDomainAll => 'ALL';
+
+  @override
+  String get projectDomainHealthcare => 'Healthcare & Smart Cards';
+
+  @override
+  String get projectDomainEnterprise => 'Enterprise HIS & LMS';
+
+  @override
+  String get projectDomainFleet => 'Fleet & Telematics';
+
+  @override
+  String get projectDomainCommerce => 'M-Commerce & Streaming';
+
+  @override
+  String projectTechFilter(String technology) {
+    return 'TECH FILTER: $technology';
+  }
+
+  @override
+  String readCaseStudyFor(String project) {
+    return 'Read case study for $project';
+  }
+
+  @override
+  String get projectTaglineNatHealth =>
+      'Mission-critical NFC smart-card healthcare platform for mobile care, digital claims, and regulatory compliance.';
+
+  @override
+  String get projectTaglineEskadenia =>
+      'High-performance enterprise mobile applications for hospital information systems and education platforms.';
+
+  @override
+  String get projectTaglineSolutions =>
+      'A loyalty rewards platform and an ephemeral video and stories experience, built for consumer scale.';
+
+  @override
+  String get projectTaglineFais =>
+      'High-throughput commerce checkouts and continuous media-streaming applications.';
+
+  @override
+  String get projectOutcomeNatHealth =>
+      'Replaced paper claim submissions with instant contactless smart-card validation.';
+
+  @override
+  String get projectOutcomeEskadenia =>
+      'Sustained 60fps across complex, data-heavy hospital and university workflows.';
+
+  @override
+  String get projectOutcomeSolutions =>
+      'Shipped both applications on time with 4.7+ star store ratings.';
+
+  @override
+  String get projectOutcomeFais =>
+      'Improved checkout completion and reduced abandoned transactions.';
+
+  @override
+  String get skillMasteryLead => 'LEAD';
+
+  @override
+  String get skillMasteryCore => 'CORE';
+
+  @override
+  String get skillMasterySolid => 'SOLID';
+
+  @override
+  String get skillMasteryGrowing => 'GROWING';
+
+  @override
+  String skillCardSemantics(String skill, String level) {
+    return '$skill, $level proficiency. Activate to flip and view details.';
+  }
+
+  @override
   String get experienceHeaderKicker => 'FEATURE 02 · CAREER TRAJECTORY';
 
   @override

@@ -47,11 +47,21 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
   // section overshoots straight onto the next one.
   bool _innerScrolledThisBurst = false;
 
+  // Track the raw accumulated wheel momentum, clamped to ±8, to provide a visual tease
+  // before the page turn threshold is reached. Exposed via InheritedNotifier.
+  final ValueNotifier<double> _momentumTease = ValueNotifier(0.0);
+
   // The wheel event currently waiting on the pointer-signal resolver, and
   // whether this interceptor (rather than scrollable content under the
   // cursor) ended up handling it.
   PointerScrollEvent? _pendingEvent;
   bool _handledPending = false;
+
+  @override
+  void dispose() {
+    _momentumTease.dispose();
+    super.dispose();
+  }
 
   void _onPointerSignal(PointerSignalEvent event) {
     if (event is! PointerScrollEvent) return;
@@ -60,6 +70,7 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
     final modalRoute = ModalRoute.of(context);
     if (modalRoute != null && !modalRoute.isCurrent) {
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       return;
     }
 
@@ -74,6 +85,7 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
     if (timeSinceLastWheel > AppMotion.wheelResetGap) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       _innerScrolledThisBurst = false;
     }
     // 2. Sudden velocity spike (new flick in same direction)
@@ -82,12 +94,14 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
         dy.abs() > _lastDy.abs() + 15.0) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       _innerScrolledThisBurst = false;
     }
     // 3. Direction change (flick in opposite direction)
     else if (_lastDy != 0 && dy.sign != _lastDy.sign && dy.abs() > 2.0) {
       _isIgnoringBurst = false;
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       _innerScrolledThisBurst = false;
     }
 
@@ -99,6 +113,7 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
         now.difference(widget.lastPageTurnCompletedAt.value) <
             _kWheelCooldown) {
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       // We are in a transition/cooldown, so any ongoing scroll burst MUST be
       // ignored entirely, even after the cooldown finishes, until the user pauses.
       _isIgnoringBurst = true;
@@ -108,6 +123,7 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
     if (_isIgnoringBurst) {
       // Still receiving momentum events from a swipe that already triggered a turn.
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       return;
     }
 
@@ -132,6 +148,7 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
       if (!_handledPending) {
         // Content under the cursor scrolled instead.
         _wheelAccum = 0;
+        _momentumTease.value = 0;
         _innerScrolledThisBurst = true;
       }
     });
@@ -142,17 +159,21 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
     // edge: rest here. Turning the page needs a fresh gesture.
     if (_innerScrolledThisBurst) {
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       return;
     }
 
     _wheelAccum += dy;
+    _momentumTease.value = (_wheelAccum / _kWheelThreshold * 8.0).clamp(-8.0, 8.0);
 
     if (_wheelAccum >= _kWheelThreshold) {
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       _isIgnoringBurst = true;
       widget.onNext();
     } else if (_wheelAccum <= -_kWheelThreshold) {
       _wheelAccum = 0;
+      _momentumTease.value = 0;
       _isIgnoringBurst = true;
       widget.onPrev();
     }
@@ -160,10 +181,27 @@ class _DesktopScrollInterceptorState extends State<DesktopScrollInterceptor> {
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      behavior: HitTestBehavior.translucent,
-      onPointerSignal: _onPointerSignal,
-      child: widget.child,
+    return MomentumTeaseProvider(
+      notifier: _momentumTease,
+      child: Listener(
+        behavior: HitTestBehavior.translucent,
+        onPointerSignal: _onPointerSignal,
+        child: widget.child,
+      ),
     );
+  }
+}
+
+class MomentumTeaseProvider extends InheritedNotifier<ValueNotifier<double>> {
+  const MomentumTeaseProvider({
+    super.key,
+    required super.notifier,
+    required super.child,
+  });
+
+  static double of(BuildContext context) {
+    final provider =
+        context.dependOnInheritedWidgetOfExactType<MomentumTeaseProvider>();
+    return provider?.notifier?.value ?? 0.0;
   }
 }

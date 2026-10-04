@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -39,14 +40,18 @@ class HatPlayingCard extends StatefulWidget {
 }
 
 class _HatPlayingCardState extends State<HatPlayingCard>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _flipController;
   late Animation<double> _flipAnimation;
+  late AnimationController _entranceController;
+  late Animation<double> _entranceAnimation;
   bool _isFlipped = false;
   bool _isHovered = false;
   final ValueNotifier<Offset> _tiltOffset = ValueNotifier(Offset.zero);
   late Offset _currentOffset;
   final ValueNotifier<double> _rotationDelta = ValueNotifier(0.0);
+
+  Timer? _delayTimer;
 
   @override
   void initState() {
@@ -54,11 +59,25 @@ class _HatPlayingCardState extends State<HatPlayingCard>
     _currentOffset = widget.position;
     _flipController = AnimationController(
       vsync: this,
-      duration: AppMotion.lg,
+      duration: AppMotion.cardFlip,
     );
     _flipAnimation = Tween<double>(begin: 0.0, end: math.pi).animate(
       CurvedAnimation(parent: _flipController, curve: Curves.easeInOutBack),
     );
+    _entranceController = AnimationController(
+      vsync: this,
+      duration: AppMotion.cardFlip,
+    );
+    _entranceAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(
+          parent: _entranceController, curve: AppMotion.emphasizedDecel),
+    );
+
+    // Stagger the entrance based on the card index
+    final int delay = widget.index * 80;
+    _delayTimer = Timer(Duration(milliseconds: delay), () {
+      if (mounted) _entranceController.forward();
+    });
   }
 
   @override
@@ -74,7 +93,9 @@ class _HatPlayingCardState extends State<HatPlayingCard>
 
   @override
   void dispose() {
+    _delayTimer?.cancel();
     _flipController.dispose();
+    _entranceController.dispose();
     _tiltOffset.dispose();
     _rotationDelta.dispose();
     super.dispose();
@@ -155,9 +176,10 @@ class _HatPlayingCardState extends State<HatPlayingCard>
               );
 
               return AnimatedBuilder(
-                animation: Listenable.merge([_flipAnimation, _rotationDelta]),
+                animation: Listenable.merge([_flipAnimation, _rotationDelta, _entranceAnimation]),
                 builder: (context, _) {
                   final angle = _flipAnimation.value;
+                  final entranceAngle = reduce ? 0.0 : _entranceAnimation.value * math.pi;
                   final isUnder = angle > math.pi / 2;
                   final double hoverLift =
                       (_isHovered && !reduce) ? -10.0 : 0.0;
@@ -172,7 +194,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                               ? 0.0
                               : widget.rotation + _rotationDelta.value)
                           ..setEntry(3, 2, 0.0015)
-                          ..rotateY(angle),
+                          ..rotateY(angle + entranceAngle),
                         child: isUnder ? backCard : frontCard,
                       ),
                     ),

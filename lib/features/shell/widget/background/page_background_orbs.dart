@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:profile/theme/tokens.dart';
 
-class DarkGlowOrbs extends StatelessWidget {
+class DarkFarOrbs extends StatelessWidget {
   final Size size;
   final Color primary;
   final Color secondary;
 
-  const DarkGlowOrbs({
+  const DarkFarOrbs({
     super.key,
     required this.size,
     required this.primary,
@@ -51,6 +51,20 @@ class DarkGlowOrbs extends StatelessWidget {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class DarkNearOrb extends StatelessWidget {
+  final Size size;
+
+  const DarkNearOrb({super.key, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
         Positioned(
           top: size.height * 0.35,
           left: size.width * 0.4,
@@ -73,12 +87,12 @@ class DarkGlowOrbs extends StatelessWidget {
   }
 }
 
-class LightGlowOrbs extends StatelessWidget {
+class LightFarOrbs extends StatelessWidget {
   final Size size;
   final Color primary;
   final Color secondary;
 
-  const LightGlowOrbs({
+  const LightFarOrbs({
     super.key,
     required this.size,
     required this.primary,
@@ -123,6 +137,20 @@ class LightGlowOrbs extends StatelessWidget {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class LightNearOrb extends StatelessWidget {
+  final Size size;
+
+  const LightNearOrb({super.key, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
         Positioned(
           top: size.height * 0.35,
           left: size.width * 0.45,

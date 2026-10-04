@@ -21,7 +21,30 @@ class Particle {
     required this.pulseOffset,
   });
 
-  void update(Size bounds, double dt) {
+  void update(Size bounds, double dt, [Offset? mousePos]) {
+    // Gravitational mouse attraction: particles drift gently toward cursor
+    if (mousePos != null) {
+      final mdx = mousePos.dx - x;
+      final mdy = mousePos.dy - y;
+      final distSq = mdx * mdx + mdy * mdy;
+      const attractRadiusSq = 120.0 * 120.0;
+      if (distSq < attractRadiusSq && distSq > 1.0) {
+        // Soft inverse-distance force — stronger when close, gentle far away
+        final strength = (1.0 - distSq / attractRadiusSq) * 0.8;
+        vx += mdx * strength * dt;
+        vy += mdy * strength * dt;
+      }
+    }
+
+    // Cap velocity so attraction doesn't cause runaway acceleration
+    const maxSpeed = 50.0;
+    final speed = vx * vx + vy * vy;
+    if (speed > maxSpeed * maxSpeed) {
+      final scale = maxSpeed / math.sqrt(speed);
+      vx *= scale;
+      vy *= scale;
+    }
+
     x += vx * dt;
     y += vy * dt;
 

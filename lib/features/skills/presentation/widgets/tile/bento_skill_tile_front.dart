@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
@@ -25,6 +26,7 @@ class TileFrontFace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final loc = AppLocalizations.of(context)!;
     final accentText = context.adaptiveAccentText(categoryColor);
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -106,7 +108,7 @@ class TileFrontFace extends StatelessWidget {
                               borderRadius: BorderRadius.circular(AppRadius.xs),
                             ),
                             child: Text(
-                              masteryLabel(skill.level),
+                              masteryLabel(skill.level, loc),
                               style: TextStyle(
                                 fontFamily: AppTypography.monoFont,
                                 color: context.onSurface,

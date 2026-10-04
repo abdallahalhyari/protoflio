@@ -39,7 +39,7 @@ class _BreathingPulseState extends State<BreathingPulse>
     );
 
     if (!PlatformDispatcher.instance.accessibilityFeatures.disableAnimations) {
-      _controller.forward();
+      _controller.repeat(reverse: true);
     }
   }
 

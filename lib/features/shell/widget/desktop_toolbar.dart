@@ -56,7 +56,15 @@ class _Puck extends StatelessWidget {
               dark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200,
         ),
       ),
-      child: child,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        splashColor:
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.18),
+        highlightColor:
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
+        child: child,
+      ),
     );
   }
 }

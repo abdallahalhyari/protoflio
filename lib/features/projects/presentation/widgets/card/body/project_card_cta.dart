@@ -28,7 +28,7 @@ class ReadCaseStudyCta extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: 'Read case study for $projectName',
+      label: AppLocalizations.of(context)!.readCaseStudyFor(projectName),
       child: InkWell(
         onTap: onTap,
         onFocusChange: onFocusChange,

@@ -29,7 +29,7 @@ class AppMotion {
   static const Duration heroEntry =
       Duration(milliseconds: 260); // intro wordmark
   static const Duration pageTurn =
-      Duration(milliseconds: 280); // desktop wheel page jump
+      Duration(milliseconds: 400); // desktop wheel page jump
   static const Duration cardFlip =
       Duration(milliseconds: 400); // skill / hat card flip
   static const Duration sectionScroll =

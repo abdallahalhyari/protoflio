@@ -6,6 +6,7 @@ import 'package:profile/features/engineering/data/architecture_labels.dart';
 import 'package:profile/features/hats/data/hat_labels.dart';
 
 import 'package:profile/features/skills/data/datasources/skill_category_labels.dart';
+import 'package:profile/features/projects/presentation/project_copy.dart';
 
 import 'package:profile/l10n/app_localizations.dart';
 
@@ -29,6 +30,11 @@ void main() {
         localized.contactHeaderKicker,
         localized.contactHeaderTitle,
         localized.contactHeaderSubtitle,
+        localized.skillMasteryLead,
+        localized.skillMasteryCore,
+        localized.skillMasterySolid,
+        localized.skillMasteryGrowing,
+        localized.skillCardSemantics('Flutter', localized.skillMasteryLead),
       ];
       final englishCopy = [
         english.introRoleHeading,
@@ -44,11 +50,43 @@ void main() {
         english.contactHeaderKicker,
         english.contactHeaderTitle,
         english.contactHeaderSubtitle,
+        english.skillMasteryLead,
+        english.skillMasteryCore,
+        english.skillMasterySolid,
+        english.skillMasteryGrowing,
+        english.skillCardSemantics('Flutter', english.skillMasteryLead),
       ];
 
       for (var index = 0; index < localizedCopy.length; index++) {
         expect(localizedCopy[index], isNotEmpty);
         expect(localizedCopy[index], isNot(englishCopy[index]));
+      }
+    });
+
+    test('$code: project card summaries and domain filters are localized', () {
+      final english = lookupAppLocalizations(const Locale('en'));
+      for (final project in testProjects) {
+        expect(
+          localizedProjectTagline(localized, project),
+          isNot(localizedProjectTagline(english, project)),
+          reason: project.company,
+        );
+        expect(
+          localizedProjectOutcome(localized, project),
+          isNot(localizedProjectOutcome(english, project)),
+          reason: project.company,
+        );
+      }
+
+      const domains = [
+        'ALL',
+        'Healthcare & Smart Cards',
+        'Enterprise HIS & LMS',
+        'Fleet & Telematics',
+        'M-Commerce & Streaming',
+      ];
+      for (final domain in domains) {
+        expect(localizedProjectDomain(localized, domain), isNot(domain));
       }
     });
   }

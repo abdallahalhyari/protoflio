@@ -106,38 +106,60 @@ class _PageBackgroundState extends State<PageBackground> {
                     curve: AppMotion.standard,
                     builder: (context, lerpedSecondary, _) {
                       final safeSecondary = lerpedSecondary ?? secondary;
-                      final orbsWidget = RepaintBoundary(
+                      final farOrbsWidget = RepaintBoundary(
                         child: AnimatedCrossFade(
                           duration: AppMotion.sm,
                           crossFadeState: isDark
                               ? CrossFadeState.showFirst
                               : CrossFadeState.showSecond,
-                          firstChild: DarkGlowOrbs(
+                          firstChild: DarkFarOrbs(
                               size: size,
                               primary: safePrimary,
                               secondary: safeSecondary),
-                          secondChild: LightGlowOrbs(
+                          secondChild: LightFarOrbs(
                               size: size,
                               primary: safePrimary,
                               secondary: safeSecondary),
                           layoutBuilder: _crossFadeLayout,
                         ),
                       );
+                      final nearOrbsWidget = RepaintBoundary(
+                        child: AnimatedCrossFade(
+                          duration: AppMotion.sm,
+                          crossFadeState: isDark
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
+                          firstChild: DarkNearOrb(size: size),
+                          secondChild: LightNearOrb(size: size),
+                          layoutBuilder: _crossFadeLayout,
+                        ),
+                      );
+                      
                       return ValueListenableBuilder<Offset>(
                         valueListenable: _mouseOffset,
-                        child: orbsWidget,
-                        builder: (context, mouseOffset, staticOrbs) {
-                          final maxShift = isDark ? 24.0 : 20.0;
+                        builder: (context, mouseOffset, _) {
+                          final farMaxShift = isDark ? 16.0 : 12.0;
+                          final nearMaxShift = isDark ? 32.0 : 28.0;
                           final still = reduceMotion || size.isEmpty;
-                          final shiftX = still
-                              ? 0.0
-                              : (mouseOffset.dx / size.width * maxShift);
-                          final shiftY = still
-                              ? 0.0
-                              : (mouseOffset.dy / size.height * maxShift);
-                          return Transform.translate(
-                            offset: Offset(shiftX, shiftY),
-                            child: staticOrbs,
+                          
+                          final farShiftX = still ? 0.0 : (mouseOffset.dx / size.width * farMaxShift);
+                          final farShiftY = still ? 0.0 : (mouseOffset.dy / size.height * farMaxShift);
+                          
+                          final nearShiftX = still ? 0.0 : (mouseOffset.dx / size.width * nearMaxShift);
+                          final nearShiftY = still ? 0.0 : (mouseOffset.dy / size.height * nearMaxShift);
+                          
+                          return Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Transform.translate(
+                                offset: Offset(farShiftX, farShiftY),
+                                child: farOrbsWidget,
+                              ),
+                              Transform.translate(
+                                offset: Offset(nearShiftX, nearShiftY),
+                                child: nearOrbsWidget,
+                              ),
+                            ],
                           );
                         },
                       );

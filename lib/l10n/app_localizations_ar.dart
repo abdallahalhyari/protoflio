@@ -328,6 +328,80 @@ class AppLocalizationsAr extends AppLocalizations {
   String get projectsHeaderKicker => 'القسم 03 · أعمال مختارة';
 
   @override
+  String get projectDomainAll => 'الكل';
+
+  @override
+  String get projectDomainHealthcare => 'الرعاية الصحية والبطاقات الذكية';
+
+  @override
+  String get projectDomainEnterprise => 'أنظمة المستشفيات والتعليم';
+
+  @override
+  String get projectDomainFleet => 'الأساطيل والاتصالات عن بُعد';
+
+  @override
+  String get projectDomainCommerce => 'التجارة الإلكترونية والبث';
+
+  @override
+  String projectTechFilter(String technology) {
+    return 'تصفية بالتقنية: $technology';
+  }
+
+  @override
+  String readCaseStudyFor(String project) {
+    return 'اقرأ دراسة حالة: $project';
+  }
+
+  @override
+  String get projectTaglineNatHealth =>
+      'منصة صحية حيوية تستخدم بطاقات NFC الذكية للرعاية الرقمية والمطالبات والامتثال التنظيمي.';
+
+  @override
+  String get projectTaglineEskadenia =>
+      'تطبيقات مؤسسية عالية الأداء لأنظمة معلومات المستشفيات ومنصات التعليم.';
+
+  @override
+  String get projectTaglineSolutions =>
+      'منصة لمكافآت الولاء وتجربة لمقاطع الفيديو والقصص المؤقتة، مصممتان للتوسع.';
+
+  @override
+  String get projectTaglineFais =>
+      'تجارب دفع تجارية عالية السعة وتطبيقات بث وسائط متواصل.';
+
+  @override
+  String get projectOutcomeNatHealth =>
+      'استبدال المطالبات الورقية بالتحقق الفوري واللاتلامسي عبر البطاقات الذكية.';
+
+  @override
+  String get projectOutcomeEskadenia =>
+      'الحفاظ على 60 إطارًا في الثانية ضمن سير عمل المستشفيات والجامعات كثيف البيانات.';
+
+  @override
+  String get projectOutcomeSolutions =>
+      'إطلاق التطبيقين في الموعد مع تقييمات تجاوزت 4.7 نجوم في المتاجر.';
+
+  @override
+  String get projectOutcomeFais =>
+      'رفع إتمام عمليات الشراء وتقليل المعاملات المتروكة.';
+
+  @override
+  String get skillMasteryLead => 'قيادة';
+
+  @override
+  String get skillMasteryCore => 'أساسي';
+
+  @override
+  String get skillMasterySolid => 'متقدم';
+
+  @override
+  String get skillMasteryGrowing => 'قيد التطوير';
+
+  @override
+  String skillCardSemantics(String skill, String level) {
+    return '$skill، مستوى $level. فعّل لقلب البطاقة وعرض التفاصيل.';
+  }
+
+  @override
   String get experienceHeaderKicker => 'القسم 02 · المسيرة المهنية';
 
   @override

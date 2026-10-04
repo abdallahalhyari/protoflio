@@ -94,7 +94,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                     shadowColor: isDark
                         ? Colors.transparent
                         : (isInteractive
-                            ? AppColors.shadowMedium
+                            ? Color.lerp(widget.scheme.primary, Colors.black, 0.5)!
+                                .withValues(alpha: 0.3)
                             : AppColors.shadowSoft),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppRadius.md),

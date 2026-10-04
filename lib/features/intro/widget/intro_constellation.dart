@@ -92,7 +92,7 @@ class IntroConstellationState extends State<IntroConstellation>
     final particles = _particles;
     if (particles == null) return;
     for (final p in particles) {
-      p.update(_bounds, dt);
+      p.update(_bounds, dt, _mousePos.value);
     }
     _frame.value++;
   }

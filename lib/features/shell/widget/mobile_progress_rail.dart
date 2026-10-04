@@ -126,7 +126,7 @@ class _HoverScaleState extends State<_HoverScale> {
       child: AnimatedScale(
         scale: _hovering ? 1.3 : 1.0,
         duration: AppMotion.sm,
-        curve: AppMotion.emphasized,
+        curve: _hovering ? AppMotion.spring : AppMotion.emphasized,
         child: widget.child,
       ),
     );

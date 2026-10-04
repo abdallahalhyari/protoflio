@@ -40,6 +40,7 @@ void main() {
         'lib/features/case_study/widget/case_study_reading_companion.dart', // typewriter tick, 60ms
         'lib/features/engineering/bloc/architecture_simulator_bloc.dart', // simulation ticker, 2200ms
         'lib/shared/util/bundled_json.dart', // network retry pause, 400ms
+        'lib/features/hats/widget/hat_playing_card.dart', // staggered intro entrance, dynamic 80ms increments
       };
       final hits = _scan(scanRoots, rx, allowList: allow);
       expect(hits, isEmpty,

@@ -3,6 +3,8 @@ import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/surface_tone.dart';
 import 'package:profile/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
+import 'package:profile/features/projects/presentation/project_copy.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/util/bidi.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
@@ -37,9 +39,8 @@ class CardBodyContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final results = project.results;
-    final outcome =
-        (results != null && results.isNotEmpty) ? results.first : null;
+    final loc = AppLocalizations.of(context)!;
+    final outcome = localizedProjectOutcome(loc, project);
 
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -70,7 +71,7 @@ class CardBodyContent extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                ltrContent(context, project.tagline),
+                ltrContent(context, localizedProjectTagline(loc, project)),
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)

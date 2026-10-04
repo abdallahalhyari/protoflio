@@ -62,10 +62,19 @@ void main() {
         300,
         scrollable: find.byType(Scrollable).first,
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
+      for (int i = 0; i < 5; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
       expect(_outcomesOnScreen(tester), isFalse);
       await tester.tap(find.byKey(const Key('case_study_glance_outcomes')));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      // Pump enough time for the sweep + scroll animation to finish.
+      // PulsingDot has an infinite animation, so pumpAndSettle will timeout.
+      for (int i = 0; i < 10; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+        if (_outcomesOnScreen(tester)) break;
+      }
       expect(_outcomesOnScreen(tester), isTrue);
     });
   }
@@ -76,15 +85,26 @@ void main() {
       (tester) async {
     await _open(tester, const NatHealthCaseStudy(), const Size(1280, 800));
     await tester.drag(find.byType(CustomScrollView), const Offset(0, -500));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    for (int i = 0; i < 5; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
     expect(find.text('OUTCOMES'), findsNothing);
     await tester.tap(find.byKey(const Key('case_study_chapter_outcomes')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    for (int i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 300));
+      if (_outcomesOnScreen(tester)) break;
+    }
     expect(_outcomesOnScreen(tester), isTrue);
 
     // And back up to a chapter that has been disposed above.
     await tester.tap(find.byKey(const Key('case_study_chapter_problem')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    for (int i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 300));
+      if (find.text('THE PROBLEM').evaluate().isNotEmpty) break;
+    }
     expect(find.text('THE PROBLEM'), findsOneWidget);
   });
 }

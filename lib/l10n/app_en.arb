@@ -145,6 +145,50 @@
   "sectionSubtitleWork": "In-depth looks at architecture, implementation, and measurable outcomes.",
   "sectionSubtitleExperience": "Multi-year development of enterprise mobile systems",
   "projectsHeaderKicker": "FEATURE 03 · SELECTED WORK",
+  "projectDomainAll": "ALL",
+  "projectDomainHealthcare": "Healthcare & Smart Cards",
+  "projectDomainEnterprise": "Enterprise HIS & LMS",
+  "projectDomainFleet": "Fleet & Telematics",
+  "projectDomainCommerce": "M-Commerce & Streaming",
+  "projectTechFilter": "TECH FILTER: {technology}",
+  "@projectTechFilter": {
+    "placeholders": {
+      "technology": {
+        "type": "String"
+      }
+    }
+  },
+  "readCaseStudyFor": "Read case study for {project}",
+  "@readCaseStudyFor": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "projectTaglineNatHealth": "Mission-critical NFC smart-card healthcare platform for mobile care, digital claims, and regulatory compliance.",
+  "projectTaglineEskadenia": "High-performance enterprise mobile applications for hospital information systems and education platforms.",
+  "projectTaglineSolutions": "A loyalty rewards platform and an ephemeral video and stories experience, built for consumer scale.",
+  "projectTaglineFais": "High-throughput commerce checkouts and continuous media-streaming applications.",
+  "projectOutcomeNatHealth": "Replaced paper claim submissions with instant contactless smart-card validation.",
+  "projectOutcomeEskadenia": "Sustained 60fps across complex, data-heavy hospital and university workflows.",
+  "projectOutcomeSolutions": "Shipped both applications on time with 4.7+ star store ratings.",
+  "projectOutcomeFais": "Improved checkout completion and reduced abandoned transactions.",
+  "skillMasteryLead": "LEAD",
+  "skillMasteryCore": "CORE",
+  "skillMasterySolid": "SOLID",
+  "skillMasteryGrowing": "GROWING",
+  "skillCardSemantics": "{skill}, {level} proficiency. Activate to flip and view details.",
+  "@skillCardSemantics": {
+    "placeholders": {
+      "skill": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
   "experienceHeaderKicker": "FEATURE 02 · CAREER TRAJECTORY",
   "engineeringHeaderKicker": "FEATURE 05 · SYSTEMS ARCHITECTURE",
   "hatsHeaderKickerMobile": "FEATURE 06 · 6 ROLES",

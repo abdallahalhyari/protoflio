@@ -331,6 +331,80 @@ class AppLocalizationsCs extends AppLocalizations {
   String get projectsHeaderKicker => 'ČÁST 03 · VYBRANÉ PROJEKTY';
 
   @override
+  String get projectDomainAll => 'VŠE';
+
+  @override
+  String get projectDomainHealthcare => 'Zdravotnictví a čipové karty';
+
+  @override
+  String get projectDomainEnterprise => 'Nemocniční a vzdělávací systémy';
+
+  @override
+  String get projectDomainFleet => 'Vozové parky a telematika';
+
+  @override
+  String get projectDomainCommerce => 'Mobilní obchod a streamování';
+
+  @override
+  String projectTechFilter(String technology) {
+    return 'FILTR TECHNOLOGIE: $technology';
+  }
+
+  @override
+  String readCaseStudyFor(String project) {
+    return 'Přečíst případovou studii: $project';
+  }
+
+  @override
+  String get projectTaglineNatHealth =>
+      'Kritická zdravotnická platforma s NFC kartami pro digitální péči, pojistné nároky a dodržování předpisů.';
+
+  @override
+  String get projectTaglineEskadenia =>
+      'Výkonné podnikové mobilní aplikace pro nemocniční informační systémy a vzdělávací platformy.';
+
+  @override
+  String get projectTaglineSolutions =>
+      'Platforma věrnostních odměn a aplikace pro dočasná videa a příběhy navržené pro široké využití.';
+
+  @override
+  String get projectTaglineFais =>
+      'Výkonné mobilní nákupní procesy a aplikace pro nepřetržité streamování médií.';
+
+  @override
+  String get projectOutcomeNatHealth =>
+      'Papírové žádosti o pojistné nároky nahradilo okamžité bezkontaktní ověření čipovou kartou.';
+
+  @override
+  String get projectOutcomeEskadenia =>
+      'Udržení 60 snímků za sekundu ve složitých datově náročných nemocničních a univerzitních procesech.';
+
+  @override
+  String get projectOutcomeSolutions =>
+      'Obě aplikace byly dodány včas a získaly hodnocení přes 4,7 hvězdičky.';
+
+  @override
+  String get projectOutcomeFais =>
+      'Vyšší dokončenost nákupů a méně nedokončených transakcí.';
+
+  @override
+  String get skillMasteryLead => 'VEDENÍ';
+
+  @override
+  String get skillMasteryCore => 'HLAVNÍ';
+
+  @override
+  String get skillMasterySolid => 'POKROČILÁ';
+
+  @override
+  String get skillMasteryGrowing => 'ROZVOJ';
+
+  @override
+  String skillCardSemantics(String skill, String level) {
+    return '$skill, úroveň znalostí $level. Aktivujte otočení karty a zobrazení podrobností.';
+  }
+
+  @override
   String get experienceHeaderKicker => 'ČÁST 02 · PROFESNÍ DRÁHA';
 
   @override
