@@ -4,7 +4,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
 
-/// Modal listing keyboard shortcuts (digits, arrows, Home/End, ?).
+/// Modal listing keyboard shortcuts (digits, arrows, Home/End, T, M, ?).
 /// Called from `KeyboardHintChip` and the `?` key handler.
 Future<void> showShortcutHelpDialog(BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
@@ -70,6 +70,10 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                       Icons.arrow_downward_rounded,
                     ]),
                     _withoutKey(l10n.keyboardHintArrows, 'Up / Down arrows')),
+                _shortcutRow(
+                    scheme, _keyText(scheme, 'T'), 'Toggle theme mode'),
+                _shortcutRow(
+                    scheme, _keyText(scheme, 'M'), 'Mute / Unmute audio'),
                 _shortcutRow(scheme, _keyText(scheme, 'Home'),
                     _withoutKey(l10n.keyboardHintHome, 'Home')),
                 _shortcutRow(scheme, _keyText(scheme, 'End'),

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_bloc.dart';
+import 'package:profile/core/bloc/theme/theme_event.dart';
+import 'package:profile/core/services/sound_service.dart';
 
 class DesktopKeyboardNav extends StatelessWidget {
   final Widget child;
@@ -32,6 +36,20 @@ class DesktopKeyboardNav extends StatelessWidget {
     // (Ctrl+1 switches tabs).
     if (_typingInField() || _modified()) return KeyEventResult.ignored;
     final k = event.logicalKey;
+
+    // Hotkey: T toggles theme (Light / Dark)
+    if (k == LogicalKeyboardKey.keyT) {
+      SoundService.instance.playClick();
+      context.read<ThemeBloc>().add(const ThemeModeToggled());
+      return KeyEventResult.handled;
+    }
+
+    // Hotkey: M toggles sound effects on / off
+    if (k == LogicalKeyboardKey.keyM) {
+      SoundService.instance.toggle();
+      return KeyEventResult.handled;
+    }
+
     if (k == LogicalKeyboardKey.arrowDown ||
         k == LogicalKeyboardKey.pageDown ||
         k == LogicalKeyboardKey.space) {

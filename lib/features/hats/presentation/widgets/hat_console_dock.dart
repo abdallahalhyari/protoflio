@@ -5,6 +5,7 @@ import 'package:profile/shared/widgets/conditional_blur.dart';
 import 'package:profile/shared/widgets/directional_icon.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/features/hats/presentation/utils/hat_labels.dart';
 import 'package:profile/shared/utils/bidi.dart';
 
@@ -90,11 +91,12 @@ class HatConsoleDock extends StatelessWidget {
                 const _DockDivider(),
                 const SizedBox(width: AppSpacing.sm),
                 // Quick Shuffle Button
-                // Its own tooltip names the button; a Tooltip wrapper left
-                // the button itself unnamed for screen readers.
                 IconButton(
                   tooltip: '${loc.spreadAction} [S]',
-                  onPressed: onShuffle,
+                  onPressed: () {
+                    SoundService.instance.playSelection();
+                    onShuffle();
+                  },
                   iconSize: 16,
                   padding: const EdgeInsets.all(6),
                   constraints: const BoxConstraints(),
@@ -105,11 +107,12 @@ class HatConsoleDock extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.xs),
                 // Quick Reset/Align Button
-                // Its own tooltip names the button; a Tooltip wrapper left
-                // the button itself unnamed for screen readers.
                 IconButton(
                   tooltip: '${loc.alignAction} [R]',
-                  onPressed: onReset,
+                  onPressed: () {
+                    SoundService.instance.playClick();
+                    onReset();
+                  },
                   iconSize: 16,
                   padding: const EdgeInsets.all(6),
                   constraints: const BoxConstraints(),
@@ -164,7 +167,10 @@ class _DockNavButton extends StatelessWidget {
     return Tooltip(
       message: tooltip,
       child: OutlinedButton.icon(
-        onPressed: onPressed,
+        onPressed: () {
+          SoundService.instance.playClick();
+          onPressed();
+        },
         style: OutlinedButton.styleFrom(
           foregroundColor: isDark ? Colors.white70 : AppColors.slate700,
           side: BorderSide(
@@ -173,8 +179,6 @@ class _DockNavButton extends StatelessWidget {
                 : AppColors.slate300,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          // 32px tall: shrink-wrapped + compact density left
-          // these ~16px, under the 24px WCAG 2.2 minimum.
           minimumSize: const Size(0, 32),
           visualDensity: VisualDensity.standard,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -243,8 +247,6 @@ class _ActiveRolePill extends StatelessWidget {
             ltrAlways(context, '0${selectedIndex + 1} / 0$totalCount'),
             style: TextStyle(
               fontFamily: AppTypography.monoFont,
-              // Contrast-adjusted: Thinking's charcoal read
-              // near-invisible on the dark dock.
               color: _readable(context, currentHat.color),
               fontSize: AppTypography.editorialSm,
               fontWeight: FontWeight.w900,
