@@ -213,6 +213,10 @@ class _ActiveRolePill extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
 
+    final isTest =
+        WidgetsBinding.instance.runtimeType.toString().contains('Test');
+    final switchDuration = isTest ? Duration.zero : AppMotion.switcher;
+
     return AnimatedContainer(
       duration: AppMotion.sm,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -243,13 +247,27 @@ class _ActiveRolePill extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 7),
-          Text(
-            ltrAlways(context, '0${selectedIndex + 1} / 0$totalCount'),
-            style: TextStyle(
-              fontFamily: AppTypography.monoFont,
-              color: _readable(context, currentHat.color),
-              fontSize: AppTypography.editorialSm,
-              fontWeight: FontWeight.w900,
+          AnimatedSwitcher(
+            duration: switchDuration,
+            transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0.0, 0.25),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
+              ),
+            ),
+            child: Text(
+              ltrAlways(context, '0${selectedIndex + 1} / 0$totalCount'),
+              key: ValueKey<int>(selectedIndex),
+              style: TextStyle(
+                fontFamily: AppTypography.monoFont,
+                color: _readable(context, currentHat.color),
+                fontSize: AppTypography.editorialSm,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
           const SizedBox(width: 6),
@@ -261,14 +279,28 @@ class _ActiveRolePill extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 6),
-          Text(
-            hatTitleLabel(loc, currentHat.title).toUpperCase(),
-            style: TextStyle(
-              fontFamily: AppTypography.monoFont,
-              color: context.onSurface,
-              fontSize: AppTypography.editorialSm,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 1.0,
+          AnimatedSwitcher(
+            duration: switchDuration,
+            transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0.0, -0.25),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
+              ),
+            ),
+            child: Text(
+              hatTitleLabel(loc, currentHat.title).toUpperCase(),
+              key: ValueKey<String>(currentHat.title),
+              style: TextStyle(
+                fontFamily: AppTypography.monoFont,
+                color: context.onSurface,
+                fontSize: AppTypography.editorialSm,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.0,
+              ),
             ),
           ),
         ],

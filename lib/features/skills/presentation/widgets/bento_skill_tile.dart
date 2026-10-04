@@ -37,8 +37,11 @@ class _BentoSkillTileState extends State<BentoSkillTile>
     vsync: this,
     duration: AppMotion.cardFlip,
   );
-  late final Animation<double> _flipAnim =
-      CurvedAnimation(parent: _c, curve: Curves.easeOutBack);
+  late final Animation<double> _flipAnim = CurvedAnimation(
+    parent: _c,
+    curve: Curves.easeOutBack,
+    reverseCurve: Curves.easeOutCubic,
+  );
 
   @override
   void dispose() {
@@ -116,9 +119,11 @@ class _BentoSkillTileState extends State<BentoSkillTile>
                 builder: (context, child) {
                   final isBack = _flipAnim.value >= 0.5;
                   final angle = _flipAnim.value * math.pi;
+                  final lift = math.sin(_flipAnim.value * math.pi) * 0.05;
 
                   final transform = Matrix4.identity()
                     ..setEntry(3, 2, 0.001)
+                    ..scaleByDouble(1.0 + lift, 1.0 + lift, 1.0, 1.0)
                     ..rotateY(angle);
 
                   return ExcludeSemantics(

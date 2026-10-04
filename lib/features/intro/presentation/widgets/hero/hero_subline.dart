@@ -103,13 +103,16 @@ class HeroPortrait extends StatelessWidget {
       borderRadius: BorderRadius.circular(13.5),
       child: ColoredBox(
         color: Colors.black.withValues(alpha: 0.4),
-        child: RetryingAssetImage(
-          'assets/my_image.webp',
-          fit: BoxFit.cover,
-          cacheWidth: 280,
-          cacheHeight: 280,
-          filterQuality: FilterQuality.high,
-          semanticLabel: AppLocalizations.of(context)!.semanticPortrait,
+        child: Hero(
+          tag: 'abdallah_avatar_headshot',
+          child: RetryingAssetImage(
+            'assets/my_image.webp',
+            fit: BoxFit.cover,
+            cacheWidth: 280,
+            cacheHeight: 280,
+            filterQuality: FilterQuality.high,
+            semanticLabel: AppLocalizations.of(context)!.semanticPortrait,
+          ),
         ),
       ),
     );

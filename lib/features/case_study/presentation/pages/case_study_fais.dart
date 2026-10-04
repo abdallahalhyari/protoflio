@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:profile/shared/utils/bidi.dart';
-import 'package:profile/l10n/app_localizations.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/case_study/presentation/pages/related_case_studies.dart';
+import 'package:profile/features/case_study/presentation/widgets/case_study_widgets.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
+import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
-import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widgets/pulsing_dot.dart';
-import 'package:profile/features/case_study/presentation/widgets/case_study_widgets.dart';
-import 'package:profile/features/case_study/presentation/pages/related_case_studies.dart';
+import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 /// Deep-dive case study on FAIS's M-Commerce & Media-Streaming Clients.
 /// Full-screen scrollable narrative matching the NatHealth case-study pattern.
@@ -274,6 +274,27 @@ class _Masthead extends StatelessWidget {
             fontWeight: FontWeight.w900,
             height: 1.05,
             color: scheme.onSurface,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Container(
+            height: isDesktop ? 180 : 130,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(
+                color: scheme.primary.withValues(alpha: 0.3),
+              ),
+            ),
+            child: Hero(
+              tag: 'project_hero_fais',
+              child: RetryingAssetImage(
+                'assets/images/projects/fais.webp',
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.md),

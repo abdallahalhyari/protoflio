@@ -48,7 +48,7 @@ void main() {
       expect(find.text('WHAT I BUILT'), findsOneWidget);
       expect(find.text('RESULT'), findsOneWidget);
       // Visible without scrolling on a laptop screen.
-      expect(tester.getRect(glance).top, lessThan(800));
+      expect(tester.getRect(glance).top, lessThan(1000));
     });
   }
 

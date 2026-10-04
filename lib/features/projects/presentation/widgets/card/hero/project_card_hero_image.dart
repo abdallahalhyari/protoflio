@@ -29,6 +29,9 @@ class CardHeroImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final heroTag =
+        'project_hero_${caseStudySlug ?? project.name.toLowerCase().replaceAll(' ', '_')}';
+
     return SizedBox(
       height: isDesktop ? 175 : 155,
       child: ClipRect(
@@ -83,10 +86,13 @@ class CardHeroImage extends StatelessWidget {
                 scale: hovered ? 1.08 : 1.0,
                 duration: AppMotion.lg,
                 curve: AppMotion.emphasizedDecel,
-                child: RetryingAssetImage(
-                  project.heroImagePath!,
-                  fit: BoxFit.cover,
-                  gaplessPlayback: true,
+                child: Hero(
+                  tag: heroTag,
+                  child: RetryingAssetImage(
+                    project.heroImagePath!,
+                    fit: BoxFit.cover,
+                    gaplessPlayback: true,
+                  ),
                 ),
               ),
             ),

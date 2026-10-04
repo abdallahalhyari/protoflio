@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:profile/shared/utils/bidi.dart';
-import 'package:profile/l10n/app_localizations.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/case_study/presentation/pages/related_case_studies.dart';
+import 'package:profile/features/case_study/presentation/widgets/case_study_widgets.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
+import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
-import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widgets/pulsing_dot.dart';
-import 'package:profile/features/case_study/presentation/widgets/case_study_widgets.dart';
-import 'package:profile/features/case_study/presentation/pages/related_case_studies.dart';
+import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
-/// Deep-dive case study on Solutions Now IT's Loyalty Rewards & Ephemeral
-/// Social Media Apps.
+/// Deep-dive case study on Solutions Now IT's Loyalty Rewards & Ephemeral Social
+/// Media Client Apps.
 /// Full-screen scrollable narrative matching the NatHealth case-study pattern.
 class SolutionsCaseStudy extends StatelessWidget {
   const SolutionsCaseStudy({super.key});
@@ -49,20 +49,19 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'As a fast-paced technology consultancy, Solutions Now IT needed to '
-            'engineer and deliver two distinct, high-volume consumer mobile applications '
-            'under compressed commercial deadlines. The first was an enterprise loyalty '
-            'rewards platform with real-time balance tracking, QR-code redemptions, '
-            'and tier progressions; the second was an ephemeral social story app featuring '
-            'instant camera capture, high-definition video recording, and fluid horizontal feed navigation.',
+            'At Solutions Now IT, our engineering team delivered consumer-facing '
+            'commercial mobile applications across two distinct domains: a high-engagement '
+            'ephemeral social media sharing client and a multi-merchant loyalty rewards '
+            'platform. The primary engineering bottleneck in the social media app was camera '
+            'pipeline memory overhead: capturing high-resolution photos and video stories '
+            'on mid-range devices caused severe main-thread UI jank, elevated memory pressure, '
+            'and out-of-memory crashes during multi-image uploads.',
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'The technical hurdles were formidable: media pipelines on Android '
-            'frequently suffered from aspect-ratio distortion and native camera surface '
-            'buffer leaks across heterogeneous OEM devices. Furthermore, building two full '
-            'applications from scratch simultaneously risked code duplication, inconsistent '
-            'UX behaviors, and doubled testing overhead.',
+            'Simultaneously, the loyalty rewards platform required real-time barcode '
+            'scanning, secure coupon validation, and multi-tenant UI theme switching that '
+            'needed to operate smoothly across fragmented merchant tablet and phone hardware.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
@@ -71,10 +70,10 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
-            'Mobile Developer architecting cross-platform mobile standards and engineering core media and transaction pipelines.',
-            'Engineered the native camera capture and video recording engine with hardware codec acceleration.',
-            'Built background Dart isolates for image and video compression prior to AWS S3 multi-part uploads, preserving UI responsiveness.',
-            'Designed and implemented an internal atomic design token library shared between both consumer client applications.',
+            'Flutter Developer responsible for client app engineering, camera pipeline optimization, and multi-tenant UI design system implementation.',
+            'Offloaded high-resolution image compression and EXIF metadata stripping to background Dart Isolates, restoring fluid 60 FPS UI responsiveness.',
+            'Architected a modular multi-merchant design system with dynamic brand tokens, dark/light theme switching, and reusable widget libraries.',
+            'Engineered camera capture workflows with hardware-accelerated preview controllers, flash toggles, and direct S3 multipart upload pipelines.',
           ]),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
@@ -91,85 +90,86 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'Layered Component Architecture prioritizing reusability, hardware '
-            'isolation, and asynchronous processing. High-frequency camera preview frames '
-            'feed directly into hardware texture buffers, decoupled from the Flutter '
-            'widget tree. Media encoding and compression execute off the main thread in '
-            'dedicated background isolates, streaming progress to the UI via broadcast '
-            'ports without dropping presentation frames.',
+            'Layered Clean Architecture enforcing clear boundary separation. '
+            'The Camera Subsystem communicates with native device camera hardware '
+            'via platform channels, passing raw byte buffers to dedicated background '
+            'Dart Isolates for non-blocking JPEG encoding, resizing, and watermark '
+            'compositing. The Loyalty Engine utilizes a token-driven Design System '
+            'backed by reactive state managers, enabling instantaneous tenant theme '
+            'swaps without rebuilding root widget trees.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '04',
-            title: 'CAMERA PIPELINE & ISOLATE COMPRESSION',
+            title: 'BACKGROUND ISOLATE COMPRESSION & CAMERA PIPELINE',
             steps: [
               TechStep(
-                layer: 'HARDWARE',
-                title: 'Native Camera Controller Lifecycle',
+                layer: 'CAMERA',
+                title: 'Hardware-Accelerated Camera Controller',
                 body:
-                    'Engineered robust lifecycle management for camera preview textures, managing focus modes, exposure locks, and orientation transforms across diverse Android device configurations and iOS devices.',
+                    'Wired low-level camera preview controllers with custom exposure locks, tap-to-focus indicators, and flash triggers optimized for low-light social story captures.',
               ),
               TechStep(
-                layer: 'CONCURRENCY',
-                title: 'Background Dart Isolate Compression',
+                layer: 'ISOLATES',
+                title: 'Background Dart Isolate Encoding',
                 body:
-                    'Offloaded video bitrate transcoding and thumbnail image generation to background Dart isolates. By isolating CPU-intensive byte compression from the UI isolate, the application maintains a stutter-free 60 FPS recording viewfinder.',
+                    'Offloaded heavy JPEG byte manipulation, image downsampling, and EXIF orientation normalization to isolated worker threads, keeping the main UI thread completely jank-free.',
               ),
               TechStep(
-                layer: 'STORAGE',
-                title: 'Resumable Multi-Part AWS S3 Uploads',
+                layer: 'UPLOAD',
+                title: 'Direct S3 Multipart Uploads',
                 body:
-                    'Designed chunked background uploads utilizing presigned AWS S3 URLs with automatic resume upon transient network disconnects, ensuring user media was never lost.',
+                    'Engineered chunked background file uploads directly to AWS S3 buckets using presigned URLs, featuring automatic upload resumption on network drops.',
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '05',
-            title: 'EPHEMERAL STORY CAROUSEL ENGINE',
+            title: 'MULTI-TENANT DESIGN SYSTEM & LOYALTY ENGINE',
             steps: [
               TechStep(
-                layer: 'GESTURE',
-                title: 'Interactive Playback State Machine',
+                layer: 'TOKENS',
+                title: 'Dynamic Theme Token Engine',
                 body:
-                    'Engineered a fluid gesture recognizer supporting press-and-hold pause, left/right edge taps for story progression, and vertical swipes for dismissal, perfectly synchronized with segment progress bars.',
+                    'Constructed a flexible design system with runtime brand token injection (primary accents, typography scales, card radii), allowing merchant brands to skin the white-label app instantly.',
               ),
               TechStep(
-                layer: 'MEMORY',
-                title: 'Anticipatory Video Buffering & Eviction',
+                layer: 'BARCODE',
+                title: 'High-Speed Barcode & QR Scanner',
                 body:
-                    'Implemented a sliding-window media cache: pre-buffering the upcoming two video segments while aggressively releasing watched segments to prevent memory leaks during long browsing sessions.',
+                    'Integrated real-time optical camera scanning with client-side checksum validation, enabling merchant cashiers to scan and redeem loyalty vouchers in under 300 milliseconds.',
               ),
               TechStep(
-                layer: 'TRANSITION',
-                title: 'Seamless Horizontal Page Transformation',
+                layer: 'CACHE',
+                title: 'Offline Coupon Storage',
                 body:
-                    'Crafted custom cube and depth page transitions using 3D Matrix4 transformations that smoothly lerp based on scroll position without clipping or texture flickering.',
+                    'Cached earned loyalty rewards and barcode tokens in encrypted local storage, permitting offline redemptions when store cellular coverage was degraded.',
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '06',
-            title: 'UNIFIED ATOMIC DESIGN SYSTEM',
+            title: 'PERFORMANCE PROFILING & UI POLISH',
             steps: [
               TechStep(
-                layer: 'TOKENS',
-                title: 'Design Token Foundation',
+                layer: 'RASTER',
+                title: '60 FPS Social Feed Virtualization',
                 body:
-                    'Standardized typography, spacing, radius, and color semantics into an extensible token layer, ensuring consistent brand expression across dark and light presentation modes.',
+                    'Implemented custom sliver list views with image memory caching horizons, preventing high-resolution story feeds from exceeding device RAM thresholds.',
               ),
               TechStep(
-                layer: 'COMPONENTS',
-                title: 'Reusable Component Catalog',
+                layer: 'ANIMATION',
+                title: 'Micro-Interactions & Gesture Feedback',
                 body:
-                    'Built a comprehensive suite of accessible buttons, modal sheets, badges, and input controls used across both the loyalty and social apps, cutting subsequent feature turnaround time by 40%.',
+                    'Designed subtle spring animations and haptic feedback triggers for voucher redemptions, story likes, and reward card flips.',
               ),
               TechStep(
-                layer: 'PARITY',
-                title: 'Cross-Platform Visual Parity',
+                layer: 'GOVERNANCE',
+                title: 'Modular Component Library',
                 body:
-                    'Ensured haptic feedback, spring physics, and bounce curves mirrored native platform expectations seamlessly across both Apple iOS and Google Android handsets.',
+                    'Package-ified core UI components (buttons, input fields, modal sheets, toast alerts), accelerating feature delivery across both project teams.',
               ),
             ],
           ),
@@ -182,10 +182,10 @@ class SolutionsCaseStudy extends StatelessWidget {
           OutcomeGrid(
             isDesktop: isDesktop,
             items: [
-              ('4.7+', l10n.studySolOutcome1),
-              ('40%', l10n.studySolOutcome2),
-              ('0', l10n.studySolOutcome3),
-              ('2', l10n.studySolOutcome4),
+              ('60 FPS', l10n.studySolOutcome1),
+              ('-60%', l10n.studySolOutcome2),
+              ('< 300ms', l10n.studySolOutcome3),
+              ('50k+', l10n.studySolOutcome4),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
@@ -195,12 +195,12 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'Mobile media applications live or die by memory hygiene and hardware '
-            'lifecycle management. Android OEM variations in camera sensor orientation, '
-            'buffer allocation, and codec support mean that defensive abstraction layers '
-            'and background thread isolation are mandatory from day one. Investing early '
-            'in a unified design system proved to be the single highest-ROI architectural '
-            'decision for the consultancy\'s velocity.',
+            'Media-intensive mobile apps live or die by their UI responsiveness. '
+            'Executing computationally expensive operations—such as image re-encoding, '
+            'filtering, or serialization—on Flutter\'s main UI thread inevitably leads '
+            'to dropped frames and user frustration. Leveraging background Dart Isolates '
+            'and modular token-driven design systems ensures that performance and '
+            'visual elegance go hand in hand.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           RelatedCaseStudies(
@@ -250,7 +250,7 @@ class _Masthead extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.studyRoleMobileDev} · 2021 — 2022',
+              '${l10n.studyRoleFlutterDev} · 2021 — 2022',
               // Two lines on phones rather than clipping the end date
               // ("2024 — PRES…").
               maxLines: 2,
@@ -274,6 +274,27 @@ class _Masthead extends StatelessWidget {
             fontWeight: FontWeight.w900,
             height: 1.05,
             color: scheme.onSurface,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Container(
+            height: isDesktop ? 180 : 130,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(
+                color: scheme.primary.withValues(alpha: 0.3),
+              ),
+            ),
+            child: Hero(
+              tag: 'project_hero_solutions',
+              child: RetryingAssetImage(
+                'assets/images/projects/solutions.webp',
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.md),

@@ -108,21 +108,28 @@ class CaseStudyRouter {
       // are translated. The technical body is English and marks itself
       // left-to-right (EnglishContent, in case_study_prose.dart).
       pageBuilder: (ctx, __, ___) => Builder(builder: builder),
-      transitionsBuilder: (context, animation, __, child) {
-        // Reduced motion: fade the study in rather than sliding a whole
-        // screen up.
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        // Reduced motion: fade the study in rather than sliding or scaling.
         if (AppMedia.reduceMotion(context)) {
           return FadeTransition(opacity: animation, child: child);
         }
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 1),
-            end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: AppMotion.emphasizedDecel,
-          )),
-          child: child,
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: AppMotion.emphasizedDecel,
+          reverseCurve: AppMotion.emphasizedAccel,
+        );
+        return FadeTransition(
+          opacity: curved,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 0.06),
+              end: Offset.zero,
+            ).animate(curved),
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.98, end: 1.0).animate(curved),
+              child: child,
+            ),
+          ),
         );
       },
     );

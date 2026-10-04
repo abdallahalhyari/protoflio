@@ -39,12 +39,12 @@ class CompanionFloatingChapterDock extends StatelessWidget {
         child: RepaintBoundary(
           child: AnimatedSlide(
             offset: visible ? Offset.zero : const Offset(0, 1.4),
-            duration: AppMotion.sm,
-            curve: Curves.easeOutCubic,
+            duration: AppMotion.md,
+            curve: AppMotion.emphasized,
             child: AnimatedOpacity(
               opacity: visible ? 1.0 : 0.0,
               duration: AppMotion.sm,
-              curve: Curves.easeOutCubic,
+              curve: AppMotion.emphasized,
               child: IgnorePointer(
                 ignoring: !visible,
                 child: Container(

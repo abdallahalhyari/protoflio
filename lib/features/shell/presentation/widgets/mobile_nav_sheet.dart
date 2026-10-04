@@ -178,6 +178,10 @@ class MobileNavSheet extends StatelessWidget {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       barrierColor: Colors.black.withValues(alpha: 0.75),
+      sheetAnimationStyle: const AnimationStyle(
+        duration: AppMotion.md,
+        reverseDuration: AppMotion.sm,
+      ),
       builder: (_) => MobileNavSheet(
         activeIndex: activeIndex,
         onSelectSection: onSelectSection,

@@ -59,9 +59,16 @@ Future<void> showProjectCaseStudy(
       );
       return FadeTransition(
         opacity: curvedAnimation,
-        child: ScaleTransition(
-          scale: Tween<double>(begin: 0.95, end: 1.0).animate(curvedAnimation),
-          child: child,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.04),
+            end: Offset.zero,
+          ).animate(curvedAnimation),
+          child: ScaleTransition(
+            scale:
+                Tween<double>(begin: 0.96, end: 1.0).animate(curvedAnimation),
+            child: child,
+          ),
         ),
       );
     },

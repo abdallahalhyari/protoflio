@@ -74,7 +74,9 @@ class _ExperienceCardState extends State<ExperienceCard> {
             duration: AppMotion.cardHover,
             curve: AppMotion.emphasized,
             child: HolographicCardPhysics(
-              child: Container(
+              child: AnimatedContainer(
+                duration: AppMotion.cardHover,
+                curve: AppMotion.emphasized,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppRadius.lg),

@@ -44,6 +44,8 @@ void main() {
     await tester.scrollUntilVisible(
         find.text('Podrobný technický rozbor níže je v angličtině.'), 300,
         scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(find.text('PROBLÉM'), 300,
+        scrollable: find.byType(Scrollable).first);
     expect(find.text('PROBLÉM'), findsWidgets);
   });
 

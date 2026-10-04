@@ -105,8 +105,16 @@ class _MobilePagerContent extends StatelessWidget {
             const SizedBox(width: 6),
             AnimatedSwitcher(
               duration: AppMotion.switcher,
-              transitionBuilder: (child, animation) =>
-                  FadeTransition(opacity: animation, child: child),
+              transitionBuilder: (child, animation) => FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0.0, 0.25),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+              ),
               child: Text(
                 // Isolated: under RTL "06 / 07" otherwise renders "07 / 06".
                 ltrAlways(

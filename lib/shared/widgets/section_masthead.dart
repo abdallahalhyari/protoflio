@@ -111,95 +111,113 @@ class _SectionMastheadState extends State<SectionMasthead>
       );
     }
 
+    final Widget headerContent = Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.kicker,
+                style: TextStyle(
+                  color: accentText,
+                  fontSize: widget.isDesktop ? 11 : 10,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: latinTracking(context, 3),
+                ),
+              ),
+              // Tenada caps fill their 1.0 line box, so a fixed 4px read
+              // as touching on wide screens; scale with the title.
+              SizedBox(height: (titleSize * 0.2).clamp(6.0, 10.0)),
+              Semantics(
+                header: true,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    widget.title,
+                    style: TextStyle(
+                      fontFamily: AppTypography.displayFont,
+                      color: scheme.onSurface,
+                      fontSize: titleSize,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: latinTracking(context, 4),
+                      height: 1,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                widget.subtitle,
+                style: TextStyle(
+                  color: scheme.onSurface.withValues(alpha: 0.75),
+                  fontSize: widget.isDesktop ? 12.5 : 11.5,
+                  fontStyle: FontStyle.italic,
+                  letterSpacing: latinTracking(context, 0.5),
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (widget.isDesktop && widget.badgeLabel != null)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: scheme.primary.withValues(alpha: 0.10),
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(color: scheme.primary.withValues(alpha: 0.4)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.badgeIcon != null) ...[
+                  Icon(widget.badgeIcon,
+                      size: AppTypography.caption + 1, color: accentText),
+                  const SizedBox(width: 6),
+                ],
+                Text(
+                  // "4 ROLES · …" — keep the count in front under RTL.
+                  ltrContent(context, widget.badgeLabel!),
+                  style: TextStyle(
+                    color: accentText,
+                    fontSize: AppTypography.editorial,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: latinTracking(context, 1.4),
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         accentRule,
         const SizedBox(height: 6),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    widget.kicker,
-                    style: TextStyle(
-                      color: accentText,
-                      fontSize: widget.isDesktop ? 11 : 10,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: latinTracking(context, 3),
-                    ),
-                  ),
-                  // Tenada caps fill their 1.0 line box, so a fixed 4px read
-                  // as touching on wide screens; scale with the title.
-                  SizedBox(height: (titleSize * 0.2).clamp(6.0, 10.0)),
-                  Semantics(
-                    header: true,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        widget.title,
-                        style: TextStyle(
-                          fontFamily: AppTypography.displayFont,
-                          color: scheme.onSurface,
-                          fontSize: titleSize,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: latinTracking(context, 4),
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    widget.subtitle,
-                    style: TextStyle(
-                      color: scheme.onSurface.withValues(alpha: 0.75),
-                      fontSize: widget.isDesktop ? 12.5 : 11.5,
-                      fontStyle: FontStyle.italic,
-                      letterSpacing: latinTracking(context, 0.5),
-                    ),
-                  ),
-                ],
-              ),
+        if (reduceMotion)
+          headerContent
+        else
+          FadeTransition(
+            opacity: CurvedAnimation(
+              parent: _shimmer,
+              curve: const Interval(0.0, 0.7, curve: Curves.easeOut),
             ),
-            if (widget.isDesktop && widget.badgeLabel != null)
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: scheme.primary.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border:
-                      Border.all(color: scheme.primary.withValues(alpha: 0.4)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (widget.badgeIcon != null) ...[
-                      Icon(widget.badgeIcon,
-                          size: AppTypography.caption + 1, color: accentText),
-                      const SizedBox(width: 6),
-                    ],
-                    Text(
-                      // "4 ROLES · …" — keep the count in front under RTL.
-                      ltrContent(context, widget.badgeLabel!),
-                      style: TextStyle(
-                        color: accentText,
-                        fontSize: AppTypography.editorial,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: latinTracking(context, 1.4),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0, 0.06),
+                end: Offset.zero,
+              ).animate(CurvedAnimation(
+                parent: _shimmer,
+                curve: AppMotion.emphasizedDecel,
+              )),
+              child: headerContent,
+            ),
+          ),
         const SizedBox(height: 6),
         Container(height: 0.75, color: scheme.primary.withValues(alpha: 0.5)),
       ],

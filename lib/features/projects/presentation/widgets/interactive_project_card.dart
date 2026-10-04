@@ -86,7 +86,9 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                 duration: AppMotion.cardHover,
                 curve: AppMotion.emphasized,
                 child: HolographicCardPhysics(
-                  child: DecoratedBox(
+                  child: AnimatedContainer(
+                    duration: AppMotion.cardHover,
+                    curve: AppMotion.emphasized,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(AppRadius.md),
                       boxShadow: isInteractive && isDark
@@ -97,7 +99,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                 blurRadius: 28,
                               ),
                             ]
-                          : null,
+                          : [],
                     ),
                     child: Card(
                       margin: EdgeInsets.zero,

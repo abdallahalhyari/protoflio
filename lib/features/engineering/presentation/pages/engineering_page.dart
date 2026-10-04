@@ -167,10 +167,14 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                       opacity: animation,
                       child: SlideTransition(
                         position: Tween<Offset>(
-                          begin: const Offset(0.04, 0),
+                          begin: const Offset(0.03, 0),
                           end: Offset.zero,
                         ).animate(animation),
-                        child: child,
+                        child: ScaleTransition(
+                          scale: Tween<double>(begin: 0.98, end: 1.0)
+                              .animate(animation),
+                          child: child,
+                        ),
                       ),
                     ),
                     child: KeyedSubtree(
