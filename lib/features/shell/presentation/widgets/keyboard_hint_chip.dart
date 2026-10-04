@@ -37,6 +37,7 @@ class KeyboardHintChip extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.w900)),
             TextSpan(text: '${l10n.keyboardHintDigits}\n'),
             TextSpan(text: '${l10n.keyboardHintArrows}\n'),
+            const TextSpan(text: 'T  Theme mode · M  Mute audio\n'),
             TextSpan(text: '${l10n.keyboardHintHome}\n'),
             TextSpan(text: l10n.keyboardHintEnd),
           ],

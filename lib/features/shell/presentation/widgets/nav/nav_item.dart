@@ -112,7 +112,7 @@ class _NavItemState extends State<NavItem> with SingleTickerProviderStateMixin {
                       Container(
                         width: 6,
                         height: 6,
-                        margin: const EdgeInsets.only(right: 6),
+                        margin: const EdgeInsetsDirectional.only(end: 6),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: isDark ? Colors.white : accent,

@@ -5,6 +5,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/services/cv_service.dart';
+import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/shared/widgets/conditional_blur.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/shared/widgets/edge_fade_scroller.dart';
@@ -50,6 +51,7 @@ class TopNav extends StatelessWidget {
     final resumeLabel = AppLocalizations.of(context)!.navResume.toUpperCase();
     void onResume() {
       HapticFeedback.lightImpact();
+      SoundService.instance.playClick();
       CvService.open(context);
     }
 
@@ -112,6 +114,7 @@ class TopNav extends StatelessWidget {
                                       onTap: () {
                                         if (i == current) return;
                                         HapticFeedback.selectionClick();
+                                        SoundService.instance.playSelection();
                                         HomeController.of(context).goTo(i);
                                       },
                                     ),

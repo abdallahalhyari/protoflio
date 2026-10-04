@@ -86,92 +86,106 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                 duration: AppMotion.cardHover,
                 curve: AppMotion.emphasized,
                 child: HolographicCardPhysics(
-                  child: Card(
-                    margin: EdgeInsets.zero,
-                    clipBehavior: Clip.antiAlias,
-                    elevation: isDark ? 0 : (isInteractive ? 16 : 8),
-                    shadowColor: isDark
-                        ? Colors.transparent
-                        : (isInteractive
-                            ? Color.lerp(
-                                    widget.scheme.primary, Colors.black, 0.5)!
-                                .withValues(alpha: 0.3)
-                            : AppColors.shadowSoft),
-                    shape: RoundedRectangleBorder(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(AppRadius.md),
-                      side: BorderSide(
-                        color: isInteractive
-                            ? widget.scheme.primary
-                                .withValues(alpha: isDark ? 0.7 : 0.6)
-                            : (isDark
-                                ? Colors.white.withValues(alpha: 0.10)
-                                : AppColors.slate200),
-                        width: isInteractive ? 1.5 : 1.0,
-                      ),
-                    ),
-                    color: isInteractive
-                        ? context.cardGlassHover
-                        : context.cardGlass,
-                    child: InkWell(
-                      canRequestFocus: false,
-                      excludeFromSemantics: true,
-                      onTap: _openStudy,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minHeight: widget.isDesktop ? 300 : 270,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            if (widget.project.heroImagePath != null)
-                              CardHeroImage(
-                                project: widget.project,
-                                scheme: widget.scheme,
-                                isDesktop: widget.isDesktop,
-                                hovered: hovered,
-                                isDark: isDark,
-                                mousePos: _mousePos,
-                                caseStudySlug: caseStudySlug,
-                              )
-                            else
-                              CardFallbackPlaceholder(
-                                project: widget.project,
-                                scheme: widget.scheme,
-                                isDesktop: widget.isDesktop,
-                                isDark: isDark,
-                                caseStudySlug: caseStudySlug,
+                      boxShadow: isInteractive && isDark
+                          ? [
+                              BoxShadow(
+                                color: widget.scheme.primary
+                                    .withValues(alpha: 0.22),
+                                blurRadius: 28,
                               ),
-                            if (pinFoot)
-                              Expanded(
-                                child: CardBodyContent(
+                            ]
+                          : null,
+                    ),
+                    child: Card(
+                      margin: EdgeInsets.zero,
+                      clipBehavior: Clip.antiAlias,
+                      elevation: isDark ? 0 : (isInteractive ? 16 : 8),
+                      shadowColor: isDark
+                          ? Colors.transparent
+                          : (isInteractive
+                              ? Color.lerp(
+                                      widget.scheme.primary, Colors.black, 0.5)!
+                                  .withValues(alpha: 0.3)
+                              : AppColors.shadowSoft),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        side: BorderSide(
+                          color: isInteractive
+                              ? widget.scheme.primary
+                                  .withValues(alpha: isDark ? 0.7 : 0.6)
+                              : (isDark
+                                  ? Colors.white.withValues(alpha: 0.10)
+                                  : AppColors.slate200),
+                          width: isInteractive ? 1.5 : 1.0,
+                        ),
+                      ),
+                      color: isInteractive
+                          ? context.cardGlassHover
+                          : context.cardGlass,
+                      child: InkWell(
+                        canRequestFocus: false,
+                        excludeFromSemantics: true,
+                        onTap: _openStudy,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: widget.isDesktop ? 300 : 270,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              if (widget.project.heroImagePath != null)
+                                CardHeroImage(
+                                  project: widget.project,
+                                  scheme: widget.scheme,
+                                  isDesktop: widget.isDesktop,
+                                  hovered: hovered,
+                                  isDark: isDark,
+                                  mousePos: _mousePos,
+                                  caseStudySlug: caseStudySlug,
+                                )
+                              else
+                                CardFallbackPlaceholder(
+                                  project: widget.project,
+                                  scheme: widget.scheme,
+                                  isDesktop: widget.isDesktop,
+                                  isDark: isDark,
+                                  caseStudySlug: caseStudySlug,
+                                ),
+                              if (pinFoot)
+                                Expanded(
+                                  child: CardBodyContent(
+                                    project: widget.project,
+                                    scheme: widget.scheme,
+                                    isDesktop: widget.isDesktop,
+                                    isHovered: _isHovered,
+                                    isDark: isDark,
+                                    pinFoot: true,
+                                    selectedTech: widget.selectedTech,
+                                    onSelectTech: widget.onSelectTech,
+                                    onOpenStudy: _openStudy,
+                                    onFocusChange: (focused) =>
+                                        setState(() => _isFocused = focused),
+                                  ),
+                                )
+                              else
+                                CardBodyContent(
                                   project: widget.project,
                                   scheme: widget.scheme,
                                   isDesktop: widget.isDesktop,
                                   isHovered: _isHovered,
                                   isDark: isDark,
-                                  pinFoot: true,
+                                  pinFoot: false,
                                   selectedTech: widget.selectedTech,
                                   onSelectTech: widget.onSelectTech,
                                   onOpenStudy: _openStudy,
                                   onFocusChange: (focused) =>
                                       setState(() => _isFocused = focused),
                                 ),
-                              )
-                            else
-                              CardBodyContent(
-                                project: widget.project,
-                                scheme: widget.scheme,
-                                isDesktop: widget.isDesktop,
-                                isHovered: _isHovered,
-                                isDark: isDark,
-                                pinFoot: false,
-                                selectedTech: widget.selectedTech,
-                                onSelectTech: widget.onSelectTech,
-                                onOpenStudy: _openStudy,
-                                onFocusChange: (focused) =>
-                                    setState(() => _isFocused = focused),
-                              ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

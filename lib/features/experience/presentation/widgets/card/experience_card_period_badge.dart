@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/widgets/pulsing_dot.dart';
 
 const Color kNowAccent = AppColors.accentGreen;
 
@@ -55,14 +56,26 @@ class PeriodBadgeRow extends StatelessWidget {
                     : AppColors.accentGreenDeep.withValues(alpha: 0.45),
               ),
             ),
-            child: Text(
-              AppLocalizations.of(context)!.uiLatestDispatch,
-              style: TextStyle(
-                color: isDark ? kNowAccent : AppColors.accentGreenDeep,
-                fontSize: AppTypography.micro,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 1,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PulsingDot(
+                  color: isDark ? kNowAccent : AppColors.accentGreenDeep,
+                ),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    AppLocalizations.of(context)!.uiLatestDispatch,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: isDark ? kNowAccent : AppColors.accentGreenDeep,
+                      fontSize: AppTypography.micro,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ]

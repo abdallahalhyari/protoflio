@@ -39,31 +39,68 @@ class DesktopToolbar extends StatelessWidget {
   }
 }
 
-class _Puck extends StatelessWidget {
+class _Puck extends StatefulWidget {
   const _Puck({required this.dark, required this.child});
   final bool dark;
   final Widget child;
 
   @override
+  State<_Puck> createState() => _PuckState();
+}
+
+class _PuckState extends State<_Puck> {
+  bool _hovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
-      elevation: dark ? 0 : 2,
-      shadowColor: Colors.black12,
-      shape: CircleBorder(
-        side: BorderSide(
-          color:
-              dark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200,
+    final dark = widget.dark;
+    final primary = Theme.of(context).colorScheme.primary;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedScale(
+        scale: _hovered ? 1.06 : 1.0,
+        duration: AppMotion.chipHover,
+        curve: AppMotion.emphasized,
+        child: AnimatedContainer(
+          duration: AppMotion.chipHover,
+          curve: AppMotion.emphasized,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: _hovered
+                ? [
+                    BoxShadow(
+                      color: primary.withValues(alpha: dark ? 0.35 : 0.18),
+                      blurRadius: 10,
+                      spreadRadius: 1,
+                    ),
+                  ]
+                : null,
+          ),
+          child: Material(
+            color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
+            elevation: dark ? 0 : (_hovered ? 4 : 2),
+            shadowColor: Colors.black12,
+            shape: CircleBorder(
+              side: BorderSide(
+                color: _hovered
+                    ? primary.withValues(alpha: dark ? 0.6 : 0.5)
+                    : (dark
+                        ? Colors.white.withValues(alpha: 0.14)
+                        : AppColors.slate200),
+                width: _hovered ? 1.4 : 1.0,
+              ),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              customBorder: const CircleBorder(),
+              splashColor: primary.withValues(alpha: 0.18),
+              highlightColor: primary.withValues(alpha: 0.08),
+              child: widget.child,
+            ),
+          ),
         ),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        splashColor:
-            Theme.of(context).colorScheme.primary.withValues(alpha: 0.18),
-        highlightColor:
-            Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
-        child: child,
       ),
     );
   }

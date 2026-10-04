@@ -15,6 +15,10 @@ class _PulsingDotState extends State<PulsingDot>
     vsync: this,
     duration: AppMotion.pulse,
   );
+  late final Animation<double> _pulseCurve = CurvedAnimation(
+    parent: _c,
+    curve: Curves.easeInOutCubic,
+  );
 
   @override
   void didChangeDependencies() {
@@ -45,6 +49,13 @@ class _PulsingDotState extends State<PulsingDot>
       decoration: BoxDecoration(
         color: widget.color,
         shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: widget.color.withValues(alpha: 0.65),
+            blurRadius: 4,
+            spreadRadius: 0.5,
+          ),
+        ],
       ),
     );
 
@@ -54,18 +65,18 @@ class _PulsingDotState extends State<PulsingDot>
           width: 14,
           height: 14,
           child: AnimatedBuilder(
-            animation: _c,
+            animation: _pulseCurve,
             child: staticDot,
             builder: (_, child) {
-              final t = _c.value;
+              final t = _pulseCurve.value;
               return Stack(
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    width: 8 + 6 * t,
-                    height: 8 + 6 * t,
+                    width: 7 + 7 * t,
+                    height: 7 + 7 * t,
                     decoration: BoxDecoration(
-                      color: widget.color.withValues(alpha: 0.35 * (1 - t)),
+                      color: widget.color.withValues(alpha: 0.38 * (1 - t)),
                       shape: BoxShape.circle,
                     ),
                   ),

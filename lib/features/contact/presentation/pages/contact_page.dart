@@ -115,14 +115,16 @@ class _ContactPageState extends State<ContactPage>
             subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
           ),
           onCopyEmail: () => _copy(context, _email),
-          onComposeInquiry: () => unawaited(
-            showInquiryComposerDialog(context),
-          ),
+          onComposeInquiry: () {
+            SoundService.instance.playClick();
+            unawaited(showInquiryComposerDialog(context));
+          },
         ),
         const SizedBox(height: AppSpacing.lg),
         // 2. Fast pre-filled subject lines beneath the primary CTA.
         ExpressPresetsBar(
           onSelectPreset: (subject, body) {
+            SoundService.instance.playClick();
             final index =
                 ExpressPresetsBar.presets.indexWhere((p) => p.$2 == subject);
             unawaited(

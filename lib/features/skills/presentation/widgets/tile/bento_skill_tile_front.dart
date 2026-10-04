@@ -35,16 +35,21 @@ class TileFrontFace extends StatelessWidget {
         border: Border.all(
           color: showFocus
               ? categoryColor
-              : categoryColor.withValues(alpha: isDark ? 0.3 : 0.4),
-          width: showFocus ? 2.5 : 1.5,
+              : categoryColor.withValues(
+                  alpha: isDark
+                      ? (isHovered ? 0.65 : 0.3)
+                      : (isHovered ? 0.70 : 0.4)),
+          width: showFocus ? 2.5 : (isHovered ? 2.0 : 1.5),
         ),
         boxShadow: [
           BoxShadow(
             color: isDark
-                ? categoryColor.withValues(alpha: 0.1)
-                : AppColors.slate900.withValues(alpha: 0.05),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+                ? categoryColor.withValues(alpha: isHovered ? 0.28 : 0.1)
+                : (isHovered
+                    ? categoryColor.withValues(alpha: 0.20)
+                    : AppColors.slate900.withValues(alpha: 0.05)),
+            blurRadius: isHovered ? 20 : 12,
+            offset: Offset(0, isHovered ? 6 : 4),
           ),
         ],
       ),

@@ -62,7 +62,7 @@ class CompanionReadingPercentPill extends StatelessWidget {
           Text(
             isCompact
                 ? '$pct%'
-                : AppLocalizations.of(context)!.studyReadPercent(pct),
+                : '${AppLocalizations.of(context)!.studyReadPercent(pct)} · 3 MIN READ',
             style: TextStyle(
               fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.micro,
