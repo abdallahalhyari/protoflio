@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/case_study/case_study_router.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_router.dart';
 
 /// Pixel size of a PNG (IHDR) or baseline/progressive JPEG (SOFn).
 (int, int) _imageSize(String path) {

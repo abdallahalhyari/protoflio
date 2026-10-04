@@ -7,9 +7,9 @@ import 'helpers/test_data.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 
-import 'package:profile/features/shell/widget/custom_cursor.dart';
-import 'package:profile/features/shell/widget/desktop_toolbar.dart';
-import 'package:profile/features/shell/widget/magazine_page_transformer.dart';
+import 'package:profile/features/shell/presentation/widgets/custom_cursor.dart';
+import 'package:profile/features/shell/presentation/widgets/desktop_toolbar.dart';
+import 'package:profile/features/shell/presentation/widgets/magazine_page_transformer.dart';
 import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
 import 'package:profile/l10n/app_localizations.dart';
 

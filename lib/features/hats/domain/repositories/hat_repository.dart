@@ -1,4 +1,4 @@
-import 'package:profile/features/hats/model/hat_info.dart';
+import 'package:profile/features/hats/domain/entities/hat_info.dart';
 
 abstract class HatRepository {
   /// Returns all hats available.

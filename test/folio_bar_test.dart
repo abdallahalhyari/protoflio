@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/shell/home_controller.dart';
-import 'package:profile/features/shell/widget/folio_bar.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
+import 'package:profile/features/shell/presentation/widgets/folio_bar.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 Widget _host(ValueNotifier<int> pageIndex, {void Function(int)? onGoTo}) {
   final controller = HomeController(

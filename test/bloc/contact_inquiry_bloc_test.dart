@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/contact/bloc/contact_inquiry_bloc.dart';
-import 'package:profile/features/contact/bloc/contact_inquiry_event.dart';
-import 'package:profile/features/contact/bloc/contact_inquiry_state.dart';
+import 'package:profile/features/contact/presentation/bloc/contact_inquiry_bloc.dart';
+import 'package:profile/features/contact/presentation/bloc/contact_inquiry_event.dart';
+import 'package:profile/features/contact/presentation/bloc/contact_inquiry_state.dart';
 
 void main() {
   group('ContactInquiryBloc Test Suite', () {

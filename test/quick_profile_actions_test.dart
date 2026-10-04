@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/theme/app_theme.dart';
-import 'package:profile/features/intro/widget/quick_profile_actions.dart';
+import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/features/intro/presentation/widgets/quick_profile_actions.dart';
 
 Widget _wrap(Widget child) {
   return MaterialApp(

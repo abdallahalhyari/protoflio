@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_event.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_state.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
-import 'package:profile/shared/widget/page_activity.dart';
+import 'package:profile/shared/widgets/page_activity.dart';
 import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
 import 'package:profile/features/projects/presentation/widgets/project_domain_filters.dart';
-import 'package:profile/shared/util/grid_math.dart';
-import 'package:profile/shared/widget/screen_shell.dart';
-import 'package:profile/shared/widget/section_masthead.dart';
+import 'package:profile/shared/utils/grid_math.dart';
+import 'package:profile/shared/widgets/screen_shell.dart';
+import 'package:profile/shared/widgets/section_masthead.dart';
 import 'package:profile/features/projects/presentation/widgets/projects_empty_state.dart';
 
 class ProjectsPage extends StatelessWidget {

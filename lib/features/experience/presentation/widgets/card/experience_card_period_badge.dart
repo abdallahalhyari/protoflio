@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 const Color kNowAccent = AppColors.accentGreen;

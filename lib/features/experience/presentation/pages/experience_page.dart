@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 import 'package:profile/features/experience/presentation/bloc/experience_timeline_bloc.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
-import 'package:profile/shared/widget/screen_shell.dart';
+import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_layouts.dart';
 
 class ExperiencePage extends StatefulWidget {
@@ -96,7 +96,6 @@ class _ExperiencePageState extends State<ExperiencePage>
   @override
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
-    final size = MediaQuery.sizeOf(context);
     final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocProvider.value(

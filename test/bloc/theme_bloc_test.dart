@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/shell/home_controller.dart';
-import 'package:profile/features/shell/widget/deferred_mount.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
+import 'package:profile/features/shell/presentation/widgets/deferred_mount.dart';
 
 Widget _wrap({
   required ValueNotifier<int> pageIndex,

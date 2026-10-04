@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/tokens.dart';
-import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/shared/utils/bidi.dart';
 
 class CardOutcomeLine extends StatelessWidget {
   const CardOutcomeLine({

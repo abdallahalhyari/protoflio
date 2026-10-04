@@ -8,19 +8,19 @@ import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import 'package:profile/features/contact/page/contact_page.dart';
-import 'package:profile/features/engineering/page/engineering_page.dart';
+import 'package:profile/features/contact/presentation/pages/contact_page.dart';
+import 'package:profile/features/engineering/presentation/pages/engineering_page.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
-import 'package:profile/features/hats/page/hats_grid_page.dart';
-import 'package:profile/features/intro/page/intro_page.dart';
+import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart';
+import 'package:profile/features/intro/presentation/pages/intro_page.dart';
 import 'package:profile/features/projects/presentation/pages/project_modal.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/skills/presentation/pages/skills_page.dart';
-import 'package:profile/features/shell/widget/mobile_app_bar.dart';
-import 'package:profile/shared/widget/screen_shell.dart';
-import 'package:profile/features/shell/widget/shortcut_help_dialog.dart';
-import 'package:profile/theme/app_theme.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/shell/presentation/widgets/mobile_app_bar.dart';
+import 'package:profile/shared/widgets/screen_shell.dart';
+import 'package:profile/features/shell/presentation/widgets/shortcut_help_dialog.dart';
+import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Widget _buildViewportHarness(Widget child, Size size,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/shared/widget/app_toast.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/widgets/app_toast.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 Widget _host({required Widget Function(BuildContext) child}) {
   return MaterialApp(

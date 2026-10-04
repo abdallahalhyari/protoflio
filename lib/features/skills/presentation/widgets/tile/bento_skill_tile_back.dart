@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
 import 'package:profile/features/skills/presentation/widgets/tile/bento_skill_tile_shared.dart';
 

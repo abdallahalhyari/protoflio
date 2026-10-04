@@ -5,7 +5,7 @@ import 'package:profile/features/experience/data/repositories/local_experience_r
 import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
-import 'package:profile/shared/util/bundled_json.dart';
+import 'package:profile/shared/utils/bundled_json.dart';
 
 import 'helpers/real_data.dart';
 

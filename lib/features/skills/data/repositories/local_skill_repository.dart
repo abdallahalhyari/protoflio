@@ -1,4 +1,4 @@
-import 'package:profile/shared/util/bundled_json.dart';
+import 'package:profile/shared/utils/bundled_json.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 

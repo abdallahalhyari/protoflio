@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:profile/theme/tokens.dart';
-import 'package:profile/service/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/util/bidi.dart';
-import 'package:profile/features/skills/data/datasources/skill_category_labels.dart';
+import 'package:profile/shared/utils/bidi.dart';
+import 'package:profile/features/skills/presentation/utils/skill_category_labels.dart';
 
 /// Styling helper for skill categories and corresponding theme accents.
 class SkillCategoryStyle {

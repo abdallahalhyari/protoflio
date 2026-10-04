@@ -4,12 +4,12 @@ import 'dart:io';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
-import 'package:profile/features/hats/model/hat_info.dart';
+import 'package:profile/features/hats/domain/entities/hat_info.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
-import 'package:profile/shared/util/career_facts.dart';
+import 'package:profile/shared/utils/career_facts.dart';
 
 /// Repositories backed by the real `assets/data/*.json`, read synchronously
 /// so widget tests see the content the site ships (titles, counts, company

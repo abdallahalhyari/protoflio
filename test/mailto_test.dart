@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/shared/util/mailto.dart';
+import 'package:profile/shared/utils/mailto.dart';
 
 void main() {
   test('mailtoUri percent-encodes spaces instead of form-encoding them', () {

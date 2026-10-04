@@ -7,16 +7,16 @@ import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/projects/presentation/pages/project_modal.dart';
-import 'package:profile/features/hats/widget/hat_role_pills.dart';
-import 'package:profile/features/shell/widget/mobile_pager.dart';
-import 'package:profile/features/shell/widget/mobile_progress_rail.dart';
-import 'package:profile/features/shell/widget/portfolio_nav.dart';
+import 'package:profile/features/hats/presentation/widgets/hat_role_pills.dart';
+import 'package:profile/features/shell/presentation/widgets/mobile_pager.dart';
+import 'package:profile/features/shell/presentation/widgets/mobile_progress_rail.dart';
+import 'package:profile/features/shell/presentation/widgets/portfolio_nav.dart';
 import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/app_theme.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 HomeController _mockController({int initialPage = 0}) {

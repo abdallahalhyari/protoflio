@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 

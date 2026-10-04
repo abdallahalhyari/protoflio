@@ -1,7 +1,7 @@
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
-import 'package:profile/shared/util/bundled_json.dart';
-import 'package:profile/shared/util/career_facts.dart';
+import 'package:profile/shared/utils/bundled_json.dart';
+import 'package:profile/shared/utils/career_facts.dart';
 
 class LocalExperienceRepository implements ExperienceRepository {
   List<Experience> _experiences = [];

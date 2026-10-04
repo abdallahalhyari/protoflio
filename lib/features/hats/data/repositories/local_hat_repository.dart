@@ -1,5 +1,5 @@
-import 'package:profile/shared/util/bundled_json.dart';
-import 'package:profile/features/hats/model/hat_info.dart';
+import 'package:profile/shared/utils/bundled_json.dart';
+import 'package:profile/features/hats/domain/entities/hat_info.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 
 class LocalHatRepository implements HatRepository {

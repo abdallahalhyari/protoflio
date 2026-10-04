@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/main.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
-import 'package:profile/features/shell/widget/custom_cursor.dart';
-import 'package:profile/features/shell/widget/page_background.dart';
+import 'package:profile/features/shell/presentation/widgets/custom_cursor.dart';
+import 'package:profile/features/shell/presentation/widgets/page_background.dart';
 import 'helpers/test_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
 

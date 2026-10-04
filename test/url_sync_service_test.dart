@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/service/url_sync_service.dart';
+import 'package:profile/core/services/url_sync_service.dart';
 
 void main() {
   final svc = UrlSyncService.instance;

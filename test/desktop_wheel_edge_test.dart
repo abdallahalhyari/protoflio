@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/shell/widget/desktop_scroll_interceptor.dart';
+import 'package:profile/features/shell/presentation/widgets/desktop_scroll_interceptor.dart';
 
 /// A page with its own long scrolling content, inside the desktop wheel
 /// interceptor. Counts page turns instead of performing them.

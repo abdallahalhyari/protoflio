@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 /// Renders the end-to-end NatHealth system architecture topology diagram,
 /// highlighting NFC Hardware, Native Kotlin APDU Channel, Flutter UI,

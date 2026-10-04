@@ -12,7 +12,7 @@ import 'package:profile/core/bloc/theme/theme_state.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
-import 'package:profile/features/shell/home_screen.dart';
+import 'package:profile/features/shell/presentation/pages/home_screen.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widget/keyboard_focus_ring.dart';

@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/test_data.dart';
-import 'package:profile/features/engineering/data/architecture_data.dart';
-import 'package:profile/features/engineering/data/architecture_labels.dart';
-import 'package:profile/features/hats/data/hat_labels.dart';
+import 'package:profile/features/engineering/data/datasources/architecture_data.dart';
+import 'package:profile/features/engineering/presentation/utils/architecture_labels.dart';
+import 'package:profile/features/hats/presentation/utils/hat_labels.dart';
 
-import 'package:profile/features/skills/data/datasources/skill_category_labels.dart';
-import 'package:profile/features/projects/presentation/project_copy.dart';
+import 'package:profile/features/skills/presentation/utils/skill_category_labels.dart';
+import 'package:profile/features/projects/presentation/utils/project_copy.dart';
 
 import 'package:profile/l10n/app_localizations.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
-import 'package:profile/features/projects/presentation/project_copy.dart';
+import 'package:profile/features/projects/presentation/utils/project_copy.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/shared/utils/bidi.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_tech_chip.dart';

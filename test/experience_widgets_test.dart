@@ -6,7 +6,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
 import 'package:profile/features/experience/presentation/widgets/credentials_bento_card.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
   return MaterialApp(

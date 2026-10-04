@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_tech_chip.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_outcome_line.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';

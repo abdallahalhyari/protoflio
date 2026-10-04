@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/shell/home_controller.dart';
-import 'package:profile/features/shell/widget/mobile_app_bar.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
+import 'package:profile/features/shell/presentation/widgets/mobile_app_bar.dart';
 
 HomeController _stub({ValueNotifier<int>? pageIndex}) {
   return HomeController(

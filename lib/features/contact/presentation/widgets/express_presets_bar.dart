@@ -1,0 +1,117 @@
+import 'package:flutter/material.dart';
+
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/shared/widgets/editorial_chip.dart';
+import 'package:profile/l10n/app_localizations.dart';
+
+class ExpressPresetsBar extends StatelessWidget {
+  final void Function(String subject, String body) onSelectPreset;
+
+  const ExpressPresetsBar({
+    super.key,
+    required this.onSelectPreset,
+  });
+
+  // Material icons, not emoji: CanvasKit has no system fonts, so the emoji
+  // pulled ~527 KB of Noto Color Emoji + Noto Sans Symbols 2 at runtime.
+  static const List<(IconData, String, String, String)> presets = [
+    (
+      Icons.work_outline_rounded,
+      'Senior Role',
+      '[Role Opportunity] Senior Mobile Engineer - Abdallah Alhyari',
+      'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Engineer role at our company...',
+    ),
+    (
+      Icons.architecture_rounded,
+      'Architecture Audit',
+      '[Architecture Review] Mobile Codebase Audit - Abdallah Alhyari',
+      'Hi Abdallah,\n\nWe are looking for a deep architectural review of our existing mobile application...',
+    ),
+    (
+      Icons.bolt_rounded,
+      'Production App',
+      '[App Project Inquiry] Enterprise Mobile App - Abdallah Alhyari',
+      'Hi Abdallah,\n\nWe are planning to build a high-performance cross-platform application and want your expertise...',
+    ),
+    (
+      Icons.coffee_rounded,
+      'Advisory & Chat',
+      '[Connect] Tech Advisory & Coffee - Abdallah Alhyari',
+      'Hi Abdallah,\n\nI’d love to connect for a 20-minute chat regarding mobile engineering and technology...',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final accent = scheme.primary;
+    final isDark = context.isDarkMode;
+
+    return RepaintBoundary(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+        decoration: BoxDecoration(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.03)
+              : AppColors.slate100,
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.08)
+                : AppColors.slate200,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.bolt_rounded,
+                  size: 16,
+                  color: context.amberText,
+                ),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      AppLocalizations.of(context)!.uiPresetsTitle,
+                      style: TextStyle(
+                        color: context.amberText,
+                        fontSize: AppTypography.editorial,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.8,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final p in presets)
+                  EditorialChip(
+                    label: p.$2,
+                    icon: p.$1,
+                    variant: ChipVariant.glass,
+                    trailing: Icon(
+                      Icons.arrow_forward_rounded,
+                      size: 12,
+                      color: accent,
+                    ),
+                    onTap: () => onSelectPreset(p.$3, p.$4),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

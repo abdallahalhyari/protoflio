@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 class CardMetricBadge extends StatelessWidget {
   const CardMetricBadge({

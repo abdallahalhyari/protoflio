@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 /// A card displaying a specific architectural dossier aspect (e.g. Core Problem,
 /// Architecture, Engineering Solution, Decision, Lesson Learned).

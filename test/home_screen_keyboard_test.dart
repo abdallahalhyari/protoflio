@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/shell/home_screen.dart';
+import 'package:profile/features/shell/presentation/pages/home_screen.dart';
 
 Widget _wrap() {
   return MultiBlocProvider(

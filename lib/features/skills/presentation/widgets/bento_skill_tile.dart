@@ -2,10 +2,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
-import 'package:profile/shared/widget/holographic_physics.dart';
+import 'package:profile/shared/widgets/holographic_physics.dart';
 
 import 'package:profile/features/skills/presentation/widgets/tile/bento_skill_tile_shared.dart';
 import 'package:profile/features/skills/presentation/widgets/tile/bento_skill_tile_front.dart';

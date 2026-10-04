@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
+
+/// Pill-shaped hint telling touch users a horizontal switcher is available.
+/// Replaces the near-identical inline widgets that used to live in
+/// projects_page / engineering_page / skills_page.
+class SwipeAffordance extends StatelessWidget {
+  const SwipeAffordance({
+    super.key,
+    required this.label,
+    this.icon = Icons.swipe_rounded,
+    this.margin,
+  });
+
+  final String label;
+  final IconData icon;
+  final EdgeInsetsGeometry? margin;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Container(
+      margin: margin,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: context.glassSurface,
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: Border.all(
+          color: context.divider,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 13, color: scheme.primary.withValues(alpha: 0.8)),
+          const SizedBox(width: 6),
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: context.mutedText,
+                  fontSize: AppTypography.micro,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/widget/section_masthead.dart';
+import 'package:profile/shared/widgets/section_masthead.dart';
 
 /// Top editorial header for the Career Trajectory / Experience section.
 class ExperienceHeader extends StatelessWidget {

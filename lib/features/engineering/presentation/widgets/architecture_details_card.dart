@@ -1,0 +1,236 @@
+import 'package:flutter/material.dart';
+
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/engineering/domain/entities/architecture_topic.dart';
+import 'package:profile/shared/utils/bidi.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/features/engineering/presentation/utils/architecture_labels.dart';
+
+/// Card container displaying architecture rationale, summary, and technical safeguards.
+class ArchitectureDetailsCard extends StatelessWidget {
+  final ArchitectureTopic topic;
+  final bool isDesktop;
+
+  const ArchitectureDetailsCard({
+    super.key,
+    required this.topic,
+    required this.isDesktop,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final isDark = scheme.brightness == Brightness.dark;
+    final accentText = context.adaptiveAccentText(scheme.primary);
+    // Per-tier budgets live in the data but were never shown.
+    final budgets =
+        topic.diagramSteps.where((s) => s.latencyBudget != null).toList();
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: context.cardGlass,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(color: context.glassBorder),
+        boxShadow: isDark
+            ? []
+            : [
+                BoxShadow(
+                  color: AppColors.slate900.withValues(alpha: 0.05),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+      ),
+      child: ListView(
+        primary: false,
+        padding: EdgeInsets.zero,
+        shrinkWrap: !isDesktop,
+        physics: isDesktop
+            ? const ClampingScrollPhysics()
+            : const NeverScrollableScrollPhysics(),
+        children: [
+          // Section Title
+          Text(
+            architectureTopicLabel(AppLocalizations.of(context)!, topic.title),
+            style: TextStyle(
+              fontSize: AppTypography.titleSm,
+              fontWeight: FontWeight.w800,
+              color: context.onSurface,
+              letterSpacing: 0.5,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            ltrContent(context, topic.summary),
+            style: TextStyle(
+              fontSize: AppTypography.small,
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.85)
+                  : AppColors.slate700,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Architectural Rationale Container
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: scheme.primary.withValues(alpha: isDark ? 0.12 : 0.08),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+              border: Border.all(
+                color: scheme.primary.withValues(alpha: isDark ? 0.35 : 0.5),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.psychology_rounded, color: accentText, size: 16),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        AppLocalizations.of(context)!.uiArchRationale,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: accentText,
+                          fontSize: AppTypography.micro,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  ltrContent(context, topic.whyChosen),
+                  style: TextStyle(
+                    color: isDark ? Colors.white : AppColors.slate800,
+                    fontSize: AppTypography.overline,
+                    height: 1.45,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Technical Highlights
+          Text(
+            AppLocalizations.of(context)!.uiKeySafeguards,
+            style: TextStyle(
+              fontFamily: AppTypography.monoFont,
+              color: accentText,
+              fontSize: AppTypography.editorial,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: 8),
+          for (final item in topic.technicalHighlights) ...[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3, right: 4),
+                    child: Icon(Icons.diamond_rounded,
+                        size: AppTypography.caption, color: accentText),
+                  ),
+                  Expanded(
+                    child: Text(
+                      ltrContent(context, item),
+                      style: TextStyle(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.8)
+                            : AppColors.slate700,
+                        fontSize: AppTypography.captionSm,
+                        height: 1.35,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          if (budgets.isNotEmpty) ...[
+            const SizedBox(height: 14),
+            Text(
+              AppLocalizations.of(context)!.uiLatencyBudget,
+              style: TextStyle(
+                fontFamily: AppTypography.monoFont,
+                color: accentText,
+                fontSize: AppTypography.editorial,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(height: 8),
+            for (final step in budgets) _BudgetRow(step: step, isDark: isDark),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// One tier of the latency budget: coloured layer dot, tier title, and
+/// the budget as a mono figure on the right.
+class _BudgetRow extends StatelessWidget {
+  const _BudgetRow({required this.step, required this.isDark});
+
+  final DiagramStep step;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    final tone = context.adaptiveAccentText(step.color);
+    return Container(
+      margin: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: step.color.withValues(alpha: isDark ? 0.08 : 0.06),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+        border: Border(left: BorderSide(color: step.color, width: 2)),
+      ),
+      child: Row(
+        children: [
+          Icon(step.icon, size: AppTypography.small, color: tone),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              step.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.85)
+                    : AppColors.slate700,
+                fontSize: AppTypography.captionSm,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            // '< 16ms' — the '<' mirrors to '>' under RTL without isolation.
+            ltrAlways(context, step.latencyBudget!),
+            style: TextStyle(
+              fontFamily: AppTypography.monoFont,
+              color: tone,
+              fontSize: AppTypography.captionSm,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

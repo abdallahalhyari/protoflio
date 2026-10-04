@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/service/analytics_service.dart';
-import 'package:profile/service/sound_service.dart';
+import 'package:profile/core/services/analytics_service.dart';
+import 'package:profile/core/services/sound_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

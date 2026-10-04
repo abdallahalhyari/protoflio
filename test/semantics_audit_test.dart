@@ -7,16 +7,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
-import 'package:profile/features/case_study/case_study_nathealth.dart';
-import 'package:profile/features/contact/page/contact_page.dart';
-import 'package:profile/features/engineering/page/engineering_page.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_nathealth.dart';
+import 'package:profile/features/contact/presentation/pages/contact_page.dart';
+import 'package:profile/features/engineering/presentation/pages/engineering_page.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
-import 'package:profile/features/hats/page/hats_grid_page.dart';
+import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/main.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 import 'helpers/test_data.dart';
 
 /// What a screen reader announces for each control, section by section.
@@ -161,7 +161,7 @@ void main() {
   for (final entry in pages.entries) {
     testWidgets('${entry.key}, below the fold too', (tester) async {
       final handle = tester.ensureSemantics();
-      tester.view.physicalSize = const Size(1440, 5000);
+      tester.view.physicalSize = const Size(6000, 5000);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);

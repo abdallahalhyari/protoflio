@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/shell/widget/desktop_keyboard_nav.dart';
+import 'package:profile/features/shell/presentation/widgets/desktop_keyboard_nav.dart';
 
 /// The section shortcuts (1–7, Space, arrows, Home / End, "/") listen on
 /// the whole page. Typing "5" in the skills search used to jump to a

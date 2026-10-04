@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/skills/presentation/bloc/skills_filter_bloc.dart';
 import 'package:profile/features/skills/presentation/bloc/skills_filter_event.dart';
 import 'package:profile/features/skills/presentation/bloc/skills_filter_state.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
-import 'package:profile/shared/util/grid_math.dart';
-import 'package:profile/shared/widget/screen_shell.dart';
+import 'package:profile/shared/utils/grid_math.dart';
+import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/features/skills/presentation/widgets/bento_skill_tile.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_category_filters.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_empty_state.dart';
@@ -91,7 +91,6 @@ class _SkillsPageViewState extends State<_SkillsPageView>
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final scheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.sizeOf(context);
     final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocBuilder<SkillsFilterBloc, SkillsFilterState>(

@@ -1,4 +1,4 @@
-import 'package:profile/shared/util/bundled_json.dart';
+import 'package:profile/shared/utils/bundled_json.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 

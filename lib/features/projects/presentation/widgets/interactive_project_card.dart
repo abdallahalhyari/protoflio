@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
-import 'package:profile/features/case_study/case_study_router.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_router.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/presentation/pages/project_modal.dart';
-import 'package:profile/shared/widget/holographic_physics.dart';
+import 'package:profile/shared/widgets/holographic_physics.dart';
 import 'package:profile/features/projects/presentation/widgets/card/project_card_hero.dart';
 import 'package:profile/features/projects/presentation/widgets/card/project_card_body.dart';
 
@@ -86,7 +86,6 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                 duration: AppMotion.cardHover,
                 curve: AppMotion.emphasized,
                 child: HolographicCardPhysics(
-                  enableGlare: false,
                   child: Card(
                     margin: EdgeInsets.zero,
                     clipBehavior: Clip.antiAlias,
@@ -94,7 +93,8 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                     shadowColor: isDark
                         ? Colors.transparent
                         : (isInteractive
-                            ? Color.lerp(widget.scheme.primary, Colors.black, 0.5)!
+                            ? Color.lerp(
+                                    widget.scheme.primary, Colors.black, 0.5)!
                                 .withValues(alpha: 0.3)
                             : AppColors.shadowSoft),
                     shape: RoundedRectangleBorder(

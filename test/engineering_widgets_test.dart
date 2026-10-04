@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/engineering/data/architecture_data.dart';
-import 'package:profile/features/engineering/widget/architecture_details_card.dart';
-import 'package:profile/features/engineering/widget/architecture_diagram_card.dart';
-import 'package:profile/features/engineering/widget/architecture_inspect_modal.dart';
-import 'package:profile/features/engineering/widget/architecture_topic_tabs.dart';
-import 'package:profile/features/engineering/widget/engineering_header.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/features/engineering/data/datasources/architecture_data.dart';
+import 'package:profile/features/engineering/presentation/widgets/architecture_details_card.dart';
+import 'package:profile/features/engineering/presentation/widgets/architecture_diagram_card.dart';
+import 'package:profile/features/engineering/presentation/widgets/architecture_inspect_modal.dart';
+import 'package:profile/features/engineering/presentation/widgets/architecture_topic_tabs.dart';
+import 'package:profile/features/engineering/presentation/widgets/engineering_header.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
   return MaterialApp(
