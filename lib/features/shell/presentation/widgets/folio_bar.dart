@@ -37,15 +37,19 @@ class FolioBar extends StatelessWidget {
               color: context.glassSurface,
               borderRadius: BorderRadius.circular(AppRadius.xs),
               border: Border.all(color: context.glassBorder),
-              boxShadow: context.isDarkMode
-                  ? null
-                  : [
-                      BoxShadow(
-                        color: AppColors.shadowSoft,
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+              boxShadow: [
+                BoxShadow(
+                  color: context.isDarkMode
+                      ? Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.08)
+                      : AppColors.shadowSoft,
+                  blurRadius: 12,
+                  spreadRadius: 1,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -200,42 +204,54 @@ class _NextStepState extends State<_NextStep> {
         cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => _hovered = true),
         onExit: (_) => setState(() => _hovered = false),
-        child: InkWell(
-          onTap: () => widget.onGoTo(target),
-          borderRadius: BorderRadius.circular(AppRadius.xs),
-          child: Padding(
-            // 28px tall hit area around the micro label.
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AnimatedSwitcher(
-                  duration: AppMotion.switcher,
-                  child: Text(
-                    label,
-                    key: ValueKey<String>(label),
-                    style: TextStyle(
-                      color: _hovered ? accent : context.mutedText,
-                      fontSize: AppTypography.micro,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.5,
+        child: AnimatedContainer(
+          duration: AppMotion.xs,
+          decoration: BoxDecoration(
+            color: _hovered
+                ? Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withValues(alpha: context.isDarkMode ? 0.15 : 0.08)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadius.xs),
+          ),
+          child: InkWell(
+            onTap: () => widget.onGoTo(target),
+            borderRadius: BorderRadius.circular(AppRadius.xs),
+            child: Padding(
+              // 28px tall hit area around the micro label.
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AnimatedSwitcher(
+                    duration: AppMotion.switcher,
+                    child: Text(
+                      label,
+                      key: ValueKey<String>(label),
+                      style: TextStyle(
+                        color: _hovered ? accent : context.mutedText,
+                        fontSize: AppTypography.micro,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1.5,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 4),
-                AnimatedSlide(
-                  offset: _hovered && !reduce
-                      ? Offset(isLast ? 0 : 0.25, isLast ? -0.25 : 0)
-                      : Offset.zero,
-                  duration: AppMotion.chipHover,
-                  curve: AppMotion.emphasized,
-                  child: isLast
-                      ? Icon(Icons.arrow_upward_rounded,
-                          size: 12, color: accent)
-                      : DirIcon(Icons.arrow_forward_rounded,
-                          size: 12, color: accent),
-                ),
-              ],
+                  const SizedBox(width: 4),
+                  AnimatedSlide(
+                    offset: _hovered && !reduce
+                        ? Offset(isLast ? 0 : 0.25, isLast ? -0.25 : 0)
+                        : Offset.zero,
+                    duration: AppMotion.chipHover,
+                    curve: AppMotion.emphasized,
+                    child: isLast
+                        ? Icon(Icons.arrow_upward_rounded,
+                            size: 12, color: accent)
+                        : DirIcon(Icons.arrow_forward_rounded,
+                            size: 12, color: accent),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

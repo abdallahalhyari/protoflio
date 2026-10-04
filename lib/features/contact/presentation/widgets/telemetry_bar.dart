@@ -22,7 +22,7 @@ class _TelemetryBarState extends State<TelemetryBar> {
   @override
   void initState() {
     super.initState();
-    _clockTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+    _clockTimer = Timer.periodic(const Duration(seconds: 10), (_) {
       if (mounted) setState(() => _now = DateTime.now());
     });
   }
@@ -35,14 +35,15 @@ class _TelemetryBarState extends State<TelemetryBar> {
 
   @override
   Widget build(BuildContext context) {
-    // Amman time (UTC+3). _now is refreshed via a 30s Timer so the pill
-    // ticks live instead of freezing at first paint, without rebuilding ContactPage.
+    // Amman time (UTC+3). _now is refreshed via a 10s Timer so the pill
+    // ticks live with updated time and celestial phase.
     final ammanTime = _now.toUtc().add(const Duration(hours: 3));
     final hour = ammanTime.hour;
     final minute = ammanTime.minute.toString().padLeft(2, '0');
     final period = hour >= 12 ? 'PM' : 'AM';
     final displayHour = hour == 0 ? 12 : (hour > 12 ? hour - 12 : hour);
     final isOfficeHours = hour >= 9 && hour < 19;
+    final isDaytime = hour >= 6 && hour < 18;
     final isDark = context.isDarkMode;
 
     Widget pill({required Widget child, Color? border}) => Container(
@@ -98,7 +99,9 @@ class _TelemetryBarState extends State<TelemetryBar> {
           ),
           EditorialChip(
             label: 'AMMAN $displayHour:$minute $period (UTC+3)',
-            icon: Icons.access_time_rounded,
+            icon:
+                isDaytime ? Icons.wb_sunny_rounded : Icons.nights_stay_rounded,
+            tone: isDaytime ? ChipTone.amber : ChipTone.indigo,
             variant: ChipVariant.glass,
           ),
           EditorialChip(

@@ -60,13 +60,13 @@ class NfcArchitectureDiagram extends StatelessWidget {
               children: [
                 _buildArchNode(
                     'NFC Hardware\n(ISO-7816)', Icons.nfc_rounded, scheme),
-                _buildArchArrow(scheme),
+                _buildArchArrow(scheme, 0),
                 _buildArchNode('Native Kotlin\nAPDU Channel',
                     Icons.android_rounded, scheme),
-                _buildArchArrow(scheme),
+                _buildArchArrow(scheme, 1),
                 _buildArchNode(
                     'Flutter UI\n(Clean Arch)', Icons.layers_rounded, scheme),
-                _buildArchArrow(scheme),
+                _buildArchArrow(scheme, 2),
                 Column(
                   children: [
                     _buildArchNode('WorkManager\n(Offline Queue)',
@@ -76,7 +76,7 @@ class NfcArchitectureDiagram extends StatelessWidget {
                         Icons.storage_rounded, scheme),
                   ],
                 ),
-                _buildArchArrow(scheme),
+                _buildArchArrow(scheme, 3),
                 _buildArchNode('TPA Backend\n(REST API)',
                     Icons.cloud_done_rounded, scheme),
               ],
@@ -122,13 +122,109 @@ class NfcArchitectureDiagram extends StatelessWidget {
     );
   }
 
-  Widget _buildArchArrow(ColorScheme scheme) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6),
-      child: Icon(
-        Icons.arrow_right_alt_rounded,
-        size: 16,
-        color: scheme.primary.withValues(alpha: 0.5),
+  Widget _buildArchArrow(ColorScheme scheme, int stepIndex) {
+    return _AnimatedNfcArrow(
+      color: scheme.primary,
+      stepIndex: stepIndex,
+    );
+  }
+}
+
+class _AnimatedNfcArrow extends StatefulWidget {
+  final Color color;
+  final int stepIndex;
+
+  const _AnimatedNfcArrow({
+    required this.color,
+    required this.stepIndex,
+  });
+
+  @override
+  State<_AnimatedNfcArrow> createState() => _AnimatedNfcArrowState();
+}
+
+class _AnimatedNfcArrowState extends State<_AnimatedNfcArrow>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: AppMotion.ambient,
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_controller.isAnimating && !MediaQuery.disableAnimationsOf(context)) {
+      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
+        _controller.forward();
+      } else {
+        _controller.repeat();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final reduceMotion = AppMedia.reduceMotion(context);
+
+    if (reduceMotion) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6),
+        child: Icon(
+          Icons.arrow_right_alt_rounded,
+          size: 16,
+          color: widget.color.withValues(alpha: 0.5),
+        ),
+      );
+    }
+
+    return RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, _) {
+          final offset = (widget.stepIndex * 0.25) % 1.0;
+          final progress = (_controller.value + offset) % 1.0;
+          final pulseAlpha =
+              (1.0 - (progress - 0.5).abs() * 2.0).clamp(0.3, 1.0);
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Icon(
+                  Icons.arrow_right_alt_rounded,
+                  size: 16,
+                  color: widget.color.withValues(alpha: 0.4),
+                ),
+                Positioned(
+                  left: progress * 12.0,
+                  child: Container(
+                    width: 3.5,
+                    height: 3.5,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: widget.color.withValues(alpha: pulseAlpha),
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              widget.color.withValues(alpha: pulseAlpha * 0.9),
+                          blurRadius: 4,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

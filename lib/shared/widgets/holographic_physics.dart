@@ -4,7 +4,7 @@ import 'package:profile/shared/utils/hover_reset_offset_controller.dart';
 import 'package:profile/core/theme/tokens.dart';
 
 /// A high-performance 3D interactive physics wrapper that tilts its child based
-/// on the mouse cursor position and renders a dynamic specular glare.
+/// on the mouse cursor position and renders a dynamic specular glare & metallic sheen.
 ///
 /// Uses [ValueNotifier] and [ValueListenableBuilder] to isolate tilt updates to
 /// the GPU transform layer without triggering full-tree widget rebuilds.
@@ -104,6 +104,8 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
                         ValueListenableBuilder<bool>(
                           valueListenable: _isHovering,
                           builder: (context, hovering, _) {
+                            final primaryColor =
+                                Theme.of(context).colorScheme.primary;
                             return Positioned.fill(
                               child: IgnorePointer(
                                 child: AnimatedOpacity(
@@ -112,27 +114,48 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                         widget.borderRadius),
-                                    child: RepaintBoundary(
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          gradient: RadialGradient(
-                                            center: Alignment(
-                                                norm.dx * 0.8, norm.dy * 0.8),
-                                            radius: 1.2,
-                                            colors: [
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface
-                                                  .withValues(alpha: 0.15),
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface
-                                                  .withValues(alpha: 0.0),
-                                            ],
-                                            stops: const [0.0, 1.0],
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            gradient: RadialGradient(
+                                              center: Alignment(
+                                                  norm.dx * 0.8, norm.dy * 0.8),
+                                              radius: 1.2,
+                                              colors: [
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface
+                                                    .withValues(alpha: 0.12),
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface
+                                                    .withValues(alpha: 0.0),
+                                              ],
+                                              stops: const [0.0, 1.0],
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                        // Metallic specular glare sheen line
+                                        DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment(
+                                                  norm.dx - 1.0, norm.dy - 1.0),
+                                              end: Alignment(
+                                                  norm.dx + 1.0, norm.dy + 1.0),
+                                              colors: [
+                                                Colors.transparent,
+                                                primaryColor.withValues(
+                                                    alpha: 0.08),
+                                                Colors.transparent,
+                                              ],
+                                              stops: const [0.35, 0.5, 0.65],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
