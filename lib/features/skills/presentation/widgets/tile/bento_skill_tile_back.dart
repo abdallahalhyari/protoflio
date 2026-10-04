@@ -22,6 +22,8 @@ class TileBackFace extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
     final accentText = context.adaptiveAccentText(categoryColor);
+    final pct = (skill.level * 100).toInt();
+
     return DecoratedBox(
       decoration: BoxDecoration(
         color: context.cardGlassHover,
@@ -116,8 +118,37 @@ class TileBackFace extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(height: isDesktop ? 8 : 6),
+                    Row(
+                      children: [
+                        Text(
+                          'MASTERY $pct%',
+                          style: TextStyle(
+                            fontFamily: AppTypography.monoFont,
+                            color: accentText,
+                            fontSize: AppTypography.nano,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(AppRadius.xs),
+                            child: LinearProgressIndicator(
+                              value: skill.level,
+                              minHeight: 4,
+                              backgroundColor: categoryColor.withValues(
+                                  alpha: isDark ? 0.15 : 0.10),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                categoryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     if (skill.tags.isNotEmpty) ...[
-                      SizedBox(height: isDesktop ? 12 : 8),
+                      SizedBox(height: isDesktop ? 10 : 6),
                       Wrap(
                         spacing: 4,
                         runSpacing: 4,
