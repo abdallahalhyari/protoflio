@@ -1,4 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/core/usecases/usecase.dart';
+import 'package:profile/features/contact/domain/repositories/contact_repository.dart';
+import 'package:profile/features/contact/domain/usecases/get_inquiry_tracks_usecase.dart';
 import 'package:profile/features/contact/presentation/bloc/contact_inquiry_event.dart';
 import 'package:profile/features/contact/presentation/bloc/contact_inquiry_state.dart';
 
@@ -7,8 +10,25 @@ class ContactInquiryBloc
   ContactInquiryBloc({
     int initialTrackIndex = 0,
     List<InquiryTrackInfo>? tracks,
+    ContactRepository? repository,
   }) : super(_createInitialState(
-            initialTrackIndex, tracks ?? kDefaultInquiryTracks)) {
+          initialTrackIndex,
+          tracks ?? repository?.getInquiryTracks() ?? kDefaultInquiryTracks,
+        )) {
+    _registerHandlers();
+  }
+
+  ContactInquiryBloc.withUseCase({
+    required GetInquiryTracksUseCase getTracksUseCase,
+    int initialTrackIndex = 0,
+  }) : super(_createInitialState(
+          initialTrackIndex,
+          getTracksUseCase(const NoParams()),
+        )) {
+    _registerHandlers();
+  }
+
+  void _registerHandlers() {
     on<InquiryTrackChanged>(_onTrackChanged);
     on<InquiryNameChanged>(_onNameChanged);
     on<InquiryCompanyChanged>(_onCompanyChanged);

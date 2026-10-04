@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
+import 'package:profile/features/hats/domain/usecases/get_hats_usecase.dart';
 import 'package:profile/features/hats/presentation/bloc/hats_deck_event.dart';
 import 'package:profile/features/hats/presentation/bloc/hats_deck_state.dart';
 
@@ -19,6 +20,16 @@ class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
   HatsDeckBloc({required HatRepository repository})
       : count = repository.getHatCount(),
         super(_createInitialState(repository.getHatCount())) {
+    _registerHandlers();
+  }
+
+  HatsDeckBloc.withUseCase({required GetHatsUseCase getHatsUseCase})
+      : count = getHatsUseCase.getHatCount(),
+        super(_createInitialState(getHatsUseCase.getHatCount())) {
+    _registerHandlers();
+  }
+
+  void _registerHandlers() {
     on<HatRoleSelected>(_onRoleSelected);
     on<HatNextRole>(_onNextRole);
     on<HatPrevRole>(_onPrevRole);

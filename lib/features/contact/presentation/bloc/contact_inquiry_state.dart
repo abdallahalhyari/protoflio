@@ -1,53 +1,14 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart' show IconData, Icons;
+import 'package:profile/features/contact/data/datasources/contact_local_data_source.dart';
+import 'package:profile/features/contact/domain/entities/inquiry_track.dart';
+import 'package:profile/features/contact/domain/usecases/format_inquiry_message_usecase.dart';
 
-class InquiryTrackInfo extends Equatable {
-  final String title;
-  final IconData icon;
-  final String subject;
-  final String defaultBody;
+/// Type alias for backward compatibility with existing UI widgets.
+typedef InquiryTrackInfo = InquiryTrack;
 
-  const InquiryTrackInfo({
-    required this.title,
-    required this.icon,
-    required this.subject,
-    required this.defaultBody,
-  });
-
-  @override
-  List<Object?> get props => [title, icon, subject, defaultBody];
-}
-
-const List<InquiryTrackInfo> kDefaultInquiryTracks = [
-  InquiryTrackInfo(
-    title: 'Role Opportunity',
-    icon: Icons.work_outline_rounded,
-    subject: '[Role Opportunity] Senior Mobile Engineer - Abdallah Alhyari',
-    defaultBody:
-        'Hi Abdallah,\n\nI reviewed your portfolio and would like to discuss a Senior Mobile Engineer (Flutter) position at our company.\n\nLooking forward to scheduling an introductory conversation.',
-  ),
-  InquiryTrackInfo(
-    title: 'Architecture Audit',
-    icon: Icons.architecture_rounded,
-    subject: '[Architecture Review] Mobile Codebase Audit - Abdallah Alhyari',
-    defaultBody:
-        'Hi Abdallah,\n\nWe are looking for an expert architectural audit and performance profiling for our enterprise mobile codebase.\n\nPlease let us know your availability for a technical discovery call.',
-  ),
-  InquiryTrackInfo(
-    title: 'Production App',
-    icon: Icons.bolt_rounded,
-    subject: '[Project Inquiry] Enterprise Mobile System - Abdallah Alhyari',
-    defaultBody:
-        'Hi Abdallah,\n\nWe are planning to build a high-performance cross-platform system requiring offline-first synchronization and robust security.\n\nWe would love to explore an engagement scope.',
-  ),
-  InquiryTrackInfo(
-    title: 'Tech Advisory',
-    icon: Icons.coffee_rounded,
-    subject: '[Connect] Tech Advisory & Coffee - Abdallah Alhyari',
-    defaultBody:
-        'Hi Abdallah,\n\nI’d love to connect for a 20-minute chat regarding mobile engineering, smart-card integrations, and architecture.',
-  ),
-];
+/// Default inquiry tracks provided via data source.
+const List<InquiryTrackInfo> kDefaultInquiryTracks =
+    ContactLocalDataSourceImpl.defaultTracks;
 
 class ContactInquiryState extends Equatable {
   final List<InquiryTrackInfo> tracks;
@@ -69,20 +30,13 @@ class ContactInquiryState extends Equatable {
 
   String get activeSubject => currentTrack.subject;
 
-  String get formattedMessage {
-    final buffer = StringBuffer();
-    final cleanName = name.trim();
-    final cleanCompany = company.trim();
-    final cleanBody = body.trim();
-
-    if (cleanName.isNotEmpty || cleanCompany.isNotEmpty) {
-      buffer.writeln(
-          'FROM: ${cleanName.isNotEmpty ? cleanName : 'Visitor'}${cleanCompany.isNotEmpty ? ' ($cleanCompany)' : ''}');
-      buffer.writeln('---');
-    }
-    buffer.writeln(cleanBody);
-    return buffer.toString();
-  }
+  String get formattedMessage => const FormatInquiryMessageUseCase().call(
+        FormatInquiryParams(
+          name: name,
+          company: company,
+          body: body,
+        ),
+      );
 
   ContactInquiryState copyWith({
     List<InquiryTrackInfo>? tracks,

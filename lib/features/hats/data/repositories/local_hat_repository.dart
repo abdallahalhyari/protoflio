@@ -1,14 +1,16 @@
-import 'package:profile/shared/utils/bundled_json.dart';
+import 'package:profile/features/hats/data/datasources/hat_local_data_source.dart';
 import 'package:profile/features/hats/domain/entities/hat_info.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 
 class LocalHatRepository implements HatRepository {
+  final HatLocalDataSource dataSource;
   List<HatInfo> _hats = [];
 
+  LocalHatRepository([HatLocalDataSource? dataSource])
+      : dataSource = dataSource ?? const HatLocalDataSourceImpl();
+
   Future<void> load() async {
-    final list = await loadBundledJsonList('assets/data/hats.json');
-    _hats = List.unmodifiable(
-        list.map((e) => HatInfo.fromJson(e as Map<String, dynamic>)));
+    _hats = await dataSource.getBundledHats();
   }
 
   @override

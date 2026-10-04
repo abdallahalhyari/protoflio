@@ -5,6 +5,11 @@ import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:profile/core/di/injection.dart';
+import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
+import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
+import 'package:profile/features/projects/domain/repositories/project_repository.dart';
+import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
 import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
@@ -149,10 +154,18 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
       initLocale = const Locale('en');
     }
 
-    final projectRepo = LocalProjectRepository();
-    final experienceRepo = LocalExperienceRepository();
-    final hatRepo = LocalHatRepository();
-    final skillRepo = LocalSkillRepository();
+    if (!ServiceLocator.instance.isRegistered<ProjectRepository>()) {
+      ServiceLocator.instance.setup();
+    }
+
+    final projectRepo = ServiceLocator.instance.get<ProjectRepository>()
+        as LocalProjectRepository;
+    final experienceRepo = ServiceLocator.instance.get<ExperienceRepository>()
+        as LocalExperienceRepository;
+    final hatRepo =
+        ServiceLocator.instance.get<HatRepository>() as LocalHatRepository;
+    final skillRepo =
+        ServiceLocator.instance.get<SkillRepository>() as LocalSkillRepository;
 
     await loadInitialData(
       projectRepo: projectRepo,

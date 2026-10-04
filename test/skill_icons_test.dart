@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/skills/domain/entities/skill.dart';
+import 'package:profile/features/skills/data/models/skill_model.dart';
 
 void main() {
   // Release builds tree-shake icons, so skills.json can only use code points
