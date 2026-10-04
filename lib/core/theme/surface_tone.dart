@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 /// Extension on [BuildContext] that resolves the "glass surface" recipe
 /// widgets across `lib/module/home/` were previously hand-rolling via

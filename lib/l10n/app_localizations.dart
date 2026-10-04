@@ -484,12 +484,6 @@ abstract class AppLocalizations {
   /// **'ISSUE 01 · PORTFOLIO EDITION · MMXXVI'**
   String get introIssueStrip;
 
-  /// No description provided for @introBuildsComplex.
-  ///
-  /// In en, this message translates to:
-  /// **'BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS'**
-  String get introBuildsComplex;
-
   /// No description provided for @introTechStack.
   ///
   /// In en, this message translates to:
@@ -874,23 +868,11 @@ abstract class AppLocalizations {
   /// **'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.'**
   String get skillsHeaderSubtitle;
 
-  /// No description provided for @sectionSubtitleSkills.
-  ///
-  /// In en, this message translates to:
-  /// **'Disciplines and stack the work is built on · Flip any card for details'**
-  String get sectionSubtitleSkills;
-
   /// No description provided for @sectionSubtitleEngineering.
   ///
   /// In en, this message translates to:
   /// **'Production-tested architectures behind the mobile suites'**
   String get sectionSubtitleEngineering;
-
-  /// No description provided for @sectionSubtitleAbout.
-  ///
-  /// In en, this message translates to:
-  /// **'Six roles a senior engineer switches between'**
-  String get sectionSubtitleAbout;
 
   /// Hint on flippable skill / role cards for touch viewports.
   ///

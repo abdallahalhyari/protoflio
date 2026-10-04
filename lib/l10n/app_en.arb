@@ -78,7 +78,6 @@
     }
   },
   "introIssueStrip": "ISSUE 01 · PORTFOLIO EDITION · MMXXVI",
-  "introBuildsComplex": "BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS",
   "introTechStack": "Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems",
   "introBasedIn": "BASED IN",
   "introStatus": "STATUS",
@@ -200,9 +199,7 @@
   "skillsHeaderKicker": "FEATURE 04 · SYSTEMS & DELIVERY",
   "skillsHeaderTitle": "STACK & ENGINEERING",
   "skillsHeaderSubtitle": "Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.",
-  "sectionSubtitleSkills": "Disciplines and stack the work is built on · Flip any card for details",
   "sectionSubtitleEngineering": "Production-tested architectures behind the mobile suites",
-  "sectionSubtitleAbout": "Six roles a senior engineer switches between",
   "flipHintTap": "TAP TO FLIP",
   "flipHintClick": "CLICK TO FLIP",
   "@flipHintTap": {

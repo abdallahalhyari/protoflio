@@ -15,9 +15,9 @@ import 'package:profile/features/projects/domain/repositories/project_repository
 import 'package:profile/features/shell/presentation/pages/home_screen.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/widget/keyboard_focus_ring.dart';
-import 'package:profile/theme/app_theme.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/shared/widgets/keyboard_focus_ring.dart';
+import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 Future<void> main() async {
   // UrlSyncService owns the URL hash (`#work`, `#work/<slug>`). Flutter's

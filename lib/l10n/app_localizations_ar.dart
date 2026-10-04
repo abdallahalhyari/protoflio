@@ -213,10 +213,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introIssueStrip => 'الإصدار 01 · نسخة معرض الأعمال · 2026';
 
   @override
-  String get introBuildsComplex =>
-      'يبني أنظمة هواتف محمولة معقدة، موثوقة، وقابلة للتوسع';
-
-  @override
   String get introTechStack =>
       'فلاتر · أندرويد · آي أو إس · معمارية برمجيات · أنظمة دون اتصال · NFC · أمان · أنظمة الوقت الفعلي';
 
@@ -438,15 +434,8 @@ class AppLocalizationsAr extends AppLocalizations {
       'فلاتر وأندرويد، وبنية المنصات، والأمان، وأنظمة التسليم لبناء منتجات مرنة وتجارب جديرة بالثقة.';
 
   @override
-  String get sectionSubtitleSkills =>
-      'التخصصات والتقنيات التي يقوم عليها العمل · اقلب أي بطاقة لعرض التفاصيل';
-
-  @override
   String get sectionSubtitleEngineering =>
       'هياكل معمارية مُختبَرة في بيئات الإنتاج خلف تطبيقات الهاتف';
-
-  @override
-  String get sectionSubtitleAbout => 'ستة أدوار يتنقّل بينها المهندس الخبير';
 
   @override
   String get flipHintTap => 'اضغط للقلب';

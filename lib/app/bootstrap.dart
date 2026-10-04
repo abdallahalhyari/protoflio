@@ -9,9 +9,9 @@ import 'package:profile/features/experience/data/repositories/local_experience_r
 import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/app_theme.dart';
-import 'package:profile/theme/tokens/colors.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/core/theme/tokens/colors.dart';
 
 const _themePrefsKey = ThemeBloc.prefsKey;
 const _localePrefsKey = LocaleBloc.prefsKey;

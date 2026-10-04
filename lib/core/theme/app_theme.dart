@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/tokens.dart';
-import 'package:profile/theme/components/button_theme.dart';
-import 'package:profile/theme/components/input_theme.dart';
-import 'package:profile/theme/components/surface_theme.dart';
-import 'package:profile/theme/components/text_theme.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/core/theme/components/button_theme.dart';
+import 'package:profile/core/theme/components/input_theme.dart';
+import 'package:profile/core/theme/components/surface_theme.dart';
+import 'package:profile/core/theme/components/text_theme.dart';
 
 /// App-wide light + dark ThemeData composed from tokens in [tokens.dart].
 class AppTheme {

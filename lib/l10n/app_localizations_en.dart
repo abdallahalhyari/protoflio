@@ -215,10 +215,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introIssueStrip => 'ISSUE 01 · PORTFOLIO EDITION · MMXXVI';
 
   @override
-  String get introBuildsComplex =>
-      'BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS';
-
-  @override
   String get introTechStack =>
       'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems';
 
@@ -441,16 +437,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.';
 
   @override
-  String get sectionSubtitleSkills =>
-      'Disciplines and stack the work is built on · Flip any card for details';
-
-  @override
   String get sectionSubtitleEngineering =>
       'Production-tested architectures behind the mobile suites';
-
-  @override
-  String get sectionSubtitleAbout =>
-      'Six roles a senior engineer switches between';
 
   @override
   String get flipHintTap => 'TAP TO FLIP';

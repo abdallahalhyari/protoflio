@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:profile/service/url_sync_service.dart';
+import 'package:profile/core/services/url_sync_service.dart';
 
 UrlSyncService createUrlSyncService() => UrlSyncServiceStub();
 

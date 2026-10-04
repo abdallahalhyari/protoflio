@@ -1,4 +1,4 @@
-import 'package:profile/service/url_sync_service_stub.dart'
+import 'package:profile/core/services/url_sync_service_stub.dart'
     if (dart.library.js_interop) 'url_sync_service_web.dart';
 
 abstract class UrlSyncService {

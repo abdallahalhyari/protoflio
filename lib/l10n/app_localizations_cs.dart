@@ -214,10 +214,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introIssueStrip => 'VYDÁNÍ 01 · EDICE PORTFOLIO · MMXXVI';
 
   @override
-  String get introBuildsComplex =>
-      'BUDUJE KOMPLEXNÍ, SPOLEHLIVÉ, ŠKÁLOVATELNÉ MOBILNÍ SYSTÉMY';
-
-  @override
   String get introTechStack =>
       'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
 
@@ -441,16 +437,8 @@ class AppLocalizationsCs extends AppLocalizations {
       'Flutter, Android, architektura platforem, zabezpečení a systémy dodávání pro odolné produktové týmy a důvěryhodné aplikace.';
 
   @override
-  String get sectionSubtitleSkills =>
-      'Disciplíny a technologie, na kterých práce stojí · Otočte kartu pro podrobnosti';
-
-  @override
   String get sectionSubtitleEngineering =>
       'Architektury ověřené v produkci, na kterých stojí mobilní aplikace';
-
-  @override
-  String get sectionSubtitleAbout =>
-      'Šest rolí, mezi kterými senior inženýr přepíná';
 
   @override
   String get flipHintTap => 'KLEPNĚTE A OTOČTE';
