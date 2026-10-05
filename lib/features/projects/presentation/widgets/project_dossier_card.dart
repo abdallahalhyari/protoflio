@@ -32,15 +32,17 @@ class ProjectDossierCard extends StatelessWidget {
           color: isDark
               ? accentColor.withValues(alpha: 0.08)
               : Colors.white.withValues(alpha: 0.90),
-          borderRadius: BorderRadius.circular(AppRadius.smd),
+          borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
               color: (isDark ? accentColor : effectiveAccent)
-                  .withValues(alpha: isDark ? 0.28 : 0.4)),
+                  .withValues(alpha: isDark ? 0.32 : 0.45),
+              width: 1.1),
           boxShadow: [
             BoxShadow(
               color: (isDark ? accentColor : effectiveAccent)
-                  .withValues(alpha: isDark ? 0.05 : 0.04),
-              blurRadius: 10,
+                  .withValues(alpha: isDark ? 0.06 : 0.04),
+              blurRadius: 12,
+              offset: const Offset(0, 3),
             ),
           ],
         ),

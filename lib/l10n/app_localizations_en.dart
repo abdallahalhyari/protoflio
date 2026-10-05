@@ -12,7 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navHome => 'Home';
 
   @override
-  String get navWork => 'Selected Work';
+  String get navWork => 'Projects';
 
   @override
   String get navEngineering => 'Engineering';
@@ -33,7 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navResume => 'Resume';
 
   @override
-  String get introLocation => 'Amman, Jordan › Brno, Czech Republic (2027)';
+  String get introLocation => 'Amman → Brno · 2027';
 
   @override
   String get sectionEducation => 'EDUCATION';
@@ -125,14 +125,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copyEmail => 'COPY EMAIL';
 
   @override
-  String get introSeniorEngineer => 'SENIOR MOBILE ENGINEER';
+  String get introSeniorEngineer => 'SENIOR FLUTTER & ANDROID ENGINEER';
 
   @override
-  String get introRoleHeading => 'SENIOR MOBILE ENGINEER';
+  String get introRoleHeading => 'SENIOR FLUTTER & ANDROID ENGINEER';
 
   @override
   String get introValueProposition =>
-      'I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.';
+      'I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.';
 
   @override
   String get introSkillArchitecture => 'Architecture';
@@ -141,7 +141,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSkillProductDelivery => 'Product delivery';
 
   @override
-  String get introWorkEligibility => 'CZ WORK ELIGIBLE · STUDENT';
+  String get introWorkEligibility =>
+      'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES';
 
   @override
   String get introAvailableContracts => 'AVAILABLE FOR CONTRACTS';
@@ -212,26 +213,27 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip => 'ISSUE 01 · PORTFOLIO EDITION · MMXXVI';
+  String get introIssueStrip =>
+      'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE';
 
   @override
   String get introTechStack =>
       'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems';
 
   @override
-  String get introBasedIn => 'BASED IN';
+  String get introBasedIn => 'LOCATION';
 
   @override
-  String get introStatus => 'STATUS';
+  String get introStatus => 'AVAILABILITY';
 
   @override
-  String get introOpenForRoles => 'OPEN FOR SENIOR ROLES';
+  String get introOpenForRoles => 'Open to Senior Mobile Roles';
 
   @override
-  String get introDiscipline => 'DISCIPLINE';
+  String get introDiscipline => 'SPECIALIZATION';
 
   @override
-  String get introMobileArch => 'MOBILE ARCHITECTURE';
+  String get introMobileArch => 'Flutter · Android · Mobile Architecture';
 
   @override
   String get introMasthead => '// MASTHEAD';

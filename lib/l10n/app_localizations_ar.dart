@@ -12,7 +12,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navHome => 'الرئيسية';
 
   @override
-  String get navWork => 'أبرز الأعمال';
+  String get navWork => 'المشاريع';
 
   @override
   String get navEngineering => 'الهندسة';
@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navResume => 'السيرة الذاتية';
 
   @override
-  String get introLocation => 'عمان، الأردن ‹ برنو، التشيك (2027)';
+  String get introLocation => 'عمان → برنو · 2027';
 
   @override
   String get sectionEducation => 'التعليم';
@@ -141,7 +141,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSkillProductDelivery => 'تسليم المنتجات';
 
   @override
-  String get introWorkEligibility => 'مؤهل للعمل في التشيك · طالب';
+  String get introWorkEligibility =>
+      'الانتقال إلى برنو · 2027   •   متاح لأدوار مهندس أول';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
@@ -217,19 +218,19 @@ class AppLocalizationsAr extends AppLocalizations {
       'فلاتر · أندرويد · آي أو إس · معمارية برمجيات · أنظمة دون اتصال · NFC · أمان · أنظمة الوقت الفعلي';
 
   @override
-  String get introBasedIn => 'مقر العمل';
+  String get introBasedIn => 'الموقع';
 
   @override
   String get introStatus => 'الحالة';
 
   @override
-  String get introOpenForRoles => 'متاح للأدوار القيادية';
+  String get introOpenForRoles => 'متاح لأدوار هندسية قيادية';
 
   @override
   String get introDiscipline => 'التخصص';
 
   @override
-  String get introMobileArch => 'بنية تطبيقات الهواتف';
+  String get introMobileArch => 'فلاتر · أندرويد · معمارية الجوال';
 
   @override
   String get introMasthead => '// الترويسة';

@@ -25,14 +25,14 @@ class IntroAvailabilityBanner extends StatelessWidget {
         child: Container(
           // A status tag, not an action: compact and borderless so it no
           // longer reads as a fifth button next to the CTAs.
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: isDark
                 ? accent.withValues(alpha: 0.12)
                 : accent.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(AppRadius.smd),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
             border: Border.all(
-              color: accent.withValues(alpha: isDark ? 0.32 : 0.22),
+              color: accent.withValues(alpha: isDark ? 0.35 : 0.25),
             ),
             boxShadow: [
               BoxShadow(
@@ -72,7 +72,9 @@ class IntroAvailabilityBanner extends StatelessWidget {
                   loc.introWorkEligibility,
                   style: TextStyle(
                     color: context.onSurface,
-                    fontSize: isWide ? 11 : 10,
+                    fontSize: isWide
+                        ? AppTypography.captionSm
+                        : AppTypography.caption,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                   ),

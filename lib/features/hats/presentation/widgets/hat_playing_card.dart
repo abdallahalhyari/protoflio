@@ -153,6 +153,7 @@ class _HatPlayingCardState extends State<HatPlayingCard>
         },
         child: HolographicCardPhysics(
           maxTiltAngle: 0.25,
+          enableGlare: false,
           child: Builder(
             builder: (context) {
               final Widget frontCard = CardFrontFace(
@@ -182,21 +183,23 @@ class _HatPlayingCardState extends State<HatPlayingCard>
                   final entranceAngle =
                       reduce ? 0.0 : _entranceAnimation.value * math.pi;
                   final isUnder = angle > math.pi / 2;
-                  final double hoverLift =
-                      (_isHovered && !reduce) ? -10.0 : 0.0;
-                  return ExcludeSemantics(
-                    excluding: !isUnder,
-                    child: Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.identity()
-                        ..translateByDouble(0.0, hoverLift, 0.0, 1.0)
-                        ..rotateZ(widget.isStandalone
-                            ? 0.0
-                            : widget.rotation + _rotationDelta.value)
-                        ..setEntry(3, 2, 0.0015)
-                        ..rotateY(angle + entranceAngle),
-                      child: RepaintBoundary(
-                        child: isUnder ? backCard : frontCard,
+                  return AnimatedSlide(
+                    offset: Offset(0, (_isHovered && !reduce) ? -0.03 : 0.0),
+                    duration: AppMotion.cardHover,
+                    curve: AppMotion.emphasizedDecel,
+                    child: ExcludeSemantics(
+                      excluding: !isUnder,
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..rotateZ(widget.isStandalone
+                              ? 0.0
+                              : widget.rotation + _rotationDelta.value)
+                          ..setEntry(3, 2, 0.0015)
+                          ..rotateY(angle + entranceAngle),
+                        child: RepaintBoundary(
+                          child: isUnder ? backCard : frontCard,
+                        ),
                       ),
                     ),
                   );

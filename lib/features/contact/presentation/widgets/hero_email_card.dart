@@ -156,7 +156,7 @@ class HeroEmailCard extends StatelessWidget {
       padding: EdgeInsets.all(isDesktop ? AppSpacing.lg : AppSpacing.md),
       decoration: BoxDecoration(
         color: context.cardGlass,
-        borderRadius: BorderRadius.circular(AppRadius.card),
+        borderRadius: BorderRadius.circular(AppRadius.container),
         border: Border.all(
           color: accent.withValues(alpha: isDark ? 0.45 : 0.35),
           width: 1.4,

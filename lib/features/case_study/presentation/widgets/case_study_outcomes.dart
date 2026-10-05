@@ -27,8 +27,16 @@ class OutcomeCard extends StatelessWidget {
               : Colors.white.withValues(alpha: 0.75),
           borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(
-            color: scheme.primary.withValues(alpha: isDark ? 0.18 : 0.22),
+            color: scheme.primary.withValues(alpha: isDark ? 0.28 : 0.35),
+            width: 1.2,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: scheme.primary.withValues(alpha: isDark ? 0.06 : 0.04),
+              blurRadius: 12,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

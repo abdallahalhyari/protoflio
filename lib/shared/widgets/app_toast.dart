@@ -1,7 +1,7 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/shared/widgets/conditional_blur.dart';
 
 /// Semantic role for an [AppToast]. `neutral` keeps the theme's inverse
 /// surface look (no accent bar); the rest paint a 4px status-color rail
@@ -143,57 +143,52 @@ class _GlassToastContent extends StatelessWidget {
       liveRegion: true,
       child: ExcludeSemantics(
         child: Center(
-          child: ClipRRect(
+          child: ConditionalBlur(
             borderRadius: BorderRadius.circular(AppRadius.pill),
-            child: BackdropFilter(
-              filter: ui.ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md,
-                  vertical: AppSpacing.smd,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.smd,
+              ),
+              decoration: BoxDecoration(
+                color: context.glassSurface,
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                border: Border.all(
+                  color: accent.withValues(alpha: 0.65),
+                  width: 1.2,
                 ),
-                decoration: BoxDecoration(
-                  color: (isDark ? AppColors.slate900 : Colors.white)
-                      .withValues(alpha: 0.8),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: accent.withValues(alpha: 0.65),
-                    width: 1.2,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: isDark ? 0.45 : 0.12),
+                    blurRadius: 24,
+                    offset: const Offset(0, 8),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          Colors.black.withValues(alpha: isDark ? 0.45 : 0.12),
-                      blurRadius: 24,
-                      offset: const Offset(0, 8),
-                    ),
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (icon != null) ...[
+                    Icon(icon, color: accent, size: AppTypography.subtitle),
+                    const SizedBox(width: AppSpacing.smd),
                   ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (icon != null) ...[
-                      Icon(icon, color: accent, size: AppTypography.subtitle),
-                      const SizedBox(width: AppSpacing.smd),
-                    ],
-                    Flexible(
-                      child: Text(
-                        message,
-                        style: TextStyle(
-                          color: context.onSurface,
-                          fontSize: AppTypography.body,
-                          fontWeight: FontWeight.w600,
-                        ),
+                  Flexible(
+                    child: Text(
+                      message,
+                      style: TextStyle(
+                        color: context.onSurface,
+                        fontSize: AppTypography.body,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ), // BackdropFilter
-          ), // ClipRRect
-        ), // Center
-      ), // ExcludeSemantics
-    ); // Semantics
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

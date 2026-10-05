@@ -58,7 +58,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                   ? Colors.white.withValues(alpha: 0.08)
                   : Colors.white.withValues(alpha: 0.04))
               : (_hover ? Colors.white : AppColors.slate50),
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(
             color: _hover
                 ? (isDark ? t.accent : accentText).withValues(alpha: 0.6)

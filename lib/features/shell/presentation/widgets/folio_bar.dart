@@ -107,34 +107,15 @@ class FolioBar extends StatelessWidget {
                       child: child,
                     ),
                   ),
-                  child: TweenAnimationBuilder<int>(
+                  child: Text(
+                    currentLabel,
                     key: ValueKey<String>(currentLabel),
-                    duration: AppMotion.switcher,
-                    tween: IntTween(begin: 0, end: currentLabel.length),
-                    builder: (context, length, child) {
-                      String scrambled = '';
-                      const chars =
-                          'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#%&*';
-                      for (int i = 0; i < currentLabel.length; i++) {
-                        if (i < length) {
-                          scrambled += currentLabel[i];
-                        } else if (i < length + 3) {
-                          // Deterministic pseudo-random character based on index
-                          scrambled +=
-                              chars[((length * 7) + (i * 13)) % chars.length];
-                        }
-                      }
-
-                      return Text(
-                        currentLabel.isEmpty ? '' : scrambled,
-                        style: TextStyle(
-                          color: context.onSurface,
-                          fontSize: AppTypography.micro,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
-                        ),
-                      );
-                    },
+                    style: TextStyle(
+                      color: context.onSurface,
+                      fontSize: AppTypography.micro,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2,
+                    ),
                   ),
                 )),
                 const SizedBox(width: 8),

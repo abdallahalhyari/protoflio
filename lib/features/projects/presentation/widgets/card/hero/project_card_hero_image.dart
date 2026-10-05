@@ -5,7 +5,6 @@ import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_spotlight.dart';
 import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_metric_badge.dart';
-import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_quick_links.dart';
 
 class CardHeroImage extends StatelessWidget {
   const CardHeroImage({
@@ -48,38 +47,7 @@ class CardHeroImage extends StatelessWidget {
 
                 return Transform.translate(
                   offset: Offset(rx, ry),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      child!,
-                      if (hovered) ...[
-                        // Crazy Chromatic Aberration - Cyan Channel
-                        Transform.translate(
-                          offset: Offset(rx * -1.5, ry * -0.5),
-                          child: Opacity(
-                            opacity: 0.5,
-                            child: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                  Colors.cyanAccent, BlendMode.screen),
-                              child: child,
-                            ),
-                          ),
-                        ),
-                        // Crazy Chromatic Aberration - Red Channel
-                        Transform.translate(
-                          offset: Offset(rx * 2.0, ry * 1.5),
-                          child: Opacity(
-                            opacity: 0.4,
-                            child: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                  Colors.redAccent, BlendMode.screen),
-                              child: child,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
+                  child: child,
                 );
               },
               child: AnimatedScale(
@@ -91,6 +59,7 @@ class CardHeroImage extends StatelessWidget {
                   child: RetryingAssetImage(
                     project.heroImagePath!,
                     fit: BoxFit.cover,
+                    cacheWidth: 800,
                     gaplessPlayback: true,
                   ),
                 ),
@@ -138,18 +107,6 @@ class CardHeroImage extends StatelessWidget {
                 ),
               ),
             ),
-            if (project.url != null ||
-                project.linkedinUrl != null ||
-                caseStudySlug != null)
-              Positioned(
-                top: AppSpacing.sm,
-                right: AppSpacing.sm,
-                child: CompanyQuickLinks(
-                  project: project,
-                  scheme: scheme,
-                  caseStudySlug: caseStudySlug,
-                ),
-              ),
           ],
         ),
       ),

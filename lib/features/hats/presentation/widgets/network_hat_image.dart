@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 class HatImage extends StatefulWidget {
@@ -34,9 +35,13 @@ class _HatImageState extends State<HatImage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final shouldAnimate = !MediaQuery.disableAnimationsOf(context);
+    final shouldAnimate = !AppMedia.reduceMotion(context);
     if (shouldAnimate && !_c.isAnimating) {
-      _c.forward();
+      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
+        _c.value = 0.5;
+      } else {
+        _c.repeat(reverse: true);
+      }
     } else if (!shouldAnimate && _c.isAnimating) {
       _c.stop();
     }

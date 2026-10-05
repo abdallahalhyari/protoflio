@@ -124,10 +124,10 @@ class ConstellationPainter extends CustomPainter {
         if (distSq < _maxConnectDistSq) {
           final dist = math.sqrt(distSq);
           final norm = 1.0 - (dist / _maxConnectDist);
-          final alpha = norm * (isDark ? 0.22 : 0.12);
+          final alpha = norm * (isDark ? 0.15 : 0.08);
 
           _linePaint.color = primary.withValues(alpha: alpha);
-          _linePaint.strokeWidth = 0.8 * norm + 0.4;
+          _linePaint.strokeWidth = 0.6 * norm + 0.3;
           canvas.drawLine(Offset(p1.x, p1.y), Offset(p2.x, p2.y), _linePaint);
         }
       }
@@ -141,11 +141,11 @@ class ConstellationPainter extends CustomPainter {
         if (mDistSq < _maxMouseDistSq) {
           final mDist = math.sqrt(mDistSq);
           final mNorm = 1.0 - (mDist / _maxMouseDist);
-          final mAlpha = mNorm * (isDark ? 0.38 : 0.24);
+          final mAlpha = mNorm * (isDark ? 0.24 : 0.14);
 
           _linePaint.color =
               AppColors.accentCyanLight.withValues(alpha: mAlpha);
-          _linePaint.strokeWidth = 1.2 * mNorm + 0.5;
+          _linePaint.strokeWidth = 1.0 * mNorm + 0.4;
           canvas.drawLine(Offset(p1.x, p1.y),
               Offset(mousePos!.dx, mousePos!.dy), _linePaint);
         }
@@ -156,15 +156,15 @@ class ConstellationPainter extends CustomPainter {
     for (final p in particles) {
       final pulse = 0.85 + 0.25 * math.sin(time + p.pulseOffset);
       final c = _resolveColor(p.colorIndex);
-      final nodeAlpha = isDark ? (0.45 * pulse) : (0.55 * pulse);
+      final nodeAlpha = isDark ? (0.30 * pulse) : (0.38 * pulse);
 
       _nodePaint.color = c.withValues(alpha: nodeAlpha);
       canvas.drawCircle(Offset(p.x, p.y), p.radius * pulse, _nodePaint);
 
       // Faint outer glow halo for larger nodes in dark mode
-      if (isDark && p.radius > 2.2) {
-        _nodePaint.color = c.withValues(alpha: 0.12 * pulse);
-        canvas.drawCircle(Offset(p.x, p.y), p.radius * 2.4 * pulse, _nodePaint);
+      if (isDark && p.radius > 2.0) {
+        _nodePaint.color = c.withValues(alpha: 0.07 * pulse);
+        canvas.drawCircle(Offset(p.x, p.y), p.radius * 2.2 * pulse, _nodePaint);
       }
     }
 

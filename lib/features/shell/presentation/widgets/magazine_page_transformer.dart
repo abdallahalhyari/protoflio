@@ -109,31 +109,32 @@ class _PageDimmerPainter extends CustomPainter {
   final double alpha;
   final bool topShadowOnly;
 
+  static final Paint _dimmerPaint = Paint();
+
   @override
   void paint(Canvas canvas, Size size) {
     if (alpha <= 0.0) return;
 
     if (topShadowOnly) {
       final rect = Rect.fromLTWH(0, 0, size.width, 120);
-      canvas.drawRect(
-        rect,
-        Paint()
-          ..shader = LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.shadowDeep.withValues(alpha: alpha),
-              Colors.transparent,
-            ],
-          ).createShader(rect),
-      );
+      _dimmerPaint
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppColors.shadowDeep.withValues(alpha: alpha),
+            Colors.transparent,
+          ],
+        ).createShader(rect)
+        ..color = Colors.white;
+      canvas.drawRect(rect, _dimmerPaint);
     } else {
       // Full page dim for pages receding into the background
       final rect = Rect.fromLTWH(0, 0, size.width, size.height);
-      canvas.drawRect(
-        rect,
-        Paint()..color = Colors.black.withValues(alpha: alpha.clamp(0.0, 1.0)),
-      );
+      _dimmerPaint
+        ..shader = null
+        ..color = Colors.black.withValues(alpha: alpha.clamp(0.0, 1.0));
+      canvas.drawRect(rect, _dimmerPaint);
     }
   }
 

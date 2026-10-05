@@ -32,6 +32,7 @@ class BentoSkillTile extends StatefulWidget {
 class _BentoSkillTileState extends State<BentoSkillTile>
     with SingleTickerProviderStateMixin {
   bool _isHovered = false;
+  bool _isFlipped = false;
   bool _showFocus = false;
   late final AnimationController _c = AnimationController(
     vsync: this,
@@ -49,14 +50,19 @@ class _BentoSkillTileState extends State<BentoSkillTile>
     super.dispose();
   }
 
-  void _onHover(bool isHovered) {
+  void _setHovered(bool isHovered) {
     if (isHovered == _isHovered) return;
     setState(() => _isHovered = isHovered);
-    if (isHovered) {
-      _c.forward();
-    } else {
+  }
+
+  void _toggleFlip() {
+    SoundService.instance.playClick();
+    if (_isFlipped) {
       _c.reverse();
+    } else {
+      _c.forward();
     }
+    setState(() => _isFlipped = !_isFlipped);
   }
 
   @override
@@ -88,13 +94,11 @@ class _BentoSkillTileState extends State<BentoSkillTile>
         masteryLabel(widget.skill.level, loc),
       ),
       child: HolographicCardPhysics(
-        borderRadius: AppRadius.tile,
         child: FocusableActionDetector(
           actions: <Type, Action<Intent>>{
             ActivateIntent: CallbackAction<ActivateIntent>(
               onInvoke: (_) {
-                SoundService.instance.playClick();
-                _onHover(!_isHovered);
+                _toggleFlip();
                 return null;
               },
             ),
@@ -103,17 +107,14 @@ class _BentoSkillTileState extends State<BentoSkillTile>
             if (show != _showFocus) setState(() => _showFocus = show);
           },
           onFocusChange: (focused) {
-            if (!focused) _onHover(false);
+            if (!focused) _setHovered(false);
           },
           child: MouseRegion(
-            onEnter: (_) => _onHover(true),
-            onExit: (_) => _onHover(false),
+            onEnter: (_) => _setHovered(true),
+            onExit: (_) => _setHovered(false),
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () {
-                SoundService.instance.playClick();
-                _onHover(!_isHovered);
-              },
+              onTap: _toggleFlip,
               child: AnimatedBuilder(
                 animation: _flipAnim,
                 builder: (context, child) {

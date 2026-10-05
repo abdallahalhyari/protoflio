@@ -30,98 +30,122 @@ class ArchitectureDiagramCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
     final clampedStep = activeStepIndex.clamp(0, topic.diagramSteps.length - 1);
+    final accentText = context.adaptiveAccentText(scheme.primary);
 
-    return Semantics(
-      container: true,
-      label:
-          'Architecture flowchart diagram for ${topic.title}: showing ${topic.diagramSteps.length} architectural tiers',
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: context.cardGlass,
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          border: Border.all(color: context.glassBorder),
-          boxShadow: isDark
-              ? []
-              : [
-                  BoxShadow(
-                    color: AppColors.slate900.withValues(alpha: 0.05),
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-        ),
-        child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    final Widget content = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
+                  Icon(Icons.account_tree_rounded, size: 15, color: accentText),
+                  const SizedBox(width: 6),
+                  Flexible(
                     child: Text(
                       AppLocalizations.of(context)!.uiArchFlowchart,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: AppTypography.monoFont,
-                        color: scheme.primary,
+                        color: accentText,
                         fontSize: isDesktop
-                            ? AppTypography.caption
+                            ? AppTypography.editorial
                             : AppTypography.editorialSm,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
-                      ),
-                    ),
-                  ),
-                  if (onInspect != null) ...[
-                    IconButton(
-                      tooltip: 'Inspect & Zoom Blueprint',
-                      iconSize: 18,
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        SoundService.instance.playClick();
-                        onInspect?.call();
-                      },
-                      icon: Icon(Icons.zoom_in_rounded, color: scheme.primary),
-                    ),
-                    const SizedBox(width: 4),
-                  ],
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.08)
-                          : AppColors.slate100,
-                      borderRadius: BorderRadius.circular(AppRadius.xs),
-                      border: Border.all(
-                          color:
-                              isDark ? Colors.transparent : AppColors.slate200),
-                    ),
-                    child: Text(
-                      ltrAlways(context, '${topic.diagramSteps.length} TIERS'),
-                      style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        color: context.mutedText,
-                        fontSize: AppTypography.editorialSm,
-                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              DiagramList(
-                topic: topic,
-                scheme: scheme,
-                isDesktop: isDesktop,
-                activeStepIndex: clampedStep,
-                onSelectStep: onSelectStep,
-                shrinkWrap: true,
+            ),
+            if (onInspect != null) ...[
+              IconButton(
+                tooltip: 'Inspect & Zoom Blueprint',
+                iconSize: 18,
+                visualDensity: VisualDensity.compact,
+                onPressed: () {
+                  SoundService.instance.playClick();
+                  onInspect?.call();
+                },
+                icon: Icon(Icons.zoom_in_rounded, color: accentText),
               ),
+              const SizedBox(width: 4),
             ],
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? scheme.primary.withValues(alpha: 0.12)
+                    : AppColors.slate100,
+                borderRadius: BorderRadius.circular(AppRadius.xs),
+                border: Border.all(
+                  color: isDark
+                      ? scheme.primary.withValues(alpha: 0.3)
+                      : AppColors.slate300,
+                ),
+              ),
+              child: Text(
+                ltrAlways(context, '${topic.diagramSteps.length} TIERS'),
+                style: TextStyle(
+                  fontFamily: AppTypography.monoFont,
+                  color: accentText,
+                  fontSize: AppTypography.nano,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        DiagramList(
+          topic: topic,
+          scheme: scheme,
+          isDesktop: isDesktop,
+          activeStepIndex: clampedStep,
+          onSelectStep: onSelectStep,
+          shrinkWrap: true,
+        ),
+      ],
+    );
+
+    return Semantics(
+      container: true,
+      label:
+          'Architecture flowchart diagram for ${topic.title}: showing ${topic.diagramSteps.length} architectural tiers',
+      child: RepaintBoundary(
+        child: Container(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: context.cardGlass,
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.14)
+                  : AppColors.slate200,
+            ),
+            boxShadow: isDark
+                ? const []
+                : [
+                    BoxShadow(
+                      color: AppColors.slate900.withValues(alpha: 0.05),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
           ),
+          child: isDesktop
+              ? SingleChildScrollView(
+                  primary: false,
+                  physics: const ClampingScrollPhysics(),
+                  child: content,
+                )
+              : content,
         ),
       ),
     );

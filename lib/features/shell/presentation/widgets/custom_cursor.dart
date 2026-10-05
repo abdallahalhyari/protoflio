@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:profile/core/theme/tokens.dart';
@@ -101,7 +102,9 @@ class _CustomCursorState extends State<CustomCursor>
     final isTouch =
         platform == TargetPlatform.iOS || platform == TargetPlatform.android;
 
-    if (MediaQuery.sizeOf(context).width < AppBreakpoints.tablet || isTouch) {
+    if (MediaQuery.sizeOf(context).width < AppBreakpoints.tablet ||
+        isTouch ||
+        AppMedia.reduceMotion(context)) {
       return widget.child;
     }
 
@@ -149,7 +152,7 @@ class _CustomCursorState extends State<CustomCursor>
                       children: [
                         // Smooth trailing ring
                         TweenAnimationBuilder<Offset>(
-                          tween: Tween(begin: pos, end: pos),
+                          tween: Tween<Offset>(end: pos),
                           duration: AppMotion.xs,
                           curve: Curves.easeOutCubic,
                           builder: (context, animatedPos, ringChild) {
@@ -167,7 +170,7 @@ class _CustomCursorState extends State<CustomCursor>
                                 fit: StackFit.expand,
                                 children: [
                                   CustomPaint(
-                                    painter: _InvertPainter(),
+                                    painter: _InvertPainter(isDark: isDark),
                                   ),
                                   Container(
                                     decoration: BoxDecoration(
@@ -248,19 +251,32 @@ class _ParticlePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_ParticlePainter old) =>
-      true; // Updates continuously on tick
+      particles.isNotEmpty || old.particles.isNotEmpty;
 }
 
 class _InvertPainter extends CustomPainter {
+  final bool isDark;
+
+  _InvertPainter({required this.isDark});
+
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white
-      ..blendMode = BlendMode.difference;
-    canvas.drawCircle(
-        Offset(size.width / 2, size.height / 2), size.width / 2, paint);
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2;
+    if (kIsWeb) {
+      final paint = Paint()
+        ..color = (isDark ? Colors.white : Colors.black).withValues(alpha: 0.12)
+        ..style = PaintingStyle.fill;
+      canvas.drawCircle(center, radius, paint);
+    } else {
+      final paint = Paint()
+        ..color = Colors.white
+        ..blendMode = BlendMode.difference;
+      canvas.drawCircle(center, radius, paint);
+    }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _InvertPainter oldDelegate) =>
+      oldDelegate.isDark != isDark;
 }

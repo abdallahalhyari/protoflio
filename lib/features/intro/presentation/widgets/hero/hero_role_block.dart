@@ -42,37 +42,48 @@ class HeroRoleBlock extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: isCompactH
-                      ? (size.width * 0.016).clamp(15.0, 19.0)
-                      : (size.width * 0.018).clamp(16.0, 22.0),
+                      ? (size.width * 0.024).clamp(20.0, 28.0)
+                      : (size.width * 0.028).clamp(24.0, 36.0),
                   fontWeight: FontWeight.w900,
-                  letterSpacing: latinTracking(context, 3),
+                  letterSpacing: latinTracking(context, 3.5),
                   color: context.onSurface,
+                  shadows: isDark
+                      ? [
+                          Shadow(
+                            color: accent.withValues(alpha: 0.35),
+                            blurRadius: 18,
+                          ),
+                        ]
+                      : null,
                 ),
               ),
-              const SizedBox(height: AppSpacing.xs),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 loc.introValueProposition,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: isCompactH
-                      ? (size.width * 0.0105).clamp(12.0, 15.0)
-                      : (size.width * 0.0115).clamp(12.5, 18.0),
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: latinTracking(context, 1.2),
-                  color: isDark ? AppColors.accentIndigoSoft : accent,
-                  height: 1.45,
+                      ? (size.width * 0.0115).clamp(13.0, 15.5)
+                      : (size.width * 0.013).clamp(14.0, 17.5),
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: latinTracking(context, 0.8),
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.88)
+                      : AppColors.slate700,
+                  height: 1.55,
                 ),
               ),
-              SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
+              SizedBox(height: isCompactH ? 8.0 : AppSpacing.md),
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _MiniPill('Flutter'),
-                  _MiniPill('Android'),
-                  _MiniPill(loc.introSkillArchitecture),
-                  _MiniPill(loc.introSkillProductDelivery),
+                  const _MiniPill('FLUTTER'),
+                  const _MiniPill('ANDROID'),
+                  _MiniPill(loc.introSkillArchitecture.toUpperCase()),
+                  const _MiniPill('NATIVE INTEGRATION'),
+                  const _MiniPill('PRODUCT DELIVERY'),
                 ],
               ),
             ],
@@ -107,7 +118,7 @@ class _MiniPill extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         child: Text(
-          label.toUpperCase(),
+          label,
           style: TextStyle(
             fontFamily: AppTypography.monoFont,
             color: context.onSurface,

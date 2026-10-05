@@ -27,7 +27,7 @@ class DarkFarOrbs extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  primary.withValues(alpha: 0.16),
+                  primary.withValues(alpha: 0.12),
                   primary.withValues(alpha: 0.0),
                 ],
               ),
@@ -44,7 +44,7 @@ class DarkFarOrbs extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  secondary.withValues(alpha: AppAlpha.hover),
+                  secondary.withValues(alpha: 0.08),
                   secondary.withValues(alpha: 0.0),
                 ],
               ),
@@ -75,7 +75,7 @@ class DarkNearOrb extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  AppColors.accentViolet.withValues(alpha: 0.08),
+                  AppColors.accentViolet.withValues(alpha: 0.05),
                   AppColors.accentViolet.withValues(alpha: 0.0),
                 ],
               ),

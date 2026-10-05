@@ -24,13 +24,15 @@ class HeroSubline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final letterSize = isCompactH
-        ? (size.width * 0.03).clamp(18.0, 32.0)
-        : (size.width * 0.035).clamp(20.0, 40.0);
-    final portraitSize = isCompactH
-        ? (size.height * 0.082).clamp(52.0, 78.0)
+        ? (size.width * 0.018).clamp(16.0, 22.0)
         : (isWide
-            ? (size.height * 0.095).clamp(60.0, 96.0)
-            : (size.width * 0.12).clamp(56.0, 80.0));
+            ? (size.width * 0.020).clamp(18.0, 26.0)
+            : (size.width * 0.028).clamp(15.0, 20.0));
+    final portraitSize = isCompactH
+        ? (size.height * 0.098).clamp(62.0, 88.0)
+        : (isWide
+            ? (size.height * 0.115).clamp(72.0, 108.0)
+            : (size.width * 0.15).clamp(64.0, 92.0));
 
     final content = isWide
         ? Row(

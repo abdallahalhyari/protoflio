@@ -12,7 +12,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navHome => 'Domů';
 
   @override
-  String get navWork => 'Vybrané projekty';
+  String get navWork => 'Projekty';
 
   @override
   String get navEngineering => 'Inženýrství';
@@ -33,7 +33,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navResume => 'Životopis';
 
   @override
-  String get introLocation => 'Ammán, Jordánsko › Brno, Česká republika (2027)';
+  String get introLocation => 'Ammán → Brno · 2027';
 
   @override
   String get sectionEducation => 'VZDĚLÁNÍ';
@@ -142,7 +142,8 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introSkillProductDelivery => 'Dodávání produktů';
 
   @override
-  String get introWorkEligibility => 'OPRÁVNĚNÍ K PRÁCI V ČR · STUDENT';
+  String get introWorkEligibility =>
+      'PŘESÍDLENÍ DO BRNA · 2027   •   OTEVŘEN SENIORNÍM ROLÍM';
 
   @override
   String get introAvailableContracts => 'K DISPOZICI PRO KONTRAKTY';
@@ -218,19 +219,19 @@ class AppLocalizationsCs extends AppLocalizations {
       'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
 
   @override
-  String get introBasedIn => 'SÍDLO';
+  String get introBasedIn => 'LOKACE';
 
   @override
-  String get introStatus => 'STATUS';
+  String get introStatus => 'DOSTUPNOST';
 
   @override
-  String get introOpenForRoles => 'OTEVŘENÝ PRO SENIORSKÉ POZICE';
+  String get introOpenForRoles => 'Otevřen pro seniorní role';
 
   @override
-  String get introDiscipline => 'OBOR';
+  String get introDiscipline => 'SPECIALIZACE';
 
   @override
-  String get introMobileArch => 'MOBILNÍ ARCHITEKTURA';
+  String get introMobileArch => 'Flutter · Android · Mobilní architektura';
 
   @override
   String get introMasthead => '// HLAVIČKA';

@@ -120,15 +120,15 @@ class IntroConstellationState extends State<IntroConstellation>
       }
       return;
     }
-    final count = isWide ? 38 : 18;
+    final count = isWide ? 28 : 14;
     final rng = math.Random(42);
 
     _particles = List.generate(count, (index) {
       final x = rng.nextDouble() * size.width;
       final y = rng.nextDouble() * size.height;
-      final speed = 12.0 + rng.nextDouble() * 18.0;
+      final speed = 10.0 + rng.nextDouble() * 14.0;
       final angle = rng.nextDouble() * 2 * math.pi;
-      final radius = 1.6 + rng.nextDouble() * 2.2;
+      final radius = 1.2 + rng.nextDouble() * 1.6;
       final colorIndex = index % 4;
 
       return Particle(

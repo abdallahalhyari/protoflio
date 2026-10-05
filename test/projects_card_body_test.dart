@@ -80,7 +80,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Increased performance by 50%'), findsOneWidget);
-      expect(find.byIcon(Icons.trending_up_rounded), findsOneWidget);
+      expect(find.text('IMPACT'), findsOneWidget);
     });
 
     testWidgets('ReadCaseStudyCta renders correctly and responds to focus',

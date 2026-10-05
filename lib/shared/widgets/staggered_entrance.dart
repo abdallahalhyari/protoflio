@@ -53,15 +53,15 @@ class _StaggeredEntranceState extends State<StaggeredEntrance>
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: Curves.elasticOut,
+      curve: AppMotion.emphasizedDecel,
     ));
-    _scale = Tween<double>(begin: 0.95, end: 1.0).animate(CurvedAnimation(
+    _scale = Tween<double>(begin: 0.96, end: 1.0).animate(CurvedAnimation(
       parent: _controller,
-      curve: Curves.elasticOut,
+      curve: AppMotion.emphasizedDecel,
     ));
-    _tilt = Tween<double>(begin: 0.2, end: 0.0).animate(CurvedAnimation(
+    _tilt = Tween<double>(begin: 0.05, end: 0.0).animate(CurvedAnimation(
       parent: _controller,
-      curve: Curves.elasticOut,
+      curve: AppMotion.emphasizedDecel,
     ));
 
     if (widget.isVisible) {
@@ -110,13 +110,11 @@ class _StaggeredEntranceState extends State<StaggeredEntrance>
             alignment: Alignment.bottomCenter,
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.001)
-              ..multiply(Matrix4.translationValues(
-                  _slide.value.dx, _slide.value.dy, 0.0))
-              ..multiply(
-                  Matrix4.diagonal3Values(_scale.value, _scale.value, 1.0))
+              ..translateByDouble(_slide.value.dx, _slide.value.dy, 0.0, 1.0)
+              ..scaleByDouble(_scale.value, _scale.value, 1.0, 1.0)
               ..rotateX(_tilt.value),
-            child: Opacity(
-              opacity: _opacity.value,
+            child: FadeTransition(
+              opacity: _opacity,
               child: child,
             ),
           );

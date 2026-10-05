@@ -198,4 +198,62 @@ extension SurfaceTone on BuildContext {
 
   Color railDot(Color color) =>
       color.withValues(alpha: isDarkMode ? 0.35 : 0.45);
+
+  // ---------------------------------------------------------------------------
+  // Card & Container Decoration Helpers
+  // ---------------------------------------------------------------------------
+
+  /// Creates a unified card [BoxDecoration] with specular rim highlights,
+  /// frosted glass fill, and depth shadows.
+  BoxDecoration cardDecoration({
+    Color? accent,
+    bool isHovered = false,
+    bool isSelected = false,
+    double radius = AppRadius.card,
+    Color? customFill,
+    List<BoxShadow>? shadows,
+  }) {
+    final active = isHovered || isSelected;
+    final fill = customFill ?? (active ? cardGlassHover : cardGlass);
+    final borderColor = active
+        ? (accent ?? Theme.of(this).colorScheme.primary).withValues(
+            alpha: isDarkMode
+                ? (isSelected ? 0.85 : 0.65)
+                : (isSelected ? 0.95 : 0.75))
+        : (isDarkMode ? glassBorder : AppColors.slate200);
+
+    final defaultShadows = active
+        ? [
+            BoxShadow(
+              color: (accent ?? Theme.of(this).colorScheme.primary)
+                  .withValues(alpha: isDarkMode ? 0.28 : 0.16),
+              blurRadius: isSelected ? 28 : 20,
+              spreadRadius: isSelected ? 2 : 1,
+            ),
+            BoxShadow(
+              color: isDarkMode ? AppColors.shadowMedium : AppColors.shadowSoft,
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ]
+        : [
+            BoxShadow(
+              color: isDarkMode
+                  ? AppColors.shadowSoft
+                  : AppColors.slate900.withValues(alpha: 0.04),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ];
+
+    return BoxDecoration(
+      color: fill,
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(
+        color: borderColor,
+        width: active ? (isSelected ? 2.0 : 1.4) : 1.0,
+      ),
+      boxShadow: shadows ?? defaultShadows,
+    );
+  }
 }

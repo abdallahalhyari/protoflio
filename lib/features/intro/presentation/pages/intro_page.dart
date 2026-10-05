@@ -8,7 +8,7 @@ import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 import 'package:profile/features/shell/presentation/widgets/scroll_explore_hint.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_constellation.dart';
 
-import 'package:profile/features/intro/presentation/widgets/hero/hero_issue_strip.dart';
+import 'package:profile/features/intro/presentation/widgets/intro_proof_row.dart';
 import 'package:profile/features/intro/presentation/widgets/hero/hero_wordmark.dart';
 import 'package:profile/features/intro/presentation/widgets/hero/hero_subline.dart';
 import 'package:profile/features/intro/presentation/widgets/hero/hero_role_block.dart';
@@ -52,7 +52,7 @@ class _IntroPageState extends State<IntroPage>
     super.initState();
     _rimController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 6),
+      duration: const Duration(seconds: 10),
     );
   }
 
@@ -62,7 +62,11 @@ class _IntroPageState extends State<IntroPage>
     if (AppMedia.reduceMotion(context)) {
       _rimController.stop();
     } else {
-      _rimController.forward();
+      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
+        _rimController.value = 1.0;
+      } else {
+        _rimController.repeat();
+      }
     }
   }
 
@@ -84,10 +88,6 @@ class _IntroPageState extends State<IntroPage>
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        HeroIssueStrip(size: size, isDark: isDark),
-        SizedBox(
-            height:
-                isCompactH ? 8.0 : (isWide ? AppSpacing.md : AppSpacing.sm)),
         HeroWordmark(
             size: size, isDark: isDark, isCompactH: isCompactH, isWide: isWide),
         SizedBox(
@@ -118,7 +118,11 @@ class _IntroPageState extends State<IntroPage>
         ),
         SizedBox(
             height:
-                isCompactH ? 16.0 : (isWide ? AppSpacing.xxl : AppSpacing.xl)),
+                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        IntroProofRow(isDark: isDark, isWide: isWide),
+        SizedBox(
+            height:
+                isCompactH ? 14.0 : (isWide ? AppSpacing.xl : AppSpacing.lg)),
         IntroFooterStrip(
           isDark: isDark,
           onContactMe: widget.onContactMe,

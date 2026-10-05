@@ -36,15 +36,21 @@ class IntroFooterStrip extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                label,
-                style: TextStyle(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.72)
-                      : AppColors.slate500,
-                  fontSize: AppTypography.editorialSm,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2.5,
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.72)
+                          : AppColors.slate500,
+                      fontSize: AppTypography.editorialSm,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2.5,
+                    ),
+                  ),
                 ),
               ),
               if (onTap != null) ...[
@@ -115,26 +121,11 @@ class IntroFooterStrip extends StatelessWidget {
 
     return Column(
       children: [
-        Row(children: [
-          Expanded(
-              child: Container(height: 1, color: context.glassBorderStrong)),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Text(
-              l10n.introMasthead,
-              style: TextStyle(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.7)
-                    : AppColors.slate500,
-                fontSize: AppTypography.micro,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 3,
-              ),
-            ),
-          ),
-          Expanded(
-              child: Container(height: 1, color: context.glassBorderStrong)),
-        ]),
+        Container(
+          height: 1,
+          margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          color: context.glassBorderStrong,
+        ),
         const SizedBox(height: AppSpacing.md),
         if (isMobile)
           Wrap(

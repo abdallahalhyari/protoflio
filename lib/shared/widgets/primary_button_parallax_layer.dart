@@ -21,7 +21,7 @@ class PrimaryButtonParallaxLayer extends StatelessWidget {
             child: staticChild,
           );
         },
-        child: RepaintBoundary(child: child),
+        child: child,
       ),
     );
   }

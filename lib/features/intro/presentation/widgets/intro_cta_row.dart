@@ -129,6 +129,7 @@ class IntroCtaRow extends StatelessWidget {
           children: [
             PrimaryButton(
               label: loc.viewMyWork,
+              trailingIcon: Icons.arrow_forward_rounded,
               isPill: true,
               letterSpacing: 1.2,
               onPressed: () {
@@ -137,7 +138,9 @@ class IntroCtaRow extends StatelessWidget {
               },
             ),
             ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 40),
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                  minHeight: 40),
               child: _ghostButton(
                 label: loc.downloadResume,
                 icon: Icons.download_rounded,
@@ -150,7 +153,9 @@ class IntroCtaRow extends StatelessWidget {
               ),
             ),
             ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 40),
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                  minHeight: 40),
               child: _ghostButton(
                 label: loc.contactMe,
                 icon: Icons.send_rounded,
@@ -164,23 +169,88 @@ class IntroCtaRow extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.xs),
+        const SizedBox(height: AppSpacing.smd),
         Wrap(
-          spacing: 8,
+          spacing: 12,
+          runSpacing: 8,
           alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            _linkButton(
-              label: loc.copyEmail,
-              icon: Icons.content_copy_rounded,
-              onPressed: () => _copyEmail(context),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                  minHeight: 40),
+              child: _linkButton(
+                label: loc.copyEmail,
+                icon: Icons.content_copy_rounded,
+                onPressed: () => _copyEmail(context),
+              ),
             ),
-            _linkButton(
-              label: loc.quickProfile,
-              icon: Icons.badge_rounded,
-              onPressed: () => showQuickProfile(
-                context,
-                onDownloadResume: onDownloadResume,
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                  minHeight: 40),
+              child: Semantics(
+                button: true,
+                label: '30-second introduction video and executive summary',
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      SoundService.instance.playClick();
+                      showQuickProfile(
+                        context,
+                        onDownloadResume: onDownloadResume,
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 7),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? accent.withValues(alpha: 0.12)
+                            : accent.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                        border: Border.all(
+                          color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
+                          width: 1.2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                accent.withValues(alpha: isDark ? 0.16 : 0.08),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.play_circle_fill_rounded,
+                              size: 15,
+                              color: accent,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              '▶ 30-SEC INTRO',
+                              style: TextStyle(
+                                fontSize: AppTypography.caption,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 1.2,
+                                color:
+                                    isDark ? Colors.white : AppColors.slate900,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

@@ -11,6 +11,7 @@ class AppRadius {
   static const double smd = 10;
   static const double md = 12;
   static const double card = 16;
+  static const double container = 20; // large panel / modal surface
   static const double lg = 20;
   static const double pill = 999;
 

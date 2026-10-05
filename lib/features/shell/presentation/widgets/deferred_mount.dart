@@ -98,7 +98,7 @@ class _DeferredMountState extends State<DeferredMount>
 
   Widget _buildContent(BuildContext context) {
     final controller = HomeController.maybeOf(context);
-    if (controller == null || _mounted) return widget.child;
+    if (controller == null) return widget.child;
 
     return ValueListenableBuilder<int>(
       valueListenable: controller.pageIndex,
@@ -108,7 +108,13 @@ class _DeferredMountState extends State<DeferredMount>
           _idleTimer?.cancel();
           StaggeredMount.cancel(_mountNow);
         }
-        if (_mounted) return child!;
+        if (_mounted) {
+          final isAdjacent = (widget.sectionIndex - pageIndex).abs() <= 1;
+          return TickerMode(
+            enabled: isAdjacent,
+            child: child!,
+          );
+        }
         return SizedBox(height: widget.placeholderHeight);
       },
       child: widget.child,

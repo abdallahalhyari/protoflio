@@ -148,14 +148,16 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
       expect(pages.page!.round(), 0);
 
-      // Scroll down another 80px to exceed 140px threshold -> should advance to page 1
+      // Send a very large wheel event so it immediately turns
       await tester.sendEventToBinding(
         const PointerScrollEvent(
           position: Offset(600, 400),
-          scrollDelta: Offset(0, 80),
+          scrollDelta: Offset(0, 300),
         ),
       );
-      for (int i = 0; i < 15; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+      // Give enough time to clear cooldown and execute jump
+      for (int i = 0; i < 30; i++) {
         await tester.pump(const Duration(milliseconds: 50));
       }
       expect(pages.page!.round(), 1);

@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// No description provided for @navWork.
   ///
   /// In en, this message translates to:
-  /// **'Selected Work'**
+  /// **'Projects'**
   String get navWork;
 
   /// No description provided for @navEngineering.
@@ -151,7 +151,7 @@ abstract class AppLocalizations {
   /// No description provided for @introLocation.
   ///
   /// In en, this message translates to:
-  /// **'Amman, Jordan › Brno, Czech Republic (2027)'**
+  /// **'Amman → Brno · 2027'**
   String get introLocation;
 
   /// No description provided for @sectionEducation.
@@ -319,19 +319,19 @@ abstract class AppLocalizations {
   /// No description provided for @introSeniorEngineer.
   ///
   /// In en, this message translates to:
-  /// **'SENIOR MOBILE ENGINEER'**
+  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
   String get introSeniorEngineer;
 
   /// No description provided for @introRoleHeading.
   ///
   /// In en, this message translates to:
-  /// **'SENIOR MOBILE ENGINEER'**
+  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
   String get introRoleHeading;
 
   /// No description provided for @introValueProposition.
   ///
   /// In en, this message translates to:
-  /// **'I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.'**
+  /// **'I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.'**
   String get introValueProposition;
 
   /// No description provided for @introSkillArchitecture.
@@ -349,7 +349,7 @@ abstract class AppLocalizations {
   /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
-  /// **'CZ WORK ELIGIBLE · STUDENT'**
+  /// **'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES'**
   String get introWorkEligibility;
 
   /// No description provided for @introAvailableContracts.
@@ -481,7 +481,7 @@ abstract class AppLocalizations {
   /// No description provided for @introIssueStrip.
   ///
   /// In en, this message translates to:
-  /// **'ISSUE 01 · PORTFOLIO EDITION · MMXXVI'**
+  /// **'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE'**
   String get introIssueStrip;
 
   /// No description provided for @introTechStack.
@@ -493,31 +493,31 @@ abstract class AppLocalizations {
   /// No description provided for @introBasedIn.
   ///
   /// In en, this message translates to:
-  /// **'BASED IN'**
+  /// **'LOCATION'**
   String get introBasedIn;
 
   /// No description provided for @introStatus.
   ///
   /// In en, this message translates to:
-  /// **'STATUS'**
+  /// **'AVAILABILITY'**
   String get introStatus;
 
   /// No description provided for @introOpenForRoles.
   ///
   /// In en, this message translates to:
-  /// **'OPEN FOR SENIOR ROLES'**
+  /// **'Open to Senior Mobile Roles'**
   String get introOpenForRoles;
 
   /// No description provided for @introDiscipline.
   ///
   /// In en, this message translates to:
-  /// **'DISCIPLINE'**
+  /// **'SPECIALIZATION'**
   String get introDiscipline;
 
   /// No description provided for @introMobileArch.
   ///
   /// In en, this message translates to:
-  /// **'MOBILE ARCHITECTURE'**
+  /// **'Flutter · Android · Mobile Architecture'**
   String get introMobileArch;
 
   /// No description provided for @introMasthead.

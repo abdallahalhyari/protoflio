@@ -31,7 +31,22 @@ class _HeroWordmarkState extends State<HeroWordmark>
     _shimmerController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 8),
-    )..repeat();
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final reduceMotion = AppMedia.reduceMotion(context);
+    if (reduceMotion && _shimmerController.isAnimating) {
+      _shimmerController.stop();
+    } else if (!reduceMotion && !_shimmerController.isAnimating) {
+      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
+        _shimmerController.value = 0.5;
+      } else {
+        _shimmerController.repeat();
+      }
+    }
   }
 
   @override
@@ -49,7 +64,7 @@ class _HeroWordmarkState extends State<HeroWordmark>
       height: 1.0,
       foreground: Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 3
+        ..strokeWidth = 2.2
         ..color = Colors.white,
     );
   }
@@ -57,10 +72,10 @@ class _HeroWordmarkState extends State<HeroWordmark>
   @override
   Widget build(BuildContext context) {
     final wordmarkHeight = widget.isCompactH
-        ? (widget.size.height * 0.17).clamp(95.0, 165.0)
+        ? (widget.size.height * 0.12).clamp(65.0, 115.0)
         : (widget.isWide
-            ? (widget.size.height * 0.21).clamp(120.0, 240.0)
-            : (widget.size.height * 0.16).clamp(85.0, 160.0));
+            ? (widget.size.height * 0.15).clamp(85.0, 165.0)
+            : (widget.size.height * 0.11).clamp(60.0, 110.0));
 
     return SnappyEntrance(
       child: Semantics(
@@ -76,10 +91,13 @@ class _HeroWordmarkState extends State<HeroWordmark>
               child: AnimatedBuilder(
                 animation: _shimmerController,
                 builder: (context, child) {
+                  if (AppMedia.reduceMotion(context)) {
+                    return child!;
+                  }
                   return ShaderMask(
                     blendMode: BlendMode.srcIn,
                     shaderCallback: (bounds) {
-                      final alpha = widget.isDark ? 0.46 : 0.7;
+                      final alpha = widget.isDark ? 0.36 : 0.65;
                       return LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,

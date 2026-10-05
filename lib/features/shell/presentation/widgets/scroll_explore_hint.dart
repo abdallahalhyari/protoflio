@@ -47,45 +47,50 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
   @override
   Widget build(BuildContext context) {
     final tint = context.mutedText;
-    return Semantics(
-      button: true,
-      label: 'Scroll to explore the portfolio',
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: widget.onTap,
-          behavior: HitTestBehavior.opaque,
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.uiScrollToExplore,
-                  style: TextStyle(
-                    color: tint,
-                    fontSize: AppTypography.editorial,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 3,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                RepaintBoundary(
-                  child: AnimatedBuilder(
-                    animation: _anim,
-                    builder: (_, child) {
-                      return Transform.translate(
-                        offset: Offset(0, _anim.value * 6),
-                        child: child,
-                      );
-                    },
-                    child: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      size: 24,
-                      color: tint,
+    return MergeSemantics(
+      child: Semantics(
+        button: true,
+        label: 'Scroll to explore the portfolio',
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: InkWell(
+            onTap: widget.onTap,
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ExcludeSemantics(
+                    child: Text(
+                      AppLocalizations.of(context)!.uiScrollToExplore,
+                      style: TextStyle(
+                        color: tint,
+                        fontSize: AppTypography.editorial,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 3,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 6),
+                  RepaintBoundary(
+                    child: AnimatedBuilder(
+                      animation: _anim,
+                      builder: (_, child) {
+                        return Transform.translate(
+                          offset: Offset(0, _anim.value * 6),
+                          child: child,
+                        );
+                      },
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        size: 24,
+                        color: tint,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

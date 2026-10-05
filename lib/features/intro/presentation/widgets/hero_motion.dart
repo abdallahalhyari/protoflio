@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class _SnappyEntranceState extends State<SnappyEntrance>
   late final AnimationController _controller;
   late final Animation<double> _opacity;
   late final Animation<double> _slide;
+  Timer? _delayTimer;
 
   @override
   void initState() {
@@ -55,7 +57,7 @@ class _SnappyEntranceState extends State<SnappyEntrance>
     }
 
     if (widget.delayMs > 0) {
-      Future.delayed(Duration(milliseconds: widget.delayMs), () {
+      _delayTimer = Timer(Duration(milliseconds: widget.delayMs), () {
         if (mounted) _controller.forward();
       });
     } else {
@@ -65,6 +67,7 @@ class _SnappyEntranceState extends State<SnappyEntrance>
 
   @override
   void dispose() {
+    _delayTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -81,13 +84,13 @@ class _SnappyEntranceState extends State<SnappyEntrance>
         builder: (context, child) {
           return Transform.translate(
             offset: Offset(0, _slide.value),
-            child: Opacity(
-              opacity: _opacity.value,
+            child: FadeTransition(
+              opacity: _opacity,
               child: child,
             ),
           );
         },
-        child: RepaintBoundary(child: widget.child),
+        child: widget.child,
       ),
     );
   }
@@ -161,19 +164,17 @@ class _HeroParallaxState extends State<HeroParallax>
                 final rotX = -norm.dy * widget.maxTilt;
                 final rotY = norm.dx * widget.maxTilt;
 
-                return Transform.translate(
-                  offset: Offset(tx, ty),
-                  child: Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.identity()
-                      ..setEntry(3, 2, 0.001) // subtle perspective
-                      ..rotateX(rotX)
-                      ..rotateY(rotY),
-                    child: child,
-                  ),
+                return Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..translateByDouble(tx, ty, 0.0, 1.0)
+                    ..setEntry(3, 2, 0.001) // subtle perspective
+                    ..rotateX(rotX)
+                    ..rotateY(rotY),
+                  child: child,
                 );
               },
-              child: RepaintBoundary(child: widget.child),
+              child: widget.child,
             ),
           ),
         );

@@ -47,6 +47,10 @@ class AppColors {
   static const Color accentIndigo600 = Color(0xFF4F46E5);
   static const Color hatGold = Color(0xFFC8A951);
 
+  // Chromatic aberration split channel accents
+  static const Color chromaticCyan = Color(0xFF22D3EE); // Cyan light
+  static const Color chromaticRose = Color(0xFFF43F5E); // Rose punchy
+
   // Extended palette — one-off tints reused just enough to name.
   static const Color accentAmberMid =
       Color(0xFFF59E0B); // amber 500 — mid warmth

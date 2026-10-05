@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/shared/utils/hover_reset_offset_controller.dart';
 
 import 'package:profile/shared/widgets/primary_button_parallax_layer.dart';
 import 'package:profile/shared/widgets/primary_button_gradient_shell.dart';
@@ -16,6 +17,7 @@ class PrimaryButton extends StatefulWidget {
   final PrimaryButtonVariant variant;
   final bool loading;
   final IconData? icon;
+  final IconData? trailingIcon;
   final bool isPill;
   final double? letterSpacing;
 
@@ -27,6 +29,7 @@ class PrimaryButton extends StatefulWidget {
     this.variant = PrimaryButtonVariant.primary,
     this.loading = false,
     this.icon,
+    this.trailingIcon,
     this.isPill = false,
     this.letterSpacing,
   });
@@ -35,12 +38,16 @@ class PrimaryButton extends StatefulWidget {
   State<PrimaryButton> createState() => _PrimaryButtonState();
 }
 
-class _PrimaryButtonState extends State<PrimaryButton> {
+class _PrimaryButtonState extends State<PrimaryButton>
+    with SingleTickerProviderStateMixin {
   bool _isHovered = false;
   bool _isFocused = false;
   bool _isPressed = false;
-  final ValueNotifier<Offset> _parallaxOffset =
-      ValueNotifier<Offset>(Offset.zero);
+  late final _hover = HoverResetOffsetController(
+    vsync: this,
+    duration: AppMotion.xs,
+    curve: Curves.easeOutCubic,
+  );
   final GlobalKey _key = GlobalKey();
   late final FocusNode _focusNode = FocusNode()..addListener(_onFocus);
 
@@ -53,7 +60,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   void dispose() {
     _focusNode.removeListener(_onFocus);
     _focusNode.dispose();
-    _parallaxOffset.dispose();
+    _hover.dispose();
     super.dispose();
   }
 
@@ -129,6 +136,19 @@ class _PrimaryButtonState extends State<PrimaryButton> {
           Flexible(child: content),
         ],
       );
+    } else if (widget.trailingIcon != null) {
+      content = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Flexible(child: content),
+          const SizedBox(width: AppSpacing.sm),
+          Icon(widget.trailingIcon,
+              size: dims.iconSize,
+              color: _enabled
+                  ? scheme.onPrimary
+                  : scheme.onPrimary.withValues(alpha: 0.7)),
+        ],
+      );
     }
 
     if (widget.loading) {
@@ -172,7 +192,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             setState(() => _isHovered = true);
           },
           onExit: (_) {
-            _parallaxOffset.value = Offset.zero;
+            _hover.animateToZero();
             if (_isHovered) {
               setState(() => _isHovered = false);
             }
@@ -186,8 +206,8 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             final center = Offset(box.size.width / 2, box.size.height / 2);
             final delta = event.localPosition - center;
             final next = Offset(delta.dx * 0.15, delta.dy * 0.25);
-            if ((next - _parallaxOffset.value).distanceSquared < 2) return;
-            _parallaxOffset.value = next;
+            if ((next - _hover.offset.value).distanceSquared < 2) return;
+            _hover.set(next);
           },
           cursor: _enabled
               ? SystemMouseCursors.click
@@ -210,7 +230,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
               duration: AppMotion.micro,
               curve: Curves.easeOutCubic,
               child: PrimaryButtonParallaxLayer(
-                parallaxOffset: _parallaxOffset,
+                parallaxOffset: _hover.offset,
                 child: PrimaryButtonGradientShell(
                   containerKey: _key,
                   base: base,

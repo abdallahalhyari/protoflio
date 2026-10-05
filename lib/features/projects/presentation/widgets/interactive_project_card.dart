@@ -77,7 +77,11 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
           child: MouseRegion(
             onEnter: (_) => setState(() => _isHovered = true),
             onExit: (_) => setState(() => _isHovered = false),
-            onHover: (e) => _mousePos.value = e.localPosition,
+            onHover: (e) {
+              if ((e.localPosition - _mousePos.value).distanceSquared > 4) {
+                _mousePos.value = e.localPosition;
+              }
+            },
             child: AnimatedOpacity(
               opacity: widget.isDimmed ? 0.35 : 1.0,
               duration: AppMotion.snap,
@@ -90,7 +94,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                     duration: AppMotion.cardHover,
                     curve: AppMotion.emphasized,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppRadius.md),
+                      borderRadius: BorderRadius.circular(AppRadius.card),
                       boxShadow: isInteractive && isDark
                           ? [
                               BoxShadow(
@@ -120,13 +124,13 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                   .withValues(alpha: 0.3)
                               : AppColors.shadowSoft),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        borderRadius: BorderRadius.circular(AppRadius.card),
                         side: BorderSide(
                           color: isInteractive
                               ? widget.scheme.primary
                                   .withValues(alpha: isDark ? 0.75 : 0.65)
                               : (isDark
-                                  ? Colors.white.withValues(alpha: 0.10)
+                                  ? Colors.white.withValues(alpha: 0.14)
                                   : AppColors.slate200),
                           width: isInteractive ? 1.5 : 1.0,
                         ),

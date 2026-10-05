@@ -23,7 +23,7 @@ class AppSurfaceTheme {
       backgroundColor: cardGlassColor,
       elevation: isDark ? 0 : 8,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: BorderRadius.circular(AppRadius.container),
         side: BorderSide(color: glassBorderColor),
       ),
     );
@@ -34,7 +34,8 @@ class AppSurfaceTheme {
       backgroundColor: cardGlassColor,
       elevation: isDark ? 0 : 8,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
+        borderRadius:
+            BorderRadius.vertical(top: Radius.circular(AppRadius.container)),
       ),
     );
   }
