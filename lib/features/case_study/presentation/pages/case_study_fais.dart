@@ -246,7 +246,7 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          const PulsingDot(color: AppColors.accentCyan),
+          const PulsingDot(color: AppColors.teal),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
@@ -256,7 +256,7 @@ class _Masthead extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: AppTypography.editorial,
+                fontSize: AppTypography.label,
                 letterSpacing: latinTracking(context, 3),
                 fontWeight: FontWeight.w800,
                 color: scheme.onSurface.withValues(alpha: 0.6),
@@ -269,8 +269,7 @@ class _Masthead extends StatelessWidget {
           'M-Commerce & Media-Streaming Clients',
           style: TextStyle(
             fontFamily: AppTypography.displayFont,
-            fontSize:
-                isDesktop ? AppTypography.displayLg : AppTypography.displaySm,
+            fontSize: isDesktop ? AppTypography.hero : AppTypography.display,
             fontWeight: FontWeight.w900,
             height: 1.05,
             color: scheme.onSurface,
@@ -301,7 +300,7 @@ class _Masthead extends StatelessWidget {
         Text(
           l10n.studyFaisIntro,
           style: TextStyle(
-            fontSize: AppTypography.subtitle,
+            fontSize: AppTypography.lead,
             height: 1.55,
             color: scheme.onSurface.withValues(alpha: 0.85),
           ),

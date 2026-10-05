@@ -27,7 +27,7 @@ class SpecularGleam extends StatelessWidget {
                     center: Alignment(tilt.dx, tilt.dy),
                     radius: 0.9,
                     colors: [
-                      AppColors.accentAmber.withValues(alpha: 0.2),
+                      AppColors.gold.withValues(alpha: 0.2),
                       Colors.white.withValues(alpha: AppAlpha.whisper),
                       Colors.transparent,
                     ],
@@ -65,9 +65,9 @@ class CardOrdinalHeader extends StatelessWidget {
             ShaderMask(
               shaderCallback: (bounds) => const LinearGradient(
                 colors: [
-                  AppColors.accentAmberSoft,
-                  AppColors.hatGold,
-                  AppColors.accentAmberSoft,
+                  AppColors.goldSoft,
+                  AppColors.gold,
+                  AppColors.goldSoft,
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -77,7 +77,7 @@ class CardOrdinalHeader extends StatelessWidget {
                 style: const TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: Colors.white,
-                  fontSize: AppTypography.titleLg,
+                  fontSize: AppTypography.heading,
                   fontWeight: FontWeight.w900,
                   height: 1,
                   letterSpacing: 1,
@@ -88,7 +88,7 @@ class CardOrdinalHeader extends StatelessWidget {
               'ROLE',
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.6),
-                fontSize: AppTypography.micro,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 3,
               ),
@@ -184,7 +184,7 @@ class FlipHintRow extends StatelessWidget {
               text,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.82),
-                fontSize: AppTypography.editorial,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 1.8,
               ),

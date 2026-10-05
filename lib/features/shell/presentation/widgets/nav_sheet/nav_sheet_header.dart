@@ -22,8 +22,8 @@ class SheetHeader extends StatelessWidget {
               const Text(
                 '// DIRECTORY',
                 style: TextStyle(
-                  color: AppColors.accentIndigo,
-                  fontSize: AppTypography.caption,
+                  color: AppColors.teal,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 2.0,
                 ),
@@ -34,7 +34,7 @@ class SheetHeader extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,
-                  fontSize: AppTypography.subtitle,
+                  fontSize: AppTypography.lead,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.5,
                 ),
@@ -52,13 +52,13 @@ class SheetHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.08)
-                    : AppColors.slate100,
+                    : AppColors.ink100,
                 borderRadius: BorderRadius.circular(AppRadius.sm),
               ),
               child: Icon(
                 Icons.close_rounded,
                 size: 18,
-                color: isDark ? Colors.white70 : AppColors.slate900,
+                color: isDark ? Colors.white70 : AppColors.ink900,
               ),
             ),
           ),

@@ -4,10 +4,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/semantics.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/core/bloc/theme/theme_bloc.dart';
-import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/services/cv_service.dart';
 import 'package:profile/core/services/sound_service.dart';
@@ -103,7 +100,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (initialSection != null) {
       _pageIndex.value = UrlSyncService.instance.hashToIndex(initialSection);
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.read<ThemeBloc>().add(ThemeAccentUpdated(_pageIndex.value));
         final knownSlug =
             initialSlug == null || CaseStudyRouter.has(initialSlug);
         UrlSyncService.instance.updateTitle(
@@ -113,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.read<ThemeBloc>().add(const ThemeAccentUpdated(0));
         UrlSyncService.instance.updateTitle(UrlSyncService.baseTitle);
       });
     }
@@ -298,7 +293,6 @@ class _HomeScreenState extends State<HomeScreen> {
       // A case study owns the URL while open; replacing it would clobber
       // the `#work/<slug>` entry Back relies on.
       if (!CaseStudyRouter.hasOpen) UrlSyncService.instance.updateHash(hash);
-      context.read<ThemeBloc>().add(ThemeAccentUpdated(page));
       unawaited(_rememberSection(page));
       final labels = TopNav.getLabels(context);
       if (page >= 0 && page < labels.length) {
@@ -324,7 +318,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final page = _controller.page?.round() ?? 0;
     if (page != _pageIndex.value) {
       _pageIndex.value = page;
-      context.read<ThemeBloc>().add(ThemeAccentUpdated(page));
       SoundService.instance.playPageTurn();
       _scheduleSettle(page);
     }
@@ -387,7 +380,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (visibleIndex != null && visibleIndex != _pageIndex.value) {
       _pageIndex.value = visibleIndex;
-      context.read<ThemeBloc>().add(ThemeAccentUpdated(visibleIndex));
       _scheduleSettle(visibleIndex);
     }
   }
@@ -398,7 +390,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // Hand keys back to section navigation; a page with its own shortcuts
     // reclaims focus once it becomes active (see ActivePageFocusMixin).
     _focusNode.requestFocus();
-    context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
     if (syncUrl) {
       _scheduleSettle(target);
     } else {
@@ -514,7 +505,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // Hand keys back to section navigation; a page with its own shortcuts
     // reclaims focus once it becomes active (see ActivePageFocusMixin).
     _focusNode.requestFocus();
-    context.read<ThemeBloc>().add(ThemeAccentUpdated(target));
     // Settle regardless of [syncUrl]: `updateHash` is idempotent
     // (replaceState + dedupe), and settle also drives the title, analytics,
     // and the screen-reader announcement for back/forward navigation.

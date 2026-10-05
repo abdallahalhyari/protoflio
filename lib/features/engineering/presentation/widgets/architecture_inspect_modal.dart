@@ -109,9 +109,8 @@ class _ArchitectureInspectDialogState
                         Text(
                           'INSPECT BLUEPRINT // ZOOM & SIMULATE',
                           style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
                             color: scheme.primary,
-                            fontSize: AppTypography.micro,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.2,
                           ),
@@ -122,7 +121,7 @@ class _ArchitectureInspectDialogState
                           style: TextStyle(
                             fontFamily: AppTypography.displayFont,
                             color: context.onSurface,
-                            fontSize: AppTypography.titleSm,
+                            fontSize: AppTypography.title,
                             fontWeight: FontWeight.w800,
                           ),
                         ),

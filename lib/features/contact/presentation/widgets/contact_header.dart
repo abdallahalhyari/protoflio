@@ -9,8 +9,8 @@ import 'package:profile/shared/utils/bidi.dart';
 class ContactHeader extends StatelessWidget {
   const ContactHeader({super.key});
 
-  static const _accent = AppColors.accentViolet;
-  static const _accentSoft = AppColors.accentVioletLight;
+  static const _accent = AppColors.teal;
+  static const _accentSoft = AppColors.tealLight;
 
   Widget _issueStrip(BuildContext context, bool isDark, AppLocalizations loc) {
     Widget rule() => Container(
@@ -29,8 +29,8 @@ class ContactHeader extends StatelessWidget {
             child: Text(
               loc.contactHeaderKicker,
               style: TextStyle(
-                color: isDark ? _accentSoft : AppColors.accentVioletDeep,
-                fontSize: AppTypography.caption,
+                color: isDark ? _accentSoft : AppColors.tealDeep,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
                 letterSpacing: latinTracking(context, 4),
               ),

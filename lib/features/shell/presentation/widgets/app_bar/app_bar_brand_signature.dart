@@ -63,7 +63,7 @@ class AppBarBrandSignature extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: AppTypography.displayFont,
                           color: Colors.white,
-                          fontSize: AppTypography.subtitle,
+                          fontSize: AppTypography.lead,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -79,7 +79,7 @@ class AppBarBrandSignature extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: AppTypography.displayFont,
                           color: context.onSurface,
-                          fontSize: AppTypography.small,
+                          fontSize: AppTypography.body,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1.4,
                           height: 1.1,
@@ -119,9 +119,8 @@ class AppBarBrandSignature extends StatelessWidget {
             Text(
               '$ordinal$denom',
               style: const TextStyle(
-                fontFamily: AppTypography.monoFont,
-                color: AppColors.accentIndigo,
-                fontSize: AppTypography.editorialSm,
+                color: AppColors.teal,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 1.2,
               ),
@@ -144,8 +143,8 @@ class AppBarBrandSignature extends StatelessWidget {
                   style: TextStyle(
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.8)
-                        : AppColors.slate600,
-                    fontSize: AppTypography.micro,
+                        : AppColors.ink600,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.4,
                   ),
@@ -165,7 +164,7 @@ class AppBarBrandSignature extends StatelessWidget {
             width: 6,
             height: 6,
             decoration: const BoxDecoration(
-              color: AppColors.accentGreen,
+              color: AppColors.teal,
               shape: BoxShape.circle,
             ),
           ),
@@ -175,8 +174,8 @@ class AppBarBrandSignature extends StatelessWidget {
             style: TextStyle(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.7)
-                  : AppColors.slate600,
-              fontSize: AppTypography.micro,
+                  : AppColors.ink600,
+              fontSize: AppTypography.label,
               fontWeight: FontWeight.w800,
               letterSpacing: 1.0,
             ),

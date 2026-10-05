@@ -44,7 +44,7 @@ class ProjectTitleSection extends StatelessWidget {
           style: TextStyle(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.85)
-                : AppColors.slate700,
+                : AppColors.ink700,
             fontSize: isDesktop ? 13 : 11.5,
             height: 1.4,
             fontWeight: FontWeight.w500,

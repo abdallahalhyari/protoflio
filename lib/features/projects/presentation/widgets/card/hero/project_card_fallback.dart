@@ -34,11 +34,10 @@ class CardFallbackPlaceholder extends StatelessWidget {
             Text(
               project.company.toUpperCase(),
               style: TextStyle(
-                fontFamily: AppTypography.monoFont,
                 color: isDark
                     ? scheme.primary
                     : AppColors.toAccessibleLightText(scheme.primary),
-                fontSize: AppTypography.micro,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 1.5,
               ),

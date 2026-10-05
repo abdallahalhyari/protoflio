@@ -32,7 +32,7 @@ class FlipHintPill extends StatelessWidget {
         border: Border.all(
           color: isDark
               ? Colors.white.withValues(alpha: AppAlpha.hover)
-              : AppColors.slate300,
+              : AppColors.ink300,
           width: 0.8,
         ),
       ),
@@ -46,16 +46,15 @@ class FlipHintPill extends StatelessWidget {
               size: 11,
               color: isDark
                   ? Colors.white.withValues(alpha: 0.6)
-                  : AppColors.slate500,
+                  : AppColors.ink500,
             ),
             const SizedBox(width: 4),
             Text(
               AppLocalizations.of(context)?.flipHintTap ?? 'TAP TO FLIP',
               style: TextStyle(
-                fontFamily: AppTypography.monoFont,
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.6)
-                    : AppColors.slate600,
+                    : AppColors.ink600,
                 fontSize: isDesktop ? 9.5 : 10,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 0.8,
@@ -67,7 +66,7 @@ class FlipHintPill extends StatelessWidget {
               size: 11,
               color: isDark
                   ? Colors.white.withValues(alpha: 0.6)
-                  : AppColors.slate500,
+                  : AppColors.ink500,
             ),
           ],
         ),
@@ -94,15 +93,13 @@ class SkillTagChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
       decoration: BoxDecoration(
-        color:
-            isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.slate100,
+        color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.ink100,
         borderRadius: BorderRadius.circular(AppRadius.xs),
-        border: Border.all(color: isDark ? Colors.white24 : AppColors.slate200),
+        border: Border.all(color: isDark ? Colors.white24 : AppColors.ink200),
       ),
       child: Text(
         tag,
         style: TextStyle(
-          fontFamily: AppTypography.monoFont,
           color: isDark
               ? categoryColor.withValues(alpha: 0.9)
               : context.adaptiveAccentText(categoryColor),

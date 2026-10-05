@@ -50,11 +50,10 @@ class ArchitectureDiagramCard extends StatelessWidget {
                       AppLocalizations.of(context)!.uiArchFlowchart,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
                         color: accentText,
                         fontSize: isDesktop
-                            ? AppTypography.editorial
-                            : AppTypography.editorialSm,
+                            ? AppTypography.label
+                            : AppTypography.label,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
                       ),
@@ -81,20 +80,19 @@ class ArchitectureDiagramCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isDark
                     ? scheme.primary.withValues(alpha: 0.12)
-                    : AppColors.slate100,
+                    : AppColors.ink100,
                 borderRadius: BorderRadius.circular(AppRadius.xs),
                 border: Border.all(
                   color: isDark
                       ? scheme.primary.withValues(alpha: 0.3)
-                      : AppColors.slate300,
+                      : AppColors.ink300,
                 ),
               ),
               child: Text(
                 ltrAlways(context, '${topic.diagramSteps.length} TIERS'),
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   color: accentText,
-                  fontSize: AppTypography.nano,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 0.8,
                 ),
@@ -127,13 +125,13 @@ class ArchitectureDiagramCard extends StatelessWidget {
             border: Border.all(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.14)
-                  : AppColors.slate200,
+                  : AppColors.ink200,
             ),
             boxShadow: isDark
                 ? const []
                 : [
                     BoxShadow(
-                      color: AppColors.slate900.withValues(alpha: 0.05),
+                      color: AppColors.ink900.withValues(alpha: 0.05),
                       blurRadius: 16,
                       offset: const Offset(0, 4),
                     ),

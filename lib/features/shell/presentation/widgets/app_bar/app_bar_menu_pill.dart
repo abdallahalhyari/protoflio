@@ -65,7 +65,7 @@ class AppBarMenuPill extends StatelessWidget {
                       'MENU',
                       style: TextStyle(
                         color: isDark ? Colors.white : primary,
-                        fontSize: AppTypography.editorial,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
                       ),

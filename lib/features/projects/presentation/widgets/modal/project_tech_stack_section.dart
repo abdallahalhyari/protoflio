@@ -28,17 +28,15 @@ class ProjectTechStackSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: isDark
                   ? Colors.white.withValues(alpha: AppAlpha.whisper)
-                  : AppColors.slate100,
+                  : AppColors.ink100,
               borderRadius: BorderRadius.circular(AppRadius.xs),
               border: Border.all(color: context.divider),
             ),
             child: Text(
               tech.toUpperCase(),
               style: TextStyle(
-                fontFamily: AppTypography.monoFont,
                 color: scheme.primary,
-                fontSize:
-                    isDesktop ? AppTypography.editorialSm : AppTypography.nano,
+                fontSize: isDesktop ? AppTypography.label : AppTypography.label,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.8,
               ),

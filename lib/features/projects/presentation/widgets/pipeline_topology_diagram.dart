@@ -68,7 +68,7 @@ class PipelineTopologyDiagram extends StatelessWidget {
         decoration: BoxDecoration(
           color: isDark
               ? Colors.black.withValues(alpha: AppAlpha.border)
-              : AppColors.slate50,
+              : AppColors.ink50,
           borderRadius: BorderRadius.circular(AppRadius.chip),
           border: Border.all(
               color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
@@ -82,7 +82,7 @@ class PipelineTopologyDiagram extends StatelessWidget {
                   width: 6,
                   height: 6,
                   decoration: const BoxDecoration(
-                    color: AppColors.accentGreenLight,
+                    color: AppColors.tealLight,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -92,7 +92,6 @@ class PipelineTopologyDiagram extends StatelessWidget {
                     'PRODUCTION PIPELINE TOPOLOGY',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
                       color: scheme.primary,
                       fontSize: isDesktop ? 9.0 : 8.0,
                       fontWeight: FontWeight.w800,
@@ -123,13 +122,12 @@ class PipelineTopologyDiagram extends StatelessWidget {
                       child: Text(
                         pipeline[i].toUpperCase(),
                         style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.95)
-                              : AppColors.slate900,
+                              : AppColors.ink900,
                           fontSize: isDesktop
-                              ? AppTypography.editorialSm
-                              : AppTypography.nano,
+                              ? AppTypography.label
+                              : AppTypography.label,
                           fontWeight: FontWeight.w700,
                         ),
                       ),

@@ -56,11 +56,11 @@ class AppSurfaceTheme {
   static TooltipThemeData tooltip(bool isDark) {
     return TooltipThemeData(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.slate900 : AppColors.slate800,
+        color: isDark ? AppColors.ink900 : AppColors.ink800,
         borderRadius: BorderRadius.circular(AppRadius.sm),
       ),
-      textStyle: const TextStyle(
-          color: Colors.white, fontSize: AppTypography.captionSm),
+      textStyle:
+          const TextStyle(color: Colors.white, fontSize: AppTypography.label),
       padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
     );

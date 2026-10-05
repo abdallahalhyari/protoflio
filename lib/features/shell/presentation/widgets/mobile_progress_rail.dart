@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/shell/presentation/widgets/portfolio_nav.dart'
     show TopNav;
@@ -77,8 +76,9 @@ class MobileProgressRail extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     color: i == page
                                         ? Theme.of(context).colorScheme.primary
-                                        : context.railDot(
-                                            ThemeBloc.colorForIndex(i)),
+                                        : context.railDot(Theme.of(context)
+                                            .colorScheme
+                                            .primary),
                                     shape: BoxShape.circle,
                                     boxShadow: i == page
                                         ? [

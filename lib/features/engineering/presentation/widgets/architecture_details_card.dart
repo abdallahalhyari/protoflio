@@ -32,7 +32,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
       Row(
         children: [
           Icon(Icons.layers_rounded,
-              size: AppTypography.small, color: accentText),
+              size: AppTypography.body, color: accentText),
           const SizedBox(width: 6),
           Flexible(
             child: FittedBox(
@@ -40,8 +40,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
               child: Text(
                 'ARCHITECTURE BLUEPRINT // ${topic.id.toUpperCase()}',
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
-                  fontSize: AppTypography.editorialSm,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.5,
                   color: accentText,
@@ -55,7 +54,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
       Text(
         architectureTopicLabel(AppLocalizations.of(context)!, topic.title),
         style: TextStyle(
-          fontSize: isDesktop ? AppTypography.title : AppTypography.titleSm,
+          fontSize: isDesktop ? AppTypography.title : AppTypography.title,
           fontWeight: FontWeight.w900,
           color: context.onSurface,
           letterSpacing: 0.5,
@@ -66,10 +65,9 @@ class ArchitectureDetailsCard extends StatelessWidget {
       Text(
         ltrContent(context, topic.summary),
         style: TextStyle(
-          fontSize: AppTypography.small,
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.92)
-              : AppColors.slate800,
+          fontSize: AppTypography.body,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.92) : AppColors.ink800,
           height: 1.5,
           fontWeight: FontWeight.w500,
         ),
@@ -106,9 +104,8 @@ class ArchitectureDetailsCard extends StatelessWidget {
                     AppLocalizations.of(context)!.uiArchRationale,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
                       color: accentText,
-                      fontSize: AppTypography.editorial,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1.2,
                     ),
@@ -122,8 +119,8 @@ class ArchitectureDetailsCard extends StatelessWidget {
               style: TextStyle(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.94)
-                    : AppColors.slate900,
-                fontSize: AppTypography.captionSm,
+                    : AppColors.ink900,
+                fontSize: AppTypography.label,
                 height: 1.5,
                 fontWeight: FontWeight.w500,
               ),
@@ -143,9 +140,8 @@ class ArchitectureDetailsCard extends StatelessWidget {
               AppLocalizations.of(context)!.uiKeySafeguards,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontFamily: AppTypography.monoFont,
                 color: accentText,
-                fontSize: AppTypography.editorial,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 1.2,
               ),
@@ -183,8 +179,8 @@ class ArchitectureDetailsCard extends StatelessWidget {
                   style: TextStyle(
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.90)
-                        : AppColors.slate800,
-                    fontSize: AppTypography.captionSm,
+                        : AppColors.ink800,
+                    fontSize: AppTypography.label,
                     height: 1.45,
                     fontWeight: FontWeight.w500,
                   ),
@@ -205,9 +201,8 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 AppLocalizations.of(context)!.uiLatencyBudget,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   color: accentText,
-                  fontSize: AppTypography.editorial,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.2,
                 ),
@@ -242,13 +237,13 @@ class ArchitectureDetailsCard extends StatelessWidget {
           border: Border.all(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.14)
-                : AppColors.slate200,
+                : AppColors.ink200,
           ),
           boxShadow: isDark
               ? const []
               : [
                   BoxShadow(
-                    color: AppColors.slate900.withValues(alpha: 0.05),
+                    color: AppColors.ink900.withValues(alpha: 0.05),
                     blurRadius: 16,
                     offset: const Offset(0, 4),
                   ),
@@ -309,9 +304,8 @@ class _BudgetRow extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
                     color: tone,
-                    fontSize: AppTypography.nano,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.0,
                   ),
@@ -323,7 +317,7 @@ class _BudgetRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: context.onSurface,
-                    fontSize: AppTypography.captionSm,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -349,9 +343,8 @@ class _BudgetRow extends StatelessWidget {
               ltrAlways(context, step.latencyBudget!),
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: AppTypography.monoFont,
                 color: tone,
-                fontSize: AppTypography.captionSm,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 0.5,
                 fontFeatures: const [FontFeature.tabularFigures()],

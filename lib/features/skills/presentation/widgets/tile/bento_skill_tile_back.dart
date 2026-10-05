@@ -33,7 +33,7 @@ class TileBackFace extends StatelessWidget {
           BoxShadow(
             color: isDark
                 ? categoryColor.withValues(alpha: 0.3)
-                : AppColors.slate900.withValues(alpha: 0.08),
+                : AppColors.ink900.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 6),
           ),
@@ -92,9 +92,8 @@ class TileBackFace extends StatelessWidget {
                               Text(
                                 'FLIP',
                                 style: TextStyle(
-                                  fontFamily: AppTypography.monoFont,
                                   color: accentText,
-                                  fontSize: AppTypography.micro,
+                                  fontSize: AppTypography.label,
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),
@@ -111,7 +110,7 @@ class TileBackFace extends StatelessWidget {
                           style: TextStyle(
                             color: isDark
                                 ? Colors.white.withValues(alpha: 0.85)
-                                : AppColors.slate700,
+                                : AppColors.ink700,
                             fontSize: isDesktop ? 12 : 10.5,
                             height: 1.4,
                           ),
@@ -124,9 +123,8 @@ class TileBackFace extends StatelessWidget {
                         Text(
                           'MASTERY $pct%',
                           style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
                             color: accentText,
-                            fontSize: AppTypography.nano,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w800,
                           ),
                         ),

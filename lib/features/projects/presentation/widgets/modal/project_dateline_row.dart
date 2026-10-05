@@ -40,9 +40,8 @@ class ProjectDatelineRow extends StatelessWidget {
                 child: Text(
                   project.company.toUpperCase(),
                   style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
                     color: scheme.primary,
-                    fontSize: AppTypography.editorialSm,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.2,
                   ),
@@ -57,11 +56,10 @@ class ProjectDatelineRow extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.6)
-                        : AppColors.slate500,
-                    fontSize: AppTypography.editorialSm,
+                        : AppColors.ink500,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.0,
                   ),
@@ -97,9 +95,8 @@ class ProjectDatelineRow extends StatelessWidget {
                         Text(
                           'WEBSITE',
                           style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
                             color: scheme.primary,
-                            fontSize: AppTypography.micro,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1,
                           ),
@@ -139,7 +136,7 @@ class ProjectDatelineRow extends StatelessWidget {
                             'in',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: AppTypography.nano,
+                              fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
                               fontFamily: 'sans-serif',
                               height: 1.0,
@@ -150,9 +147,8 @@ class ProjectDatelineRow extends StatelessWidget {
                         const Text(
                           'LINKEDIN',
                           style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
                             color: AppColors.linkedIn,
-                            fontSize: AppTypography.micro,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1,
                           ),

@@ -19,7 +19,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Declarative widgets, BLoC / ValueNotifiers, input validation & 60fps view rendering.',
         icon: Icons.layers_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 16ms',
       ),
       DiagramStep(
@@ -28,7 +28,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Pure Dart entities, business rules, repository contracts. Zero external framework dependencies.',
         icon: Icons.account_tree_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 2ms',
       ),
       DiagramStep(
@@ -37,7 +37,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Coordination between local cache and remote sources, serialization, and error translation.',
         icon: Icons.storage_rounded,
-        color: AppColors.accentGreenLight,
+        color: AppColors.tealLight,
         latencyBudget: '< 5ms',
       ),
       DiagramStep(
@@ -46,7 +46,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Native Android NFC Adapter, SQLite persistent storage, and secure HTTPS REST endpoints.',
         icon: Icons.settings_ethernet_rounded,
-        color: AppColors.accentAmber,
+        color: AppColors.gold,
         latencyBudget: '< 12ms',
       ),
     ],
@@ -71,7 +71,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Immediate user feedback with transactional state marked as PENDING_SYNC.',
         icon: Icons.touch_app_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 1ms',
       ),
       DiagramStep(
@@ -80,7 +80,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Record stored locally within an ACID database transaction. Never held in volatile memory.',
         icon: Icons.save_rounded,
-        color: AppColors.accentGreen,
+        color: AppColors.teal,
         latencyBudget: '< 8ms',
       ),
       DiagramStep(
@@ -89,7 +89,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'OS-managed background worker triggered with NETWORK_CONNECTED constraints & exponential backoff.',
         icon: Icons.schedule_rounded,
-        color: AppColors.accentAmberMid,
+        color: AppColors.gold,
         latencyBudget: '< 15ms',
       ),
       DiagramStep(
@@ -98,7 +98,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Idempotency keys prevent duplicate transactions; server timestamp updates local state to SYNCED.',
         icon: Icons.cloud_done_rounded,
-        color: AppColors.accentVioletLight,
+        color: AppColors.tealLight,
         latencyBudget: '< 120ms',
       ),
     ],
@@ -123,7 +123,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Foreground dispatch filter captures IsoDep / Mifare smart-cards within milliseconds.',
         icon: Icons.nfc_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 24ms',
       ),
       DiagramStep(
@@ -132,7 +132,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'High-speed binary transport bridging Flutter runtime to native Android IsoDep transceive buffer.',
         icon: Icons.cable_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 4ms',
       ),
       DiagramStep(
@@ -141,7 +141,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Select Application (AID), Mutual Authentication, and encrypted binary block read.',
         icon: Icons.security_rounded,
-        color: AppColors.accentAmber,
+        color: AppColors.gold,
         latencyBudget: '< 32ms',
       ),
       DiagramStep(
@@ -150,7 +150,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Card payload parsed and cryptographically validated against digital certificate authorities.',
         icon: Icons.verified_user_rounded,
-        color: AppColors.accentGreen,
+        color: AppColors.teal,
         latencyBudget: '< 18ms',
       ),
     ],
@@ -175,7 +175,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Fingerprint / Face Unlock verified via Android BiometricPrompt with StrongBox / TEE backing.',
         icon: Icons.fingerprint_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 50ms',
       ),
       DiagramStep(
@@ -184,7 +184,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Hardware-backed AES-256 GCM key encryption. Private keys never leave secure hardware enclave.',
         icon: Icons.lock_outline_rounded,
-        color: AppColors.accentAmberMid,
+        color: AppColors.gold,
         latencyBudget: '< 8ms',
       ),
       DiagramStep(
@@ -193,7 +193,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Short-lived access token (15 min) + hardware GUID-bound refresh token stored securely.',
         icon: Icons.vpn_key_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 16ms',
       ),
       DiagramStep(
@@ -202,7 +202,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Automatic token refresh on HTTP 401 with immediate local cache purge upon revocation.',
         icon: Icons.sync_lock_rounded,
-        color: AppColors.accentGreen,
+        color: AppColors.teal,
         latencyBudget: '< 70ms',
       ),
     ],
@@ -227,7 +227,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Widget tree reacts instantly to state emissions while handling side-effects (navigation, dialogs) through listeners.',
         icon: Icons.view_quilt_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 16ms',
       ),
       DiagramStep(
@@ -236,7 +236,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'User actions are transformed into strictly typed Events pushed into the BLoC sink.',
         icon: Icons.alt_route_rounded,
-        color: AppColors.accentAmberMid,
+        color: AppColors.gold,
         latencyBudget: '< 1ms',
       ),
       DiagramStep(
@@ -245,7 +245,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Asynchronous generators process events, interact with Domain use-cases, and yield immutable State objects.',
         icon: Icons.memory_rounded,
-        color: AppColors.accentSky,
+        color: AppColors.teal,
         latencyBudget: '< 14ms',
       ),
       DiagramStep(
@@ -254,7 +254,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         details:
             'Data classes with strictly defined properties and value equality (Equatable) preventing unnecessary widget rebuilds.',
         icon: Icons.stream_rounded,
-        color: AppColors.accentGreen,
+        color: AppColors.teal,
         latencyBudget: '< 2ms',
       ),
     ],

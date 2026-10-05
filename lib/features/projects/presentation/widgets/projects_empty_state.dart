@@ -46,7 +46,7 @@ class ProjectsEmptyState extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: scheme.onSurface.withValues(alpha: 0.7),
-              fontSize: AppTypography.small,
+              fontSize: AppTypography.body,
             ),
           ),
           const SizedBox(height: AppSpacing.lg),

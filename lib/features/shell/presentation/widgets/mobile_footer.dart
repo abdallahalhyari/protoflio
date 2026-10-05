@@ -30,7 +30,7 @@ class MobileFooter extends StatelessWidget {
                 height: 28,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [AppColors.accentSky, AppColors.accentIndigo],
+                    colors: [AppColors.teal, AppColors.teal],
                   ),
                   borderRadius: BorderRadius.circular(AppRadius.chip),
                 ),
@@ -41,7 +41,7 @@ class MobileFooter extends StatelessWidget {
                     fontFamily: AppTypography.displayFont,
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
-                    fontSize: AppTypography.bodyLg,
+                    fontSize: AppTypography.lead,
                   ),
                 ),
               ),
@@ -52,7 +52,7 @@ class MobileFooter extends StatelessWidget {
                   style: TextStyle(
                     color: context.onSurface,
                     fontWeight: FontWeight.w900,
-                    fontSize: AppTypography.overline,
+                    fontSize: AppTypography.label,
                     letterSpacing: 2,
                   ),
                 ),
@@ -64,7 +64,7 @@ class MobileFooter extends StatelessWidget {
             'SENIOR MOBILE ENGINEER · SYSTEM ARCHITECT',
             style: TextStyle(
               color: context.mutedText,
-              fontSize: AppTypography.editorialSm,
+              fontSize: AppTypography.label,
               fontWeight: FontWeight.w700,
               letterSpacing: 2,
             ),
@@ -74,7 +74,7 @@ class MobileFooter extends StatelessWidget {
             AppLocalizations.of(context)!.footerRightsReserved,
             style: TextStyle(
               color: context.subtleText,
-              fontSize: AppTypography.editorialSm,
+              fontSize: AppTypography.label,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.5,
             ),

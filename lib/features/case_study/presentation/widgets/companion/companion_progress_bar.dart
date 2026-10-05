@@ -39,19 +39,19 @@ class CompanionTopReadingProgressBar extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        AppColors.accentCyan,
+                        AppColors.teal,
                         scheme.primary,
-                        AppColors.accentGreen,
+                        AppColors.teal,
                       ],
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: context.glowAccent(AppColors.accentCyan),
+                        color: context.glowAccent(AppColors.teal),
                         blurRadius: 8,
                         spreadRadius: 1,
                       ),
                       BoxShadow(
-                        color: context.glowSecondary(AppColors.accentGreen),
+                        color: context.glowSecondary(AppColors.teal),
                         blurRadius: 12,
                         spreadRadius: -1,
                       ),
@@ -71,7 +71,7 @@ class CompanionTopReadingProgressBar extends StatelessWidget {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.accentCyan,
+                            color: AppColors.teal,
                             blurRadius: 6,
                             spreadRadius: 1.5,
                           ),

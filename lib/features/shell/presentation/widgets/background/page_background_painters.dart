@@ -32,7 +32,7 @@ class LightGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final dotPaint = Paint()
-      ..color = AppColors.slate400.withValues(alpha: 0.20)
+      ..color = AppColors.ink400.withValues(alpha: 0.20)
       ..strokeWidth = 1.6
       ..strokeCap = StrokeCap.round;
 

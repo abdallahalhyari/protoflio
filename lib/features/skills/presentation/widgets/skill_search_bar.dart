@@ -45,14 +45,14 @@ class SkillSearchBar extends StatelessWidget {
           decoration: BoxDecoration(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.04)
-                : AppColors.slate100.withValues(alpha: 0.8),
+                : AppColors.ink100.withValues(alpha: 0.8),
             borderRadius: BorderRadius.circular(AppRadius.pill),
             border: Border.all(
               color: isFiltered
                   ? scheme.primary.withValues(alpha: 0.5)
                   : (isDark
                       ? Colors.white.withValues(alpha: 0.08)
-                      : AppColors.slate200),
+                      : AppColors.ink200),
               width: isFiltered ? 1.2 : 1.0,
             ),
           ),
@@ -73,7 +73,7 @@ class SkillSearchBar extends StatelessWidget {
                   controller: controller,
                   onChanged: onChanged,
                   style: TextStyle(
-                    fontSize: AppTypography.small,
+                    fontSize: AppTypography.body,
                     fontWeight: FontWeight.w600,
                     color: context.onSurface,
                   ),
@@ -81,9 +81,8 @@ class SkillSearchBar extends StatelessWidget {
                   decoration: InputDecoration(
                     hintText: l10n.skillsSearchHint,
                     hintStyle: TextStyle(
-                      fontSize: isDesktop
-                          ? AppTypography.small
-                          : AppTypography.caption,
+                      fontSize:
+                          isDesktop ? AppTypography.body : AppTypography.label,
                       // 0.4 was 2.5:1 in light mode; 0.62 clears 4.5:1.
                       color: scheme.onSurface.withValues(alpha: 0.62),
                       fontWeight: FontWeight.w500,
@@ -153,7 +152,7 @@ class SkillSearchBar extends StatelessWidget {
                           softWrap: false,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: AppTypography.overlineTight,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 0.8,
                             color: isFiltered

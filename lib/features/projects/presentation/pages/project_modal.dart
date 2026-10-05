@@ -120,14 +120,14 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                     border: Border.all(
                       color: isDark
                           ? scheme.primary.withValues(alpha: 0.5)
-                          : AppColors.slate300,
+                          : AppColors.ink300,
                       width: isDark ? 1.5 : 1.0,
                     ),
                     boxShadow: [
                       BoxShadow(
                         color: isDark
                             ? Colors.black.withValues(alpha: 0.5)
-                            : AppColors.slate900
+                            : AppColors.ink900
                                 .withValues(alpha: AppAlpha.whisper),
                         blurRadius: 22,
                         offset: const Offset(0, 6),
@@ -174,7 +174,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                 style: TextStyle(
                                   color: isDark
                                       ? Colors.white.withValues(alpha: 0.8)
-                                      : AppColors.slate700,
+                                      : AppColors.ink700,
                                   fontSize: isDesktop ? 12.0 : 11.0,
                                   height: 1.45,
                                 ),

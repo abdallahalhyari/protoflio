@@ -99,9 +99,8 @@ class CardHeroImage extends StatelessWidget {
               child: Text(
                 project.company.toUpperCase(),
                 style: const TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   color: Colors.white,
-                  fontSize: AppTypography.micro,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.5,
                 ),

@@ -79,7 +79,7 @@ class FolioBar extends StatelessWidget {
                     key: ValueKey<int>(page),
                     style: TextStyle(
                       color: context.subtleText,
-                      fontSize: AppTypography.micro,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
                     ),
@@ -112,7 +112,7 @@ class FolioBar extends StatelessWidget {
                     key: ValueKey<String>(currentLabel),
                     style: TextStyle(
                       color: context.onSurface,
-                      fontSize: AppTypography.micro,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2,
                     ),
@@ -212,7 +212,7 @@ class _NextStepState extends State<_NextStep> {
                       key: ValueKey<String>(label),
                       style: TextStyle(
                         color: _hovered ? accent : context.mutedText,
-                        fontSize: AppTypography.micro,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 1.5,
                       ),

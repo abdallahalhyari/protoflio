@@ -129,7 +129,7 @@ class _CaseStudyScaffoldState extends State<CaseStudyScaffold> {
                 title: Text(
                   widget.appBarTitle,
                   style: TextStyle(
-                    fontSize: AppTypography.overline,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
                     letterSpacing: latinTracking(context, 2.4),
                     color: scheme.onSurface.withValues(alpha: 0.8),

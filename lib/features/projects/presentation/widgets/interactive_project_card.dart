@@ -104,8 +104,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                 spreadRadius: 1,
                               ),
                               BoxShadow(
-                                color: AppColors.accentViolet
-                                    .withValues(alpha: 0.15),
+                                color: AppColors.teal.withValues(alpha: 0.15),
                                 blurRadius: 36,
                                 spreadRadius: 2,
                               ),
@@ -131,7 +130,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                                   .withValues(alpha: isDark ? 0.75 : 0.65)
                               : (isDark
                                   ? Colors.white.withValues(alpha: 0.14)
-                                  : AppColors.slate200),
+                                  : AppColors.ink200),
                           width: isInteractive ? 1.5 : 1.0,
                         ),
                       ),

@@ -17,9 +17,9 @@ class EngagementMatrixSection extends StatelessWidget {
     required this.onInquire,
   });
 
-  static const _sky = AppColors.accentSky;
-  static const _accent = AppColors.accentViolet;
-  static const _availabilityGreen = AppColors.accentGreenLight;
+  static const _sky = AppColors.teal;
+  static const _accent = AppColors.teal;
+  static const _availabilityGreen = AppColors.tealLight;
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +93,8 @@ class EngagementMatrixSection extends StatelessWidget {
                   child: Text(
                     l10n.contactEngagementScopes,
                     style: TextStyle(
-                      color: isDark ? Colors.white70 : AppColors.slate500,
-                      fontSize: AppTypography.caption,
+                      color: isDark ? Colors.white70 : AppColors.ink500,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2.2,
                     ),

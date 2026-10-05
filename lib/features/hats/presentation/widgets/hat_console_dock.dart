@@ -101,7 +101,7 @@ class HatConsoleDock extends StatelessWidget {
                   padding: const EdgeInsets.all(6),
                   constraints: const BoxConstraints(),
                   style: IconButton.styleFrom(
-                    foregroundColor: isDark ? primary : AppColors.accentSkyDeep,
+                    foregroundColor: isDark ? primary : AppColors.tealDeep,
                   ),
                   icon: const Icon(Icons.auto_awesome_motion_rounded),
                 ),
@@ -117,8 +117,7 @@ class HatConsoleDock extends StatelessWidget {
                   padding: const EdgeInsets.all(6),
                   constraints: const BoxConstraints(),
                   style: IconButton.styleFrom(
-                    foregroundColor:
-                        isDark ? Colors.white60 : AppColors.slate500,
+                    foregroundColor: isDark ? Colors.white60 : AppColors.ink500,
                   ),
                   icon: const Icon(Icons.layers_clear_rounded),
                 ),
@@ -172,11 +171,10 @@ class _DockNavButton extends StatelessWidget {
           onPressed();
         },
         style: OutlinedButton.styleFrom(
-          foregroundColor: isDark ? Colors.white70 : AppColors.slate700,
+          foregroundColor: isDark ? Colors.white70 : AppColors.ink700,
           side: BorderSide(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.2)
-                : AppColors.slate300,
+            color:
+                isDark ? Colors.white.withValues(alpha: 0.2) : AppColors.ink300,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           minimumSize: const Size(0, 32),
@@ -187,8 +185,7 @@ class _DockNavButton extends StatelessWidget {
         label: Text(
           label,
           style: const TextStyle(
-            fontFamily: AppTypography.monoFont,
-            fontSize: AppTypography.editorialSm,
+            fontSize: AppTypography.label,
             fontWeight: FontWeight.w800,
           ),
         ),
@@ -263,9 +260,8 @@ class _ActiveRolePill extends StatelessWidget {
               ltrAlways(context, '0${selectedIndex + 1} / 0$totalCount'),
               key: ValueKey<int>(selectedIndex),
               style: TextStyle(
-                fontFamily: AppTypography.monoFont,
                 color: _readable(context, currentHat.color),
-                fontSize: AppTypography.editorialSm,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -295,9 +291,8 @@ class _ActiveRolePill extends StatelessWidget {
               hatTitleLabel(loc, currentHat.title).toUpperCase(),
               key: ValueKey<String>(currentHat.title),
               style: TextStyle(
-                fontFamily: AppTypography.monoFont,
                 color: context.onSurface,
-                fontSize: AppTypography.editorialSm,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.0,
               ),
@@ -335,13 +330,11 @@ class _ShortcutBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color:
-            isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100,
+        color: isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.ink100,
         borderRadius: BorderRadius.circular(AppRadius.xs),
         border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.08)
-              : AppColors.slate200,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.ink200,
         ),
       ),
       child: Row(
@@ -356,8 +349,7 @@ class _ShortcutBadge extends StatelessWidget {
           Text(
             loc.perspectiveShortcutsHint,
             style: TextStyle(
-              fontFamily: AppTypography.monoFont,
-              fontSize: AppTypography.micro,
+              fontSize: AppTypography.label,
               color: context.subtleText,
               fontWeight: FontWeight.w600,
             ),

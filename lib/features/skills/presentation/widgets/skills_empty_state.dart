@@ -29,12 +29,12 @@ class SkillsEmptyState extends StatelessWidget {
             horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         decoration: BoxDecoration(
           color:
-              isDark ? Colors.white.withValues(alpha: 0.03) : AppColors.slate50,
+              isDark ? Colors.white.withValues(alpha: 0.03) : AppColors.ink50,
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.08)
-                : AppColors.slate200,
+                : AppColors.ink200,
           ),
         ),
         child: Column(
@@ -52,7 +52,7 @@ class SkillsEmptyState extends StatelessWidget {
                   : l10n.skillsNoMatch(query.trim()),
               style: TextStyle(
                 color: context.onSurface,
-                fontSize: AppTypography.small,
+                fontSize: AppTypography.body,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -62,7 +62,7 @@ class SkillsEmptyState extends StatelessWidget {
               child: Text(
                 l10n.skillsEmptyShowAll,
                 style: const TextStyle(
-                  fontSize: AppTypography.caption,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.4,
                 ),

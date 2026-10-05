@@ -75,8 +75,8 @@ class DarkNearOrb extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  AppColors.accentViolet.withValues(alpha: 0.05),
-                  AppColors.accentViolet.withValues(alpha: 0.0),
+                  AppColors.teal.withValues(alpha: 0.05),
+                  AppColors.teal.withValues(alpha: 0.0),
                 ],
               ),
             ),
@@ -161,8 +161,8 @@ class LightNearOrb extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  AppColors.accentAmber.withValues(alpha: 0.07),
-                  AppColors.accentAmber.withValues(alpha: 0.0),
+                  AppColors.gold.withValues(alpha: 0.07),
+                  AppColors.gold.withValues(alpha: 0.0),
                 ],
               ),
             ),

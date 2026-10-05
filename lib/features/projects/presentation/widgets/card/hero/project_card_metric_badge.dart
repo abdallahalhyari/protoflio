@@ -33,9 +33,8 @@ class CardMetricBadge extends StatelessWidget {
             Text(
               text.toUpperCase(),
               style: const TextStyle(
-                fontFamily: AppTypography.monoFont,
                 color: Colors.white,
-                fontSize: AppTypography.editorialSm,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 0.8,
               ),

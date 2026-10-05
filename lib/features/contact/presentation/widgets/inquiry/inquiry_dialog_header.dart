@@ -31,9 +31,8 @@ class InquiryDialogHeader extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.uiComposerTitle,
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   color: scheme.primary,
-                  fontSize: AppTypography.micro,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.4,
                 ),

@@ -56,7 +56,6 @@ class ProjectDossierCard extends StatelessWidget {
                 Text(
                   label,
                   style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
                     color: effectiveAccent,
                     fontSize: isDesktop ? 10.0 : 9.0,
                     fontWeight: FontWeight.w900,
@@ -71,7 +70,7 @@ class ProjectDossierCard extends StatelessWidget {
               style: TextStyle(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.95)
-                    : AppColors.slate800,
+                    : AppColors.ink800,
                 fontSize: isDesktop ? 12.5 : 11.0,
                 height: 1.45,
               ),
@@ -112,7 +111,6 @@ class ProjectHighlightRow extends StatelessWidget {
           Text(
             '§ ',
             style: TextStyle(
-              fontFamily: AppTypography.monoFont,
               color: scheme.primary,
               fontWeight: FontWeight.w900,
               fontSize: isDesktop ? 12.5 : 11.0,
@@ -126,10 +124,7 @@ class ProjectHighlightRow extends StatelessWidget {
                     TextSpan(
                       text: '$prefix ',
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        color: isDark
-                            ? AppColors.accentAmberSoft
-                            : AppColors.accentAmberDeep,
+                        color: isDark ? AppColors.goldSoft : AppColors.goldDeep,
                         fontWeight: FontWeight.w800,
                         fontSize: isDesktop ? 12.0 : 10.5,
                       ),
@@ -139,7 +134,7 @@ class ProjectHighlightRow extends StatelessWidget {
                     style: TextStyle(
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.9)
-                          : AppColors.slate700,
+                          : AppColors.ink700,
                       fontSize: isDesktop ? 12.0 : 10.5,
                       height: 1.35,
                     ),

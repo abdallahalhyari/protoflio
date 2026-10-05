@@ -61,7 +61,7 @@ class _MobilePagerContent extends StatelessWidget {
                 size: 18,
                 color: onTap == null
                     ? context.glassBorderStrong
-                    : (isDark ? Colors.white : AppColors.slate700),
+                    : (isDark ? Colors.white : AppColors.ink700),
               ),
             ),
           ),
@@ -124,8 +124,7 @@ class _MobilePagerContent extends StatelessWidget {
                 ),
                 key: ValueKey<int>(page),
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
-                  fontSize: AppTypography.caption,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
                   color: context.mutedText,

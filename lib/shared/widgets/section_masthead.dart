@@ -179,7 +179,7 @@ class _SectionMastheadState extends State<SectionMasthead>
               children: [
                 if (widget.badgeIcon != null) ...[
                   Icon(widget.badgeIcon,
-                      size: AppTypography.caption + 1, color: accentText),
+                      size: AppTypography.label + 1, color: accentText),
                   const SizedBox(width: 6),
                 ],
                 Text(
@@ -187,7 +187,7 @@ class _SectionMastheadState extends State<SectionMasthead>
                   ltrContent(context, widget.badgeLabel!),
                   style: TextStyle(
                     color: accentText,
-                    fontSize: AppTypography.editorial,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w900,
                     letterSpacing: latinTracking(context, 1.4),
                   ),

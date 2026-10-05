@@ -102,13 +102,11 @@ class _HeroWordmarkState extends State<HeroWordmark>
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          (widget.isDark ? Colors.white : AppColors.slate700)
+                          (widget.isDark ? Colors.white : AppColors.ink700)
                               .withValues(alpha: alpha),
-                          (widget.isDark
-                                  ? AppColors.accentIndigo
-                                  : AppColors.accentIndigo600)
+                          (widget.isDark ? AppColors.teal : AppColors.teal)
                               .withValues(alpha: alpha + 0.15),
-                          AppColors.accentViolet.withValues(alpha: alpha),
+                          AppColors.teal.withValues(alpha: alpha),
                         ],
                         stops: const [0.0, 0.55, 1.0],
                         transform: GradientRotation(

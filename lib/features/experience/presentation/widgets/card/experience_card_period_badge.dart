@@ -4,7 +4,7 @@ import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/pulsing_dot.dart';
 
-const Color kNowAccent = AppColors.accentGreen;
+const Color kNowAccent = AppColors.teal;
 
 class PeriodBadgeRow extends StatelessWidget {
   const PeriodBadgeRow({
@@ -37,7 +37,7 @@ class PeriodBadgeRow extends StatelessWidget {
             period.toUpperCase(),
             style: TextStyle(
                 color: context.adaptiveAccentText(scheme.primary),
-                fontSize: AppTypography.micro,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1),
           ),
@@ -48,19 +48,19 @@ class PeriodBadgeRow extends StatelessWidget {
             decoration: BoxDecoration(
               color: isDark
                   ? kNowAccent.withValues(alpha: 0.15)
-                  : AppColors.accentGreenDeep.withValues(alpha: 0.10),
+                  : AppColors.tealDeep.withValues(alpha: 0.10),
               borderRadius: BorderRadius.circular(AppRadius.xs),
               border: Border.all(
                 color: isDark
                     ? kNowAccent.withValues(alpha: 0.5)
-                    : AppColors.accentGreenDeep.withValues(alpha: 0.45),
+                    : AppColors.tealDeep.withValues(alpha: 0.45),
               ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 PulsingDot(
-                  color: isDark ? kNowAccent : AppColors.accentGreenDeep,
+                  color: isDark ? kNowAccent : AppColors.tealDeep,
                 ),
                 const SizedBox(width: 6),
                 Flexible(
@@ -68,8 +68,8 @@ class PeriodBadgeRow extends StatelessWidget {
                     AppLocalizations.of(context)!.uiLatestDispatch,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: isDark ? kNowAccent : AppColors.accentGreenDeep,
-                      fontSize: AppTypography.micro,
+                      color: isDark ? kNowAccent : AppColors.tealDeep,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1,
                     ),

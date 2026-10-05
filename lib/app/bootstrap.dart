@@ -166,7 +166,7 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
           context: ErrorDescription('Failed to read startup preferences.'),
         ),
       );
-      initTheme = ThemeMode.dark;
+      initTheme = ThemeMode.light;
       initLocale = const Locale('en');
     }
 
@@ -263,7 +263,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.dark();
-    final accent = AppColors.accentIndigo;
+    final accent = AppColors.teal;
     final panelBorder = Colors.white.withValues(alpha: 0.12);
 
     return Theme(
@@ -377,7 +377,7 @@ class _StartupErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.dark();
-    final accent = AppColors.accentIndigo;
+    final accent = AppColors.teal;
     final surface = AppColors.darkSurface;
 
     return Theme(

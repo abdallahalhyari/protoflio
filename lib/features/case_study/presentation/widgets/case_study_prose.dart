@@ -29,7 +29,7 @@ class SectionKicker extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            fontSize: AppTypography.overline,
+            fontSize: AppTypography.label,
             letterSpacing: latinTracking(context, 3),
             fontWeight: FontWeight.w800,
             color: scheme.onSurface.withValues(alpha: 0.9),
@@ -137,7 +137,7 @@ class CaseStudyLanguageNote extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                fontSize: AppTypography.small,
+                fontSize: AppTypography.body,
                 fontStyle: FontStyle.italic,
                 color: context.mutedText,
               ),

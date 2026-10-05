@@ -38,11 +38,10 @@ class HatDragHint extends StatelessWidget {
               Text(
                 AppLocalizations.of(context)!.uiDragCardsHint,
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   // Full-strength accent: at border opacity this
                   // instruction measured ~2:1 on the dark canvas.
                   color: context.adaptiveAccentText(primary),
-                  fontSize: AppTypography.editorial,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
                 ),

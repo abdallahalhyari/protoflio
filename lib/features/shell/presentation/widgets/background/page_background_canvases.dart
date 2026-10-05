@@ -23,9 +23,9 @@ class DarkBaseCanvas extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColors.slate950,
+                  AppColors.ink950,
                   AppColors.darkNight,
-                  AppColors.slate950,
+                  AppColors.ink950,
                 ],
                 stops: [0.0, 0.55, 1.0],
               ),
@@ -51,7 +51,7 @@ class DarkBaseCanvas extends StatelessWidget {
                     radius: 1.25,
                     colors: [
                       Colors.transparent,
-                      AppColors.slate950.withValues(alpha: 0.65),
+                      AppColors.ink950.withValues(alpha: 0.65),
                     ],
                   ),
                 ),

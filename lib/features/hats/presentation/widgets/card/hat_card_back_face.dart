@@ -70,7 +70,7 @@ class CardBackFace extends StatelessWidget {
                             text: 'REVERSE · ',
                             style: TextStyle(
                               color: Colors.white.withValues(alpha: 0.5),
-                              fontSize: AppTypography.caption,
+                              fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 2,
                             ),
@@ -81,7 +81,7 @@ class CardBackFace extends StatelessWidget {
                                 .toUpperCase(),
                             style: TextStyle(
                               color: accent,
-                              fontSize: AppTypography.overline,
+                              fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1.8,
                             ),
@@ -115,7 +115,7 @@ class CardBackFace extends StatelessWidget {
                     hat.titleDesc,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: AppTypography.overline,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w800,
                       height: 1.4,
                       letterSpacing: 0.3,
@@ -128,7 +128,7 @@ class CardBackFace extends StatelessWidget {
                     hat.desc,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.92),
-                      fontSize: AppTypography.overlineTight,
+                      fontSize: AppTypography.label,
                       height: 1.55,
                       letterSpacing: 0.15,
                     ),

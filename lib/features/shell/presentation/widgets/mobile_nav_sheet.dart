@@ -61,7 +61,7 @@ class MobileNavSheet extends StatelessWidget {
         subtitle:
             l?.navSubExperience ?? '5+ Years Enterprise Engineering & Impact',
         icon: Icons.timeline_rounded,
-        accentColor: AppColors.accentGreen,
+        accentColor: AppColors.teal,
       ),
       NavSectionItem(
         index: 2,
@@ -69,7 +69,7 @@ class MobileNavSheet extends StatelessWidget {
         title: l?.navSectionWork ?? 'SELECTED WORK',
         subtitle: l?.navSubWork ?? 'Production Systems & Case Studies',
         icon: Icons.rocket_launch_rounded,
-        accentColor: AppColors.accentViolet,
+        accentColor: AppColors.teal,
       ),
       NavSectionItem(
         index: 3,
@@ -77,7 +77,7 @@ class MobileNavSheet extends StatelessWidget {
         title: l?.navSectionStack ?? 'SKILLS & STACK',
         subtitle: l?.navSubStack ?? 'Technical Proficiency Matrix',
         icon: Icons.code_rounded,
-        accentColor: AppColors.accentAmber,
+        accentColor: AppColors.gold,
       ),
       NavSectionItem(
         index: 4,
@@ -86,7 +86,7 @@ class MobileNavSheet extends StatelessWidget {
         subtitle:
             l?.navSubEngineering ?? 'Enterprise Blueprints & Offline-First',
         icon: Icons.hub_rounded,
-        accentColor: AppColors.accentRose,
+        accentColor: AppColors.signal,
       ),
       NavSectionItem(
         index: 5,
@@ -94,7 +94,7 @@ class MobileNavSheet extends StatelessWidget {
         title: l?.navSectionAbout ?? 'PERSPECTIVES',
         subtitle: l?.navSubAbout ?? 'Architectural Perspectives & Hats',
         icon: Icons.style_rounded,
-        accentColor: AppColors.accentCyan,
+        accentColor: AppColors.teal,
       ),
       NavSectionItem(
         index: 6,
@@ -102,7 +102,7 @@ class MobileNavSheet extends StatelessWidget {
         title: l?.navSectionContact ?? 'CONTACT',
         subtitle: l?.navSubContact ?? 'Direct Channels & Availability',
         icon: Icons.mail_rounded,
-        accentColor: AppColors.accentIndigoDeep,
+        accentColor: AppColors.teal,
       ),
     ];
   }
@@ -122,7 +122,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'CAREER & EXPERIENCE',
       subtitle: '5+ Years Enterprise Engineering & Impact',
       icon: Icons.timeline_rounded,
-      accentColor: AppColors.accentGreen,
+      accentColor: AppColors.teal,
     ),
     NavSectionItem(
       index: 2,
@@ -130,7 +130,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'FEATURED WORK',
       subtitle: 'Production Systems & Case Studies',
       icon: Icons.rocket_launch_rounded,
-      accentColor: AppColors.accentViolet,
+      accentColor: AppColors.teal,
     ),
     NavSectionItem(
       index: 3,
@@ -138,7 +138,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'SKILLS & STACK',
       subtitle: 'Technical Proficiency Matrix',
       icon: Icons.code_rounded,
-      accentColor: AppColors.accentAmber,
+      accentColor: AppColors.gold,
     ),
     NavSectionItem(
       index: 4,
@@ -146,7 +146,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'SYSTEM ARCHITECTURES',
       subtitle: 'Enterprise Blueprints & Offline-First',
       icon: Icons.hub_rounded,
-      accentColor: AppColors.accentRose,
+      accentColor: AppColors.signal,
     ),
     NavSectionItem(
       index: 5,
@@ -154,7 +154,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'LEADERSHIP PERSPECTIVES',
       subtitle: 'Architectural Perspectives & Hats',
       icon: Icons.style_rounded,
-      accentColor: AppColors.accentCyan,
+      accentColor: AppColors.teal,
     ),
     NavSectionItem(
       index: 6,
@@ -162,7 +162,7 @@ class MobileNavSheet extends StatelessWidget {
       title: 'CONTACT & INQUIRIES',
       subtitle: 'Direct Channels & Availability',
       icon: Icons.mail_rounded,
-      accentColor: AppColors.accentIndigoDeep,
+      accentColor: AppColors.teal,
     ),
   ];
 
@@ -199,7 +199,7 @@ class MobileNavSheet extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: isDark
-              ? AppColors.slate900.withValues(alpha: 0.95)
+              ? AppColors.ink900.withValues(alpha: 0.95)
               : Colors.white.withValues(alpha: 0.96),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           border: Border.all(

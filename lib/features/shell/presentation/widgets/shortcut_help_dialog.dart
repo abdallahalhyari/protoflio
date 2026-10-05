@@ -110,9 +110,8 @@ String _withoutKey(String hint, String key) {
 Widget _keyText(ColorScheme scheme, String key) => Text(
       key,
       style: TextStyle(
-        fontFamily: AppTypography.monoFont,
         color: scheme.primary,
-        fontSize: AppTypography.overline,
+        fontSize: AppTypography.label,
         fontWeight: FontWeight.w900,
         letterSpacing: 0.5,
       ),
@@ -122,7 +121,7 @@ Widget _keyIcons(ColorScheme scheme, List<IconData> icons) => Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         for (final icon in icons)
-          Icon(icon, size: AppTypography.overline + 3, color: scheme.primary),
+          Icon(icon, size: AppTypography.label + 3, color: scheme.primary),
       ],
     );
 
@@ -150,7 +149,7 @@ Widget _shortcutRow(ColorScheme scheme, Widget keyCap, String label) {
             label,
             style: TextStyle(
               color: scheme.onSurface.withValues(alpha: 0.85),
-              fontSize: AppTypography.small,
+              fontSize: AppTypography.body,
               fontWeight: FontWeight.w600,
             ),
           ),

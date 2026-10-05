@@ -28,12 +28,12 @@ class AppBarAudioToggle extends StatelessWidget {
                 constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
                 icon: enabled
                     ? const _EqualizerWaveform(
-                        color: AppColors.accentAmber,
+                        color: AppColors.gold,
                       )
                     : Icon(
                         Icons.volume_off_rounded,
                         size: 18,
-                        color: isDark ? Colors.white38 : AppColors.slate400,
+                        color: isDark ? Colors.white38 : AppColors.ink400,
                       ),
                 onPressed: SoundService.instance.toggle,
               ),

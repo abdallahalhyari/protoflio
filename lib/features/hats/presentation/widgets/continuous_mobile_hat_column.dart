@@ -115,7 +115,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
                 border: Border.all(
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.08)
-                        : AppColors.slate200),
+                        : AppColors.ink200),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -131,8 +131,8 @@ class ContinuousMobileHatColumn extends StatelessWidget {
                         style: TextStyle(
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.72)
-                              : AppColors.slate500,
-                          fontSize: AppTypography.editorialSm,
+                              : AppColors.ink500,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,
                         ),

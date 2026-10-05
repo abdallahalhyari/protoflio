@@ -84,9 +84,8 @@ class ProjectDomainFilters extends StatelessWidget {
                     ),
                   ),
                   style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
                     color: accentText,
-                    fontSize: AppTypography.micro,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.0,
                   ),
@@ -154,7 +153,7 @@ class _DomainChipState extends State<_DomainChip> {
             ? scheme.primary.withValues(alpha: isDark ? 0.08 : 0.05)
             : (isDark
                 ? Colors.white.withValues(alpha: 0.05)
-                : AppColors.slate100));
+                : AppColors.ink100));
 
     final activeBorder = isSelected
         ? scheme.primary.withValues(alpha: isDark ? 0.7 : 0.6)
@@ -168,7 +167,7 @@ class _DomainChipState extends State<_DomainChip> {
             ? (context.onSurface)
             : (isDark
                 ? Colors.white.withValues(alpha: 0.85)
-                : AppColors.slate700));
+                : AppColors.ink700));
 
     return Semantics(
       button: true,
@@ -230,9 +229,8 @@ class _DomainChipState extends State<_DomainChip> {
                     Text(
                       widget.label.toUpperCase(),
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
                         color: textColor,
-                        fontSize: isDesktop ? AppTypography.micro : 10,
+                        fontSize: isDesktop ? AppTypography.label : 10,
                         fontWeight:
                             isSelected ? FontWeight.w900 : FontWeight.w700,
                         letterSpacing: 1.0,
@@ -257,9 +255,8 @@ class _DomainChipState extends State<_DomainChip> {
                       child: Text(
                         '${widget.count}',
                         style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
                           color: isSelected ? scheme.onPrimary : textColor,
-                          fontSize: AppTypography.editorialSm,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
                         ),
                       ),

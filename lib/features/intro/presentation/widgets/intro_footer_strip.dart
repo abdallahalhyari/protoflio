@@ -17,7 +17,7 @@ class IntroFooterStrip extends StatelessWidget {
     this.onViewWork,
   });
 
-  static const _gold = AppColors.accentAmberSoft;
+  static const _gold = AppColors.goldSoft;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +45,8 @@ class IntroFooterStrip extends StatelessWidget {
                     style: TextStyle(
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.72)
-                          : AppColors.slate500,
-                      fontSize: AppTypography.editorialSm,
+                          : AppColors.ink500,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2.5,
                     ),
@@ -58,7 +58,7 @@ class IntroFooterStrip extends StatelessWidget {
                 Icon(Icons.arrow_outward_rounded,
                     size: 9,
                     color: valueColor ??
-                        (isDark ? Colors.white70 : AppColors.slate500)),
+                        (isDark ? Colors.white70 : AppColors.ink500)),
               ],
             ],
           ),
@@ -67,7 +67,7 @@ class IntroFooterStrip extends StatelessWidget {
             value,
             style: TextStyle(
               color: valueColor ?? (context.onSurface),
-              fontSize: AppTypography.captionSm,
+              fontSize: AppTypography.label,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.4,
             ),
@@ -95,14 +95,14 @@ class IntroFooterStrip extends StatelessWidget {
           height: 32,
           margin: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
           color:
-              isDark ? Colors.white.withValues(alpha: 0.2) : AppColors.slate300,
+              isDark ? Colors.white.withValues(alpha: 0.2) : AppColors.ink300,
         );
 
     final blocks = [
       block(
         l10n.introBasedIn,
         l10n.introLocation.toUpperCase(),
-        valueColor: isDark ? _gold : AppColors.accentAmberDeep,
+        valueColor: isDark ? _gold : AppColors.goldDeep,
       ),
       block(
         l10n.introStatus,
@@ -139,7 +139,7 @@ class IntroFooterStrip extends StatelessWidget {
               border: Border.all(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.1)
-                    : AppColors.slate200,
+                    : AppColors.ink200,
               ),
               boxShadow: isDark
                   ? null
@@ -160,7 +160,7 @@ class IntroFooterStrip extends StatelessWidget {
                       height: 1,
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.08)
-                          : AppColors.slate200,
+                          : AppColors.ink200,
                     ),
                   Padding(
                     padding: const EdgeInsets.symmetric(

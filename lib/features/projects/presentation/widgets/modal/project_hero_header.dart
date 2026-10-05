@@ -26,7 +26,7 @@ class ProjectHeroHeader extends StatelessWidget {
           height: 3,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [scheme.primary, AppColors.accentPurpleSoft],
+              colors: [scheme.primary, AppColors.tealLight],
             ),
           ),
         ),

@@ -169,7 +169,7 @@ class _GlassToastContent extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (icon != null) ...[
-                    Icon(icon, color: accent, size: AppTypography.subtitle),
+                    Icon(icon, color: accent, size: AppTypography.lead),
                     const SizedBox(width: AppSpacing.smd),
                   ],
                   Flexible(
@@ -231,7 +231,7 @@ class _ToastContent extends StatelessWidget {
                     children: [
                       if (icon != null) ...[
                         Icon(icon,
-                            size: AppTypography.subtitle,
+                            size: AppTypography.lead,
                             color: accent ?? onInverse),
                         const SizedBox(width: AppSpacing.sm),
                       ],

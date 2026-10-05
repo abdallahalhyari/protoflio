@@ -88,7 +88,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                                 : (widget.isSelected ? 1.0 : 0.8))
                         : (isDark
                             ? context.glassBorderStrong
-                            : AppColors.slate200),
+                            : AppColors.ink200),
                     width: active ? (widget.isSelected ? 2.0 : 1.5) : 1.0,
                   ),
                   boxShadow: active
@@ -113,7 +113,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                           BoxShadow(
                               color: isDark
                                   ? AppColors.shadowSoft
-                                  : AppColors.slate900.withValues(alpha: 0.04),
+                                  : AppColors.ink900.withValues(alpha: 0.04),
                               blurRadius: 10,
                               offset: const Offset(0, 4)),
                         ],
@@ -141,7 +141,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
                         child: Container(
                           decoration: BoxDecoration(
                             color: _isCurrent
-                                ? AppColors.accentGreen
+                                ? AppColors.teal
                                 : scheme.primary
                                     .withValues(alpha: active ? 0.85 : 0.45),
                             borderRadius: const BorderRadius.only(

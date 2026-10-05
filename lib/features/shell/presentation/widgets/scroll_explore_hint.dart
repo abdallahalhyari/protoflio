@@ -66,7 +66,7 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
                       AppLocalizations.of(context)!.uiScrollToExplore,
                       style: TextStyle(
                         color: tint,
-                        fontSize: AppTypography.editorial,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 3,
                       ),

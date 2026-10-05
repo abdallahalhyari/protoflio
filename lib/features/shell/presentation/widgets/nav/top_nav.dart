@@ -159,7 +159,7 @@ class TopNav extends StatelessWidget {
                                     resumeLabel,
                                     semanticsLabel: '',
                                     style: const TextStyle(
-                                      fontSize: AppTypography.caption,
+                                      fontSize: AppTypography.label,
                                       fontWeight: FontWeight.w800,
                                       letterSpacing: 1.0,
                                     ),

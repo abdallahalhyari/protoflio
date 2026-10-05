@@ -39,9 +39,8 @@ class CardOutcomeLine extends StatelessWidget {
               Text(
                 'IMPACT',
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   color: accent,
-                  fontSize: AppTypography.nano,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.0,
                 ),
@@ -58,8 +57,8 @@ class CardOutcomeLine extends StatelessWidget {
             style: TextStyle(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.95)
-                  : AppColors.slate800,
-              fontSize: AppTypography.caption + 1,
+                  : AppColors.ink800,
+              fontSize: AppTypography.label + 1,
               fontWeight: FontWeight.w700,
               height: 1.35,
             ),

@@ -28,9 +28,7 @@ class KeyboardHintChip extends StatelessWidget {
         preferBelow: false,
         richMessage: TextSpan(
           style: const TextStyle(
-              fontSize: AppTypography.overline,
-              height: 1.5,
-              color: Colors.white),
+              fontSize: AppTypography.label, height: 1.5, color: Colors.white),
           children: [
             TextSpan(
                 text: '${l10n.keyboardHintTitle}\n',
@@ -81,8 +79,7 @@ class KeyboardHintChip extends StatelessWidget {
                   Text(
                     'SHORTCUTS [?]',
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
-                      fontSize: AppTypography.micro,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0.8,
                       color: context.mutedText,

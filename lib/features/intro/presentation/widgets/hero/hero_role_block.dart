@@ -34,7 +34,7 @@ class HeroRoleBlock extends StatelessWidget {
               _HairlineRow(
                 isDark: isDark,
                 child: Icon(Icons.diamond_rounded,
-                    size: AppTypography.small, color: accent),
+                    size: AppTypography.body, color: accent),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
               Text(
@@ -69,7 +69,7 @@ class HeroRoleBlock extends StatelessWidget {
                   letterSpacing: latinTracking(context, 0.8),
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.88)
-                      : AppColors.slate700,
+                      : AppColors.ink700,
                   height: 1.55,
                 ),
               ),
@@ -106,13 +106,11 @@ class _MiniPill extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color:
-            isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100,
+        color: isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.ink100,
         borderRadius: BorderRadius.circular(AppRadius.pill),
         border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.12)
-              : AppColors.slate200,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.ink200,
         ),
       ),
       child: Padding(
@@ -120,9 +118,8 @@ class _MiniPill extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            fontFamily: AppTypography.monoFont,
             color: context.onSurface,
-            fontSize: AppTypography.micro,
+            fontSize: AppTypography.label,
             fontWeight: FontWeight.w800,
             letterSpacing: latinTracking(context, 1.1),
           ),

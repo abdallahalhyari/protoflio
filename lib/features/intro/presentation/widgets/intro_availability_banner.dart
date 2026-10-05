@@ -50,14 +50,10 @@ class IntroAvailabilityBanner extends StatelessWidget {
                 height: 6,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isDark
-                      ? AppColors.accentGreenLight
-                      : AppColors.accentGreen,
+                  color: isDark ? AppColors.tealLight : AppColors.teal,
                   boxShadow: [
                     BoxShadow(
-                      color: (isDark
-                              ? AppColors.accentGreenLight
-                              : AppColors.accentGreen)
+                      color: (isDark ? AppColors.tealLight : AppColors.teal)
                           .withValues(alpha: 0.6),
                       blurRadius: 6,
                     ),
@@ -72,9 +68,8 @@ class IntroAvailabilityBanner extends StatelessWidget {
                   loc.introWorkEligibility,
                   style: TextStyle(
                     color: context.onSurface,
-                    fontSize: isWide
-                        ? AppTypography.captionSm
-                        : AppTypography.caption,
+                    fontSize:
+                        isWide ? AppTypography.label : AppTypography.label,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                   ),
