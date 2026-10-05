@@ -60,8 +60,8 @@ class AppColors {
   // The HTML boot screen's background (web/index.html, #boot-loader).
   // Flutter's own loading screen repeats it so the two never flash
   // different backgrounds at each other.
-  static const Color bootGlow = paper;
-  static const Color bootEdge = paper;
+  static const Color bootGlow = ink950;
+  static const Color bootEdge = ink950;
 
   // Modal surface — opaque fill for full-screen dialogs.
   static const Color darkModal = Color(0xFF1A2940);

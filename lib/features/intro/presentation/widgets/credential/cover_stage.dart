@@ -210,7 +210,7 @@ class _CoverStageState extends State<CoverStage> with TickerProviderStateMixin {
         Semantics(
           header: true,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 940),
+            constraints: const BoxConstraints(maxWidth: 1080),
             child: Text(
               loc.coverStatement,
               textAlign: TextAlign.center,

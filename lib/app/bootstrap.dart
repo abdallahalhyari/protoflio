@@ -271,7 +271,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Material(
-          color: AppColors.darkNight,
+          color: AppColors.ink950,
           // The HTML boot screen's gradient: this screen only shows if the
           // content is slow, and then sits right where the boot screen was.
           child: DecoratedBox(
@@ -281,7 +281,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                 radius: 1.1,
                 colors: [
                   AppColors.bootGlow,
-                  AppColors.darkNight,
+                  AppColors.ink950,
                   AppColors.bootEdge,
                 ],
                 stops: [0.0, 0.52, 1.0],
@@ -322,7 +322,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                           ),
                         ),
                         Text(
-                          'ABDALLAH ALHYARI',
+                          'Abdallah Alhyari',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w700,
                             color: Colors.white,

@@ -198,7 +198,7 @@ class HoloFoilPainter extends CustomPainter {
 
     // Iridescent hologram patch over the rosette.
     final centre = Offset(size.width * 0.86, size.height * 0.34);
-    final r = size.height * 0.2;
+    final r = size.height * 0.15;
     final patch = Rect.fromCircle(center: centre, radius: r);
     canvas.drawCircle(
       centre,
