@@ -91,17 +91,31 @@ class TileFrontFace extends StatelessWidget {
                                 color: accentText, size: isDesktop ? 36 : 20),
                           ),
                           SizedBox(height: isDesktop ? 16 : 8),
-                          Text(
-                            skill.name.toUpperCase(),
-                            textAlign: TextAlign.center,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontFamily: AppTypography.displayFont,
-                              color: context.onSurface,
-                              fontSize: isDesktop ? 22 : 14,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.2,
+                          // Desktop: fixed three-line slot, title centred
+                          // in it. A one-line name and a three-line one
+                          // shifted the icon and badge, so tiles in a row
+                          // no longer lined up. Mobile tiles have no room
+                          // for the slot (the FittedBox shrank them), so
+                          // they keep the natural height.
+                          SizedBox(
+                            height: isDesktop
+                                ? 22 * _kTitleLineHeight * _kTitleMaxLines
+                                : null,
+                            child: Center(
+                              child: Text(
+                                skill.name.toUpperCase(),
+                                textAlign: TextAlign.center,
+                                maxLines: _kTitleMaxLines,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontFamily: AppTypography.displayFont,
+                                  color: context.onSurface,
+                                  fontSize: isDesktop ? 22 : 14,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1.2,
+                                  height: isDesktop ? _kTitleLineHeight : null,
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(height: isDesktop ? 8 : 4),
@@ -141,3 +155,6 @@ class TileFrontFace extends StatelessWidget {
     );
   }
 }
+
+const int _kTitleMaxLines = 3;
+const double _kTitleLineHeight = 1.2;

@@ -49,23 +49,19 @@ class CardBodyContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (project.role != null) ...[
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-            decoration: BoxDecoration(
+          // A full sentence, so sentence case at caption size: set in
+          // 8.5px mono capitals inside a grey box it read as noise.
+          Text(
+            project.role!,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: AppTypography.caption,
+              fontWeight: FontWeight.w600,
+              height: 1.35,
               color: isDark
-                  ? Colors.white.withValues(alpha: 0.1)
-                  : AppColors.slate100,
-              borderRadius: BorderRadius.circular(AppRadius.xs),
-            ),
-            child: Text(
-              project.role!.toUpperCase(),
-              style: TextStyle(
-                fontFamily: AppTypography.monoFont,
-                fontSize: AppTypography.nano,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.0,
-                color: context.onSurface.withValues(alpha: 0.7),
-              ),
+                  ? Colors.white.withValues(alpha: 0.62)
+                  : AppColors.slate500,
             ),
           ),
           const SizedBox(height: 6),

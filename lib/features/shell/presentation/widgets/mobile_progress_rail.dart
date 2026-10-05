@@ -24,6 +24,8 @@ class MobileProgressRail extends StatelessWidget {
       builder: (context, page, _) {
         // Each dot gets a 24×24 tap target (WCAG 2.2 target-size minimum;
         // it was 5×11) while the drawn rail stays a slim pill behind them.
+        // The pill hugs the screen edge rather than the target's centre so
+        // it sits in the 16px page gutter instead of over the card borders.
         return SizedBox(
           width: _kTarget,
           child: Stack(
@@ -32,8 +34,9 @@ class MobileProgressRail extends StatelessWidget {
               Positioned(
                 top: 0,
                 bottom: 0,
+                right: _kEdgeInset,
                 child: Container(
-                  width: 13,
+                  width: _kPill,
                   decoration: BoxDecoration(
                     color: context.glassSurface,
                     borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -63,7 +66,8 @@ class MobileProgressRail extends StatelessWidget {
                                 },
                           child: SizedBox.square(
                             dimension: _kTarget,
-                            child: Center(
+                            child: Align(
+                              alignment: _kDotAlignment,
                               child: _HoverScale(
                                 child: AnimatedContainer(
                                   duration: AppMotion.sm,
@@ -107,6 +111,12 @@ class MobileProgressRail extends StatelessWidget {
 }
 
 const double _kTarget = 24;
+const double _kPill = 13;
+const double _kEdgeInset = 2;
+
+/// Centres each dot on the edge-hugging pill rather than the tap target.
+const Alignment _kDotAlignment =
+    Alignment((_kTarget - _kEdgeInset - _kPill / 2) / _kTarget * 2 - 1, 0);
 
 class _HoverScale extends StatefulWidget {
   final Widget child;
