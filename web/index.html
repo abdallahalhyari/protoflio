@@ -194,7 +194,10 @@
       src: url('assets/fonts/Tenada.ttf') format('truetype');
       font-display: swap;
     }
-    html, body { margin: 0; padding: 0; height: 100%; background: #0E0E10; }
+    /* The boot screen's and the page's midnight (AppColors.darkNight): the
+       canvas can present a frame or two after the boot screen starts to
+       fade, and the body showing through must not flash a different dark. */
+    html, body { margin: 0; padding: 0; height: 100%; background: #0B101D; }
     .skip-link {
       position: fixed; left: -9999px; top: 8px;
       background: #E11D48; color: #fff; padding: 10px 14px;
@@ -226,6 +229,10 @@
       color: rgba(255, 255, 255, 0.72);
     }
     #boot-loader.slow .boot-slow { display: block; }
+    /* Flutter is up and building the page: freeze the loader's loops (the
+       glow and shimmer repaint on the main thread every frame) so they
+       don't compete with that work while the screen waits to hand off. */
+    #boot-loader.settled * { animation-play-state: paused; }
     .boot-pitch {
       max-width: 440px;
       margin: 0 0 24px;
@@ -567,8 +574,19 @@
       }
     }
 
-    // Hide loader once Flutter renders first frame
-    window.addEventListener('flutter-first-frame', dismissBootLoader);
+    // The app calls this once real content has painted (lib/service/
+    // boot_handoff.dart), so the boot screen dissolves straight into the
+    // page. Leaving on Flutter's first frame showed its near-black
+    // loading frame in between.
+    window.portfolioReady = dismissBootLoader;
+
+    // Safety net: if the app never reports in, don't keep visitors behind
+    // the boot screen once Flutter is up.
+    window.addEventListener('flutter-first-frame', function () {
+      var l = document.getElementById('boot-loader');
+      if (l) l.classList.add('settled');
+      setTimeout(dismissBootLoader, 6000);
+    });
 
     // The sr-only copy below serves crawlers, print, and screen readers
     // until Flutter's own accessibility tree is switched on. Once it is,

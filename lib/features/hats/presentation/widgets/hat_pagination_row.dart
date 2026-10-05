@@ -28,7 +28,10 @@ class HatPaginationRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        OutlinedButton.icon(
+        // The buttons may shrink too (labels scale down): Arabic labels at
+        // 2x text on a 320px phone overflowed the row by 8px.
+        Flexible(
+            child: OutlinedButton.icon(
           onPressed: onPrev,
           style: OutlinedButton.styleFrom(
             // Full-strength accent text (was border-alpha, read as
@@ -41,15 +44,18 @@ class HatPaginationRow extends StatelessWidget {
             tapTargetSize: MaterialTapTargetSize.padded,
           ),
           icon: const DirIcon(Icons.chevron_left_rounded, size: 14),
-          label: Text(
-            l10n?.previousAction ?? 'PREV',
-            style: const TextStyle(
-              fontFamily: AppTypography.monoFont,
-              fontSize: AppTypography.editorialSm,
-              fontWeight: FontWeight.w800,
+          label: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              l10n?.previousAction ?? 'PREV',
+              style: const TextStyle(
+                fontFamily: AppTypography.monoFont,
+                fontSize: AppTypography.editorialSm,
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
-        ),
+        )),
         Flexible(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -68,7 +74,8 @@ class HatPaginationRow extends StatelessWidget {
             ),
           ),
         ),
-        OutlinedButton.icon(
+        Flexible(
+            child: OutlinedButton.icon(
           onPressed: onNext,
           style: OutlinedButton.styleFrom(
             // Full-strength accent text (was border-alpha, read as
@@ -81,15 +88,18 @@ class HatPaginationRow extends StatelessWidget {
             tapTargetSize: MaterialTapTargetSize.padded,
           ),
           icon: const DirIcon(Icons.chevron_right_rounded, size: 14),
-          label: Text(
-            l10n?.nextAction ?? 'NEXT',
-            style: const TextStyle(
-              fontFamily: AppTypography.monoFont,
-              fontSize: AppTypography.editorialSm,
-              fontWeight: FontWeight.w800,
+          label: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              l10n?.nextAction ?? 'NEXT',
+              style: const TextStyle(
+                fontFamily: AppTypography.monoFont,
+                fontSize: AppTypography.editorialSm,
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
-        ),
+        )),
       ],
     );
   }

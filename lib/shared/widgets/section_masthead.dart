@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/shared/widgets/in_view_trigger.dart';
 import 'package:profile/shared/utils/bidi.dart';
 
 /// Editorial section header shared by the paged sections: a heavy accent
@@ -9,8 +10,9 @@ import 'package:profile/shared/utils/bidi.dart';
 /// an italic subtitle, an optional count badge on the right (desktop),
 /// and a hairline rule underneath.
 ///
-/// The top accent rule plays a one-shot specular shimmer sweep on mount
-/// to signal each new section landing.
+/// The top accent rule plays a one-shot specular shimmer sweep, and the
+/// header fades up, the first time it comes into view, to signal each new
+/// section landing.
 class SectionMasthead extends StatefulWidget {
   const SectionMasthead({
     super.key,
@@ -34,7 +36,7 @@ class SectionMasthead extends StatefulWidget {
 }
 
 class _SectionMastheadState extends State<SectionMasthead>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, InViewTrigger {
   late final AnimationController _shimmer;
 
   @override
@@ -53,7 +55,9 @@ class _SectionMastheadState extends State<SectionMasthead>
       if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
         _shimmer.value = 1.0;
       } else {
-        _shimmer.forward();
+        // On view, not on mount: most sections mount before they're
+        // reached, and played the entrance off screen.
+        playWhenInView(_shimmer.forward);
       }
     }
   }
@@ -203,6 +207,9 @@ class _SectionMastheadState extends State<SectionMasthead>
           headerContent
         else
           FadeTransition(
+            // Headers wait at zero opacity until they're seen; screen
+            // readers still need them to navigate by heading.
+            alwaysIncludeSemantics: true,
             opacity: CurvedAnimation(
               parent: _shimmer,
               curve: const Interval(0.0, 0.7, curve: Curves.easeOut),

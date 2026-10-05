@@ -74,6 +74,12 @@ class AppColors {
   static const Color darkNight =
       Color(0xFF0B101D); // page bg midnight blue-black
 
+  // The HTML boot screen's radial gradient (web/index.html, #boot-loader):
+  // glow → darkNight → edge. Flutter's own loading screen repeats it so
+  // the two never flash different backgrounds at each other.
+  static const Color bootGlow = Color(0xFF141B2E);
+  static const Color bootEdge = Color(0xFF060911);
+
   // Modal surface — denser obsidian for full-screen dialogs (opaque, so
   // no cardGlass see-through).
   static const Color darkModal =
