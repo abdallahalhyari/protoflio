@@ -80,14 +80,13 @@ class ProjectDomainFilters extends StatelessWidget {
                   ltrContent(
                     context,
                     loc.projectTechFilter(
-                      ltrAlways(context, selectedTech!.toUpperCase()),
+                      ltrAlways(context, selectedTech!),
                     ),
                   ),
                   style: TextStyle(
                     color: accentText,
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.0,
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -227,13 +226,12 @@ class _DomainChipState extends State<_DomainChip> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      widget.label.toUpperCase(),
+                      widget.label,
                       style: TextStyle(
                         color: textColor,
                         fontSize: isDesktop ? AppTypography.label : 10,
                         fontWeight:
                             isSelected ? FontWeight.w900 : FontWeight.w700,
-                        letterSpacing: 1.0,
                       ),
                     ),
                     const SizedBox(width: 6),

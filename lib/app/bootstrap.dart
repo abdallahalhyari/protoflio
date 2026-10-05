@@ -324,7 +324,6 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                         Text(
                           'ABDALLAH ALHYARI',
                           style: theme.textTheme.titleMedium?.copyWith(
-                            letterSpacing: 3,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
@@ -334,7 +333,6 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                           'Senior Flutter & Android Engineer',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: Colors.white.withValues(alpha: 0.72),
-                            letterSpacing: 0.2,
                           ),
                         ),
                         const SizedBox(height: 18),
@@ -353,7 +351,6 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                           'Loading portfolio…',
                           style: theme.textTheme.labelLarge?.copyWith(
                             color: Colors.white.withValues(alpha: 0.7),
-                            letterSpacing: 0.8,
                           ),
                         ),
                       ],

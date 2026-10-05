@@ -60,7 +60,6 @@ class _HeroWordmarkState extends State<HeroWordmark>
       fontFamily: AppTypography.displayFont,
       fontSize: AppTypography.watermark,
       fontWeight: FontWeight.w900,
-      letterSpacing: 10,
       height: 1.0,
       foreground: Paint()
         ..style = PaintingStyle.stroke
@@ -121,7 +120,7 @@ class _HeroWordmarkState extends State<HeroWordmark>
                     top: AppTypography.watermark * 0.12,
                   ),
                   child: Text(
-                    'ABDALLAH',
+                    'Abdallah',
                     style: _wordmarkStyle(),
                   ),
                 ),

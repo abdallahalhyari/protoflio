@@ -32,7 +32,6 @@ class ContactHeader extends StatelessWidget {
                 color: isDark ? _accentSoft : AppColors.tealDeep,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
-                letterSpacing: latinTracking(context, 4),
               ),
             ),
           ),
@@ -55,7 +54,6 @@ class ContactHeader extends StatelessWidget {
           fontFamily: AppTypography.displayFont,
           fontSize: fs,
           fontWeight: FontWeight.w900,
-          letterSpacing: latinTracking(context, 2.5),
           color: context.onSurface,
           height: 1.05,
           shadows: isDark
@@ -80,7 +78,6 @@ class ContactHeader extends StatelessWidget {
             color: context.mutedText,
             fontSize: (size.width * 0.014).clamp(13.5, 17.0),
             height: 1.6,
-            letterSpacing: latinTracking(context, 0.3),
           ),
         ),
       ),

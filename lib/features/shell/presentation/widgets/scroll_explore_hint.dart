@@ -68,7 +68,6 @@ class _ScrollExploreHintState extends State<ScrollExploreHint>
                         color: tint,
                         fontSize: AppTypography.label,
                         fontWeight: FontWeight.w800,
-                        letterSpacing: 3,
                       ),
                     ),
                   ),

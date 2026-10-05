@@ -32,14 +32,13 @@ class CardFallbackPlaceholder extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              project.company.toUpperCase(),
+              project.company,
               style: TextStyle(
                 color: isDark
                     ? scheme.primary
                     : AppColors.toAccessibleLightText(scheme.primary),
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 1.5,
               ),
             ),
             if (project.url != null ||

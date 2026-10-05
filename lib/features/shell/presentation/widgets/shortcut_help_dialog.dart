@@ -44,7 +44,6 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                         style: const TextStyle(
                           fontSize: AppTypography.body + 1,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 0.3,
                         ),
                       ),
                     ),
@@ -113,7 +112,6 @@ Widget _keyText(ColorScheme scheme, String key) => Text(
         color: scheme.primary,
         fontSize: AppTypography.label,
         fontWeight: FontWeight.w900,
-        letterSpacing: 0.5,
       ),
     );
 

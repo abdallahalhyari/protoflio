@@ -29,7 +29,7 @@ class PipelineTopologyDiagram extends StatelessWidget {
         'WorkManager',
         'HTTPS TPA'
       ];
-    } else if (project.name.contains('ESKADENIA')) {
+    } else if (project.name.contains('Eskadenia')) {
       pipeline = const [
         'Feature PKG',
         'MVVM Models',
@@ -89,13 +89,12 @@ class PipelineTopologyDiagram extends StatelessWidget {
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
-                    'PRODUCTION PIPELINE TOPOLOGY',
+                    'Production pipeline topology',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: scheme.primary,
                       fontSize: isDesktop ? 9.0 : 8.0,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 0.8,
                     ),
                   ),
                 ),
@@ -120,7 +119,7 @@ class PipelineTopologyDiagram extends StatelessWidget {
                                 .withValues(alpha: isDark ? 0.3 : 0.25)),
                       ),
                       child: Text(
-                        pipeline[i].toUpperCase(),
+                        pipeline[i],
                         style: TextStyle(
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.95)

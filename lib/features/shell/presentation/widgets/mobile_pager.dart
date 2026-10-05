@@ -126,7 +126,6 @@ class _MobilePagerContent extends StatelessWidget {
                 style: TextStyle(
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w800,
-                  letterSpacing: 1.2,
                   color: context.mutedText,
                 ),
               ),

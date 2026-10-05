@@ -26,15 +26,15 @@ class IntroProofRow extends StatelessWidget {
       ),
       (
         icon: Icons.phone_android_rounded,
-        label: 'PRODUCTION MOBILE APPS',
+        label: 'Production mobile apps',
       ),
       (
         icon: Icons.layers_rounded,
-        label: 'FLUTTER + ANDROID',
+        label: 'Flutter + Android',
       ),
       (
         icon: Icons.hub_rounded,
-        label: 'COMPLEX SYSTEMS',
+        label: 'Complex systems',
       ),
     ];
 
@@ -73,7 +73,6 @@ class IntroProofRow extends StatelessWidget {
                   style: TextStyle(
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.2,
                     color: context.onSurface
                         .withValues(alpha: isDark ? 0.85 : 0.80),
                   ),

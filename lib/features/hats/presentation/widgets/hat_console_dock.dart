@@ -288,13 +288,12 @@ class _ActiveRolePill extends StatelessWidget {
               ),
             ),
             child: Text(
-              hatTitleLabel(loc, currentHat.title).toUpperCase(),
+              hatTitleLabel(loc, currentHat.title),
               key: ValueKey<String>(currentHat.title),
               style: TextStyle(
                 color: context.onSurface,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 1.0,
               ),
             ),
           ),

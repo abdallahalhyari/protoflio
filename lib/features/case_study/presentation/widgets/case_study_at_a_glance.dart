@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/core/services/analytics_service.dart';
@@ -83,7 +82,6 @@ class CaseStudyAtAGlance extends StatelessWidget {
                     style: TextStyle(
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: latinTracking(context, 2),
                       color: context.mutedText,
                     ),
                   ),
@@ -160,7 +158,6 @@ class _Step extends StatelessWidget {
           style: TextStyle(
             fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
-            letterSpacing: latinTracking(context, 1.8),
             color: color,
           ),
         ),

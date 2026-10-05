@@ -30,7 +30,6 @@ class InquiryTrackSelector extends StatelessWidget {
             color: scheme.primary,
             fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
-            letterSpacing: 1.0,
           ),
         ),
         const SizedBox(height: 8),

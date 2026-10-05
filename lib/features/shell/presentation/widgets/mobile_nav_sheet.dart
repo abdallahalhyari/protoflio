@@ -49,7 +49,7 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 0,
         number: '01',
-        title: l?.navSectionCover ?? 'COVER & PROFILE',
+        title: l?.navSectionCover ?? 'Cover & profile',
         subtitle: l?.navSubCover ?? 'Senior Flutter & Android Engineer',
         icon: Icons.home_rounded,
         accentColor: AppColors.seed,
@@ -57,7 +57,7 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 1,
         number: '02',
-        title: l?.navSectionExperience ?? 'EXPERIENCE',
+        title: l?.navSectionExperience ?? 'Experience',
         subtitle:
             l?.navSubExperience ?? '5+ Years Enterprise Engineering & Impact',
         icon: Icons.timeline_rounded,
@@ -66,7 +66,7 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 2,
         number: '03',
-        title: l?.navSectionWork ?? 'SELECTED WORK',
+        title: l?.navSectionWork ?? 'Selected work',
         subtitle: l?.navSubWork ?? 'Production Systems & Case Studies',
         icon: Icons.rocket_launch_rounded,
         accentColor: AppColors.teal,
@@ -74,7 +74,7 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 3,
         number: '04',
-        title: l?.navSectionStack ?? 'SKILLS & STACK',
+        title: l?.navSectionStack ?? 'Skills & stack',
         subtitle: l?.navSubStack ?? 'Technical Proficiency Matrix',
         icon: Icons.code_rounded,
         accentColor: AppColors.gold,
@@ -82,7 +82,7 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 4,
         number: '05',
-        title: l?.navSectionEngineering ?? 'ENGINEERING',
+        title: l?.navSectionEngineering ?? 'Engineering',
         subtitle:
             l?.navSubEngineering ?? 'Enterprise Blueprints & Offline-First',
         icon: Icons.hub_rounded,
@@ -91,7 +91,7 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 5,
         number: '06',
-        title: l?.navSectionAbout ?? 'PERSPECTIVES',
+        title: l?.navSectionAbout ?? 'Perspectives',
         subtitle: l?.navSubAbout ?? 'Architectural Perspectives & Hats',
         icon: Icons.style_rounded,
         accentColor: AppColors.teal,
@@ -99,7 +99,7 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 6,
         number: '07',
-        title: l?.navSectionContact ?? 'CONTACT',
+        title: l?.navSectionContact ?? 'Contact',
         subtitle: l?.navSubContact ?? 'Direct Channels & Availability',
         icon: Icons.mail_rounded,
         accentColor: AppColors.teal,
@@ -111,7 +111,7 @@ class MobileNavSheet extends StatelessWidget {
     NavSectionItem(
       index: 0,
       number: '01',
-      title: 'COVER & PROFILE',
+      title: 'Cover & profile',
       subtitle: 'Senior Flutter & Android Engineer',
       icon: Icons.home_rounded,
       accentColor: AppColors.seed,
@@ -119,7 +119,7 @@ class MobileNavSheet extends StatelessWidget {
     NavSectionItem(
       index: 1,
       number: '02',
-      title: 'CAREER & EXPERIENCE',
+      title: 'Career & experience',
       subtitle: '5+ Years Enterprise Engineering & Impact',
       icon: Icons.timeline_rounded,
       accentColor: AppColors.teal,
@@ -127,7 +127,7 @@ class MobileNavSheet extends StatelessWidget {
     NavSectionItem(
       index: 2,
       number: '03',
-      title: 'FEATURED WORK',
+      title: 'Featured work',
       subtitle: 'Production Systems & Case Studies',
       icon: Icons.rocket_launch_rounded,
       accentColor: AppColors.teal,
@@ -135,7 +135,7 @@ class MobileNavSheet extends StatelessWidget {
     NavSectionItem(
       index: 3,
       number: '04',
-      title: 'SKILLS & STACK',
+      title: 'Skills & stack',
       subtitle: 'Technical Proficiency Matrix',
       icon: Icons.code_rounded,
       accentColor: AppColors.gold,
@@ -143,7 +143,7 @@ class MobileNavSheet extends StatelessWidget {
     NavSectionItem(
       index: 4,
       number: '05',
-      title: 'SYSTEM ARCHITECTURES',
+      title: 'System architectures',
       subtitle: 'Enterprise Blueprints & Offline-First',
       icon: Icons.hub_rounded,
       accentColor: AppColors.signal,
@@ -151,7 +151,7 @@ class MobileNavSheet extends StatelessWidget {
     NavSectionItem(
       index: 5,
       number: '06',
-      title: 'LEADERSHIP PERSPECTIVES',
+      title: 'Leadership perspectives',
       subtitle: 'Architectural Perspectives & Hats',
       icon: Icons.style_rounded,
       accentColor: AppColors.teal,
@@ -159,7 +159,7 @@ class MobileNavSheet extends StatelessWidget {
     NavSectionItem(
       index: 6,
       number: '07',
-      title: 'CONTACT & INQUIRIES',
+      title: 'Contact & inquiries',
       subtitle: 'Direct Channels & Availability',
       icon: Icons.mail_rounded,
       accentColor: AppColors.teal,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:profile/features/engineering/data/datasources/architecture_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/section_masthead.dart';
 
@@ -17,12 +16,9 @@ class EngineeringHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return SectionMasthead(
-      kicker: loc.engineeringHeaderKicker,
-      title: loc.navEngineering.toUpperCase(),
+      title: loc.navEngineering,
       subtitle: loc.sectionSubtitleEngineering,
       isDesktop: isDesktop,
-      badgeIcon: Icons.hub_rounded,
-      badgeLabel: loc.badgeArchitectures(kArchitectureTopics.length),
     );
   }
 }

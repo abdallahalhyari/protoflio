@@ -154,7 +154,6 @@ class SkillSearchBar extends StatelessWidget {
                           style: TextStyle(
                             fontSize: AppTypography.label,
                             fontWeight: FontWeight.w800,
-                            letterSpacing: 0.8,
                             color: isFiltered
                                 ? scheme.primary
                                 : scheme.onSurface.withValues(alpha: 0.7),

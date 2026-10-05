@@ -86,7 +86,6 @@ class _TelemetryBarState extends State<TelemetryBar> {
                         color: context.greenText,
                         fontSize: AppTypography.label,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: 1.0,
                       ),
                     ),
                   ),

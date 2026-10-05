@@ -49,7 +49,6 @@ class AppBarLanguageToggle extends StatelessWidget {
                       color: context.onSurface,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 0.8,
                     ),
                   ),
                 ),

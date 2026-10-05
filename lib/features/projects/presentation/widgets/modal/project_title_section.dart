@@ -25,13 +25,12 @@ class ProjectTitleSection extends StatelessWidget {
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
           child: Text(
-            project.name.toUpperCase(),
+            project.name,
             style: TextStyle(
               fontFamily: AppTypography.displayFont,
               color: context.onSurface,
               fontSize: isDesktop ? 38 : 28,
               fontWeight: FontWeight.w900,
-              letterSpacing: 2.5,
               height: 1.05,
             ),
           ),

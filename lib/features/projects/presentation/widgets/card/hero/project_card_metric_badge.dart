@@ -31,12 +31,11 @@ class CardMetricBadge extends StatelessWidget {
             Icon(Icons.verified_rounded, size: 12, color: primary),
             const SizedBox(width: 4),
             Text(
-              text.toUpperCase(),
+              text,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 0.8,
               ),
             ),
           ],

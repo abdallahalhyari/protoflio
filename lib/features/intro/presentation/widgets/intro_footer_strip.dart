@@ -48,7 +48,6 @@ class IntroFooterStrip extends StatelessWidget {
                           : AppColors.ink500,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 2.5,
                     ),
                   ),
                 ),
@@ -69,7 +68,6 @@ class IntroFooterStrip extends StatelessWidget {
               color: valueColor ?? (context.onSurface),
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w700,
-              letterSpacing: 1.4,
             ),
           ),
         ],
@@ -101,7 +99,7 @@ class IntroFooterStrip extends StatelessWidget {
     final blocks = [
       block(
         l10n.introBasedIn,
-        l10n.introLocation.toUpperCase(),
+        l10n.introLocation,
         valueColor: isDark ? _gold : AppColors.goldDeep,
       ),
       block(

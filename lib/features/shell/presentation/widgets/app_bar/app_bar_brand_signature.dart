@@ -75,13 +75,12 @@ class AppBarBrandSignature extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'ABDALLAH',
+                        'Abdallah',
                         style: TextStyle(
                           fontFamily: AppTypography.displayFont,
                           color: context.onSurface,
                           fontSize: AppTypography.body,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.4,
                           height: 1.1,
                         ),
                       ),
@@ -111,7 +110,7 @@ class AppBarBrandSignature extends StatelessWidget {
 
         final ordinal = (page + 1).toString().padLeft(2, '0');
         final denom = ' / ${pageCount.toString().padLeft(2, '0')}';
-        final label = labels[page].toUpperCase();
+        final label = labels[page];
 
         return Row(
           mainAxisSize: MainAxisSize.min,
@@ -122,7 +121,6 @@ class AppBarBrandSignature extends StatelessWidget {
                 color: AppColors.teal,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 1.2,
               ),
             ),
             const SizedBox(width: 6),
@@ -146,7 +144,6 @@ class AppBarBrandSignature extends StatelessWidget {
                         : AppColors.ink600,
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.4,
                   ),
                 ),
               ),
@@ -170,14 +167,13 @@ class AppBarBrandSignature extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            'AVAILABLE',
+            'Available',
             style: TextStyle(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.7)
                   : AppColors.ink600,
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w800,
-              letterSpacing: 1.0,
             ),
           ),
         ],

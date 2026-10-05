@@ -1,20 +1,20 @@
 {
   "@@locale": "en",
   "navHome": "Home",
-  "navWork": "Projects",
+  "navWork": "Work",
   "navEngineering": "Engineering",
   "navExperience": "Experience",
-  "navStack": "Skills & Stack",
+  "navStack": "Skills",
   "navAbout": "Perspectives",
   "navContact": "Contact",
-  "navResume": "Resume",
-  "introLocation": "Amman → Brno · 2027",
-  "sectionEducation": "EDUCATION",
-  "sectionCertifications": "CERTIFICATIONS",
-  "contactHeroEyebrow": "DIRECT EMAIL · FASTEST REPLY",
-  "contactReplyWindow": "Replies within 24 hours · English / Arabic",
-  "contactSendEmailBtn": "SEND EMAIL",
-  "contactCopyAddressBtn": "COPY ADDRESS",
+  "navResume": "CV",
+  "introLocation": "Amman, moving to Brno in 2027",
+  "sectionEducation": "Education",
+  "sectionCertifications": "Certifications",
+  "contactHeroEyebrow": "Email",
+  "contactReplyWindow": "Replies within 24 hours, in English or Arabic",
+  "contactSendEmailBtn": "Send email",
+  "contactCopyAddressBtn": "Copy address",
   "skillsEmptyTitle": "No skills in this category yet",
   "skillsNoMatch": "No skills match “{query}”",
   "@skillsNoMatch": {
@@ -25,80 +25,80 @@
       }
     }
   },
-  "skillsEmptyShowAll": "SHOW ALL",
+  "skillsEmptyShowAll": "Show all skills",
   "keyboardHintTitle": "Keyboard shortcuts",
   "keyboardHintDigits": "1–7   jump to section",
-  "keyboardHintArrows": "Up / Down arrows · prev / next page",
+  "keyboardHintArrows": "Up and down arrows move between pages",
   "keyboardHintHome": "Home  first page",
   "keyboardHintEnd": "End   last page",
   "closeTooltip": "Close",
   "showHelpShortcut": "Show this help",
   "resumeOpenError": "Could not open resume — visit {publicUrl}",
   "projectOpenError": "Could not open {url}",
-  "spreadAction": "SPREAD",
-  "alignAction": "ALIGN",
-  "previousAction": "PREV",
-  "nextAction": "NEXT",
-  "emailCopied": "Email copied · {email}",
-  "viewMyWork": "VIEW MY WORK",
-  "downloadResume": "DOWNLOAD RESUME",
-  "contactMe": "CONTACT ME",
-  "copyEmail": "COPY EMAIL",
-  "introSeniorEngineer": "SENIOR FLUTTER & ANDROID ENGINEER",
-  "introRoleHeading": "SENIOR FLUTTER & ANDROID ENGINEER",
+  "spreadAction": "Spread",
+  "alignAction": "Align",
+  "previousAction": "Previous",
+  "nextAction": "Next",
+  "emailCopied": "Copied {email}",
+  "viewMyWork": "See the work",
+  "downloadResume": "Download CV",
+  "contactMe": "Contact me",
+  "copyEmail": "Copy email",
+  "introSeniorEngineer": "Senior Flutter & Android engineer",
+  "introRoleHeading": "Senior Flutter & Android engineer",
   "introValueProposition": "I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.",
   "introSkillArchitecture": "Architecture",
   "introSkillProductDelivery": "Product delivery",
-  "introWorkEligibility": "RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES",
-  "introAvailableContracts": "AVAILABLE FOR CONTRACTS",
-  "contactEngagementScopes": "// ENGAGEMENT SCOPES & COLLABORATION MODES",
-  "contactAtsVerified": "ATS-VERIFIED · 2026 EDITION",
-  "contactPdfSize": "PDF · 22 KB",
+  "introWorkEligibility": "Moving to Brno in 2027, open to senior mobile roles",
+  "introAvailableContracts": "Available for contracts",
+  "contactEngagementScopes": "Ways to work together",
+  "contactAtsVerified": "ATS-friendly, 2026 edition",
+  "contactPdfSize": "PDF, 22 KB",
   "contactCvDossierTitle": "Executive Curriculum Vitae & Portfolio Dossier",
   "contactCvDossierDesc": "Complete chronological track record, enterprise architecture case studies, and engineering competencies.",
-  "contactDownloadCvPdf": "DOWNLOAD CV · PDF",
-  "contactPreview": "PREVIEW",
-  "footerRightsReserved": "© 2026 · ALL RIGHTS RESERVED",
-  "contactPhone": "PHONE",
+  "contactDownloadCvPdf": "Download CV (PDF)",
+  "contactPreview": "Preview",
+  "footerRightsReserved": "© 2026 Abdallah Alhyari",
+  "contactPhone": "Phone",
   "contactCall": "Call",
-  "contactWhatsapp": "WHATSAPP",
+  "contactWhatsapp": "WhatsApp",
   "contactOpen": "Open",
   "contactCopy": "Copy",
-  "contactLinkedin": "LINKEDIN",
+  "contactLinkedin": "LinkedIn",
   "contactProfile": "Profile",
-  "contactGithub": "GITHUB",
+  "contactGithub": "GitHub",
   "contactVisit": "Visit",
   "semanticPortrait": "Portrait of Abdallah Alhyari",
   "semanticTitle": "Abdallah Alhyari, Senior Mobile Engineer",
-  "folioIndicator": "FOLIO {current} / {total}",
+  "folioIndicator": "{current} of {total}",
   "@folioIndicator": {
     "placeholders": {
       "current": {},
       "total": {}
     }
   },
-  "introIssueStrip": "LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE",
-  "introTechStack": "Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems",
-  "introBasedIn": "LOCATION",
-  "introStatus": "AVAILABILITY",
-  "introOpenForRoles": "Open to Senior Mobile Roles",
-  "introDiscipline": "SPECIALIZATION",
-  "introMobileArch": "Flutter · Android · Mobile Architecture",
-  "introMasthead": "// MASTHEAD",
-  "navSectionCover": "COVER & PROFILE",
-  "navSubCover": "Senior Flutter & Android Engineer",
-  "navSectionExperience": "EXPERIENCE",
-  "navSubExperience": "5+ Years Enterprise Engineering & Impact",
-  "navSectionWork": "SELECTED WORK",
-  "navSubWork": "Production Systems & Case Studies",
-  "navSectionStack": "SKILLS & STACK",
-  "navSubStack": "Technical Proficiency Matrix",
-  "navSectionEngineering": "ENGINEERING",
-  "navSubEngineering": "Enterprise Blueprints & Offline-First",
-  "navSectionAbout": "PERSPECTIVES",
-  "navSubAbout": "Architectural Perspectives & Hats",
-  "navSectionContact": "CONTACT",
-  "navSubContact": "Direct Channels & Availability",
+  "introIssueStrip": "Amman, moving to Brno in 2027. Open to senior mobile roles in Flutter, Android and mobile architecture.",
+  "introTechStack": "Flutter, Android, iOS, architecture, offline-first, NFC, security, real-time systems",
+  "introBasedIn": "Location",
+  "introStatus": "Availability",
+  "introOpenForRoles": "Open to senior mobile roles",
+  "introDiscipline": "Specialization",
+  "introMobileArch": "Flutter, Android, mobile architecture",
+  "introMasthead": "Masthead",
+  "navSectionCover": "Cover",
+  "navSubCover": "Senior Flutter & Android engineer",
+  "navSectionExperience": "Experience",
+  "navSubExperience": "Five years of enterprise mobile work",
+  "navSectionWork": "Work",
+  "navSubWork": "Case studies from production apps",
+  "navSectionStack": "Skills",
+  "navSubStack": "Tools and disciplines",
+  "navSectionEngineering": "Engineering",
+  "navSubEngineering": "How the apps are built",
+  "navSectionAbout": "Perspectives",
+  "navSubAbout": "How I work with teams",
+  "navSectionContact": "Contact",
+  "navSubContact": "Email, phone and profiles",
   "selectedRoleAnnouncement": "Selected role: {role}",
   "@selectedRoleAnnouncement": {
     "description": "Screen reader announcement when selecting a role card in the engineering perspectives section",
@@ -118,7 +118,7 @@
     }
   },
   "skillsSearchHint": "Search skills, tools, or architectures...",
-  "skillsCountAll": "{count} SKILLS",
+  "skillsCountAll": "{count} skills",
   "@skillsCountAll": {
     "placeholders": {
       "count": {
@@ -126,7 +126,7 @@
       }
     }
   },
-  "skillsCountFiltered": "{filtered} OF {total} SKILLS",
+  "skillsCountFiltered": "{filtered} of {total} skills",
   "@skillsCountFiltered": {
     "placeholders": {
       "filtered": {
@@ -137,19 +137,19 @@
       }
     }
   },
-  "skillsClearSearch": "CLEAR SEARCH",
-  "perspectivePrev": "PREV ROLE",
-  "perspectiveNext": "NEXT ROLE",
-  "perspectiveShortcutsHint": "Arrow keys or A / D to cycle · S shuffle · R align",
+  "skillsClearSearch": "Clear search",
+  "perspectivePrev": "Previous role",
+  "perspectiveNext": "Next role",
+  "perspectiveShortcutsHint": "Arrow keys or A and D to cycle, S to shuffle, R to align",
   "sectionSubtitleWork": "In-depth looks at architecture, implementation, and measurable outcomes.",
   "sectionSubtitleExperience": "Multi-year development of enterprise mobile systems",
-  "projectsHeaderKicker": "FEATURE 03 · SELECTED WORK",
-  "projectDomainAll": "ALL",
+  "projectsHeaderKicker": "Selected work",
+  "projectDomainAll": "All",
   "projectDomainHealthcare": "Healthcare & Smart Cards",
   "projectDomainEnterprise": "Enterprise HIS & LMS",
   "projectDomainFleet": "Fleet & Telematics",
   "projectDomainCommerce": "M-Commerce & Streaming",
-  "projectTechFilter": "TECH FILTER: {technology}",
+  "projectTechFilter": "Filtered by {technology}",
   "@projectTechFilter": {
     "placeholders": {
       "technology": {
@@ -173,10 +173,10 @@
   "projectOutcomeEskadenia": "Sustained 60fps across complex, data-heavy hospital and university workflows.",
   "projectOutcomeSolutions": "Shipped both applications on time with 4.7+ star store ratings.",
   "projectOutcomeFais": "Improved checkout completion and reduced abandoned transactions.",
-  "skillMasteryLead": "LEAD",
-  "skillMasteryCore": "CORE",
-  "skillMasterySolid": "SOLID",
-  "skillMasteryGrowing": "GROWING",
+  "skillMasteryLead": "Lead",
+  "skillMasteryCore": "Core",
+  "skillMasterySolid": "Solid",
+  "skillMasteryGrowing": "Growing",
   "skillCardSemantics": "{skill}, {level} proficiency. Activate to flip and view details.",
   "@skillCardSemantics": {
     "placeholders": {
@@ -188,30 +188,30 @@
       }
     }
   },
-  "experienceHeaderKicker": "FEATURE 02 · CAREER TRAJECTORY",
-  "engineeringHeaderKicker": "FEATURE 05 · SYSTEMS ARCHITECTURE",
-  "hatsHeaderKickerMobile": "FEATURE 06 · 6 ROLES",
-  "hatsHeaderKickerDesktop": "FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP",
+  "experienceHeaderKicker": "Career",
+  "engineeringHeaderKicker": "Systems architecture",
+  "hatsHeaderKickerMobile": "Six roles",
+  "hatsHeaderKickerDesktop": "Six roles",
   "hatsHeaderSubtitle": "Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.",
-  "contactHeaderKicker": "FEATURE 07 · DIRECT LINE & REACH OUT",
-  "contactHeaderTitle": "LET'S BUILD WHAT'S NEXT.",
-  "contactHeaderSubtitle": "I help teams ship complex mobile products with calmer architecture, stronger execution, and more confidence in production. Available for senior engineering leadership, technical strategy, and product-critical delivery work.",
-  "skillsHeaderKicker": "FEATURE 04 · SYSTEMS & DELIVERY",
-  "skillsHeaderTitle": "STACK & ENGINEERING",
+  "contactHeaderKicker": "Contact",
+  "contactHeaderTitle": "Tell me what you're building.",
+  "contactHeaderSubtitle": "I'm looking for a senior mobile role in Brno or remote from 2027, and I take on architecture reviews and contract work in the meantime. Email gets the fastest reply.",
+  "skillsHeaderKicker": "Skills",
+  "skillsHeaderTitle": "Skills",
   "skillsHeaderSubtitle": "Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.",
   "sectionSubtitleEngineering": "Production-tested architectures behind the mobile suites",
-  "flipHintTap": "TAP TO FLIP",
-  "flipHintClick": "CLICK TO FLIP",
+  "flipHintTap": "Tap to flip",
+  "flipHintClick": "Click to flip",
   "@flipHintTap": {
     "description": "Hint on flippable skill / role cards for touch viewports."
   },
   "@flipHintClick": {
     "description": "Hint on flippable skill / role cards for desktop (pointer) viewports."
   },
-  "folioNext": "NEXT",
-  "folioBackToStart": "BACK TO START",
+  "folioNext": "Next",
+  "folioBackToStart": "Back to start",
   "welcomeBack": "Welcome back — continue at {section}?",
-  "continueAction": "CONTINUE",
+  "continueAction": "Continue",
   "@welcomeBack": {
     "description": "Toast for a returning visitor, offering to jump back to the section they last viewed.",
     "placeholders": {
@@ -223,13 +223,13 @@
   "@folioNext": {
     "description": "Desktop footer link to the next section."
   },
-  "quickProfile": "30-SEC PROFILE",
+  "quickProfile": "30-second profile",
   "quickProfileTitle": "Hiring summary",
-  "quickProfileRole": "ROLE",
-  "quickProfileExperience": "EXPERIENCE",
+  "quickProfileRole": "Role",
+  "quickProfileExperience": "Experience",
   "quickProfileYears": "{years}+ years in mobile engineering",
-  "quickProfileStack": "CORE STACK",
-  "quickProfileRecent": "RECENT ROLES",
+  "quickProfileStack": "Core stack",
+  "quickProfileRecent": "Recent roles",
   "quickProfileEmail": "Email",
   "quickProfileCopy": "Copy summary",
   "quickProfileCopied": "Profile summary copied",
@@ -244,22 +244,22 @@
       }
     }
   },
-  "studyCaseStudy": "CASE STUDY",
-  "studyProblem": "THE PROBLEM",
-  "studyRole": "MY ROLE",
-  "studyArchitecture": "SYSTEM ARCHITECTURE",
-  "studyOutcomes": "OUTCOMES",
-  "studyLessons": "LESSONS",
-  "studyMore": "MORE CASE STUDIES",
-  "studyDockProblem": "PROBLEM",
-  "studyDockProblemShort": "PROB",
-  "studyDockRole": "ROLE",
-  "studyDockArch": "ARCH",
-  "studyDockOutcomes": "OUTCOMES",
-  "studyDockOutcomesShort": "RESULTS",
-  "studyDockLessons": "LESSONS",
+  "studyCaseStudy": "Case study",
+  "studyProblem": "The problem",
+  "studyRole": "My role",
+  "studyArchitecture": "System architecture",
+  "studyOutcomes": "Outcomes",
+  "studyLessons": "Lessons",
+  "studyMore": "More case studies",
+  "studyDockProblem": "Problem",
+  "studyDockProblemShort": "Problem",
+  "studyDockRole": "Role",
+  "studyDockArch": "Design",
+  "studyDockOutcomes": "Outcomes",
+  "studyDockOutcomesShort": "Results",
+  "studyDockLessons": "Lessons",
   "studyBackToPortfolio": "Back to portfolio",
-  "studyReadPercent": "{pct}% READ",
+  "studyReadPercent": "{pct}% read",
   "@studyReadPercent": {
     "placeholders": {
       "pct": {
@@ -267,7 +267,7 @@
       }
     }
   },
-  "studyTop": "TOP",
+  "studyTop": "Top",
   "studyBackToTop": "Back to top",
   "studyJumpTo": "Jump to {chapter}",
   "@studyJumpTo": {
@@ -285,7 +285,7 @@
       }
     }
   },
-  "studyOfficialWebsite": "OFFICIAL WEBSITE",
+  "studyOfficialWebsite": "Company website",
   "studyVisitWebsite": "Visit {company} official website",
   "@studyVisitWebsite": {
     "placeholders": {
@@ -294,7 +294,7 @@
       }
     }
   },
-  "studyCompanyLinkedIn": "COMPANY LINKEDIN",
+  "studyCompanyLinkedIn": "Company LinkedIn",
   "studyViewOnLinkedIn": "View {company} on LinkedIn",
   "@studyViewOnLinkedIn": {
     "placeholders": {
@@ -303,7 +303,7 @@
       }
     }
   },
-  "studyShare": "SHARE STUDY",
+  "studyShare": "Share",
   "studyShareTooltip": "Copy direct link to this case study",
   "studyShareSemantics": "Share direct link to {title} case study",
   "@studyShareSemantics": {
@@ -322,11 +322,11 @@
       }
     }
   },
-  "studyGlanceKicker": "AT A GLANCE · 30-SECOND READ",
+  "studyGlanceKicker": "At a glance",
   "studyGlance": "At a glance",
-  "studyChallenge": "CHALLENGE",
-  "studyBuilt": "WHAT I BUILT",
-  "studyResult": "RESULT",
+  "studyChallenge": "Challenge",
+  "studyBuilt": "What I built",
+  "studyResult": "Result",
   "studySeeOutcomes": "See all outcomes",
   "studyEnglishNote": "",
   "studyOutcomeSemantics": "Key outcome metric: {headline}. {body}",
@@ -340,9 +340,9 @@
       }
     }
   },
-  "studyPresent": "PRESENT",
-  "studyRoleMobileDev": "MOBILE DEVELOPER",
-  "studyRoleFlutterDev": "FLUTTER DEVELOPER",
+  "studyPresent": "Present",
+  "studyRoleMobileDev": "Mobile developer",
+  "studyRoleFlutterDev": "Flutter developer",
   "studyNatIntro": "Mission-critical NFC smart-card healthcare platform serving Jordan's largest health-insurance TPA. Ring App, E-Health Gate, and Compliance System — shipped as three coordinated clients on a shared architecture.",
   "studyNatChallenge": "Paper claims slowed reimbursement and exposed Jordan's largest health-insurance TPA to fraud, and many clinics had unreliable connectivity.",
   "studyNatBuilt": "A three-app NFC smart-card suite: a native Kotlin APDU bridge, an offline-first WorkManager sync pipeline, and hardware-bound JWT tokens.",
@@ -396,34 +396,34 @@
   "archTopicNfc": "ISO-7816 Smart-Card & NFC Pipeline",
   "archTopicKeystore": "Hardware-Backed Keystore & JWT Lifecycle",
   "archTopicState": "Reactive State Management (BLoC)",
-  "uiComposeInquiry": "COMPOSE INQUIRY",
-  "uiPresetsTitle": "ONE-TAP EXPRESS REACH-OUT PRESETS",
-  "uiActiveHours": "ACTIVE WORKING HOURS",
-  "uiStandbyAsync": "STANDBY · ASYNC",
-  "uiRelocating": "RELOCATING BRNO 2027",
-  "uiInquireTrack": "INQUIRE TRACK",
-  "uiComposerTitle": "DIRECT INQUIRY COMPOSER",
-  "uiSelectTrack": "SELECT ENGAGEMENT TRACK",
-  "uiCopyDraft": "COPY DRAFT",
-  "uiSending": "SENDING...",
-  "uiSendMessage": "SEND MESSAGE",
-  "uiOpenEmailClient": "OPEN IN EMAIL CLIENT",
-  "uiReadCaseStudy": "READ CASE STUDY",
-  "uiNoCaseStudies": "NO CASE STUDIES MATCHED",
-  "uiResetFilters": "RESET FILTERS",
-  "uiScrollToExplore": "SCROLL TO EXPLORE",
-  "uiPortfolioSections": "PORTFOLIO SECTIONS",
-  "uiDownloadResumePdf": "DOWNLOAD RESUME · PDF",
-  "uiDragCardsHint": "DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE",
-  "uiTapSwipeHint": "TAP CARD TO FLIP · SWIPE TO CHANGE ROLE",
-  "uiTapToReturn": "TAP TO RETURN",
-  "uiArchFlowchart": "ARCHITECTURE FLOWCHART",
-  "uiArchRationale": "ARCHITECTURAL RATIONALE (WHY THIS CHOICE)",
-  "uiKeySafeguards": "KEY IMPLEMENTATION SAFEGUARDS",
-  "uiLatencyBudget": "LATENCY BUDGET PER TIER",
-  "uiActiveTrace": "ACTIVE TRACE",
-  "uiLatestDispatch": "LATEST DISPATCH",
-  "badgeSkills": "{count} CORE DISCIPLINES",
+  "uiComposeInquiry": "Write a message",
+  "uiPresetsTitle": "Start from a template",
+  "uiActiveHours": "Working hours",
+  "uiStandbyAsync": "Replies within a day",
+  "uiRelocating": "Moving to Brno, 2027",
+  "uiInquireTrack": "Ask about this",
+  "uiComposerTitle": "Write a message",
+  "uiSelectTrack": "What is this about?",
+  "uiCopyDraft": "Copy draft",
+  "uiSending": "Sending…",
+  "uiSendMessage": "Send message",
+  "uiOpenEmailClient": "Open in email app",
+  "uiReadCaseStudy": "Read case study",
+  "uiNoCaseStudies": "No case studies match these filters",
+  "uiResetFilters": "Reset filters",
+  "uiScrollToExplore": "Scroll to explore",
+  "uiPortfolioSections": "Sections",
+  "uiDownloadResumePdf": "Download CV (PDF)",
+  "uiDragCardsHint": "Drag the cards, click one to flip it, or shuffle",
+  "uiTapSwipeHint": "Tap a card to flip it, swipe to change role",
+  "uiTapToReturn": "Tap to return",
+  "uiArchFlowchart": "Flowchart",
+  "uiArchRationale": "Why this choice",
+  "uiKeySafeguards": "Safeguards",
+  "uiLatencyBudget": "Latency budget per layer",
+  "uiActiveTrace": "Tracing",
+  "uiLatestDispatch": "Current role",
+  "badgeSkills": "{count} disciplines",
   "@badgeSkills": {
     "placeholders": {
       "count": {
@@ -431,7 +431,7 @@
       }
     }
   },
-  "badgeCaseStudies": "{count} CASE STUDIES",
+  "badgeCaseStudies": "{count} case studies",
   "@badgeCaseStudies": {
     "placeholders": {
       "count": {
@@ -439,7 +439,7 @@
       }
     }
   },
-  "badgeArchitectures": "{count} ARCHITECTURES",
+  "badgeArchitectures": "{count} architectures",
   "@badgeArchitectures": {
     "placeholders": {
       "count": {
@@ -447,7 +447,7 @@
       }
     }
   },
-  "badgeRoles": "{count} ROLES · ENTERPRISE IMPACT",
+  "badgeRoles": "{count} roles",
   "@badgeRoles": {
     "placeholders": {
       "count": {

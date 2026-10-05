@@ -64,7 +64,6 @@ class CvDossierCard extends StatelessWidget {
                           color: context.amberText,
                           fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.4,
                         ),
                       ),
                     ),
@@ -85,7 +84,6 @@ class CvDossierCard extends StatelessWidget {
                     color: context.onSurface,
                     fontSize: AppTypography.lead,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 0.3,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -117,7 +115,6 @@ class CvDossierCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 1.4,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -142,7 +139,6 @@ class CvDossierCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 1.2,
                     ),
                   ),
                   style: OutlinedButton.styleFrom(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/core/services/analytics_service.dart';
@@ -131,7 +130,6 @@ class _CaseStudyScaffoldState extends State<CaseStudyScaffold> {
                   style: TextStyle(
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: latinTracking(context, 2.4),
                     color: scheme.onSurface.withValues(alpha: 0.8),
                   ),
                 ),

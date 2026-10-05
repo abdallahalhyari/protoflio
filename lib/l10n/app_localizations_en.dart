@@ -12,7 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navHome => 'Home';
 
   @override
-  String get navWork => 'Projects';
+  String get navWork => 'Work';
 
   @override
   String get navEngineering => 'Engineering';
@@ -21,7 +21,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navExperience => 'Experience';
 
   @override
-  String get navStack => 'Skills & Stack';
+  String get navStack => 'Skills';
 
   @override
   String get navAbout => 'Perspectives';
@@ -30,28 +30,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navContact => 'Contact';
 
   @override
-  String get navResume => 'Resume';
+  String get navResume => 'CV';
 
   @override
-  String get introLocation => 'Amman → Brno · 2027';
+  String get introLocation => 'Amman, moving to Brno in 2027';
 
   @override
-  String get sectionEducation => 'EDUCATION';
+  String get sectionEducation => 'Education';
 
   @override
-  String get sectionCertifications => 'CERTIFICATIONS';
+  String get sectionCertifications => 'Certifications';
 
   @override
-  String get contactHeroEyebrow => 'DIRECT EMAIL · FASTEST REPLY';
+  String get contactHeroEyebrow => 'Email';
 
   @override
-  String get contactReplyWindow => 'Replies within 24 hours · English / Arabic';
+  String get contactReplyWindow =>
+      'Replies within 24 hours, in English or Arabic';
 
   @override
-  String get contactSendEmailBtn => 'SEND EMAIL';
+  String get contactSendEmailBtn => 'Send email';
 
   @override
-  String get contactCopyAddressBtn => 'COPY ADDRESS';
+  String get contactCopyAddressBtn => 'Copy address';
 
   @override
   String get skillsEmptyTitle => 'No skills in this category yet';
@@ -62,7 +63,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get skillsEmptyShowAll => 'SHOW ALL';
+  String get skillsEmptyShowAll => 'Show all skills';
 
   @override
   String get keyboardHintTitle => 'Keyboard shortcuts';
@@ -71,7 +72,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get keyboardHintDigits => '1–7   jump to section';
 
   @override
-  String get keyboardHintArrows => 'Up / Down arrows · prev / next page';
+  String get keyboardHintArrows => 'Up and down arrows move between pages';
 
   @override
   String get keyboardHintHome => 'Home  first page';
@@ -96,39 +97,39 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get spreadAction => 'SPREAD';
+  String get spreadAction => 'Spread';
 
   @override
-  String get alignAction => 'ALIGN';
+  String get alignAction => 'Align';
 
   @override
-  String get previousAction => 'PREV';
+  String get previousAction => 'Previous';
 
   @override
-  String get nextAction => 'NEXT';
+  String get nextAction => 'Next';
 
   @override
   String emailCopied(Object email) {
-    return 'Email copied · $email';
+    return 'Copied $email';
   }
 
   @override
-  String get viewMyWork => 'VIEW MY WORK';
+  String get viewMyWork => 'See the work';
 
   @override
-  String get downloadResume => 'DOWNLOAD RESUME';
+  String get downloadResume => 'Download CV';
 
   @override
-  String get contactMe => 'CONTACT ME';
+  String get contactMe => 'Contact me';
 
   @override
-  String get copyEmail => 'COPY EMAIL';
+  String get copyEmail => 'Copy email';
 
   @override
-  String get introSeniorEngineer => 'SENIOR FLUTTER & ANDROID ENGINEER';
+  String get introSeniorEngineer => 'Senior Flutter & Android engineer';
 
   @override
-  String get introRoleHeading => 'SENIOR FLUTTER & ANDROID ENGINEER';
+  String get introRoleHeading => 'Senior Flutter & Android engineer';
 
   @override
   String get introValueProposition =>
@@ -142,20 +143,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introWorkEligibility =>
-      'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES';
+      'Moving to Brno in 2027, open to senior mobile roles';
 
   @override
-  String get introAvailableContracts => 'AVAILABLE FOR CONTRACTS';
+  String get introAvailableContracts => 'Available for contracts';
 
   @override
-  String get contactEngagementScopes =>
-      '// ENGAGEMENT SCOPES & COLLABORATION MODES';
+  String get contactEngagementScopes => 'Ways to work together';
 
   @override
-  String get contactAtsVerified => 'ATS-VERIFIED · 2026 EDITION';
+  String get contactAtsVerified => 'ATS-friendly, 2026 edition';
 
   @override
-  String get contactPdfSize => 'PDF · 22 KB';
+  String get contactPdfSize => 'PDF, 22 KB';
 
   @override
   String get contactCvDossierTitle =>
@@ -166,22 +166,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'Complete chronological track record, enterprise architecture case studies, and engineering competencies.';
 
   @override
-  String get contactDownloadCvPdf => 'DOWNLOAD CV · PDF';
+  String get contactDownloadCvPdf => 'Download CV (PDF)';
 
   @override
-  String get contactPreview => 'PREVIEW';
+  String get contactPreview => 'Preview';
 
   @override
-  String get footerRightsReserved => '© 2026 · ALL RIGHTS RESERVED';
+  String get footerRightsReserved => '© 2026 Abdallah Alhyari';
 
   @override
-  String get contactPhone => 'PHONE';
+  String get contactPhone => 'Phone';
 
   @override
   String get contactCall => 'Call';
 
   @override
-  String get contactWhatsapp => 'WHATSAPP';
+  String get contactWhatsapp => 'WhatsApp';
 
   @override
   String get contactOpen => 'Open';
@@ -190,13 +190,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactCopy => 'Copy';
 
   @override
-  String get contactLinkedin => 'LINKEDIN';
+  String get contactLinkedin => 'LinkedIn';
 
   @override
   String get contactProfile => 'Profile';
 
   @override
-  String get contactGithub => 'GITHUB';
+  String get contactGithub => 'GitHub';
 
   @override
   String get contactVisit => 'Visit';
@@ -209,76 +209,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String folioIndicator(Object current, Object total) {
-    return 'FOLIO $current / $total';
+    return '$current of $total';
   }
 
   @override
   String get introIssueStrip =>
-      'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE';
+      'Amman, moving to Brno in 2027. Open to senior mobile roles in Flutter, Android and mobile architecture.';
 
   @override
   String get introTechStack =>
-      'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems';
+      'Flutter, Android, iOS, architecture, offline-first, NFC, security, real-time systems';
 
   @override
-  String get introBasedIn => 'LOCATION';
+  String get introBasedIn => 'Location';
 
   @override
-  String get introStatus => 'AVAILABILITY';
+  String get introStatus => 'Availability';
 
   @override
-  String get introOpenForRoles => 'Open to Senior Mobile Roles';
+  String get introOpenForRoles => 'Open to senior mobile roles';
 
   @override
-  String get introDiscipline => 'SPECIALIZATION';
+  String get introDiscipline => 'Specialization';
 
   @override
-  String get introMobileArch => 'Flutter · Android · Mobile Architecture';
+  String get introMobileArch => 'Flutter, Android, mobile architecture';
 
   @override
-  String get introMasthead => '// MASTHEAD';
+  String get introMasthead => 'Masthead';
 
   @override
-  String get navSectionCover => 'COVER & PROFILE';
+  String get navSectionCover => 'Cover';
 
   @override
-  String get navSubCover => 'Senior Flutter & Android Engineer';
+  String get navSubCover => 'Senior Flutter & Android engineer';
 
   @override
-  String get navSectionExperience => 'EXPERIENCE';
+  String get navSectionExperience => 'Experience';
 
   @override
-  String get navSubExperience => '5+ Years Enterprise Engineering & Impact';
+  String get navSubExperience => 'Five years of enterprise mobile work';
 
   @override
-  String get navSectionWork => 'SELECTED WORK';
+  String get navSectionWork => 'Work';
 
   @override
-  String get navSubWork => 'Production Systems & Case Studies';
+  String get navSubWork => 'Case studies from production apps';
 
   @override
-  String get navSectionStack => 'SKILLS & STACK';
+  String get navSectionStack => 'Skills';
 
   @override
-  String get navSubStack => 'Technical Proficiency Matrix';
+  String get navSubStack => 'Tools and disciplines';
 
   @override
-  String get navSectionEngineering => 'ENGINEERING';
+  String get navSectionEngineering => 'Engineering';
 
   @override
-  String get navSubEngineering => 'Enterprise Blueprints & Offline-First';
+  String get navSubEngineering => 'How the apps are built';
 
   @override
-  String get navSectionAbout => 'PERSPECTIVES';
+  String get navSectionAbout => 'Perspectives';
 
   @override
-  String get navSubAbout => 'Architectural Perspectives & Hats';
+  String get navSubAbout => 'How I work with teams';
 
   @override
-  String get navSectionContact => 'CONTACT';
+  String get navSectionContact => 'Contact';
 
   @override
-  String get navSubContact => 'Direct Channels & Availability';
+  String get navSubContact => 'Email, phone and profiles';
 
   @override
   String selectedRoleAnnouncement(String role) {
@@ -295,26 +295,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String skillsCountAll(int count) {
-    return '$count SKILLS';
+    return '$count skills';
   }
 
   @override
   String skillsCountFiltered(int filtered, int total) {
-    return '$filtered OF $total SKILLS';
+    return '$filtered of $total skills';
   }
 
   @override
-  String get skillsClearSearch => 'CLEAR SEARCH';
+  String get skillsClearSearch => 'Clear search';
 
   @override
-  String get perspectivePrev => 'PREV ROLE';
+  String get perspectivePrev => 'Previous role';
 
   @override
-  String get perspectiveNext => 'NEXT ROLE';
+  String get perspectiveNext => 'Next role';
 
   @override
   String get perspectiveShortcutsHint =>
-      'Arrow keys or A / D to cycle · S shuffle · R align';
+      'Arrow keys or A and D to cycle, S to shuffle, R to align';
 
   @override
   String get sectionSubtitleWork =>
@@ -325,10 +325,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Multi-year development of enterprise mobile systems';
 
   @override
-  String get projectsHeaderKicker => 'FEATURE 03 · SELECTED WORK';
+  String get projectsHeaderKicker => 'Selected work';
 
   @override
-  String get projectDomainAll => 'ALL';
+  String get projectDomainAll => 'All';
 
   @override
   String get projectDomainHealthcare => 'Healthcare & Smart Cards';
@@ -344,7 +344,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String projectTechFilter(String technology) {
-    return 'TECH FILTER: $technology';
+    return 'Filtered by $technology';
   }
 
   @override
@@ -385,16 +385,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Improved checkout completion and reduced abandoned transactions.';
 
   @override
-  String get skillMasteryLead => 'LEAD';
+  String get skillMasteryLead => 'Lead';
 
   @override
-  String get skillMasteryCore => 'CORE';
+  String get skillMasteryCore => 'Core';
 
   @override
-  String get skillMasterySolid => 'SOLID';
+  String get skillMasterySolid => 'Solid';
 
   @override
-  String get skillMasteryGrowing => 'GROWING';
+  String get skillMasteryGrowing => 'Growing';
 
   @override
   String skillCardSemantics(String skill, String level) {
@@ -402,37 +402,36 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get experienceHeaderKicker => 'FEATURE 02 · CAREER TRAJECTORY';
+  String get experienceHeaderKicker => 'Career';
 
   @override
-  String get engineeringHeaderKicker => 'FEATURE 05 · SYSTEMS ARCHITECTURE';
+  String get engineeringHeaderKicker => 'Systems architecture';
 
   @override
-  String get hatsHeaderKickerMobile => 'FEATURE 06 · 6 ROLES';
+  String get hatsHeaderKickerMobile => 'Six roles';
 
   @override
-  String get hatsHeaderKickerDesktop =>
-      'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP';
+  String get hatsHeaderKickerDesktop => 'Six roles';
 
   @override
   String get hatsHeaderSubtitle =>
       'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.';
 
   @override
-  String get contactHeaderKicker => 'FEATURE 07 · DIRECT LINE & REACH OUT';
+  String get contactHeaderKicker => 'Contact';
 
   @override
-  String get contactHeaderTitle => 'LET\'S BUILD WHAT\'S NEXT.';
+  String get contactHeaderTitle => 'Tell me what you\'re building.';
 
   @override
   String get contactHeaderSubtitle =>
-      'I help teams ship complex mobile products with calmer architecture, stronger execution, and more confidence in production. Available for senior engineering leadership, technical strategy, and product-critical delivery work.';
+      'I\'m looking for a senior mobile role in Brno or remote from 2027, and I take on architecture reviews and contract work in the meantime. Email gets the fastest reply.';
 
   @override
-  String get skillsHeaderKicker => 'FEATURE 04 · SYSTEMS & DELIVERY';
+  String get skillsHeaderKicker => 'Skills';
 
   @override
-  String get skillsHeaderTitle => 'STACK & ENGINEERING';
+  String get skillsHeaderTitle => 'Skills';
 
   @override
   String get skillsHeaderSubtitle =>
@@ -443,16 +442,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Production-tested architectures behind the mobile suites';
 
   @override
-  String get flipHintTap => 'TAP TO FLIP';
+  String get flipHintTap => 'Tap to flip';
 
   @override
-  String get flipHintClick => 'CLICK TO FLIP';
+  String get flipHintClick => 'Click to flip';
 
   @override
-  String get folioNext => 'NEXT';
+  String get folioNext => 'Next';
 
   @override
-  String get folioBackToStart => 'BACK TO START';
+  String get folioBackToStart => 'Back to start';
 
   @override
   String welcomeBack(String section) {
@@ -460,19 +459,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get continueAction => 'CONTINUE';
+  String get continueAction => 'Continue';
 
   @override
-  String get quickProfile => '30-SEC PROFILE';
+  String get quickProfile => '30-second profile';
 
   @override
   String get quickProfileTitle => 'Hiring summary';
 
   @override
-  String get quickProfileRole => 'ROLE';
+  String get quickProfileRole => 'Role';
 
   @override
-  String get quickProfileExperience => 'EXPERIENCE';
+  String get quickProfileExperience => 'Experience';
 
   @override
   String quickProfileYears(int years) {
@@ -480,10 +479,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get quickProfileStack => 'CORE STACK';
+  String get quickProfileStack => 'Core stack';
 
   @override
-  String get quickProfileRecent => 'RECENT ROLES';
+  String get quickProfileRecent => 'Recent roles';
 
   @override
   String get quickProfileEmail => 'Email';
@@ -495,57 +494,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quickProfileCopied => 'Profile summary copied';
 
   @override
-  String get studyCaseStudy => 'CASE STUDY';
+  String get studyCaseStudy => 'Case study';
 
   @override
-  String get studyProblem => 'THE PROBLEM';
+  String get studyProblem => 'The problem';
 
   @override
-  String get studyRole => 'MY ROLE';
+  String get studyRole => 'My role';
 
   @override
-  String get studyArchitecture => 'SYSTEM ARCHITECTURE';
+  String get studyArchitecture => 'System architecture';
 
   @override
-  String get studyOutcomes => 'OUTCOMES';
+  String get studyOutcomes => 'Outcomes';
 
   @override
-  String get studyLessons => 'LESSONS';
+  String get studyLessons => 'Lessons';
 
   @override
-  String get studyMore => 'MORE CASE STUDIES';
+  String get studyMore => 'More case studies';
 
   @override
-  String get studyDockProblem => 'PROBLEM';
+  String get studyDockProblem => 'Problem';
 
   @override
-  String get studyDockProblemShort => 'PROB';
+  String get studyDockProblemShort => 'Problem';
 
   @override
-  String get studyDockRole => 'ROLE';
+  String get studyDockRole => 'Role';
 
   @override
-  String get studyDockArch => 'ARCH';
+  String get studyDockArch => 'Design';
 
   @override
-  String get studyDockOutcomes => 'OUTCOMES';
+  String get studyDockOutcomes => 'Outcomes';
 
   @override
-  String get studyDockOutcomesShort => 'RESULTS';
+  String get studyDockOutcomesShort => 'Results';
 
   @override
-  String get studyDockLessons => 'LESSONS';
+  String get studyDockLessons => 'Lessons';
 
   @override
   String get studyBackToPortfolio => 'Back to portfolio';
 
   @override
   String studyReadPercent(int pct) {
-    return '$pct% READ';
+    return '$pct% read';
   }
 
   @override
-  String get studyTop => 'TOP';
+  String get studyTop => 'Top';
 
   @override
   String get studyBackToTop => 'Back to top';
@@ -561,7 +560,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get studyOfficialWebsite => 'OFFICIAL WEBSITE';
+  String get studyOfficialWebsite => 'Company website';
 
   @override
   String studyVisitWebsite(String company) {
@@ -569,7 +568,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get studyCompanyLinkedIn => 'COMPANY LINKEDIN';
+  String get studyCompanyLinkedIn => 'Company LinkedIn';
 
   @override
   String studyViewOnLinkedIn(String company) {
@@ -577,7 +576,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get studyShare => 'SHARE STUDY';
+  String get studyShare => 'Share';
 
   @override
   String get studyShareTooltip => 'Copy direct link to this case study';
@@ -596,19 +595,19 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get studyGlanceKicker => 'AT A GLANCE · 30-SECOND READ';
+  String get studyGlanceKicker => 'At a glance';
 
   @override
   String get studyGlance => 'At a glance';
 
   @override
-  String get studyChallenge => 'CHALLENGE';
+  String get studyChallenge => 'Challenge';
 
   @override
-  String get studyBuilt => 'WHAT I BUILT';
+  String get studyBuilt => 'What I built';
 
   @override
-  String get studyResult => 'RESULT';
+  String get studyResult => 'Result';
 
   @override
   String get studySeeOutcomes => 'See all outcomes';
@@ -622,13 +621,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get studyPresent => 'PRESENT';
+  String get studyPresent => 'Present';
 
   @override
-  String get studyRoleMobileDev => 'MOBILE DEVELOPER';
+  String get studyRoleMobileDev => 'Mobile developer';
 
   @override
-  String get studyRoleFlutterDev => 'FLUTTER DEVELOPER';
+  String get studyRoleFlutterDev => 'Flutter developer';
 
   @override
   String get studyNatIntro =>
@@ -813,104 +812,104 @@ class AppLocalizationsEn extends AppLocalizations {
   String get archTopicState => 'Reactive State Management (BLoC)';
 
   @override
-  String get uiComposeInquiry => 'COMPOSE INQUIRY';
+  String get uiComposeInquiry => 'Write a message';
 
   @override
-  String get uiPresetsTitle => 'ONE-TAP EXPRESS REACH-OUT PRESETS';
+  String get uiPresetsTitle => 'Start from a template';
 
   @override
-  String get uiActiveHours => 'ACTIVE WORKING HOURS';
+  String get uiActiveHours => 'Working hours';
 
   @override
-  String get uiStandbyAsync => 'STANDBY · ASYNC';
+  String get uiStandbyAsync => 'Replies within a day';
 
   @override
-  String get uiRelocating => 'RELOCATING BRNO 2027';
+  String get uiRelocating => 'Moving to Brno, 2027';
 
   @override
-  String get uiInquireTrack => 'INQUIRE TRACK';
+  String get uiInquireTrack => 'Ask about this';
 
   @override
-  String get uiComposerTitle => 'DIRECT INQUIRY COMPOSER';
+  String get uiComposerTitle => 'Write a message';
 
   @override
-  String get uiSelectTrack => 'SELECT ENGAGEMENT TRACK';
+  String get uiSelectTrack => 'What is this about?';
 
   @override
-  String get uiCopyDraft => 'COPY DRAFT';
+  String get uiCopyDraft => 'Copy draft';
 
   @override
-  String get uiSending => 'SENDING...';
+  String get uiSending => 'Sending…';
 
   @override
-  String get uiSendMessage => 'SEND MESSAGE';
+  String get uiSendMessage => 'Send message';
 
   @override
-  String get uiOpenEmailClient => 'OPEN IN EMAIL CLIENT';
+  String get uiOpenEmailClient => 'Open in email app';
 
   @override
-  String get uiReadCaseStudy => 'READ CASE STUDY';
+  String get uiReadCaseStudy => 'Read case study';
 
   @override
-  String get uiNoCaseStudies => 'NO CASE STUDIES MATCHED';
+  String get uiNoCaseStudies => 'No case studies match these filters';
 
   @override
-  String get uiResetFilters => 'RESET FILTERS';
+  String get uiResetFilters => 'Reset filters';
 
   @override
-  String get uiScrollToExplore => 'SCROLL TO EXPLORE';
+  String get uiScrollToExplore => 'Scroll to explore';
 
   @override
-  String get uiPortfolioSections => 'PORTFOLIO SECTIONS';
+  String get uiPortfolioSections => 'Sections';
 
   @override
-  String get uiDownloadResumePdf => 'DOWNLOAD RESUME · PDF';
+  String get uiDownloadResumePdf => 'Download CV (PDF)';
 
   @override
   String get uiDragCardsHint =>
-      'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE';
+      'Drag the cards, click one to flip it, or shuffle';
 
   @override
-  String get uiTapSwipeHint => 'TAP CARD TO FLIP · SWIPE TO CHANGE ROLE';
+  String get uiTapSwipeHint => 'Tap a card to flip it, swipe to change role';
 
   @override
-  String get uiTapToReturn => 'TAP TO RETURN';
+  String get uiTapToReturn => 'Tap to return';
 
   @override
-  String get uiArchFlowchart => 'ARCHITECTURE FLOWCHART';
+  String get uiArchFlowchart => 'Flowchart';
 
   @override
-  String get uiArchRationale => 'ARCHITECTURAL RATIONALE (WHY THIS CHOICE)';
+  String get uiArchRationale => 'Why this choice';
 
   @override
-  String get uiKeySafeguards => 'KEY IMPLEMENTATION SAFEGUARDS';
+  String get uiKeySafeguards => 'Safeguards';
 
   @override
-  String get uiLatencyBudget => 'LATENCY BUDGET PER TIER';
+  String get uiLatencyBudget => 'Latency budget per layer';
 
   @override
-  String get uiActiveTrace => 'ACTIVE TRACE';
+  String get uiActiveTrace => 'Tracing';
 
   @override
-  String get uiLatestDispatch => 'LATEST DISPATCH';
+  String get uiLatestDispatch => 'Current role';
 
   @override
   String badgeSkills(int count) {
-    return '$count CORE DISCIPLINES';
+    return '$count disciplines';
   }
 
   @override
   String badgeCaseStudies(int count) {
-    return '$count CASE STUDIES';
+    return '$count case studies';
   }
 
   @override
   String badgeArchitectures(int count) {
-    return '$count ARCHITECTURES';
+    return '$count architectures';
   }
 
   @override
   String badgeRoles(int count) {
-    return '$count ROLES · ENTERPRISE IMPACT';
+    return '$count roles';
   }
 }

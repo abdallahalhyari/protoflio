@@ -89,7 +89,7 @@ class HatRolePills extends StatelessWidget {
                     const SizedBox(width: 5),
                     Text(
                       ltrContent(context,
-                          '0${i + 1} ${hatTitleLabel(AppLocalizations.of(context)!, hats[i].title).toUpperCase()}'),
+                          '0${i + 1} ${hatTitleLabel(AppLocalizations.of(context)!, hats[i].title)}'),
                       style: TextStyle(
                         color: selectedIndex == i
                             ? (context.onSurface)
@@ -100,7 +100,6 @@ class HatRolePills extends StatelessWidget {
                         fontWeight: selectedIndex == i
                             ? FontWeight.w900
                             : FontWeight.w700,
-                        letterSpacing: 0.8,
                       ),
                     ),
                   ],

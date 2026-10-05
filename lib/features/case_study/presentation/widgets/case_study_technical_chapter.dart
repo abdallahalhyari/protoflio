@@ -102,7 +102,6 @@ class TechStepCard extends StatelessWidget {
                   step.layer,
                   style: TextStyle(
                     fontSize: AppTypography.label,
-                    letterSpacing: 2.4,
                     fontWeight: FontWeight.w800,
                     color: accentText,
                   ),

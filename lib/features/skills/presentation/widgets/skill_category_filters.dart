@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/features/skills/presentation/utils/skill_category_labels.dart';
 
 /// Styling helper for skill categories and corresponding theme accents.
@@ -243,8 +242,7 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
                       const SizedBox(width: 6),
                     ],
                     Text(
-                      skillCategoryLabel(AppLocalizations.of(context)!, cat)
-                          .toUpperCase(),
+                      skillCategoryLabel(AppLocalizations.of(context)!, cat),
                       style: TextStyle(
                         color: isSelected
                             ? (isDark ? color : textColor)
@@ -256,7 +254,6 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
                             : AppTypography.label,
                         fontWeight:
                             isSelected ? FontWeight.w800 : FontWeight.w600,
-                        letterSpacing: latinTracking(context, 0.8),
                       ),
                     ),
                     const SizedBox(width: 5),

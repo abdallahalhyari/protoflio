@@ -12,7 +12,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navHome => 'Domů';
 
   @override
-  String get navWork => 'Projekty';
+  String get navWork => 'Práce';
 
   @override
   String get navEngineering => 'Inženýrství';
@@ -21,7 +21,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navExperience => 'Zkušenosti';
 
   @override
-  String get navStack => 'Dovednosti & technologie';
+  String get navStack => 'Dovednosti';
 
   @override
   String get navAbout => 'Perspektivy';
@@ -33,25 +33,25 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navResume => 'Životopis';
 
   @override
-  String get introLocation => 'Ammán → Brno · 2027';
+  String get introLocation => 'Ammán, v roce 2027 stěhování do Brna';
 
   @override
-  String get sectionEducation => 'VZDĚLÁNÍ';
+  String get sectionEducation => 'Vzdělání';
 
   @override
-  String get sectionCertifications => 'CERTIFIKACE';
+  String get sectionCertifications => 'Certifikace';
 
   @override
-  String get contactHeroEyebrow => 'PŘÍMÝ E-MAIL · NEJRYCHLEJŠÍ ODPOVĚĎ';
+  String get contactHeroEyebrow => 'E-mail';
 
   @override
   String get contactReplyWindow => 'Odpověď do 24 hodin · anglicky / arabsky';
 
   @override
-  String get contactSendEmailBtn => 'ODESLAT E-MAIL';
+  String get contactSendEmailBtn => 'Odeslat e-mail';
 
   @override
-  String get contactCopyAddressBtn => 'KOPÍROVAT ADRESU';
+  String get contactCopyAddressBtn => 'Kopírovat adresu';
 
   @override
   String get skillsEmptyTitle =>
@@ -63,7 +63,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get skillsEmptyShowAll => 'ZOBRAZIT VŠE';
+  String get skillsEmptyShowAll => 'Zobrazit vše';
 
   @override
   String get keyboardHintTitle => 'Klávesové zkratky';
@@ -97,16 +97,16 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get spreadAction => 'ROZLOŽIT';
+  String get spreadAction => 'Rozložit';
 
   @override
-  String get alignAction => 'ZAROVNAT';
+  String get alignAction => 'Zarovnat';
 
   @override
-  String get previousAction => 'PŘEDCHOZÍ';
+  String get previousAction => 'Předchozí';
 
   @override
-  String get nextAction => 'DALŠÍ';
+  String get nextAction => 'Další';
 
   @override
   String emailCopied(Object email) {
@@ -114,22 +114,22 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get viewMyWork => 'ZOBRAZIT PRÁCI';
+  String get viewMyWork => 'Zobrazit práci';
 
   @override
-  String get downloadResume => 'STÁHNOUT ŽIVOTOPIS';
+  String get downloadResume => 'Stáhnout životopis';
 
   @override
-  String get contactMe => 'KONTAKTUJTE MĚ';
+  String get contactMe => 'Kontaktujte mě';
 
   @override
-  String get copyEmail => 'KOPÍROVAT E-MAIL';
+  String get copyEmail => 'Kopírovat e-mail';
 
   @override
-  String get introSeniorEngineer => 'SENIOR MOBILNÍ VÝVOJÁŘ';
+  String get introSeniorEngineer => 'Senior mobilní vývojář';
 
   @override
-  String get introRoleHeading => 'SENIOR VÝVOJÁŘ MOBILNÍCH APLIKACÍ';
+  String get introRoleHeading => 'Senior vývojář mobilních aplikací';
 
   @override
   String get introValueProposition =>
@@ -143,19 +143,19 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introWorkEligibility =>
-      'PŘESÍDLENÍ DO BRNA · 2027   •   OTEVŘEN SENIORNÍM ROLÍM';
+      'V roce 2027 se stěhuji do Brna, otevřen seniorním mobilním rolím';
 
   @override
-  String get introAvailableContracts => 'K DISPOZICI PRO KONTRAKTY';
+  String get introAvailableContracts => 'K dispozici pro kontrakty';
 
   @override
-  String get contactEngagementScopes => '// ROZSAHY SPOLUPRÁCE A REŽIMY';
+  String get contactEngagementScopes => 'Možnosti spolupráce';
 
   @override
-  String get contactAtsVerified => 'ATS OVĚŘENO · EDICE 2026';
+  String get contactAtsVerified => 'ATS ověřeno, edice 2026';
 
   @override
-  String get contactPdfSize => 'PDF · 22 KB';
+  String get contactPdfSize => 'PDF, 22 KB';
 
   @override
   String get contactCvDossierTitle => 'Exekutivní životopis a portfolio';
@@ -165,22 +165,22 @@ class AppLocalizationsCs extends AppLocalizations {
       'Kompletní chronologický záznam, případové studie podnikové architektury a inženýrské kompetence.';
 
   @override
-  String get contactDownloadCvPdf => 'STÁHNOUT ŽIVOTOPIS · PDF';
+  String get contactDownloadCvPdf => 'Stáhnout životopis (PDF)';
 
   @override
-  String get contactPreview => 'NÁHLED';
+  String get contactPreview => 'Náhled';
 
   @override
-  String get footerRightsReserved => '© 2026 · VŠECHNA PRÁVA VYHRAZENA';
+  String get footerRightsReserved => '© 2026 Abdallah Alhyari';
 
   @override
-  String get contactPhone => 'TELEFON';
+  String get contactPhone => 'Telefon';
 
   @override
   String get contactCall => 'Volat';
 
   @override
-  String get contactWhatsapp => 'WHATSAPP';
+  String get contactWhatsapp => 'WhatsApp';
 
   @override
   String get contactOpen => 'Otevřít';
@@ -189,13 +189,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get contactCopy => 'Kopírovat';
 
   @override
-  String get contactLinkedin => 'LINKEDIN';
+  String get contactLinkedin => 'LinkedIn';
 
   @override
   String get contactProfile => 'Profil';
 
   @override
-  String get contactGithub => 'GITHUB';
+  String get contactGithub => 'GitHub';
 
   @override
   String get contactVisit => 'Navštívit';
@@ -208,76 +208,76 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String folioIndicator(Object current, Object total) {
-    return 'LIST $current / $total';
+    return '$current z $total';
   }
 
   @override
-  String get introIssueStrip => 'VYDÁNÍ 01 · EDICE PORTFOLIO · MMXXVI';
+  String get introIssueStrip =>
+      'Ammán, v roce 2027 stěhování do Brna. Otevřen seniorním mobilním rolím ve Flutteru, Androidu a mobilní architektuře.';
 
   @override
   String get introTechStack =>
-      'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
+      'Flutter, Android, iOS, architektura, offline-first, NFC, bezpečnost, real-time systémy';
 
   @override
-  String get introBasedIn => 'LOKACE';
+  String get introBasedIn => 'Lokace';
 
   @override
-  String get introStatus => 'DOSTUPNOST';
+  String get introStatus => 'Dostupnost';
 
   @override
   String get introOpenForRoles => 'Otevřen pro seniorní role';
 
   @override
-  String get introDiscipline => 'SPECIALIZACE';
+  String get introDiscipline => 'Specializace';
 
   @override
-  String get introMobileArch => 'Flutter · Android · Mobilní architektura';
+  String get introMobileArch => 'Flutter, Android, mobilní architektura';
 
   @override
-  String get introMasthead => '// HLAVIČKA';
+  String get introMasthead => 'Hlavička';
 
   @override
-  String get navSectionCover => 'ÚVOD & PROFIL';
+  String get navSectionCover => 'Úvod';
 
   @override
-  String get navSubCover => 'Senior Flutter & Android inženýr';
+  String get navSubCover => 'Senior Flutter & Android vývojář';
 
   @override
-  String get navSectionExperience => 'ZKUŠENOSTI';
+  String get navSectionExperience => 'Zkušenosti';
 
   @override
-  String get navSubExperience => '5+ let vývoje a dopadu na podnikové systémy';
+  String get navSubExperience => 'Pět let podnikového mobilního vývoje';
 
   @override
-  String get navSectionWork => 'VYBRANÉ PROJEKTY';
+  String get navSectionWork => 'Práce';
 
   @override
-  String get navSubWork => 'Produkční systémy a případové studie';
+  String get navSubWork => 'Případové studie z produkčních aplikací';
 
   @override
-  String get navSectionStack => 'DOVEDNOSTI & TECHNOLOGIE';
+  String get navSectionStack => 'Dovednosti';
 
   @override
-  String get navSubStack => 'Matice technických kompetencí';
+  String get navSubStack => 'Nástroje a disciplíny';
 
   @override
-  String get navSectionEngineering => 'INŽENÝRSTVÍ';
+  String get navSectionEngineering => 'Inženýrství';
 
   @override
-  String get navSubEngineering =>
-      'Podnikové modely & offline-first architektura';
+  String get navSubEngineering => 'Jak jsou aplikace postavené';
 
   @override
-  String get navSectionAbout => 'PERSPEKTIVY';
+  String get navSectionAbout => 'Perspektivy';
 
   @override
-  String get navSubAbout => 'Architektonické úhly pohledu a role';
+  String get navSubAbout => 'Jak pracuji s týmy';
 
   @override
-  String get navSectionContact => 'KONTAKT';
+  String get navSectionContact => 'Kontakt';
 
   @override
-  String get navSubContact => 'Přímé komunikační kanály a dostupnost';
+  String get navSubContact => 'E-mail, telefon a profily';
 
   @override
   String selectedRoleAnnouncement(String role) {
@@ -295,22 +295,22 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String skillsCountAll(int count) {
-    return '$count DOVEDNOSTÍ';
+    return '$count dovedností';
   }
 
   @override
   String skillsCountFiltered(int filtered, int total) {
-    return '$filtered Z $total DOVEDNOSTÍ';
+    return '$filtered z $total dovedností';
   }
 
   @override
-  String get skillsClearSearch => 'VYMAZAT HLEDÁNÍ';
+  String get skillsClearSearch => 'Vymazat hledání';
 
   @override
-  String get perspectivePrev => 'PŘEDCHOZÍ ROLE';
+  String get perspectivePrev => 'Předchozí role';
 
   @override
-  String get perspectiveNext => 'DALŠÍ ROLE';
+  String get perspectiveNext => 'Další role';
 
   @override
   String get perspectiveShortcutsHint =>
@@ -325,10 +325,10 @@ class AppLocalizationsCs extends AppLocalizations {
       'Víceletý vývoj podnikových mobilních systémů';
 
   @override
-  String get projectsHeaderKicker => 'ČÁST 03 · VYBRANÉ PROJEKTY';
+  String get projectsHeaderKicker => 'Část 03, vybrané projekty';
 
   @override
-  String get projectDomainAll => 'VŠE';
+  String get projectDomainAll => 'Vše';
 
   @override
   String get projectDomainHealthcare => 'Zdravotnictví a čipové karty';
@@ -344,7 +344,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String projectTechFilter(String technology) {
-    return 'FILTR TECHNOLOGIE: $technology';
+    return 'Filtr technologie: $technology';
   }
 
   @override
@@ -385,16 +385,16 @@ class AppLocalizationsCs extends AppLocalizations {
       'Vyšší dokončenost nákupů a méně nedokončených transakcí.';
 
   @override
-  String get skillMasteryLead => 'VEDENÍ';
+  String get skillMasteryLead => 'Vedení';
 
   @override
-  String get skillMasteryCore => 'HLAVNÍ';
+  String get skillMasteryCore => 'Hlavní';
 
   @override
-  String get skillMasterySolid => 'POKROČILÁ';
+  String get skillMasterySolid => 'Pokročilá';
 
   @override
-  String get skillMasteryGrowing => 'ROZVOJ';
+  String get skillMasteryGrowing => 'Rozvoj';
 
   @override
   String skillCardSemantics(String skill, String level) {
@@ -402,36 +402,36 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get experienceHeaderKicker => 'ČÁST 02 · PROFESNÍ DRÁHA';
+  String get experienceHeaderKicker => 'Část 02, profesní dráha';
 
   @override
-  String get engineeringHeaderKicker => 'ČÁST 05 · SYSTÉMOVÁ ARCHITEKTURA';
+  String get engineeringHeaderKicker => 'Část 05, systémová architektura';
 
   @override
-  String get hatsHeaderKickerMobile => 'ČÁST 06 · 6 ROLÍ';
+  String get hatsHeaderKickerMobile => 'Část 06, 6 rolí';
 
   @override
-  String get hatsHeaderKickerDesktop => 'ČÁST 06 · MEZIOBOROVÉ VEDENÍ';
+  String get hatsHeaderKickerDesktop => 'Část 06, mezioborové vedení';
 
   @override
   String get hatsHeaderSubtitle =>
       'Inženýrství zaměřené na produkt, srozumitelná komunikace a praktické vedení napříč týmy, omezeními a klíčovými dodávkami.';
 
   @override
-  String get contactHeaderKicker => 'ČÁST 07 · PŘÍMÝ KONTAKT';
+  String get contactHeaderKicker => 'Část 07, přímý kontakt';
 
   @override
-  String get contactHeaderTitle => 'POJĎME VYTVOŘIT, CO PŘIJDE.';
+  String get contactHeaderTitle => 'Napište mi, na čem pracujete.';
 
   @override
   String get contactHeaderSubtitle =>
-      'Pomáhám týmům dodávat komplexní mobilní produkty s přehlednější architekturou, důslednějším provedením a větší jistotou v produkci. Jsem k dispozici pro seniorní technické vedení, technickou strategii a klíčové produktové dodávky.';
+      'Od roku 2027 hledám seniorní mobilní roli v Brně nebo na dálku a mezitím přijímám architektonické revize a zakázky. Nejrychleji odpovídám na e-mail.';
 
   @override
-  String get skillsHeaderKicker => 'ČÁST 04 · SYSTÉMY A DODÁVKA';
+  String get skillsHeaderKicker => 'Část 04, systémy a dodávka';
 
   @override
-  String get skillsHeaderTitle => 'DOVEDNOSTI A INŽENÝRSTVÍ';
+  String get skillsHeaderTitle => 'Dovednosti';
 
   @override
   String get skillsHeaderSubtitle =>
@@ -442,16 +442,16 @@ class AppLocalizationsCs extends AppLocalizations {
       'Architektury ověřené v produkci, na kterých stojí mobilní aplikace';
 
   @override
-  String get flipHintTap => 'KLEPNĚTE A OTOČTE';
+  String get flipHintTap => 'Klepněte a otočte';
 
   @override
-  String get flipHintClick => 'KLIKNĚTE A OTOČTE';
+  String get flipHintClick => 'Klikněte a otočte';
 
   @override
-  String get folioNext => 'DÁLE';
+  String get folioNext => 'Dále';
 
   @override
-  String get folioBackToStart => 'ZPĚT NA ZAČÁTEK';
+  String get folioBackToStart => 'Zpět na začátek';
 
   @override
   String welcomeBack(String section) {
@@ -459,19 +459,19 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get continueAction => 'POKRAČOVAT';
+  String get continueAction => 'Pokračovat';
 
   @override
-  String get quickProfile => 'PROFIL ZA 30 S';
+  String get quickProfile => 'Profil za 30 s';
 
   @override
   String get quickProfileTitle => 'Shrnutí pro nábor';
 
   @override
-  String get quickProfileRole => 'POZICE';
+  String get quickProfileRole => 'Pozice';
 
   @override
-  String get quickProfileExperience => 'PRAXE';
+  String get quickProfileExperience => 'Praxe';
 
   @override
   String quickProfileYears(int years) {
@@ -479,10 +479,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get quickProfileStack => 'HLAVNÍ TECHNOLOGIE';
+  String get quickProfileStack => 'Hlavní technologie';
 
   @override
-  String get quickProfileRecent => 'POSLEDNÍ POZICE';
+  String get quickProfileRecent => 'Poslední pozice';
 
   @override
   String get quickProfileEmail => 'E-mail';
@@ -494,57 +494,57 @@ class AppLocalizationsCs extends AppLocalizations {
   String get quickProfileCopied => 'Shrnutí profilu zkopírováno';
 
   @override
-  String get studyCaseStudy => 'PŘÍPADOVÁ STUDIE';
+  String get studyCaseStudy => 'Případová studie';
 
   @override
-  String get studyProblem => 'PROBLÉM';
+  String get studyProblem => 'Problém';
 
   @override
-  String get studyRole => 'MOJE ROLE';
+  String get studyRole => 'Moje role';
 
   @override
-  String get studyArchitecture => 'ARCHITEKTURA SYSTÉMU';
+  String get studyArchitecture => 'Architektura systému';
 
   @override
-  String get studyOutcomes => 'VÝSLEDKY';
+  String get studyOutcomes => 'Výsledky';
 
   @override
-  String get studyLessons => 'PONAUČENÍ';
+  String get studyLessons => 'Ponaučení';
 
   @override
-  String get studyMore => 'DALŠÍ PŘÍPADOVÉ STUDIE';
+  String get studyMore => 'Další případové studie';
 
   @override
-  String get studyDockProblem => 'PROBLÉM';
+  String get studyDockProblem => 'Problém';
 
   @override
-  String get studyDockProblemShort => 'PROBL.';
+  String get studyDockProblemShort => 'Probl.';
 
   @override
-  String get studyDockRole => 'ROLE';
+  String get studyDockRole => 'Role';
 
   @override
-  String get studyDockArch => 'ARCH.';
+  String get studyDockArch => 'Návrh';
 
   @override
-  String get studyDockOutcomes => 'VÝSLEDKY';
+  String get studyDockOutcomes => 'Výsledky';
 
   @override
-  String get studyDockOutcomesShort => 'VÝSL.';
+  String get studyDockOutcomesShort => 'Výsl.';
 
   @override
-  String get studyDockLessons => 'PONAUČENÍ';
+  String get studyDockLessons => 'Ponaučení';
 
   @override
   String get studyBackToPortfolio => 'Zpět na portfolio';
 
   @override
   String studyReadPercent(int pct) {
-    return 'PŘEČTENO $pct %';
+    return 'Přečteno $pct %';
   }
 
   @override
-  String get studyTop => 'NAHORU';
+  String get studyTop => 'Nahoru';
 
   @override
   String get studyBackToTop => 'Zpět nahoru';
@@ -560,7 +560,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get studyOfficialWebsite => 'OFICIÁLNÍ WEB';
+  String get studyOfficialWebsite => 'Oficiální web';
 
   @override
   String studyVisitWebsite(String company) {
@@ -568,7 +568,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get studyCompanyLinkedIn => 'LINKEDIN FIRMY';
+  String get studyCompanyLinkedIn => 'LinkedIn firmy';
 
   @override
   String studyViewOnLinkedIn(String company) {
@@ -576,7 +576,7 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get studyShare => 'SDÍLET STUDII';
+  String get studyShare => 'Sdílet';
 
   @override
   String get studyShareTooltip => 'Zkopírovat přímý odkaz na tuto studii';
@@ -595,19 +595,19 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get studyGlanceKicker => 'V KOSTCE · ČTENÍ NA 30 SEKUND';
+  String get studyGlanceKicker => 'V kostce';
 
   @override
   String get studyGlance => 'V kostce';
 
   @override
-  String get studyChallenge => 'VÝZVA';
+  String get studyChallenge => 'Výzva';
 
   @override
-  String get studyBuilt => 'CO JSEM VYTVOŘIL';
+  String get studyBuilt => 'Co jsem vytvořil';
 
   @override
-  String get studyResult => 'VÝSLEDEK';
+  String get studyResult => 'Výsledek';
 
   @override
   String get studySeeOutcomes => 'Zobrazit všechny výsledky';
@@ -622,13 +622,13 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get studyPresent => 'SOUČASNOST';
+  String get studyPresent => 'Současnost';
 
   @override
-  String get studyRoleMobileDev => 'MOBILNÍ VÝVOJÁŘ';
+  String get studyRoleMobileDev => 'Mobilní vývojář';
 
   @override
-  String get studyRoleFlutterDev => 'FLUTTER VÝVOJÁŘ';
+  String get studyRoleFlutterDev => 'Flutter vývojář';
 
   @override
   String get studyNatIntro =>
@@ -812,104 +812,104 @@ class AppLocalizationsCs extends AppLocalizations {
   String get archTopicState => 'Reaktivní správa stavu (BLoC)';
 
   @override
-  String get uiComposeInquiry => 'NAPSAT POPTÁVKU';
+  String get uiComposeInquiry => 'Napsat zprávu';
 
   @override
-  String get uiPresetsTitle => 'RYCHLÉ ŠABLONY ZPRÁV';
+  String get uiPresetsTitle => 'Začít ze šablony';
 
   @override
-  String get uiActiveHours => 'PRACOVNÍ DOBA';
+  String get uiActiveHours => 'Pracovní doba';
 
   @override
-  String get uiStandbyAsync => 'MIMO PRACOVNÍ DOBU · ODPOVÍM POZDĚJI';
+  String get uiStandbyAsync => 'Odpovídám do jednoho dne';
 
   @override
-  String get uiRelocating => 'STĚHOVÁNÍ DO BRNA 2027';
+  String get uiRelocating => 'Stěhování do Brna 2027';
 
   @override
-  String get uiInquireTrack => 'POPTAT TENTO SMĚR';
+  String get uiInquireTrack => 'Zeptat se';
 
   @override
-  String get uiComposerTitle => 'PŘÍMÁ POPTÁVKA';
+  String get uiComposerTitle => 'Napsat zprávu';
 
   @override
-  String get uiSelectTrack => 'VYBERTE TYP SPOLUPRÁCE';
+  String get uiSelectTrack => 'O co jde?';
 
   @override
-  String get uiCopyDraft => 'KOPÍROVAT KONCEPT';
+  String get uiCopyDraft => 'Kopírovat koncept';
 
   @override
-  String get uiSending => 'ODESÍLÁNÍ...';
+  String get uiSending => 'Odesílání…';
 
   @override
-  String get uiSendMessage => 'ODESLAT ZPRÁVU';
+  String get uiSendMessage => 'Odeslat zprávu';
 
   @override
-  String get uiOpenEmailClient => 'OTEVŘÍT V E-MAILU';
+  String get uiOpenEmailClient => 'Otevřít v e-mailu';
 
   @override
-  String get uiReadCaseStudy => 'ČÍST PŘÍPADOVOU STUDII';
+  String get uiReadCaseStudy => 'Číst případovou studii';
 
   @override
-  String get uiNoCaseStudies => 'ŽÁDNÉ ODPOVÍDAJÍCÍ STUDIE';
+  String get uiNoCaseStudies => 'Žádné odpovídající studie';
 
   @override
-  String get uiResetFilters => 'ZRUŠIT FILTRY';
+  String get uiResetFilters => 'Zrušit filtry';
 
   @override
-  String get uiScrollToExplore => 'POSUŇTE A PROZKOUMEJTE';
+  String get uiScrollToExplore => 'Posuňte a prozkoumejte';
 
   @override
-  String get uiPortfolioSections => 'SEKCE PORTFOLIA';
+  String get uiPortfolioSections => 'Sekce portfolia';
 
   @override
-  String get uiDownloadResumePdf => 'STÁHNOUT ŽIVOTOPIS · PDF';
+  String get uiDownloadResumePdf => 'Stáhnout životopis (PDF)';
 
   @override
   String get uiDragCardsHint =>
-      'PŘETÁHNĚTE KARTY · KLIKNUTÍM OTOČÍTE · ZAMÍCHÁNÍM PŘESKUPÍTE';
+      'Přetáhněte karty, kliknutím otočíte, zamícháním přeskupíte';
 
   @override
-  String get uiTapSwipeHint => 'KLEPNUTÍM OTOČÍTE · PŘEJETÍM ZMĚNÍTE ROLI';
+  String get uiTapSwipeHint => 'Klepnutím otočíte, přejetím změníte roli';
 
   @override
-  String get uiTapToReturn => 'KLEPNUTÍM ZPĚT';
+  String get uiTapToReturn => 'Klepnutím zpět';
 
   @override
-  String get uiArchFlowchart => 'DIAGRAM ARCHITEKTURY';
+  String get uiArchFlowchart => 'Diagram';
 
   @override
-  String get uiArchRationale => 'ZDŮVODNĚNÍ ARCHITEKTURY (PROČ TATO VOLBA)';
+  String get uiArchRationale => 'Proč tato volba';
 
   @override
-  String get uiKeySafeguards => 'KLÍČOVÉ POJISTKY IMPLEMENTACE';
+  String get uiKeySafeguards => 'Pojistky';
 
   @override
-  String get uiLatencyBudget => 'ROZPOČET LATENCE PRO KAŽDOU VRSTVU';
+  String get uiLatencyBudget => 'Rozpočet latence pro každou vrstvu';
 
   @override
-  String get uiActiveTrace => 'AKTIVNÍ STOPA';
+  String get uiActiveTrace => 'Sledování';
 
   @override
-  String get uiLatestDispatch => 'AKTUÁLNÍ';
+  String get uiLatestDispatch => 'Současná role';
 
   @override
   String badgeSkills(int count) {
-    return '$count KLÍČOVÝCH DISCIPLÍN';
+    return '$count disciplín';
   }
 
   @override
   String badgeCaseStudies(int count) {
-    return '$count PŘÍPADOVÉ STUDIE';
+    return '$count případové studie';
   }
 
   @override
   String badgeArchitectures(int count) {
-    return '$count ARCHITEKTUR';
+    return '$count architektur';
   }
 
   @override
   String badgeRoles(int count) {
-    return '$count ROLE · PODNIKOVÝ DOPAD';
+    return '$count role';
   }
 }

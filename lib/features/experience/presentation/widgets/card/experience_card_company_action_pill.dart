@@ -146,7 +146,6 @@ class _CompanyActionPillState extends State<CompanyActionPill> {
                         style: TextStyle(
                           fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
                           color: _hovered
                               ? (isDark ? Colors.white : primary)
                               : (isDark

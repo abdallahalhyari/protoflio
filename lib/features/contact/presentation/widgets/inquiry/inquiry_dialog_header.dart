@@ -34,7 +34,6 @@ class InquiryDialogHeader extends StatelessWidget {
                   color: scheme.primary,
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 1.4,
                 ),
               ),
               Text(

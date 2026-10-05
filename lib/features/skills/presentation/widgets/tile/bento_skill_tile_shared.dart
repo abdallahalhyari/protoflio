@@ -50,14 +50,13 @@ class FlipHintPill extends StatelessWidget {
             ),
             const SizedBox(width: 4),
             Text(
-              AppLocalizations.of(context)?.flipHintTap ?? 'TAP TO FLIP',
+              AppLocalizations.of(context)?.flipHintTap ?? 'Tap to flip',
               style: TextStyle(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.6)
                     : AppColors.ink600,
                 fontSize: isDesktop ? 9.5 : 10,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 0.8,
               ),
             ),
             const SizedBox(width: 3),

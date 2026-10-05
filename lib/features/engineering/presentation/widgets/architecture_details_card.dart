@@ -38,11 +38,10 @@ class ArchitectureDetailsCard extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                'ARCHITECTURE BLUEPRINT // ${topic.id.toUpperCase()}',
+                'ARCHITECTURE BLUEPRINT // ${topic.id}',
                 style: TextStyle(
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 1.5,
                   color: accentText,
                 ),
               ),
@@ -57,7 +56,6 @@ class ArchitectureDetailsCard extends StatelessWidget {
           fontSize: isDesktop ? AppTypography.title : AppTypography.title,
           fontWeight: FontWeight.w900,
           color: context.onSurface,
-          letterSpacing: 0.5,
           height: 1.2,
         ),
       ),
@@ -107,7 +105,6 @@ class ArchitectureDetailsCard extends StatelessWidget {
                       color: accentText,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 1.2,
                     ),
                   ),
                 ),
@@ -143,7 +140,6 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 color: accentText,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 1.2,
               ),
             ),
           ),
@@ -204,7 +200,6 @@ class ArchitectureDetailsCard extends StatelessWidget {
                   color: accentText,
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 1.2,
                 ),
               ),
             ),
@@ -300,14 +295,13 @@ class _BudgetRow extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  step.layer.toUpperCase(),
+                  step.layer,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: tone,
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.0,
                   ),
                 ),
                 const SizedBox(height: 1),
@@ -346,7 +340,6 @@ class _BudgetRow extends StatelessWidget {
                 color: tone,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 0.5,
                 fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),

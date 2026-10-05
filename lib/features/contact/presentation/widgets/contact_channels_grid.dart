@@ -121,12 +121,11 @@ class ContactChannelsGrid extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '// DIRECT COMMUNICATION CHANNELS',
+                  'Direct communication channels',
                   style: TextStyle(
                     color: isDark ? Colors.white70 : AppColors.ink500,
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: 2.2,
                   ),
                 ),
               ),

@@ -85,7 +85,6 @@ class NavSectionRow extends StatelessWidget {
                               : AppColors.ink800),
                       fontSize: AppTypography.body,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 1.0,
                     ),
                   ),
                   const SizedBox(height: 1),

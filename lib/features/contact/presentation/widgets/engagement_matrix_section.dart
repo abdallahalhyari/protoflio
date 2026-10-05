@@ -28,7 +28,7 @@ class EngagementMatrixSection extends StatelessWidget {
 
     final tracks = [
       ConsultingTrack(
-        tag: 'SYSTEM AUDIT',
+        tag: 'System audit',
         title: 'Architecture & Resilience Audit',
         description:
             'Clean Architecture restructuring, state-machine resilience, concurrency bottleneck triage, and multi-package decoupling.',
@@ -42,7 +42,7 @@ class EngagementMatrixSection extends StatelessWidget {
         ),
       ),
       ConsultingTrack(
-        tag: 'PRODUCTION APPS',
+        tag: 'Production apps',
         title: 'Full-Lifecycle App Engineering',
         description:
             'Zero-to-one cross-platform app delivery, native iOS Swift & Android Kotlin platform channels, 120 FPS buttery rendering.',
@@ -56,7 +56,7 @@ class EngagementMatrixSection extends StatelessWidget {
         ),
       ),
       ConsultingTrack(
-        tag: 'TECH LEADERSHIP',
+        tag: 'Tech leadership',
         title: 'Fractional Lead & Mentorship',
         description:
             'Code review governance, automated UI & integration test harnesses, mobile CI/CD pipelines, and upskilling engineering squads.',
@@ -96,7 +96,6 @@ class EngagementMatrixSection extends StatelessWidget {
                       color: isDark ? Colors.white70 : AppColors.ink500,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 2.2,
                     ),
                   ),
                 ),

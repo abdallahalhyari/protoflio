@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/features/case_study/presentation/widgets/case_study_reading_companion.dart';
 
 class CompanionDockDivider extends StatelessWidget {
@@ -65,7 +64,6 @@ class CompanionReadingPercentPill extends StatelessWidget {
             style: TextStyle(
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w900,
-              letterSpacing: latinTracking(context, 0.8),
               color: isDark ? AppColors.teal : AppColors.tealDeep,
             ),
           ),
@@ -189,7 +187,6 @@ class _CompanionChapterPillState extends State<CompanionChapterPill> {
                         fontSize: AppTypography.label,
                         fontWeight:
                             isActive ? FontWeight.w900 : FontWeight.w700,
-                        letterSpacing: latinTracking(context, 1.0),
                         color: isActive
                             ? (isDark ? AppColors.teal : AppColors.tealDeep)
                             : (_hovered
@@ -299,7 +296,6 @@ class _CompanionBackToTopPillState extends State<CompanionBackToTopPill> {
                         style: TextStyle(
                           fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: latinTracking(context, 1.2),
                           color: _hovered
                               ? (isDark ? Colors.white : AppColors.tealDeep)
                               : (context.mutedText),

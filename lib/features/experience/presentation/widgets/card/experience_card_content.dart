@@ -44,17 +44,15 @@ class CardContent extends StatelessWidget {
               color: scheme.onSurface,
               fontSize: isDesktop ? 28 : 22,
               fontWeight: FontWeight.w900,
-              letterSpacing: 2,
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            exp.role.toUpperCase(),
+            exp.role,
             style: TextStyle(
               color: context.adaptiveAccentText(scheme.primary),
               fontSize: isDesktop ? 14 : 12.5,
               fontWeight: FontWeight.w900,
-              letterSpacing: 1.5,
             ),
           ),
           if (exp.websiteUrl != null || exp.linkedinUrl != null) ...[
@@ -66,7 +64,7 @@ class CardContent extends StatelessWidget {
               children: [
                 if (exp.websiteUrl != null)
                   CompanyActionPill(
-                    label: 'WEBSITE',
+                    label: 'Website',
                     tooltip: 'Visit ${exp.company} official website',
                     icon: Icons.language_rounded,
                     url: exp.websiteUrl!,
@@ -77,7 +75,7 @@ class CardContent extends StatelessWidget {
                   ),
                 if (exp.linkedinUrl != null)
                   CompanyActionPill(
-                    label: 'LINKEDIN',
+                    label: 'LinkedIn',
                     tooltip: 'View ${exp.company} on LinkedIn',
                     isLinkedIn: true,
                     url: exp.linkedinUrl!,

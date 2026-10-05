@@ -37,13 +37,12 @@ class NfcArchitectureDiagram extends StatelessWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  'SYSTEM ARCHITECTURE TOPOLOGY',
+                  'System architecture topology',
                   style: TextStyle(
                     color: scheme.primary,
                     fontSize:
                         isDesktop ? AppTypography.label : AppTypography.label,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: 1.5,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),

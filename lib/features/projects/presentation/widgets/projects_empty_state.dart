@@ -37,7 +37,6 @@ class ProjectsEmptyState extends StatelessWidget {
               fontFamily: AppTypography.displayFont,
               fontSize: isDesktop ? 20 : 16,
               fontWeight: FontWeight.w800,
-              letterSpacing: 1.0,
             ),
           ),
           const SizedBox(height: AppSpacing.sm),

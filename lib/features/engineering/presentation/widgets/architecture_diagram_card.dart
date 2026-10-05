@@ -55,7 +55,6 @@ class ArchitectureDiagramCard extends StatelessWidget {
                             ? AppTypography.label
                             : AppTypography.label,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: 1.2,
                       ),
                     ),
                   ),
@@ -94,7 +93,6 @@ class ArchitectureDiagramCard extends StatelessWidget {
                   color: accentText,
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 0.8,
                 ),
               ),
             ),

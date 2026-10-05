@@ -53,7 +53,6 @@ class HatBioStrip extends StatelessWidget {
                 isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.ink700,
             fontSize: AppTypography.label,
             height: 1.45,
-            letterSpacing: 0.2,
           ),
         ),
       );
@@ -86,7 +85,6 @@ class HatBioStrip extends StatelessWidget {
                     : AppColors.ink800,
                 fontSize: AppTypography.body,
                 height: 1.6,
-                letterSpacing: 0.2,
               ),
             ),
           ),
@@ -97,13 +95,13 @@ class HatBioStrip extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _bioMetaBlock(context, 'BASED', 'AMMAN · JORDAN', isDark),
+              _bioMetaBlock(context, 'BASED', 'Amman, Jordan', isDark),
               const SizedBox(height: AppSpacing.lg),
               _bioMetaBlock(
-                  context, 'NEXT', 'BRNO · CZECH REPUBLIC · 2027', isDark),
+                  context, 'NEXT', 'Brno, Czech Republic, 2027', isDark),
               const SizedBox(height: AppSpacing.lg),
               _bioMetaBlock(
-                  context, 'OPEN FOR', 'SENIOR ROLES · CONSULTING', isDark),
+                  context, 'Open for', 'Senior roles, consulting', isDark),
             ],
           ),
         ),
@@ -123,7 +121,6 @@ class HatBioStrip extends StatelessWidget {
                 isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.ink500,
             fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
-            letterSpacing: 2.4,
           ),
         ),
         const SizedBox(height: 2),
@@ -133,7 +130,6 @@ class HatBioStrip extends StatelessWidget {
             color: context.onSurface,
             fontSize: AppTypography.label,
             fontWeight: FontWeight.w700,
-            letterSpacing: 1.2,
           ),
         ),
       ],

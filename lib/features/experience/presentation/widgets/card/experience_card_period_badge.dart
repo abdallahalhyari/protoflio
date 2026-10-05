@@ -34,12 +34,11 @@ class PeriodBadgeRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.xs),
           ),
           child: Text(
-            period.toUpperCase(),
+            period,
             style: TextStyle(
                 color: context.adaptiveAccentText(scheme.primary),
                 fontSize: AppTypography.label,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1),
+                fontWeight: FontWeight.w800),
           ),
         ),
         if (isCurrent) ...[
@@ -71,7 +70,6 @@ class PeriodBadgeRow extends StatelessWidget {
                       color: isDark ? kNowAccent : AppColors.tealDeep,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 1,
                     ),
                   ),
                 ),

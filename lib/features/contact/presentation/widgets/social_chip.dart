@@ -42,7 +42,6 @@ class _SocialChipState extends State<SocialChip> {
             style: const TextStyle(
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w900,
-              letterSpacing: 1.6,
             ),
           ),
           style: OutlinedButton.styleFrom(

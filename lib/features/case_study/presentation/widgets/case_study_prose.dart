@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:profile/shared/utils/bidi.dart';
 
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
@@ -30,7 +29,6 @@ class SectionKicker extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: AppTypography.label,
-            letterSpacing: latinTracking(context, 3),
             fontWeight: FontWeight.w800,
             color: scheme.onSurface.withValues(alpha: 0.9),
           ),

@@ -77,11 +77,10 @@ class KeyboardHintChip extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'SHORTCUTS [?]',
+                    'Shortcuts [?]',
                     style: TextStyle(
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 0.8,
                       color: context.mutedText,
                     ),
                   ),

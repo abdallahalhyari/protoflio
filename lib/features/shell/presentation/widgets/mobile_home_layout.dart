@@ -45,7 +45,7 @@ class MobileHomeLayout extends StatelessWidget {
 
   static String _dividerLabel(List<String> labels, int index) {
     if (index < 0 || index >= labels.length) return '';
-    return labels[index].toUpperCase();
+    return labels[index];
   }
 
   @override

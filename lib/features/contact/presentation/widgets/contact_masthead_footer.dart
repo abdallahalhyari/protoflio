@@ -48,7 +48,6 @@ class ContactMastheadFooter extends StatelessWidget {
                     : AppColors.ink500,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 2.2,
               ),
             ),
             const SizedBox(height: 4),
@@ -58,17 +57,16 @@ class ContactMastheadFooter extends StatelessWidget {
                 color: context.onSurface,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w700,
-                letterSpacing: 1.0,
               ),
             ),
           ],
         );
 
     final blocks = [
-      block('PRIMARY LOCATION', 'AMMAN · RELOCATING BRNO 2027'),
-      block('CZ WORK STATUS', 'ELIGIBLE AS STUDENT · NO PERMIT'),
-      block('RESPONSE SLA', 'GUARANTEED WITHIN 24 HOURS'),
-      block('ENGAGEMENT SCOPE', 'SENIOR ROLES · ADVISORY'),
+      block('Primary location', 'Amman, relocating Brno 2027'),
+      block('CZ work status', 'Eligible as student, no permit'),
+      block('Response SLA', 'Guaranteed within 24 hours'),
+      block('Engagement scope', 'Senior roles, advisory'),
     ];
 
     return Column(
@@ -115,13 +113,12 @@ class ContactMastheadFooter extends StatelessWidget {
               children: [
                 Icon(Icons.shield_rounded, size: 13, color: availabilityGreen),
                 Text(
-                  'VERIFIED SENIOR MOBILE ARCHITECT · DIRECT COMMUNICATION',
+                  'Verified senior mobile architect, direct communication',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: context.mutedText,
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.2,
                   ),
                 ),
               ],
@@ -139,14 +136,13 @@ class ContactMastheadFooter extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    '// COLOPHON & DISPATCH',
+                    'Colophon & dispatch',
                     style: TextStyle(
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.60)
                           : AppColors.ink500, // slate400 was 2.5:1
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
                     ),
                   ),
                 ),

@@ -43,7 +43,7 @@ class ProjectOutcomesSection extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: 'MEASURABLE OUTCOME: ',
+                        text: 'Measurable outcome: ',
                         style: TextStyle(
                           color: AppColors.teal,
                           fontSize: isDesktop

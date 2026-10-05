@@ -103,7 +103,7 @@ class TileFrontFace extends StatelessWidget {
                                 : null,
                             child: Center(
                               child: Text(
-                                skill.name.toUpperCase(),
+                                skill.name,
                                 textAlign: TextAlign.center,
                                 maxLines: _kTitleMaxLines,
                                 overflow: TextOverflow.ellipsis,
@@ -112,7 +112,6 @@ class TileFrontFace extends StatelessWidget {
                                   color: context.onSurface,
                                   fontSize: isDesktop ? 22 : 14,
                                   fontWeight: FontWeight.w900,
-                                  letterSpacing: 1.2,
                                   height: isDesktop ? _kTitleLineHeight : null,
                                 ),
                               ),
@@ -133,7 +132,6 @@ class TileFrontFace extends StatelessWidget {
                                 color: context.onSurface,
                                 fontSize: isDesktop ? 11 : 9,
                                 fontWeight: FontWeight.w900,
-                                letterSpacing: 1.2,
                               ),
                             ),
                           ),

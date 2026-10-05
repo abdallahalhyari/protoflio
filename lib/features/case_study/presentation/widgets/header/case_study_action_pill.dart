@@ -3,7 +3,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/services/sound_service.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 
@@ -152,7 +151,6 @@ class _CaseStudyActionPillState extends State<CaseStudyActionPill> {
                             style: TextStyle(
                               fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
-                              letterSpacing: latinTracking(context, 1.2),
                               color: _hovered
                                   ? (isDark ? Colors.white : primary)
                                   : (isDark

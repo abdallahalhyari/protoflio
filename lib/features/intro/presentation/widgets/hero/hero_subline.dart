@@ -42,12 +42,11 @@ class HeroSubline extends StatelessWidget {
               SizedBox(width: portraitSize * 0.26),
               ExcludeSemantics(
                   child: Text(
-                'ALHYARI',
+                'Alhyari',
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   fontSize: letterSize,
                   fontWeight: FontWeight.w800,
-                  letterSpacing: 12,
                   color: context.onSurface,
                   shadows: isDark
                       ? [
@@ -65,13 +64,12 @@ class HeroSubline extends StatelessWidget {
               const SizedBox(height: AppSpacing.smd),
               ExcludeSemantics(
                   child: Text(
-                'ALHYARI',
+                'Alhyari',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   fontSize: letterSize,
                   fontWeight: FontWeight.w800,
-                  letterSpacing: 10,
                   color: context.onSurface,
                   shadows: isDark
                       ? [

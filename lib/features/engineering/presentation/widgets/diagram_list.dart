@@ -200,7 +200,6 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                                       ? AppTypography.label
                                       : AppTypography.label,
                                   fontWeight: FontWeight.w900,
-                                  letterSpacing: 1.2,
                                 ),
                               ),
                             ),
@@ -244,7 +243,6 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                                             fontSize: AppTypography.label,
                                             fontWeight: FontWeight.w900,
                                             color: AppColors.onAccent(accent),
-                                            letterSpacing: 0.8,
                                           ),
                                         ),
                                       ],

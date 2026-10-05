@@ -141,7 +141,6 @@ class _NavItemState extends State<NavItem> with SingleTickerProviderStateMixin {
                             : AppTypography.body,
                         fontWeight:
                             widget.active ? FontWeight.w800 : FontWeight.w600,
-                        letterSpacing: 0.3,
                       ),
                       child: Text(widget.label),
                     ),

@@ -24,9 +24,8 @@ class FolioBar extends StatelessWidget {
     return ValueListenableBuilder<int>(
       valueListenable: controller.pageIndex,
       builder: (context, page, _) {
-        final currentLabel = (page >= 0 && page < labels.length)
-            ? labels[page].toUpperCase()
-            : '';
+        final currentLabel =
+            (page >= 0 && page < labels.length) ? labels[page] : '';
         return Semantics(
           container: true,
           label:
@@ -81,7 +80,6 @@ class FolioBar extends StatelessWidget {
                       color: context.subtleText,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w700,
-                      letterSpacing: 1.5,
                     ),
                   ),
                 )),
@@ -114,7 +112,6 @@ class FolioBar extends StatelessWidget {
                       color: context.onSurface,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
                     ),
                   ),
                 )),
@@ -170,7 +167,7 @@ class _NextStepState extends State<_NextStep> {
     final target = isLast ? 0 : widget.page + 1;
     final label = isLast
         ? l10n.folioBackToStart
-        : '${l10n.folioNext} · ${widget.labels[target].toUpperCase()}';
+        : '${l10n.folioNext} · ${widget.labels[target]}';
     final accent =
         context.adaptiveAccentText(Theme.of(context).colorScheme.primary);
     final reduce = MediaQuery.disableAnimationsOf(context);
@@ -214,7 +211,6 @@ class _NextStepState extends State<_NextStep> {
                         color: _hovered ? accent : context.mutedText,
                         fontSize: AppTypography.label,
                         fontWeight: FontWeight.w800,
-                        letterSpacing: 1.5,
                       ),
                     ),
                   ),

@@ -98,7 +98,6 @@ class EditorialChip extends StatelessWidget {
               color: fg,
               fontSize: fontSize,
               fontWeight: FontWeight.w800,
-              letterSpacing: 1.2,
             ),
           ),
         ),

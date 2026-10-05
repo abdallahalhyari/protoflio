@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 
@@ -106,7 +105,6 @@ class _CaseStudySharePillState extends State<CaseStudySharePill> {
                             style: TextStyle(
                               fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
-                              letterSpacing: latinTracking(context, 1.2),
                               color: _hovered
                                   ? (isDark ? Colors.white : AppColors.tealDeep)
                                   : (isDark

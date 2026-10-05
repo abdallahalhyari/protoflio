@@ -33,12 +33,11 @@ class ProjectTechStackSection extends StatelessWidget {
               border: Border.all(color: context.divider),
             ),
             child: Text(
-              tech.toUpperCase(),
+              tech,
               style: TextStyle(
                 color: scheme.primary,
                 fontSize: isDesktop ? AppTypography.label : AppTypography.label,
                 fontWeight: FontWeight.w700,
-                letterSpacing: 0.8,
               ),
             ),
           ),

@@ -63,7 +63,7 @@ class TileBackFace extends StatelessWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            skill.name.toUpperCase(),
+                            skill.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

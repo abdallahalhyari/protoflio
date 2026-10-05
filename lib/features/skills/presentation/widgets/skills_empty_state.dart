@@ -64,7 +64,6 @@ class SkillsEmptyState extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 1.4,
                 ),
               ),
             ),

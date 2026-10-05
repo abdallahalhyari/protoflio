@@ -71,7 +71,6 @@ class IntroAvailabilityBanner extends StatelessWidget {
                     fontSize:
                         isWide ? AppTypography.label : AppTypography.label,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.2,
                   ),
                   textAlign: TextAlign.center,
                 ),

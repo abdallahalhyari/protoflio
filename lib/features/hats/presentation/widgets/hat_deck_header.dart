@@ -3,7 +3,6 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/shared/utils/bidi.dart';
 
 /// Top header for the Hats & Perspectives section, including title, subtitle,
 /// and desktop deck shuffle/align action buttons.
@@ -47,18 +46,16 @@ class HatDeckHeader extends StatelessWidget {
                   color: context.adaptiveAccentText(scheme.primary),
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: latinTracking(context, 3),
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                loc.navAbout.toUpperCase(),
+                loc.navAbout,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,
                   fontSize: isMobile ? 24 : 40,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: latinTracking(context, 4),
                   height: 1,
                 ),
               ),
@@ -71,7 +68,6 @@ class HatDeckHeader extends StatelessWidget {
                       : AppColors.ink600,
                   fontSize: isMobile ? 11 : 12.5,
                   fontStyle: FontStyle.italic,
-                  letterSpacing: latinTracking(context, 0.5),
                 ),
               ),
             ],

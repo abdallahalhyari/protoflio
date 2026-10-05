@@ -82,7 +82,6 @@ class ExpressPresetsBar extends StatelessWidget {
                         color: context.amberText,
                         fontSize: AppTypography.label,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: 1.8,
                       ),
                     ),
                   ),

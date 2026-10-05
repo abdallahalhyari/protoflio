@@ -31,7 +31,6 @@ class CredentialsBentoCard extends StatelessWidget {
           fontFamily: AppTypography.displayFont,
           color: scheme.onSurface,
           fontSize: AppTypography.lead,
-          letterSpacing: 2,
         ),
       ),
     );
@@ -86,13 +85,13 @@ class CredentialsBentoCard extends StatelessWidget {
                   final eduTitle = lang == 'ar'
                       ? (l10n?.sectionEducation ?? 'التعليم')
                       : (lang == 'cs'
-                          ? (l10n?.sectionEducation ?? 'VZDĚLÁNÍ')
-                          : 'ACADEMIC ANNEX');
+                          ? (l10n?.sectionEducation ?? 'Vzdělání')
+                          : 'Academic annex');
                   final certTitle = lang == 'ar'
                       ? (l10n?.sectionCertifications ?? 'الشهادات')
                       : (lang == 'cs'
-                          ? (l10n?.sectionCertifications ?? 'CERTIFIKACE')
-                          : 'CERTIFICATION STAMPS');
+                          ? (l10n?.sectionCertifications ?? 'Certifikace')
+                          : 'Certification stamps');
 
                   final content = Padding(
                     padding: const EdgeInsets.all(AppSpacing.md),

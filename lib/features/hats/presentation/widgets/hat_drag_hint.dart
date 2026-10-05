@@ -43,7 +43,6 @@ class HatDragHint extends StatelessWidget {
                   color: context.adaptiveAccentText(primary),
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w800,
-                  letterSpacing: 1.2,
                 ),
               ),
             ],

@@ -39,7 +39,6 @@ class HeroEmailCard extends StatelessWidget {
         textStyle: const TextStyle(
           fontSize: AppTypography.label,
           fontWeight: FontWeight.w900,
-          letterSpacing: 1.4,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -62,7 +61,6 @@ class HeroEmailCard extends StatelessWidget {
         textStyle: const TextStyle(
           fontSize: AppTypography.label,
           fontWeight: FontWeight.w800,
-          letterSpacing: 1.2,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -80,7 +78,6 @@ class HeroEmailCard extends StatelessWidget {
               textStyle: const TextStyle(
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -110,7 +107,6 @@ class HeroEmailCard extends StatelessWidget {
             color: context.adaptiveAccentText(accent),
             fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
-            letterSpacing: 2,
           ),
         ),
         const SizedBox(height: 8),
@@ -123,7 +119,6 @@ class HeroEmailCard extends StatelessWidget {
               color: context.onSurface,
               fontSize: isDesktop ? 22 : 16,
               fontWeight: FontWeight.w800,
-              letterSpacing: 0.3,
             ),
           ),
         ),

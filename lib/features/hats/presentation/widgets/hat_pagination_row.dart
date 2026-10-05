@@ -66,7 +66,6 @@ class HatPaginationRow extends StatelessWidget {
                   color: primary,
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 1.0,
                 ),
               ),
             ),

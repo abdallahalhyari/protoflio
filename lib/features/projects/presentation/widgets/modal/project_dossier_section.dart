@@ -30,7 +30,7 @@ class ProjectDossierSection extends StatelessWidget {
         ),
         if (project.problem != null)
           ProjectDossierCard(
-            label: 'CORE PROBLEM',
+            label: 'Core problem',
             value: project.problem!,
             accentColor: AppColors.signalLight,
             isDesktop: isDesktop,
@@ -38,7 +38,7 @@ class ProjectDossierSection extends StatelessWidget {
           ),
         if (project.architecture != null)
           ProjectDossierCard(
-            label: 'ARCHITECTURE',
+            label: 'Architecture',
             value: project.architecture!,
             accentColor: AppColors.teal,
             isDesktop: isDesktop,
@@ -51,7 +51,7 @@ class ProjectDossierSection extends StatelessWidget {
           ),
         if (project.solution != null)
           ProjectDossierCard(
-            label: 'ENGINEERING SOLUTION',
+            label: 'Engineering solution',
             value: project.solution!,
             accentColor: AppColors.teal,
             isDesktop: isDesktop,
@@ -60,7 +60,7 @@ class ProjectDossierSection extends StatelessWidget {
         if (project.technicalDecisions != null &&
             project.technicalDecisions!.isNotEmpty)
           ProjectDossierCard(
-            label: 'DECISION',
+            label: 'Decision',
             value: project.technicalDecisions!.first,
             accentColor: AppColors.goldSoft,
             isDesktop: isDesktop,
@@ -68,7 +68,7 @@ class ProjectDossierSection extends StatelessWidget {
           ),
         if (project.lessonsLearned != null)
           ProjectDossierCard(
-            label: 'LESSON LEARNED',
+            label: 'Lesson learned',
             value: project.lessonsLearned!,
             accentColor: AppColors.gold,
             isDesktop: isDesktop,

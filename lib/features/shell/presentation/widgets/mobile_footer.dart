@@ -48,12 +48,11 @@ class MobileFooter extends StatelessWidget {
               const SizedBox(width: 10),
               Flexible(
                 child: Text(
-                  'ABDALLAH ALHYARI',
+                  'Abdallah Alhyari',
                   style: TextStyle(
                     color: context.onSurface,
                     fontWeight: FontWeight.w900,
                     fontSize: AppTypography.label,
-                    letterSpacing: 2,
                   ),
                 ),
               ),
@@ -61,12 +60,11 @@ class MobileFooter extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'SENIOR MOBILE ENGINEER · SYSTEM ARCHITECT',
+            'Senior mobile engineer, system architect',
             style: TextStyle(
               color: context.mutedText,
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w700,
-              letterSpacing: 2,
             ),
           ),
           const SizedBox(height: 6),
@@ -76,7 +74,6 @@ class MobileFooter extends StatelessWidget {
               color: context.subtleText,
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w600,
-              letterSpacing: 1.5,
             ),
           ),
         ],

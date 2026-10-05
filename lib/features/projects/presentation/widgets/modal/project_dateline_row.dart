@@ -38,12 +38,11 @@ class ProjectDatelineRow extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadius.xs),
                 ),
                 child: Text(
-                  project.company.toUpperCase(),
+                  project.company,
                   style: TextStyle(
                     color: scheme.primary,
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: 1.2,
                   ),
                 ),
               ),
@@ -61,7 +60,6 @@ class ProjectDatelineRow extends StatelessWidget {
                         : AppColors.ink500,
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w700,
-                    letterSpacing: 1.0,
                   ),
                 ),
               ),
@@ -93,12 +91,11 @@ class ProjectDatelineRow extends StatelessWidget {
                             size: 12, color: scheme.primary),
                         const SizedBox(width: 4),
                         Text(
-                          'WEBSITE',
+                          'Website',
                           style: TextStyle(
                             color: scheme.primary,
                             fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 1,
                           ),
                         ),
                         const SizedBox(width: 3),
@@ -145,12 +142,11 @@ class ProjectDatelineRow extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         const Text(
-                          'LINKEDIN',
+                          'LinkedIn',
                           style: TextStyle(
                             color: AppColors.linkedIn,
                             fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 1,
                           ),
                         ),
                         const SizedBox(width: 3),

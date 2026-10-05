@@ -20,12 +20,11 @@ class SheetHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                '// DIRECTORY',
+                'Directory',
                 style: TextStyle(
                   color: AppColors.teal,
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 2.0,
                 ),
               ),
               const SizedBox(height: 2),
@@ -36,7 +35,6 @@ class SheetHeader extends StatelessWidget {
                   color: context.onSurface,
                   fontSize: AppTypography.lead,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 1.5,
                 ),
               ),
             ],

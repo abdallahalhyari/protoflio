@@ -59,7 +59,6 @@ class ProjectDossierCard extends StatelessWidget {
                     color: effectiveAccent,
                     fontSize: isDesktop ? 10.0 : 9.0,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: 1.5,
                   ),
                 ),
               ],

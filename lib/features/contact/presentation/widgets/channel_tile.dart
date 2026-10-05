@@ -114,7 +114,6 @@ class _ChannelTileState extends State<ChannelTile> {
                           color: labelColor,
                           fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -126,7 +125,6 @@ class _ChannelTileState extends State<ChannelTile> {
                           color: context.onSurface,
                           fontSize: AppTypography.body,
                           fontWeight: FontWeight.w700,
-                          letterSpacing: 0.2,
                         ),
                       ),
                     ],
@@ -157,12 +155,11 @@ class _ChannelTileState extends State<ChannelTile> {
                         ),
                       ),
                       child: Text(
-                        d.primaryLabel.toUpperCase(),
+                        d.primaryLabel,
                         semanticsLabel: '',
                         style: const TextStyle(
                           fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
                         ),
                       ),
                     ),
@@ -189,12 +186,11 @@ class _ChannelTileState extends State<ChannelTile> {
                       ),
                     ),
                     child: Text(
-                      d.secondaryLabel.toUpperCase(),
+                      d.secondaryLabel,
                       semanticsLabel: '',
                       style: const TextStyle(
                         fontSize: AppTypography.label,
                         fontWeight: FontWeight.w800,
-                        letterSpacing: 1.2,
                       ),
                     ),
                   ),

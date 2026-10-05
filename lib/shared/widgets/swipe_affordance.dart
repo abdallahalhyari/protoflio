@@ -45,7 +45,6 @@ class SwipeAffordance extends StatelessWidget {
                   color: context.mutedText,
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w700,
-                  letterSpacing: 1.2,
                 ),
               ),
             ),

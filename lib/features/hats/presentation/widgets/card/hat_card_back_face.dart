@@ -67,23 +67,20 @@ class CardBackFace extends StatelessWidget {
                       child: Text.rich(
                         TextSpan(children: [
                           TextSpan(
-                            text: 'REVERSE · ',
+                            text: 'Reverse, ',
                             style: TextStyle(
                               color: Colors.white.withValues(alpha: 0.5),
                               fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
-                              letterSpacing: 2,
                             ),
                           ),
                           TextSpan(
                             text: hatTitleLabel(
-                                    AppLocalizations.of(context)!, hat.title)
-                                .toUpperCase(),
+                                AppLocalizations.of(context)!, hat.title),
                             style: TextStyle(
                               color: accent,
                               fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
-                              letterSpacing: 1.8,
                             ),
                           ),
                         ]),
@@ -118,7 +115,6 @@ class CardBackFace extends StatelessWidget {
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w800,
                       height: 1.4,
-                      letterSpacing: 0.3,
                     ),
                   ),
                 ),
@@ -130,7 +126,6 @@ class CardBackFace extends StatelessWidget {
                       color: Colors.white.withValues(alpha: 0.92),
                       fontSize: AppTypography.label,
                       height: 1.55,
-                      letterSpacing: 0.15,
                     ),
                   ),
                 ),
