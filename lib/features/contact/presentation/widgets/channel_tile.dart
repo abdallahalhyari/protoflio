@@ -45,11 +45,13 @@ class _ChannelTileState extends State<ChannelTile> {
     final d = widget.data;
     final isDark = context.isDarkMode;
     final labelColor = context.adaptiveAccentText(d.accent);
-    // Light mode fills with the deep tone the label uses; dark mode keeps
-    // the bright accent. Either way the text is picked for contrast: white
-    // on the bright indigo and violet was 3.0:1 and 4.2:1.
-    final buttonFill = isDark ? d.accent : labelColor;
-    final buttonTextColor = AppColors.onAccent(buttonFill);
+    // Tonal, not solid: four saturated sky/green/indigo/violet fills
+    // outranked the hero email card's Send Email, the section's real
+    // primary action. The tint matches the icon chip; the label keeps the
+    // contrast-checked accent text colour. Hover fills it in.
+    final buttonFill = d.accent.withValues(
+        alpha: _hover ? (isDark ? 0.24 : 0.18) : (isDark ? 0.14 : 0.10));
+    final buttonTextColor = labelColor;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
@@ -148,6 +150,10 @@ class _ChannelTileState extends State<ChannelTile> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.pill),
+                          side: BorderSide(
+                            color: d.accent
+                                .withValues(alpha: isDark ? 0.45 : 0.35),
+                          ),
                         ),
                       ),
                       child: Text(

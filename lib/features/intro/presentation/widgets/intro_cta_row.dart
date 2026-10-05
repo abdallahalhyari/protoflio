@@ -236,7 +236,7 @@ class IntroCtaRow extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              '▶ 30-SEC INTRO',
+                              '30-SEC INTRO',
                               style: TextStyle(
                                 fontSize: AppTypography.caption,
                                 fontWeight: FontWeight.w800,

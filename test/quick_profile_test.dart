@@ -41,7 +41,7 @@ void main() {
     await tester.pumpWidget(_hero(const Locale('en'), onCv: () {
       cvOpened = true;
     }));
-    await tester.tap(find.text('▶ 30-SEC INTRO'));
+    await tester.tap(find.text('30-SEC INTRO'));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('quick_profile')), findsOneWidget);
@@ -60,7 +60,7 @@ void main() {
   testWidgets('bottom sheet on phones', (tester) async {
     _size(tester, const Size(390, 844));
     await tester.pumpWidget(_hero(const Locale('en')));
-    await tester.tap(find.text('▶ 30-SEC INTRO'));
+    await tester.tap(find.text('30-SEC INTRO'));
     await tester.pumpAndSettle();
     expect(find.byType(BottomSheet), findsOneWidget);
     expect(find.byKey(const Key('quick_profile')), findsOneWidget);
@@ -81,7 +81,7 @@ void main() {
         .setMockMethodCallHandler(SystemChannels.platform, null));
 
     await tester.pumpWidget(_hero(const Locale('en')));
-    await tester.tap(find.text('▶ 30-SEC INTRO'));
+    await tester.tap(find.text('30-SEC INTRO'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('quick_profile_copy')));
     await tester.pumpAndSettle();
