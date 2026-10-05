@@ -4,6 +4,7 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/shared/widgets/spec_sheet_card.dart';
 
 class IntroFooterStrip extends StatelessWidget {
   final bool isDark;
@@ -127,52 +128,10 @@ class IntroFooterStrip extends StatelessWidget {
           color: context.glassBorderStrong,
         ),
         const SizedBox(height: AppSpacing.md),
-        // Mobile: one spec sheet with hairline rows. Three separately
-        // centred chips of different widths stacked into a ragged pyramid.
         if (isMobile)
-          Container(
+          SpecSheetCard(
             margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-            decoration: BoxDecoration(
-              color:
-                  isDark ? Colors.white.withValues(alpha: 0.04) : Colors.white,
-              borderRadius: BorderRadius.circular(AppRadius.sm),
-              border: Border.all(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : AppColors.slate200,
-              ),
-              boxShadow: isDark
-                  ? null
-                  : [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.04),
-                        blurRadius: 4,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                for (var i = 0; i < blocks.length; i++) ...[
-                  if (i > 0)
-                    Container(
-                      height: 1,
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.08)
-                          : AppColors.slate200,
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.smd, vertical: 10),
-                    child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: blocks[i],
-                    ),
-                  ),
-                ],
-              ],
-            ),
+            rows: blocks,
           )
         else
           Wrap(

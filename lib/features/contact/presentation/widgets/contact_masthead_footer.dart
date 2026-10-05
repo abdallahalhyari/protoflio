@@ -6,6 +6,7 @@ import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/contact/presentation/widgets/social_chip.dart';
+import 'package:profile/shared/widgets/spec_sheet_card.dart';
 
 class ContactMastheadFooter extends StatelessWidget {
   final String linkedInHandle;
@@ -157,30 +158,7 @@ class ContactMastheadFooter extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.md),
         if (isMobile)
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 10,
-            runSpacing: 8,
-            children: [
-              for (final b in blocks)
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.04)
-                        : Colors.white,
-                    borderRadius: BorderRadius.circular(AppRadius.sm),
-                    border: Border.all(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.1)
-                          : AppColors.slate200,
-                    ),
-                  ),
-                  child: b,
-                ),
-            ],
-          )
+          SpecSheetCard(rows: blocks)
         else
           Wrap(
             alignment: WrapAlignment.center,
