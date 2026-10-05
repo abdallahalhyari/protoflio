@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/shell/widget/deferred_page.dart';
+import 'package:profile/features/shell/presentation/widgets/deferred_page.dart';
 
 void main() {
   testWidgets('mounts one page per frame, nearest first', (tester) async {

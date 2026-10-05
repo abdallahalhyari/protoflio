@@ -4,15 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/case_study/case_study_widgets.dart';
-import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/case_study/presentation/widgets/case_study_widgets.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
-import 'package:profile/features/shell/widget/mobile_home_layout.dart';
-import 'package:profile/features/shell/widget/portfolio_nav.dart';
-import 'package:profile/shared/widget/screen_shell.dart';
-import 'package:profile/theme/app_theme.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/shell/presentation/widgets/mobile_home_layout.dart';
+import 'package:profile/features/shell/presentation/widgets/portfolio_nav.dart';
+import 'package:profile/shared/widgets/screen_shell.dart';
+import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 HomeController _mockController() {
   return HomeController(

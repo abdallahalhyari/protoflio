@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 Widget _wrap(Widget child,
     {Size size = const Size(1400, 900), bool scrollable = false}) {

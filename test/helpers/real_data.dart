@@ -1,15 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:profile/features/experience/data/models/education_model.dart';
+import 'package:profile/features/experience/data/models/experience_model.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
+import 'package:profile/features/hats/data/models/hat_info_model.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
-import 'package:profile/features/hats/model/hat_info.dart';
+import 'package:profile/features/hats/domain/entities/hat_info.dart';
+import 'package:profile/features/projects/data/models/project_model.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
+import 'package:profile/features/skills/data/models/skill_model.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
-import 'package:profile/shared/util/career_facts.dart';
+import 'package:profile/shared/utils/career_facts.dart';
 
 /// Repositories backed by the real `assets/data/*.json`, read synchronously
 /// so widget tests see the content the site ships (titles, counts, company
@@ -20,7 +25,7 @@ List<dynamic> _json(String name) =>
 
 class RealProjectRepository implements ProjectRepository {
   final List<Project> _items = _json('projects')
-      .map((e) => Project.fromJson(e as Map<String, dynamic>))
+      .map((e) => ProjectModel.fromJson(e as Map<String, dynamic>))
       .toList();
   @override
   List<Project> getProjects() => _items;
@@ -33,10 +38,10 @@ class RealProjectRepository implements ProjectRepository {
 
 class RealExperienceRepository implements ExperienceRepository {
   final List<Experience> _exp = _json('experience')
-      .map((e) => Experience.fromJson(e as Map<String, dynamic>))
+      .map((e) => ExperienceModel.fromJson(e as Map<String, dynamic>))
       .toList();
   final List<Education> _edu = _json('education')
-      .map((e) => Education.fromJson(e as Map<String, dynamic>))
+      .map((e) => EducationModel.fromJson(e as Map<String, dynamic>))
       .toList();
   final List<String> _certs =
       _json('certifications').map((e) => e as String).toList();
@@ -52,7 +57,7 @@ class RealExperienceRepository implements ExperienceRepository {
 
 class RealSkillRepository implements SkillRepository {
   final List<Skill> _items = _json('skills')
-      .map((e) => Skill.fromJson(e as Map<String, dynamic>))
+      .map((e) => SkillModel.fromJson(e as Map<String, dynamic>))
       .toList();
   @override
   List<Skill> getSkills() => _items;
@@ -62,7 +67,7 @@ class RealSkillRepository implements SkillRepository {
 
 class RealHatRepository implements HatRepository {
   final List<HatInfo> _items = _json('hats')
-      .map((e) => HatInfo.fromJson(e as Map<String, dynamic>))
+      .map((e) => HatInfoModel.fromJson(e as Map<String, dynamic>))
       .toList();
   @override
   List<HatInfo> getHats() => _items;

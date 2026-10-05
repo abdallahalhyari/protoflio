@@ -38,32 +38,29 @@ Feature-first: each top-level section owns its `page/`, `widget/`, `bloc/`, `mod
 lib/
 ├── main.dart                       # MaterialApp bootstrap + global scroll behavior
 ├── core/
-│   └── bloc/
-│       ├── navigation/              # NavigationBloc — section index, scroll-to-top visibility
+│   ├── services/                    # Cross-cutting platform services (analytics, audio, linking)
+│   ├── theme/                       # Design tokens + ThemeData (AppTheme, AppColors, AppSpacing, AppMotion...)
+│   └── bloc/                        # Global state (theme, locale)
 │       ├── theme/                   # ThemeBloc — light/dark mode, live section-accent seed color
 │       └── locale/                  # LocaleBloc — en / ar / cs
-├── service/
-│   ├── analytics_service*.dart      # gtag-backed screen/CTA telemetry (web/stub split)
-│   ├── cv_service.dart              # CV download & preview handler
-│   ├── sound_service*.dart          # Ambient audio + tactile click feedback (web/io split)
-│   └── url_sync_service*.dart       # Hash-based deep linking (#work, #work/<slug>, …)
-├── theme/                           # Design tokens + ThemeData (AppTheme, AppColors, AppSpacing, AppMotion...)
-├── shared/widget/                   # Cross-feature components (PrimaryButton, HolographicCardPhysics, AppToast...)
+├── shared/                          # Cross-feature utilities and UI components
+│   ├── util/                        # Helpers, math, pure Dart utils
+│   └── widget/                      # Cross-feature components (PrimaryButton, HolographicCardPhysics, AppToast...)
 ├── l10n/                            # ARB files + generated AppLocalizations (en, ar, cs)
 └── features/
     ├── shell/                       # HomeScreen: desktop PageView + mobile continuous scroll,
     │                                 #   HomeController (real nav state), keyboard nav, scroll interceptor
-    ├── intro/                       # Hero section (page/ + widget/)
-    ├── projects/                    # Selected Work grid, domain filters, case-study modal (page/widget/bloc/model/data)
+    ├── intro/                       # Hero section (presentation/)
+    ├── projects/                    # Selected Work grid, domain filters, case-study modal (presentation/domain/data)
     ├── case_study/                  # Dedicated full-page case studies (routed via CaseStudyRouter, not the modal)
-    ├── engineering/                 # Architecture flowcharts + simulator (page/widget/bloc/data)
-    ├── experience/                  # Career timeline (page/widget/bloc/model/data)
-    ├── skills/                      # Skill tiles + category filters (page/widget/bloc/data)
-    ├── hats/                        # Perspective card deck (page/widget/bloc/model)
-    └── contact/                     # Contact channels + inquiry composer (page/widget/bloc)
+    ├── engineering/                 # Architecture flowcharts + simulator (presentation/domain/data)
+    ├── experience/                  # Career timeline (presentation/domain/data)
+    ├── skills/                      # Skill tiles + category filters (presentation/domain/data)
+    ├── hats/                        # Perspective card deck (presentation/domain/data)
+    └── contact/                     # Contact channels + inquiry composer (presentation/)
 ```
 
-Notable architectural detail: `NavigationBloc` mirrors the current section index for UI highlighting (nav pills, dots, folio bar), but the *actual* page position is owned by `HomeController`/`_HomeScreenState` (the real `PageController` / mobile `ScrollController`). Always drive navigation through `HomeController.of(context).goTo(...)` / `.scrollToMobileSection(...)` — dispatching `NavigationPageSelected` straight to the bloc only updates the highlight, not the visible page.
+Notable architectural detail: Global navigation state is managed by `HomeController`/`_HomeScreenState` instead of a BLoC. `HomeController` exposes `ValueListenable` properties (`pageIndex`, `showScrollToTop`) which are observed via `ValueListenableBuilder` to surgically rebuild UI elements like nav pills, dots, and the folio bar without prop-drilling or relying on heavier state management. Use `HomeController.of(context).goTo(...)` / `.scrollToMobileSection(...)` to drive navigation.
 
 ## Running
 

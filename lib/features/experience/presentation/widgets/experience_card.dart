@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
-import 'package:profile/shared/widget/holographic_physics.dart';
+import 'package:profile/shared/widgets/holographic_physics.dart';
 
 import 'package:profile/features/experience/presentation/widgets/card/experience_card_content.dart';
 
@@ -74,7 +74,9 @@ class _ExperienceCardState extends State<ExperienceCard> {
             duration: AppMotion.cardHover,
             curve: AppMotion.emphasized,
             child: HolographicCardPhysics(
-              child: Container(
+              child: AnimatedContainer(
+                duration: AppMotion.cardHover,
+                curve: AppMotion.emphasized,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -128,6 +130,24 @@ class _ExperienceCardState extends State<ExperienceCard> {
                             color: active
                                 ? context.cardGlassHover
                                 : context.cardGlass,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: 4,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: _isCurrent
+                                ? AppColors.accentGreen
+                                : scheme.primary
+                                    .withValues(alpha: active ? 0.85 : 0.45),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(AppRadius.lg),
+                              bottomLeft: Radius.circular(AppRadius.lg),
+                            ),
                           ),
                         ),
                       ),

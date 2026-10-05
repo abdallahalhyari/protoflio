@@ -12,7 +12,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navHome => 'الرئيسية';
 
   @override
-  String get navWork => 'أبرز الأعمال';
+  String get navWork => 'المشاريع';
 
   @override
   String get navEngineering => 'الهندسة';
@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navResume => 'السيرة الذاتية';
 
   @override
-  String get introLocation => 'عمان، الأردن ‹ برنو، التشيك (2027)';
+  String get introLocation => 'عمان → برنو · 2027';
 
   @override
   String get sectionEducation => 'التعليم';
@@ -141,7 +141,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSkillProductDelivery => 'تسليم المنتجات';
 
   @override
-  String get introWorkEligibility => 'مؤهل للعمل في التشيك · طالب';
+  String get introWorkEligibility =>
+      'الانتقال إلى برنو · 2027   •   متاح لأدوار مهندس أول';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
@@ -213,27 +214,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introIssueStrip => 'الإصدار 01 · نسخة معرض الأعمال · 2026';
 
   @override
-  String get introBuildsComplex =>
-      'يبني أنظمة هواتف محمولة معقدة، موثوقة، وقابلة للتوسع';
-
-  @override
   String get introTechStack =>
       'فلاتر · أندرويد · آي أو إس · معمارية برمجيات · أنظمة دون اتصال · NFC · أمان · أنظمة الوقت الفعلي';
 
   @override
-  String get introBasedIn => 'مقر العمل';
+  String get introBasedIn => 'الموقع';
 
   @override
   String get introStatus => 'الحالة';
 
   @override
-  String get introOpenForRoles => 'متاح للأدوار القيادية';
+  String get introOpenForRoles => 'متاح لأدوار هندسية قيادية';
 
   @override
   String get introDiscipline => 'التخصص';
 
   @override
-  String get introMobileArch => 'بنية تطبيقات الهواتف';
+  String get introMobileArch => 'فلاتر · أندرويد · معمارية الجوال';
 
   @override
   String get introMasthead => '// الترويسة';
@@ -328,6 +325,80 @@ class AppLocalizationsAr extends AppLocalizations {
   String get projectsHeaderKicker => 'القسم 03 · أعمال مختارة';
 
   @override
+  String get projectDomainAll => 'الكل';
+
+  @override
+  String get projectDomainHealthcare => 'الرعاية الصحية والبطاقات الذكية';
+
+  @override
+  String get projectDomainEnterprise => 'أنظمة المستشفيات والتعليم';
+
+  @override
+  String get projectDomainFleet => 'الأساطيل والاتصالات عن بُعد';
+
+  @override
+  String get projectDomainCommerce => 'التجارة الإلكترونية والبث';
+
+  @override
+  String projectTechFilter(String technology) {
+    return 'تصفية بالتقنية: $technology';
+  }
+
+  @override
+  String readCaseStudyFor(String project) {
+    return 'اقرأ دراسة حالة: $project';
+  }
+
+  @override
+  String get projectTaglineNatHealth =>
+      'منصة صحية حيوية تستخدم بطاقات NFC الذكية للرعاية الرقمية والمطالبات والامتثال التنظيمي.';
+
+  @override
+  String get projectTaglineEskadenia =>
+      'تطبيقات مؤسسية عالية الأداء لأنظمة معلومات المستشفيات ومنصات التعليم.';
+
+  @override
+  String get projectTaglineSolutions =>
+      'منصة لمكافآت الولاء وتجربة لمقاطع الفيديو والقصص المؤقتة، مصممتان للتوسع.';
+
+  @override
+  String get projectTaglineFais =>
+      'تجارب دفع تجارية عالية السعة وتطبيقات بث وسائط متواصل.';
+
+  @override
+  String get projectOutcomeNatHealth =>
+      'استبدال المطالبات الورقية بالتحقق الفوري واللاتلامسي عبر البطاقات الذكية.';
+
+  @override
+  String get projectOutcomeEskadenia =>
+      'الحفاظ على 60 إطارًا في الثانية ضمن سير عمل المستشفيات والجامعات كثيف البيانات.';
+
+  @override
+  String get projectOutcomeSolutions =>
+      'إطلاق التطبيقين في الموعد مع تقييمات تجاوزت 4.7 نجوم في المتاجر.';
+
+  @override
+  String get projectOutcomeFais =>
+      'رفع إتمام عمليات الشراء وتقليل المعاملات المتروكة.';
+
+  @override
+  String get skillMasteryLead => 'قيادة';
+
+  @override
+  String get skillMasteryCore => 'أساسي';
+
+  @override
+  String get skillMasterySolid => 'متقدم';
+
+  @override
+  String get skillMasteryGrowing => 'قيد التطوير';
+
+  @override
+  String skillCardSemantics(String skill, String level) {
+    return '$skill، مستوى $level. فعّل لقلب البطاقة وعرض التفاصيل.';
+  }
+
+  @override
   String get experienceHeaderKicker => 'القسم 02 · المسيرة المهنية';
 
   @override
@@ -364,15 +435,8 @@ class AppLocalizationsAr extends AppLocalizations {
       'فلاتر وأندرويد، وبنية المنصات، والأمان، وأنظمة التسليم لبناء منتجات مرنة وتجارب جديرة بالثقة.';
 
   @override
-  String get sectionSubtitleSkills =>
-      'التخصصات والتقنيات التي يقوم عليها العمل · اقلب أي بطاقة لعرض التفاصيل';
-
-  @override
   String get sectionSubtitleEngineering =>
       'هياكل معمارية مُختبَرة في بيئات الإنتاج خلف تطبيقات الهاتف';
-
-  @override
-  String get sectionSubtitleAbout => 'ستة أدوار يتنقّل بينها المهندس الخبير';
 
   @override
   String get flipHintTap => 'اضغط للقلب';

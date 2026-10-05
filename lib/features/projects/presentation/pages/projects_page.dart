@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_event.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_state.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
-import 'package:profile/shared/widget/page_activity.dart';
+import 'package:profile/shared/widgets/page_activity.dart';
 import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
 import 'package:profile/features/projects/presentation/widgets/project_domain_filters.dart';
-import 'package:profile/shared/util/grid_math.dart';
-import 'package:profile/shared/widget/screen_shell.dart';
-import 'package:profile/shared/widget/section_masthead.dart';
+import 'package:profile/shared/utils/grid_math.dart';
+import 'package:profile/shared/widgets/screen_shell.dart';
+import 'package:profile/shared/widgets/section_masthead.dart';
 import 'package:profile/features/projects/presentation/widgets/projects_empty_state.dart';
 
 class ProjectsPage extends StatelessWidget {
@@ -91,60 +91,56 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
     final loc = AppLocalizations.of(context)!;
 
-    return BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
-      builder: (context, filterState) {
-        final filteredProjects = filterState.filteredProjects;
-        final selectedDomain = filterState.selectedDomain;
-        final selectedTech = filterState.selectedTech;
-
-        return Focus(
-          focusNode: _keyboardFocusNode,
-          onKeyEvent: (node, event) {
-            if (event is KeyDownEvent) {
-              if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-                final curIdx = _domains.indexOf(selectedDomain);
-                final nextIdx =
-                    (curIdx - 1 + _domains.length) % _domains.length;
-                SoundService.instance.playSelection();
-                context
-                    .read<ProjectsFilterBloc>()
-                    .add(DomainFilterSelected(_domains[nextIdx]));
-                return KeyEventResult.handled;
-              } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-                final curIdx = _domains.indexOf(selectedDomain);
-                final nextIdx = (curIdx + 1) % _domains.length;
-                SoundService.instance.playSelection();
-                context
-                    .read<ProjectsFilterBloc>()
-                    .add(DomainFilterSelected(_domains[nextIdx]));
-                return KeyEventResult.handled;
-              }
-            }
-            return KeyEventResult.ignored;
-          },
-          child: AppScreenShell(
-            verticalPadding: AppSpacing.xl,
-            reserveBottomNav: !widget.isContinuousMobile,
-            reserveMobileTop: !widget.isContinuousMobile,
-            child: CustomScrollView(
-              shrinkWrap: widget.isContinuousMobile,
-              physics: widget.isContinuousMobile
-                  ? const NeverScrollableScrollPhysics()
-                  : null,
-              slivers: [
-                SliverToBoxAdapter(
-                  child: _buildHeader(scheme, loc, size, isDesktop),
-                ),
-                const SliverToBoxAdapter(
-                    child: SizedBox(height: AppSpacing.md)),
-                SliverToBoxAdapter(
-                  child: ProjectDomainFilters(
+    return Focus(
+      focusNode: _keyboardFocusNode,
+      onKeyEvent: (node, event) {
+        if (event is KeyDownEvent) {
+          final filterBloc = context.read<ProjectsFilterBloc>();
+          final selectedDomain = filterBloc.state.selectedDomain;
+          if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+            final curIdx = _domains.indexOf(selectedDomain);
+            final nextIdx = (curIdx - 1 + _domains.length) % _domains.length;
+            SoundService.instance.playSelection();
+            filterBloc.add(DomainFilterSelected(_domains[nextIdx]));
+            return KeyEventResult.handled;
+          } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+            final curIdx = _domains.indexOf(selectedDomain);
+            final nextIdx = (curIdx + 1) % _domains.length;
+            SoundService.instance.playSelection();
+            filterBloc.add(DomainFilterSelected(_domains[nextIdx]));
+            return KeyEventResult.handled;
+          }
+        }
+        return KeyEventResult.ignored;
+      },
+      child: AppScreenShell(
+        verticalPadding: AppSpacing.xl,
+        reserveBottomNav: !widget.isContinuousMobile,
+        reserveMobileTop: !widget.isContinuousMobile,
+        child: CustomScrollView(
+          shrinkWrap: widget.isContinuousMobile,
+          physics: widget.isContinuousMobile
+              ? const NeverScrollableScrollPhysics()
+              : null,
+          slivers: [
+            SliverToBoxAdapter(
+              child: _buildHeader(scheme, loc, size, isDesktop),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
+            SliverToBoxAdapter(
+              child: BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
+                buildWhen: (prev, curr) =>
+                    prev.selectedDomain != curr.selectedDomain ||
+                    prev.selectedTech != curr.selectedTech ||
+                    prev.domainCounts != curr.domainCounts,
+                builder: (context, filterState) {
+                  return ProjectDomainFilters(
                     domains: _domains,
-                    selectedDomain: selectedDomain,
-                    selectedTech: selectedTech,
+                    selectedDomain: filterState.selectedDomain,
+                    selectedTech: filterState.selectedTech,
                     domainCounts: filterState.domainCounts,
                     isDesktop: isDesktop,
                     onSelectDomain: (domain) {
@@ -157,12 +153,21 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                           .read<ProjectsFilterBloc>()
                           .add(const ProjectsFilterReset());
                     },
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                    child: SizedBox(height: AppSpacing.lg)),
-                SliverToBoxAdapter(
-                  child: LayoutBuilder(
+                  );
+                },
+              ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
+            SliverToBoxAdapter(
+              child: BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
+                buildWhen: (prev, curr) =>
+                    prev.filteredProjects != curr.filteredProjects ||
+                    prev.selectedTech != curr.selectedTech,
+                builder: (context, filterState) {
+                  final filteredProjects = filterState.filteredProjects;
+                  final selectedTech = filterState.selectedTech;
+
+                  return LayoutBuilder(
                     builder: (context, constraints) {
                       if (filteredProjects.isEmpty) {
                         return ProjectsEmptyState(
@@ -176,13 +181,10 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                         final double itemWidth =
                             columnWidth(constraints.maxWidth, 2, spacing);
                         if (itemWidth <= 0) return const SizedBox.shrink();
-                        // Fixed-height grid cells: grow the text area with
-                        // the user's text scale (up to 2x) instead of
-                        // clipping the card body.
                         final double textScale =
                             MediaQuery.textScalerOf(context).scale(1);
                         final double itemHeight =
-                            392 + 110 * (textScale - 1).clamp(0.0, 1.0);
+                            520 + 160 * (textScale - 1).clamp(0.0, 1.0);
 
                         return Wrap(
                           spacing: spacing,
@@ -194,6 +196,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                                 height: itemHeight,
                                 child: _buildProjectItem(
                                   project: filteredProjects[i],
+                                  index: i,
                                   scheme: scheme,
                                   isDesktop: isDesktop,
                                   selectedTech: selectedTech,
@@ -209,6 +212,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                           for (int i = 0; i < filteredProjects.length; i++) ...[
                             _buildProjectItem(
                               project: filteredProjects[i],
+                              index: i,
                               scheme: scheme,
                               isDesktop: isDesktop,
                               selectedTech: selectedTech,
@@ -219,13 +223,13 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                         ],
                       );
                     },
-                  ),
-                ),
-              ],
+                  );
+                },
+              ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
@@ -245,13 +249,14 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
 
   Widget _buildProjectItem({
     required Project project,
+    required int index,
     required ColorScheme scheme,
     required bool isDesktop,
     required String? selectedTech,
   }) {
     return InteractiveProjectCard(
       project: project,
-      index: context.read<ProjectRepository>().getProjects().indexOf(project),
+      index: index,
       scheme: scheme,
       isDesktop: isDesktop,
       selectedTech: selectedTech,

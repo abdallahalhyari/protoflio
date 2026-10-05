@@ -1,14 +1,16 @@
-import 'package:profile/shared/util/bundled_json.dart';
+import 'package:profile/features/projects/data/datasources/project_local_data_source.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 
 class LocalProjectRepository implements ProjectRepository {
+  final ProjectLocalDataSource dataSource;
   List<Project> _projects = [];
 
+  LocalProjectRepository([ProjectLocalDataSource? dataSource])
+      : dataSource = dataSource ?? const ProjectLocalDataSourceImpl();
+
   Future<void> load() async {
-    final list = await loadBundledJsonList('assets/data/projects.json');
-    _projects = List.unmodifiable(
-        list.map((e) => Project.fromJson(e as Map<String, dynamic>)));
+    _projects = await dataSource.getBundledProjects();
   }
 
   @override

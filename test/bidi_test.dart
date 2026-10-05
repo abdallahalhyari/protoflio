@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/shared/utils/bidi.dart';
 
 void main() {
   Future<String> render(

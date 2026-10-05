@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/intro/widget/intro_constellation.dart';
-import 'package:profile/features/shell/home_controller.dart';
+import 'package:profile/features/intro/presentation/widgets/intro_constellation.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 
 Widget _host(GlobalKey<IntroConstellationState> key,
     {ValueNotifier<int>? pageIndex, bool reduceMotion = false}) {

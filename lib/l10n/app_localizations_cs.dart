@@ -12,7 +12,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navHome => 'Domů';
 
   @override
-  String get navWork => 'Vybrané projekty';
+  String get navWork => 'Projekty';
 
   @override
   String get navEngineering => 'Inženýrství';
@@ -33,7 +33,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navResume => 'Životopis';
 
   @override
-  String get introLocation => 'Ammán, Jordánsko › Brno, Česká republika (2027)';
+  String get introLocation => 'Ammán → Brno · 2027';
 
   @override
   String get sectionEducation => 'VZDĚLÁNÍ';
@@ -142,7 +142,8 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introSkillProductDelivery => 'Dodávání produktů';
 
   @override
-  String get introWorkEligibility => 'OPRÁVNĚNÍ K PRÁCI V ČR · STUDENT';
+  String get introWorkEligibility =>
+      'PŘESÍDLENÍ DO BRNA · 2027   •   OTEVŘEN SENIORNÍM ROLÍM';
 
   @override
   String get introAvailableContracts => 'K DISPOZICI PRO KONTRAKTY';
@@ -214,27 +215,23 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introIssueStrip => 'VYDÁNÍ 01 · EDICE PORTFOLIO · MMXXVI';
 
   @override
-  String get introBuildsComplex =>
-      'BUDUJE KOMPLEXNÍ, SPOLEHLIVÉ, ŠKÁLOVATELNÉ MOBILNÍ SYSTÉMY';
-
-  @override
   String get introTechStack =>
       'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
 
   @override
-  String get introBasedIn => 'SÍDLO';
+  String get introBasedIn => 'LOKACE';
 
   @override
-  String get introStatus => 'STATUS';
+  String get introStatus => 'DOSTUPNOST';
 
   @override
-  String get introOpenForRoles => 'OTEVŘENÝ PRO SENIORSKÉ POZICE';
+  String get introOpenForRoles => 'Otevřen pro seniorní role';
 
   @override
-  String get introDiscipline => 'OBOR';
+  String get introDiscipline => 'SPECIALIZACE';
 
   @override
-  String get introMobileArch => 'MOBILNÍ ARCHITEKTURA';
+  String get introMobileArch => 'Flutter · Android · Mobilní architektura';
 
   @override
   String get introMasthead => '// HLAVIČKA';
@@ -331,6 +328,80 @@ class AppLocalizationsCs extends AppLocalizations {
   String get projectsHeaderKicker => 'ČÁST 03 · VYBRANÉ PROJEKTY';
 
   @override
+  String get projectDomainAll => 'VŠE';
+
+  @override
+  String get projectDomainHealthcare => 'Zdravotnictví a čipové karty';
+
+  @override
+  String get projectDomainEnterprise => 'Nemocniční a vzdělávací systémy';
+
+  @override
+  String get projectDomainFleet => 'Vozové parky a telematika';
+
+  @override
+  String get projectDomainCommerce => 'Mobilní obchod a streamování';
+
+  @override
+  String projectTechFilter(String technology) {
+    return 'FILTR TECHNOLOGIE: $technology';
+  }
+
+  @override
+  String readCaseStudyFor(String project) {
+    return 'Přečíst případovou studii: $project';
+  }
+
+  @override
+  String get projectTaglineNatHealth =>
+      'Kritická zdravotnická platforma s NFC kartami pro digitální péči, pojistné nároky a dodržování předpisů.';
+
+  @override
+  String get projectTaglineEskadenia =>
+      'Výkonné podnikové mobilní aplikace pro nemocniční informační systémy a vzdělávací platformy.';
+
+  @override
+  String get projectTaglineSolutions =>
+      'Platforma věrnostních odměn a aplikace pro dočasná videa a příběhy navržené pro široké využití.';
+
+  @override
+  String get projectTaglineFais =>
+      'Výkonné mobilní nákupní procesy a aplikace pro nepřetržité streamování médií.';
+
+  @override
+  String get projectOutcomeNatHealth =>
+      'Papírové žádosti o pojistné nároky nahradilo okamžité bezkontaktní ověření čipovou kartou.';
+
+  @override
+  String get projectOutcomeEskadenia =>
+      'Udržení 60 snímků za sekundu ve složitých datově náročných nemocničních a univerzitních procesech.';
+
+  @override
+  String get projectOutcomeSolutions =>
+      'Obě aplikace byly dodány včas a získaly hodnocení přes 4,7 hvězdičky.';
+
+  @override
+  String get projectOutcomeFais =>
+      'Vyšší dokončenost nákupů a méně nedokončených transakcí.';
+
+  @override
+  String get skillMasteryLead => 'VEDENÍ';
+
+  @override
+  String get skillMasteryCore => 'HLAVNÍ';
+
+  @override
+  String get skillMasterySolid => 'POKROČILÁ';
+
+  @override
+  String get skillMasteryGrowing => 'ROZVOJ';
+
+  @override
+  String skillCardSemantics(String skill, String level) {
+    return '$skill, úroveň znalostí $level. Aktivujte otočení karty a zobrazení podrobností.';
+  }
+
+  @override
   String get experienceHeaderKicker => 'ČÁST 02 · PROFESNÍ DRÁHA';
 
   @override
@@ -367,16 +438,8 @@ class AppLocalizationsCs extends AppLocalizations {
       'Flutter, Android, architektura platforem, zabezpečení a systémy dodávání pro odolné produktové týmy a důvěryhodné aplikace.';
 
   @override
-  String get sectionSubtitleSkills =>
-      'Disciplíny a technologie, na kterých práce stojí · Otočte kartu pro podrobnosti';
-
-  @override
   String get sectionSubtitleEngineering =>
       'Architektury ověřené v produkci, na kterých stojí mobilní aplikace';
-
-  @override
-  String get sectionSubtitleAbout =>
-      'Šest rolí, mezi kterými senior inženýr přepíná';
 
   @override
   String get flipHintTap => 'KLEPNĚTE A OTOČTE';

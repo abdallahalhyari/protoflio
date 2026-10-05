@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
-import 'package:profile/shared/widget/retrying_asset_image.dart';
+import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_spotlight.dart';
 import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_metric_badge.dart';
-import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_quick_links.dart';
 
 class CardHeroImage extends StatelessWidget {
   const CardHeroImage({
@@ -29,20 +28,41 @@ class CardHeroImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final heroTag =
+        'project_hero_${caseStudySlug ?? project.name.toLowerCase().replaceAll(' ', '_')}';
+
     return SizedBox(
       height: isDesktop ? 175 : 155,
       child: ClipRect(
         child: Stack(
           fit: StackFit.expand,
           children: [
-            AnimatedScale(
-              scale: hovered ? 1.08 : 1.0,
-              duration: AppMotion.lg,
-              curve: AppMotion.emphasizedDecel,
-              child: RetryingAssetImage(
-                project.heroImagePath!,
-                fit: BoxFit.cover,
-                gaplessPlayback: true,
+            ValueListenableBuilder<Offset>(
+              valueListenable: mousePos,
+              builder: (context, pos, child) {
+                // Parallax translation: map local pos to a slight offset
+                // Card width is ~400, height ~200. Max pan ~8px.
+                final rx = hovered ? (pos.dx / 400 - 0.5) * -16 : 0.0;
+                final ry = hovered ? (pos.dy / 200 - 0.5) * -16 : 0.0;
+
+                return Transform.translate(
+                  offset: Offset(rx, ry),
+                  child: child,
+                );
+              },
+              child: AnimatedScale(
+                scale: hovered ? 1.08 : 1.0,
+                duration: AppMotion.lg,
+                curve: AppMotion.emphasizedDecel,
+                child: Hero(
+                  tag: heroTag,
+                  child: RetryingAssetImage(
+                    project.heroImagePath!,
+                    fit: BoxFit.cover,
+                    cacheWidth: 800,
+                    gaplessPlayback: true,
+                  ),
+                ),
               ),
             ),
             AnimatedOpacity(
@@ -87,18 +107,6 @@ class CardHeroImage extends StatelessWidget {
                 ),
               ),
             ),
-            if (project.url != null ||
-                project.linkedinUrl != null ||
-                caseStudySlug != null)
-              Positioned(
-                top: AppSpacing.sm,
-                right: AppSpacing.sm,
-                child: CompanyQuickLinks(
-                  project: project,
-                  scheme: scheme,
-                  caseStudySlug: caseStudySlug,
-                ),
-              ),
           ],
         ),
       ),

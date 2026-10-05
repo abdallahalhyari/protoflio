@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 
@@ -57,10 +57,10 @@ class CredentialsBentoCard extends StatelessWidget {
           width: double.infinity,
           margin: EdgeInsets.only(bottom: isDesktop ? 0 : AppSpacing.lg),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.lg),
+            borderRadius: BorderRadius.circular(AppRadius.container),
             border: Border.all(
               color: isDark
-                  ? scheme.primary.withValues(alpha: 0.3)
+                  ? scheme.primary.withValues(alpha: 0.35)
                   : AppColors.slate300,
               width: isDark ? 1.5 : 1.0,
             ),
@@ -77,7 +77,7 @@ class CredentialsBentoCard extends StatelessWidget {
           ),
           child: RepaintBoundary(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.lg),
+              borderRadius: BorderRadius.circular(AppRadius.container),
               child: Builder(
                 builder: (context) {
                   final lang =

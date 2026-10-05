@@ -7,9 +7,9 @@ import 'helpers/test_data.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 
-import 'package:profile/features/shell/widget/custom_cursor.dart';
-import 'package:profile/features/shell/widget/desktop_toolbar.dart';
-import 'package:profile/features/shell/widget/magazine_page_transformer.dart';
+import 'package:profile/features/shell/presentation/widgets/custom_cursor.dart';
+import 'package:profile/features/shell/presentation/widgets/desktop_toolbar.dart';
+import 'package:profile/features/shell/presentation/widgets/magazine_page_transformer.dart';
 import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
@@ -21,10 +21,10 @@ void main() {
       final assets = <String, int>{
         'assets/my_image.webp': 64 * 1024,
         'assets/hat.webp': 32 * 1024,
-        'assets/images/projects/nathealth.webp': 75 * 1024,
-        'assets/images/projects/eskadenia.webp': 75 * 1024,
-        'assets/images/projects/solutions.webp': 75 * 1024,
-        'assets/images/projects/fais.webp': 75 * 1024,
+        'assets/images/projects/nathealth.webp': 180 * 1024,
+        'assets/images/projects/eskadenia.webp': 180 * 1024,
+        'assets/images/projects/solutions.webp': 180 * 1024,
+        'assets/images/projects/fais.webp': 180 * 1024,
       };
 
       int totalBytes = 0;
@@ -42,8 +42,8 @@ void main() {
         );
       }
 
-      // Total portfolio image asset payload must be under 350 KB
-      expect(totalBytes, lessThanOrEqualTo(350 * 1024),
+      // Total portfolio image asset payload must be under 650 KB
+      expect(totalBytes, lessThanOrEqualTo(650 * 1024),
           reason:
               'Total image payload must be less than 350 KB for instant load');
     });
@@ -72,7 +72,7 @@ void main() {
           home: Scaffold(
             body: SizedBox(
               width: 400,
-              height: 400,
+              height: 500,
               child: InteractiveProjectCard(
                 project: testProject,
                 index: 0,

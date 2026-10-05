@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
 import 'package:profile/features/skills/presentation/widgets/tile/bento_skill_tile_shared.dart';
 
@@ -25,6 +26,7 @@ class TileFrontFace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final loc = AppLocalizations.of(context)!;
     final accentText = context.adaptiveAccentText(categoryColor);
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -33,16 +35,22 @@ class TileFrontFace extends StatelessWidget {
         border: Border.all(
           color: showFocus
               ? categoryColor
-              : categoryColor.withValues(alpha: isDark ? 0.3 : 0.4),
-          width: showFocus ? 2.5 : 1.5,
+              : categoryColor.withValues(
+                  alpha: isDark
+                      ? (isHovered ? 0.75 : 0.35)
+                      : (isHovered ? 0.75 : 0.45)),
+          width: showFocus ? 2.5 : (isHovered ? 2.0 : 1.5),
         ),
         boxShadow: [
           BoxShadow(
             color: isDark
-                ? categoryColor.withValues(alpha: 0.1)
-                : AppColors.slate900.withValues(alpha: 0.05),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+                ? categoryColor.withValues(alpha: isHovered ? 0.35 : 0.12)
+                : (isHovered
+                    ? categoryColor.withValues(alpha: 0.25)
+                    : AppColors.slate900.withValues(alpha: 0.05)),
+            blurRadius: isHovered ? 24 : 12,
+            spreadRadius: isHovered ? 1 : 0,
+            offset: Offset(0, isHovered ? 6 : 4),
           ),
         ],
       ),
@@ -73,11 +81,11 @@ class TileFrontFace extends StatelessWidget {
                             padding: EdgeInsets.all(isDesktop ? 12 : 6),
                             decoration: BoxDecoration(
                               color: categoryColor.withValues(
-                                  alpha: isDark ? 0.15 : 0.10),
+                                  alpha: isDark ? 0.18 : 0.12),
                               shape: BoxShape.circle,
                               border: Border.all(
                                   color: categoryColor.withValues(
-                                      alpha: isDark ? 0.3 : 0.4)),
+                                      alpha: isDark ? 0.4 : 0.5)),
                             ),
                             child: Icon(skill.icon,
                                 color: accentText, size: isDesktop ? 36 : 20),
@@ -106,7 +114,7 @@ class TileFrontFace extends StatelessWidget {
                               borderRadius: BorderRadius.circular(AppRadius.xs),
                             ),
                             child: Text(
-                              masteryLabel(skill.level),
+                              masteryLabel(skill.level, loc),
                               style: TextStyle(
                                 fontFamily: AppTypography.monoFont,
                                 color: context.onSurface,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 import 'package:profile/features/projects/presentation/widgets/projects_empty_state.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';

@@ -7,7 +7,7 @@ import 'package:profile/features/skills/presentation/widgets/skill_category_filt
 import 'package:profile/features/skills/presentation/widgets/skill_search_bar.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_empty_state.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_header.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
   return MaterialApp(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/shared/widget/retrying_asset_image.dart';
+import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 // 1×1 transparent PNG.
 final Uint8List _png = Uint8List.fromList(const [

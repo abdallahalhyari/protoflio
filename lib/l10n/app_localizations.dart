@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// No description provided for @navWork.
   ///
   /// In en, this message translates to:
-  /// **'Selected Work'**
+  /// **'Projects'**
   String get navWork;
 
   /// No description provided for @navEngineering.
@@ -151,7 +151,7 @@ abstract class AppLocalizations {
   /// No description provided for @introLocation.
   ///
   /// In en, this message translates to:
-  /// **'Amman, Jordan › Brno, Czech Republic (2027)'**
+  /// **'Amman → Brno · 2027'**
   String get introLocation;
 
   /// No description provided for @sectionEducation.
@@ -319,19 +319,19 @@ abstract class AppLocalizations {
   /// No description provided for @introSeniorEngineer.
   ///
   /// In en, this message translates to:
-  /// **'SENIOR MOBILE ENGINEER'**
+  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
   String get introSeniorEngineer;
 
   /// No description provided for @introRoleHeading.
   ///
   /// In en, this message translates to:
-  /// **'SENIOR MOBILE ENGINEER'**
+  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
   String get introRoleHeading;
 
   /// No description provided for @introValueProposition.
   ///
   /// In en, this message translates to:
-  /// **'I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.'**
+  /// **'I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.'**
   String get introValueProposition;
 
   /// No description provided for @introSkillArchitecture.
@@ -349,7 +349,7 @@ abstract class AppLocalizations {
   /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
-  /// **'CZ WORK ELIGIBLE · STUDENT'**
+  /// **'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES'**
   String get introWorkEligibility;
 
   /// No description provided for @introAvailableContracts.
@@ -481,14 +481,8 @@ abstract class AppLocalizations {
   /// No description provided for @introIssueStrip.
   ///
   /// In en, this message translates to:
-  /// **'ISSUE 01 · PORTFOLIO EDITION · MMXXVI'**
+  /// **'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE'**
   String get introIssueStrip;
-
-  /// No description provided for @introBuildsComplex.
-  ///
-  /// In en, this message translates to:
-  /// **'BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS'**
-  String get introBuildsComplex;
 
   /// No description provided for @introTechStack.
   ///
@@ -499,31 +493,31 @@ abstract class AppLocalizations {
   /// No description provided for @introBasedIn.
   ///
   /// In en, this message translates to:
-  /// **'BASED IN'**
+  /// **'LOCATION'**
   String get introBasedIn;
 
   /// No description provided for @introStatus.
   ///
   /// In en, this message translates to:
-  /// **'STATUS'**
+  /// **'AVAILABILITY'**
   String get introStatus;
 
   /// No description provided for @introOpenForRoles.
   ///
   /// In en, this message translates to:
-  /// **'OPEN FOR SENIOR ROLES'**
+  /// **'Open to Senior Mobile Roles'**
   String get introOpenForRoles;
 
   /// No description provided for @introDiscipline.
   ///
   /// In en, this message translates to:
-  /// **'DISCIPLINE'**
+  /// **'SPECIALIZATION'**
   String get introDiscipline;
 
   /// No description provided for @introMobileArch.
   ///
   /// In en, this message translates to:
-  /// **'MOBILE ARCHITECTURE'**
+  /// **'Flutter · Android · Mobile Architecture'**
   String get introMobileArch;
 
   /// No description provided for @introMasthead.
@@ -688,6 +682,126 @@ abstract class AppLocalizations {
   /// **'FEATURE 03 · SELECTED WORK'**
   String get projectsHeaderKicker;
 
+  /// No description provided for @projectDomainAll.
+  ///
+  /// In en, this message translates to:
+  /// **'ALL'**
+  String get projectDomainAll;
+
+  /// No description provided for @projectDomainHealthcare.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthcare & Smart Cards'**
+  String get projectDomainHealthcare;
+
+  /// No description provided for @projectDomainEnterprise.
+  ///
+  /// In en, this message translates to:
+  /// **'Enterprise HIS & LMS'**
+  String get projectDomainEnterprise;
+
+  /// No description provided for @projectDomainFleet.
+  ///
+  /// In en, this message translates to:
+  /// **'Fleet & Telematics'**
+  String get projectDomainFleet;
+
+  /// No description provided for @projectDomainCommerce.
+  ///
+  /// In en, this message translates to:
+  /// **'M-Commerce & Streaming'**
+  String get projectDomainCommerce;
+
+  /// No description provided for @projectTechFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'TECH FILTER: {technology}'**
+  String projectTechFilter(String technology);
+
+  /// No description provided for @readCaseStudyFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Read case study for {project}'**
+  String readCaseStudyFor(String project);
+
+  /// No description provided for @projectTaglineNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Mission-critical NFC smart-card healthcare platform for mobile care, digital claims, and regulatory compliance.'**
+  String get projectTaglineNatHealth;
+
+  /// No description provided for @projectTaglineEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'High-performance enterprise mobile applications for hospital information systems and education platforms.'**
+  String get projectTaglineEskadenia;
+
+  /// No description provided for @projectTaglineSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'A loyalty rewards platform and an ephemeral video and stories experience, built for consumer scale.'**
+  String get projectTaglineSolutions;
+
+  /// No description provided for @projectTaglineFais.
+  ///
+  /// In en, this message translates to:
+  /// **'High-throughput commerce checkouts and continuous media-streaming applications.'**
+  String get projectTaglineFais;
+
+  /// No description provided for @projectOutcomeNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Replaced paper claim submissions with instant contactless smart-card validation.'**
+  String get projectOutcomeNatHealth;
+
+  /// No description provided for @projectOutcomeEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustained 60fps across complex, data-heavy hospital and university workflows.'**
+  String get projectOutcomeEskadenia;
+
+  /// No description provided for @projectOutcomeSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipped both applications on time with 4.7+ star store ratings.'**
+  String get projectOutcomeSolutions;
+
+  /// No description provided for @projectOutcomeFais.
+  ///
+  /// In en, this message translates to:
+  /// **'Improved checkout completion and reduced abandoned transactions.'**
+  String get projectOutcomeFais;
+
+  /// No description provided for @skillMasteryLead.
+  ///
+  /// In en, this message translates to:
+  /// **'LEAD'**
+  String get skillMasteryLead;
+
+  /// No description provided for @skillMasteryCore.
+  ///
+  /// In en, this message translates to:
+  /// **'CORE'**
+  String get skillMasteryCore;
+
+  /// No description provided for @skillMasterySolid.
+  ///
+  /// In en, this message translates to:
+  /// **'SOLID'**
+  String get skillMasterySolid;
+
+  /// No description provided for @skillMasteryGrowing.
+  ///
+  /// In en, this message translates to:
+  /// **'GROWING'**
+  String get skillMasteryGrowing;
+
+  /// No description provided for @skillCardSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'{skill}, {level} proficiency. Activate to flip and view details.'**
+  String skillCardSemantics(String skill, String level);
+
   /// No description provided for @experienceHeaderKicker.
   ///
   /// In en, this message translates to:
@@ -754,23 +868,11 @@ abstract class AppLocalizations {
   /// **'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.'**
   String get skillsHeaderSubtitle;
 
-  /// No description provided for @sectionSubtitleSkills.
-  ///
-  /// In en, this message translates to:
-  /// **'Disciplines and stack the work is built on · Flip any card for details'**
-  String get sectionSubtitleSkills;
-
   /// No description provided for @sectionSubtitleEngineering.
   ///
   /// In en, this message translates to:
   /// **'Production-tested architectures behind the mobile suites'**
   String get sectionSubtitleEngineering;
-
-  /// No description provided for @sectionSubtitleAbout.
-  ///
-  /// In en, this message translates to:
-  /// **'Six roles a senior engineer switches between'**
-  String get sectionSubtitleAbout;
 
   /// Hint on flippable skill / role cards for touch viewports.
   ///

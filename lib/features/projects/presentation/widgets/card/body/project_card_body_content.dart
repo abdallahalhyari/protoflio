@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
-import 'package:profile/shared/util/bidi.dart';
+import 'package:profile/features/projects/presentation/utils/project_copy.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/utils/bidi.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_tech_chip.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_outcome_line.dart';
+import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_quick_links.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_router.dart';
 
 class CardBodyContent extends StatelessWidget {
   const CardBodyContent({
@@ -37,52 +41,76 @@ class CardBodyContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final results = project.results;
-    final outcome =
-        (results != null && results.isNotEmpty) ? results.first : null;
+    final loc = AppLocalizations.of(context)!;
+    final outcome = localizedProjectOutcome(loc, project);
+    final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
+
+    final titleBlock = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (project.role != null) ...[
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : AppColors.slate100,
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+            ),
+            child: Text(
+              project.role!.toUpperCase(),
+              style: TextStyle(
+                fontFamily: AppTypography.monoFont,
+                fontSize: AppTypography.nano,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.0,
+                color: context.onSurface.withValues(alpha: 0.7),
+              ),
+            ),
+          ),
+          const SizedBox(height: 6),
+        ],
+        AnimatedDefaultTextStyle(
+          duration: AppMotion.snap,
+          style: TextStyle(
+            fontFamily: AppTypography.displayFont,
+            color: isHovered
+                ? (isDark
+                    ? scheme.primary
+                    : AppColors.toAccessibleLightText(scheme.primary))
+                : (context.onSurface),
+            fontSize: isDesktop ? 22 : 18,
+            fontWeight: FontWeight.w900,
+            height: 1.1,
+          ),
+          child: Text(
+            project.name,
+            maxLines: isDesktop ? 1 : 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          ltrContent(context, localizedProjectTagline(loc, project)),
+          style: TextStyle(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.75)
+                : AppColors.slate600,
+            fontSize: isDesktop ? 13 : 12,
+            height: 1.4,
+          ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
 
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AnimatedDefaultTextStyle(
-                duration: AppMotion.snap,
-                style: TextStyle(
-                  fontFamily: AppTypography.displayFont,
-                  color: isHovered
-                      ? (isDark
-                          ? scheme.primary
-                          : AppColors.toAccessibleLightText(scheme.primary))
-                      : (context.onSurface),
-                  fontSize: isDesktop ? 22 : 18,
-                  fontWeight: FontWeight.w900,
-                  height: 1.1,
-                ),
-                child: Text(
-                  project.name,
-                  maxLines: isDesktop ? 1 : 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                ltrContent(context, project.tagline),
-                style: TextStyle(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.7)
-                      : AppColors.slate600,
-                  fontSize: isDesktop ? 13 : 12,
-                  height: 1.4,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
+          titleBlock,
           if (outcome != null) ...[
             const SizedBox(height: AppSpacing.sm),
             if (pinFoot)
@@ -123,15 +151,31 @@ class CardBodyContent extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.xs),
-          ReadCaseStudyCta(
-            projectName: project.name,
-            scheme: scheme,
-            isHovered: isHovered,
-            isDesktop: isDesktop,
-            isDark: isDark,
-            onTap: onOpenStudy,
-            onFocusChange: onFocusChange,
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            children: [
+              Expanded(
+                child: ReadCaseStudyCta(
+                  projectName: project.name,
+                  scheme: scheme,
+                  isHovered: isHovered,
+                  isDesktop: isDesktop,
+                  isDark: isDark,
+                  onTap: onOpenStudy,
+                  onFocusChange: onFocusChange,
+                ),
+              ),
+              if (project.url != null ||
+                  project.linkedinUrl != null ||
+                  caseStudySlug != null) ...[
+                const SizedBox(width: AppSpacing.sm),
+                CompanyQuickLinks(
+                  project: project,
+                  scheme: scheme,
+                  caseStudySlug: caseStudySlug,
+                ),
+              ],
+            ],
           ),
         ],
       ),

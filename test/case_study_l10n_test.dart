@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/case_study/case_study_eskadenia.dart';
-import 'package:profile/features/case_study/case_study_fais.dart';
-import 'package:profile/features/case_study/case_study_nathealth.dart';
-import 'package:profile/features/case_study/case_study_solutions.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_eskadenia.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_fais.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_nathealth.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_solutions.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 Future<List<String>> _open(
     WidgetTester tester, Widget study, Locale locale, Size size) async {
@@ -43,6 +43,8 @@ void main() {
     // Lazy list: the note sits just below the first screen in Czech.
     await tester.scrollUntilVisible(
         find.text('Podrobný technický rozbor níže je v angličtině.'), 300,
+        scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(find.text('PROBLÉM'), 300,
         scrollable: find.byType(Scrollable).first);
     expect(find.text('PROBLÉM'), findsWidgets);
   });

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 
 import 'package:profile/features/experience/presentation/widgets/card/experience_card_period_badge.dart';

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/util/grid_math.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/shared/utils/grid_math.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 void main() {
   group('columnWidth', () {

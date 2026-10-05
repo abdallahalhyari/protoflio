@@ -55,7 +55,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "public, max-age=3600, must-revalidate"
+              "value": "public, max-age=31536000, immutable"
             }
           ]
         },
@@ -64,7 +64,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "public, max-age=86400, must-revalidate"
+              "value": "public, max-age=31536000, immutable"
             }
           ]
         },
@@ -105,7 +105,7 @@
           ]
         },
         {
-          "source": "@(flutter_service_worker.js|version.json)",
+          "source": "@(flutter_service_worker.js|version.json|flutter_bootstrap.js)",
           "headers": [
             {
               "key": "Cache-Control",
@@ -114,11 +114,11 @@
           ]
         },
         {
-          "source": "@(flutter_bootstrap.js|main.dart.js|main.dart.mjs|main.dart.wasm)",
+          "source": "@(main.dart.js|main.dart.mjs|main.dart.wasm)",
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "public, max-age=300, must-revalidate"
+              "value": "public, max-age=31536000, immutable"
             }
           ]
         },
@@ -127,7 +127,7 @@
           "headers": [
             {
               "key": "Cache-Control",
-              "value": "public, max-age=300, must-revalidate"
+              "value": "public, max-age=31536000, immutable"
             }
           ]
         }

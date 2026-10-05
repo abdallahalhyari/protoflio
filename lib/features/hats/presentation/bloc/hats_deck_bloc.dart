@@ -1,0 +1,171 @@
+import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
+import 'package:profile/features/hats/domain/usecases/get_hats_usecase.dart';
+import 'package:profile/features/hats/presentation/bloc/hats_deck_event.dart';
+import 'package:profile/features/hats/presentation/bloc/hats_deck_state.dart';
+
+const double kCardW = 255;
+const double kCardH = 370;
+const double kEdgeInset = 16;
+const double kFanSideReserve = 200;
+const double kFanArcHeight = 30;
+const double kShuffleSpread = 260;
+const double kShuffleDrop = 100;
+
+class HatsDeckBloc extends Bloc<HatsDeckEvent, HatsDeckState> {
+  final int count;
+
+  HatsDeckBloc({required HatRepository repository})
+      : count = repository.getHatCount(),
+        super(_createInitialState(repository.getHatCount())) {
+    _registerHandlers();
+  }
+
+  HatsDeckBloc.withUseCase({required GetHatsUseCase getHatsUseCase})
+      : count = getHatsUseCase.getHatCount(),
+        super(_createInitialState(getHatsUseCase.getHatCount())) {
+    _registerHandlers();
+  }
+
+  void _registerHandlers() {
+    on<HatRoleSelected>(_onRoleSelected);
+    on<HatNextRole>(_onNextRole);
+    on<HatPrevRole>(_onPrevRole);
+    on<HatCardBroughtToFront>(_onCardBroughtToFront);
+    on<HatCardPositionSet>(_onCardPositionSet);
+    on<HatLayoutInitialized>(_onLayoutInitialized);
+    on<HatDeckShuffled>(_onDeckShuffled);
+    on<HatDeckSpreadReset>(_onDeckSpreadReset);
+  }
+
+  static HatsDeckState _createInitialState(int count) {
+    return HatsDeckState(
+      selectedHatIndex: 0,
+      renderOrder: List.generate(count, (i) => i),
+      cardPositions: List.filled(count, Offset.zero),
+      cardRotations: fanRotations(count),
+      isInitialized: false,
+    );
+  }
+
+  static List<double> fanRotations(int count) {
+    if (count <= 1) return const [0.0];
+    const double spread = 0.28;
+    return List<double>.generate(count, (i) {
+      final t = i / (count - 1);
+      return -spread / 2 + spread * t;
+    });
+  }
+
+  void _onRoleSelected(HatRoleSelected event, Emitter<HatsDeckState> emit) =>
+      _select(event.index, emit);
+
+  // Next / previous update the state here rather than re-dispatching a
+  // HatRoleSelected: a queued event read the index before the one ahead of
+  // it had landed, so quick key repeats moved one role instead of several.
+  void _onNextRole(HatNextRole event, Emitter<HatsDeckState> emit) =>
+      _select((state.selectedHatIndex + 1) % count, emit);
+
+  void _onPrevRole(HatPrevRole event, Emitter<HatsDeckState> emit) =>
+      _select((state.selectedHatIndex - 1 + count) % count, emit);
+
+  void _select(int index, Emitter<HatsDeckState> emit) {
+    final newOrder = List<int>.from(state.renderOrder);
+    if (newOrder.isNotEmpty && newOrder.last != index) {
+      newOrder.remove(index);
+      newOrder.add(index);
+    }
+    emit(state.copyWith(selectedHatIndex: index, renderOrder: newOrder));
+  }
+
+  void _onCardBroughtToFront(
+      HatCardBroughtToFront event, Emitter<HatsDeckState> emit) {
+    if (state.renderOrder.isNotEmpty && state.renderOrder.last == event.index) {
+      return;
+    }
+    final newOrder = List<int>.from(state.renderOrder);
+    newOrder.remove(event.index);
+    newOrder.add(event.index);
+    emit(state.copyWith(renderOrder: newOrder));
+  }
+
+  void _onCardPositionSet(
+      HatCardPositionSet event, Emitter<HatsDeckState> emit) {
+    final positions = List<Offset>.from(state.cardPositions);
+    positions[event.index] = event.position;
+    emit(state.copyWith(cardPositions: positions));
+  }
+
+  void _onLayoutInitialized(
+      HatLayoutInitialized event, Emitter<HatsDeckState> emit) {
+    final positions = _calculateFanPositions(event.size, count);
+    emit(state.copyWith(
+      cardPositions: positions,
+      cardRotations: fanRotations(count),
+      isInitialized: true,
+    ));
+  }
+
+  void _onDeckShuffled(HatDeckShuffled event, Emitter<HatsDeckState> emit) {
+    final random = math.Random();
+    final size = event.size;
+    final positions = List<Offset>.filled(count, Offset.zero);
+    final rotations = List<double>.filled(count, 0.0);
+
+    for (int i = 0; i < count; i++) {
+      final double rx = (size.width / 2 - kCardW / 2) +
+          (random.nextDouble() * kShuffleSpread - kShuffleSpread / 2);
+      final double ry = (size.height / 2 - kCardH / 2) +
+          (random.nextDouble() * kShuffleDrop - kShuffleDrop / 2);
+      positions[i] = Offset(
+        rx.clamp(
+            kEdgeInset, math.max(kEdgeInset, size.width - kCardW - kEdgeInset)),
+        ry.clamp(0.0, math.max(0.0, size.height - kCardH)),
+      );
+      rotations[i] = (random.nextDouble() * 0.36) - 0.18;
+    }
+
+    emit(state.copyWith(
+      cardPositions: positions,
+      cardRotations: rotations,
+    ));
+  }
+
+  void _onDeckSpreadReset(
+      HatDeckSpreadReset event, Emitter<HatsDeckState> emit) {
+    final positions = _calculateFanPositions(event.size, count);
+    emit(state.copyWith(
+      renderOrder: List.generate(count, (i) => i),
+      cardPositions: positions,
+      cardRotations: fanRotations(count),
+      isInitialized: true,
+    ));
+  }
+
+  /// Fans the cards across [size], the felt the cards are drawn in (not
+  /// the whole viewport): centred horizontally, and centred vertically
+  /// with the fan arc included.
+  static List<Offset> _calculateFanPositions(Size size, int count) {
+    final double centerX = size.width / 2;
+    final double availableWidth = size.width - kFanSideReserve * 2;
+    final double spacing = (availableWidth / (count - 1)).clamp(80.0, 170.0);
+    final double totalW = spacing * (count - 1);
+    final double startX = centerX - totalW / 2 - kCardW / 2;
+    final double topY =
+        math.max(0.0, (size.height - kCardH - kFanArcHeight) / 2);
+
+    final positions = List<Offset>.filled(count, Offset.zero);
+    for (int i = 0; i < count; i++) {
+      final double progress = (i - (count - 1) / 2) / ((count - 1) / 2);
+      final double arcY = progress * progress * kFanArcHeight;
+      positions[i] = Offset(
+        (startX + i * spacing).clamp(kEdgeInset * 2,
+            math.max(kEdgeInset * 2, size.width - kCardW - kEdgeInset * 3)),
+        topY + arcY,
+      );
+    }
+    return positions;
+  }
+}

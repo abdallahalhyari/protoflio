@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/presentation/bloc/experience_timeline_bloc.dart';
 import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
 import 'package:profile/features/experience/presentation/widgets/credentials_bento_card.dart';
-import 'package:profile/shared/widget/staggered_entrance.dart';
+import 'package:profile/shared/widgets/staggered_entrance.dart';
 
 class ExperienceContinuousMobileList extends StatelessWidget {
   final ExperienceTimelineState state;

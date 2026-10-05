@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 
-String masteryLabel(double level) {
-  if (level >= 0.9) return 'LEAD';
-  if (level >= 0.75) return 'CORE';
-  if (level >= 0.55) return 'SOLID';
-  return 'GROWING';
+String masteryLabel(double level, AppLocalizations loc) {
+  if (level >= 0.9) return loc.skillMasteryLead;
+  if (level >= 0.75) return loc.skillMasteryCore;
+  if (level >= 0.55) return loc.skillMasterySolid;
+  return loc.skillMasteryGrowing;
 }
 
 class FlipHintPill extends StatelessWidget {

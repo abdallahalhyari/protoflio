@@ -1,14 +1,14 @@
 {
   "@@locale": "en",
   "navHome": "Home",
-  "navWork": "Selected Work",
+  "navWork": "Projects",
   "navEngineering": "Engineering",
   "navExperience": "Experience",
   "navStack": "Skills & Stack",
   "navAbout": "Perspectives",
   "navContact": "Contact",
   "navResume": "Resume",
-  "introLocation": "Amman, Jordan › Brno, Czech Republic (2027)",
+  "introLocation": "Amman → Brno · 2027",
   "sectionEducation": "EDUCATION",
   "sectionCertifications": "CERTIFICATIONS",
   "contactHeroEyebrow": "DIRECT EMAIL · FASTEST REPLY",
@@ -44,12 +44,12 @@
   "downloadResume": "DOWNLOAD RESUME",
   "contactMe": "CONTACT ME",
   "copyEmail": "COPY EMAIL",
-  "introSeniorEngineer": "SENIOR MOBILE ENGINEER",
-  "introRoleHeading": "SENIOR MOBILE ENGINEER",
-  "introValueProposition": "I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.",
+  "introSeniorEngineer": "SENIOR FLUTTER & ANDROID ENGINEER",
+  "introRoleHeading": "SENIOR FLUTTER & ANDROID ENGINEER",
+  "introValueProposition": "I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.",
   "introSkillArchitecture": "Architecture",
   "introSkillProductDelivery": "Product delivery",
-  "introWorkEligibility": "CZ WORK ELIGIBLE · STUDENT",
+  "introWorkEligibility": "RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES",
   "introAvailableContracts": "AVAILABLE FOR CONTRACTS",
   "contactEngagementScopes": "// ENGAGEMENT SCOPES & COLLABORATION MODES",
   "contactAtsVerified": "ATS-VERIFIED · 2026 EDITION",
@@ -77,14 +77,13 @@
       "total": {}
     }
   },
-  "introIssueStrip": "ISSUE 01 · PORTFOLIO EDITION · MMXXVI",
-  "introBuildsComplex": "BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS",
+  "introIssueStrip": "LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE",
   "introTechStack": "Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems",
-  "introBasedIn": "BASED IN",
-  "introStatus": "STATUS",
-  "introOpenForRoles": "OPEN FOR SENIOR ROLES",
-  "introDiscipline": "DISCIPLINE",
-  "introMobileArch": "MOBILE ARCHITECTURE",
+  "introBasedIn": "LOCATION",
+  "introStatus": "AVAILABILITY",
+  "introOpenForRoles": "Open to Senior Mobile Roles",
+  "introDiscipline": "SPECIALIZATION",
+  "introMobileArch": "Flutter · Android · Mobile Architecture",
   "introMasthead": "// MASTHEAD",
   "navSectionCover": "COVER & PROFILE",
   "navSubCover": "Senior Flutter & Android Engineer",
@@ -145,6 +144,50 @@
   "sectionSubtitleWork": "In-depth looks at architecture, implementation, and measurable outcomes.",
   "sectionSubtitleExperience": "Multi-year development of enterprise mobile systems",
   "projectsHeaderKicker": "FEATURE 03 · SELECTED WORK",
+  "projectDomainAll": "ALL",
+  "projectDomainHealthcare": "Healthcare & Smart Cards",
+  "projectDomainEnterprise": "Enterprise HIS & LMS",
+  "projectDomainFleet": "Fleet & Telematics",
+  "projectDomainCommerce": "M-Commerce & Streaming",
+  "projectTechFilter": "TECH FILTER: {technology}",
+  "@projectTechFilter": {
+    "placeholders": {
+      "technology": {
+        "type": "String"
+      }
+    }
+  },
+  "readCaseStudyFor": "Read case study for {project}",
+  "@readCaseStudyFor": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "projectTaglineNatHealth": "Mission-critical NFC smart-card healthcare platform for mobile care, digital claims, and regulatory compliance.",
+  "projectTaglineEskadenia": "High-performance enterprise mobile applications for hospital information systems and education platforms.",
+  "projectTaglineSolutions": "A loyalty rewards platform and an ephemeral video and stories experience, built for consumer scale.",
+  "projectTaglineFais": "High-throughput commerce checkouts and continuous media-streaming applications.",
+  "projectOutcomeNatHealth": "Replaced paper claim submissions with instant contactless smart-card validation.",
+  "projectOutcomeEskadenia": "Sustained 60fps across complex, data-heavy hospital and university workflows.",
+  "projectOutcomeSolutions": "Shipped both applications on time with 4.7+ star store ratings.",
+  "projectOutcomeFais": "Improved checkout completion and reduced abandoned transactions.",
+  "skillMasteryLead": "LEAD",
+  "skillMasteryCore": "CORE",
+  "skillMasterySolid": "SOLID",
+  "skillMasteryGrowing": "GROWING",
+  "skillCardSemantics": "{skill}, {level} proficiency. Activate to flip and view details.",
+  "@skillCardSemantics": {
+    "placeholders": {
+      "skill": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
   "experienceHeaderKicker": "FEATURE 02 · CAREER TRAJECTORY",
   "engineeringHeaderKicker": "FEATURE 05 · SYSTEMS ARCHITECTURE",
   "hatsHeaderKickerMobile": "FEATURE 06 · 6 ROLES",
@@ -156,9 +199,7 @@
   "skillsHeaderKicker": "FEATURE 04 · SYSTEMS & DELIVERY",
   "skillsHeaderTitle": "STACK & ENGINEERING",
   "skillsHeaderSubtitle": "Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.",
-  "sectionSubtitleSkills": "Disciplines and stack the work is built on · Flip any card for details",
   "sectionSubtitleEngineering": "Production-tested architectures behind the mobile suites",
-  "sectionSubtitleAbout": "Six roles a senior engineer switches between",
   "flipHintTap": "TAP TO FLIP",
   "flipHintClick": "CLICK TO FLIP",
   "@flipHintTap": {

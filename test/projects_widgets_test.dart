@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/projects/presentation/widgets/project_dossier_card.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 Widget _wrap(Widget child,
     [Size size = const Size(1200, 900), bool scrollable = true]) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/shared/widget/keyboard_focus_ring.dart';
+import 'package:profile/shared/widgets/keyboard_focus_ring.dart';
 
 Widget _app() => MaterialApp(
       builder: (context, child) => KeyboardFocusRing(child: child!),

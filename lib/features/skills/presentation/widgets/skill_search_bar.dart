@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/surface_tone.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 /// Glassmorphic, real-time search and filter bar for the Skills matrix.
 /// Includes interactive query input, instant clear action, and live count badge.

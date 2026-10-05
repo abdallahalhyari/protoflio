@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/shared/util/career_facts.dart';
+import 'package:profile/shared/utils/career_facts.dart';
 
 void main() {
   group('CareerFacts.yearsOfExperience', () {

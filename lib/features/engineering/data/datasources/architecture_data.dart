@@ -1,0 +1,267 @@
+import 'package:flutter/material.dart';
+
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/engineering/domain/entities/architecture_topic.dart';
+
+final List<ArchitectureTopic> kArchitectureTopics = [
+  const ArchitectureTopic(
+    id: 'clean_arch',
+    title: 'Clean Mobile Architecture',
+    category: 'SYSTEM DESIGN',
+    summary:
+        'Strict 3-tier boundary separation decoupling presentation widgets from business use-cases and hardware data sources.',
+    whyChosen:
+        'Prevents UI framework lock-in, enables independent automated unit testing of core business rules without Flutter mocks, and isolates platform-specific native plugins (like NFC and Keystore).',
+    diagramSteps: [
+      DiagramStep(
+        layer: 'PRESENTATION LAYER',
+        title: 'Flutter UI & State Controllers',
+        details:
+            'Declarative widgets, BLoC / ValueNotifiers, input validation & 60fps view rendering.',
+        icon: Icons.layers_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 16ms',
+      ),
+      DiagramStep(
+        layer: 'DOMAIN LAYER (CORE)',
+        title: 'Use Cases & Business Entities',
+        details:
+            'Pure Dart entities, business rules, repository contracts. Zero external framework dependencies.',
+        icon: Icons.account_tree_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 2ms',
+      ),
+      DiagramStep(
+        layer: 'DATA LAYER',
+        title: 'Repository Implementations & DTOs',
+        details:
+            'Coordination between local cache and remote sources, serialization, and error translation.',
+        icon: Icons.storage_rounded,
+        color: AppColors.accentGreenLight,
+        latencyBudget: '< 5ms',
+      ),
+      DiagramStep(
+        layer: 'DATA SOURCES / HARDWARE',
+        title: 'SQLite Cache & REST / NFC APIs',
+        details:
+            'Native Android NFC Adapter, SQLite persistent storage, and secure HTTPS REST endpoints.',
+        icon: Icons.settings_ethernet_rounded,
+        color: AppColors.accentAmber,
+        latencyBudget: '< 12ms',
+      ),
+    ],
+    technicalHighlights: [
+      'Repository Pattern decouples native NFC hardware channels from presentation views.',
+      'Pure Domain entities ensure 100% test coverage without UI harness dependencies.',
+      'Immutable Data Transfer Objects (DTOs) with defensive parsing prevent runtime crashes from unexpected null payloads.',
+    ],
+  ),
+  const ArchitectureTopic(
+    id: 'offline_first',
+    title: 'Offline-First Synchronization',
+    category: 'DATA PERSISTENCE',
+    summary:
+        'Guaranteed data delivery through persistent local queueing, atomic SQLite mutations, and Android WorkManager background sync.',
+    whyChosen:
+        'Healthcare practitioners and clinic staff operate in areas with fluctuating cellular connectivity. Claims and patient validations must never be lost or blocked by network drops.',
+    diagramSteps: [
+      DiagramStep(
+        layer: 'STEP 1: USER ACTION',
+        title: 'Optimistic UI Dispatch',
+        details:
+            'Immediate user feedback with transactional state marked as PENDING_SYNC.',
+        icon: Icons.touch_app_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 1ms',
+      ),
+      DiagramStep(
+        layer: 'STEP 2: LOCAL ATOMIC COMMIT',
+        title: 'SQLite / Encrypted Database',
+        details:
+            'Record stored locally within an ACID database transaction. Never held in volatile memory.',
+        icon: Icons.save_rounded,
+        color: AppColors.accentGreen,
+        latencyBudget: '< 8ms',
+      ),
+      DiagramStep(
+        layer: 'STEP 3: JOB SCHEDULER',
+        title: 'Android WorkManager Pipeline',
+        details:
+            'OS-managed background worker triggered with NETWORK_CONNECTED constraints & exponential backoff.',
+        icon: Icons.schedule_rounded,
+        color: AppColors.accentAmberMid,
+        latencyBudget: '< 15ms',
+      ),
+      DiagramStep(
+        layer: 'STEP 4: REMOTE RECONCILIATION',
+        title: 'Server ACK & Conflict Resolution',
+        details:
+            'Idempotency keys prevent duplicate transactions; server timestamp updates local state to SYNCED.',
+        icon: Icons.cloud_done_rounded,
+        color: AppColors.accentVioletLight,
+        latencyBudget: '< 120ms',
+      ),
+    ],
+    technicalHighlights: [
+      'Idempotent dispatch tokens prevent duplicate claims on flaky network reconnects.',
+      'Survives complete app process termination via Android WorkManager native OS execution.',
+      'Client-side error protocols implement exponential backoff with jitter to protect backend infrastructure.',
+    ],
+  ),
+  const ArchitectureTopic(
+    id: 'nfc_apdu',
+    title: 'ISO-7816 Smart-Card & NFC Pipeline',
+    category: 'HARDWARE INTEGRATION',
+    summary:
+        'Direct low-level contactless smart-card interaction via ISO/IEC 7816-4 APDU command chains over Android NFC.',
+    whyChosen:
+        'Enables paperless, high-security smart-card verification for national health insurance schemes with millisecond validation speed and zero physical contact.',
+    diagramSteps: [
+      DiagramStep(
+        layer: 'DISCOVERY',
+        title: 'NFC Adapter & Tag Dispatch',
+        details:
+            'Foreground dispatch filter captures IsoDep / Mifare smart-cards within milliseconds.',
+        icon: Icons.nfc_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 24ms',
+      ),
+      DiagramStep(
+        layer: 'NATIVE CHANNEL',
+        title: 'Kotlin MethodChannel Bridge',
+        details:
+            'High-speed binary transport bridging Flutter runtime to native Android IsoDep transceive buffer.',
+        icon: Icons.cable_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 4ms',
+      ),
+      DiagramStep(
+        layer: 'COMMAND CHAIN',
+        title: 'ISO-7816 APDU Handshake',
+        details:
+            'Select Application (AID), Mutual Authentication, and encrypted binary block read.',
+        icon: Icons.security_rounded,
+        color: AppColors.accentAmber,
+        latencyBudget: '< 32ms',
+      ),
+      DiagramStep(
+        layer: 'VERIFICATION',
+        title: 'Cryptographic Claim Verification',
+        details:
+            'Card payload parsed and cryptographically validated against digital certificate authorities.',
+        icon: Icons.verified_user_rounded,
+        color: AppColors.accentGreen,
+        latencyBudget: '< 18ms',
+      ),
+    ],
+    technicalHighlights: [
+      'Abstract NFCCardReader interface allows swapping physical card vendors without modifying app logic.',
+      'Defensive state machine handles card displacement before APDU command sequence completion.',
+      'Optimized transceive buffers achieve complete contactless card verification in under 750ms.',
+    ],
+  ),
+  const ArchitectureTopic(
+    id: 'security_jwt',
+    title: 'Hardware-Backed Keystore & JWT Lifecycle',
+    category: 'APPLICATION SECURITY',
+    summary:
+        'Defense-in-depth security framework combining hardware-bound cryptographic keys, biometric auth, and dual-token JWT rotation.',
+    whyChosen:
+        'Enterprise healthcare and financial data requires zero-trust security. Protecting credentials against extraction on compromised or rooted devices is mandatory.',
+    diagramSteps: [
+      DiagramStep(
+        layer: 'AUTHENTICATION',
+        title: 'Biometric + Hardware Challenge',
+        details:
+            'Fingerprint / Face Unlock verified via Android BiometricPrompt with StrongBox / TEE backing.',
+        icon: Icons.fingerprint_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 50ms',
+      ),
+      DiagramStep(
+        layer: 'STORAGE',
+        title: 'Android Keystore / iOS Keychain',
+        details:
+            'Hardware-backed AES-256 GCM key encryption. Private keys never leave secure hardware enclave.',
+        icon: Icons.lock_outline_rounded,
+        color: AppColors.accentAmberMid,
+        latencyBudget: '< 8ms',
+      ),
+      DiagramStep(
+        layer: 'EXCHANGE',
+        title: 'Two-Tier JWT Token Protocol',
+        details:
+            'Short-lived access token (15 min) + hardware GUID-bound refresh token stored securely.',
+        icon: Icons.vpn_key_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 16ms',
+      ),
+      DiagramStep(
+        layer: 'ROTATION',
+        title: 'Atomic Silent Refresh & Revocation',
+        details:
+            'Automatic token refresh on HTTP 401 with immediate local cache purge upon revocation.',
+        icon: Icons.sync_lock_rounded,
+        color: AppColors.accentGreen,
+        latencyBudget: '< 70ms',
+      ),
+    ],
+    technicalHighlights: [
+      'Hardware GUID binding prevents token replay even if refresh token is intercepted on untrusted devices.',
+      'Strict in-memory cleanup: sensitive credentials explicitly zeroed out after cryptographic operations.',
+      'Proactive SSL Pinning protects network transport against rogue proxy or man-in-the-middle attacks.',
+    ],
+  ),
+  const ArchitectureTopic(
+    id: 'state_management_bloc',
+    title: 'Reactive State Management (BLoC)',
+    category: 'STATE ARCHITECTURE',
+    summary:
+        'Predictable, highly-testable reactive state container using the BLoC pattern with unidirectional data flow and strict event-to-state mapping.',
+    whyChosen:
+        'Isolates UI from complex business logic. Enables time-travel debugging, flawless dependency injection, and guarantees that the presentation layer strictly reflects the current state without side effects.',
+    diagramSteps: [
+      DiagramStep(
+        layer: 'UI / PRESENTATION',
+        title: 'BlocBuilder & BlocListener',
+        details:
+            'Widget tree reacts instantly to state emissions while handling side-effects (navigation, dialogs) through listeners.',
+        icon: Icons.view_quilt_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 16ms',
+      ),
+      DiagramStep(
+        layer: 'EVENT DISPATCH',
+        title: 'Unidirectional Data Flow',
+        details:
+            'User actions are transformed into strictly typed Events pushed into the BLoC sink.',
+        icon: Icons.alt_route_rounded,
+        color: AppColors.accentAmberMid,
+        latencyBudget: '< 1ms',
+      ),
+      DiagramStep(
+        layer: 'BUSINESS LOGIC COMPONENT',
+        title: 'Event-to-State Mapping',
+        details:
+            'Asynchronous generators process events, interact with Domain use-cases, and yield immutable State objects.',
+        icon: Icons.memory_rounded,
+        color: AppColors.accentSky,
+        latencyBudget: '< 14ms',
+      ),
+      DiagramStep(
+        layer: 'STATE / EMISSION',
+        title: 'Immutable State Classes',
+        details:
+            'Data classes with strictly defined properties and value equality (Equatable) preventing unnecessary widget rebuilds.',
+        icon: Icons.stream_rounded,
+        color: AppColors.accentGreen,
+        latencyBudget: '< 2ms',
+      ),
+    ],
+    technicalHighlights: [
+      'Extensive use of Freezed and Equatable to guarantee memory-efficient value equality and copyWith mutations.',
+      'Complex asynchronous race conditions solved via restartable, sequential, and droppable event transformers (RxDart).',
+      'Flawless automated unit testing achieved using bloc_test to verify precise event-state trajectories.',
+    ],
+  ),
+];

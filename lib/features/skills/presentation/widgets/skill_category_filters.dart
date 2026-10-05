@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:profile/theme/tokens.dart';
-import 'package:profile/service/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/util/bidi.dart';
-import 'package:profile/features/skills/data/datasources/skill_category_labels.dart';
+import 'package:profile/shared/utils/bidi.dart';
+import 'package:profile/features/skills/presentation/utils/skill_category_labels.dart';
 
 /// Styling helper for skill categories and corresponding theme accents.
 class SkillCategoryStyle {
@@ -142,6 +142,7 @@ class _SkillFilterChip extends StatefulWidget {
 
 class _SkillFilterChipState extends State<_SkillFilterChip> {
   bool _focused = false;
+  bool _hovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -162,112 +163,127 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
         : SkillCategoryStyle.getTextColor(cat, scheme, isDark);
     final count = widget.count;
 
+    final borderColor = isSelected || _focused
+        ? color
+        : (_hovered
+            ? color.withValues(alpha: isDark ? 0.55 : 0.6)
+            : (isDark
+                ? scheme.onSurface.withValues(alpha: 0.15)
+                : AppColors.slate300));
+
     return Semantics(
       button: true,
       selected: isSelected,
       label: '$cat category, $count skills',
-      child: InkWell(
-        onTap: () {
-          SoundService.instance.playClick();
-          onSelectCategory(cat);
-        },
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        focusColor: color.withValues(alpha: AppAlpha.fill),
-        onFocusChange: (focused) {
-          if (focused != _focused) setState(() => _focused = focused);
-        },
-        child: ExcludeSemantics(
-            child: AnimatedContainer(
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: AnimatedScale(
+          scale: _hovered && !isSelected ? 1.03 : 1.0,
           duration: AppMotion.chipHover,
           curve: AppMotion.emphasized,
-          padding: EdgeInsets.symmetric(
-            horizontal: isDesktop ? 16 : 10,
-            vertical: isDesktop ? 10 : 7,
-          ),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? color.withValues(alpha: isDark ? 0.18 : 0.12)
-                : (isDark
-                    ? Colors.transparent
-                    : Colors.white.withValues(alpha: 0.8)),
+          child: InkWell(
+            onTap: () {
+              SoundService.instance.playClick();
+              onSelectCategory(cat);
+            },
             borderRadius: BorderRadius.circular(AppRadius.sm),
-            // Keyboard focus gets the category colour at full strength —
-            // the InkWell focus tint alone was near-invisible on dark.
-            border: Border.all(
-              color: isSelected || _focused
-                  ? color
-                  : (isDark
-                      ? scheme.onSurface.withValues(alpha: 0.15)
-                      : AppColors.slate300),
-              width: _focused ? 2.0 : (isSelected ? 1.5 : 1.0),
-            ),
-            boxShadow: isSelected
-                ? [
-                    BoxShadow(
-                      color: color.withValues(alpha: isDark ? 0.25 : 0.15),
-                      blurRadius: 12,
-                    ),
-                  ]
-                : (isDark
-                    ? []
-                    : [
+            focusColor: color.withValues(alpha: AppAlpha.fill),
+            onFocusChange: (focused) {
+              if (focused != _focused) setState(() => _focused = focused);
+            },
+            child: ExcludeSemantics(
+                child: AnimatedContainer(
+              duration: AppMotion.chipHover,
+              curve: AppMotion.emphasized,
+              padding: EdgeInsets.symmetric(
+                horizontal: isDesktop ? 16 : 10,
+                vertical: isDesktop ? 10 : 7,
+              ),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? color.withValues(alpha: isDark ? 0.18 : 0.12)
+                    : (isDark
+                        ? Colors.transparent
+                        : Colors.white.withValues(alpha: 0.8)),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                border: Border.all(
+                  color: borderColor,
+                  width: _focused ? 2.0 : (isSelected ? 1.5 : 1.0),
+                ),
+                boxShadow: isSelected
+                    ? [
                         BoxShadow(
-                          color: AppColors.slate900.withValues(alpha: 0.03),
-                          blurRadius: 6,
-                          offset: const Offset(0, 1),
+                          color: color.withValues(alpha: isDark ? 0.25 : 0.15),
+                          blurRadius: 12,
                         ),
-                      ]),
-          ),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (isSelected) ...[
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration:
-                        BoxDecoration(color: color, shape: BoxShape.circle),
-                  ),
-                  const SizedBox(width: 6),
-                ],
-                Text(
-                  skillCategoryLabel(AppLocalizations.of(context)!, cat)
-                      .toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
-                    color: isSelected
-                        ? (isDark ? color : textColor)
-                        : (isDark
-                            ? scheme.onSurface.withValues(alpha: 0.7)
-                            : AppColors.slate700),
-                    fontSize: isDesktop
-                        ? AppTypography.caption
-                        : AppTypography.editorialSm,
-                    fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                    letterSpacing: latinTracking(context, 0.8),
-                  ),
+                      ]
+                    : (isDark
+                        ? []
+                        : [
+                            BoxShadow(
+                              color: AppColors.slate900.withValues(alpha: 0.03),
+                              blurRadius: 6,
+                              offset: const Offset(0, 1),
+                            ),
+                          ]),
+              ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (isSelected) ...[
+                      Container(
+                        width: 6,
+                        height: 6,
+                        decoration:
+                            BoxDecoration(color: color, shape: BoxShape.circle),
+                      ),
+                      const SizedBox(width: 6),
+                    ],
+                    Text(
+                      skillCategoryLabel(AppLocalizations.of(context)!, cat)
+                          .toUpperCase(),
+                      style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
+                        color: isSelected
+                            ? (isDark ? color : textColor)
+                            : (isDark
+                                ? scheme.onSurface.withValues(alpha: 0.7)
+                                : AppColors.slate700),
+                        fontSize: isDesktop
+                            ? AppTypography.caption
+                            : AppTypography.editorialSm,
+                        fontWeight:
+                            isSelected ? FontWeight.w800 : FontWeight.w600,
+                        letterSpacing: latinTracking(context, 0.8),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      '($count)',
+                      style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
+                        color: isSelected
+                            ? (isDark
+                                ? color.withValues(alpha: 0.85)
+                                : textColor)
+                            : (isDark
+                                ? scheme.onSurface.withValues(alpha: 0.45)
+                                : AppColors.slate500),
+                        fontSize: isDesktop
+                            ? AppTypography.micro
+                            : AppTypography.nano,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 5),
-                Text(
-                  '($count)',
-                  style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
-                    color: isSelected
-                        ? (isDark ? color.withValues(alpha: 0.85) : textColor)
-                        : (isDark
-                            ? scheme.onSurface.withValues(alpha: 0.45)
-                            : AppColors.slate500),
-                    fontSize:
-                        isDesktop ? AppTypography.micro : AppTypography.nano,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            )),
           ),
-        )),
+        ),
       ),
     );
   }

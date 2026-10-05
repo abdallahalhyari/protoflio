@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_event.dart';
 import 'package:profile/l10n/app_localizations.dart';

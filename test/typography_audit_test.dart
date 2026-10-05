@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/shell/home_controller.dart';
-import 'package:profile/features/shell/widget/mobile_footer.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
+import 'package:profile/features/shell/presentation/widgets/mobile_footer.dart';
 import 'package:profile/features/experience/presentation/widgets/credentials_bento_card.dart';
-import 'package:profile/theme/app_theme.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 HomeController _mockController() {
   return HomeController(

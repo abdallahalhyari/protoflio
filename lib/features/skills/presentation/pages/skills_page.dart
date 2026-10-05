@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/skills/presentation/bloc/skills_filter_bloc.dart';
 import 'package:profile/features/skills/presentation/bloc/skills_filter_event.dart';
 import 'package:profile/features/skills/presentation/bloc/skills_filter_state.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
-import 'package:profile/shared/util/grid_math.dart';
-import 'package:profile/shared/widget/screen_shell.dart';
+import 'package:profile/shared/utils/grid_math.dart';
+import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/features/skills/presentation/widgets/bento_skill_tile.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_category_filters.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_empty_state.dart';
@@ -91,16 +91,16 @@ class _SkillsPageViewState extends State<_SkillsPageView>
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final scheme = Theme.of(context).colorScheme;
-    final size = MediaQuery.sizeOf(context);
-    final isDesktop = size.width >= AppBreakpoints.tablet;
+    final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocBuilder<SkillsFilterBloc, SkillsFilterState>(
       builder: (context, state) {
         final displayedSkills = state.filteredSkills;
         final selectedCategory = state.selectedCategory;
 
-        final grid = displayedSkills.isEmpty
+        final Widget content = displayedSkills.isEmpty
             ? SkillsEmptyState(
+                key: const ValueKey('skills_empty'),
                 query: state.searchQuery,
                 onShowAll: () {
                   _searchController.clear();
@@ -110,6 +110,8 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                 },
               )
             : LayoutBuilder(
+                key: ValueKey(
+                    'skills_grid_${selectedCategory}_${state.searchQuery}'),
                 builder: (context, constraints) {
                   // Tile size follows the available height, so a short
                   // viewport (13-14" laptop, ~650px tall) squeezed two rows
@@ -152,6 +154,22 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                   );
                 },
               );
+
+        final grid = AnimatedSwitcher(
+          duration: AppMotion.switcher,
+          switchInCurve: AppMotion.emphasizedDecel,
+          switchOutCurve: Curves.easeOut,
+          layoutBuilder: (currentChild, previousChildren) {
+            return Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                ...previousChildren,
+                if (currentChild != null) currentChild,
+              ],
+            );
+          },
+          child: content,
+        );
 
         return AppScreenShell(
           maxWidth: 1400,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/presentation/widgets/nfc_architecture_diagram.dart';
 import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';

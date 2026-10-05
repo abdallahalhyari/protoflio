@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_tech_chip.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_outcome_line.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
@@ -80,7 +80,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Increased performance by 50%'), findsOneWidget);
-      expect(find.byIcon(Icons.trending_up_rounded), findsOneWidget);
+      expect(find.text('IMPACT'), findsOneWidget);
     });
 
     testWidgets('ReadCaseStudyCta renders correctly and responds to focus',

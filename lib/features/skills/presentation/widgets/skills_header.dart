@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/widget/section_masthead.dart';
+import 'package:profile/shared/widgets/section_masthead.dart';
 
 /// Top editorial header for the Skills & Disciplines section.
 class SkillsHeader extends StatelessWidget {

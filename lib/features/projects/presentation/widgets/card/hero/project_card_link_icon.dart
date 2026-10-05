@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:profile/service/analytics_service.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/core/services/analytics_service.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 class ProjectCardLinkIcon extends StatefulWidget {
   final String tooltip;

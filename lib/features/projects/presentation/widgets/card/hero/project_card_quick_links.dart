@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
-import 'package:profile/features/case_study/case_study_widgets.dart';
+import 'package:profile/features/case_study/presentation/widgets/case_study_widgets.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_link_icon.dart';
 

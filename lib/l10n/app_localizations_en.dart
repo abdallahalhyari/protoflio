@@ -12,7 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navHome => 'Home';
 
   @override
-  String get navWork => 'Selected Work';
+  String get navWork => 'Projects';
 
   @override
   String get navEngineering => 'Engineering';
@@ -33,7 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navResume => 'Resume';
 
   @override
-  String get introLocation => 'Amman, Jordan › Brno, Czech Republic (2027)';
+  String get introLocation => 'Amman → Brno · 2027';
 
   @override
   String get sectionEducation => 'EDUCATION';
@@ -125,14 +125,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copyEmail => 'COPY EMAIL';
 
   @override
-  String get introSeniorEngineer => 'SENIOR MOBILE ENGINEER';
+  String get introSeniorEngineer => 'SENIOR FLUTTER & ANDROID ENGINEER';
 
   @override
-  String get introRoleHeading => 'SENIOR MOBILE ENGINEER';
+  String get introRoleHeading => 'SENIOR FLUTTER & ANDROID ENGINEER';
 
   @override
   String get introValueProposition =>
-      'I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.';
+      'I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.';
 
   @override
   String get introSkillArchitecture => 'Architecture';
@@ -141,7 +141,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSkillProductDelivery => 'Product delivery';
 
   @override
-  String get introWorkEligibility => 'CZ WORK ELIGIBLE · STUDENT';
+  String get introWorkEligibility =>
+      'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES';
 
   @override
   String get introAvailableContracts => 'AVAILABLE FOR CONTRACTS';
@@ -212,30 +213,27 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip => 'ISSUE 01 · PORTFOLIO EDITION · MMXXVI';
-
-  @override
-  String get introBuildsComplex =>
-      'BUILDS COMPLEX, RELIABLE, SCALABLE MOBILE SYSTEMS';
+  String get introIssueStrip =>
+      'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE';
 
   @override
   String get introTechStack =>
       'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems';
 
   @override
-  String get introBasedIn => 'BASED IN';
+  String get introBasedIn => 'LOCATION';
 
   @override
-  String get introStatus => 'STATUS';
+  String get introStatus => 'AVAILABILITY';
 
   @override
-  String get introOpenForRoles => 'OPEN FOR SENIOR ROLES';
+  String get introOpenForRoles => 'Open to Senior Mobile Roles';
 
   @override
-  String get introDiscipline => 'DISCIPLINE';
+  String get introDiscipline => 'SPECIALIZATION';
 
   @override
-  String get introMobileArch => 'MOBILE ARCHITECTURE';
+  String get introMobileArch => 'Flutter · Android · Mobile Architecture';
 
   @override
   String get introMasthead => '// MASTHEAD';
@@ -330,6 +328,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get projectsHeaderKicker => 'FEATURE 03 · SELECTED WORK';
 
   @override
+  String get projectDomainAll => 'ALL';
+
+  @override
+  String get projectDomainHealthcare => 'Healthcare & Smart Cards';
+
+  @override
+  String get projectDomainEnterprise => 'Enterprise HIS & LMS';
+
+  @override
+  String get projectDomainFleet => 'Fleet & Telematics';
+
+  @override
+  String get projectDomainCommerce => 'M-Commerce & Streaming';
+
+  @override
+  String projectTechFilter(String technology) {
+    return 'TECH FILTER: $technology';
+  }
+
+  @override
+  String readCaseStudyFor(String project) {
+    return 'Read case study for $project';
+  }
+
+  @override
+  String get projectTaglineNatHealth =>
+      'Mission-critical NFC smart-card healthcare platform for mobile care, digital claims, and regulatory compliance.';
+
+  @override
+  String get projectTaglineEskadenia =>
+      'High-performance enterprise mobile applications for hospital information systems and education platforms.';
+
+  @override
+  String get projectTaglineSolutions =>
+      'A loyalty rewards platform and an ephemeral video and stories experience, built for consumer scale.';
+
+  @override
+  String get projectTaglineFais =>
+      'High-throughput commerce checkouts and continuous media-streaming applications.';
+
+  @override
+  String get projectOutcomeNatHealth =>
+      'Replaced paper claim submissions with instant contactless smart-card validation.';
+
+  @override
+  String get projectOutcomeEskadenia =>
+      'Sustained 60fps across complex, data-heavy hospital and university workflows.';
+
+  @override
+  String get projectOutcomeSolutions =>
+      'Shipped both applications on time with 4.7+ star store ratings.';
+
+  @override
+  String get projectOutcomeFais =>
+      'Improved checkout completion and reduced abandoned transactions.';
+
+  @override
+  String get skillMasteryLead => 'LEAD';
+
+  @override
+  String get skillMasteryCore => 'CORE';
+
+  @override
+  String get skillMasterySolid => 'SOLID';
+
+  @override
+  String get skillMasteryGrowing => 'GROWING';
+
+  @override
+  String skillCardSemantics(String skill, String level) {
+    return '$skill, $level proficiency. Activate to flip and view details.';
+  }
+
+  @override
   String get experienceHeaderKicker => 'FEATURE 02 · CAREER TRAJECTORY';
 
   @override
@@ -367,16 +439,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.';
 
   @override
-  String get sectionSubtitleSkills =>
-      'Disciplines and stack the work is built on · Flip any card for details';
-
-  @override
   String get sectionSubtitleEngineering =>
       'Production-tested architectures behind the mobile suites';
-
-  @override
-  String get sectionSubtitleAbout =>
-      'Six roles a senior engineer switches between';
 
   @override
   String get flipHintTap => 'TAP TO FLIP';

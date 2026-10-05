@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/test_data.dart';
-import 'package:profile/features/case_study/case_study_nathealth.dart';
+import 'package:profile/features/case_study/presentation/pages/case_study_nathealth.dart';
 
-import 'package:profile/features/hats/widget/hat_playing_card.dart';
-import 'package:profile/features/shell/widget/shortcut_help_dialog.dart';
+import 'package:profile/features/hats/presentation/widgets/hat_playing_card.dart';
+import 'package:profile/features/shell/presentation/widgets/shortcut_help_dialog.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_search_bar.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/main.dart';
-import 'package:profile/theme/app_theme.dart';
+import 'package:profile/core/theme/app_theme.dart';
 
 /// Runs [body] at [size] and [textScale] and returns every framework error
 /// reported on the way (overflows, invalid constraints, NaN transforms).

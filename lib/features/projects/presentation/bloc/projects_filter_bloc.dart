@@ -1,44 +1,48 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:profile/core/usecases/usecase.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
+import 'package:profile/features/projects/domain/usecases/filter_projects_usecase.dart';
+import 'package:profile/features/projects/domain/usecases/get_projects_usecase.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_event.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_state.dart';
 
 class ProjectsFilterBloc
     extends Bloc<ProjectsFilterEvent, ProjectsFilterState> {
-  ProjectsFilterBloc({required ProjectRepository repository})
-      : super(_createInitialState(repository.getProjects())) {
+  final FilterProjectsUseCase _filterUseCase;
+
+  ProjectsFilterBloc({
+    required ProjectRepository repository,
+    FilterProjectsUseCase filterUseCase = const FilterProjectsUseCase(),
+  })  : _filterUseCase = filterUseCase,
+        super(_createInitialState(repository.getProjects(), filterUseCase)) {
+    _registerHandlers();
+  }
+
+  ProjectsFilterBloc.withUseCases({
+    required GetProjectsUseCase getProjectsUseCase,
+    FilterProjectsUseCase filterUseCase = const FilterProjectsUseCase(),
+  })  : _filterUseCase = filterUseCase,
+        super(_createInitialState(
+            getProjectsUseCase(const NoParams()), filterUseCase)) {
+    _registerHandlers();
+  }
+
+  void _registerHandlers() {
     on<DomainFilterSelected>(_onDomainSelected);
     on<TechFilterToggled>(_onTechToggled);
     on<ProjectsFilterReset>(_onReset);
   }
 
-  static ProjectsFilterState _createInitialState(List<Project> projects) {
+  static ProjectsFilterState _createInitialState(
+    List<Project> projects,
+    FilterProjectsUseCase filterUseCase,
+  ) {
     return ProjectsFilterState(
       allProjects: projects,
       filteredProjects: List.unmodifiable(projects),
-      domainCounts: _calculateCounts(projects),
+      domainCounts: filterUseCase.computeDomainCounts(projects),
     );
-  }
-
-  static Map<String, int> _calculateCounts(List<Project> projects) {
-    final counts = <String, int>{'ALL': projects.length};
-    for (final p in projects) {
-      counts[p.domain] = (counts[p.domain] ?? 0) + 1;
-    }
-    return Map.unmodifiable(counts);
-  }
-
-  static List<Project> _filter(
-    List<Project> all,
-    String domain,
-    String? tech,
-  ) {
-    return all.where((p) {
-      final domainMatch = domain == 'ALL' || p.domain == domain;
-      final techMatch = tech == null || p.stack.contains(tech);
-      return domainMatch && techMatch;
-    }).toList();
   }
 
   void _onDomainSelected(
@@ -46,8 +50,13 @@ class ProjectsFilterBloc
     Emitter<ProjectsFilterState> emit,
   ) {
     if (state.selectedDomain == event.domain) return;
-    final filtered =
-        _filter(state.allProjects, event.domain, state.selectedTech);
+    final filtered = _filterUseCase(
+      FilterProjectsParams(
+        allProjects: state.allProjects,
+        domain: event.domain,
+        tech: state.selectedTech,
+      ),
+    );
     emit(state.copyWith(
       selectedDomain: event.domain,
       filteredProjects: filtered,
@@ -59,7 +68,13 @@ class ProjectsFilterBloc
     Emitter<ProjectsFilterState> emit,
   ) {
     final nextTech = state.selectedTech == event.tech ? null : event.tech;
-    final filtered = _filter(state.allProjects, state.selectedDomain, nextTech);
+    final filtered = _filterUseCase(
+      FilterProjectsParams(
+        allProjects: state.allProjects,
+        domain: state.selectedDomain,
+        tech: nextTech,
+      ),
+    );
     emit(state.copyWith(
       selectedTech: () => nextTech,
       filteredProjects: filtered,

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:profile/service/sound_service.dart';
-import 'package:profile/theme/surface_tone.dart';
-import 'package:profile/theme/tokens.dart';
+import 'package:profile/features/projects/presentation/utils/project_copy.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/shared/utils/bidi.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 class ProjectDomainFilters extends StatelessWidget {
   final List<String> domains;
@@ -29,6 +32,7 @@ class ProjectDomainFilters extends StatelessWidget {
     final scheme = theme.colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
     final accentText = context.adaptiveAccentText(scheme.primary);
+    final loc = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +44,7 @@ class ProjectDomainFilters extends StatelessWidget {
             children: [
               for (final domain in domains) ...[
                 _DomainChip(
-                  label: domain,
+                  label: localizedProjectDomain(loc, domain),
                   count: domainCounts[domain] ?? 0,
                   isSelected: domain == selectedDomain,
                   scheme: scheme,
@@ -73,7 +77,12 @@ class ProjectDomainFilters extends StatelessWidget {
                 Icon(Icons.filter_alt_rounded, size: 14, color: accentText),
                 const SizedBox(width: 6),
                 Text(
-                  'TECH FILTER: ${selectedTech!.toUpperCase()}',
+                  ltrContent(
+                    context,
+                    loc.projectTechFilter(
+                      ltrAlways(context, selectedTech!.toUpperCase()),
+                    ),
+                  ),
                   style: TextStyle(
                     fontFamily: AppTypography.monoFont,
                     color: accentText,
