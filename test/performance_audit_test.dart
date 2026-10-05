@@ -7,7 +7,6 @@ import 'helpers/test_data.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 
-import 'package:profile/features/shell/presentation/widgets/custom_cursor.dart';
 import 'package:profile/features/shell/presentation/widgets/desktop_toolbar.dart';
 import 'package:profile/features/shell/presentation/widgets/magazine_page_transformer.dart';
 import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
@@ -48,10 +47,14 @@ void main() {
               'Total image payload must be less than 350 KB for instant load');
     });
 
-    test('Subsetted Tenada display font is within 32 KB budget', () {
-      final fontFile = File('fonts/Tenada.ttf');
-      expect(fontFile.existsSync(), isTrue);
-      expect(fontFile.lengthSync(), lessThanOrEqualTo(32 * 1024));
+    test('Bundled fonts stay within budget', () {
+      // Readex Pro carries Latin, Czech and Arabic in one variable file.
+      final text = File('fonts/ReadexPro.ttf');
+      expect(text.existsSync(), isTrue);
+      expect(text.lengthSync(), lessThanOrEqualTo(300 * 1024));
+      final mono = File('fonts/ShareTechMono-Regular.ttf');
+      expect(mono.existsSync(), isTrue);
+      expect(mono.lengthSync(), lessThanOrEqualTo(48 * 1024));
     });
   });
 
@@ -163,26 +166,6 @@ void main() {
       expect(find.byType(Offstage), findsWidgets);
     });
 
-    testWidgets('CustomCursor suppresses sub-pixel jitter to minimize rebuilds',
-        (tester) async {
-      await tester.binding.setSurfaceSize(const Size(1200, 800));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: Scaffold(
-            body: CustomCursor(
-              child: Text('Cursor Test Target'),
-            ),
-          ),
-        ),
-      );
-
-      expect(find.byType(CustomCursor), findsOneWidget);
-      expect(find.text('Cursor Test Target'), findsOneWidget);
-    });
   });
 
   group('Web Resource Hints Audit (web/index.html)', () {
@@ -197,7 +180,7 @@ void main() {
     test('Contains critical preloads and prefetch resource hints', () {
       expect(
           indexHtml.contains(
-              'rel="preload" href="assets/fonts/Tenada.ttf" as="font"'),
+              'rel="preload" href="assets/fonts/ReadexPro.ttf" as="fetch"'),
           isTrue);
       expect(
           indexHtml.contains('rel="preload" href="main.dart.wasm" as="fetch"'),

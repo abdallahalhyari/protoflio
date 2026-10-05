@@ -52,50 +52,25 @@ Widget _wrapWithTextScaler({
 void main() {
   group('AppTypography Token & Scale Hierarchy Audit', () {
     test('Typography font family tokens are defined and non-empty', () {
-      expect(AppTypography.displayFont, 'Tenada');
-      expect(AppTypography.monoFont, 'Courier');
+      expect(AppTypography.bodyFont, 'ReadexPro');
+      expect(AppTypography.displayFont, AppTypography.bodyFont);
+      expect(AppTypography.monoFont, 'ShareTechMono');
     });
 
-    test('Typography scale maintains strict logical monotonic progression', () {
-      expect(AppTypography.label, lessThan(AppTypography.label));
-      expect(AppTypography.label, lessThan(AppTypography.label));
-      expect(AppTypography.label, lessThan(AppTypography.label));
-      expect(AppTypography.label, lessThanOrEqualTo(AppTypography.label));
-      expect(AppTypography.label, lessThan(AppTypography.label));
-      expect(AppTypography.label, lessThan(AppTypography.label));
-      expect(AppTypography.label, lessThan(AppTypography.label));
-      expect(AppTypography.label, lessThan(AppTypography.body));
-      expect(AppTypography.body, lessThan(AppTypography.body));
-      expect(AppTypography.body, lessThan(AppTypography.body));
-      expect(AppTypography.body, lessThan(AppTypography.body));
-      expect(AppTypography.body, lessThan(AppTypography.lead));
-      expect(AppTypography.lead, lessThan(AppTypography.lead));
-      expect(AppTypography.lead, lessThan(AppTypography.title));
-      expect(AppTypography.title, lessThan(AppTypography.title));
-      expect(AppTypography.title, lessThan(AppTypography.title));
-      expect(AppTypography.title, lessThan(AppTypography.heading));
-      expect(AppTypography.heading, lessThan(AppTypography.heading));
-      expect(AppTypography.heading, lessThan(AppTypography.display));
-      expect(AppTypography.display, lessThan(AppTypography.display));
-      expect(AppTypography.display, lessThan(AppTypography.display));
-      expect(AppTypography.display, lessThan(AppTypography.hero));
-      expect(AppTypography.hero, lessThan(AppTypography.hero));
-      expect(AppTypography.hero, lessThan(AppTypography.hero));
-      expect(AppTypography.hero, lessThan(AppTypography.watermark));
-    });
-
-    test('New audit tokens match expected design point values', () {
-      expect(AppTypography.label, 8.5);
-      expect(AppTypography.body, 14.5);
-      expect(AppTypography.lead, 15.0);
-      expect(AppTypography.title, 18.0);
-      expect(AppTypography.title, 22.0);
-      expect(AppTypography.heading, 24.0);
-      expect(AppTypography.display, 36.0);
-      expect(AppTypography.display, 38.0);
-      expect(AppTypography.hero, 54.0);
-      expect(AppTypography.hero, 60.0);
-      expect(AppTypography.watermark, 220.0);
+    test('Seven-step scale, strictly increasing, nothing below 12px', () {
+      const scale = [
+        AppTypography.label,
+        AppTypography.body,
+        AppTypography.lead,
+        AppTypography.title,
+        AppTypography.heading,
+        AppTypography.display,
+        AppTypography.hero,
+      ];
+      for (var i = 1; i < scale.length; i++) {
+        expect(scale[i], greaterThan(scale[i - 1]));
+      }
+      expect(scale.first, greaterThanOrEqualTo(12));
     });
   });
 

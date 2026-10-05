@@ -59,7 +59,7 @@ class PeriodBadgeRow extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 PulsingDot(
-                  color: isDark ? kNowAccent : AppColors.tealDeep,
+                  color: isDark ? AppColors.tealLight : AppColors.tealDeep,
                 ),
                 const SizedBox(width: 6),
                 Flexible(
@@ -67,7 +67,7 @@ class PeriodBadgeRow extends StatelessWidget {
                     AppLocalizations.of(context)!.uiLatestDispatch,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: isDark ? kNowAccent : AppColors.tealDeep,
+                      color: isDark ? AppColors.tealLight : AppColors.tealDeep,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
                     ),

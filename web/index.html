@@ -49,6 +49,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 
   <!-- Performance Preconnect & Preloads -->
+  <!-- The text face: the engine fetches it before the first frame. -->
+  <link rel="preload" href="assets/fonts/ReadexPro.ttf" as="fetch" crossorigin>
   <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="preload" href="canvaskit/skwasm.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="modulepreload" href="main.dart.mjs" crossorigin>

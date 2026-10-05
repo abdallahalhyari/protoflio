@@ -64,7 +64,7 @@ class CompanionReadingPercentPill extends StatelessWidget {
             style: TextStyle(
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w900,
-              color: isDark ? AppColors.teal : AppColors.tealDeep,
+              color: isDark ? AppColors.tealLight : AppColors.tealDeep,
             ),
           ),
         ],
@@ -188,7 +188,9 @@ class _CompanionChapterPillState extends State<CompanionChapterPill> {
                         fontWeight:
                             isActive ? FontWeight.w900 : FontWeight.w700,
                         color: isActive
-                            ? (isDark ? AppColors.teal : AppColors.tealDeep)
+                            ? (isDark
+                                ? AppColors.tealLight
+                                : AppColors.tealDeep)
                             : (_hovered
                                 ? (context.onSurface)
                                 : (context.mutedText)),

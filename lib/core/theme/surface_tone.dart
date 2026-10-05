@@ -89,7 +89,7 @@ extension SurfaceTone on BuildContext {
       isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
 
   /// Border for the resume CTA.
-  Color get resumeBorder => isDarkMode ? AppColors.gold : AppColors.gold;
+  Color get resumeBorder => isDarkMode ? AppColors.goldSoft : AppColors.gold;
 
   /// Semantic accessible accent text colors (>4.5:1 contrast in both modes)
   Color get amberText => isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
@@ -100,7 +100,7 @@ extension SurfaceTone on BuildContext {
   /// mode; in dark mode lifted just enough to clear 5:1 on the card
   /// surface (mid-tones like violet sat at 4.3:1).
   Color adaptiveAccentText(Color color) => isDarkMode
-      ? AppColors.legibleOn(color, AppColors.darkCard, target: 5.0)
+      ? AppColors.legibleOn(color, AppColors.darkCard, target: 6.0)
       : AppColors.toAccessibleLightText(color);
 
   // ---------------------------------------------------------------------------

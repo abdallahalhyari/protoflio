@@ -57,7 +57,7 @@ class AppTheme {
   /// Contrast an accent keeps against the plain card surface. Above the
   /// 4.5:1 minimum so it still passes on the accent-tinted chips and
   /// badges drawn on those cards.
-  static const double _accentContrast = 5.5;
+  static const double _accentContrast = 6.5;
 
   static ThemeData _base(Brightness brightness, Color seedColor) {
     final isDark = brightness == Brightness.dark;

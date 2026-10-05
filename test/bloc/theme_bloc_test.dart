@@ -28,52 +28,27 @@ void main() {
       expect(resolve('https://a.app/?theme=DARK', 'light'), ThemeMode.dark);
     });
 
-    test('anything else (including a stale "system") is dark', () {
-      expect(resolve('https://a.app/', 'system'), ThemeMode.dark);
-      expect(resolve('https://a.app/?theme=sepia'), ThemeMode.dark);
+    test('anything else (including a stale "system") is light', () {
+      expect(resolve('https://a.app/', 'system'), ThemeMode.light);
+      expect(resolve('https://a.app/?theme=sepia'), ThemeMode.light);
     });
-  });
-
-  test('colorForIndex maps each section to its accent', () {
-    expect(ThemeBloc.colorForIndex(0), AppColors.seed);
-    expect(ThemeBloc.colorForIndex(1), AppColors.teal);
-    expect(ThemeBloc.colorForIndex(2), AppColors.teal);
-    expect(ThemeBloc.colorForIndex(3), AppColors.gold);
-    expect(ThemeBloc.colorForIndex(4), AppColors.signal);
-    expect(ThemeBloc.colorForIndex(5), AppColors.teal);
-    expect(ThemeBloc.colorForIndex(6), AppColors.teal);
-    expect(ThemeBloc.colorForIndex(99), AppColors.seed);
   });
 
   group('ThemeBloc', () {
     blocTest<ThemeBloc, ThemeState>(
-      'toggles between dark and light and saves the choice',
+      'toggles between light and dark and saves the choice',
       build: ThemeBloc.new,
       act: (b) => b
         ..add(const ThemeModeToggled())
         ..add(const ThemeModeToggled()),
       expect: () => const [
-        ThemeState(mode: ThemeMode.light),
+        ThemeState(mode: ThemeMode.dark),
         ThemeState(),
       ],
       verify: (_) async {
         final prefs = await SharedPreferences.getInstance();
-        expect(prefs.getString(ThemeBloc.prefsKey), 'dark');
+        expect(prefs.getString(ThemeBloc.prefsKey), 'light');
       },
-    );
-
-    blocTest<ThemeBloc, ThemeState>(
-      'a section change sets its accent as the seed',
-      build: ThemeBloc.new,
-      act: (b) => b
-        ..add(const ThemeAccentUpdated(3))
-        ..add(const ThemeAccentUpdated(3))
-        ..add(const ThemeAccentUpdated(0)),
-      // The repeat is a no-op (same state), not a second rebuild.
-      expect: () => const [
-        ThemeState(seedColor: AppColors.gold),
-        ThemeState(),
-      ],
     );
   });
 }

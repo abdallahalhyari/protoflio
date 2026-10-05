@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/main.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
-import 'package:profile/features/shell/presentation/widgets/custom_cursor.dart';
 import 'package:profile/features/shell/presentation/widgets/page_background.dart';
 import 'helpers/test_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -94,30 +93,6 @@ void main() {
       expect(find.byType(RepaintBoundary), findsWidgets);
     });
 
-    testWidgets(
-        'CustomCursor wraps pointer layer in RepaintBoundary on desktop',
-        (tester) async {
-      tester.view.physicalSize = const Size(1280, 800);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-
-      await tester.pumpWidget(
-        const MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: Scaffold(
-            body: CustomCursor(
-              child: Text('Cursor Test'),
-            ),
-          ),
-        ),
-      );
-      await tester.pump(const Duration(milliseconds: 100));
-
-      expect(find.byType(CustomCursor), findsOneWidget);
-      expect(find.byType(RepaintBoundary), findsWidgets);
-    });
 
     testWidgets(
         'Desktop wheel gesture advances page and respects directional reversal',

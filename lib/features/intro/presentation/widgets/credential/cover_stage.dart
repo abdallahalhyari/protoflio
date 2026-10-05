@@ -290,20 +290,25 @@ class _CoverStageState extends State<CoverStage> with TickerProviderStateMixin {
     return MouseRegion(
       onHover: _onHover,
       onExit: _onExit,
-      child: widget.isContinuousMobile
-          ? ConstrainedBox(
-              constraints: BoxConstraints(minHeight: size.height),
-              child: stage,
-            )
-          : SizedBox.expand(
-              child: SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: size.height),
-                  child: stage,
+      // The ink is an ancestor of the copy (not just a sibling layer), so
+      // contrast tooling and text-on-surface lookups see the real ground.
+      child: DecoratedBox(
+        decoration: const BoxDecoration(color: _kStage),
+        child: widget.isContinuousMobile
+            ? ConstrainedBox(
+                constraints: BoxConstraints(minHeight: size.height),
+                child: stage,
+              )
+            : SizedBox.expand(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: size.height),
+                    child: stage,
+                  ),
                 ),
               ),
-            ),
+      ),
     );
   }
 
@@ -512,7 +517,7 @@ class _Reader extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: AppTypography.monoFont,
                     fontSize: AppTypography.label,
-                    color: Colors.white.withValues(alpha: 0.5),
+                    color: Colors.white.withValues(alpha: 0.62),
                   ),
                 ),
               ),

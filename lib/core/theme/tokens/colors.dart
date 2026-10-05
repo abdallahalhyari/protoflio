@@ -40,7 +40,7 @@ class AppColors {
   // Contact gold — interactive accent.
   static const Color gold = Color(0xFFB08D3C);
   static const Color goldSoft = Color(0xFFE3CB8E); // on ink surfaces
-  static const Color goldDeep = Color(0xFF7A5E1E); // text on paper (5.3:1)
+  static const Color goldDeep = Color(0xFF6B5216); // text on paper (6.4:1)
 
   // Guilloche teal — secondary lines, diagram strokes, positive status.
   static const Color teal = Color(0xFF2F6F6A);
@@ -123,7 +123,7 @@ class AppColors {
   static const Color ink200 = Color(0xFFDDE1DA);
   static const Color ink300 = Color(0xFFC9CEC6);
   static const Color ink400 = Color(0xFF959E9B);
-  static const Color ink500 = Color(0xFF66716F);
+  static const Color ink500 = Color(0xFF5E6967);
   static const Color ink600 = Color(0xFF4A5763);
   static const Color ink700 = Color(0xFF34425A);
   static const Color ink800 = Color(0xFF24324A);

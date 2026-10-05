@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -261,15 +262,9 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
                       '($count)',
                       style: TextStyle(
                         color: isSelected
-                            ? (isDark
-                                ? color.withValues(alpha: 0.85)
-                                : textColor)
-                            : (isDark
-                                ? scheme.onSurface.withValues(alpha: 0.45)
-                                : AppColors.ink500),
-                        fontSize: isDesktop
-                            ? AppTypography.label
-                            : AppTypography.label,
+                            ? textColor
+                            : (isDark ? context.mutedText : AppColors.ink500),
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

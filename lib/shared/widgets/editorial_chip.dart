@@ -42,13 +42,13 @@ class EditorialChip extends StatelessWidget {
       case ChipTone.primary:
         return scheme.primary;
       case ChipTone.amber:
-        return isDark ? AppColors.gold : AppColors.goldDeep;
+        return isDark ? AppColors.goldSoft : AppColors.goldDeep;
       case ChipTone.green:
-        return isDark ? AppColors.teal : AppColors.tealDeep;
+        return isDark ? AppColors.tealLight : AppColors.tealDeep;
       case ChipTone.sky:
-        return isDark ? AppColors.teal : AppColors.tealDeep;
+        return isDark ? AppColors.tealLight : AppColors.tealDeep;
       case ChipTone.indigo:
-        return isDark ? AppColors.teal : AppColors.tealDeep;
+        return isDark ? AppColors.tealLight : AppColors.tealDeep;
       case ChipTone.neutral:
         return isDark
             ? scheme.onSurface.withValues(alpha: 0.7)
