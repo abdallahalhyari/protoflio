@@ -25,7 +25,6 @@ import 'package:profile/features/contact/presentation/pages/contact_page.dart'
     deferred as contact_lib;
 
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
-import 'package:profile/features/shell/presentation/widgets/custom_cursor.dart';
 import 'package:profile/features/shell/presentation/widgets/deferred_page.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_home_layout.dart';
 import 'package:profile/features/shell/presentation/widgets/shortcut_help_dialog.dart';
@@ -578,34 +577,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return HomeControllerScope(
       controller: _homeController,
-      child: CustomCursor(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: DesktopKeyboardNav(
-            focusNode: _focusNode,
-            pageCount: _pageCount,
-            onNext: _next,
-            onPrev: _prev,
-            onGoTo: _goTo,
-            onShowHelp: _showShortcutHelp,
-            child: PageBackground(
-              child: isDesktop
-                  ? DesktopHomeLayout(
-                      controller: _controller,
-                      pageIndex: _pageIndex,
-                      pageCount: _pageCount,
-                      isPageTransitioning: _isPageTransitioning,
-                      lastPageTurnCompletedAt: _lastPageTurnCompletedAt,
-                      onNext: _next,
-                      onPrev: _prev,
-                      onShowHelp: _showShortcutHelp,
-                      buildDesktopPage: _buildDesktopPage,
-                    )
-                  : MobileHomeLayout(
-                      scrollController: _mobileScrollController,
-                      sectionKeys: _sectionKeys,
-                    ),
-            ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: DesktopKeyboardNav(
+          focusNode: _focusNode,
+          pageCount: _pageCount,
+          onNext: _next,
+          onPrev: _prev,
+          onGoTo: _goTo,
+          onShowHelp: _showShortcutHelp,
+          child: PageBackground(
+            child: isDesktop
+                ? DesktopHomeLayout(
+                    controller: _controller,
+                    pageIndex: _pageIndex,
+                    pageCount: _pageCount,
+                    isPageTransitioning: _isPageTransitioning,
+                    lastPageTurnCompletedAt: _lastPageTurnCompletedAt,
+                    onNext: _next,
+                    onPrev: _prev,
+                    onShowHelp: _showShortcutHelp,
+                    buildDesktopPage: _buildDesktopPage,
+                  )
+                : MobileHomeLayout(
+                    scrollController: _mobileScrollController,
+                    sectionKeys: _sectionKeys,
+                  ),
           ),
         ),
       ),
@@ -617,36 +614,36 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return IntroPage(
           onScrollDown: _next,
-          onViewWork: () => _goTo(2),
+          onViewWork: () => _goTo(1),
           onDownloadResume: _downloadResume,
           onContactMe: () => _goTo(6),
         );
       case 1:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
-          loader: experience_lib.loadLibrary,
-          builder: () => experience_lib.ExperiencePage(
-            controller: _controller,
-            pageIndex: 1,
-          ),
+          loader: projects_lib.loadLibrary,
+          builder: () => projects_lib.ProjectsPage(),
         );
       case 2:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
-          loader: projects_lib.loadLibrary,
-          builder: () => projects_lib.ProjectsPage(),
+          loader: engineering_lib.loadLibrary,
+          builder: () => engineering_lib.EngineeringPage(),
         );
       case 3:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
-          loader: skills_lib.loadLibrary,
-          builder: () => skills_lib.SkillsPage(),
+          loader: experience_lib.loadLibrary,
+          builder: () => experience_lib.ExperiencePage(
+            controller: _controller,
+            pageIndex: 3,
+          ),
         );
       case 4:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
-          loader: engineering_lib.loadLibrary,
-          builder: () => engineering_lib.EngineeringPage(),
+          loader: skills_lib.loadLibrary,
+          builder: () => skills_lib.SkillsPage(),
         );
       case 5:
         return DeferredPage(

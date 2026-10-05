@@ -286,5 +286,8 @@
   "cardOutcome1": "Papírové žádosti nahradilo bezkontaktní ověření čipové karty",
   "cardOutcome2": "Čtení NFC pod jednu sekundu na široké škále telefonů s Androidem",
   "cardOutcome3": "O 35 % méně pádů a stabilních 60 fps v nemocničních aplikacích s velkým objemem dat",
-  "cardSemantics": "Identifikační karta Abdallaha Alhyariho. Aktivací přečtete čip a kartu otočíte."
+  "cardSemantics": "Identifikační karta Abdallaha Alhyariho. Aktivací přečtete čip a kartu otočíte.",
+  "coverHintDrag": "Přetáhněte kartu na čtečku, nebo na ni klikněte.",
+  "coverHintTap": "Klepnutím kartu přečtete.",
+  "coverGranted": "Přístup povolen"
 }

@@ -475,5 +475,8 @@
   "cardOutcome1": "Paper claims replaced by contactless smart-card checks",
   "cardOutcome2": "Sub-second NFC reads across a wide range of Android phones",
   "cardOutcome3": "35% fewer crashes and a steady 60 fps in data-heavy hospital apps",
-  "cardSemantics": "Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over."
+  "cardSemantics": "Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over.",
+  "coverHintDrag": "Drag the card onto the reader, or click it.",
+  "coverHintTap": "Tap the card to read it.",
+  "coverGranted": "Access granted"
 }

@@ -981,4 +981,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get cardSemantics =>
       'Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over.';
+
+  @override
+  String get coverHintDrag => 'Drag the card onto the reader, or click it.';
+
+  @override
+  String get coverHintTap => 'Tap the card to read it.';
+
+  @override
+  String get coverGranted => 'Access granted';
 }

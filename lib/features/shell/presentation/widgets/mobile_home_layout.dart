@@ -73,7 +73,7 @@ class MobileHomeLayout extends StatelessWidget {
                 key: sectionKeys[0],
                 child: IntroPage(
                   onScrollDown: () => controller.scrollToMobileSection(1),
-                  onViewWork: () => controller.scrollToMobileSection(2),
+                  onViewWork: () => controller.scrollToMobileSection(1),
                   onDownloadResume: () => CvService.open(context),
                   onContactMe: () => controller.scrollToMobileSection(6),
                   isContinuousMobile: true,
@@ -81,26 +81,19 @@ class MobileHomeLayout extends StatelessWidget {
               ),
             ),
             MobileSectionDivider(number: '02', title: _dividerLabel(labels, 1)),
-            // Key outside DeferredMount: the jump target must exist (and
-            // have a position) even while the section is a placeholder.
             KeyedSubtree(
               key: sectionKeys[1],
               child: DeferredMount(
                 sectionIndex: 1,
                 placeholderHeight: 720,
-                // Build the section ahead of the reader right away and the
-                // rest once the intro has settled, one per frame, instead of
-                // all seven while a phone is still loading the page.
                 distance: 1,
                 mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
-                    // Top to bottom, one per frame: the first frame shows the
-                    // cover instead of waiting for every section to build.
                     mountPriority: 1,
-                    loader: experience_lib.loadLibrary,
+                    loader: projects_lib.loadLibrary,
                     builder: () =>
-                        experience_lib.ExperiencePage(isContinuousMobile: true),
+                        projects_lib.ProjectsPage(isContinuousMobile: true),
                   ),
                 ),
               ),
@@ -116,27 +109,34 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: DeferredPage(
                     mountPriority: 2,
-                    loader: projects_lib.loadLibrary,
-                    builder: () =>
-                        projects_lib.ProjectsPage(isContinuousMobile: true),
+                    loader: engineering_lib.loadLibrary,
+                    builder: () => engineering_lib.EngineeringPage(
+                        isContinuousMobile: true),
                   ),
                 ),
               ),
             ),
             MobileSectionDivider(number: '04', title: _dividerLabel(labels, 3)),
+            // Key outside DeferredMount: the jump target must exist (and
+            // have a position) even while the section is a placeholder.
             KeyedSubtree(
               key: sectionKeys[3],
               child: DeferredMount(
                 sectionIndex: 3,
                 placeholderHeight: 720,
+                // Build the section ahead of the reader right away and the
+                // rest once the intro has settled, one per frame, instead of
+                // all seven while a phone is still loading the page.
                 distance: 1,
                 mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
+                    // Top to bottom, one per frame: the first frame shows the
+                    // cover instead of waiting for every section to build.
                     mountPriority: 3,
-                    loader: skills_lib.loadLibrary,
+                    loader: experience_lib.loadLibrary,
                     builder: () =>
-                        skills_lib.SkillsPage(isContinuousMobile: true),
+                        experience_lib.ExperiencePage(isContinuousMobile: true),
                   ),
                 ),
               ),
@@ -152,9 +152,9 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: DeferredPage(
                     mountPriority: 4,
-                    loader: engineering_lib.loadLibrary,
-                    builder: () => engineering_lib.EngineeringPage(
-                        isContinuousMobile: true),
+                    loader: skills_lib.loadLibrary,
+                    builder: () =>
+                        skills_lib.SkillsPage(isContinuousMobile: true),
                   ),
                 ),
               ),

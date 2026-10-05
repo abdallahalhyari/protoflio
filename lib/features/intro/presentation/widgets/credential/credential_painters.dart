@@ -158,3 +158,156 @@ class ContactlessPainter extends CustomPainter {
   bool shouldRepaint(ContactlessPainter oldDelegate) =>
       oldDelegate.color != color || oldDelegate.pulse != pulse;
 }
+
+/// Holographic laminate over the card face. The sheen band and the
+/// iridescent patch over the rosette both follow [tilt] (-1..1 on each
+/// axis), so the foil shifts as the card turns under the light.
+class HoloFoilPainter extends CustomPainter {
+  const HoloFoilPainter({required this.tilt});
+
+  final Offset tilt;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+
+    // Sheen band sweeping across with the tilt.
+    final c = 0.5 + tilt.dx * 0.45 + tilt.dy * 0.2;
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.white.withValues(alpha: 0),
+            AppColors.tealLight.withValues(alpha: 0.16),
+            Colors.white.withValues(alpha: 0.42),
+            AppColors.goldSoft.withValues(alpha: 0.2),
+            Colors.white.withValues(alpha: 0),
+          ],
+          stops: [
+            (c - 0.32).clamp(0.0, 1.0),
+            (c - 0.12).clamp(0.0, 1.0),
+            c.clamp(0.0, 1.0),
+            (c + 0.12).clamp(0.0, 1.0),
+            (c + 0.32).clamp(0.0, 1.0),
+          ],
+        ).createShader(rect),
+    );
+
+    // Iridescent hologram patch over the rosette.
+    final centre = Offset(size.width * 0.86, size.height * 0.34);
+    final r = size.height * 0.2;
+    final patch = Rect.fromCircle(center: centre, radius: r);
+    canvas.drawCircle(
+      centre,
+      r,
+      Paint()
+        ..shader = SweepGradient(
+          transform: GradientRotation((tilt.dx - tilt.dy) * math.pi),
+          colors: [
+            AppColors.tealLight.withValues(alpha: 0.5),
+            AppColors.goldSoft.withValues(alpha: 0.55),
+            AppColors.signalLight.withValues(alpha: 0.35),
+            Colors.white.withValues(alpha: 0.5),
+            AppColors.tealLight.withValues(alpha: 0.5),
+          ],
+        ).createShader(patch),
+    );
+  }
+
+  @override
+  bool shouldRepaint(HoloFoilPainter oldDelegate) => oldDelegate.tilt != tilt;
+}
+
+/// A wall of hex byte pairs, the raw traffic between reader and card.
+/// Laid out once per size; rows are single text runs so painting stays
+/// cheap. Deterministic, so it doesn't reshuffle between frames.
+class HexFieldPainter extends CustomPainter {
+  HexFieldPainter({required this.color});
+
+  final Color color;
+
+  static const double _rowHeight = 22;
+  static const String _digits = '0123456789ABCDEF';
+
+  final List<TextPainter> _rows = [];
+  Size? _laidOutFor;
+
+  void _layout(Size size) {
+    for (final r in _rows) {
+      r.dispose();
+    }
+    _rows.clear();
+    final rng = math.Random(7816);
+    final style = TextStyle(
+      fontFamily: AppTypography.monoFont,
+      fontSize: AppTypography.label,
+      color: color,
+      letterSpacing: 1.5,
+    );
+    final pairs = (size.width / 26).ceil() + 1;
+    final rows = (size.height / _rowHeight).ceil() + 1;
+    for (var y = 0; y < rows; y++) {
+      final b = StringBuffer();
+      for (var x = 0; x < pairs; x++) {
+        b
+          ..write(_digits[rng.nextInt(16)])
+          ..write(_digits[rng.nextInt(16)])
+          ..write(' ');
+      }
+      _rows.add(
+        TextPainter(
+          text: TextSpan(text: b.toString(), style: style),
+          textDirection: TextDirection.ltr,
+          maxLines: 1,
+        )..layout(),
+      );
+    }
+    _laidOutFor = size;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (_laidOutFor != size) _layout(size);
+    for (var i = 0; i < _rows.length; i++) {
+      // Alternate rows shift half a pair, like interleaved trace output.
+      _rows[i].paint(canvas, Offset(i.isOdd ? -13 : 0, i * _rowHeight));
+    }
+  }
+
+  @override
+  bool shouldRepaint(HexFieldPainter oldDelegate) => oldDelegate.color != color;
+}
+
+/// Opens the next page from the reader: a disc of [color] growing from
+/// [centre] until it covers the stage.
+class IrisPainter extends CustomPainter {
+  IrisPainter({
+    required this.progress,
+    required this.centre,
+    required this.color,
+  }) : super(repaint: progress);
+
+  final Animation<double> progress;
+  final Offset centre;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final t = progress.value;
+    if (t <= 0) return;
+    final reach = [
+      Offset.zero,
+      Offset(size.width, 0),
+      Offset(0, size.height),
+      Offset(size.width, size.height),
+    ].map((p) => (p - centre).distance).reduce(math.max);
+    canvas.drawCircle(centre, reach * t, Paint()..color = color);
+  }
+
+  @override
+  bool shouldRepaint(IrisPainter oldDelegate) =>
+      oldDelegate.centre != centre || oldDelegate.color != color;
+}

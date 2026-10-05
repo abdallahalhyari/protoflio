@@ -1821,6 +1821,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over.'**
   String get cardSemantics;
+
+  /// No description provided for @coverHintDrag.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag the card onto the reader, or click it.'**
+  String get coverHintDrag;
+
+  /// No description provided for @coverHintTap.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the card to read it.'**
+  String get coverHintTap;
+
+  /// No description provided for @coverGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'Access granted'**
+  String get coverGranted;
 }
 
 class _AppLocalizationsDelegate

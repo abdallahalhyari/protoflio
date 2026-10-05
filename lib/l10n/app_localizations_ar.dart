@@ -974,4 +974,13 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get cardSemantics =>
       'بطاقة تعريف عبدالله الحياري. فعّلها لقراءة الشريحة وقلب البطاقة.';
+
+  @override
+  String get coverHintDrag => 'اسحب البطاقة إلى القارئ أو انقر عليها.';
+
+  @override
+  String get coverHintTap => 'انقر على البطاقة لقراءتها.';
+
+  @override
+  String get coverGranted => 'تم السماح بالدخول';
 }

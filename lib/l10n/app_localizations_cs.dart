@@ -981,4 +981,14 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get cardSemantics =>
       'Identifikační karta Abdallaha Alhyariho. Aktivací přečtete čip a kartu otočíte.';
+
+  @override
+  String get coverHintDrag =>
+      'Přetáhněte kartu na čtečku, nebo na ni klikněte.';
+
+  @override
+  String get coverHintTap => 'Klepnutím kartu přečtete.';
+
+  @override
+  String get coverGranted => 'Přístup povolen';
 }
