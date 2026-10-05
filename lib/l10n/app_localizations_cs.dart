@@ -912,4 +912,73 @@ class AppLocalizationsCs extends AppLocalizations {
   String badgeRoles(int count) {
     return '$count role';
   }
+
+  @override
+  String get coverName => 'Abdallah Alhyari';
+
+  @override
+  String get coverStatement =>
+      'Mobilní aplikace, které fungují offline, čtou čipové karty a chrání data pacientů.';
+
+  @override
+  String get coverLead =>
+      'Jsem senior Flutter a Android vývojář s pěti lety praxe na podnikových aplikacích pro zdravotnictví, vzdělávání a obchod. Žiji v Ammánu, v roce 2027 se stěhuji do Brna.';
+
+  @override
+  String get coverEmailPrefix => 'Nebo napište na';
+
+  @override
+  String get cardHintTap => 'Klepnutím na kartu přečtete čip';
+
+  @override
+  String get cardHintClick => 'Kliknutím na kartu přečtete čip';
+
+  @override
+  String get cardHintTurnBackTap => 'Dalším klepnutím kartu otočíte zpět';
+
+  @override
+  String get cardHintTurnBackClick => 'Dalším kliknutím kartu otočíte zpět';
+
+  @override
+  String get cardSurname => 'Alhyari';
+
+  @override
+  String get cardGivenName => 'Abdallah';
+
+  @override
+  String get cardFieldSurname => 'Příjmení';
+
+  @override
+  String get cardFieldGiven => 'Jméno';
+
+  @override
+  String get cardFieldRole => 'Role';
+
+  @override
+  String get cardFieldBase => 'Bydliště';
+
+  @override
+  String get cardRole => 'Senior mobilní vývojář';
+
+  @override
+  String get cardBase => 'Ammán, od 2027 Brno';
+
+  @override
+  String get cardBackTitle => 'Přečteno z čipu';
+
+  @override
+  String get cardOutcome1 =>
+      'Papírové žádosti nahradilo bezkontaktní ověření čipové karty';
+
+  @override
+  String get cardOutcome2 =>
+      'Čtení NFC pod jednu sekundu na široké škále telefonů s Androidem';
+
+  @override
+  String get cardOutcome3 =>
+      'O 35 % méně pádů a stabilních 60 fps v nemocničních aplikacích s velkým objemem dat';
+
+  @override
+  String get cardSemantics =>
+      'Identifikační karta Abdallaha Alhyariho. Aktivací přečtete čip a kartu otočíte.';
 }

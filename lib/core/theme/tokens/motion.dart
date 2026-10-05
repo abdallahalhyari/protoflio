@@ -30,6 +30,10 @@ class AppMotion {
       Duration(milliseconds: 260); // intro wordmark
   static const Duration pageTurn =
       Duration(milliseconds: 400); // desktop wheel page jump
+  /// The cover credential's chip read: contactless pulse, APDU exchange,
+  /// then the card turns over. The site's one orchestrated motion.
+  static const Duration credentialRead = Duration(milliseconds: 1400);
+  static const Duration credentialEject = Duration(milliseconds: 600);
   static const Duration cardFlip =
       Duration(milliseconds: 400); // skill / hat card flip
   static const Duration sectionScroll =

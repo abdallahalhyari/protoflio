@@ -36,12 +36,12 @@ void main() {
 
   test('colorForIndex maps each section to its accent', () {
     expect(ThemeBloc.colorForIndex(0), AppColors.seed);
-    expect(ThemeBloc.colorForIndex(1), AppColors.accentGreen);
-    expect(ThemeBloc.colorForIndex(2), AppColors.accentViolet);
-    expect(ThemeBloc.colorForIndex(3), AppColors.accentAmber);
-    expect(ThemeBloc.colorForIndex(4), AppColors.accentRose);
-    expect(ThemeBloc.colorForIndex(5), AppColors.accentCyan);
-    expect(ThemeBloc.colorForIndex(6), AppColors.accentIndigoDeep);
+    expect(ThemeBloc.colorForIndex(1), AppColors.teal);
+    expect(ThemeBloc.colorForIndex(2), AppColors.teal);
+    expect(ThemeBloc.colorForIndex(3), AppColors.gold);
+    expect(ThemeBloc.colorForIndex(4), AppColors.signal);
+    expect(ThemeBloc.colorForIndex(5), AppColors.teal);
+    expect(ThemeBloc.colorForIndex(6), AppColors.teal);
     expect(ThemeBloc.colorForIndex(99), AppColors.seed);
   });
 
@@ -71,7 +71,7 @@ void main() {
         ..add(const ThemeAccentUpdated(0)),
       // The repeat is a no-op (same state), not a second rebuild.
       expect: () => const [
-        ThemeState(seedColor: AppColors.accentAmber),
+        ThemeState(seedColor: AppColors.gold),
         ThemeState(),
       ],
     );

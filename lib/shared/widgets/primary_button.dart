@@ -197,18 +197,6 @@ class _PrimaryButtonState extends State<PrimaryButton>
               setState(() => _isHovered = false);
             }
           },
-          onHover: (event) {
-            if (!_enabled || _key.currentContext == null || reduceMotion) {
-              return;
-            }
-            final RenderBox box =
-                _key.currentContext!.findRenderObject() as RenderBox;
-            final center = Offset(box.size.width / 2, box.size.height / 2);
-            final delta = event.localPosition - center;
-            final next = Offset(delta.dx * 0.15, delta.dy * 0.25);
-            if ((next - _hover.offset.value).distanceSquared < 2) return;
-            _hover.set(next);
-          },
           cursor: _enabled
               ? SystemMouseCursors.click
               : SystemMouseCursors.forbidden,

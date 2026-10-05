@@ -912,4 +912,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String badgeRoles(int count) {
     return '$count roles';
   }
+
+  @override
+  String get coverName => 'Abdallah Alhyari';
+
+  @override
+  String get coverStatement =>
+      'Mobile apps that work offline, read smart cards and keep patient data safe.';
+
+  @override
+  String get coverLead =>
+      'I\'m a senior Flutter and Android engineer with five years on enterprise healthcare, education and commerce apps. Based in Amman, moving to Brno in 2027.';
+
+  @override
+  String get coverEmailPrefix => 'Or email';
+
+  @override
+  String get cardHintTap => 'Tap the card to read its chip';
+
+  @override
+  String get cardHintClick => 'Click the card to read its chip';
+
+  @override
+  String get cardHintTurnBackTap => 'Tap the card again to turn it over';
+
+  @override
+  String get cardHintTurnBackClick => 'Click the card again to turn it over';
+
+  @override
+  String get cardSurname => 'Alhyari';
+
+  @override
+  String get cardGivenName => 'Abdallah';
+
+  @override
+  String get cardFieldSurname => 'Surname';
+
+  @override
+  String get cardFieldGiven => 'Given name';
+
+  @override
+  String get cardFieldRole => 'Role';
+
+  @override
+  String get cardFieldBase => 'Based in';
+
+  @override
+  String get cardRole => 'Senior mobile engineer';
+
+  @override
+  String get cardBase => 'Amman, Brno from 2027';
+
+  @override
+  String get cardBackTitle => 'Read from the chip';
+
+  @override
+  String get cardOutcome1 =>
+      'Paper claims replaced by contactless smart-card checks';
+
+  @override
+  String get cardOutcome2 =>
+      'Sub-second NFC reads across a wide range of Android phones';
+
+  @override
+  String get cardOutcome3 =>
+      '35% fewer crashes and a steady 60 fps in data-heavy hospital apps';
+
+  @override
+  String get cardSemantics =>
+      'Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over.';
 }

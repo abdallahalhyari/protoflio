@@ -905,4 +905,73 @@ class AppLocalizationsAr extends AppLocalizations {
   String badgeRoles(int count) {
     return '$count أدوار · أثر مؤسسي';
   }
+
+  @override
+  String get coverName => 'عبدالله الحياري';
+
+  @override
+  String get coverStatement =>
+      'تطبيقات جوال تعمل دون اتصال، وتقرأ البطاقات الذكية، وتحمي بيانات المرضى.';
+
+  @override
+  String get coverLead =>
+      'أنا مهندس فلاتر وأندرويد أول بخبرة خمس سنوات في تطبيقات المؤسسات للرعاية الصحية والتعليم والتجارة. أقيم في عمّان وأنتقل إلى برنو في 2027.';
+
+  @override
+  String get coverEmailPrefix => 'أو راسلني على';
+
+  @override
+  String get cardHintTap => 'انقر على البطاقة لقراءة شريحتها';
+
+  @override
+  String get cardHintClick => 'انقر على البطاقة لقراءة شريحتها';
+
+  @override
+  String get cardHintTurnBackTap => 'انقر على البطاقة مرة أخرى لقلبها';
+
+  @override
+  String get cardHintTurnBackClick => 'انقر على البطاقة مرة أخرى لقلبها';
+
+  @override
+  String get cardSurname => 'الحياري';
+
+  @override
+  String get cardGivenName => 'عبدالله';
+
+  @override
+  String get cardFieldSurname => 'اسم العائلة';
+
+  @override
+  String get cardFieldGiven => 'الاسم';
+
+  @override
+  String get cardFieldRole => 'الدور';
+
+  @override
+  String get cardFieldBase => 'مكان الإقامة';
+
+  @override
+  String get cardRole => 'مهندس تطبيقات جوال أول';
+
+  @override
+  String get cardBase => 'عمّان، وبرنو ابتداءً من 2027';
+
+  @override
+  String get cardBackTitle => 'مقروء من الشريحة';
+
+  @override
+  String get cardOutcome1 =>
+      'استبدال المطالبات الورقية بتحقق لاسلكي عبر البطاقة الذكية';
+
+  @override
+  String get cardOutcome2 =>
+      'قراءة NFC في أقل من ثانية على مجموعة واسعة من هواتف أندرويد';
+
+  @override
+  String get cardOutcome3 =>
+      'أعطال أقل بنسبة 35% وأداء ثابت بمعدل 60 إطارًا في الثانية في تطبيقات المستشفيات كثيفة البيانات';
+
+  @override
+  String get cardSemantics =>
+      'بطاقة تعريف عبدالله الحياري. فعّلها لقراءة الشريحة وقلب البطاقة.';
 }

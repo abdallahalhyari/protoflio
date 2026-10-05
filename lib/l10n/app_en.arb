@@ -454,5 +454,26 @@
         "type": "int"
       }
     }
-  }
+  },
+  "coverName": "Abdallah Alhyari",
+  "coverStatement": "Mobile apps that work offline, read smart cards and keep patient data safe.",
+  "coverLead": "I'm a senior Flutter and Android engineer with five years on enterprise healthcare, education and commerce apps. Based in Amman, moving to Brno in 2027.",
+  "coverEmailPrefix": "Or email",
+  "cardHintTap": "Tap the card to read its chip",
+  "cardHintClick": "Click the card to read its chip",
+  "cardHintTurnBackTap": "Tap the card again to turn it over",
+  "cardHintTurnBackClick": "Click the card again to turn it over",
+  "cardSurname": "Alhyari",
+  "cardGivenName": "Abdallah",
+  "cardFieldSurname": "Surname",
+  "cardFieldGiven": "Given name",
+  "cardFieldRole": "Role",
+  "cardFieldBase": "Based in",
+  "cardRole": "Senior mobile engineer",
+  "cardBase": "Amman, Brno from 2027",
+  "cardBackTitle": "Read from the chip",
+  "cardOutcome1": "Paper claims replaced by contactless smart-card checks",
+  "cardOutcome2": "Sub-second NFC reads across a wide range of Android phones",
+  "cardOutcome3": "35% fewer crashes and a steady 60 fps in data-heavy hospital apps",
+  "cardSemantics": "Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over."
 }

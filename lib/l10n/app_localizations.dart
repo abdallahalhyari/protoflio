@@ -1695,6 +1695,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} roles'**
   String badgeRoles(int count);
+
+  /// No description provided for @coverName.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdallah Alhyari'**
+  String get coverName;
+
+  /// No description provided for @coverStatement.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile apps that work offline, read smart cards and keep patient data safe.'**
+  String get coverStatement;
+
+  /// No description provided for @coverLead.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m a senior Flutter and Android engineer with five years on enterprise healthcare, education and commerce apps. Based in Amman, moving to Brno in 2027.'**
+  String get coverLead;
+
+  /// No description provided for @coverEmailPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Or email'**
+  String get coverEmailPrefix;
+
+  /// No description provided for @cardHintTap.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the card to read its chip'**
+  String get cardHintTap;
+
+  /// No description provided for @cardHintClick.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the card to read its chip'**
+  String get cardHintClick;
+
+  /// No description provided for @cardHintTurnBackTap.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the card again to turn it over'**
+  String get cardHintTurnBackTap;
+
+  /// No description provided for @cardHintTurnBackClick.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the card again to turn it over'**
+  String get cardHintTurnBackClick;
+
+  /// No description provided for @cardSurname.
+  ///
+  /// In en, this message translates to:
+  /// **'Alhyari'**
+  String get cardSurname;
+
+  /// No description provided for @cardGivenName.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdallah'**
+  String get cardGivenName;
+
+  /// No description provided for @cardFieldSurname.
+  ///
+  /// In en, this message translates to:
+  /// **'Surname'**
+  String get cardFieldSurname;
+
+  /// No description provided for @cardFieldGiven.
+  ///
+  /// In en, this message translates to:
+  /// **'Given name'**
+  String get cardFieldGiven;
+
+  /// No description provided for @cardFieldRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get cardFieldRole;
+
+  /// No description provided for @cardFieldBase.
+  ///
+  /// In en, this message translates to:
+  /// **'Based in'**
+  String get cardFieldBase;
+
+  /// No description provided for @cardRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Senior mobile engineer'**
+  String get cardRole;
+
+  /// No description provided for @cardBase.
+  ///
+  /// In en, this message translates to:
+  /// **'Amman, Brno from 2027'**
+  String get cardBase;
+
+  /// No description provided for @cardBackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Read from the chip'**
+  String get cardBackTitle;
+
+  /// No description provided for @cardOutcome1.
+  ///
+  /// In en, this message translates to:
+  /// **'Paper claims replaced by contactless smart-card checks'**
+  String get cardOutcome1;
+
+  /// No description provided for @cardOutcome2.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-second NFC reads across a wide range of Android phones'**
+  String get cardOutcome2;
+
+  /// No description provided for @cardOutcome3.
+  ///
+  /// In en, this message translates to:
+  /// **'35% fewer crashes and a steady 60 fps in data-heavy hospital apps'**
+  String get cardOutcome3;
+
+  /// No description provided for @cardSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over.'**
+  String get cardSemantics;
 }
 
 class _AppLocalizationsDelegate
