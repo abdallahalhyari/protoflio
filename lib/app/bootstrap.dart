@@ -9,6 +9,7 @@ import 'package:profile/features/experience/data/repositories/local_experience_r
 import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
+import 'package:profile/service/boot_handoff.dart';
 import 'package:profile/service/sound_service.dart';
 import 'package:profile/theme/app_theme.dart';
 import 'package:profile/theme/tokens/colors.dart';
@@ -92,6 +93,7 @@ class AppBootstrapper extends StatefulWidget {
 class _AppBootstrapperState extends State<AppBootstrapper> {
   late Future<AppBootstrapData> _bootstrapFuture;
   bool _didMinimumSplashTimePass = false;
+  bool _announcedReady = false;
   Timer? _minimumSplashTimer;
 
   @override
@@ -123,6 +125,20 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
       _bootstrapFuture = widget.bootstrapOverride ?? _bootstrap();
     });
     _scheduleMinimumSplash();
+  }
+
+  /// Lets the HTML boot screen go once a real screen (the app, or the
+  /// retry screen) has painted under it. Waits one more frame past the
+  /// first: on the web the frame is drawn off the main thread and can
+  /// reach the screen after this frame's callbacks have run.
+  void _announceReady() {
+    if (_announcedReady) return;
+    _announcedReady = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance
+        ..scheduleFrame()
+        ..addPostFrameCallback((_) => signalAppReady());
+    });
   }
 
   Future<AppBootstrapData> _bootstrap() async {
@@ -180,8 +196,12 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
         // splash cost ~570ms of first content on the live site. The
         // minimum only fronts the error screen, so a quick failure (or
         // a retry) doesn't flash between loading and error.
-        if (snapshot.hasData) return widget.builder(snapshot.data!);
+        if (snapshot.hasData) {
+          _announceReady();
+          return widget.builder(snapshot.data!);
+        }
         if (snapshot.hasError && _didMinimumSplashTimePass) {
+          _announceReady();
           return _StartupErrorScreen(onRetry: _retry);
         }
         return const _StartupLoadingScreen();
@@ -230,8 +250,6 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.dark();
-    final surface = AppColors.darkSurface;
-    final surfaceElevated = AppColors.darkSurfaceElevated;
     final accent = AppColors.accentIndigo;
     final panelBorder = Colors.white.withValues(alpha: 0.12);
 
@@ -240,19 +258,20 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Material(
-          color: surface,
+          color: AppColors.darkNight,
+          // The HTML boot screen's gradient: this screen only shows if the
+          // content is slow, and then sits right where the boot screen was.
           child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+            decoration: const BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment(0, -0.16),
+                radius: 1.1,
                 colors: [
-                  surface,
-                  Color.alphaBlend(
-                    accent.withValues(alpha: 0.08),
-                    surfaceElevated,
-                  ),
+                  AppColors.bootGlow,
+                  AppColors.darkNight,
+                  AppColors.bootEdge,
                 ],
+                stops: [0.0, 0.52, 1.0],
               ),
             ),
             child: Center(

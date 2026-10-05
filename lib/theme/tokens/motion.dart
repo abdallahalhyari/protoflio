@@ -36,6 +36,10 @@ class AppMotion {
       Duration(milliseconds: 600); // mobile section jump
   static const Duration entry =
       Duration(milliseconds: 800); // page-entry stagger
+  static const Duration mastheadReveal =
+      Duration(milliseconds: 900); // section header ink-in, played once
+  static const Duration heroSheen =
+      Duration(milliseconds: 1200); // light pass over the wordmark, once
   static const Duration ambient =
       Duration(milliseconds: 1400); // long-loop hint bounces
   static const Duration pulse =
