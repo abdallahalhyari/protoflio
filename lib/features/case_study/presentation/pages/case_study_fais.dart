@@ -9,7 +9,7 @@ import 'package:profile/features/projects/presentation/widgets/pipeline_topology
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
-import 'package:profile/shared/widgets/pulsing_dot.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 /// Deep-dive case study on FAIS's M-Commerce & Media-Streaming Clients.
@@ -245,11 +245,9 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          const PulsingDot(color: AppColors.teal),
-          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.studyRoleMobileDev} · 2021',
+              '${l10n.studyRoleMobileDev}, 2021',
               // Two lines on phones rather than clipping the end date
               // ("2024 — PRES…").
               maxLines: 2,
@@ -257,7 +255,7 @@ class _Masthead extends StatelessWidget {
               style: TextStyle(
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                color: scheme.onSurface.withValues(alpha: 0.6),
+                color: context.mutedText,
               ),
             ),
           ),

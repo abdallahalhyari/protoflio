@@ -83,8 +83,8 @@ class SkillSearchBar extends StatelessWidget {
                     hintStyle: TextStyle(
                       fontSize:
                           isDesktop ? AppTypography.body : AppTypography.label,
-                      // 0.4 was 2.5:1 in light mode; 0.62 clears 4.5:1.
-                      color: scheme.onSurface.withValues(alpha: 0.62),
+                      // The muted text tone clears 4.5:1 on both themes.
+                      color: context.mutedText,
                       fontWeight: FontWeight.w500,
                     ),
                     border: InputBorder.none,

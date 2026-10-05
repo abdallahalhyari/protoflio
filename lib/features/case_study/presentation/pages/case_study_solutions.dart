@@ -9,7 +9,7 @@ import 'package:profile/features/projects/presentation/widgets/pipeline_topology
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
-import 'package:profile/shared/widgets/pulsing_dot.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 /// Deep-dive case study on Solutions Now IT's Loyalty Rewards & Ephemeral Social
@@ -245,11 +245,9 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          const PulsingDot(color: AppColors.gold),
-          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.studyRoleFlutterDev} · 2021 — 2022',
+              '${l10n.studyRoleFlutterDev}, 2021–2022',
               // Two lines on phones rather than clipping the end date
               // ("2024 — PRES…").
               maxLines: 2,
@@ -257,7 +255,7 @@ class _Masthead extends StatelessWidget {
               style: TextStyle(
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                color: scheme.onSurface.withValues(alpha: 0.6),
+                color: context.mutedText,
               ),
             ),
           ),
