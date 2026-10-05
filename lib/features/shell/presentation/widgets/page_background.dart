@@ -23,6 +23,7 @@ class _PageBackgroundState extends State<PageBackground>
     with SingleTickerProviderStateMixin {
   final ValueNotifier<Offset> _mouseOffset = ValueNotifier(Offset.zero);
   late final AnimationController _breathController;
+  late final AppLifecycleListener _lifecycleListener;
 
   @override
   void initState() {
@@ -31,6 +32,26 @@ class _PageBackgroundState extends State<PageBackground>
       vsync: this,
       duration: AppMotion.idleMount,
     );
+    _lifecycleListener = AppLifecycleListener(
+      onPause: _onAppPause,
+      onHide: _onAppPause,
+      onResume: _onAppResume,
+      onShow: _onAppResume,
+    );
+  }
+
+  void _onAppPause() {
+    if (_breathController.isAnimating) {
+      _breathController.stop();
+    }
+  }
+
+  void _onAppResume() {
+    if (mounted &&
+        !MediaQuery.disableAnimationsOf(context) &&
+        !_breathController.isAnimating) {
+      _breathController.repeat(reverse: true);
+    }
   }
 
   @override
@@ -47,6 +68,7 @@ class _PageBackgroundState extends State<PageBackground>
 
   @override
   void dispose() {
+    _lifecycleListener.dispose();
     _breathController.dispose();
     _mouseOffset.dispose();
     super.dispose();
