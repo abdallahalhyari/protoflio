@@ -9,6 +9,7 @@ import 'package:profile/shared/utils/hover_reset_offset_controller.dart';
 class MagneticPull extends StatefulWidget {
   final Widget child;
   final bool enabled;
+
   /// How far the button can be pulled from its center (in pixels). Default 12.0.
   final double maxPull;
 
@@ -52,8 +53,10 @@ class _MagneticPullState extends State<MagneticPull>
     final localPosition = renderBox.globalToLocal(event.position);
 
     // Map position to a normalized pull factor (-1 to 1)
-    final dx = ((localPosition.dx - center.dx) / (size.width / 2)).clamp(-1.0, 1.0);
-    final dy = ((localPosition.dy - center.dy) / (size.height / 2)).clamp(-1.0, 1.0);
+    final dx =
+        ((localPosition.dx - center.dx) / (size.width / 2)).clamp(-1.0, 1.0);
+    final dy =
+        ((localPosition.dy - center.dy) / (size.height / 2)).clamp(-1.0, 1.0);
 
     // Apply maxPull and set offset
     _hover.set(Offset(dx * widget.maxPull, dy * widget.maxPull));

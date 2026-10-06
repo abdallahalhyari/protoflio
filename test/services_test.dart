@@ -77,7 +77,8 @@ void main() {
       expect(Analytics.ctaEmail, returnsNormally);
       expect(Analytics.ctaCvDownload, returnsNormally);
       expect(() => Analytics.ctaProject('TestCo'), returnsNormally);
-      expect(() => Analytics.ctaChapterJump('nathealth', 'architecture'), returnsNormally);
+      expect(() => Analytics.ctaChapterJump('nathealth', 'architecture'),
+          returnsNormally);
       expect(Analytics.ctaAmmanClock, returnsNormally);
       expect(() => Analytics.ctaContactPreset('Fulltime'), returnsNormally);
       expect(() => Analytics.ctaRoleHatSelect('Architect'), returnsNormally);
