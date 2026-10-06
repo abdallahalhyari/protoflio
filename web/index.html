@@ -11,7 +11,7 @@
   <meta name="description" content="Senior Flutter and Android Engineer specializing in enterprise mobile applications, offline-first architecture, NFC, security, performance, and scalable mobile systems.">
   <meta name="author" content="Abdallah Alhyari">
   <meta name="keywords" content="Abdallah Alhyari, Senior Flutter Engineer, Senior Android Developer, Kotlin, NFC ISO-7816 APDU, Offline-First Architecture, WorkManager, JWT Security, Mobile Solutions Architect, Amman Jordan, Brno Czech Republic">
-  <meta name="theme-color" content="#121D2F">
+  <meta name="theme-color" content="#0E0E10">
   <meta name="color-scheme" content="dark light">
 
   <!-- Search Engine Directives -->
@@ -49,6 +49,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 
   <!-- Performance Preconnect & Preloads -->
+  <link rel="preload" href="assets/fonts/Tenada.ttf" as="font" type="font/ttf" crossorigin>
   <!-- The text face: the engine fetches it before the first frame. -->
   <link rel="preload" href="assets/fonts/ReadexPro.ttf" as="fetch" crossorigin>
   <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
@@ -190,10 +191,15 @@
   </script>
 
   <style>
-    /* The boot screen is the cover's reader stage (AppColors.ink950); the
+    @font-face {
+      font-family: 'Tenada';
+      src: url('assets/fonts/Tenada.ttf') format('truetype');
+      font-display: swap;
+    }
+    /* The boot screen's and the page's midnight (AppColors.darkNight): the
        canvas can present a frame or two after the boot screen starts to
-       fade, and the body showing through must be the same ink. */
-    html, body { margin: 0; padding: 0; height: 100%; background: #121D2F; }
+       fade, and the body showing through must not flash a different dark. */
+    html, body { margin: 0; padding: 0; height: 100%; background: #0B101D; }
     .skip-link {
       position: fixed; left: -9999px; top: 8px;
       background: #E11D48; color: #fff; padding: 10px 14px;
@@ -205,94 +211,63 @@
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      background: #121D2F;
+      background: radial-gradient(ellipse at 50% 42%, #141B2E 0%, #0B101D 52%, #060911 100%);
       color: #ffffff;
       z-index: 9999;
       opacity: 1;
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(1);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       overflow: hidden;
-      padding: 0 16px;
+      padding: 0 24px;
       text-align: center;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
     }
-    /* Faint hex traffic, as on the cover. */
-    #boot-loader::before {
-      content: "A0 00 00 02 47 10 01 90 00 00 A4 04 0C 07 B0 81 00 00 3F 00 61 10 6A 82 9F 7C C0 00 47 10 A0 00 00 02 47 10 01 90 00 00 A4 04 0C 07 B0 81 00 00 3F 00 61 10 6A 82 9F 7C C0 00 47 10";
-      position: absolute; inset: -20px;
-      font: 12px/22px ui-monospace, "Cascadia Mono", Consolas, monospace;
-      letter-spacing: 1.5px; word-spacing: 4px;
-      color: rgba(127, 189, 181, 0.09);
-      overflow: hidden; pointer-events: none;
-      white-space: normal; word-break: break-all;
-      text-align: left;
+    .boot-slow {
+      display: none;
+      margin-top: 22px;
+      max-width: 340px;
+      font: 500 13px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: rgba(255, 255, 255, 0.72);
     }
-    #boot-loader > * { position: relative; }
-    .boot-container { display: flex; flex-direction: column; align-items: center; }
-    .boot-who { font-size: 15px; color: rgba(255, 255, 255, 0.66); margin: 0 0 12px; }
-    .boot-who b { color: #fff; font-weight: 600; margin-inline-end: 1em; }
-    .boot-statement {
-      max-width: 1080px; margin: 0 0 48px;
-      font-size: clamp(30px, 3.6vw, 56px); line-height: 1.08;
-      font-weight: 650; letter-spacing: -0.025em; color: #fff;
+    #boot-loader.slow .boot-slow { display: block; }
+    /* Flutter is up and building the page: freeze the loader's loops (the
+       glow and shimmer repaint on the main thread every frame) so they
+       don't compete with that work while the screen waits to hand off. */
+    #boot-loader.settled * { animation-play-state: paused; }
+    .boot-pitch {
+      max-width: 440px;
+      margin: 0 0 24px;
+      font: 400 14px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: #CBD5E1;
       user-select: text; -webkit-user-select: text;
     }
-    /* The credential, drawn in CSS: card stock, gold contact plate. */
-    .boot-card {
-      width: min(86vw, 360px); aspect-ratio: 85.6 / 53.98;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #ffffff, #F7F8F5);
-      box-shadow: 0 24px 40px rgba(0, 0, 0, 0.5);
-      position: relative; margin-bottom: 24px;
-    }
-    .boot-card::before {
-      content: ""; position: absolute; left: 4.4%; top: 6%;
-      width: 11%; aspect-ratio: 40 / 31; border-radius: 5px;
-      background: linear-gradient(135deg, #E3CB8E, #B08D3C 55%, #7A5E1E);
-    }
-    /* The reader slab; its slot carries the loading scan. */
-    .boot-reader {
-      width: min(92vw, 420px); height: 56px; box-sizing: border-box;
-      display: flex; align-items: center; gap: 12px; padding: 0 16px;
-      border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);
-      background: linear-gradient(#24324A, #1B2A41);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
-    }
-    .boot-slot {
-      flex: 1; height: 4px; border-radius: 2px; background: #121D2F;
-      position: relative; overflow: hidden;
-    }
-    .boot-slot::after {
-      content: ""; position: absolute; top: 0; bottom: 0; width: 35%;
-      background: linear-gradient(90deg, transparent, #E3CB8E, transparent);
-      animation: boot-scan 1.4s ease-in-out infinite;
-    }
-    .boot-std { font: 12px ui-monospace, Consolas, monospace; color: rgba(255, 255, 255, 0.5); }
-    .boot-lamp { width: 9px; height: 9px; border-radius: 50%; background: #E3CB8E; box-shadow: 0 0 8px #E3CB8E; animation: boot-blink 0.9s steps(2) infinite; }
-    #boot-loader.settled * { animation-play-state: paused; }
-    #boot-loader.settled *::after { animation-play-state: paused; }
     .boot-actions {
-      display: flex; flex-wrap: wrap; gap: 8px;
+      display: flex; flex-wrap: wrap; gap: 10px;
       align-items: center; justify-content: center;
-      margin-top: 24px;
+      margin-bottom: 28px;
     }
     .boot-actions a {
       display: inline-flex; align-items: center; min-height: 44px;
-      padding: 0 20px; border-radius: 8px;
-      font: 600 14px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      text-decoration: none;
-      color: #fff; border: 1px solid rgba(255, 255, 255, 0.3);
-      transition: background-color 0.15s ease;
+      padding: 0 20px; border-radius: 999px;
+      font: 700 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+      color: #C7D2FE; border: 1px solid rgba(165, 180, 252, 0.45);
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
-    .boot-actions a:hover { background: rgba(255, 255, 255, 0.08); }
-    .boot-actions a.primary { background: #B08D3C; border-color: #B08D3C; color: #121D2F; }
-    .boot-actions a.primary:hover { background: #E3CB8E; }
-    .boot-actions a:focus-visible { outline: 2px solid #E3CB8E; outline-offset: 3px; }
-    .boot-loading { margin-top: 16px; font-size: 13px; color: rgba(255, 255, 255, 0.6); }
-    .boot-slow {
-      display: none; margin: 12px 0 0; max-width: 340px;
-      font-size: 13px; line-height: 1.55; color: rgba(255, 255, 255, 0.72);
+    .boot-actions a:hover { background: rgba(99, 102, 241, 0.14); border-color: #A5B4FC; }
+    .boot-actions a.primary { background: #4F46E5; border-color: #4F46E5; color: #FFFFFF; }
+    .boot-actions a.primary:hover { background: #4338CA; }
+    .boot-actions a:focus-visible { outline: 2px solid #A5B4FC; outline-offset: 3px; }
+    @media (max-width: 420px) {
+      .boot-role { letter-spacing: 0.1em; }
     }
-    #boot-loader.slow .boot-slow { display: block; }
+    .boot-loading {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font: 500 11px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: #94A3B8;
+    }
     #consent-banner {
       position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
       z-index: 10000; display: flex; align-items: center; gap: 10px;
@@ -311,11 +286,100 @@
     }
     #consent-banner button.primary { background: #B08D3C; border-color: #B08D3C; color: #121D2F; }
     #consent-banner button:focus-visible { outline: 2px solid #E3CB8E; outline-offset: 2px; }
-    #boot-loader.hidden { opacity: 0; pointer-events: none; }
-    @keyframes boot-scan { 0% { left: -35%; } 100% { left: 100%; } }
-    @keyframes boot-blink { 0% { opacity: 1; } 100% { opacity: 0.25; } }
-    @media (prefers-reduced-motion: reduce) {
-      .boot-slot::after, .boot-lamp { animation: none; }
+    #boot-loader.hidden {
+      opacity: 0;
+      transform: scale(1.025);
+      pointer-events: none;
+    }
+    .boot-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .boot-emblem-wrap {
+      position: relative;
+      width: 76px;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .boot-orbital-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: #6366F1;
+      border-right-color: #EC4899;
+      border-bottom-color: rgba(99, 102, 241, 0.15);
+      animation: boot-orbit 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
+    }
+    .boot-emblem {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Tenada', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: #FFFFFF;
+      box-shadow: 0 0 32px rgba(99, 102, 241, 0.45), 0 0 64px rgba(139, 92, 246, 0.2);
+      animation: boot-pulse-glow 2s ease-in-out infinite alternate;
+    }
+    .boot-title {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: clamp(20px, 4.2vw, 34px);
+      font-weight: 800;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: #F8FAFC;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    .boot-role {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #A5B4FC;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .boot-progress-track {
+      width: 140px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .boot-progress-bar {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 50%;
+      background: linear-gradient(90deg, transparent, #6366F1, #EC4899, #F59E0B, transparent);
+      border-radius: 999px;
+      animation: boot-shimmer 1.4s ease-in-out infinite;
+    }
+    @keyframes boot-orbit {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes boot-pulse-glow {
+      0% { transform: scale(0.98); box-shadow: 0 0 24px rgba(99, 102, 241, 0.35); }
+      100% { transform: scale(1.02); box-shadow: 0 0 42px rgba(99, 102, 241, 0.55), 0 0 70px rgba(236, 72, 153, 0.25); }
+    }
+    @keyframes boot-shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(250%); }
     }
     /* Screen reader & crawler accessible semantic layout (never blocks visual Canvas) */
     .sr-only {
@@ -388,21 +452,26 @@
        frame. Crossfades into the app's own hero once it renders. -->
   <div id="boot-loader">
     <div class="boot-container">
-      <p class="boot-who"><b>Abdallah Alhyari</b>Senior mobile engineer</p>
-      <p class="boot-statement">Mobile apps that work offline, read smart cards and keep patient data safe.</p>
-      <div class="boot-card" aria-hidden="true"></div>
-      <div class="boot-reader" aria-hidden="true">
-        <span class="boot-slot"></span>
-        <span class="boot-std">ISO/IEC 14443</span>
-        <span class="boot-lamp"></span>
+      <div class="boot-emblem-wrap" aria-hidden="true">
+        <div class="boot-orbital-ring"></div>
+        <div class="boot-emblem">A</div>
       </div>
-      <div class="boot-loading" role="status">Loading the portfolio&hellip;</div>
+      <div class="boot-title">Abdallah Alhyari</div>
+      <div class="boot-role">Senior Mobile Engineer &middot; Flutter &amp; Android</div>
+      <p class="boot-pitch">Builds complex, reliable, scalable mobile systems &mdash;
+        offline-first sync, NFC smart-cards, security and real-time apps.</p>
       <nav class="boot-actions" aria-label="Quick links">
         <a class="primary" href="cv.pdf">Download CV</a>
-        <a href="mailto:alhyariabdallh@gmail.com">Email</a>
+        <a href="mailto:alhyariabdallh@gmail.com">Email me</a>
         <a href="https://www.linkedin.com/in/abdallah-alhyari-0294791a0/" rel="noopener" target="_blank">LinkedIn</a>
       </nav>
-      <p class="boot-slow">Still loading. This can take a moment on a slow connection.</p>
+      <div class="boot-loading" role="status">
+        <div class="boot-progress-track" aria-hidden="true">
+          <div class="boot-progress-bar"></div>
+        </div>
+        <span>Loading the interactive portfolio&hellip;</span>
+      </div>
+      <p class="boot-slow">Still loading &mdash; this can take a moment on a slow connection.</p>
     </div>
   </div>
 

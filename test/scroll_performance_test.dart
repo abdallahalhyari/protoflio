@@ -93,7 +93,6 @@ void main() {
       expect(find.byType(RepaintBoundary), findsWidgets);
     });
 
-
     testWidgets(
         'Desktop wheel gesture advances page and respects directional reversal',
         (tester) async {

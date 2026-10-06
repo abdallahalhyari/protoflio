@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navResume => 'السيرة الذاتية';
 
   @override
-  String get introLocation => 'عمّان، والانتقال إلى برنو في 2027';
+  String get introLocation => 'عمان → برنو · 2027';
 
   @override
   String get sectionEducation => 'التعليم';
@@ -119,6 +119,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get downloadResume => 'تحميل السيرة الذاتية';
 
   @override
+  String get introDownloadResume => 'تحميل السيرة الذاتية';
+
+  @override
   String get contactMe => 'تواصل معي';
 
   @override
@@ -126,6 +129,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
+
+  @override
+  String get introRoleLine => 'مهندس تطبيقات هواتف أول';
 
   @override
   String get introRoleHeading => 'مهندس تطبيقات هواتف أول';
@@ -142,7 +148,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introWorkEligibility =>
-      'أنتقل إلى برنو في 2027، ومتاح لأدوار الجوال القيادية';
+      'الانتقال إلى برنو · 2027   •   متاح لأدوار مهندس أول';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
@@ -211,12 +217,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip =>
-      'عمّان، والانتقال إلى برنو في 2027. متاح لأدوار الجوال القيادية في فلاتر وأندرويد ومعمارية الجوال.';
+  String get introIssueStrip => 'الإصدار 01 · نسخة معرض الأعمال · 2026';
 
   @override
   String get introTechStack =>
-      'فلاتر، أندرويد، آي أو إس، معمارية البرمجيات، العمل دون اتصال، NFC، الأمان، أنظمة الوقت الفعلي';
+      'فلاتر · أندرويد · آي أو إس · معمارية برمجيات · أنظمة دون اتصال · NFC · أمان · أنظمة الوقت الفعلي';
 
   @override
   String get introBasedIn => 'الموقع';
@@ -231,7 +236,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introDiscipline => 'التخصص';
 
   @override
-  String get introMobileArch => 'فلاتر، أندرويد، معمارية الجوال';
+  String get introMobileArch => 'فلاتر · أندرويد · معمارية الجوال';
 
   @override
   String get introMasthead => '// الترويسة';

@@ -165,7 +165,6 @@ void main() {
       expect(find.byType(TickerMode), findsWidgets);
       expect(find.byType(Offstage), findsWidgets);
     });
-
   });
 
   group('Web Resource Hints Audit (web/index.html)', () {

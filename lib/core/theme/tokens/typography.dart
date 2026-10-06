@@ -13,6 +13,10 @@ class AppTypography {
   /// line, APDU bytes) — never for ordinary labels.
   static const String monoFont = 'ShareTechMono';
 
+  /// Tenada, kept for the cover alone: the outlined ABDALLAH wordmark and
+  /// the ALHYARI subline of the original intro. Nowhere else.
+  static const String wordmarkFont = 'Tenada';
+
   static const double label = 12; // meta, chips, captions
   static const double body = 14;
   static const double lead = 16; // intro paragraphs, card titles

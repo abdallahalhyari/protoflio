@@ -303,22 +303,22 @@ void main() {
     test(
         'toAccessibleLightText maps saturated dark-mode tones to high-contrast light tones',
         () {
-      expect(AppColors.toAccessibleLightText(AppColors.gold),
-          AppColors.goldDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.gold), AppColors.goldDeep);
       expect(AppColors.toAccessibleLightText(const Color(0xFFFBBF24)),
           AppColors.goldDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.teal),
-          AppColors.tealDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.teal),
-          AppColors.tealDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.teal),
-          AppColors.tealDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
       expect(AppColors.toAccessibleLightText(AppColors.signal),
           AppColors.signalDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.teal),
-          AppColors.tealDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.teal),
-          AppColors.tealDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
     });
 
     testWidgets(
@@ -344,8 +344,8 @@ void main() {
           child: Builder(
             builder: (context) {
               expect(context.isDarkMode, isTrue);
-              expect(context.adaptiveAccentText(AppColors.gold),
-                  AppColors.gold);
+              expect(
+                  context.adaptiveAccentText(AppColors.gold), AppColors.gold);
               return const SizedBox.shrink();
             },
           ),

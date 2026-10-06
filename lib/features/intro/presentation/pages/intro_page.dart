@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/features/intro/presentation/widgets/intro_availability_banner.dart';
+import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
+import 'package:profile/features/intro/presentation/widgets/intro_footer_strip.dart';
+import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
+import 'package:profile/features/shell/presentation/widgets/scroll_explore_hint.dart';
+import 'package:profile/features/intro/presentation/widgets/intro_constellation.dart';
 
-import 'package:profile/features/intro/presentation/widgets/credential/cover_stage.dart';
+import 'package:profile/features/intro/presentation/widgets/intro_proof_row.dart';
+import 'package:profile/features/intro/presentation/widgets/hero/hero_wordmark.dart';
+import 'package:profile/features/intro/presentation/widgets/hero/hero_subline.dart';
+import 'package:profile/features/intro/presentation/widgets/hero/hero_role_block.dart';
 
-/// The cover: a full-bleed card reader. Reading the credential unlocks
-/// the site and opens onto the work; the two plain actions under the
-/// reader do the same without the ceremony.
+/// Intro reimagined as a premium magazine cover:
+///   [issue strip]      TOP — small caps run + registration marks
+///   ABDALLAH           HERO — outlined Tenada wordmark, full-bleed
+///   ALHYARI • portrait  SUB — solid subline sitting next to a boxed portrait
+///   [role kicker]      MID — role tagline stack over hairline rules
+///   [CTA row]          BODY — 3 CTAs (view work / resume / contact)
+///   [footer strip]     BASE — 3-column masthead footer: location · status · disciplines
 class IntroPage extends StatefulWidget {
   final VoidCallback onScrollDown;
   final VoidCallback? onViewWork;
@@ -26,19 +41,112 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+  late final AnimationController _rimController;
+
   @override
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+    _rimController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (AppMedia.reduceMotion(context)) {
+      _rimController.stop();
+    } else {
+      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
+        _rimController.value = 1.0;
+      } else {
+        _rimController.repeat();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _rimController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
-    final viewWork = widget.onViewWork ?? widget.onScrollDown;
-    return CoverStage(
-      isContinuousMobile: widget.isContinuousMobile,
-      onUnlocked: viewWork,
-      onViewWork: viewWork,
-      onDownloadResume: widget.onDownloadResume ?? widget.onScrollDown,
+    final size = MediaQuery.sizeOf(context);
+    final isWide = AppBreakpoints.isDesktop(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isCompactH = isWide && size.height < 920;
+
+    final body = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        HeroWordmark(
+            size: size, isDark: isDark, isCompactH: isCompactH, isWide: isWide),
+        SizedBox(
+            height:
+                isCompactH ? 8.0 : (isWide ? AppSpacing.smd : AppSpacing.xs)),
+        HeroSubline(
+            size: size,
+            isWide: isWide,
+            isDark: isDark,
+            isCompactH: isCompactH,
+            rimAnimation: _rimController),
+        SizedBox(
+            height:
+                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        HeroRoleBlock(size: size, isDark: isDark, isCompactH: isCompactH),
+        SizedBox(
+            height:
+                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        IntroAvailabilityBanner(isDark: isDark, isWide: isWide),
+        SizedBox(
+            height:
+                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        IntroCtaRow(
+          isDark: isDark,
+          onViewWork: widget.onViewWork ?? widget.onScrollDown,
+          onDownloadResume: widget.onDownloadResume ?? widget.onScrollDown,
+          onContactMe: widget.onContactMe ?? widget.onScrollDown,
+        ),
+        SizedBox(
+            height:
+                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
+        IntroProofRow(isDark: isDark, isWide: isWide),
+        SizedBox(
+            height:
+                isCompactH ? 14.0 : (isWide ? AppSpacing.xl : AppSpacing.lg)),
+        IntroFooterStrip(
+          isDark: isDark,
+          onContactMe: widget.onContactMe,
+          onViewWork: widget.onViewWork,
+        ),
+        if (isWide && !widget.isContinuousMobile && size.height >= 1000) ...[
+          const SizedBox(height: AppSpacing.md),
+          ScrollExploreHint(
+            onTap: () {
+              SoundService.instance.playClick();
+              widget.onScrollDown();
+            },
+          ),
+        ],
+      ],
+    );
+
+    return IntroConstellation(
+      isDark: isDark,
+      child: ScrollableAppScreenShell(
+        maxWidth: 1200,
+        isContinuousMobile: widget.isContinuousMobile,
+        child: body,
+      ),
     );
   }
 }

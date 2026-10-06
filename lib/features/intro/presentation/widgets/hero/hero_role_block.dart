@@ -1,0 +1,154 @@
+import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
+import 'package:profile/shared/utils/bidi.dart';
+
+class HeroRoleBlock extends StatelessWidget {
+  final Size size;
+  final bool isDark;
+  final bool isCompactH;
+
+  const HeroRoleBlock({
+    super.key,
+    required this.size,
+    required this.isDark,
+    required this.isCompactH,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = Theme.of(context).colorScheme.primary;
+    final loc = AppLocalizations.of(context)!;
+
+    return SnappyEntrance(
+      delayMs: 60,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: (size.width * 0.78).clamp(320.0, 700.0),
+          ),
+          child: Column(
+            children: [
+              _HairlineRow(
+                isDark: isDark,
+                child: Icon(Icons.diamond_rounded,
+                    size: IntroType.small, color: accent),
+              ),
+              SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
+              Text(
+                loc.introRoleHeading,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: isCompactH
+                      ? (size.width * 0.024).clamp(20.0, 28.0)
+                      : (size.width * 0.028).clamp(24.0, 36.0),
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: latinTracking(context, 3.5),
+                  color: context.onSurface,
+                  shadows: isDark
+                      ? [
+                          Shadow(
+                            color: accent.withValues(alpha: 0.35),
+                            blurRadius: 18,
+                          ),
+                        ]
+                      : null,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                loc.introValueProposition,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: isCompactH
+                      ? (size.width * 0.0115).clamp(13.0, 15.5)
+                      : (size.width * 0.013).clamp(14.0, 17.5),
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: latinTracking(context, 0.8),
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.88)
+                      : IntroColors.slate700,
+                  height: 1.55,
+                ),
+              ),
+              SizedBox(height: isCompactH ? 8.0 : AppSpacing.md),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  const _MiniPill('FLUTTER'),
+                  const _MiniPill('ANDROID'),
+                  _MiniPill(loc.introSkillArchitecture.toUpperCase()),
+                  const _MiniPill('NATIVE INTEGRATION'),
+                  const _MiniPill('PRODUCT DELIVERY'),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MiniPill extends StatelessWidget {
+  final String label;
+
+  const _MiniPill(this.label);
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final isDark = scheme.brightness == Brightness.dark;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.05)
+            : IntroColors.slate100,
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.12)
+              : IntroColors.slate200,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontFamily: AppTypography.monoFont,
+            color: context.onSurface,
+            fontSize: IntroType.micro,
+            fontWeight: FontWeight.w800,
+            letterSpacing: latinTracking(context, 1.1),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HairlineRow extends StatelessWidget {
+  final Widget child;
+  final bool isDark;
+
+  const _HairlineRow({required this.child, required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    final ruleColor = context.glassBorderStrong;
+    return Row(
+      children: [
+        Expanded(child: Container(height: 1, color: ruleColor)),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12), child: child),
+        Expanded(child: Container(height: 1, color: ruleColor)),
+      ],
+    );
+  }
+}

@@ -33,7 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navResume => 'CV';
 
   @override
-  String get introLocation => 'Amman, moving to Brno in 2027';
+  String get introLocation => 'Amman → Brno · 2027';
 
   @override
   String get sectionEducation => 'Education';
@@ -114,10 +114,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get viewMyWork => 'See the work';
+  String get viewMyWork => 'VIEW MY WORK';
 
   @override
   String get downloadResume => 'Download CV';
+
+  @override
+  String get introDownloadResume => 'DOWNLOAD RESUME';
 
   @override
   String get contactMe => 'Contact me';
@@ -127,6 +130,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introSeniorEngineer => 'Senior Flutter & Android engineer';
+
+  @override
+  String get introRoleLine => 'SENIOR FLUTTER & ANDROID ENGINEER';
 
   @override
   String get introRoleHeading => 'Senior Flutter & Android engineer';
@@ -143,10 +149,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introWorkEligibility =>
-      'Moving to Brno in 2027, open to senior mobile roles';
+      'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES';
 
   @override
-  String get introAvailableContracts => 'Available for contracts';
+  String get introAvailableContracts => 'AVAILABLE FOR CONTRACTS';
 
   @override
   String get contactEngagementScopes => 'Ways to work together';
@@ -214,26 +220,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introIssueStrip =>
-      'Amman, moving to Brno in 2027. Open to senior mobile roles in Flutter, Android and mobile architecture.';
+      'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE';
 
   @override
   String get introTechStack =>
-      'Flutter, Android, iOS, architecture, offline-first, NFC, security, real-time systems';
+      'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems';
 
   @override
-  String get introBasedIn => 'Location';
+  String get introBasedIn => 'LOCATION';
 
   @override
-  String get introStatus => 'Availability';
+  String get introStatus => 'AVAILABILITY';
 
   @override
-  String get introOpenForRoles => 'Open to senior mobile roles';
+  String get introOpenForRoles => 'Open to Senior Mobile Roles';
 
   @override
-  String get introDiscipline => 'Specialization';
+  String get introDiscipline => 'SPECIALIZATION';
 
   @override
-  String get introMobileArch => 'Flutter, Android, mobile architecture';
+  String get introMobileArch => 'Flutter · Android · Mobile Architecture';
 
   @override
   String get introMasthead => 'Masthead';
@@ -468,10 +474,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quickProfileTitle => 'Hiring summary';
 
   @override
-  String get quickProfileRole => 'Role';
+  String get quickProfileRole => 'ROLE';
 
   @override
-  String get quickProfileExperience => 'Experience';
+  String get quickProfileExperience => 'EXPERIENCE';
 
   @override
   String quickProfileYears(int years) {
@@ -479,10 +485,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get quickProfileStack => 'Core stack';
+  String get quickProfileStack => 'CORE STACK';
 
   @override
-  String get quickProfileRecent => 'Recent roles';
+  String get quickProfileRecent => 'RECENT ROLES';
 
   @override
   String get quickProfileEmail => 'Email';

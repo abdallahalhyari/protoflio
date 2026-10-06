@@ -33,7 +33,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navResume => 'Životopis';
 
   @override
-  String get introLocation => 'Ammán, v roce 2027 stěhování do Brna';
+  String get introLocation => 'Ammán → Brno · 2027';
 
   @override
   String get sectionEducation => 'Vzdělání';
@@ -114,10 +114,13 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get viewMyWork => 'Zobrazit práci';
+  String get viewMyWork => 'ZOBRAZIT PRÁCI';
 
   @override
   String get downloadResume => 'Stáhnout životopis';
+
+  @override
+  String get introDownloadResume => 'STÁHNOUT ŽIVOTOPIS';
 
   @override
   String get contactMe => 'Kontaktujte mě';
@@ -127,6 +130,9 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introSeniorEngineer => 'Senior mobilní vývojář';
+
+  @override
+  String get introRoleLine => 'SENIOR MOBILNÍ VÝVOJÁŘ';
 
   @override
   String get introRoleHeading => 'Senior vývojář mobilních aplikací';
@@ -143,10 +149,10 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introWorkEligibility =>
-      'V roce 2027 se stěhuji do Brna, otevřen seniorním mobilním rolím';
+      'PŘESÍDLENÍ DO BRNA · 2027   •   OTEVŘEN SENIORNÍM ROLÍM';
 
   @override
-  String get introAvailableContracts => 'K dispozici pro kontrakty';
+  String get introAvailableContracts => 'K DISPOZICI PRO KONTRAKTY';
 
   @override
   String get contactEngagementScopes => 'Možnosti spolupráce';
@@ -212,27 +218,26 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip =>
-      'Ammán, v roce 2027 stěhování do Brna. Otevřen seniorním mobilním rolím ve Flutteru, Androidu a mobilní architektuře.';
+  String get introIssueStrip => 'VYDÁNÍ 01 · EDICE PORTFOLIO · MMXXVI';
 
   @override
   String get introTechStack =>
-      'Flutter, Android, iOS, architektura, offline-first, NFC, bezpečnost, real-time systémy';
+      'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
 
   @override
-  String get introBasedIn => 'Lokace';
+  String get introBasedIn => 'LOKACE';
 
   @override
-  String get introStatus => 'Dostupnost';
+  String get introStatus => 'DOSTUPNOST';
 
   @override
   String get introOpenForRoles => 'Otevřen pro seniorní role';
 
   @override
-  String get introDiscipline => 'Specializace';
+  String get introDiscipline => 'SPECIALIZACE';
 
   @override
-  String get introMobileArch => 'Flutter, Android, mobilní architektura';
+  String get introMobileArch => 'Flutter · Android · Mobilní architektura';
 
   @override
   String get introMasthead => 'Hlavička';
@@ -468,10 +473,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get quickProfileTitle => 'Shrnutí pro nábor';
 
   @override
-  String get quickProfileRole => 'Pozice';
+  String get quickProfileRole => 'POZICE';
 
   @override
-  String get quickProfileExperience => 'Praxe';
+  String get quickProfileExperience => 'PRAXE';
 
   @override
   String quickProfileYears(int years) {
@@ -479,10 +484,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get quickProfileStack => 'Hlavní technologie';
+  String get quickProfileStack => 'HLAVNÍ TECHNOLOGIE';
 
   @override
-  String get quickProfileRecent => 'Poslední pozice';
+  String get quickProfileRecent => 'POSLEDNÍ POZICE';
 
   @override
   String get quickProfileEmail => 'E-mail';
