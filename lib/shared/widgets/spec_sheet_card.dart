@@ -35,7 +35,9 @@ class _SpecSheetCardState extends State<SpecSheetCard> {
     final primary = Theme.of(context).colorScheme.primary;
     final borderColor = _isHovered
         ? primary.withValues(alpha: isDark ? 0.4 : 0.5)
-        : (isDark ? Colors.white.withValues(alpha: 0.1) : widget.lightLineColor);
+        : (isDark
+            ? Colors.white.withValues(alpha: 0.1)
+            : widget.lightLineColor);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
