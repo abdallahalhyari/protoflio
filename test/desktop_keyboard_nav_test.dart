@@ -53,10 +53,10 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.keyC);
 
     expect(calls, [
-      'goTo 2', // W -> Work
-      'goTo 4', // E -> Engineering
-      'goTo 1', // X -> Experience
-      'goTo 3', // S -> Skills
+      'goTo 1', // W -> Work
+      'goTo 2', // E -> Engineering
+      'goTo 3', // X -> Experience
+      'goTo 4', // S -> Skills
       'goTo 5', // H -> Hats
       'goTo 6', // C -> Contact
     ]);

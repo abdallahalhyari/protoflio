@@ -313,13 +313,13 @@ abstract class AppLocalizations {
   /// No description provided for @contactMe.
   ///
   /// In en, this message translates to:
-  /// **'Contact me'**
+  /// **'CONTACT ME'**
   String get contactMe;
 
   /// No description provided for @copyEmail.
   ///
   /// In en, this message translates to:
-  /// **'Copy email'**
+  /// **'COPY EMAIL'**
   String get copyEmail;
 
   /// No description provided for @introSeniorEngineer.
@@ -337,7 +337,7 @@ abstract class AppLocalizations {
   /// No description provided for @introRoleHeading.
   ///
   /// In en, this message translates to:
-  /// **'Senior Flutter & Android engineer'**
+  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
   String get introRoleHeading;
 
   /// No description provided for @introValueProposition.

@@ -43,7 +43,7 @@ Widget _wrapHome() {
 
 int? _folioIndex(WidgetTester tester) {
   for (final w in tester.widgetList<Text>(find.byType(Text))) {
-    final m = RegExp(r'^FOLIO (\d+) / \d+$').firstMatch(w.data ?? '');
+    final m = RegExp(r'^(\d+) of \d+$').firstMatch(w.data ?? '');
     if (m != null) return int.parse(m.group(1)!);
   }
   return null;
@@ -168,14 +168,14 @@ void main() {
       }
     }
 
-    // Experience — Projects is pre-built next door but must not own focus.
-    await goTo(LogicalKeyboardKey.digit2);
+    // Engineering — Projects is pre-built next door but must not own focus.
+    await goTo(LogicalKeyboardKey.digit3);
     expect(focusInside<ProjectsPage>(), isFalse);
 
-    await goTo(LogicalKeyboardKey.digit3);
+    await goTo(LogicalKeyboardKey.digit2);
     expect(focusInside<ProjectsPage>(), isTrue);
 
-    // Engineering — the hat deck is pre-built next door.
+    // Skills — the hat deck is pre-built next door.
     await goTo(LogicalKeyboardKey.digit5);
     expect(focusInside<ProjectsPage>(), isFalse);
     expect(focusInside<HatsGridPage>(), isFalse);

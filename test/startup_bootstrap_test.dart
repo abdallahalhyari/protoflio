@@ -21,14 +21,14 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('readInitialThemeMode', () {
-    test('defaults to dark for missing or invalid values', () async {
+    test('defaults to light for missing or invalid values', () async {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
-      expect(readInitialThemeMode(prefs), ThemeMode.dark);
+      expect(readInitialThemeMode(prefs), ThemeMode.light);
 
       SharedPreferences.setMockInitialValues({'themeMode': 'invalid'});
       final invalidPrefs = await SharedPreferences.getInstance();
-      expect(readInitialThemeMode(invalidPrefs), ThemeMode.dark);
+      expect(readInitialThemeMode(invalidPrefs), ThemeMode.light);
     });
 
     test('reads supported theme preferences', () async {
@@ -93,7 +93,7 @@ void main() {
     ));
 
     expect(find.text('Loading portfolio…'), findsOneWidget);
-    expect(find.text('ABDALLAH ALHYARI'), findsOneWidget);
+    expect(find.text('Abdallah Alhyari'), findsOneWidget);
   });
 
   // A failed content load must reach the retry screen. It used to be

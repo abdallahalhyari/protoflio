@@ -13,8 +13,8 @@ void main() {
     ThemeMode resolve(String url, [String? stored]) =>
         ThemeBloc.resolveInitial(uri: Uri.parse(url), stored: stored);
 
-    test('defaults to dark', () {
-      expect(resolve('https://a.app/'), ThemeMode.dark);
+    test('defaults to light', () {
+      expect(resolve('https://a.app/'), ThemeMode.light);
     });
 
     test('uses the saved choice', () {

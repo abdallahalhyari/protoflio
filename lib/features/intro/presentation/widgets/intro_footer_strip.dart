@@ -43,9 +43,11 @@ class IntroFooterStrip extends StatelessWidget {
                   child: Text(
                     label,
                     style: TextStyle(
+                      // Slate-600: slate-500 fell to 4.15:1 on the
+                      // issued-credential paper.
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.72)
-                          : IntroColors.slate500,
+                          : IntroColors.slate600,
                       fontSize: IntroType.editorialSm,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2.5,
@@ -58,7 +60,7 @@ class IntroFooterStrip extends StatelessWidget {
                 Icon(Icons.arrow_outward_rounded,
                     size: 9,
                     color: valueColor ??
-                        (isDark ? Colors.white70 : IntroColors.slate500)),
+                        (isDark ? Colors.white70 : IntroColors.slate600)),
               ],
             ],
           ),

@@ -157,7 +157,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('ABDALLAH ALHYARI'), findsOneWidget);
+      expect(find.text('Abdallah Alhyari'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
@@ -176,7 +176,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('ACADEMIC ANNEX'), findsOneWidget);
+      expect(find.text('Academic annex'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });

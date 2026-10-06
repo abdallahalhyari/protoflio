@@ -21,7 +21,7 @@ import 'package:profile/features/experience/presentation/widgets/experience_card
 import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
 import 'package:profile/features/shell/presentation/widgets/folio_bar.dart';
 import 'package:profile/features/hats/presentation/widgets/hat_role_pills.dart';
-import 'package:profile/features/intro/presentation/pages/intro_page.dart';
+import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
 import 'package:profile/features/shell/presentation/widgets/keyboard_hint_chip.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_app_bar.dart';
 import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
@@ -363,21 +363,39 @@ void main() {
       expect(chipSemantics, findsOneWidget);
     });
 
-    testWidgets('the cover credential is one named button', (tester) async {
+    testWidgets('IntroCtaRow ghost buttons declare button semantics',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(
-        child: IntroPage(onScrollDown: () {}),
+        child: IntroCtaRow(
+          isDark: true,
+          onViewWork: () {},
+          onDownloadResume: () {},
+          onContactMe: () {},
+        ),
       ));
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       expect(
         find.byWidgetPredicate((w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.startsWith('Credential card') ?? false)),
+            (w.properties.label?.contains('DOWNLOAD RESUME') ?? false)),
         findsOneWidget,
       );
-      expect(find.text('See the work'), findsOneWidget);
-      expect(find.text('Download CV'), findsOneWidget);
+      expect(
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('CONTACT ME') ?? false)),
+        findsOneWidget,
+      );
+      expect(
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.contains('COPY EMAIL') ?? false)),
+        findsOneWidget,
+      );
     });
   });
 

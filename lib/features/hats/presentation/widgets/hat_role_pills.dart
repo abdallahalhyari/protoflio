@@ -87,7 +87,10 @@ class HatRolePills extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 5),
-                    Text(
+                    // Wraps inside the pill rather than overflowing it: at
+                    // 2x text a role name is wider than a narrow phone.
+                    Flexible(
+                        child: Text(
                       ltrContent(context,
                           '0${i + 1} ${hatTitleLabel(AppLocalizations.of(context)!, hats[i].title)}'),
                       style: TextStyle(
@@ -101,7 +104,7 @@ class HatRolePills extends StatelessWidget {
                             ? FontWeight.w900
                             : FontWeight.w700,
                       ),
-                    ),
+                    )),
                   ],
                 ),
               )),

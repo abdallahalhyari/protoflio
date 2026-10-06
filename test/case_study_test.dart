@@ -37,13 +37,13 @@ void main() {
       await tester.pumpWidget(_wrap(const NatHealthCaseStudy()));
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.text('NATHEALTH · CASE STUDY'), findsOneWidget);
+      expect(find.text('NATHEALTH · Case study'), findsOneWidget);
       expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(find.text('THE PROBLEM'), findsOneWidget);
-      expect(find.text('MY ROLE'), findsOneWidget);
-      expect(find.text('SYSTEM ARCHITECTURE'), findsOneWidget);
-      expect(find.text('OUTCOMES'), findsOneWidget);
-      expect(find.text('LESSONS'), findsOneWidget);
+      expect(find.text('The problem'), findsOneWidget);
+      expect(find.text('My role'), findsOneWidget);
+      expect(find.text('System architecture'), findsOneWidget);
+      expect(find.text('Outcomes'), findsOneWidget);
+      expect(find.text('Lessons'), findsOneWidget);
       expect(find.text('2M+'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
           scrollable: find.byType(Scrollable).first);
@@ -55,7 +55,7 @@ void main() {
       await tester
           .pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('NATHEALTH · CASE STUDY'), findsOneWidget);
+      expect(find.text('NATHEALTH · Case study'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
@@ -67,14 +67,14 @@ void main() {
       await tester.pumpWidget(_wrap(const EskadeniaCaseStudy()));
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.text('ESKADENIA · CASE STUDY'), findsOneWidget);
+      expect(find.text('ESKADENIA · Case study'), findsOneWidget);
       expect(find.text('E-Learning & Healthcare Enterprise Suite'),
           findsOneWidget);
-      expect(find.text('THE PROBLEM'), findsOneWidget);
-      expect(find.text('MY ROLE'), findsOneWidget);
-      expect(find.text('SYSTEM ARCHITECTURE'), findsOneWidget);
-      expect(find.text('OUTCOMES'), findsOneWidget);
-      expect(find.text('LESSONS'), findsOneWidget);
+      expect(find.text('The problem'), findsOneWidget);
+      expect(find.text('My role'), findsOneWidget);
+      expect(find.text('System architecture'), findsOneWidget);
+      expect(find.text('Outcomes'), findsOneWidget);
+      expect(find.text('Lessons'), findsOneWidget);
       expect(find.text('60 FPS'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
           scrollable: find.byType(Scrollable).first);
@@ -86,7 +86,7 @@ void main() {
       await tester
           .pumpWidget(_wrap(const EskadeniaCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('ESKADENIA · CASE STUDY'), findsOneWidget);
+      expect(find.text('ESKADENIA · Case study'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
@@ -98,14 +98,14 @@ void main() {
       await tester.pumpWidget(_wrap(const SolutionsCaseStudy()));
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.text('SOLUTIONS NOW · CASE STUDY'), findsOneWidget);
+      expect(find.text('SOLUTIONS NOW · Case study'), findsOneWidget);
       expect(find.text('Loyalty Rewards & Ephemeral Social Media Apps'),
           findsOneWidget);
-      expect(find.text('THE PROBLEM'), findsOneWidget);
-      expect(find.text('MY ROLE'), findsOneWidget);
-      expect(find.text('SYSTEM ARCHITECTURE'), findsOneWidget);
-      expect(find.text('OUTCOMES'), findsOneWidget);
-      expect(find.text('LESSONS'), findsOneWidget);
+      expect(find.text('The problem'), findsOneWidget);
+      expect(find.text('My role'), findsOneWidget);
+      expect(find.text('System architecture'), findsOneWidget);
+      expect(find.text('Outcomes'), findsOneWidget);
+      expect(find.text('Lessons'), findsOneWidget);
       expect(find.text('50k+'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
           scrollable: find.byType(Scrollable).first);
@@ -117,7 +117,7 @@ void main() {
       await tester
           .pumpWidget(_wrap(const SolutionsCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('SOLUTIONS NOW · CASE STUDY'), findsOneWidget);
+      expect(find.text('SOLUTIONS NOW · Case study'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
@@ -129,13 +129,13 @@ void main() {
       await tester.pumpWidget(_wrap(const FaisCaseStudy()));
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.text('FAIS · CASE STUDY'), findsOneWidget);
+      expect(find.text('FAIS · Case study'), findsOneWidget);
       expect(find.text('M-Commerce & Media-Streaming Clients'), findsOneWidget);
-      expect(find.text('THE PROBLEM'), findsOneWidget);
-      expect(find.text('MY ROLE'), findsOneWidget);
-      expect(find.text('SYSTEM ARCHITECTURE'), findsOneWidget);
-      expect(find.text('OUTCOMES'), findsOneWidget);
-      expect(find.text('LESSONS'), findsOneWidget);
+      expect(find.text('The problem'), findsOneWidget);
+      expect(find.text('My role'), findsOneWidget);
+      expect(find.text('System architecture'), findsOneWidget);
+      expect(find.text('Outcomes'), findsOneWidget);
+      expect(find.text('Lessons'), findsOneWidget);
       expect(find.text('99.8%'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
           scrollable: find.byType(Scrollable).first);
@@ -147,7 +147,7 @@ void main() {
       await tester
           .pumpWidget(_wrap(const FaisCaseStudy(), const Size(390, 844)));
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('FAIS · CASE STUDY'), findsOneWidget);
+      expect(find.text('FAIS · Case study'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
@@ -159,9 +159,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(CaseStudyAtAGlance), findsOneWidget);
-      expect(find.text('CHALLENGE'), findsOneWidget);
-      expect(find.text('WHAT I BUILT'), findsOneWidget);
-      expect(find.text('RESULT'), findsOneWidget);
+      expect(find.text('Challenge'), findsOneWidget);
+      expect(find.text('What I built'), findsOneWidget);
+      expect(find.text('Result'), findsOneWidget);
       await tester.binding.setSurfaceSize(null);
     });
 
@@ -174,7 +174,7 @@ void main() {
       await tester.scrollUntilVisible(find.byType(OutcomeGrid), 500,
           scrollable: find.byType(Scrollable).first);
       expect(find.byType(OutcomeGrid), findsOneWidget);
-      expect(find.text('OUTCOMES'), findsOneWidget);
+      expect(find.text('Outcomes'), findsOneWidget);
       await tester.binding.setSurfaceSize(null);
     });
 
@@ -201,9 +201,9 @@ void main() {
 
       expect(find.byType(CaseStudyCorporateHeader), findsOneWidget);
       expect(find.byType(CaseStudyToolbarShareButton), findsOneWidget);
-      expect(find.text('OFFICIAL WEBSITE'), findsOneWidget);
-      expect(find.text('COMPANY LINKEDIN'), findsOneWidget);
-      expect(find.text('SHARE STUDY'), findsOneWidget);
+      expect(find.text('Company website'), findsOneWidget);
+      expect(find.text('Company LinkedIn'), findsOneWidget);
+      expect(find.text('Share'), findsOneWidget);
 
       // Tap toolbar share button
       await tester.tap(find.byType(CaseStudyToolbarShareButton));
@@ -214,7 +214,7 @@ void main() {
       }
 
       // Tap masthead share pill
-      await tester.tap(find.text('SHARE STUDY'));
+      await tester.tap(find.text('Share'));
       await tester.pump(const Duration(milliseconds: 500));
       if (find.text('COPY LINK').evaluate().isNotEmpty) {
         await tester.tap(find.text('COPY LINK'));

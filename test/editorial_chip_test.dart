@@ -67,9 +67,9 @@ void main() {
         ],
       ),
     ));
-    final normal = tester.getSize(find.text('NORMAL'));
-    final dense = tester.getSize(find.text('DENSE'));
-    // Dense uses editorialSm (9.5) vs editorial (10.5).
+    // One type size now (12px floor); dense is tighter padding only.
+    final normal = tester.getSize(find.widgetWithText(EditorialChip, 'NORMAL'));
+    final dense = tester.getSize(find.widgetWithText(EditorialChip, 'DENSE'));
     expect(dense.height < normal.height, isTrue);
   });
 }

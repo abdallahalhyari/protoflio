@@ -42,13 +42,13 @@ void main() {
     await tester.pumpWidget(createTestApp(const HatsGridPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('PERSPECTIVES'), findsOneWidget);
-    expect(find.text('SPREAD'), findsOneWidget);
-    expect(find.text('ALIGN'), findsOneWidget);
-    expect(find.textContaining('THINKING'), findsWidgets);
+    expect(find.text('Perspectives'), findsOneWidget);
+    expect(find.text('Spread'), findsOneWidget);
+    expect(find.text('Align'), findsOneWidget);
+    expect(find.textContaining('Thinking'), findsWidgets);
 
     // Tap role pill
-    await tester.tap(find.text('02 COMMUNICATING'));
+    await tester.tap(find.text('02 Communicating'));
     await tester.pump(const Duration(milliseconds: 200));
 
     // Mobile layout
@@ -57,10 +57,10 @@ void main() {
         .pumpWidget(createTestApp(const HatsGridPage(), const Size(400, 800)));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('PREV'), findsOneWidget);
-    expect(find.text('NEXT'), findsOneWidget);
+    expect(find.text('Previous'), findsOneWidget);
+    expect(find.text('Next'), findsOneWidget);
 
-    await tester.tap(find.text('NEXT'));
+    await tester.tap(find.text('Next'));
     await tester.pump(const Duration(milliseconds: 200));
 
     // Reset surface size
@@ -75,7 +75,7 @@ void main() {
     await tester.pumpWidget(createTestApp(const ProjectsPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.textContaining('NATHEALTH'), findsWidgets);
+    expect(find.textContaining('NatHealth'), findsWidgets);
     expect(find.textContaining('ESKADENIA'), findsWidgets);
 
     // Mobile layout
@@ -99,7 +99,7 @@ void main() {
     await tester.pumpWidget(createTestApp(const SkillsPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.textContaining('SKILLS'), findsWidgets);
+    expect(find.textContaining('Skills'), findsWidgets);
     await tester.binding.setSurfaceSize(null);
   });
 
@@ -110,12 +110,12 @@ void main() {
     await tester.pumpWidget(createTestApp(const EngineeringPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('ENGINEERING'), findsOneWidget);
-    expect(find.textContaining('CLEAN MOBILE ARCHITECTURE'), findsWidgets);
-    expect(find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'), findsWidgets);
+    expect(find.text('Engineering'), findsOneWidget);
+    expect(find.textContaining('Clean Mobile Architecture'), findsWidgets);
+    expect(find.textContaining('Offline-First Synchronization'), findsWidgets);
 
     // Tap second tab (Offline-First)
-    await tester.tap(find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'));
+    await tester.tap(find.textContaining('Offline-First Synchronization'));
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(find.textContaining('WorkManager Pipeline'), findsOneWidget);

@@ -45,8 +45,8 @@ void main() {
   testWidgets('renders AVAILABLE fallback outside a HomeControllerScope',
       (tester) async {
     await tester.pumpWidget(_host(MobileAppBar(onMenuPressed: () {})));
-    expect(find.text('ABDALLAH'), findsOneWidget);
-    expect(find.text('AVAILABLE'), findsOneWidget);
+    expect(find.text('Abdallah'), findsOneWidget);
+    expect(find.text('Available'), findsOneWidget);
     expect(find.text('MENU'), findsOneWidget);
   });
 
@@ -58,7 +58,7 @@ void main() {
       controller: _stub(pageIndex: pageIndex),
     ));
     await tester.pumpAndSettle();
-    expect(find.text('AVAILABLE'), findsNothing);
+    expect(find.text('Available'), findsNothing);
     expect(find.text('05 / 07'), findsOneWidget);
   });
 

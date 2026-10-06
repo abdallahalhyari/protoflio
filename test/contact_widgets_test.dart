@@ -30,10 +30,10 @@ void main() {
       await tester.pumpWidget(_wrap(const ContactHeader()));
       await tester.pumpAndSettle();
 
-      expect(find.text('FEATURE 07 · DIRECT LINE & REACH OUT'), findsOneWidget);
-      expect(find.text("LET'S BUILD WHAT'S NEXT."), findsOneWidget);
+      expect(find.text('Contact'), findsOneWidget);
+      expect(find.text("Tell me what you're building."), findsOneWidget);
       expect(
-        find.textContaining('I help teams ship complex mobile products'),
+        find.textContaining("I'm looking for a senior mobile role"),
         findsOneWidget,
       );
     });
@@ -53,14 +53,14 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('alhyariabdallh@gmail.com'), findsOneWidget);
-      expect(find.text('SEND EMAIL'), findsOneWidget);
-      expect(find.text('COPY ADDRESS'), findsOneWidget);
+      expect(find.text('Send email'), findsOneWidget);
+      expect(find.text('Copy address'), findsOneWidget);
 
-      await tester.tap(find.text('SEND EMAIL'));
+      await tester.tap(find.text('Send email'));
       await tester.pumpAndSettle();
       expect(sent, isTrue);
 
-      await tester.tap(find.text('COPY ADDRESS'));
+      await tester.tap(find.text('Copy address'));
       await tester.pumpAndSettle();
       expect(copied, isTrue);
     });
@@ -75,7 +75,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('ONE-TAP EXPRESS REACH-OUT PRESETS'), findsOneWidget);
+      expect(find.text('Start from a template'), findsOneWidget);
       expect(find.text('Senior Role'), findsOneWidget);
 
       await tester.tap(find.text('Senior Role'));
@@ -89,11 +89,11 @@ void main() {
       await tester.pumpWidget(_wrap(const CvDossierCard()));
       await tester.pumpAndSettle();
 
-      expect(find.text('ATS-VERIFIED · 2026 EDITION'), findsOneWidget);
+      expect(find.text('ATS-friendly, 2026 edition'), findsOneWidget);
       expect(find.text('Executive Curriculum Vitae & Portfolio Dossier'),
           findsOneWidget);
-      expect(find.text('DOWNLOAD CV · PDF'), findsOneWidget);
-      expect(find.text('PREVIEW'), findsOneWidget);
+      expect(find.text('Download CV (PDF)'), findsOneWidget);
+      expect(find.text('Preview'), findsOneWidget);
     });
 
     testWidgets('ContactChannelsGrid renders all 4 direct channels',
@@ -114,7 +114,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('// DIRECT COMMUNICATION CHANNELS'), findsOneWidget);
+      expect(find.text('Direct communication channels'), findsOneWidget);
       expect(find.text('+962-787032264'), findsOneWidget);
       expect(find.text('wa.me/962787032264'), findsOneWidget);
       expect(find.text('in/abdallah-alhyari'), findsOneWidget);
@@ -136,7 +136,7 @@ void main() {
       expect(find.text('Full-Lifecycle App Engineering'), findsOneWidget);
       expect(find.text('Fractional Lead & Mentorship'), findsOneWidget);
 
-      await tester.tap(find.text('INQUIRE TRACK').first);
+      await tester.tap(find.text('Ask about this').first);
       await tester.pumpAndSettle();
 
       expect(inquiredSubject, contains('Mobile System Audit'));
@@ -158,8 +158,8 @@ void main() {
 
       expect(find.text('LINKEDIN · abdallah-alhyari'), findsOneWidget);
       expect(find.text('GITHUB · abdallahalhyari'), findsOneWidget);
-      expect(find.text('// COLOPHON & DISPATCH'), findsOneWidget);
-      expect(find.text('PRIMARY LOCATION'), findsOneWidget);
+      expect(find.text('Colophon & dispatch'), findsOneWidget);
+      expect(find.text('Primary location'), findsOneWidget);
 
       await tester.tap(find.text('LINKEDIN · abdallah-alhyari'));
       await tester.pumpAndSettle();
@@ -185,8 +185,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('COMPOSE INQUIRY'), findsOneWidget);
-      await tester.tap(find.text('COMPOSE INQUIRY'));
+      expect(find.text('Write a message'), findsOneWidget);
+      await tester.tap(find.text('Write a message'));
       await tester.pumpAndSettle();
       expect(composed, isTrue);
     });
@@ -197,15 +197,15 @@ void main() {
       await tester.pumpWidget(_wrap(const InquiryComposerDialog()));
       await tester.pumpAndSettle();
 
-      expect(find.text('DIRECT INQUIRY COMPOSER'), findsOneWidget);
+      expect(find.text('Write a message'), findsOneWidget);
       expect(find.text('Reach Abdallah Alhyari'), findsOneWidget);
       expect(find.textContaining('AMMAN (UTC+3)'), findsOneWidget);
       expect(find.text('Role Opportunity'), findsOneWidget);
       expect(find.text('Architecture Audit'), findsOneWidget);
       expect(find.text('Production App'), findsOneWidget);
       expect(find.text('Tech Advisory'), findsOneWidget);
-      expect(find.text('COPY DRAFT'), findsOneWidget);
-      expect(find.text('OPEN IN EMAIL CLIENT'), findsOneWidget);
+      expect(find.text('Copy draft'), findsOneWidget);
+      expect(find.text('Open in email app'), findsOneWidget);
 
       // Verify initial body contains Role Opportunity template
       expect(find.textContaining('Senior Mobile Engineer (Flutter)'),
@@ -247,8 +247,8 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap COPY DRAFT
-      await tester.ensureVisible(find.text('COPY DRAFT'));
-      await tester.tap(find.text('COPY DRAFT'));
+      await tester.ensureVisible(find.text('Copy draft'));
+      await tester.tap(find.text('Copy draft'));
       await tester.pumpAndSettle();
 
       expect(copiedMessage, isNotNull);
@@ -278,8 +278,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      await tester.ensureVisible(find.text('OPEN IN EMAIL CLIENT'));
-      await tester.tap(find.text('OPEN IN EMAIL CLIENT'));
+      await tester.ensureVisible(find.text('Open in email app'));
+      await tester.tap(find.text('Open in email app'));
       await tester.pumpAndSettle();
 
       expect(sentSubject, contains('Architecture Review'));
@@ -303,13 +303,13 @@ void main() {
       await tester.tap(find.text('OPEN COMPOSER'));
       await tester.pumpAndSettle();
 
-      expect(find.text('DIRECT INQUIRY COMPOSER'), findsOneWidget);
+      expect(find.text('Write a message'), findsOneWidget);
       expect(find.byTooltip('Close'), findsOneWidget);
 
       await tester.tap(find.byTooltip('Close'));
       await tester.pumpAndSettle();
 
-      expect(find.text('DIRECT INQUIRY COMPOSER'), findsNothing);
+      expect(find.text('Write a message'), findsNothing);
     });
   });
 
@@ -322,7 +322,7 @@ void main() {
     await tester.pumpAndSettle();
 
     FilledButton sendButton() => tester.widget<FilledButton>(find.ancestor(
-        of: find.text('OPEN IN EMAIL CLIENT'),
+        of: find.text('Open in email app'),
         matching: find.byWidgetPredicate((w) => w is FilledButton)));
 
     // The template pre-fills the body, so sending starts enabled.

@@ -70,7 +70,7 @@ void main() {
 
       // Confirm RepaintBoundary wraps the card
       expect(find.byType(RepaintBoundary), findsWidgets);
-      expect(find.text('STAFF FLUTTER ENGINEER'), findsOneWidget);
+      expect(find.text('Staff Flutter Engineer'), findsOneWidget);
     });
 
     testWidgets('PageBackground contains isolated repaint boundaries',

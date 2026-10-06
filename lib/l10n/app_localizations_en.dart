@@ -123,10 +123,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introDownloadResume => 'DOWNLOAD RESUME';
 
   @override
-  String get contactMe => 'Contact me';
+  String get contactMe => 'CONTACT ME';
 
   @override
-  String get copyEmail => 'Copy email';
+  String get copyEmail => 'COPY EMAIL';
 
   @override
   String get introSeniorEngineer => 'Senior Flutter & Android engineer';
@@ -135,7 +135,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introRoleLine => 'SENIOR FLUTTER & ANDROID ENGINEER';
 
   @override
-  String get introRoleHeading => 'Senior Flutter & Android engineer';
+  String get introRoleHeading => 'SENIOR FLUTTER & ANDROID ENGINEER';
 
   @override
   String get introValueProposition =>

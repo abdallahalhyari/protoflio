@@ -46,14 +46,14 @@
   "@introDownloadResume": {
     "description": "Intro cover copy (the original design); downloadResume carries the site-wide wording."
   },
-  "contactMe": "Contact me",
-  "copyEmail": "Copy email",
+  "contactMe": "CONTACT ME",
+  "copyEmail": "COPY EMAIL",
   "introSeniorEngineer": "Senior Flutter & Android engineer",
   "introRoleLine": "SENIOR FLUTTER & ANDROID ENGINEER",
   "@introRoleLine": {
     "description": "Intro cover copy (the original design); introSeniorEngineer carries the site-wide wording."
   },
-  "introRoleHeading": "Senior Flutter & Android engineer",
+  "introRoleHeading": "SENIOR FLUTTER & ANDROID ENGINEER",
   "introValueProposition": "I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.",
   "introSkillArchitecture": "Architecture",
   "introSkillProductDelivery": "Product delivery",

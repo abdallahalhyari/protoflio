@@ -123,10 +123,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introDownloadResume => 'STÁHNOUT ŽIVOTOPIS';
 
   @override
-  String get contactMe => 'Kontaktujte mě';
+  String get contactMe => 'KONTAKTUJTE MĚ';
 
   @override
-  String get copyEmail => 'Kopírovat e-mail';
+  String get copyEmail => 'KOPÍROVAT E-MAIL';
 
   @override
   String get introSeniorEngineer => 'Senior mobilní vývojář';
@@ -135,7 +135,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introRoleLine => 'SENIOR MOBILNÍ VÝVOJÁŘ';
 
   @override
-  String get introRoleHeading => 'Senior vývojář mobilních aplikací';
+  String get introRoleHeading => 'SENIOR VÝVOJÁŘ MOBILNÍCH APLIKACÍ';
 
   @override
   String get introValueProposition =>
