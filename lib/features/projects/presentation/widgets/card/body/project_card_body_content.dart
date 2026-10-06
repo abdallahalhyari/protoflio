@@ -44,6 +44,10 @@ class CardBodyContent extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     final outcome = localizedProjectOutcome(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
+    // Only the fixed-height desktop grid needs clamps; cards that size to
+    // content show every line instead of cutting the impact mid-sentence.
+    final clampLines = pinFoot ? 2 : null;
+    final clampOverflow = pinFoot ? TextOverflow.ellipsis : null;
 
     final titleBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,8 +57,8 @@ class CardBodyContent extends StatelessWidget {
           // 8.5px mono capitals inside a grey box it read as noise.
           Text(
             project.role!,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+            maxLines: clampLines,
+            overflow: clampOverflow,
             style: TextStyle(
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w600,
@@ -95,8 +99,8 @@ class CardBodyContent extends StatelessWidget {
             fontSize: isDesktop ? 13 : 12,
             height: 1.4,
           ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+          maxLines: clampLines,
+          overflow: clampOverflow,
         ),
       ],
     );
@@ -124,6 +128,7 @@ class CardBodyContent extends StatelessWidget {
                 text: outcome,
                 scheme: scheme,
                 isDark: isDark,
+                maxLines: null,
               ),
           ],
           if (pinFoot) const Spacer(),

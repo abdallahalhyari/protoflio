@@ -8,11 +8,15 @@ class CardOutcomeLine extends StatelessWidget {
     required this.text,
     required this.scheme,
     required this.isDark,
+    this.maxLines = 2,
   });
 
   final String text;
   final ColorScheme scheme;
   final bool isDark;
+
+  /// Null lets the line wrap in full, for cards that size to content.
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +55,8 @@ class CardOutcomeLine extends StatelessWidget {
         Expanded(
           child: Text(
             ltrContent(context, text),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+            maxLines: maxLines,
+            overflow: maxLines == null ? null : TextOverflow.ellipsis,
             style: TextStyle(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.95)
