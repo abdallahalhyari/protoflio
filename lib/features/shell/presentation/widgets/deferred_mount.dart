@@ -18,6 +18,7 @@ class DeferredMount extends StatefulWidget {
     required this.child,
     this.distance = 10,
     this.mountWhenIdleAfter,
+    this.mountWhenScrolled = false,
   });
 
   final int sectionIndex;
@@ -31,6 +32,12 @@ class DeferredMount extends StatefulWidget {
   /// the page is still loading.
   final Duration? mountWhenIdleAfter;
 
+  /// Also mount as soon as the reader starts scrolling the column. For a
+  /// section just below the fold: it stays out of the startup frames, and
+  /// the first scroll still gives it a screen's height of travel to build
+  /// before it comes into view.
+  final bool mountWhenScrolled;
+
   @override
   State<DeferredMount> createState() => _DeferredMountState();
 }
@@ -40,17 +47,30 @@ class _DeferredMountState extends State<DeferredMount>
   bool _mounted = false;
   bool _initializedFromScope = false;
   Timer? _idleTimer;
+  ScrollPosition? _watchedPosition;
 
   bool _isNear(int pageIndex) =>
       widget.sectionIndex <= pageIndex + widget.distance;
 
   void _mountNow() {
+    _unwatchScroll();
     if (!mounted || _mounted) return;
     setState(() => _mounted = true);
   }
 
+  void _onScroll() {
+    final position = _watchedPosition;
+    if (position != null && position.pixels > 0) _mountNow();
+  }
+
+  void _unwatchScroll() {
+    _watchedPosition?.removeListener(_onScroll);
+    _watchedPosition = null;
+  }
+
   @override
   void dispose() {
+    _unwatchScroll();
     _idleTimer?.cancel();
     StaggeredMount.cancel(_mountNow);
     super.dispose();
@@ -80,6 +100,10 @@ class _DeferredMountState extends State<DeferredMount>
         }
       });
     }
+    if (widget.mountWhenScrolled) {
+      _watchedPosition = Scrollable.maybeOf(context)?.position
+        ?..addListener(_onScroll);
+    }
   }
 
   @override
@@ -106,6 +130,7 @@ class _DeferredMountState extends State<DeferredMount>
         if (!_mounted && _isNear(pageIndex)) {
           _mounted = true;
           _idleTimer?.cancel();
+          _unwatchScroll();
           StaggeredMount.cancel(_mountNow);
         }
         if (_mounted) {

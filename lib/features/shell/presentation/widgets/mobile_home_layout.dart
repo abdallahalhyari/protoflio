@@ -86,7 +86,11 @@ class MobileHomeLayout extends StatelessWidget {
               child: DeferredMount(
                 sectionIndex: 1,
                 placeholderHeight: 720,
-                distance: 1,
+                // Below the fold on phones, so it stays out of the startup
+                // frames (one of the largest tasks right after the first frame)
+                // and builds on the reader's first scroll or once idle.
+                distance: 0,
+                mountWhenScrolled: true,
                 mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(

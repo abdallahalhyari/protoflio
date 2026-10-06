@@ -73,6 +73,10 @@ class IntroProofRow extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontFamily: AppTypography.monoFont,
+                    // Share Tech Mono is Latin-only; Arabic and Czech
+                    // letters come from the body font instead of a Noto
+                    // download.
+                    fontFamilyFallback: const [AppTypography.bodyFont],
                     fontSize: IntroType.micro,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,

@@ -190,4 +190,30 @@ void main() {
     await tester.pumpWidget(const SizedBox());
     // The test binding fails the test if a Timer is still pending here.
   });
+
+  testWidgets('mounts on the first scroll when asked to', (tester) async {
+    final scroll = ScrollController();
+    await tester.pumpWidget(_wrap(
+      pageIndex: ValueNotifier<int>(0),
+      // Starts below the 600px test viewport, inside the cache extent so
+      // its placeholder is laid out, as in the app's column.
+      child: ListView(controller: scroll, children: const [
+        SizedBox(height: 700),
+        DeferredMount(
+          sectionIndex: 1,
+          placeholderHeight: 720,
+          distance: 0,
+          mountWhenScrolled: true,
+          child: Text('mounted'),
+        ),
+      ]),
+    ));
+    await tester.pump();
+    expect(find.text('mounted', skipOffstage: false), findsNothing,
+        reason: 'below the fold, not part of the startup frames');
+
+    scroll.jumpTo(10);
+    await tester.pump();
+    expect(find.text('mounted', skipOffstage: false), findsOneWidget);
+  });
 }
