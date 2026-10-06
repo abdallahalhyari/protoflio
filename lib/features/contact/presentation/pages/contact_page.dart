@@ -176,12 +176,9 @@ class _ContactPageState extends State<ContactPage>
           },
         ),
         const SizedBox(height: AppSpacing.xl),
-        ContactMastheadFooter(
-          linkedInHandle: _linkedInHandle,
-          githubHandle: _githubHandle,
-          onOpenLinkedIn: () => unawaited(_open(_linkedInUrl)),
-          onOpenGithub: () => unawaited(_open(_githubUrl)),
-        ),
+        // No LinkedIn / GitHub chips here: the channel cards above already
+        // open and copy both.
+        const ContactMastheadFooter(),
       ],
     );
 

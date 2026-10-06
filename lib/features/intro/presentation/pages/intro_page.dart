@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/services/sound_service.dart';
-import 'package:profile/features/intro/presentation/widgets/intro_availability_banner.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_footer_strip.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
@@ -103,10 +102,6 @@ class _IntroPageState extends State<IntroPage>
             height:
                 isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
         HeroRoleBlock(size: size, isDark: isDark, isCompactH: isCompactH),
-        SizedBox(
-            height:
-                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
-        IntroAvailabilityBanner(isDark: isDark, isWide: isWide),
         SizedBox(
             height:
                 isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),

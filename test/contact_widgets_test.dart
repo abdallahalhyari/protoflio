@@ -142,32 +142,16 @@ void main() {
       expect(inquiredSubject, contains('Mobile System Audit'));
     });
 
-    testWidgets('ContactMastheadFooter renders brand and handle links',
+    testWidgets('ContactMastheadFooter renders the colophon only',
         (tester) async {
-      bool linkedInOpened = false;
-      bool githubOpened = false;
-      await tester.pumpWidget(_wrap(
-        ContactMastheadFooter(
-          linkedInHandle: 'abdallah-alhyari',
-          githubHandle: 'abdallahalhyari',
-          onOpenLinkedIn: () => linkedInOpened = true,
-          onOpenGithub: () => githubOpened = true,
-        ),
-      ));
+      await tester.pumpWidget(_wrap(const ContactMastheadFooter()));
       await tester.pumpAndSettle();
 
-      expect(find.text('LINKEDIN · abdallah-alhyari'), findsOneWidget);
-      expect(find.text('GITHUB · abdallahalhyari'), findsOneWidget);
       expect(find.text('// COLOPHON & DISPATCH'), findsOneWidget);
       expect(find.text('PRIMARY LOCATION'), findsOneWidget);
-
-      await tester.tap(find.text('LINKEDIN · abdallah-alhyari'));
-      await tester.pumpAndSettle();
-      expect(linkedInOpened, isTrue);
-
-      await tester.tap(find.text('GITHUB · abdallahalhyari'));
-      await tester.pumpAndSettle();
-      expect(githubOpened, isTrue);
+      // Profile links live on the channel cards, not repeated here.
+      expect(find.textContaining('LINKEDIN ·'), findsNothing);
+      expect(find.textContaining('GITHUB ·'), findsNothing);
     });
 
     testWidgets(

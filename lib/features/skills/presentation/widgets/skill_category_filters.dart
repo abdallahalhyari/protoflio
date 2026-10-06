@@ -196,8 +196,10 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
                 child: AnimatedContainer(
               duration: AppMotion.chipHover,
               curve: AppMotion.emphasized,
+              // 12 on desktop keeps all seven filters on one row inside
+              // the shared 1280 section width (16 wrapped the last one).
               padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 16 : 10,
+                horizontal: isDesktop ? 12 : 10,
                 vertical: isDesktop ? 10 : 7,
               ),
               decoration: BoxDecoration(

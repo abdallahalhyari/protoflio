@@ -191,7 +191,13 @@ void main() {
         (tester) async {
       // HatsGridPage fills its parent via SizedBox.expand — needs bounded
       // constraints, unlike _wrap's SingleChildScrollView used elsewhere
-      // in this file for standalone sub-widgets.
+      // in this file for standalone sub-widgets. The surface matches the
+      // MediaQuery below: on the default 800x600 surface the header laid
+      // out 400px narrower than the page believed and wrapped the deck
+      // off screen.
+      tester.view.physicalSize = const Size(1200, 900);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
       await tester.pumpWidget(MaterialApp(
         theme: AppTheme.dark(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,

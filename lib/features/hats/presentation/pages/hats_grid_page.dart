@@ -324,32 +324,39 @@ class _DesktopHeader extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 14 + kTopNavReserve, 24, 0),
+        padding: const EdgeInsets.only(top: 14 + kTopNavReserve),
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                HatDeckHeader(
-                  isMobile: false,
-                  onShuffle: onShuffle,
-                  onReset: onReset,
-                ),
-                const SizedBox(height: AppSpacing.smd),
-                if (size.height >= _kBioMinViewportHeight) ...[
-                  const HatBioStrip(isMobile: false),
+            constraints: const BoxConstraints(maxWidth: kSectionMaxWidth),
+            child: Padding(
+              // Same box and inset as AppScreenShell, so the header lines
+              // up with the other sections' left edge.
+              padding: EdgeInsets.symmetric(
+                  horizontal:
+                      AppScreenShell.sideInset(context, kSectionMaxWidth)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  HatDeckHeader(
+                    isMobile: false,
+                    onShuffle: onShuffle,
+                    onReset: onReset,
+                  ),
                   const SizedBox(height: AppSpacing.smd),
+                  if (size.height >= _kBioMinViewportHeight) ...[
+                    const HatBioStrip(isMobile: false),
+                    const SizedBox(height: AppSpacing.smd),
+                  ],
+                  const HatDragHint(),
+                  const SizedBox(height: AppSpacing.sm),
+                  HatRolePills(
+                    selectedIndex: selectedHatIndex,
+                    isDesktop: true,
+                    onSelectRole: onSelectRole,
+                  ),
                 ],
-                const HatDragHint(),
-                const SizedBox(height: AppSpacing.sm),
-                HatRolePills(
-                  selectedIndex: selectedHatIndex,
-                  isDesktop: true,
-                  onSelectRole: onSelectRole,
-                ),
-              ],
+              ),
             ),
           ),
         ),

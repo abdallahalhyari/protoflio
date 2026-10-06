@@ -5,21 +5,11 @@ import 'package:profile/core/services/analytics_service.dart';
 
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/features/contact/presentation/widgets/social_chip.dart';
 import 'package:profile/shared/widgets/spec_sheet_card.dart';
 
 class ContactMastheadFooter extends StatelessWidget {
-  final String linkedInHandle;
-  final String githubHandle;
-  final VoidCallback onOpenLinkedIn;
-  final VoidCallback onOpenGithub;
-
   const ContactMastheadFooter({
     super.key,
-    required this.linkedInHandle,
-    required this.githubHandle,
-    required this.onOpenLinkedIn,
-    required this.onOpenGithub,
   });
 
   @override
@@ -74,25 +64,6 @@ class ContactMastheadFooter extends StatelessWidget {
 
     return Column(
       children: [
-        // Social quick-pills
-        Wrap(
-          alignment: WrapAlignment.center,
-          spacing: 12,
-          runSpacing: 8,
-          children: [
-            SocialChip(
-              label: 'LINKEDIN · $linkedInHandle',
-              icon: Icons.link_rounded,
-              onTap: onOpenLinkedIn,
-            ),
-            SocialChip(
-              label: 'GITHUB · $githubHandle',
-              icon: Icons.code_rounded,
-              onTap: onOpenGithub,
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.lg),
         // Trust and identity badge
         Center(
           child: Container(
