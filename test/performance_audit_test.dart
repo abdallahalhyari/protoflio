@@ -48,10 +48,12 @@ void main() {
     });
 
     test('Bundled fonts stay within budget', () {
-      // Readex Pro carries Latin, Czech and Arabic in one variable file.
+      // Readex Pro carries Latin, Czech and Arabic in one variable file,
+      // cut to the wght axis and the site's scripts by
+      // tool/subset_readex.py (it sits on the startup path).
       final text = File('fonts/ReadexPro.ttf');
       expect(text.existsSync(), isTrue);
-      expect(text.lengthSync(), lessThanOrEqualTo(300 * 1024));
+      expect(text.lengthSync(), lessThanOrEqualTo(170 * 1024));
       final mono = File('fonts/ShareTechMono-Regular.ttf');
       expect(mono.existsSync(), isTrue);
       expect(mono.lengthSync(), lessThanOrEqualTo(48 * 1024));
@@ -177,10 +179,9 @@ void main() {
     });
 
     test('Contains critical preloads and prefetch resource hints', () {
-      expect(
-          indexHtml.contains(
-              'rel="preload" href="assets/fonts/ReadexPro.ttf" as="fetch"'),
-          isTrue);
+      // The text fonts are preloaded once the boot screen has painted.
+      expect(indexHtml.contains('"assets/fonts/ReadexPro.ttf"'), isTrue);
+      expect(indexHtml.contains("link.rel = 'preload'"), isTrue);
       expect(
           indexHtml.contains('rel="preload" href="main.dart.wasm" as="fetch"'),
           isTrue);
