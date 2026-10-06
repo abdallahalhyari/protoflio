@@ -1,4 +1,4 @@
-.PHONY: all analyze test format format-check build deploy deploy-fast clean
+.PHONY: all analyze test format format-check build deploy deploy-fast clean hooks
 
 all: format-check analyze test build
 
@@ -27,3 +27,8 @@ deploy-fast: build
 clean:
 	flutter clean
 	flutter pub get
+
+# Point git at the repo's hooks (.githooks/pre-push: format + analyze on
+# every push, tests too when pushing to main). Once per clone.
+hooks:
+	git config core.hooksPath .githooks
