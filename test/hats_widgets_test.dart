@@ -190,7 +190,13 @@ void main() {
         (tester) async {
       // HatsGridPage fills its parent via SizedBox.expand — needs bounded
       // constraints, unlike _wrap's SingleChildScrollView used elsewhere
-      // in this file for standalone sub-widgets.
+      // in this file for standalone sub-widgets. The surface matches the
+      // MediaQuery below: on the default 800x600 surface the header laid
+      // out 400px narrower than the page believed and wrapped the deck
+      // off screen.
+      tester.view.physicalSize = const Size(1200, 900);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
       await tester.pumpWidget(MaterialApp(
         theme: AppTheme.dark(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -205,20 +211,22 @@ void main() {
       // instead, matching the existing HatsGridPage test in widget_test.dart.
       await tester.pump(const Duration(milliseconds: 300));
 
-      // The active-role label is the only plain role name on the page
-      // (the pills are numbered: "01 Thinking"), so the arrows moving it
-      // is what proves the shortcuts reached the deck.
-      expect(find.text('Thinking'), findsOneWidget);
-      expect(find.text('Communicating'), findsNothing);
+      // The dock's active-role label is what the shortcuts move. Scoped
+      // to the dock: with the deck on screen the cards carry the same
+      // role names.
+      Finder dock(String role) => find.descendant(
+          of: find.byType(HatConsoleDock), matching: find.text(role));
+      expect(dock('Thinking'), findsOneWidget);
+      expect(dock('Communicating'), findsNothing);
 
       await tester.sendKeyEvent(LogicalKeyboardKey.arrowRight);
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('Communicating'), findsOneWidget);
-      expect(find.text('Thinking'), findsNothing);
+      expect(dock('Communicating'), findsOneWidget);
+      expect(dock('Thinking'), findsNothing);
 
       await tester.sendKeyEvent(LogicalKeyboardKey.arrowLeft);
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('Thinking'), findsOneWidget);
+      expect(dock('Thinking'), findsOneWidget);
     });
   });
 }

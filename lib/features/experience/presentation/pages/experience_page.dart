@@ -107,7 +107,7 @@ class _ExperiencePageState extends State<ExperiencePage>
       child: Focus(
         onKeyEvent: _handleKeyEvent,
         child: AppScreenShell(
-          maxWidth: 1600, // Wider for horizontal scroll
+          maxWidth: kSectionMaxWidth,
           verticalPadding: AppSpacing.md,
           reserveBottomNav: !widget.isContinuousMobile,
           reserveMobileTop: !widget.isContinuousMobile,

@@ -233,7 +233,13 @@ class _PrimaryButtonState extends State<PrimaryButton>
                       horizontal: dims.hPad,
                       vertical: dims.vPad,
                     ),
-                    child: content,
+                    // Factor 1: hugs the label as before, but centres it
+                    // when a parent stretches the button (stacked CTAs).
+                    child: Center(
+                      widthFactor: 1,
+                      heightFactor: 1,
+                      child: content,
+                    ),
                   ),
                 ),
               ), // PrimaryButtonParallaxLayer

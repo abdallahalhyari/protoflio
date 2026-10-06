@@ -109,7 +109,7 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
         SoundService.instance.playSelection();
       },
       child: AppScreenShell(
-        maxWidth: 1280,
+        maxWidth: kSectionMaxWidth,
         verticalPadding: AppSpacing.md,
         reserveBottomNav: !widget.isContinuousMobile,
         reserveMobileTop: !widget.isContinuousMobile,

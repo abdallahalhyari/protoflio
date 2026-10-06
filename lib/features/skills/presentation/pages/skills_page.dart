@@ -172,7 +172,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
         );
 
         return AppScreenShell(
-          maxWidth: 1400,
+          maxWidth: kSectionMaxWidth,
           verticalPadding: AppSpacing.md,
           reserveBottomNav: !widget.isContinuousMobile,
           reserveMobileTop: !widget.isContinuousMobile,

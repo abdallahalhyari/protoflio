@@ -26,6 +26,13 @@ const double kMobileTopReserve = 64;
 /// vertical page-indicator dots (pinned 12px in, ~20px wide).
 const double kSideRailReserve = 48;
 
+/// Max content width shared by the left-aligned desktop sections (Work,
+/// Experience, Skills, Engineering, Perspectives). Each used to pick its
+/// own (1200-1600), so the section header's left edge jumped between
+/// 48px and 168px at 1440px as you paged. The centred Intro and Contact
+/// compositions keep their narrower widths.
+const double kSectionMaxWidth = 1280;
+
 /// Shared screen shell: SafeArea + centered content column + capped
 /// max-width + top-nav reserve. (backdrop system removed).
 class AppScreenShell extends StatelessWidget {
@@ -69,9 +76,22 @@ class AppScreenShell extends StatelessWidget {
     return 16;
   }
 
+  /// Horizontal padding inside a centred box of [maxWidth]. On desktop
+  /// the content must not run under the page-indicator dots: whatever of
+  /// [kSideRailReserve] the box doesn't already leave free becomes
+  /// padding (on both sides, to stay centred). Public so screens that
+  /// build their own box line up with the shell.
+  static double sideInset(BuildContext context, double maxWidth,
+      {double? hPad}) {
+    final side = hPad ?? horizontalPadding(context);
+    if (!AppBreakpoints.isDesktop(context)) return side;
+    final width = MediaQuery.sizeOf(context).width;
+    final freeEachSide = math.max(0.0, (width - maxWidth) / 2);
+    return math.max(side, kSideRailReserve - freeEachSide);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
     final wide = AppBreakpoints.isDesktop(context);
     final topExtra = wide
         ? (reserveTopNav ? kTopNavReserve : 0.0)
@@ -79,14 +99,7 @@ class AppScreenShell extends StatelessWidget {
     final mobileBottomExtra =
         (!wide && reserveBottomNav) ? kBottomNavReserve : 0.0;
 
-    // On desktop the content must not run under the page-indicator dots.
-    // Whatever of [kSideRailReserve] the centred max-width box doesn't
-    // already leave free becomes padding (on both sides, to stay centred).
-    var side = hPad ?? horizontalPadding(context);
-    if (wide) {
-      final freeEachSide = math.max(0.0, (width - maxWidth) / 2);
-      side = math.max(side, kSideRailReserve - freeEachSide);
-    }
+    final side = sideInset(context, maxWidth, hPad: hPad);
     final shellPadding = padding ??
         EdgeInsets.fromLTRB(
           side,

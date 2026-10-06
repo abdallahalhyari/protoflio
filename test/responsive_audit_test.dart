@@ -384,7 +384,7 @@ void main() {
                 matching: find.byType(ConstrainedBox))
             .first,
       );
-      expect(constrainedBox.constraints.maxWidth, equals(1200.0));
+      expect(constrainedBox.constraints.maxWidth, equals(kSectionMaxWidth));
       final renderBox = tester.renderObject<RenderBox>(
         find
             .descendant(
@@ -392,7 +392,7 @@ void main() {
                 matching: find.byType(ConstrainedBox))
             .first,
       );
-      expect(renderBox.size.width, lessThanOrEqualTo(1200.0));
+      expect(renderBox.size.width, lessThanOrEqualTo(kSectionMaxWidth));
     });
 
     testWidgets('ExperiencePage centers and constrains maxWidth on 4K display',
@@ -412,7 +412,7 @@ void main() {
                 matching: find.byType(ConstrainedBox))
             .first,
       );
-      expect(constrainedBox.constraints.maxWidth, equals(1600.0));
+      expect(constrainedBox.constraints.maxWidth, equals(kSectionMaxWidth));
       final renderBox = tester.renderObject<RenderBox>(
         find
             .descendant(
@@ -420,7 +420,7 @@ void main() {
                 matching: find.byType(ConstrainedBox))
             .first,
       );
-      expect(renderBox.size.width, lessThanOrEqualTo(1600.0));
+      expect(renderBox.size.width, lessThanOrEqualTo(kSectionMaxWidth));
     });
   });
 

@@ -73,59 +73,7 @@ class HeroRoleBlock extends StatelessWidget {
                   height: 1.55,
                 ),
               ),
-              SizedBox(height: isCompactH ? 8.0 : AppSpacing.md),
-              Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  const _MiniPill('FLUTTER'),
-                  const _MiniPill('ANDROID'),
-                  _MiniPill(loc.introSkillArchitecture.toUpperCase()),
-                  const _MiniPill('NATIVE INTEGRATION'),
-                  const _MiniPill('PRODUCT DELIVERY'),
-                ],
-              ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _MiniPill extends StatelessWidget {
-  final String label;
-
-  const _MiniPill(this.label);
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final isDark = scheme.brightness == Brightness.dark;
-
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.05)
-            : IntroColors.slate100,
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.12)
-              : IntroColors.slate200,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontFamily: AppTypography.monoFont,
-            color: context.onSurface,
-            fontSize: IntroType.micro,
-            fontWeight: FontWeight.w800,
-            letterSpacing: latinTracking(context, 1.1),
           ),
         ),
       ),

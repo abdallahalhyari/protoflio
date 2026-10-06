@@ -29,8 +29,8 @@ class IntroProofRow extends StatelessWidget {
         label: 'PRODUCTION MOBILE APPS',
       ),
       (
-        icon: Icons.layers_rounded,
-        label: 'FLUTTER + ANDROID',
+        icon: Icons.settings_input_antenna_rounded,
+        label: 'NATIVE INTEGRATION',
       ),
       (
         icon: Icons.hub_rounded,

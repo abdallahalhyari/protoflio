@@ -119,56 +119,73 @@ class IntroCtaRow extends StatelessWidget {
     final accent = Theme.of(context).colorScheme.primary;
     final loc = AppLocalizations.of(context)!;
 
+    final ctas = <Widget>[
+      PrimaryButton(
+        label: loc.viewMyWork,
+        trailingIcon: Icons.arrow_forward_rounded,
+        isPill: true,
+        letterSpacing: 1.2,
+        onPressed: () {
+          SoundService.instance.playClick();
+          onViewWork();
+        },
+      ),
+      ConstrainedBox(
+        constraints: BoxConstraints(
+            maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
+        child: _ghostButton(
+          label: loc.introDownloadResume,
+          icon: Icons.download_rounded,
+          color: accent,
+          isDark: isDark,
+          onPressed: () {
+            SoundService.instance.playClick();
+            onDownloadResume();
+          },
+        ),
+      ),
+      ConstrainedBox(
+        constraints: BoxConstraints(
+            maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
+        child: _ghostButton(
+          label: loc.contactMe,
+          icon: Icons.send_rounded,
+          color: accent,
+          isDark: isDark,
+          onPressed: () {
+            SoundService.instance.playClick();
+            onContactMe();
+          },
+        ),
+      ),
+    ];
+    // Narrow phones: one column at a shared width. Centred in a Wrap the
+    // three buttons each took their label's width and stacked unevenly.
+    final stackCtas = MediaQuery.sizeOf(context).width < AppBreakpoints.compact;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Wrap(
-          spacing: 12,
-          runSpacing: 10,
-          alignment: WrapAlignment.center,
-          children: [
-            PrimaryButton(
-              label: loc.viewMyWork,
-              trailingIcon: Icons.arrow_forward_rounded,
-              isPill: true,
-              letterSpacing: 1.2,
-              onPressed: () {
-                SoundService.instance.playClick();
-                onViewWork();
-              },
+        if (stackCtas)
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 320),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (var i = 0; i < ctas.length; i++) ...[
+                  if (i > 0) const SizedBox(height: 10),
+                  ctas[i],
+                ],
+              ],
             ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                  minHeight: 40),
-              child: _ghostButton(
-                label: loc.introDownloadResume,
-                icon: Icons.download_rounded,
-                color: accent,
-                isDark: isDark,
-                onPressed: () {
-                  SoundService.instance.playClick();
-                  onDownloadResume();
-                },
-              ),
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                  minHeight: 40),
-              child: _ghostButton(
-                label: loc.contactMe,
-                icon: Icons.send_rounded,
-                color: accent,
-                isDark: isDark,
-                onPressed: () {
-                  SoundService.instance.playClick();
-                  onContactMe();
-                },
-              ),
-            ),
-          ],
-        ),
+          )
+        else
+          Wrap(
+            spacing: 12,
+            runSpacing: 10,
+            alignment: WrapAlignment.center,
+            children: ctas,
+          ),
         const SizedBox(height: AppSpacing.smd),
         Wrap(
           spacing: 12,

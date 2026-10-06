@@ -54,11 +54,10 @@ class ContactChannelsGrid extends StatelessWidget {
           Analytics.ctaPhoneCall();
           onOpenUrl('tel:$phoneRaw');
         },
-        secondaryLabel: l10n.contactWhatsapp,
-        secondaryAction: () {
-          Analytics.ctaWhatsapp();
-          onOpenUrl(whatsAppUrl);
-        },
+        // Copy, like every other card: a WhatsApp button here duplicated
+        // the WhatsApp card beside it.
+        secondaryLabel: l10n.contactCopy,
+        secondaryAction: () => onCopy(phoneRaw),
         accent: _sky,
       ),
       ChannelData(
