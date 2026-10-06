@@ -190,8 +190,7 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
         ServiceLocator.instance.get<SkillRepository>() as LocalSkillRepository;
     final architectureRepo =
         ServiceLocator.instance.get<ArchitectureRepository>();
-    final contactRepo =
-        ServiceLocator.instance.get<ContactRepository>();
+    final contactRepo = ServiceLocator.instance.get<ContactRepository>();
 
     await loadInitialData(
       projectRepo: projectRepo,

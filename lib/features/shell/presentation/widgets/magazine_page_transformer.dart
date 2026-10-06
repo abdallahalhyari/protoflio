@@ -10,11 +10,17 @@ import 'package:profile/features/shell/presentation/widgets/desktop_scroll_inter
 /// Pages don't slide past each other. Both stay where they are while the
 /// pager scrolls, and:
 ///  * the page below is *scanned in*: revealed from its leading edge by a
-///    gold reader line that sweeps across the viewport;
+///    gold reader line that sweeps across the viewport, the new sheet's
+///    edge casting a soft shadow on the page it covers;
 ///  * the page above *recedes into the stack*: it sinks back, shrinks a
-///    little and dims, like a card dropped onto a pile.
+///    little and fades into the surface, like a card dropped onto a pile.
 /// Turning backwards plays the same physics in reverse. Reduced motion cuts
 /// straight to the page.
+///
+/// The pager's own curve ([AppMotion.emphasized]) is the only easing: the
+/// turn reads the page position as is. Easing it again here put 70% of the
+/// reveal in the first 100ms, so the reader line flashed instead of
+/// sweeping.
 class MagazinePageTransformer extends StatelessWidget {
   final Widget child;
   final PageController controller;
@@ -33,6 +39,7 @@ class MagazinePageTransformer extends StatelessWidget {
     if (reduceMotion) return child;
 
     final double momentumTease = MomentumTeaseProvider.of(context);
+    final surface = Theme.of(context).scaffoldBackgroundColor;
 
     return AnimatedBuilder(
       animation: controller,
@@ -54,16 +61,14 @@ class MagazinePageTransformer extends StatelessWidget {
         // is carried by the reveal and the recede instead.
         var dy = offscreen ? 0.0 : position * extent;
         var scale = 1.0;
-        var shade = 0.0;
+        var veil = 0.0;
         var reveal = 1.0; // fraction of this page uncovered (scan-in)
         if (!offscreen && position > 0) {
-          final e = AppMotion.emphasizedDecel.transform(position);
-          scale = 1 - 0.07 * e;
-          dy += 24 * e;
-          shade = 0.55 * e;
+          scale = 1 - 0.07 * position;
+          dy += 24 * position;
+          veil = 0.6 * position;
         } else if (!offscreen && position < 0) {
-          final p = 1 + position; // 0 → 1 as it arrives
-          reveal = AppMotion.emphasized.transform(p.clamp(0.0, 1.0));
+          reveal = (1 + position).clamp(0.0, 1.0); // 0 → 1 as it arrives
           // A little parallax so the page settles into place as it's read.
           dy += (1 - reveal) * 48;
         } else if (!offscreen && position == 0) {
@@ -83,8 +88,16 @@ class MagazinePageTransformer extends StatelessWidget {
               transform: Matrix4.translationValues(0, dy, 0)
                 ..scaleByDouble(scale, scale, 1, 1),
               child: CustomPaint(
+                // Pages have no background of their own (one canvas
+                // sits behind the pager), so the arriving page backs
+                // its uncovered part with that canvas: the page it
+                // covers no longer shows through between its cards.
+                painter: reveal < 1
+                    ? _ScanBackdrop(reveal: reveal, color: surface)
+                    : null,
                 foregroundPainter: _TurnPainter(
-                  shade: shade,
+                  veil: veil,
+                  veilColor: surface,
                   scan: reveal < 1 ? reveal : null,
                 ),
                 child: ClipRect(
@@ -118,23 +131,53 @@ class _ScanClipper extends CustomClipper<Rect> {
   bool shouldReclip(_ScanClipper oldClipper) => oldClipper.reveal != reveal;
 }
 
-/// Dims a receding page; draws the gold reader line on the edge of a page
-/// being scanned in.
-class _TurnPainter extends CustomPainter {
-  _TurnPainter({required this.shade, required this.scan});
+/// Fills the uncovered part of an arriving page with the page canvas.
+class _ScanBackdrop extends CustomPainter {
+  _ScanBackdrop({required this.reveal, required this.color});
 
-  final double shade;
-  final double? scan;
+  final double reveal;
+  final Color color;
 
   static final Paint _paint = Paint();
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (shade > 0) {
+    final top = size.height * (1 - reveal);
+    canvas.drawRect(
+        Rect.fromLTRB(0, top, size.width, size.height), _paint..color = color);
+  }
+
+  @override
+  bool shouldRepaint(_ScanBackdrop oldDelegate) =>
+      oldDelegate.reveal != reveal || oldDelegate.color != color;
+}
+
+/// Fades a receding page into the canvas; draws the reader line, and the
+/// shadow the arriving sheet's edge casts, on a page being scanned in.
+class _TurnPainter extends CustomPainter {
+  _TurnPainter({
+    required this.veil,
+    required this.veilColor,
+    required this.scan,
+  });
+
+  /// 0 → 1: how far a receding page has faded into [veilColor]. The canvas
+  /// colour, not a fixed ink: on the light paper theme a dark wash read as
+  /// grey murk, where fading into the paper reads as sinking into the pile.
+  final double veil;
+  final Color veilColor;
+  final double? scan;
+
+  static final Paint _paint = Paint();
+  static const double _shadowDepth = 36;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (veil > 0) {
       _paint
         ..shader = null
         ..maskFilter = null
-        ..color = AppColors.ink950.withValues(alpha: shade.clamp(0.0, 1.0));
+        ..color = veilColor.withValues(alpha: veil.clamp(0.0, 1.0));
       canvas.drawRect(Offset.zero & size, _paint);
     }
     final s = scan;
@@ -142,6 +185,24 @@ class _TurnPainter extends CustomPainter {
     final y = size.height * (1 - s);
     // Brightest mid-scan, fading in and out at either end of the turn.
     final strength = math.sin(s * math.pi).clamp(0.0, 1.0);
+
+    // The arriving sheet sits on top of the stack: its edge throws a soft
+    // shadow onto the page it is covering.
+    final shadowRect =
+        Rect.fromLTRB(0, math.max(0.0, y - _shadowDepth), size.width, y);
+    _paint
+      ..maskFilter = null
+      ..color = Colors.black
+      ..shader = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          AppColors.ink950.withValues(alpha: 0),
+          AppColors.ink950.withValues(alpha: 0.16 * strength),
+        ],
+      ).createShader(shadowRect);
+    canvas.drawRect(shadowRect, _paint);
+
     _paint
       ..shader = null
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 14)
@@ -155,5 +216,7 @@ class _TurnPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_TurnPainter oldDelegate) =>
-      oldDelegate.shade != shade || oldDelegate.scan != scan;
+      oldDelegate.veil != veil ||
+      oldDelegate.veilColor != veilColor ||
+      oldDelegate.scan != scan;
 }
