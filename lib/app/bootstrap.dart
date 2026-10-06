@@ -6,6 +6,8 @@ import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:profile/core/di/injection.dart';
+import 'package:profile/features/contact/domain/repositories/contact_repository.dart';
+import 'package:profile/features/engineering/domain/repositories/architecture_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
@@ -71,6 +73,8 @@ class AppBootstrapData {
     required this.experienceRepo,
     required this.hatRepo,
     required this.skillRepo,
+    required this.architectureRepo,
+    required this.contactRepo,
   });
 
   final ThemeMode initialTheme;
@@ -79,6 +83,8 @@ class AppBootstrapData {
   final LocalExperienceRepository experienceRepo;
   final LocalHatRepository hatRepo;
   final LocalSkillRepository skillRepo;
+  final ArchitectureRepository architectureRepo;
+  final ContactRepository contactRepo;
 }
 
 class AppBootstrapper extends StatefulWidget {
@@ -182,6 +188,10 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
         ServiceLocator.instance.get<HatRepository>() as LocalHatRepository;
     final skillRepo =
         ServiceLocator.instance.get<SkillRepository>() as LocalSkillRepository;
+    final architectureRepo =
+        ServiceLocator.instance.get<ArchitectureRepository>();
+    final contactRepo =
+        ServiceLocator.instance.get<ContactRepository>();
 
     await loadInitialData(
       projectRepo: projectRepo,
@@ -197,6 +207,8 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
       experienceRepo: experienceRepo,
       hatRepo: hatRepo,
       skillRepo: skillRepo,
+      architectureRepo: architectureRepo,
+      contactRepo: contactRepo,
     );
   }
 

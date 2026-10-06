@@ -9,6 +9,8 @@ import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_state.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
+import 'package:profile/features/contact/domain/repositories/contact_repository.dart';
+import 'package:profile/features/engineering/domain/repositories/architecture_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
@@ -36,6 +38,8 @@ Future<void> main() async {
         experienceRepo: data.experienceRepo,
         hatRepo: data.hatRepo,
         skillRepo: data.skillRepo,
+        architectureRepo: data.architectureRepo,
+        contactRepo: data.contactRepo,
       ),
     ),
   );
@@ -81,6 +85,8 @@ class PortfolioApp extends StatelessWidget {
     required this.experienceRepo,
     required this.hatRepo,
     required this.skillRepo,
+    this.architectureRepo,
+    this.contactRepo,
   });
 
   final ThemeMode initialTheme;
@@ -89,6 +95,8 @@ class PortfolioApp extends StatelessWidget {
   final ExperienceRepository experienceRepo;
   final HatRepository hatRepo;
   final SkillRepository skillRepo;
+  final ArchitectureRepository? architectureRepo;
+  final ContactRepository? contactRepo;
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +114,14 @@ class PortfolioApp extends StatelessWidget {
         RepositoryProvider<SkillRepository>.value(
           value: skillRepo,
         ),
+        if (architectureRepo != null)
+          RepositoryProvider<ArchitectureRepository>.value(
+            value: architectureRepo!,
+          ),
+        if (contactRepo != null)
+          RepositoryProvider<ContactRepository>.value(
+            value: contactRepo!,
+          ),
       ],
       child: MultiBlocProvider(
         providers: [

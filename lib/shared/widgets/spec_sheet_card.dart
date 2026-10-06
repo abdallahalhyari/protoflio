@@ -33,6 +33,7 @@ class _SpecSheetCardState extends State<SpecSheetCard> {
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
     final primary = Theme.of(context).colorScheme.primary;
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final borderColor = _isHovered
         ? primary.withValues(alpha: isDark ? 0.4 : 0.5)
         : (isDark
@@ -43,7 +44,7 @@ class _SpecSheetCardState extends State<SpecSheetCard> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: AppMotion.micro,
+        duration: reduceMotion ? Duration.zero : AppMotion.micro,
         curve: Curves.easeOutCubic,
         margin: widget.margin,
         decoration: BoxDecoration(

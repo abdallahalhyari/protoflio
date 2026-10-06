@@ -66,4 +66,14 @@ class Analytics {
   static void ctaGithub() => event('cta_github');
   static void ctaProject(String company) =>
       event('cta_project_visit', params: {'company': company});
+  static void ctaChapterJump(String caseStudyId, String chapterId) =>
+      event('cta_chapter_jump', params: {
+        'case_study_id': caseStudyId,
+        'chapter_id': chapterId,
+      });
+  static void ctaAmmanClock() => event('cta_amman_clock');
+  static void ctaContactPreset(String trackName) =>
+      event('cta_contact_preset', params: {'track_name': trackName});
+  static void ctaRoleHatSelect(String hatTitle) =>
+      event('cta_role_hat_select', params: {'hat_title': hatTitle});
 }

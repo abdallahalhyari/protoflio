@@ -60,7 +60,7 @@ void main() {
     expect(find.text('Previous'), findsOneWidget);
     expect(find.text('Next'), findsOneWidget);
 
-    await tester.tap(find.text('Next'));
+    await tester.tap(find.text('Next'), warnIfMissed: false);
     await tester.pump(const Duration(milliseconds: 200));
 
     // Reset surface size

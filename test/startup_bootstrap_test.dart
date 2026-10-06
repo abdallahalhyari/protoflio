@@ -5,6 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:profile/app/bootstrap.dart';
+import 'package:profile/features/contact/data/datasources/contact_local_data_source.dart';
+import 'package:profile/features/contact/data/repositories/contact_repository_impl.dart';
+import 'package:profile/features/engineering/data/repositories/architecture_repository_impl.dart';
 import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
 import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
@@ -153,6 +156,8 @@ void main() {
       experienceRepo: LocalExperienceRepository(),
       hatRepo: LocalHatRepository(),
       skillRepo: LocalSkillRepository(),
+      architectureRepo: const ArchitectureRepositoryImpl(),
+      contactRepo: const ContactRepositoryImpl(ContactLocalDataSourceImpl()),
     ));
     await tester.pump();
     expect(find.text('content'), findsOneWidget);

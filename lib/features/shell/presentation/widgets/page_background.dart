@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// The canvas behind every page: polycarbonate card stock in the theme's surface
-/// colour with a subtle radial ambient mesh glow driven by the active section primary accent.
+/// The canvas behind every page: plain card stock in the theme's surface
+/// colour. No orbs, particles or parallax — the cover's credential card is
+/// the only thing on the site that moves on its own.
 class PageBackground extends StatelessWidget {
   final Widget child;
 
@@ -18,24 +19,8 @@ class PageBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final surface = Theme.of(context).scaffoldBackgroundColor;
-    final primary = Theme.of(context).colorScheme.primary;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor =
-        overlay == null ? surface : Color.alphaBlend(overlay!, surface);
-
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: baseColor,
-        gradient: RadialGradient(
-          center: const Alignment(0.0, -0.6),
-          radius: 1.25,
-          colors: [
-            primary.withValues(alpha: isDark ? 0.08 : 0.04),
-            baseColor,
-          ],
-          stops: const [0.0, 1.0],
-        ),
-      ),
+    return ColoredBox(
+      color: overlay == null ? surface : Color.alphaBlend(overlay!, surface),
       child: RepaintBoundary(child: child),
     );
   }

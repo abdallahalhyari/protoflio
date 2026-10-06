@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/services/sound_service.dart';
 
+import 'package:profile/features/engineering/domain/repositories/architecture_repository.dart';
 import 'package:profile/features/engineering/presentation/bloc/architecture_simulator_bloc.dart';
 import 'package:profile/features/engineering/presentation/bloc/architecture_simulator_event.dart';
 import 'package:profile/features/engineering/presentation/bloc/architecture_simulator_state.dart';
@@ -37,8 +38,15 @@ class EngineeringPage extends StatelessWidget {
       return _EngineeringPageView(isContinuousMobile: isContinuousMobile);
     }
 
+    ArchitectureRepository? repo;
+    try {
+      repo = context.read<ArchitectureRepository>();
+    } catch (_) {
+      repo = null;
+    }
+
     return BlocProvider<ArchitectureSimulatorBloc>(
-      create: (_) => ArchitectureSimulatorBloc(),
+      create: (_) => ArchitectureSimulatorBloc(repository: repo),
       child: _EngineeringPageView(isContinuousMobile: isContinuousMobile),
     );
   }

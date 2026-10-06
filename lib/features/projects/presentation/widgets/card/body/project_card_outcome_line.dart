@@ -26,29 +26,33 @@ class CardOutcomeLine extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-          margin: const EdgeInsets.only(top: 1),
-          decoration: BoxDecoration(
-            color: accent.withValues(alpha: isDark ? 0.15 : 0.10),
-            borderRadius: BorderRadius.circular(AppRadius.xs),
-            border: Border.all(
-                color: accent.withValues(alpha: isDark ? 0.35 : 0.25)),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.trending_up_rounded, size: 10, color: accent),
-              const SizedBox(width: 4),
-              Text(
-                'IMPACT',
-                style: TextStyle(
-                  color: accent,
-                  fontSize: AppTypography.label,
-                  fontWeight: FontWeight.w900,
+        Semantics(
+          label: 'Impact',
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+            margin: const EdgeInsets.only(top: 1),
+            decoration: BoxDecoration(
+              color: accent.withValues(alpha: isDark ? 0.15 : 0.10),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+              border: Border.all(
+                  color: accent.withValues(alpha: isDark ? 0.35 : 0.25)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.trending_up_rounded, size: 10, color: accent),
+                const SizedBox(width: 4),
+                Text(
+                  'IMPACT',
+                  semanticsLabel: '',
+                  style: TextStyle(
+                    color: accent,
+                    fontSize: AppTypography.label,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         const SizedBox(width: 8),

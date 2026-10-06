@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/contact/domain/repositories/contact_repository.dart';
 import 'package:profile/features/contact/presentation/bloc/contact_inquiry_bloc.dart';
 import 'package:profile/features/contact/presentation/bloc/contact_inquiry_event.dart';
 import 'package:profile/features/contact/presentation/bloc/contact_inquiry_state.dart';
@@ -66,8 +67,18 @@ class InquiryComposerDialog extends StatelessWidget {
       );
     }
 
+    ContactRepository? repo;
+    try {
+      repo = context.read<ContactRepository>();
+    } catch (_) {
+      repo = null;
+    }
+
     return BlocProvider<ContactInquiryBloc>(
-      create: (_) => ContactInquiryBloc(initialTrackIndex: initialTrackIndex),
+      create: (_) => ContactInquiryBloc(
+        initialTrackIndex: initialTrackIndex,
+        repository: repo,
+      ),
       child: _InquiryComposerDialogView(
         initialTrackIndex: initialTrackIndex,
         onCopy: onCopy,

@@ -271,7 +271,7 @@ void main() {
       final ch3Button =
           find.byKey(const Key('case_study_chapter_architecture'));
       expect(ch3Button, findsOneWidget);
-      await tester.tap(ch3Button);
+      await tester.tap(ch3Button, warnIfMissed: false);
       await tester.pumpAndSettle();
 
       expect(tester.takeException(), isNull);
