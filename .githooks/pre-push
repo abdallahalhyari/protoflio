@@ -1,0 +1,57 @@
+#!/bin/sh
+# Runs CI's first checks before a push leaves the machine. A commit pushed
+# straight to main without `dart format` turns main's CI red, and while
+# it is red the build and deploy-live jobs never run, so nothing deploys.
+#
+#   every push:      dart format check + flutter analyze   (~15 s)
+#   pushes to main:  also flutter test                      (~2 min)
+#
+# Enable once per clone:   make hooks
+# Skip in an emergency:    git push --no-verify
+#
+# Checks run on the working tree, which is what you are pushing as long
+# as everything under lib/ and test/ is committed.
+
+to_main=0
+pushing=0
+while read -r _local_ref local_sha remote_ref _remote_sha; do
+  # A branch delete pushes the all-zero sha; nothing to check.
+  case "$local_sha" in *[!0]*) ;; *) continue ;; esac
+  pushing=1
+  [ "$remote_ref" = "refs/heads/main" ] && to_main=1
+done
+[ "$pushing" = 1 ] || exit 0
+
+if ! command -v flutter >/dev/null 2>&1 || ! command -v dart >/dev/null 2>&1; then
+  echo "pre-push: flutter/dart not on PATH, skipping checks (CI still runs them)." >&2
+  exit 0
+fi
+
+if ! git diff --quiet HEAD -- lib test 2>/dev/null; then
+  echo "pre-push: note: uncommitted changes under lib/ or test/ are checked too." >&2
+fi
+
+fail() {
+  echo "" >&2
+  echo "pre-push: $1" >&2
+  echo "pre-push: push stopped. Fix it, commit, and push again" >&2
+  echo "          (or 'git push --no-verify' to skip the checks)." >&2
+  exit 1
+}
+
+echo "pre-push: dart format check..." >&2
+dart format --output=none --set-exit-if-changed lib/ test/ ||
+  fail "files above need formatting: run 'make format'."
+
+echo "pre-push: flutter analyze..." >&2
+flutter analyze --no-pub ||
+  fail "flutter analyze found issues: see the issues above."
+
+if [ "$to_main" = 1 ]; then
+  echo "pre-push: pushing to main, running flutter test..." >&2
+  flutter test --no-pub ||
+    fail "tests failed: see the failures above."
+fi
+
+echo "pre-push: checks passed." >&2
+exit 0

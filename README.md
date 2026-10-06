@@ -83,6 +83,7 @@ make test            # flutter test
 make build            # flutter build web --wasm --release ...
 make deploy           # format-check + analyze + test + build + firebase deploy
 make deploy-fast      # build + firebase deploy (skips verification, for quick iteration)
+make hooks            # enable the pre-push checks (once per clone; see CONTRIBUTING.md)
 ```
 
 ## Testing & Quality Assurance
@@ -113,7 +114,7 @@ Build-flag notes:
 
 Configuration lives in `firebase.json` (single hosting target: `alhyari`) and `.firebaserc` (default project `testfirestore-9b0b0` — the project's default Hosting site of the same name exists but is unused/undeletable; deploys don't target it).
 
-CI/CD: `.github/workflows/firebase-hosting-merge.yml` runs format-check + analyze + test + build and deploys to Firebase Hosting on every push to `main`. Requires a `FIREBASE_SERVICE_ACCOUNT` secret configured in the repo settings.
+CI/CD: `.github/workflows/flutter-ci.yml` runs format-check + analyze + test + build on every pull request and push to `main`. Pull requests get a 7-day preview channel; pushes to `main` deploy live, then run Lighthouse against the live URL. Deploys need the `DEPLOY_ENABLED` repo variable set to `true` and a `FIREBASE_SERVICE_ACCOUNT` secret. If any step before the deploy fails, nothing deploys, so keep `main` green (see [CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ## Contact
 
