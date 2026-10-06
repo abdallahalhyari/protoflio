@@ -111,8 +111,8 @@ class _KeyboardFocusRingState extends State<KeyboardFocusRing>
   }
 }
 
-/// Paints the ring: a dark halo under a bright accent stroke, so it reads
-/// on both the dark canvas and light cards.
+/// Paints the ring: a dark halo under a bright accent stroke with a soft glow,
+/// so it reads on both the dark canvas and light cards.
 class FocusRingPainter extends CustomPainter {
   const FocusRingPainter({required this.rect, required this.color});
 
@@ -131,6 +131,14 @@ class FocusRingPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = 5
         ..color = Colors.black.withValues(alpha: 0.55),
+    );
+    canvas.drawRRect(
+      ring.inflate(2),
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3.5
+        ..color = color.withValues(alpha: 0.25)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3),
     );
     canvas.drawRRect(
       ring,
