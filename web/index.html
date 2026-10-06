@@ -50,8 +50,6 @@
 
   <!-- Performance Preconnect & Preloads -->
   <link rel="preload" href="assets/fonts/Tenada.ttf" as="font" type="font/ttf" crossorigin>
-  <!-- The text face: the engine fetches it before the first frame. -->
-  <link rel="preload" href="assets/fonts/ReadexPro.ttf" as="fetch" crossorigin>
   <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="preload" href="canvaskit/skwasm.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="modulepreload" href="main.dart.mjs" crossorigin>
@@ -74,8 +72,40 @@
   <link rel="preload" href="assets/assets/data/education.json" as="fetch" crossorigin>
   <link rel="preload" href="assets/assets/data/certifications.json" as="fetch" crossorigin>
   <link rel="preload" href="assets/fonts/MaterialIcons-Regular.otf" as="fetch" crossorigin>
-  <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Me4GZLCzYlKw.woff2" as="fetch" crossorigin>
   <link rel="prefetch" href="assets/assets/hat.webp" as="image">
+  <script>
+    // The two text fonts (Readex Pro, the engine's fallback Roboto) are the
+    // heaviest preloads, ~140 KB. Started here they landed before the boot
+    // screen painted, and Lighthouse's simulated LCP charged their bytes to
+    // that paint (2.9 s on mobile). Requested once the boot screen has
+    // painted, they still download alongside main.dart.wasm, long before
+    // the engine asks for them.
+    (function () {
+      var fonts = [
+        "assets/fonts/ReadexPro.ttf",
+        "https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Me4GZLCzYlKw.woff2"
+      ];
+      var started = false;
+      function preloadFonts() {
+        if (started) return;
+        started = true;
+        fonts.forEach(function (href) {
+          var link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'fetch';
+          link.crossOrigin = 'anonymous';
+          link.href = href;
+          document.head.appendChild(link);
+        });
+      }
+      try {
+        new PerformanceObserver(function (list) {
+          if (list.getEntriesByName('first-contentful-paint').length) preloadFonts();
+        }).observe({ type: 'paint', buffered: true });
+      } catch (e) {}
+      setTimeout(preloadFonts, 1500);
+    })();
+  </script>
   <script>
     // No Intl.v8BreakIterator polyfill: Flutter web takes its line-break
     // opportunities from it, and Intl.Segmenter has no 'line' granularity.
