@@ -45,6 +45,10 @@ android {
     }
 }
 
+dependencies {
+    implementation "androidx.profileinstaller:profileinstaller:1.4.1"
+}
+
 flutter {
     source = "../.."
 }
