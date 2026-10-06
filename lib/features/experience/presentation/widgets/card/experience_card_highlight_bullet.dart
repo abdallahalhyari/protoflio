@@ -54,7 +54,7 @@ class HighlightBullet extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
                             color: context.adaptiveAccentText(scheme.primary),
-                            fontSize: AppTypography.editorial,
+                            fontSize: AppTypography.label,
                             height: 1.5,
                           ),
                         ),
@@ -64,8 +64,8 @@ class HighlightBullet extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             color: isDark
                                 ? scheme.onSurface.withValues(alpha: 0.85)
-                                : AppColors.slate700,
-                            fontSize: AppTypography.editorial,
+                                : AppColors.ink700,
+                            fontSize: AppTypography.label,
                             height: 1.5,
                           ),
                         ),
@@ -77,8 +77,8 @@ class HighlightBullet extends StatelessWidget {
                     style: TextStyle(
                       color: isDark
                           ? scheme.onSurface.withValues(alpha: 0.85)
-                          : AppColors.slate700,
-                      fontSize: AppTypography.editorial,
+                          : AppColors.ink700,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w500,
                       height: 1.5,
                     ),

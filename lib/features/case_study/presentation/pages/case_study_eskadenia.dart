@@ -7,10 +7,9 @@ import 'package:profile/features/case_study/presentation/widgets/case_study_widg
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
-import 'package:profile/shared/widgets/pulsing_dot.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 /// Deep-dive case study on ESKADENIA Software's E-Learning & Healthcare
@@ -103,22 +102,22 @@ class EskadeniaCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '04',
-            title: 'MODULAR PACKAGE EXTRACTION',
+            title: 'Modular package extraction',
             steps: [
               TechStep(
-                layer: 'AUDIT',
+                layer: 'Audit',
                 title: 'Dependency Graph Analysis',
                 body:
                     'Profiled the legacy monolithic codebase to map circular dependencies, shared static singletons, and leaky UI state. Identified core domain boundaries between clinical operations (HIS, Pharmacy, Radiology) and administrative flows.',
               ),
               TechStep(
-                layer: 'DECOUPLING',
+                layer: 'Decoupling',
                 title: 'Feature Package Partitioning',
                 body:
                     'Extracted monolithic modules into standalone Dart/Flutter packages with explicitly defined public API boundaries. Common logic (networking, auth, theme tokens, storage) was abstracted into a shared enterprise foundation package.',
               ),
               TechStep(
-                layer: 'INJECTION',
+                layer: 'Injection',
                 title: 'Service Locator & Repository Pattern',
                 body:
                     'Implemented lightweight dependency injection isolating concrete REST consumers from business logic. Feature squads could develop, mock, and unit-test modules independently without running full application builds.',
@@ -128,22 +127,22 @@ class EskadeniaCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '05',
-            title: 'HIGH-DENSITY RENDERING OPTIMIZATION',
+            title: 'High-density rendering optimization',
             steps: [
               TechStep(
-                layer: 'VIEWPORT',
+                layer: 'Viewport',
                 title: 'Custom Slivers & Lazy Loading',
                 body:
                     'Replaced naive nested list builders with customized CustomScrollView and SliverList implementations. Roster items, laboratory test cards, and course catalogs allocate only visible elements, maintaining a fixed memory envelope regardless of roster size.',
               ),
               TechStep(
-                layer: 'CACHE',
+                layer: 'Cache',
                 title: 'Two-Tier Caching & Query Deduplication',
                 body:
                     'Engineered an in-memory LRU cache backed by indexed local SQLite storage. Repeated lookups for doctor rosters, medication formularies, and student grades resolve instantaneously without redundant network roundtrips.',
               ),
               TechStep(
-                layer: 'RASTER',
+                layer: 'Raster',
                 title: 'GPU Paint & Clip Optimization',
                 body:
                     'Eliminated expensive saveLayer triggers caused by unnecessary Opacity and ClipRRect wrappers on data tables. Cached static table headers with RepaintBoundary, locking continuous 60 FPS scrolling on data-dense hospital screens.',
@@ -153,22 +152,22 @@ class EskadeniaCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '06',
-            title: 'ENTERPRISE RESILIENCE & ERROR HANDLING',
+            title: 'Enterprise resilience & error handling',
             steps: [
               TechStep(
-                layer: 'NETWORK',
+                layer: 'Network',
                 title: 'Defensive Network Interceptors',
                 body:
                     'Standardized HTTP client pipelines with automated token refresh, transparent timeout envelopes, and exponential backoff retry policies for intermittent hospital Wi-Fi zones.',
               ),
               TechStep(
-                layer: 'VALIDATION',
+                layer: 'Validation',
                 title: 'Strict Schema Contracts & Type Safety',
                 body:
                     'Eliminated dynamic type casting by generating immutable Dart models with runtime validation. Invalid API responses fail fast at the network boundary rather than causing unhandled null pointer exceptions in UI trees.',
               ),
               TechStep(
-                layer: 'DIAGNOSTICS',
+                layer: 'Diagnostics',
                 title: 'Proactive Crash Telemetry & Logging',
                 body:
                     'Integrated structured error reporting with breadcrumb logging across clinical shifts, enabling the engineering squad to diagnose and resolve production anomalies before users encounter disruptions.',
@@ -248,20 +247,17 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          const PulsingDot(color: AppColors.accentViolet),
-          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.studyRoleFlutterDev} · 2022 — 2024',
+              '${l10n.studyRoleFlutterDev}, 2022–2024',
               // Two lines on phones rather than clipping the end date
               // ("2024 — PRES…").
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: AppTypography.editorial,
-                letterSpacing: latinTracking(context, 3),
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                color: scheme.onSurface.withValues(alpha: 0.6),
+                color: context.mutedText,
               ),
             ),
           ),
@@ -271,8 +267,7 @@ class _Masthead extends StatelessWidget {
           'E-Learning & Healthcare Enterprise Suite',
           style: TextStyle(
             fontFamily: AppTypography.displayFont,
-            fontSize:
-                isDesktop ? AppTypography.displayLg : AppTypography.displaySm,
+            fontSize: isDesktop ? AppTypography.hero : AppTypography.display,
             fontWeight: FontWeight.w900,
             height: 1.05,
             color: scheme.onSurface,
@@ -303,7 +298,7 @@ class _Masthead extends StatelessWidget {
         Text(
           l10n.studyEskIntro,
           style: TextStyle(
-            fontSize: AppTypography.subtitle,
+            fontSize: AppTypography.lead,
             height: 1.55,
             color: scheme.onSurface.withValues(alpha: 0.85),
           ),

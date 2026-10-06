@@ -31,7 +31,7 @@ class HeroIssueStrip extends StatelessWidget {
               style: TextStyle(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.85)
-                    : AppColors.slate600,
+                    : IntroColors.slate600,
                 fontSize: fs,
                 fontWeight: FontWeight.w800,
                 letterSpacing: size.width < AppBreakpoints.tablet ? 1.5 : 2.0,

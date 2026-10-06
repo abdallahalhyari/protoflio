@@ -31,7 +31,7 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
         ? widget.scheme.primary.withValues(alpha: widget.isDark ? 0.25 : 0.15)
         : (widget.isDark
             ? Colors.white.withValues(alpha: AppAlpha.whisper)
-            : AppColors.slate100);
+            : AppColors.ink100);
 
     final border =
         widget.isSelected ? widget.scheme.primary : (context.divider);
@@ -40,7 +40,7 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
         ? (widget.isDark
             ? widget.scheme.primary
             : AppColors.toAccessibleLightText(widget.scheme.primary))
-        : (widget.isDark ? Colors.white70 : AppColors.slate700);
+        : (widget.isDark ? Colors.white70 : AppColors.ink700);
 
     return Semantics(
       button: widget.onTap != null,
@@ -77,11 +77,10 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
                 widget.tag,
                 semanticsLabel: '',
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   color: _isHovered && widget.onTap != null && !widget.isDark
                       ? AppColors.toAccessibleLightText(widget.scheme.primary)
                       : text,
-                  fontSize: AppTypography.editorialSm,
+                  fontSize: AppTypography.label,
                   fontWeight: widget.isSelected || _isHovered
                       ? FontWeight.w900
                       : FontWeight.w600,

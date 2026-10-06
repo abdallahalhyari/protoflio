@@ -37,7 +37,7 @@ class HatPaginationRow extends StatelessWidget {
             // Full-strength accent text (was border-alpha, read as
             // disabled) and a padded 48px hit area around the same visual.
             foregroundColor: context.adaptiveAccentText(primary),
-            side: BorderSide(color: AppColors.hatGold.withValues(alpha: 0.7)),
+            side: BorderSide(color: AppColors.gold.withValues(alpha: 0.7)),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             visualDensity: VisualDensity.compact,
             minimumSize: Size.zero,
@@ -49,8 +49,7 @@ class HatPaginationRow extends StatelessWidget {
             child: Text(
               l10n?.previousAction ?? 'PREV',
               style: const TextStyle(
-                fontFamily: AppTypography.monoFont,
-                fontSize: AppTypography.editorialSm,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -64,11 +63,9 @@ class HatPaginationRow extends StatelessWidget {
               child: Text(
                 ltrAlways(context, 'ROLE 0${selectedIndex + 1} / 0$totalCount'),
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   color: primary,
-                  fontSize: AppTypography.editorial,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 1.0,
                 ),
               ),
             ),
@@ -81,7 +78,7 @@ class HatPaginationRow extends StatelessWidget {
             // Full-strength accent text (was border-alpha, read as
             // disabled) and a padded 48px hit area around the same visual.
             foregroundColor: context.adaptiveAccentText(primary),
-            side: BorderSide(color: AppColors.hatGold.withValues(alpha: 0.7)),
+            side: BorderSide(color: AppColors.gold.withValues(alpha: 0.7)),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             visualDensity: VisualDensity.compact,
             minimumSize: Size.zero,
@@ -93,8 +90,7 @@ class HatPaginationRow extends StatelessWidget {
             child: Text(
               l10n?.nextAction ?? 'NEXT',
               style: const TextStyle(
-                fontFamily: AppTypography.monoFont,
-                fontSize: AppTypography.editorialSm,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
               ),
             ),

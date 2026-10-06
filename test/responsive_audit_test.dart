@@ -259,7 +259,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('EXPERIENCE'), findsOneWidget);
+      expect(find.text('Experience'), findsOneWidget);
     });
 
     testWidgets('ProjectsPage renders cleanly on compact 320x568',
@@ -273,7 +273,10 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('FEATURE 03 · SELECTED WORK'), findsOneWidget);
+      expect(
+          find.text(
+              'In-depth looks at architecture, implementation, and measurable outcomes.'),
+          findsOneWidget);
     });
 
     testWidgets('SkillsPage renders cleanly on compact 320x568',
@@ -287,7 +290,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('STACK & ENGINEERING'), findsOneWidget);
+      expect(find.text('Skills'), findsOneWidget);
     });
 
     testWidgets('EngineeringPage renders cleanly on compact 320x568',
@@ -301,7 +304,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('ENGINEERING'), findsOneWidget);
+      expect(find.text('Engineering'), findsOneWidget);
     });
 
     testWidgets('HatsGridPage renders cleanly on compact 320x568',
@@ -315,7 +318,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('PERSPECTIVES'), findsOneWidget);
+      expect(find.text('Perspectives'), findsOneWidget);
     });
 
     testWidgets('ContactPage renders cleanly on compact 320x568',
@@ -329,7 +332,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text("LET'S BUILD WHAT'S NEXT."), findsOneWidget);
+      expect(find.text("Tell me what you're building."), findsOneWidget);
     });
   });
 
@@ -481,9 +484,9 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('ABDALLAH'), findsOneWidget);
+      expect(find.text('Abdallah'), findsOneWidget);
       // Sub-badge is hidden on compact screens
-      expect(find.text('AVAILABLE'), findsNothing);
+      expect(find.text('Available'), findsNothing);
     });
 
     testWidgets('Displays sub-badge on wider phone (600px)', (tester) async {
@@ -494,8 +497,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('ABDALLAH'), findsOneWidget);
-      expect(find.text('AVAILABLE'), findsOneWidget);
+      expect(find.text('Abdallah'), findsOneWidget);
+      expect(find.text('Available'), findsOneWidget);
     });
   });
 }

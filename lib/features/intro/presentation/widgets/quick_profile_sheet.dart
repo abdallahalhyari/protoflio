@@ -59,7 +59,7 @@ class QuickProfileCard extends StatelessWidget {
   final VoidCallback onDownloadResume;
 
   static List<(String, String)> _facts(AppLocalizations l10n, int years) => [
-        (l10n.quickProfileRole, l10n.introSeniorEngineer),
+        (l10n.quickProfileRole, l10n.introRoleLine),
         (
           l10n.quickProfileExperience,
           l10n.quickProfileYears(years),
@@ -164,7 +164,7 @@ class QuickProfileCard extends StatelessWidget {
                         ),
                       ]),
                       style: const TextStyle(
-                          fontSize: AppTypography.small, height: 1.4),
+                          fontSize: IntroType.small, height: 1.4),
                     ),
                   ),
               ],
@@ -200,7 +200,7 @@ class _Fact extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontSize: AppTypography.micro,
+              fontSize: IntroType.micro,
               fontWeight: FontWeight.w900,
               letterSpacing: 1.8,
               color: context.mutedText,

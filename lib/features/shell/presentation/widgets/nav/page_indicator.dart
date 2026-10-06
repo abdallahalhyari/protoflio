@@ -58,12 +58,8 @@ class PageIndicator extends StatelessWidget {
                           height: active ? 12 : 8,
                           decoration: BoxDecoration(
                             color: active
-                                ? (isDark
-                                    ? Colors.white
-                                    : AppColors.accentIndigoDeep)
-                                : (isDark
-                                    ? Colors.white70
-                                    : AppColors.slate400),
+                                ? (isDark ? Colors.white : AppColors.teal)
+                                : (isDark ? Colors.white70 : AppColors.ink400),
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: isDark ? Colors.black45 : Colors.white,
@@ -73,7 +69,7 @@ class PageIndicator extends StatelessWidget {
                                     BoxShadow(
                                       color: (isDark
                                               ? Colors.white
-                                              : AppColors.accentIndigoDeep)
+                                              : AppColors.teal)
                                           .withValues(alpha: 0.5),
                                       blurRadius: 8,
                                       spreadRadius: 1,

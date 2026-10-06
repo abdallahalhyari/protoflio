@@ -70,21 +70,21 @@ class _PrimaryButtonState extends State<PrimaryButton>
     switch (widget.size) {
       case PrimaryButtonSize.sm:
         return (
-          fontSize: AppTypography.small,
+          fontSize: AppTypography.body,
           hPad: 18,
           vPad: AppSpacing.xs + 2,
           iconSize: 14,
         );
       case PrimaryButtonSize.md:
         return (
-          fontSize: AppTypography.subtitle,
+          fontSize: AppTypography.lead,
           hPad: 28,
           vPad: AppSpacing.sm,
           iconSize: AppSpacing.md,
         );
       case PrimaryButtonSize.lg:
         return (
-          fontSize: AppTypography.subtitle + 2,
+          fontSize: AppTypography.lead + 2,
           hPad: 36,
           vPad: AppSpacing.smd,
           iconSize: 20,
@@ -196,18 +196,6 @@ class _PrimaryButtonState extends State<PrimaryButton>
             if (_isHovered) {
               setState(() => _isHovered = false);
             }
-          },
-          onHover: (event) {
-            if (!_enabled || _key.currentContext == null || reduceMotion) {
-              return;
-            }
-            final RenderBox box =
-                _key.currentContext!.findRenderObject() as RenderBox;
-            final center = Offset(box.size.width / 2, box.size.height / 2);
-            final delta = event.localPosition - center;
-            final next = Offset(delta.dx * 0.15, delta.dy * 0.25);
-            if ((next - _hover.offset.value).distanceSquared < 2) return;
-            _hover.set(next);
           },
           cursor: _enabled
               ? SystemMouseCursors.click

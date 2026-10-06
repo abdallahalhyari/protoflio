@@ -80,15 +80,13 @@ class ProjectDomainFilters extends StatelessWidget {
                   ltrContent(
                     context,
                     loc.projectTechFilter(
-                      ltrAlways(context, selectedTech!.toUpperCase()),
+                      ltrAlways(context, selectedTech!),
                     ),
                   ),
                   style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
                     color: accentText,
-                    fontSize: AppTypography.micro,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.0,
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -154,7 +152,7 @@ class _DomainChipState extends State<_DomainChip> {
             ? scheme.primary.withValues(alpha: isDark ? 0.08 : 0.05)
             : (isDark
                 ? Colors.white.withValues(alpha: 0.05)
-                : AppColors.slate100));
+                : AppColors.ink100));
 
     final activeBorder = isSelected
         ? scheme.primary.withValues(alpha: isDark ? 0.7 : 0.6)
@@ -168,7 +166,7 @@ class _DomainChipState extends State<_DomainChip> {
             ? (context.onSurface)
             : (isDark
                 ? Colors.white.withValues(alpha: 0.85)
-                : AppColors.slate700));
+                : AppColors.ink700));
 
     return Semantics(
       button: true,
@@ -228,14 +226,12 @@ class _DomainChipState extends State<_DomainChip> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      widget.label.toUpperCase(),
+                      widget.label,
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
                         color: textColor,
-                        fontSize: isDesktop ? AppTypography.micro : 10,
+                        fontSize: isDesktop ? AppTypography.label : 10,
                         fontWeight:
                             isSelected ? FontWeight.w900 : FontWeight.w700,
-                        letterSpacing: 1.0,
                       ),
                     ),
                     const SizedBox(width: 6),
@@ -257,9 +253,8 @@ class _DomainChipState extends State<_DomainChip> {
                       child: Text(
                         '${widget.count}',
                         style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
                           color: isSelected ? scheme.onPrimary : textColor,
-                          fontSize: AppTypography.editorialSm,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
                         ),
                       ),

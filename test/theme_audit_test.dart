@@ -78,7 +78,8 @@ void main() {
           brightness: brightness,
         ));
         await tester.pump(const Duration(milliseconds: 300));
-        expect(find.textContaining('CASE STUDIES'), findsWidgets);
+        expect(find.textContaining('In-depth looks at architecture'),
+            findsWidgets);
         expect(tester.takeException(), isNull);
 
         // Mobile
@@ -89,7 +90,8 @@ void main() {
           size: const Size(390, 844),
         ));
         await tester.pump(const Duration(milliseconds: 300));
-        expect(find.textContaining('SELECTED WORK'), findsWidgets);
+        expect(find.textContaining('In-depth looks at architecture'),
+            findsWidgets);
         expect(tester.takeException(), isNull);
 
         await tester.binding.setSurfaceSize(null);
@@ -104,7 +106,10 @@ void main() {
         ));
         await tester.pump(const Duration(milliseconds: 300));
 
-        expect(find.textContaining('CLEAN MOBILE ARCHITECTURE'), findsWidgets);
+        expect(
+            find.textContaining(
+                RegExp('clean mobile architecture', caseSensitive: false)),
+            findsWidgets);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });
@@ -120,7 +125,7 @@ void main() {
         ));
         await tester.pump(const Duration(milliseconds: 300));
 
-        expect(find.textContaining('CAREER TRAJECTORY'), findsWidgets);
+        expect(find.text('Experience'), findsWidgets);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });
@@ -135,7 +140,8 @@ void main() {
         ));
         await tester.pump(const Duration(milliseconds: 300));
 
-        expect(find.textContaining('SKILLS'), findsWidgets);
+        expect(find.textContaining(RegExp('skills', caseSensitive: false)),
+            findsWidgets);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });
@@ -150,7 +156,7 @@ void main() {
         ));
         await tester.pump(const Duration(milliseconds: 300));
 
-        expect(find.text('PERSPECTIVES'), findsOneWidget);
+        expect(find.text('Perspectives'), findsWidgets);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });
@@ -165,7 +171,8 @@ void main() {
         ));
         await tester.pump(const Duration(milliseconds: 300));
 
-        expect(find.textContaining('DIRECT LINE'), findsWidgets);
+        expect(
+            find.textContaining("Tell me what you're building"), findsWidgets);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });
@@ -303,22 +310,26 @@ void main() {
     test(
         'toAccessibleLightText maps saturated dark-mode tones to high-contrast light tones',
         () {
-      expect(AppColors.toAccessibleLightText(AppColors.accentAmber),
-          AppColors.accentAmberDeep);
-      expect(AppColors.toAccessibleLightText(const Color(0xFFFBBF24)),
-          AppColors.accentAmberDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentGreen),
-          AppColors.accentGreenDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentSky),
-          AppColors.accentSkyDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentCyan),
-          AppColors.accentCyanDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentRose),
-          AppColors.accentRoseDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentViolet),
-          AppColors.accentVioletDeep);
-      expect(AppColors.toAccessibleLightText(AppColors.accentIndigo),
-          AppColors.accentIndigoDeepText);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.gold), AppColors.goldDeep);
+      // An off-palette tone is deepened until it reads on paper (5:1).
+      expect(
+          AppColors.contrastRatio(
+              AppColors.toAccessibleLightText(const Color(0xFFFBBF24)),
+              AppColors.ink100),
+          greaterThanOrEqualTo(5.0));
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
+      expect(AppColors.toAccessibleLightText(AppColors.signal),
+          AppColors.signalDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
+      expect(
+          AppColors.toAccessibleLightText(AppColors.teal), AppColors.tealDeep);
     });
 
     testWidgets(
@@ -330,8 +341,8 @@ void main() {
           child: Builder(
             builder: (context) {
               expect(context.isDarkMode, isFalse);
-              expect(context.adaptiveAccentText(AppColors.accentAmber),
-                  AppColors.accentAmberDeep);
+              expect(context.adaptiveAccentText(AppColors.gold),
+                  AppColors.goldDeep);
               return const SizedBox.shrink();
             },
           ),
@@ -344,8 +355,11 @@ void main() {
           child: Builder(
             builder: (context) {
               expect(context.isDarkMode, isTrue);
-              expect(context.adaptiveAccentText(AppColors.accentAmber),
-                  AppColors.accentAmber);
+              // Lifted just enough to read on the dark card (6:1).
+              expect(
+                  context.adaptiveAccentText(AppColors.gold),
+                  AppColors.legibleOn(AppColors.gold, AppColors.darkCard,
+                      target: 6.0));
               return const SizedBox.shrink();
             },
           ),
@@ -353,16 +367,15 @@ void main() {
       );
     });
 
-    testWidgets(
-        'SurfaceTone.cardGlass and cardGlassHover provide hybrid dense glass opacities',
+    testWidgets('SurfaceTone.cardGlass and cardGlassHover are solid card stock',
         (tester) async {
       await tester.pumpWidget(
         Theme(
           data: ThemeData.dark(),
           child: Builder(
             builder: (context) {
-              expect(context.cardGlass.a, closeTo(0.88, 0.01));
-              expect(context.cardGlassHover.a, closeTo(0.95, 0.01));
+              expect(context.cardGlass.a, 1.0);
+              expect(context.cardGlassHover.a, 1.0);
               return const SizedBox.shrink();
             },
           ),
@@ -374,8 +387,8 @@ void main() {
           data: ThemeData.light(),
           child: Builder(
             builder: (context) {
-              expect(context.cardGlass.a, closeTo(0.92, 0.01));
-              expect(context.cardGlassHover.a, closeTo(0.96, 0.01));
+              expect(context.cardGlass.a, 1.0);
+              expect(context.cardGlassHover.a, 1.0);
               return const SizedBox.shrink();
             },
           ),

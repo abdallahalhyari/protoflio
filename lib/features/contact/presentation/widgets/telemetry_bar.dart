@@ -68,15 +68,13 @@ class _TelemetryBarState extends State<TelemetryBar> {
         runSpacing: 8,
         children: [
           pill(
-            border: (isDark ? AppColors.accentGreen : AppColors.accentGreenDeep)
+            border: (isDark ? AppColors.tealLight : AppColors.tealDeep)
                 .withValues(alpha: 0.45),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 PulsingDot(
-                    color: isDark
-                        ? AppColors.accentGreen
-                        : AppColors.accentGreenDeep),
+                    color: isDark ? AppColors.tealLight : AppColors.tealDeep),
                 const SizedBox(width: 6),
                 Flexible(
                   child: FittedBox(
@@ -87,9 +85,8 @@ class _TelemetryBarState extends State<TelemetryBar> {
                           : AppLocalizations.of(context)!.uiStandbyAsync,
                       style: TextStyle(
                         color: context.greenText,
-                        fontSize: AppTypography.editorial,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: 1.0,
                       ),
                     ),
                   ),

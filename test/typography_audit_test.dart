@@ -52,50 +52,25 @@ Widget _wrapWithTextScaler({
 void main() {
   group('AppTypography Token & Scale Hierarchy Audit', () {
     test('Typography font family tokens are defined and non-empty', () {
-      expect(AppTypography.displayFont, 'Tenada');
-      expect(AppTypography.monoFont, 'Courier');
+      expect(AppTypography.bodyFont, 'ReadexPro');
+      expect(AppTypography.displayFont, AppTypography.bodyFont);
+      expect(AppTypography.monoFont, 'ShareTechMono');
     });
 
-    test('Typography scale maintains strict logical monotonic progression', () {
-      expect(AppTypography.nano, lessThan(AppTypography.micro));
-      expect(AppTypography.nano, lessThan(AppTypography.editorialSm));
-      expect(AppTypography.editorialSm, lessThan(AppTypography.editorial));
-      expect(AppTypography.micro, lessThanOrEqualTo(AppTypography.caption));
-      expect(AppTypography.caption, lessThan(AppTypography.captionSm));
-      expect(AppTypography.captionSm, lessThan(AppTypography.overline));
-      expect(AppTypography.overline, lessThan(AppTypography.overlineTight));
-      expect(AppTypography.overlineTight, lessThan(AppTypography.small));
-      expect(AppTypography.small, lessThan(AppTypography.smallLoose));
-      expect(AppTypography.smallLoose, lessThan(AppTypography.body));
-      expect(AppTypography.body, lessThan(AppTypography.bodyLoose));
-      expect(AppTypography.bodyLoose, lessThan(AppTypography.bodyLg));
-      expect(AppTypography.bodyLg, lessThan(AppTypography.subtitle));
-      expect(AppTypography.subtitle, lessThan(AppTypography.titleSm));
-      expect(AppTypography.titleSm, lessThan(AppTypography.title));
-      expect(AppTypography.title, lessThan(AppTypography.titleMid));
-      expect(AppTypography.titleMid, lessThan(AppTypography.titleLg));
-      expect(AppTypography.titleLg, lessThan(AppTypography.heading));
-      expect(AppTypography.heading, lessThan(AppTypography.displaySm));
-      expect(AppTypography.displaySm, lessThan(AppTypography.statDisplay));
-      expect(AppTypography.statDisplay, lessThan(AppTypography.display));
-      expect(AppTypography.display, lessThan(AppTypography.displayLg));
-      expect(AppTypography.displayLg, lessThan(AppTypography.heroSm));
-      expect(AppTypography.heroSm, lessThan(AppTypography.hero));
-      expect(AppTypography.hero, lessThan(AppTypography.watermark));
-    });
-
-    test('New audit tokens match expected design point values', () {
-      expect(AppTypography.nano, 8.5);
-      expect(AppTypography.bodyLoose, 14.5);
-      expect(AppTypography.bodyLg, 15.0);
-      expect(AppTypography.titleSm, 18.0);
-      expect(AppTypography.titleMid, 22.0);
-      expect(AppTypography.titleLg, 24.0);
-      expect(AppTypography.displaySm, 36.0);
-      expect(AppTypography.statDisplay, 38.0);
-      expect(AppTypography.displayLg, 54.0);
-      expect(AppTypography.heroSm, 60.0);
-      expect(AppTypography.watermark, 220.0);
+    test('Seven-step scale, strictly increasing, nothing below 12px', () {
+      const scale = [
+        AppTypography.label,
+        AppTypography.body,
+        AppTypography.lead,
+        AppTypography.title,
+        AppTypography.heading,
+        AppTypography.display,
+        AppTypography.hero,
+      ];
+      for (var i = 1; i < scale.length; i++) {
+        expect(scale[i], greaterThan(scale[i - 1]));
+      }
+      expect(scale.first, greaterThanOrEqualTo(12));
     });
   });
 
@@ -182,7 +157,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('ABDALLAH ALHYARI'), findsOneWidget);
+      expect(find.text('Abdallah Alhyari'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });
@@ -201,7 +176,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('ACADEMIC ANNEX'), findsOneWidget);
+      expect(find.text('Academic annex'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });

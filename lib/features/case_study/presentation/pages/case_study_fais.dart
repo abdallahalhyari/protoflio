@@ -7,10 +7,9 @@ import 'package:profile/features/case_study/presentation/widgets/case_study_widg
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
-import 'package:profile/shared/widgets/pulsing_dot.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 /// Deep-dive case study on FAIS's M-Commerce & Media-Streaming Clients.
@@ -101,22 +100,22 @@ class FaisCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '04',
-            title: 'TRANSACTIONAL CHECKOUT FUNNEL & IDEMPOTENCY',
+            title: 'Transactional checkout funnel & idempotency',
             steps: [
               TechStep(
-                layer: 'INTEGRITY',
+                layer: 'Integrity',
                 title: 'Client-Generated Idempotency Keys',
                 body:
                     'Assigned unique cryptographically secure UUID transaction tokens to every payment submission. Retried requests following network timeouts carried identical tokens, allowing backend gateways to recognize replays and prevent double-charging.',
               ),
               TechStep(
-                layer: 'STATE MACHINE',
+                layer: 'State machine',
                 title: 'Deterministic Funnel Navigation',
                 body:
                     'Structured checkout steps (Cart › Delivery › Payment Gateway › Order Confirmation) as a strict finite state machine. Impossible state transitions and accidental back-navigation during payment processing were blocked defensively.',
               ),
               TechStep(
-                layer: 'PERSISTENCE',
+                layer: 'Persistence',
                 title: 'Atomic Local Order Staging',
                 body:
                     'Staged cart and order payloads in local SQLite storage before initiating network requests. If the app process was interrupted mid-funnel, the checkout session recovered seamlessly without data loss.',
@@ -126,22 +125,22 @@ class FaisCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '05',
-            title: 'UNINTERRUPTED MEDIA STREAMING PIPELINE',
+            title: 'Uninterrupted media streaming pipeline',
             steps: [
               TechStep(
-                layer: 'LIFECYCLE',
+                layer: 'Lifecycle',
                 title: 'Foreground Service & Audio Focus',
                 body:
                     'Implemented native Android foreground services with persistent playback notifications and system audio-focus listeners. Media streaming continued uninterrupted when users locked their screens or switched apps.',
               ),
               TechStep(
-                layer: 'BUFFERING',
+                layer: 'Buffering',
                 title: 'Adaptive Buffer Management',
                 body:
                     'Constructed a predictive buffer controller that adjusted audio and video cache horizons dynamically based on moving-average network throughput, eliminating stutter on intermittent connections.',
               ),
               TechStep(
-                layer: 'TELEMETRY',
+                layer: 'Telemetry',
                 title: 'Quality of Service (QoS) Telemetry',
                 body:
                     'Monitored buffer underrun occurrences, playback start latencies, and stream bitrates to identify ISP peering bottlenecks and optimize CDN distribution rules.',
@@ -151,22 +150,22 @@ class FaisCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '06',
-            title: 'DATA-DRIVEN TRIAGE & RESOLUTION',
+            title: 'Data-driven triage & resolution',
             steps: [
               TechStep(
-                layer: 'MONITORING',
+                layer: 'Monitoring',
                 title: 'Automated Network Interception',
                 body:
                     'Wired network interceptors logging response latencies, payload sizes, and HTTP status codes, flagging degrading endpoints before user reports arrived.',
               ),
               TechStep(
-                layer: 'TRIAGE',
+                layer: 'Triage',
                 title: 'Rapid Root-Cause Diagnosis',
                 body:
                     'Correlated client crash reports with server access logs to pinpoint edge-case serialization anomalies in legacy backend microservices.',
               ),
               TechStep(
-                layer: 'EFFICIENCY',
+                layer: 'Efficiency',
                 title: 'Optimized JSON Serialization',
                 body:
                     'Refactored catalog models to use lazy JSON decoding and selective deserialization, slashing memory footprint during large search result page loads.',
@@ -246,20 +245,17 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          const PulsingDot(color: AppColors.accentCyan),
-          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.studyRoleMobileDev} · 2021',
+              '${l10n.studyRoleMobileDev}, 2021',
               // Two lines on phones rather than clipping the end date
               // ("2024 — PRES…").
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: AppTypography.editorial,
-                letterSpacing: latinTracking(context, 3),
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                color: scheme.onSurface.withValues(alpha: 0.6),
+                color: context.mutedText,
               ),
             ),
           ),
@@ -269,8 +265,7 @@ class _Masthead extends StatelessWidget {
           'M-Commerce & Media-Streaming Clients',
           style: TextStyle(
             fontFamily: AppTypography.displayFont,
-            fontSize:
-                isDesktop ? AppTypography.displayLg : AppTypography.displaySm,
+            fontSize: isDesktop ? AppTypography.hero : AppTypography.display,
             fontWeight: FontWeight.w900,
             height: 1.05,
             color: scheme.onSurface,
@@ -301,7 +296,7 @@ class _Masthead extends StatelessWidget {
         Text(
           l10n.studyFaisIntro,
           style: TextStyle(
-            fontSize: AppTypography.subtitle,
+            fontSize: AppTypography.lead,
             height: 1.55,
             color: scheme.onSurface.withValues(alpha: 0.85),
           ),

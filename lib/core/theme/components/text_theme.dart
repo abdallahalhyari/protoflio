@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
 
+/// Material text roles mapped onto the seven-step scale. Weight carries
+/// hierarchy; nothing is tracked out or set in capitals by the theme.
 class AppTextTheme {
   AppTextTheme._();
 
@@ -9,64 +11,32 @@ class AppTextTheme {
         ? Typography.material2021().white
         : Typography.material2021().black;
 
+    TextStyle style(double size, FontWeight weight, {double height = 1.45}) =>
+        TextStyle(
+          color: scheme.onSurface,
+          fontSize: size,
+          fontWeight: weight,
+          height: height,
+          letterSpacing: 0,
+        );
+
     return baseText.copyWith(
-      displayLarge: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.displayLg,
-          fontWeight: FontWeight.w900),
-      displayMedium: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.display,
-          fontWeight: FontWeight.w900),
-      displaySmall: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.displaySm,
-          fontWeight: FontWeight.w800),
-      headlineLarge: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.heroSm,
-          fontWeight: FontWeight.w800),
-      headlineMedium: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.heading,
-          fontWeight: FontWeight.w900),
-      headlineSmall: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.titleLg,
-          fontWeight: FontWeight.w800),
-      titleLarge: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.titleMid,
-          fontWeight: FontWeight.w700),
-      titleMedium: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.title,
-          fontWeight: FontWeight.w700),
-      titleSmall: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.titleSm,
-          fontWeight: FontWeight.w600),
-      bodyLarge:
-          TextStyle(color: scheme.onSurface, fontSize: AppTypography.bodyLg),
-      bodyMedium:
-          TextStyle(color: scheme.onSurface, fontSize: AppTypography.body),
-      bodySmall:
-          TextStyle(color: scheme.onSurface, fontSize: AppTypography.small),
-      labelLarge: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.caption,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5),
-      labelMedium: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.captionSm,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5),
-      labelSmall: TextStyle(
-          color: scheme.onSurface,
-          fontSize: AppTypography.micro,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5),
+      displayLarge: style(AppTypography.hero, FontWeight.w600, height: 1.05),
+      displayMedium: style(AppTypography.display, FontWeight.w600, height: 1.1),
+      displaySmall: style(AppTypography.heading, FontWeight.w600, height: 1.15),
+      headlineLarge: style(AppTypography.display, FontWeight.w600, height: 1.1),
+      headlineMedium:
+          style(AppTypography.heading, FontWeight.w600, height: 1.15),
+      headlineSmall: style(AppTypography.title, FontWeight.w600, height: 1.25),
+      titleLarge: style(AppTypography.title, FontWeight.w600, height: 1.25),
+      titleMedium: style(AppTypography.lead, FontWeight.w600, height: 1.35),
+      titleSmall: style(AppTypography.body, FontWeight.w600, height: 1.4),
+      bodyLarge: style(AppTypography.lead, FontWeight.w400, height: 1.55),
+      bodyMedium: style(AppTypography.body, FontWeight.w400, height: 1.55),
+      bodySmall: style(AppTypography.label, FontWeight.w400, height: 1.5),
+      labelLarge: style(AppTypography.body, FontWeight.w500, height: 1.2),
+      labelMedium: style(AppTypography.label, FontWeight.w500, height: 1.2),
+      labelSmall: style(AppTypography.label, FontWeight.w500, height: 1.2),
     );
   }
 }

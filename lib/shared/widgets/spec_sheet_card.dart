@@ -8,10 +8,19 @@ import 'package:profile/core/theme/tokens.dart';
 /// same blocks in a row: centred in a Wrap as separate chips, blocks of
 /// different widths stacked into a ragged pyramid.
 class SpecSheetCard extends StatelessWidget {
-  const SpecSheetCard({super.key, required this.rows, this.margin});
+  const SpecSheetCard({
+    super.key,
+    required this.rows,
+    this.margin,
+    this.lightLineColor = AppColors.ink200,
+  });
 
   final List<Widget> rows;
   final EdgeInsetsGeometry? margin;
+
+  /// Border and row-rule colour in light mode. The intro keeps its own
+  /// palette, so it passes `IntroColors.slate200`.
+  final Color lightLineColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +31,7 @@ class SpecSheetCard extends StatelessWidget {
         color: isDark ? Colors.white.withValues(alpha: 0.04) : Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.sm),
         border: Border.all(
-          color:
-              isDark ? Colors.white.withValues(alpha: 0.1) : AppColors.slate200,
+          color: isDark ? Colors.white.withValues(alpha: 0.1) : lightLineColor,
         ),
         boxShadow: isDark
             ? null
@@ -44,7 +52,7 @@ class SpecSheetCard extends StatelessWidget {
                 height: 1,
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.08)
-                    : AppColors.slate200,
+                    : lightLineColor,
               ),
             Padding(
               padding: const EdgeInsets.symmetric(

@@ -28,13 +28,12 @@ class BottomActions extends StatelessWidget {
               label: Text(
                 AppLocalizations.of(context)!.uiDownloadResumePdf,
                 style: const TextStyle(
-                  fontSize: AppTypography.overlineTight,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: 1.4,
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accentAmber,
+                backgroundColor: AppColors.gold,
                 foregroundColor: Colors.black,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
@@ -101,14 +100,14 @@ class SocialButton extends StatelessWidget {
             Icon(
               icon,
               size: 14,
-              color: isDark ? Colors.white60 : AppColors.slate500,
+              color: isDark ? Colors.white60 : AppColors.ink500,
             ),
             const SizedBox(width: 4),
             Text(
               label,
               style: TextStyle(
                 color: context.mutedText,
-                fontSize: AppTypography.caption,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w700,
               ),
             ),

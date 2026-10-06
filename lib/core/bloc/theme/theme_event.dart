@@ -10,13 +10,3 @@ sealed class ThemeEvent extends Equatable {
 class ThemeModeToggled extends ThemeEvent {
   const ThemeModeToggled();
 }
-
-/// The section now on screen; its accent becomes the theme seed.
-class ThemeAccentUpdated extends ThemeEvent {
-  final int sectionIndex;
-
-  const ThemeAccentUpdated(this.sectionIndex);
-
-  @override
-  List<Object?> get props => [sectionIndex];
-}

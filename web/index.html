@@ -50,6 +50,8 @@
 
   <!-- Performance Preconnect & Preloads -->
   <link rel="preload" href="assets/fonts/Tenada.ttf" as="font" type="font/ttf" crossorigin>
+  <!-- The text face: the engine fetches it before the first frame. -->
+  <link rel="preload" href="assets/fonts/ReadexPro.ttf" as="fetch" crossorigin>
   <link rel="preload" href="main.dart.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="preload" href="canvaskit/skwasm.wasm" as="fetch" type="application/wasm" crossorigin fetchpriority="high">
   <link rel="modulepreload" href="main.dart.mjs" crossorigin>
@@ -271,19 +273,19 @@
       z-index: 10000; display: flex; align-items: center; gap: 10px;
       flex-wrap: wrap; justify-content: center;
       max-width: calc(100vw - 32px); padding: 10px 14px;
-      background: rgba(14, 18, 32, 0.96); color: rgba(255, 255, 255, 0.86);
-      border: 1px solid rgba(165, 180, 252, 0.28); border-radius: 12px;
+      background: #1B2A41; color: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
       font: 500 13px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
     #consent-banner button {
-      font: inherit; font-weight: 700; cursor: pointer;
+      font: inherit; font-weight: 600; cursor: pointer;
       padding: 6px 12px; border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.22);
       background: transparent; color: #fff;
     }
-    #consent-banner button.primary { background: #4F46E5; border-color: #4F46E5; }
-    #consent-banner button:focus-visible { outline: 2px solid #A5B4FC; outline-offset: 2px; }
+    #consent-banner button.primary { background: #B08D3C; border-color: #B08D3C; color: #121D2F; }
+    #consent-banner button:focus-visible { outline: 2px solid #E3CB8E; outline-offset: 2px; }
     #boot-loader.hidden {
       opacity: 0;
       transform: scale(1.025);

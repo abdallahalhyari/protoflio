@@ -6,7 +6,7 @@ class AppInputTheme {
 
   static InputDecorationTheme build(ColorScheme scheme, bool isDark) {
     final glassBorderColor =
-        isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200;
+        isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.ink200;
 
     return InputDecorationTheme(
       filled: true,
@@ -28,9 +28,8 @@ class AppInputTheme {
         borderSide: BorderSide(color: scheme.primary, width: 2),
       ),
       hintStyle: TextStyle(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.55)
-              : AppColors.slate500),
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.55) : AppColors.ink500),
     );
   }
 }

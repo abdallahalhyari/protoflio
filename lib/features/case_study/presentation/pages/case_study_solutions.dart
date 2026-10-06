@@ -7,10 +7,9 @@ import 'package:profile/features/case_study/presentation/widgets/case_study_widg
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
-import 'package:profile/shared/widgets/pulsing_dot.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 /// Deep-dive case study on Solutions Now IT's Loyalty Rewards & Ephemeral Social
@@ -101,22 +100,22 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '04',
-            title: 'BACKGROUND ISOLATE COMPRESSION & CAMERA PIPELINE',
+            title: 'Background isolate compression & camera pipeline',
             steps: [
               TechStep(
-                layer: 'CAMERA',
+                layer: 'Camera',
                 title: 'Hardware-Accelerated Camera Controller',
                 body:
                     'Wired low-level camera preview controllers with custom exposure locks, tap-to-focus indicators, and flash triggers optimized for low-light social story captures.',
               ),
               TechStep(
-                layer: 'ISOLATES',
+                layer: 'Isolates',
                 title: 'Background Dart Isolate Encoding',
                 body:
                     'Offloaded heavy JPEG byte manipulation, image downsampling, and EXIF orientation normalization to isolated worker threads, keeping the main UI thread completely jank-free.',
               ),
               TechStep(
-                layer: 'UPLOAD',
+                layer: 'Upload',
                 title: 'Direct S3 Multipart Uploads',
                 body:
                     'Engineered chunked background file uploads directly to AWS S3 buckets using presigned URLs, featuring automatic upload resumption on network drops.',
@@ -126,22 +125,22 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '05',
-            title: 'MULTI-TENANT DESIGN SYSTEM & LOYALTY ENGINE',
+            title: 'Multi-tenant design system & loyalty engine',
             steps: [
               TechStep(
-                layer: 'TOKENS',
+                layer: 'Tokens',
                 title: 'Dynamic Theme Token Engine',
                 body:
                     'Constructed a flexible design system with runtime brand token injection (primary accents, typography scales, card radii), allowing merchant brands to skin the white-label app instantly.',
               ),
               TechStep(
-                layer: 'BARCODE',
+                layer: 'Barcode',
                 title: 'High-Speed Barcode & QR Scanner',
                 body:
                     'Integrated real-time optical camera scanning with client-side checksum validation, enabling merchant cashiers to scan and redeem loyalty vouchers in under 300 milliseconds.',
               ),
               TechStep(
-                layer: 'CACHE',
+                layer: 'Cache',
                 title: 'Offline Coupon Storage',
                 body:
                     'Cached earned loyalty rewards and barcode tokens in encrypted local storage, permitting offline redemptions when store cellular coverage was degraded.',
@@ -151,22 +150,22 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '06',
-            title: 'PERFORMANCE PROFILING & UI POLISH',
+            title: 'Performance profiling & UI polish',
             steps: [
               TechStep(
-                layer: 'RASTER',
+                layer: 'Raster',
                 title: '60 FPS Social Feed Virtualization',
                 body:
                     'Implemented custom sliver list views with image memory caching horizons, preventing high-resolution story feeds from exceeding device RAM thresholds.',
               ),
               TechStep(
-                layer: 'ANIMATION',
+                layer: 'Animation',
                 title: 'Micro-Interactions & Gesture Feedback',
                 body:
                     'Designed subtle spring animations and haptic feedback triggers for voucher redemptions, story likes, and reward card flips.',
               ),
               TechStep(
-                layer: 'GOVERNANCE',
+                layer: 'Governance',
                 title: 'Modular Component Library',
                 body:
                     'Package-ified core UI components (buttons, input fields, modal sheets, toast alerts), accelerating feature delivery across both project teams.',
@@ -246,20 +245,17 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          const PulsingDot(color: AppColors.accentAmber),
-          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.studyRoleFlutterDev} · 2021 — 2022',
+              '${l10n.studyRoleFlutterDev}, 2021–2022',
               // Two lines on phones rather than clipping the end date
               // ("2024 — PRES…").
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: AppTypography.editorial,
-                letterSpacing: latinTracking(context, 3),
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                color: scheme.onSurface.withValues(alpha: 0.6),
+                color: context.mutedText,
               ),
             ),
           ),
@@ -269,8 +265,7 @@ class _Masthead extends StatelessWidget {
           'Loyalty Rewards & Ephemeral Social Media Apps',
           style: TextStyle(
             fontFamily: AppTypography.displayFont,
-            fontSize:
-                isDesktop ? AppTypography.displayLg : AppTypography.displaySm,
+            fontSize: isDesktop ? AppTypography.hero : AppTypography.display,
             fontWeight: FontWeight.w900,
             height: 1.05,
             color: scheme.onSurface,
@@ -301,7 +296,7 @@ class _Masthead extends StatelessWidget {
         Text(
           l10n.studySolIntro,
           style: TextStyle(
-            fontSize: AppTypography.subtitle,
+            fontSize: AppTypography.lead,
             height: 1.55,
             color: scheme.onSurface.withValues(alpha: 0.85),
           ),
@@ -313,7 +308,7 @@ class _Masthead extends StatelessWidget {
           children: [
             EditorialChip(label: 'Flutter', tone: ChipTone.indigo),
             EditorialChip(label: 'Camera Engine', tone: ChipTone.amber),
-            EditorialChip(label: 'AWS S3', tone: ChipTone.sky),
+            EditorialChip(label: 'AWS s3', tone: ChipTone.sky),
             EditorialChip(label: 'REST APIs', tone: ChipTone.neutral),
             EditorialChip(label: 'Design System'),
             EditorialChip(label: 'Isolate Compression', tone: ChipTone.green),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'helpers/test_data.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/features/skills/presentation/widgets/skill_category_filters.dart';
@@ -37,22 +37,22 @@ void main() {
       await tester.pumpWidget(_wrap(const SkillsHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
-      expect(find.text('FEATURE 04 · SYSTEMS & DELIVERY'), findsOneWidget);
-      expect(
-          find.text('${testSkills.length} CORE DISCIPLINES'), findsOneWidget);
+      expect(find.text('Skills'), findsOneWidget);
+      expect(find.textContaining('Flutter, Android, platform architecture'),
+          findsOneWidget);
     });
 
     test('Skills header copy is translated in every supported locale',
         () async {
       final english = await AppLocalizations.delegate.load(const Locale('en'));
-      expect(english.skillsHeaderTitle, 'STACK & ENGINEERING');
+      expect(english.skillsHeaderTitle, 'Skills');
 
       final arabic = await AppLocalizations.delegate.load(const Locale('ar'));
-      expect(arabic.skillsHeaderTitle, 'المهارات والهندسة');
+      expect(arabic.skillsHeaderTitle, 'المهارات');
       expect(arabic.skillsHeaderSubtitle, contains('أندرويد'));
 
       final czech = await AppLocalizations.delegate.load(const Locale('cs'));
-      expect(czech.skillsHeaderTitle, 'DOVEDNOSTI A INŽENÝRSTVÍ');
+      expect(czech.skillsHeaderTitle, 'Dovednosti');
       expect(czech.skillsHeaderSubtitle, contains('Flutter'));
     });
 
@@ -81,8 +81,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('MOBILE SYSTEMS'), findsOneWidget);
-      await tester.tap(find.textContaining('MOBILE SYSTEMS'));
+      expect(find.textContaining('Mobile Systems'), findsOneWidget);
+      await tester.tap(find.textContaining('Mobile Systems'));
       await tester.pumpAndSettle();
 
       expect(selected, 'Mobile Systems');
@@ -125,7 +125,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(TextField), findsOneWidget);
-      expect(find.text('5 OF 24 SKILLS'), findsOneWidget);
+      expect(find.text('5 of 24 skills'), findsOneWidget);
 
       // Tap clear button
       expect(find.byIcon(Icons.close_rounded), findsOneWidget);
@@ -140,12 +140,12 @@ void main() {
         () {
       const scheme = ColorScheme.dark();
       final color = SkillCategoryStyle.getColor('Mobile Systems', scheme);
-      expect(color, const Color(0xFF38BDF8));
+      expect(color, AppColors.teal);
 
       final gradient =
           SkillCategoryStyle.getGradient('Security & Protocols', scheme);
       expect(gradient.length, 2);
-      expect(gradient.first, const Color(0xFFFBBF24));
+      expect(gradient.first, AppColors.gold);
     });
   });
 }

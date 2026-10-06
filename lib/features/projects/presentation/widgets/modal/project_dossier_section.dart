@@ -30,17 +30,17 @@ class ProjectDossierSection extends StatelessWidget {
         ),
         if (project.problem != null)
           ProjectDossierCard(
-            label: 'CORE PROBLEM',
+            label: 'Core problem',
             value: project.problem!,
-            accentColor: AppColors.accentRoseSoft,
+            accentColor: AppColors.signalLight,
             isDesktop: isDesktop,
             isDark: isDark,
           ),
         if (project.architecture != null)
           ProjectDossierCard(
-            label: 'ARCHITECTURE',
+            label: 'Architecture',
             value: project.architecture!,
-            accentColor: AppColors.accentIndigo,
+            accentColor: AppColors.teal,
             isDesktop: isDesktop,
             isDark: isDark,
           ),
@@ -51,26 +51,26 @@ class ProjectDossierSection extends StatelessWidget {
           ),
         if (project.solution != null)
           ProjectDossierCard(
-            label: 'ENGINEERING SOLUTION',
+            label: 'Engineering solution',
             value: project.solution!,
-            accentColor: AppColors.accentGreen,
+            accentColor: AppColors.teal,
             isDesktop: isDesktop,
             isDark: isDark,
           ),
         if (project.technicalDecisions != null &&
             project.technicalDecisions!.isNotEmpty)
           ProjectDossierCard(
-            label: 'DECISION',
+            label: 'Decision',
             value: project.technicalDecisions!.first,
-            accentColor: AppColors.accentAmberSoft,
+            accentColor: AppColors.goldSoft,
             isDesktop: isDesktop,
             isDark: isDark,
           ),
         if (project.lessonsLearned != null)
           ProjectDossierCard(
-            label: 'LESSON LEARNED',
+            label: 'Lesson learned',
             value: project.lessonsLearned!,
-            accentColor: AppColors.accentAmber,
+            accentColor: AppColors.gold,
             isDesktop: isDesktop,
             isDark: isDark,
           ),

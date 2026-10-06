@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/features/skills/presentation/utils/skill_category_labels.dart';
 
 /// Styling helper for skill categories and corresponding theme accents.
@@ -11,17 +11,17 @@ class SkillCategoryStyle {
   static Color getColor(String category, ColorScheme scheme) {
     switch (category) {
       case 'Domain Expertise':
-        return AppColors.accentViolet;
+        return AppColors.teal;
       case 'Mobile Systems':
-        return AppColors.accentSky;
+        return AppColors.teal;
       case 'Security & Protocols':
-        return AppColors.accentAmber;
+        return AppColors.gold;
       case 'Architecture & State':
-        return AppColors.accentGreen;
+        return AppColors.teal;
       case 'Cloud & Infrastructure':
-        return AppColors.accentVioletLight;
+        return AppColors.tealLight;
       case 'Languages & Comm':
-        return AppColors.accentPink;
+        return AppColors.signal;
       default:
         return scheme.primary;
     }
@@ -31,17 +31,17 @@ class SkillCategoryStyle {
     if (isDark) return getColor(category, scheme);
     switch (category) {
       case 'Domain Expertise':
-        return AppColors.accentVioletDeep;
+        return AppColors.tealDeep;
       case 'Mobile Systems':
-        return AppColors.accentSkyDeep;
+        return AppColors.tealDeep;
       case 'Security & Protocols':
-        return AppColors.accentAmberDeep;
+        return AppColors.goldDeep;
       case 'Architecture & State':
-        return AppColors.accentGreenDeep;
+        return AppColors.tealDeep;
       case 'Cloud & Infrastructure':
-        return AppColors.accentVioletMid;
+        return AppColors.teal;
       case 'Languages & Comm':
-        return AppColors.accentPinkDeep;
+        return AppColors.signalDeep;
       default:
         return AppColors.toAccessibleLightText(scheme.primary);
     }
@@ -50,19 +50,19 @@ class SkillCategoryStyle {
   static List<Color> getGradient(String category, ColorScheme scheme) {
     switch (category) {
       case 'Domain Expertise':
-        return const [AppColors.accentViolet, AppColors.accentVioletDeep];
+        return const [AppColors.teal, AppColors.tealDeep];
       case 'Mobile Systems':
-        return [AppColors.accentSky, scheme.primary];
+        return [AppColors.teal, scheme.primary];
       case 'Security & Protocols':
-        return const [AppColors.accentAmber, AppColors.accentAmberMid];
+        return const [AppColors.gold, AppColors.gold];
       case 'Architecture & State':
-        return const [AppColors.accentGreenLight, AppColors.accentGreen];
+        return const [AppColors.tealLight, AppColors.teal];
       case 'Cloud & Infrastructure':
-        return const [AppColors.accentVioletLight, AppColors.accentPinkBright];
+        return const [AppColors.tealLight, AppColors.signal];
       case 'Languages & Comm':
-        return const [AppColors.accentPink, AppColors.accentPinkDeep];
+        return const [AppColors.signal, AppColors.signalDeep];
       default:
-        return [scheme.primary, AppColors.accentPurpleSoft];
+        return [scheme.primary, AppColors.tealLight];
     }
   }
 }
@@ -169,7 +169,7 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
             ? color.withValues(alpha: isDark ? 0.55 : 0.6)
             : (isDark
                 ? scheme.onSurface.withValues(alpha: 0.15)
-                : AppColors.slate300));
+                : AppColors.ink300));
 
     return Semantics(
       button: true,
@@ -224,7 +224,7 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
                         ? []
                         : [
                             BoxShadow(
-                              color: AppColors.slate900.withValues(alpha: 0.03),
+                              color: AppColors.ink900.withValues(alpha: 0.03),
                               blurRadius: 6,
                               offset: const Offset(0, 1),
                             ),
@@ -245,38 +245,28 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
                       const SizedBox(width: 6),
                     ],
                     Text(
-                      skillCategoryLabel(AppLocalizations.of(context)!, cat)
-                          .toUpperCase(),
+                      skillCategoryLabel(AppLocalizations.of(context)!, cat),
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
                         color: isSelected
                             ? (isDark ? color : textColor)
                             : (isDark
                                 ? scheme.onSurface.withValues(alpha: 0.7)
-                                : AppColors.slate700),
+                                : AppColors.ink700),
                         fontSize: isDesktop
-                            ? AppTypography.caption
-                            : AppTypography.editorialSm,
+                            ? AppTypography.label
+                            : AppTypography.label,
                         fontWeight:
                             isSelected ? FontWeight.w800 : FontWeight.w600,
-                        letterSpacing: latinTracking(context, 0.8),
                       ),
                     ),
                     const SizedBox(width: 5),
                     Text(
                       '($count)',
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
                         color: isSelected
-                            ? (isDark
-                                ? color.withValues(alpha: 0.85)
-                                : textColor)
-                            : (isDark
-                                ? scheme.onSurface.withValues(alpha: 0.45)
-                                : AppColors.slate500),
-                        fontSize: isDesktop
-                            ? AppTypography.micro
-                            : AppTypography.nano,
+                            ? textColor
+                            : (isDark ? context.mutedText : AppColors.ink500),
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

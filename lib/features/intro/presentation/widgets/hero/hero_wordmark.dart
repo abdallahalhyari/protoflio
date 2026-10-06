@@ -57,7 +57,7 @@ class _HeroWordmarkState extends State<HeroWordmark>
 
   TextStyle _wordmarkStyle() {
     return TextStyle(
-      fontFamily: AppTypography.displayFont,
+      fontFamily: AppTypography.wordmarkFont,
       fontSize: AppTypography.watermark,
       fontWeight: FontWeight.w900,
       letterSpacing: 10,
@@ -102,13 +102,13 @@ class _HeroWordmarkState extends State<HeroWordmark>
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          (widget.isDark ? Colors.white : AppColors.slate700)
+                          (widget.isDark ? Colors.white : IntroColors.slate700)
                               .withValues(alpha: alpha),
                           (widget.isDark
-                                  ? AppColors.accentIndigo
-                                  : AppColors.accentIndigo600)
+                                  ? IntroColors.accentIndigo
+                                  : IntroColors.accentIndigo600)
                               .withValues(alpha: alpha + 0.15),
-                          AppColors.accentViolet.withValues(alpha: alpha),
+                          IntroColors.accentViolet.withValues(alpha: alpha),
                         ],
                         stops: const [0.0, 0.55, 1.0],
                         transform: GradientRotation(

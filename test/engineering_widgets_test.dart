@@ -28,10 +28,10 @@ void main() {
       await tester.pumpWidget(_wrap(const EngineeringHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
-      expect(find.text('FEATURE 05 · SYSTEMS ARCHITECTURE'), findsOneWidget);
-      expect(find.text('ENGINEERING'), findsOneWidget);
-      expect(find.text('${kArchitectureTopics.length} ARCHITECTURES'),
+      expect(
+          find.text('Production-tested architectures behind the mobile suites'),
           findsOneWidget);
+      expect(find.text('Engineering'), findsOneWidget);
     });
 
     testWidgets(
@@ -51,11 +51,11 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('CLEAN MOBILE ARCHITECTURE'), findsOneWidget);
+      expect(find.textContaining('Clean Mobile Architecture'), findsOneWidget);
       expect(
-          find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'), findsOneWidget);
+          find.textContaining('Offline-First Synchronization'), findsOneWidget);
 
-      await tester.tap(find.textContaining('OFFLINE-FIRST SYNCHRONIZATION'));
+      await tester.tap(find.textContaining('Offline-First Synchronization'));
       await tester.pumpAndSettle();
 
       expect(selected, 1);
@@ -72,7 +72,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('ARCHITECTURE FLOWCHART'), findsOneWidget);
+      expect(find.text('Flowchart'), findsOneWidget);
       expect(find.text('${topic.diagramSteps.length} TIERS'), findsOneWidget);
       expect(find.text(topic.diagramSteps.first.title), findsWidgets);
     });
@@ -89,9 +89,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(topic.title), findsOneWidget);
-      expect(find.text('ARCHITECTURAL RATIONALE (WHY THIS CHOICE)'),
-          findsOneWidget);
-      expect(find.text('KEY IMPLEMENTATION SAFEGUARDS'), findsOneWidget);
+      expect(find.text('Why this choice'), findsOneWidget);
+      expect(find.text('Safeguards'), findsOneWidget);
       expect(find.text(topic.summary), findsOneWidget);
     });
 
@@ -129,7 +128,7 @@ void main() {
       await tester.tap(find.text('OPEN MODAL'));
       await tester.pump(const Duration(milliseconds: 200));
 
-      expect(find.text('INSPECT BLUEPRINT // ZOOM & SIMULATE'), findsOneWidget);
+      expect(find.text('Inspect blueprint // zoom & simulate'), findsOneWidget);
       expect(find.byType(InteractiveViewer), findsOneWidget);
     });
   });

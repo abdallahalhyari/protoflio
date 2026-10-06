@@ -199,7 +199,7 @@ List<_Finding> _audit(WidgetTester tester, Color page) {
   return findings;
 }
 
-Widget _app(Widget child, Brightness brightness, Color seed) {
+Widget _app(Widget child, Brightness brightness) {
   final mode = brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
   final base =
       brightness == Brightness.dark ? AppTheme.dark() : AppTheme.light();
@@ -212,36 +212,30 @@ Widget _app(Widget child, Brightness brightness, Color seed) {
       theme: base,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      // As the live app presents each section: under its own accent.
-      builder: (context, child) => Theme(
-        data: AppTheme.withAccent(Theme.of(context), seed),
-        child: child!,
-      ),
       home: Scaffold(body: child),
     ),
   );
 }
 
 void main() {
-  final sections = <String, (int, Widget Function())>{
-    'Intro': (0, () => IntroPage(onScrollDown: () {})),
-    'Experience': (
-      1,
-      () => ExperiencePage(controller: PageController(), pageIndex: 1)
-    ),
-    'Work': (2, () => const ProjectsPage()),
-    'Skills': (3, () => const SkillsPage()),
-    'Engineering': (4, () => const EngineeringPage()),
-    'Perspectives': (5, () => const HatsGridPage()),
-    'Contact': (6, () => const ContactPage()),
-    // Opened from Selected Work, so under its accent.
-    'Case study': (2, () => const NatHealthCaseStudy()),
+  // One accent across the site, so every section is audited under the
+  // same theme.
+  final sections = <String, Widget Function()>{
+    'Intro': () => IntroPage(onScrollDown: () {}),
+    'Work': () => const ProjectsPage(),
+    'Engineering': () => const EngineeringPage(),
+    'Experience': () =>
+        ExperiencePage(controller: PageController(), pageIndex: 3),
+    'Skills': () => const SkillsPage(),
+    'Perspectives': () => const HatsGridPage(),
+    'Contact': () => const ContactPage(),
+    'Case study': () => const NatHealthCaseStudy(),
   };
 
   for (final brightness in Brightness.values) {
     for (final size in const [Size(1280, 900), Size(390, 844)]) {
       for (final entry in sections.entries) {
-        final (index, build) = entry.value;
+        final build = entry.value;
         testWidgets(
             '${entry.key} text contrast, ${brightness.name} '
             '@ ${size.width.toInt()}', (tester) async {
@@ -249,8 +243,7 @@ void main() {
           tester.view.devicePixelRatio = 1;
           addTearDown(tester.view.resetPhysicalSize);
           addTearDown(tester.view.resetDevicePixelRatio);
-          final seed = ThemeBloc.colorForIndex(index);
-          await tester.pumpWidget(_app(build(), brightness, seed));
+          await tester.pumpWidget(_app(build(), brightness));
           // Let entrance animations settle.
           for (var i = 0; i < 20; i++) {
             await tester.pump(const Duration(milliseconds: 100));

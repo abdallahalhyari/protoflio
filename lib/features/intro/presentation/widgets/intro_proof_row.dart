@@ -47,12 +47,12 @@ class IntroProofRow extends StatelessWidget {
         decoration: BoxDecoration(
           color: isDark
               ? Colors.white.withValues(alpha: 0.03)
-              : AppColors.slate100,
+              : IntroColors.slate100,
           borderRadius: BorderRadius.circular(AppRadius.pill),
           border: Border.all(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.08)
-                : AppColors.slate200,
+                : IntroColors.slate200,
           ),
         ),
         child: Row(
@@ -73,7 +73,7 @@ class IntroProofRow extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontFamily: AppTypography.monoFont,
-                    fontSize: AppTypography.micro,
+                    fontSize: IntroType.micro,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                     color: context.onSurface

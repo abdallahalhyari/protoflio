@@ -29,7 +29,7 @@ class PipelineTopologyDiagram extends StatelessWidget {
         'WorkManager',
         'HTTPS TPA'
       ];
-    } else if (project.name.contains('ESKADENIA')) {
+    } else if (project.name.contains('Eskadenia')) {
       pipeline = const [
         'Feature PKG',
         'MVVM Models',
@@ -68,7 +68,7 @@ class PipelineTopologyDiagram extends StatelessWidget {
         decoration: BoxDecoration(
           color: isDark
               ? Colors.black.withValues(alpha: AppAlpha.border)
-              : AppColors.slate50,
+              : AppColors.ink50,
           borderRadius: BorderRadius.circular(AppRadius.chip),
           border: Border.all(
               color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
@@ -82,21 +82,19 @@ class PipelineTopologyDiagram extends StatelessWidget {
                   width: 6,
                   height: 6,
                   decoration: const BoxDecoration(
-                    color: AppColors.accentGreenLight,
+                    color: AppColors.tealLight,
                     shape: BoxShape.circle,
                   ),
                 ),
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
-                    'PRODUCTION PIPELINE TOPOLOGY',
+                    'Production pipeline topology',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
                       color: scheme.primary,
                       fontSize: isDesktop ? 9.0 : 8.0,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 0.8,
                     ),
                   ),
                 ),
@@ -121,15 +119,14 @@ class PipelineTopologyDiagram extends StatelessWidget {
                                 .withValues(alpha: isDark ? 0.3 : 0.25)),
                       ),
                       child: Text(
-                        pipeline[i].toUpperCase(),
+                        pipeline[i],
                         style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.95)
-                              : AppColors.slate900,
+                              : AppColors.ink900,
                           fontSize: isDesktop
-                              ? AppTypography.editorialSm
-                              : AppTypography.nano,
+                              ? AppTypography.label
+                              : AppTypography.label,
                           fontWeight: FontWeight.w700,
                         ),
                       ),

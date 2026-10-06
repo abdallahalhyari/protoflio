@@ -19,10 +19,10 @@ class TopNav extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     return [
       l.navHome,
-      l.navExperience,
       l.navWork,
-      l.navStack,
       l.navEngineering,
+      l.navExperience,
+      l.navStack,
       l.navAbout,
       l.navContact,
     ];
@@ -48,7 +48,7 @@ class TopNav extends StatelessWidget {
 
     final compactResume = width < AppBreakpoints.desktop;
     final denseLinks = width < kDenseNavBelow;
-    final resumeLabel = AppLocalizations.of(context)!.navResume.toUpperCase();
+    final resumeLabel = AppLocalizations.of(context)!.navResume;
     void onResume() {
       HapticFeedback.lightImpact();
       SoundService.instance.playClick();
@@ -159,9 +159,8 @@ class TopNav extends StatelessWidget {
                                     resumeLabel,
                                     semanticsLabel: '',
                                     style: const TextStyle(
-                                      fontSize: AppTypography.caption,
+                                      fontSize: AppTypography.label,
                                       fontWeight: FontWeight.w800,
-                                      letterSpacing: 1.0,
                                     ),
                                   ),
                                   style: resumeStyle,

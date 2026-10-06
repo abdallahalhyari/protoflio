@@ -39,6 +39,12 @@ flutter:
     - assets/data/
 
   fonts:
+    - family: ReadexPro
+      fonts:
+        - asset: fonts/ReadexPro.ttf
+    - family: ShareTechMono
+      fonts:
+        - asset: fonts/ShareTechMono-Regular.ttf
     - family: Tenada
       fonts:
         - asset: fonts/Tenada.ttf

@@ -41,7 +41,7 @@ class QuickProfileActions extends StatelessWidget {
             onDownloadResume();
           },
           icon: const Icon(Icons.download_rounded, size: 18),
-          label: Text(l10n.downloadResume),
+          label: Text(l10n.introDownloadResume),
           style: FilledButton.styleFrom(minimumSize: const Size(0, 44)),
         ),
         OutlinedButton.icon(

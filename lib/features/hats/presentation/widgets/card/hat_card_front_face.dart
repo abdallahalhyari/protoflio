@@ -5,7 +5,6 @@ import 'package:profile/features/hats/domain/entities/hat_info.dart';
 import 'package:profile/features/hats/presentation/utils/hat_labels.dart';
 import 'package:profile/features/hats/presentation/widgets/network_hat_image.dart';
 import 'package:profile/features/hats/presentation/widgets/card/hat_card_shared.dart';
-import 'package:profile/shared/utils/bidi.dart';
 
 const double kFanVisibleWidth = 140;
 
@@ -22,7 +21,7 @@ class CardTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = Text(
-      hatTitleLabel(AppLocalizations.of(context)!, hat.title).toUpperCase(),
+      hatTitleLabel(AppLocalizations.of(context)!, hat.title),
       textAlign: TextAlign.center,
       maxLines: 1,
       style: TextStyle(
@@ -30,7 +29,6 @@ class CardTitle extends StatelessWidget {
         color: Colors.white,
         fontSize: AppTypography.title + 1,
         fontWeight: FontWeight.w900,
-        letterSpacing: latinTracking(context, 2.2),
       ),
     );
     if (isStandalone) return text;
@@ -140,9 +138,9 @@ class CardFrontFace extends StatelessWidget {
                 FlipHintRow(
                   text: isStandalone
                       ? (AppLocalizations.of(context)?.flipHintTap ??
-                          'TAP TO FLIP')
+                          'Tap to flip')
                       : (AppLocalizations.of(context)?.flipHintClick ??
-                          'CLICK TO FLIP'),
+                          'Click to flip'),
                   isStandalone: isStandalone,
                   showTrailingIcon: isStandalone,
                 ),

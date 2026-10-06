@@ -1,8 +1,20 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/shell/presentation/widgets/desktop_scroll_interceptor.dart';
 
+/// The desktop page turn, in the vocabulary of the cover's card reader.
+///
+/// Pages don't slide past each other. Both stay where they are while the
+/// pager scrolls, and:
+///  * the page below is *scanned in*: revealed from its leading edge by a
+///    gold reader line that sweeps across the viewport;
+///  * the page above *recedes into the stack*: it sinks back, shrinks a
+///    little and dims, like a card dropped onto a pile.
+/// Turning backwards plays the same physics in reverse. Reduced motion cuts
+/// straight to the page.
 class MagazinePageTransformer extends StatelessWidget {
   final Widget child;
   final PageController controller;
@@ -17,82 +29,68 @@ class MagazinePageTransformer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.disableAnimationsOf(context) ||
-        MediaQuery.accessibleNavigationOf(context);
+    final reduceMotion = AppMedia.reduceMotion(context);
+    if (reduceMotion) return child;
 
-    if (reduceMotion) {
-      return child;
-    }
-
-    // Read the momentum tease value which represents accumulated wheel scroll before a page turn
     final double momentumTease = MomentumTeaseProvider.of(context);
 
     return AnimatedBuilder(
       animation: controller,
       builder: (context, staticChild) {
         double position = 0.0;
+        double extent = 0.0;
         if (controller.hasClients &&
             controller.positions.length == 1 &&
             controller.position.haveDimensions) {
           position =
               (controller.page ?? controller.initialPage.toDouble()) - index;
+          extent = controller.position.viewportDimension;
         }
 
-        // Pages fully outside the viewport (1 or more screens away):
-        // Offstage + TickerMode(enabled: false) keeps widgets, elements, and
-        // state alive without paying GPU raster or CPU tick cost.
+        // Pages a full screen or more away: keep state, skip raster/ticks.
         final offscreen = position >= 1.0 || position <= -1.0;
 
-        double dy = 0.0;
-        double scale = 1.0;
-        double shade = 0.0;
-        double rotateX = 0.0;
-        if (!offscreen && position > 0.0) {
-          // Page is scrolling away (moving up) — drops back into the viewport
-          // like a physical card, stacking underneath the next one.
-          final turnProgress = AppMotion.emphasizedDecel.transform(position);
-          dy = turnProgress * -80.0; // Smooth parallax shift
-          scale = 1.0 - (turnProgress * 0.08); // Subtle depth scale
-          rotateX = turnProgress * -0.08; // Gentle 3D perspective pitch tilt
-          shade = turnProgress * 0.55; // Ambient vignette as it recedes
-        } else if (!offscreen && position < 0.0) {
-          // Incoming page sweeping from below with elevated tactile feel
-          final emergeProgress = AppMotion.emphasizedDecel.transform(-position);
-          dy = emergeProgress * 120.0; // Controlled entry sweep
-          scale = 1.0 -
-              (emergeProgress *
-                  0.03); // Natural card entrance bloom (0.97 -> 1.0)
-          rotateX = emergeProgress * 0.04; // Smooth leveling tilt
-          shade = emergeProgress * 0.4; // Top edge cast shadow on entry
-        } else if (!offscreen && position == 0.0) {
-          // Current page: apply elastic momentum tease with micro-pitch
+        // Cancel the pager's own scroll so the page holds still; the turn
+        // is carried by the reveal and the recede instead.
+        var dy = offscreen ? 0.0 : position * extent;
+        var scale = 1.0;
+        var shade = 0.0;
+        var reveal = 1.0; // fraction of this page uncovered (scan-in)
+        if (!offscreen && position > 0) {
+          final e = AppMotion.emphasizedDecel.transform(position);
+          scale = 1 - 0.07 * e;
+          dy += 24 * e;
+          shade = 0.55 * e;
+        } else if (!offscreen && position < 0) {
+          final p = 1 + position; // 0 → 1 as it arrives
+          reveal = AppMotion.emphasized.transform(p.clamp(0.0, 1.0));
+          // A little parallax so the page settles into place as it's read.
+          dy += (1 - reveal) * 48;
+        } else if (!offscreen && position == 0) {
           dy = -momentumTease;
-          if (momentumTease != 0.0) {
-            rotateX = (momentumTease / 100.0).clamp(-0.03, 0.03) * -1.0;
-          }
         }
 
-        // The widget tree shape must stay identical across every phase —
-        // swapping root widget types (bare child ↔ Transform ↔ Offstage)
-        // makes Flutter unmount and remount the whole page on each turn,
-        // replaying deferred-load placeholders and entrance animations
-        // and defeating AutomaticKeepAlive.
+        // Tree shape must stay identical in every phase: swapping root
+        // widget types remounts the page and replays its deferred loads.
         return Offstage(
           offstage: offscreen,
           child: TickerMode(
             enabled: !offscreen,
+            // Clip and line live inside the transform: they are in the
+            // page's own coordinates once it has been held in place.
             child: Transform(
-              alignment: Alignment.topCenter, // rotate around the top edge
-              transform: Matrix4.translationValues(0.0, dy, 0.0)
-                ..setEntry(3, 2, 0.0008) // refined 3D perspective
-                ..scaleByDouble(scale, scale, 1.0, 1.0)
-                ..rotateX(rotateX),
+              alignment: Alignment.center,
+              transform: Matrix4.translationValues(0, dy, 0)
+                ..scaleByDouble(scale, scale, 1, 1),
               child: CustomPaint(
-                foregroundPainter: _PageDimmerPainter(
-                  shade,
-                  topShadowOnly: position < 0.0,
+                foregroundPainter: _TurnPainter(
+                  shade: shade,
+                  scan: reveal < 1 ? reveal : null,
                 ),
-                child: staticChild,
+                child: ClipRect(
+                  clipper: _ScanClipper(reveal),
+                  child: staticChild,
+                ),
               ),
             ),
           ),
@@ -103,42 +101,59 @@ class MagazinePageTransformer extends StatelessWidget {
   }
 }
 
-class _PageDimmerPainter extends CustomPainter {
-  _PageDimmerPainter(this.alpha, {this.topShadowOnly = false});
+/// Uncovers the page from the bottom edge up as [reveal] goes 0 → 1.
+class _ScanClipper extends CustomClipper<Rect> {
+  const _ScanClipper(this.reveal);
 
-  final double alpha;
-  final bool topShadowOnly;
-
-  static final Paint _dimmerPaint = Paint();
+  final double reveal;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    if (alpha <= 0.0) return;
-
-    if (topShadowOnly) {
-      final rect = Rect.fromLTWH(0, 0, size.width, 120);
-      _dimmerPaint
-        ..shader = LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            AppColors.shadowDeep.withValues(alpha: alpha),
-            Colors.transparent,
-          ],
-        ).createShader(rect)
-        ..color = Colors.white;
-      canvas.drawRect(rect, _dimmerPaint);
-    } else {
-      // Full page dim for pages receding into the background
-      final rect = Rect.fromLTWH(0, 0, size.width, size.height);
-      _dimmerPaint
-        ..shader = null
-        ..color = Colors.black.withValues(alpha: alpha.clamp(0.0, 1.0));
-      canvas.drawRect(rect, _dimmerPaint);
-    }
+  Rect getClip(Size size) {
+    if (reveal >= 1) return Offset.zero & size;
+    final top = size.height * (1 - reveal);
+    return Rect.fromLTRB(0, top, size.width, size.height);
   }
 
   @override
-  bool shouldRepaint(_PageDimmerPainter oldDelegate) =>
-      oldDelegate.alpha != alpha || oldDelegate.topShadowOnly != topShadowOnly;
+  bool shouldReclip(_ScanClipper oldClipper) => oldClipper.reveal != reveal;
+}
+
+/// Dims a receding page; draws the gold reader line on the edge of a page
+/// being scanned in.
+class _TurnPainter extends CustomPainter {
+  _TurnPainter({required this.shade, required this.scan});
+
+  final double shade;
+  final double? scan;
+
+  static final Paint _paint = Paint();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (shade > 0) {
+      _paint
+        ..shader = null
+        ..maskFilter = null
+        ..color = AppColors.ink950.withValues(alpha: shade.clamp(0.0, 1.0));
+      canvas.drawRect(Offset.zero & size, _paint);
+    }
+    final s = scan;
+    if (s == null || s <= 0) return;
+    final y = size.height * (1 - s);
+    // Brightest mid-scan, fading in and out at either end of the turn.
+    final strength = math.sin(s * math.pi).clamp(0.0, 1.0);
+    _paint
+      ..shader = null
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 14)
+      ..color = AppColors.gold.withValues(alpha: 0.55 * strength);
+    canvas.drawRect(Rect.fromLTWH(0, y - 6, size.width, 18), _paint);
+    _paint
+      ..maskFilter = null
+      ..color = AppColors.goldSoft.withValues(alpha: 0.95 * strength);
+    canvas.drawRect(Rect.fromLTWH(0, y, size.width, 2), _paint);
+  }
+
+  @override
+  bool shouldRepaint(_TurnPainter oldDelegate) =>
+      oldDelegate.shade != shade || oldDelegate.scan != scan;
 }

@@ -57,14 +57,14 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
               ? (_hover
                   ? Colors.white.withValues(alpha: 0.08)
                   : Colors.white.withValues(alpha: 0.04))
-              : (_hover ? Colors.white : AppColors.slate50),
+              : (_hover ? Colors.white : AppColors.ink50),
           borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(
             color: _hover
                 ? (isDark ? t.accent : accentText).withValues(alpha: 0.6)
                 : (isDark
                     ? Colors.white.withValues(alpha: 0.1)
-                    : AppColors.slate200),
+                    : AppColors.ink200),
             width: 1.2,
           ),
           boxShadow: [
@@ -111,9 +111,8 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                         t.tag,
                         style: TextStyle(
                           color: accentText,
-                          fontSize: AppTypography.micro,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.0,
                         ),
                       ),
                     ),
@@ -126,9 +125,8 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
               t.title,
               style: TextStyle(
                 color: context.onSurface,
-                fontSize: AppTypography.bodyLoose,
+                fontSize: AppTypography.body,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 0.3,
               ),
             ),
             const SizedBox(height: 6),
@@ -137,8 +135,8 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
               style: TextStyle(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.72)
-                    : AppColors.slate500,
-                fontSize: AppTypography.captionSm,
+                    : AppColors.ink500,
+                fontSize: AppTypography.label,
                 height: 1.45,
               ),
             ),
@@ -164,9 +162,8 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                           AppLocalizations.of(context)!.uiInquireTrack,
                           style: TextStyle(
                             color: accentText,
-                            fontSize: AppTypography.micro,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 1.4,
                           ),
                         ),
                       ),

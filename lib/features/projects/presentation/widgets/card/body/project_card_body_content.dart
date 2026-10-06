@@ -56,12 +56,12 @@ class CardBodyContent extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: AppTypography.caption,
+              fontSize: AppTypography.label,
               fontWeight: FontWeight.w600,
               height: 1.35,
               color: isDark
                   ? Colors.white.withValues(alpha: 0.62)
-                  : AppColors.slate500,
+                  : AppColors.ink500,
             ),
           ),
           const SizedBox(height: 6),
@@ -91,7 +91,7 @@ class CardBodyContent extends StatelessWidget {
           style: TextStyle(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.75)
-                : AppColors.slate600,
+                : AppColors.ink600,
             fontSize: isDesktop ? 13 : 12,
             height: 1.4,
           ),

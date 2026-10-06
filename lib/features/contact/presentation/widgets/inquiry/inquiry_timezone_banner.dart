@@ -22,10 +22,10 @@ class InquiryTimezoneBanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: isDark ? Colors.black.withValues(alpha: 0.3) : AppColors.slate50,
+        color: isDark ? Colors.black.withValues(alpha: 0.3) : AppColors.ink50,
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(
-          color: (isAmmanActive ? AppColors.accentGreen : AppColors.accentAmber)
+          color: (isAmmanActive ? AppColors.teal : AppColors.gold)
               .withValues(alpha: 0.3),
         ),
       ),
@@ -35,8 +35,7 @@ class InquiryTimezoneBanner extends StatelessWidget {
             width: 8,
             height: 8,
             decoration: BoxDecoration(
-              color:
-                  isAmmanActive ? AppColors.accentGreen : AppColors.accentAmber,
+              color: isAmmanActive ? AppColors.teal : AppColors.gold,
               shape: BoxShape.circle,
             ),
           ),
@@ -45,9 +44,8 @@ class InquiryTimezoneBanner extends StatelessWidget {
             child: Text(
               'AMMAN (UTC+3): $ammanFormatted · YOUR TIME: $localFormatted — ${isAmmanActive ? "ACTIVE RESPONSE WINDOW" : "ASYNC INQUIRY (REPLY WITHIN 24H)"}',
               style: TextStyle(
-                fontFamily: AppTypography.monoFont,
-                color: isDark ? Colors.white70 : AppColors.slate700,
-                fontSize: AppTypography.micro,
+                color: isDark ? Colors.white70 : AppColors.ink700,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
               ),
             ),

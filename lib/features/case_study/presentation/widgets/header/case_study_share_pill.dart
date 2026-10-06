@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 
@@ -30,7 +29,7 @@ class _CaseStudySharePillState extends State<CaseStudySharePill> {
   @override
   Widget build(BuildContext context) {
     final isDark = widget.isDark;
-    const accent = AppColors.accentGreen;
+    const accent = AppColors.teal;
 
     return Semantics(
       button: true,
@@ -65,14 +64,14 @@ class _CaseStudySharePillState extends State<CaseStudySharePill> {
                               : accent.withValues(alpha: AppAlpha.hover))
                           : (isDark
                               ? Colors.white.withValues(alpha: AppAlpha.whisper)
-                              : AppColors.slate100),
+                              : AppColors.ink100),
                       borderRadius: BorderRadius.circular(AppRadius.pill),
                       border: Border.all(
                         color: _hovered
                             ? accent.withValues(alpha: isDark ? 0.9 : 0.8)
                             : (isDark
                                 ? Colors.white.withValues(alpha: 0.2)
-                                : AppColors.slate300),
+                                : AppColors.ink300),
                         width: _hovered ? 1.4 : 1.0,
                       ),
                       boxShadow: _hovered
@@ -93,9 +92,7 @@ class _CaseStudySharePillState extends State<CaseStudySharePill> {
                           Icons.share_rounded,
                           size: 13,
                           color: _hovered
-                              ? (isDark
-                                  ? Colors.white
-                                  : AppColors.accentGreenDeep)
+                              ? (isDark ? Colors.white : AppColors.tealDeep)
                               : (context.mutedText),
                         ),
                         const SizedBox(width: 5),
@@ -106,17 +103,13 @@ class _CaseStudySharePillState extends State<CaseStudySharePill> {
                             softWrap: false,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontFamily: AppTypography.monoFont,
-                              fontSize: AppTypography.micro,
+                              fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
-                              letterSpacing: latinTracking(context, 1.2),
                               color: _hovered
-                                  ? (isDark
-                                      ? Colors.white
-                                      : AppColors.accentGreenDeep)
+                                  ? (isDark ? Colors.white : AppColors.tealDeep)
                                   : (isDark
                                       ? Colors.white.withValues(alpha: 0.88)
-                                      : AppColors.slate800),
+                                      : AppColors.ink800),
                             ),
                           ),
                         ),

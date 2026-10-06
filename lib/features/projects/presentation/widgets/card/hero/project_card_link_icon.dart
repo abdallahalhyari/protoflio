@@ -118,7 +118,7 @@ class _ProjectCardLinkIconState extends State<ProjectCardLinkIcon> {
                             style: TextStyle(
                               color:
                                   _hovered ? AppColors.linkedIn : Colors.white,
-                              fontSize: AppTypography.editorialSm,
+                              fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
                               fontFamily: 'sans-serif',
                               height: 1.0,

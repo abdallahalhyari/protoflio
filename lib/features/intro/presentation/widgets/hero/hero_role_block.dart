@@ -34,7 +34,7 @@ class HeroRoleBlock extends StatelessWidget {
               _HairlineRow(
                 isDark: isDark,
                 child: Icon(Icons.diamond_rounded,
-                    size: AppTypography.small, color: accent),
+                    size: IntroType.small, color: accent),
               ),
               SizedBox(height: isCompactH ? 6.0 : AppSpacing.sm),
               Text(
@@ -69,7 +69,7 @@ class HeroRoleBlock extends StatelessWidget {
                   letterSpacing: latinTracking(context, 0.8),
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.88)
-                      : AppColors.slate700,
+                      : IntroColors.slate700,
                   height: 1.55,
                 ),
               ),
