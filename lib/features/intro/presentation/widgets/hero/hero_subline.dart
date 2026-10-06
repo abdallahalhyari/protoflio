@@ -44,7 +44,7 @@ class HeroSubline extends StatelessWidget {
                   child: Text(
                 'ALHYARI',
                 style: TextStyle(
-                  fontFamily: AppTypography.displayFont,
+                  fontFamily: AppTypography.wordmarkFont,
                   fontSize: letterSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 12,
@@ -52,7 +52,7 @@ class HeroSubline extends StatelessWidget {
                   shadows: isDark
                       ? [
                           const Shadow(blurRadius: 16),
-                          Shadow(color: AppColors.glowIndigo, blurRadius: 24),
+                          Shadow(color: IntroColors.glowIndigo, blurRadius: 24),
                         ]
                       : const [Shadow(color: Colors.black12, blurRadius: 4)],
                 ),
@@ -68,7 +68,7 @@ class HeroSubline extends StatelessWidget {
                 'ALHYARI',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: AppTypography.displayFont,
+                  fontFamily: AppTypography.wordmarkFont,
                   fontSize: letterSize,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 10,
@@ -76,7 +76,7 @@ class HeroSubline extends StatelessWidget {
                   shadows: isDark
                       ? [
                           const Shadow(blurRadius: 8),
-                          Shadow(color: AppColors.glowIndigo, blurRadius: 12),
+                          Shadow(color: IntroColors.glowIndigo, blurRadius: 12),
                         ]
                       : const [Shadow(color: Colors.black12, blurRadius: 2)],
                 ),
@@ -94,7 +94,7 @@ class HeroSubline extends StatelessWidget {
 class HeroPortrait extends StatelessWidget {
   final double size;
   final Animation<double> animation;
-  static const _gold = AppColors.accentAmberSoft;
+  static const _gold = IntroColors.accentAmberSoft;
 
   const HeroPortrait({super.key, required this.size, required this.animation});
 
@@ -135,7 +135,7 @@ class HeroPortrait extends StatelessWidget {
               spreadRadius: 2,
             ),
             BoxShadow(
-              color: AppColors.accentViolet.withValues(alpha: 0.18),
+              color: IntroColors.accentViolet.withValues(alpha: 0.18),
               blurRadius: 48,
               spreadRadius: 4,
             ),
@@ -156,7 +156,7 @@ class HeroPortrait extends StatelessWidget {
                     colors: [
                       accent,
                       _gold.withValues(alpha: 0.9),
-                      AppColors.accentVioletLight,
+                      IntroColors.accentVioletLight,
                       accent,
                     ],
                     stops: const [0.0, 0.3, 0.65, 1.0],

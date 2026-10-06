@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// No description provided for @navWork.
   ///
   /// In en, this message translates to:
-  /// **'Projects'**
+  /// **'Work'**
   String get navWork;
 
   /// No description provided for @navEngineering.
@@ -127,7 +127,7 @@ abstract class AppLocalizations {
   /// No description provided for @navStack.
   ///
   /// In en, this message translates to:
-  /// **'Skills & Stack'**
+  /// **'Skills'**
   String get navStack;
 
   /// No description provided for @navAbout.
@@ -145,7 +145,7 @@ abstract class AppLocalizations {
   /// No description provided for @navResume.
   ///
   /// In en, this message translates to:
-  /// **'Resume'**
+  /// **'CV'**
   String get navResume;
 
   /// No description provided for @introLocation.
@@ -157,37 +157,37 @@ abstract class AppLocalizations {
   /// No description provided for @sectionEducation.
   ///
   /// In en, this message translates to:
-  /// **'EDUCATION'**
+  /// **'Education'**
   String get sectionEducation;
 
   /// No description provided for @sectionCertifications.
   ///
   /// In en, this message translates to:
-  /// **'CERTIFICATIONS'**
+  /// **'Certifications'**
   String get sectionCertifications;
 
   /// No description provided for @contactHeroEyebrow.
   ///
   /// In en, this message translates to:
-  /// **'DIRECT EMAIL · FASTEST REPLY'**
+  /// **'Email'**
   String get contactHeroEyebrow;
 
   /// No description provided for @contactReplyWindow.
   ///
   /// In en, this message translates to:
-  /// **'Replies within 24 hours · English / Arabic'**
+  /// **'Replies within 24 hours, in English or Arabic'**
   String get contactReplyWindow;
 
   /// No description provided for @contactSendEmailBtn.
   ///
   /// In en, this message translates to:
-  /// **'SEND EMAIL'**
+  /// **'Send email'**
   String get contactSendEmailBtn;
 
   /// No description provided for @contactCopyAddressBtn.
   ///
   /// In en, this message translates to:
-  /// **'COPY ADDRESS'**
+  /// **'Copy address'**
   String get contactCopyAddressBtn;
 
   /// No description provided for @skillsEmptyTitle.
@@ -205,7 +205,7 @@ abstract class AppLocalizations {
   /// No description provided for @skillsEmptyShowAll.
   ///
   /// In en, this message translates to:
-  /// **'SHOW ALL'**
+  /// **'Show all skills'**
   String get skillsEmptyShowAll;
 
   /// No description provided for @keyboardHintTitle.
@@ -223,7 +223,7 @@ abstract class AppLocalizations {
   /// No description provided for @keyboardHintArrows.
   ///
   /// In en, this message translates to:
-  /// **'Up / Down arrows · prev / next page'**
+  /// **'Up and down arrows move between pages'**
   String get keyboardHintArrows;
 
   /// No description provided for @keyboardHintHome.
@@ -265,31 +265,31 @@ abstract class AppLocalizations {
   /// No description provided for @spreadAction.
   ///
   /// In en, this message translates to:
-  /// **'SPREAD'**
+  /// **'Spread'**
   String get spreadAction;
 
   /// No description provided for @alignAction.
   ///
   /// In en, this message translates to:
-  /// **'ALIGN'**
+  /// **'Align'**
   String get alignAction;
 
   /// No description provided for @previousAction.
   ///
   /// In en, this message translates to:
-  /// **'PREV'**
+  /// **'Previous'**
   String get previousAction;
 
   /// No description provided for @nextAction.
   ///
   /// In en, this message translates to:
-  /// **'NEXT'**
+  /// **'Next'**
   String get nextAction;
 
   /// No description provided for @emailCopied.
   ///
   /// In en, this message translates to:
-  /// **'Email copied · {email}'**
+  /// **'Copied {email}'**
   String emailCopied(Object email);
 
   /// No description provided for @viewMyWork.
@@ -301,8 +301,14 @@ abstract class AppLocalizations {
   /// No description provided for @downloadResume.
   ///
   /// In en, this message translates to:
-  /// **'DOWNLOAD RESUME'**
+  /// **'Download CV'**
   String get downloadResume;
+
+  /// Intro cover copy (the original design); downloadResume carries the site-wide wording.
+  ///
+  /// In en, this message translates to:
+  /// **'DOWNLOAD RESUME'**
+  String get introDownloadResume;
 
   /// No description provided for @contactMe.
   ///
@@ -319,8 +325,14 @@ abstract class AppLocalizations {
   /// No description provided for @introSeniorEngineer.
   ///
   /// In en, this message translates to:
-  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
+  /// **'Senior Flutter & Android engineer'**
   String get introSeniorEngineer;
+
+  /// Intro cover copy (the original design); introSeniorEngineer carries the site-wide wording.
+  ///
+  /// In en, this message translates to:
+  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
+  String get introRoleLine;
 
   /// No description provided for @introRoleHeading.
   ///
@@ -361,19 +373,19 @@ abstract class AppLocalizations {
   /// No description provided for @contactEngagementScopes.
   ///
   /// In en, this message translates to:
-  /// **'// ENGAGEMENT SCOPES & COLLABORATION MODES'**
+  /// **'Ways to work together'**
   String get contactEngagementScopes;
 
   /// No description provided for @contactAtsVerified.
   ///
   /// In en, this message translates to:
-  /// **'ATS-VERIFIED · 2026 EDITION'**
+  /// **'ATS-friendly, 2026 edition'**
   String get contactAtsVerified;
 
   /// No description provided for @contactPdfSize.
   ///
   /// In en, this message translates to:
-  /// **'PDF · 22 KB'**
+  /// **'PDF, 22 KB'**
   String get contactPdfSize;
 
   /// No description provided for @contactCvDossierTitle.
@@ -391,25 +403,25 @@ abstract class AppLocalizations {
   /// No description provided for @contactDownloadCvPdf.
   ///
   /// In en, this message translates to:
-  /// **'DOWNLOAD CV · PDF'**
+  /// **'Download CV (PDF)'**
   String get contactDownloadCvPdf;
 
   /// No description provided for @contactPreview.
   ///
   /// In en, this message translates to:
-  /// **'PREVIEW'**
+  /// **'Preview'**
   String get contactPreview;
 
   /// No description provided for @footerRightsReserved.
   ///
   /// In en, this message translates to:
-  /// **'© 2026 · ALL RIGHTS RESERVED'**
+  /// **'© 2026 Abdallah Alhyari'**
   String get footerRightsReserved;
 
   /// No description provided for @contactPhone.
   ///
   /// In en, this message translates to:
-  /// **'PHONE'**
+  /// **'Phone'**
   String get contactPhone;
 
   /// No description provided for @contactCall.
@@ -421,7 +433,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactWhatsapp.
   ///
   /// In en, this message translates to:
-  /// **'WHATSAPP'**
+  /// **'WhatsApp'**
   String get contactWhatsapp;
 
   /// No description provided for @contactOpen.
@@ -439,7 +451,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactLinkedin.
   ///
   /// In en, this message translates to:
-  /// **'LINKEDIN'**
+  /// **'LinkedIn'**
   String get contactLinkedin;
 
   /// No description provided for @contactProfile.
@@ -451,7 +463,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactGithub.
   ///
   /// In en, this message translates to:
-  /// **'GITHUB'**
+  /// **'GitHub'**
   String get contactGithub;
 
   /// No description provided for @contactVisit.
@@ -475,7 +487,7 @@ abstract class AppLocalizations {
   /// No description provided for @folioIndicator.
   ///
   /// In en, this message translates to:
-  /// **'FOLIO {current} / {total}'**
+  /// **'{current} of {total}'**
   String folioIndicator(Object current, Object total);
 
   /// No description provided for @introIssueStrip.
@@ -523,91 +535,91 @@ abstract class AppLocalizations {
   /// No description provided for @introMasthead.
   ///
   /// In en, this message translates to:
-  /// **'// MASTHEAD'**
+  /// **'Masthead'**
   String get introMasthead;
 
   /// No description provided for @navSectionCover.
   ///
   /// In en, this message translates to:
-  /// **'COVER & PROFILE'**
+  /// **'Cover'**
   String get navSectionCover;
 
   /// No description provided for @navSubCover.
   ///
   /// In en, this message translates to:
-  /// **'Senior Flutter & Android Engineer'**
+  /// **'Senior Flutter & Android engineer'**
   String get navSubCover;
 
   /// No description provided for @navSectionExperience.
   ///
   /// In en, this message translates to:
-  /// **'EXPERIENCE'**
+  /// **'Experience'**
   String get navSectionExperience;
 
   /// No description provided for @navSubExperience.
   ///
   /// In en, this message translates to:
-  /// **'5+ Years Enterprise Engineering & Impact'**
+  /// **'Five years of enterprise mobile work'**
   String get navSubExperience;
 
   /// No description provided for @navSectionWork.
   ///
   /// In en, this message translates to:
-  /// **'SELECTED WORK'**
+  /// **'Work'**
   String get navSectionWork;
 
   /// No description provided for @navSubWork.
   ///
   /// In en, this message translates to:
-  /// **'Production Systems & Case Studies'**
+  /// **'Case studies from production apps'**
   String get navSubWork;
 
   /// No description provided for @navSectionStack.
   ///
   /// In en, this message translates to:
-  /// **'SKILLS & STACK'**
+  /// **'Skills'**
   String get navSectionStack;
 
   /// No description provided for @navSubStack.
   ///
   /// In en, this message translates to:
-  /// **'Technical Proficiency Matrix'**
+  /// **'Tools and disciplines'**
   String get navSubStack;
 
   /// No description provided for @navSectionEngineering.
   ///
   /// In en, this message translates to:
-  /// **'ENGINEERING'**
+  /// **'Engineering'**
   String get navSectionEngineering;
 
   /// No description provided for @navSubEngineering.
   ///
   /// In en, this message translates to:
-  /// **'Enterprise Blueprints & Offline-First'**
+  /// **'How the apps are built'**
   String get navSubEngineering;
 
   /// No description provided for @navSectionAbout.
   ///
   /// In en, this message translates to:
-  /// **'PERSPECTIVES'**
+  /// **'Perspectives'**
   String get navSectionAbout;
 
   /// No description provided for @navSubAbout.
   ///
   /// In en, this message translates to:
-  /// **'Architectural Perspectives & Hats'**
+  /// **'How I work with teams'**
   String get navSubAbout;
 
   /// No description provided for @navSectionContact.
   ///
   /// In en, this message translates to:
-  /// **'CONTACT'**
+  /// **'Contact'**
   String get navSectionContact;
 
   /// No description provided for @navSubContact.
   ///
   /// In en, this message translates to:
-  /// **'Direct Channels & Availability'**
+  /// **'Email, phone and profiles'**
   String get navSubContact;
 
   /// Screen reader announcement when selecting a role card in the engineering perspectives section
@@ -631,37 +643,37 @@ abstract class AppLocalizations {
   /// No description provided for @skillsCountAll.
   ///
   /// In en, this message translates to:
-  /// **'{count} SKILLS'**
+  /// **'{count} skills'**
   String skillsCountAll(int count);
 
   /// No description provided for @skillsCountFiltered.
   ///
   /// In en, this message translates to:
-  /// **'{filtered} OF {total} SKILLS'**
+  /// **'{filtered} of {total} skills'**
   String skillsCountFiltered(int filtered, int total);
 
   /// No description provided for @skillsClearSearch.
   ///
   /// In en, this message translates to:
-  /// **'CLEAR SEARCH'**
+  /// **'Clear search'**
   String get skillsClearSearch;
 
   /// No description provided for @perspectivePrev.
   ///
   /// In en, this message translates to:
-  /// **'PREV ROLE'**
+  /// **'Previous role'**
   String get perspectivePrev;
 
   /// No description provided for @perspectiveNext.
   ///
   /// In en, this message translates to:
-  /// **'NEXT ROLE'**
+  /// **'Next role'**
   String get perspectiveNext;
 
   /// No description provided for @perspectiveShortcutsHint.
   ///
   /// In en, this message translates to:
-  /// **'Arrow keys or A / D to cycle · S shuffle · R align'**
+  /// **'Arrow keys or A and D to cycle, S to shuffle, R to align'**
   String get perspectiveShortcutsHint;
 
   /// No description provided for @sectionSubtitleWork.
@@ -679,13 +691,13 @@ abstract class AppLocalizations {
   /// No description provided for @projectsHeaderKicker.
   ///
   /// In en, this message translates to:
-  /// **'FEATURE 03 · SELECTED WORK'**
+  /// **'Selected work'**
   String get projectsHeaderKicker;
 
   /// No description provided for @projectDomainAll.
   ///
   /// In en, this message translates to:
-  /// **'ALL'**
+  /// **'All'**
   String get projectDomainAll;
 
   /// No description provided for @projectDomainHealthcare.
@@ -715,7 +727,7 @@ abstract class AppLocalizations {
   /// No description provided for @projectTechFilter.
   ///
   /// In en, this message translates to:
-  /// **'TECH FILTER: {technology}'**
+  /// **'Filtered by {technology}'**
   String projectTechFilter(String technology);
 
   /// No description provided for @readCaseStudyFor.
@@ -775,25 +787,25 @@ abstract class AppLocalizations {
   /// No description provided for @skillMasteryLead.
   ///
   /// In en, this message translates to:
-  /// **'LEAD'**
+  /// **'Lead'**
   String get skillMasteryLead;
 
   /// No description provided for @skillMasteryCore.
   ///
   /// In en, this message translates to:
-  /// **'CORE'**
+  /// **'Core'**
   String get skillMasteryCore;
 
   /// No description provided for @skillMasterySolid.
   ///
   /// In en, this message translates to:
-  /// **'SOLID'**
+  /// **'Solid'**
   String get skillMasterySolid;
 
   /// No description provided for @skillMasteryGrowing.
   ///
   /// In en, this message translates to:
-  /// **'GROWING'**
+  /// **'Growing'**
   String get skillMasteryGrowing;
 
   /// No description provided for @skillCardSemantics.
@@ -805,25 +817,25 @@ abstract class AppLocalizations {
   /// No description provided for @experienceHeaderKicker.
   ///
   /// In en, this message translates to:
-  /// **'FEATURE 02 · CAREER TRAJECTORY'**
+  /// **'Career'**
   String get experienceHeaderKicker;
 
   /// No description provided for @engineeringHeaderKicker.
   ///
   /// In en, this message translates to:
-  /// **'FEATURE 05 · SYSTEMS ARCHITECTURE'**
+  /// **'Systems architecture'**
   String get engineeringHeaderKicker;
 
   /// No description provided for @hatsHeaderKickerMobile.
   ///
   /// In en, this message translates to:
-  /// **'FEATURE 06 · 6 ROLES'**
+  /// **'Six roles'**
   String get hatsHeaderKickerMobile;
 
   /// No description provided for @hatsHeaderKickerDesktop.
   ///
   /// In en, this message translates to:
-  /// **'FEATURE 06 · MULTI-DISCIPLINARY LEADERSHIP'**
+  /// **'Six roles'**
   String get hatsHeaderKickerDesktop;
 
   /// No description provided for @hatsHeaderSubtitle.
@@ -835,31 +847,31 @@ abstract class AppLocalizations {
   /// No description provided for @contactHeaderKicker.
   ///
   /// In en, this message translates to:
-  /// **'FEATURE 07 · DIRECT LINE & REACH OUT'**
+  /// **'Contact'**
   String get contactHeaderKicker;
 
   /// No description provided for @contactHeaderTitle.
   ///
   /// In en, this message translates to:
-  /// **'LET\'S BUILD WHAT\'S NEXT.'**
+  /// **'Tell me what you\'re building.'**
   String get contactHeaderTitle;
 
   /// No description provided for @contactHeaderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'I help teams ship complex mobile products with calmer architecture, stronger execution, and more confidence in production. Available for senior engineering leadership, technical strategy, and product-critical delivery work.'**
+  /// **'I\'m looking for a senior mobile role in Brno or remote from 2027, and I take on architecture reviews and contract work in the meantime. Email gets the fastest reply.'**
   String get contactHeaderSubtitle;
 
   /// No description provided for @skillsHeaderKicker.
   ///
   /// In en, this message translates to:
-  /// **'FEATURE 04 · SYSTEMS & DELIVERY'**
+  /// **'Skills'**
   String get skillsHeaderKicker;
 
   /// No description provided for @skillsHeaderTitle.
   ///
   /// In en, this message translates to:
-  /// **'STACK & ENGINEERING'**
+  /// **'Skills'**
   String get skillsHeaderTitle;
 
   /// No description provided for @skillsHeaderSubtitle.
@@ -877,25 +889,25 @@ abstract class AppLocalizations {
   /// Hint on flippable skill / role cards for touch viewports.
   ///
   /// In en, this message translates to:
-  /// **'TAP TO FLIP'**
+  /// **'Tap to flip'**
   String get flipHintTap;
 
   /// Hint on flippable skill / role cards for desktop (pointer) viewports.
   ///
   /// In en, this message translates to:
-  /// **'CLICK TO FLIP'**
+  /// **'Click to flip'**
   String get flipHintClick;
 
   /// Desktop footer link to the next section.
   ///
   /// In en, this message translates to:
-  /// **'NEXT'**
+  /// **'Next'**
   String get folioNext;
 
   /// No description provided for @folioBackToStart.
   ///
   /// In en, this message translates to:
-  /// **'BACK TO START'**
+  /// **'Back to start'**
   String get folioBackToStart;
 
   /// Toast for a returning visitor, offering to jump back to the section they last viewed.
@@ -907,13 +919,13 @@ abstract class AppLocalizations {
   /// No description provided for @continueAction.
   ///
   /// In en, this message translates to:
-  /// **'CONTINUE'**
+  /// **'Continue'**
   String get continueAction;
 
   /// Hero link that opens the recruiter summary sheet.
   ///
   /// In en, this message translates to:
-  /// **'30-SEC PROFILE'**
+  /// **'30-second profile'**
   String get quickProfile;
 
   /// No description provided for @quickProfileTitle.
@@ -973,85 +985,85 @@ abstract class AppLocalizations {
   /// No description provided for @studyCaseStudy.
   ///
   /// In en, this message translates to:
-  /// **'CASE STUDY'**
+  /// **'Case study'**
   String get studyCaseStudy;
 
   /// No description provided for @studyProblem.
   ///
   /// In en, this message translates to:
-  /// **'THE PROBLEM'**
+  /// **'The problem'**
   String get studyProblem;
 
   /// No description provided for @studyRole.
   ///
   /// In en, this message translates to:
-  /// **'MY ROLE'**
+  /// **'My role'**
   String get studyRole;
 
   /// No description provided for @studyArchitecture.
   ///
   /// In en, this message translates to:
-  /// **'SYSTEM ARCHITECTURE'**
+  /// **'System architecture'**
   String get studyArchitecture;
 
   /// No description provided for @studyOutcomes.
   ///
   /// In en, this message translates to:
-  /// **'OUTCOMES'**
+  /// **'Outcomes'**
   String get studyOutcomes;
 
   /// No description provided for @studyLessons.
   ///
   /// In en, this message translates to:
-  /// **'LESSONS'**
+  /// **'Lessons'**
   String get studyLessons;
 
   /// No description provided for @studyMore.
   ///
   /// In en, this message translates to:
-  /// **'MORE CASE STUDIES'**
+  /// **'More case studies'**
   String get studyMore;
 
   /// No description provided for @studyDockProblem.
   ///
   /// In en, this message translates to:
-  /// **'PROBLEM'**
+  /// **'Problem'**
   String get studyDockProblem;
 
   /// No description provided for @studyDockProblemShort.
   ///
   /// In en, this message translates to:
-  /// **'PROB'**
+  /// **'Problem'**
   String get studyDockProblemShort;
 
   /// No description provided for @studyDockRole.
   ///
   /// In en, this message translates to:
-  /// **'ROLE'**
+  /// **'Role'**
   String get studyDockRole;
 
   /// No description provided for @studyDockArch.
   ///
   /// In en, this message translates to:
-  /// **'ARCH'**
+  /// **'Design'**
   String get studyDockArch;
 
   /// No description provided for @studyDockOutcomes.
   ///
   /// In en, this message translates to:
-  /// **'OUTCOMES'**
+  /// **'Outcomes'**
   String get studyDockOutcomes;
 
   /// No description provided for @studyDockOutcomesShort.
   ///
   /// In en, this message translates to:
-  /// **'RESULTS'**
+  /// **'Results'**
   String get studyDockOutcomesShort;
 
   /// No description provided for @studyDockLessons.
   ///
   /// In en, this message translates to:
-  /// **'LESSONS'**
+  /// **'Lessons'**
   String get studyDockLessons;
 
   /// No description provided for @studyBackToPortfolio.
@@ -1063,13 +1075,13 @@ abstract class AppLocalizations {
   /// No description provided for @studyReadPercent.
   ///
   /// In en, this message translates to:
-  /// **'{pct}% READ'**
+  /// **'{pct}% read'**
   String studyReadPercent(int pct);
 
   /// No description provided for @studyTop.
   ///
   /// In en, this message translates to:
-  /// **'TOP'**
+  /// **'Top'**
   String get studyTop;
 
   /// No description provided for @studyBackToTop.
@@ -1093,7 +1105,7 @@ abstract class AppLocalizations {
   /// No description provided for @studyOfficialWebsite.
   ///
   /// In en, this message translates to:
-  /// **'OFFICIAL WEBSITE'**
+  /// **'Company website'**
   String get studyOfficialWebsite;
 
   /// No description provided for @studyVisitWebsite.
@@ -1105,7 +1117,7 @@ abstract class AppLocalizations {
   /// No description provided for @studyCompanyLinkedIn.
   ///
   /// In en, this message translates to:
-  /// **'COMPANY LINKEDIN'**
+  /// **'Company LinkedIn'**
   String get studyCompanyLinkedIn;
 
   /// No description provided for @studyViewOnLinkedIn.
@@ -1117,7 +1129,7 @@ abstract class AppLocalizations {
   /// No description provided for @studyShare.
   ///
   /// In en, this message translates to:
-  /// **'SHARE STUDY'**
+  /// **'Share'**
   String get studyShare;
 
   /// No description provided for @studyShareTooltip.
@@ -1147,7 +1159,7 @@ abstract class AppLocalizations {
   /// No description provided for @studyGlanceKicker.
   ///
   /// In en, this message translates to:
-  /// **'AT A GLANCE · 30-SECOND READ'**
+  /// **'At a glance'**
   String get studyGlanceKicker;
 
   /// No description provided for @studyGlance.
@@ -1159,19 +1171,19 @@ abstract class AppLocalizations {
   /// No description provided for @studyChallenge.
   ///
   /// In en, this message translates to:
-  /// **'CHALLENGE'**
+  /// **'Challenge'**
   String get studyChallenge;
 
   /// No description provided for @studyBuilt.
   ///
   /// In en, this message translates to:
-  /// **'WHAT I BUILT'**
+  /// **'What I built'**
   String get studyBuilt;
 
   /// No description provided for @studyResult.
   ///
   /// In en, this message translates to:
-  /// **'RESULT'**
+  /// **'Result'**
   String get studyResult;
 
   /// No description provided for @studySeeOutcomes.
@@ -1195,19 +1207,19 @@ abstract class AppLocalizations {
   /// No description provided for @studyPresent.
   ///
   /// In en, this message translates to:
-  /// **'PRESENT'**
+  /// **'Present'**
   String get studyPresent;
 
   /// No description provided for @studyRoleMobileDev.
   ///
   /// In en, this message translates to:
-  /// **'MOBILE DEVELOPER'**
+  /// **'Mobile developer'**
   String get studyRoleMobileDev;
 
   /// No description provided for @studyRoleFlutterDev.
   ///
   /// In en, this message translates to:
-  /// **'FLUTTER DEVELOPER'**
+  /// **'Flutter developer'**
   String get studyRoleFlutterDev;
 
   /// No description provided for @studyNatIntro.
@@ -1513,188 +1525,332 @@ abstract class AppLocalizations {
   /// No description provided for @uiComposeInquiry.
   ///
   /// In en, this message translates to:
-  /// **'COMPOSE INQUIRY'**
+  /// **'Write a message'**
   String get uiComposeInquiry;
 
   /// No description provided for @uiPresetsTitle.
   ///
   /// In en, this message translates to:
-  /// **'ONE-TAP EXPRESS REACH-OUT PRESETS'**
+  /// **'Start from a template'**
   String get uiPresetsTitle;
 
   /// No description provided for @uiActiveHours.
   ///
   /// In en, this message translates to:
-  /// **'ACTIVE WORKING HOURS'**
+  /// **'Working hours'**
   String get uiActiveHours;
 
   /// No description provided for @uiStandbyAsync.
   ///
   /// In en, this message translates to:
-  /// **'STANDBY · ASYNC'**
+  /// **'Replies within a day'**
   String get uiStandbyAsync;
 
   /// No description provided for @uiRelocating.
   ///
   /// In en, this message translates to:
-  /// **'RELOCATING BRNO 2027'**
+  /// **'Moving to Brno, 2027'**
   String get uiRelocating;
 
   /// No description provided for @uiInquireTrack.
   ///
   /// In en, this message translates to:
-  /// **'INQUIRE TRACK'**
+  /// **'Ask about this'**
   String get uiInquireTrack;
 
   /// No description provided for @uiComposerTitle.
   ///
   /// In en, this message translates to:
-  /// **'DIRECT INQUIRY COMPOSER'**
+  /// **'Write a message'**
   String get uiComposerTitle;
 
   /// No description provided for @uiSelectTrack.
   ///
   /// In en, this message translates to:
-  /// **'SELECT ENGAGEMENT TRACK'**
+  /// **'What is this about?'**
   String get uiSelectTrack;
 
   /// No description provided for @uiCopyDraft.
   ///
   /// In en, this message translates to:
-  /// **'COPY DRAFT'**
+  /// **'Copy draft'**
   String get uiCopyDraft;
 
   /// No description provided for @uiSending.
   ///
   /// In en, this message translates to:
-  /// **'SENDING...'**
+  /// **'Sending…'**
   String get uiSending;
 
   /// No description provided for @uiSendMessage.
   ///
   /// In en, this message translates to:
-  /// **'SEND MESSAGE'**
+  /// **'Send message'**
   String get uiSendMessage;
 
   /// No description provided for @uiOpenEmailClient.
   ///
   /// In en, this message translates to:
-  /// **'OPEN IN EMAIL CLIENT'**
+  /// **'Open in email app'**
   String get uiOpenEmailClient;
 
   /// No description provided for @uiReadCaseStudy.
   ///
   /// In en, this message translates to:
-  /// **'READ CASE STUDY'**
+  /// **'Read case study'**
   String get uiReadCaseStudy;
 
   /// No description provided for @uiNoCaseStudies.
   ///
   /// In en, this message translates to:
-  /// **'NO CASE STUDIES MATCHED'**
+  /// **'No case studies match these filters'**
   String get uiNoCaseStudies;
 
   /// No description provided for @uiResetFilters.
   ///
   /// In en, this message translates to:
-  /// **'RESET FILTERS'**
+  /// **'Reset filters'**
   String get uiResetFilters;
 
   /// No description provided for @uiScrollToExplore.
   ///
   /// In en, this message translates to:
-  /// **'SCROLL TO EXPLORE'**
+  /// **'Scroll to explore'**
   String get uiScrollToExplore;
 
   /// No description provided for @uiPortfolioSections.
   ///
   /// In en, this message translates to:
-  /// **'PORTFOLIO SECTIONS'**
+  /// **'Sections'**
   String get uiPortfolioSections;
 
   /// No description provided for @uiDownloadResumePdf.
   ///
   /// In en, this message translates to:
-  /// **'DOWNLOAD RESUME · PDF'**
+  /// **'Download CV (PDF)'**
   String get uiDownloadResumePdf;
 
   /// No description provided for @uiDragCardsHint.
   ///
   /// In en, this message translates to:
-  /// **'DRAG THE CARDS · CLICK TO FLIP · SHUFFLE TO RESHAPE'**
+  /// **'Drag the cards, click one to flip it, or shuffle'**
   String get uiDragCardsHint;
 
   /// No description provided for @uiTapSwipeHint.
   ///
   /// In en, this message translates to:
-  /// **'TAP CARD TO FLIP · SWIPE TO CHANGE ROLE'**
+  /// **'Tap a card to flip it, swipe to change role'**
   String get uiTapSwipeHint;
 
   /// No description provided for @uiTapToReturn.
   ///
   /// In en, this message translates to:
-  /// **'TAP TO RETURN'**
+  /// **'Tap to return'**
   String get uiTapToReturn;
 
   /// No description provided for @uiArchFlowchart.
   ///
   /// In en, this message translates to:
-  /// **'ARCHITECTURE FLOWCHART'**
+  /// **'Flowchart'**
   String get uiArchFlowchart;
 
   /// No description provided for @uiArchRationale.
   ///
   /// In en, this message translates to:
-  /// **'ARCHITECTURAL RATIONALE (WHY THIS CHOICE)'**
+  /// **'Why this choice'**
   String get uiArchRationale;
 
   /// No description provided for @uiKeySafeguards.
   ///
   /// In en, this message translates to:
-  /// **'KEY IMPLEMENTATION SAFEGUARDS'**
+  /// **'Safeguards'**
   String get uiKeySafeguards;
 
   /// No description provided for @uiLatencyBudget.
   ///
   /// In en, this message translates to:
-  /// **'LATENCY BUDGET PER TIER'**
+  /// **'Latency budget per layer'**
   String get uiLatencyBudget;
 
   /// No description provided for @uiActiveTrace.
   ///
   /// In en, this message translates to:
-  /// **'ACTIVE TRACE'**
+  /// **'Tracing'**
   String get uiActiveTrace;
 
   /// No description provided for @uiLatestDispatch.
   ///
   /// In en, this message translates to:
-  /// **'LATEST DISPATCH'**
+  /// **'Current role'**
   String get uiLatestDispatch;
 
   /// No description provided for @badgeSkills.
   ///
   /// In en, this message translates to:
-  /// **'{count} CORE DISCIPLINES'**
+  /// **'{count} disciplines'**
   String badgeSkills(int count);
 
   /// No description provided for @badgeCaseStudies.
   ///
   /// In en, this message translates to:
-  /// **'{count} CASE STUDIES'**
+  /// **'{count} case studies'**
   String badgeCaseStudies(int count);
 
   /// No description provided for @badgeArchitectures.
   ///
   /// In en, this message translates to:
-  /// **'{count} ARCHITECTURES'**
+  /// **'{count} architectures'**
   String badgeArchitectures(int count);
 
   /// No description provided for @badgeRoles.
   ///
   /// In en, this message translates to:
-  /// **'{count} ROLES · ENTERPRISE IMPACT'**
+  /// **'{count} roles'**
   String badgeRoles(int count);
+
+  /// No description provided for @coverName.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdallah Alhyari'**
+  String get coverName;
+
+  /// No description provided for @coverStatement.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile apps that work offline, read smart cards and keep patient data safe.'**
+  String get coverStatement;
+
+  /// No description provided for @coverLead.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m a senior Flutter and Android engineer with five years on enterprise healthcare, education and commerce apps. Based in Amman, moving to Brno in 2027.'**
+  String get coverLead;
+
+  /// No description provided for @coverEmailPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Or email'**
+  String get coverEmailPrefix;
+
+  /// No description provided for @cardHintTap.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the card to read its chip'**
+  String get cardHintTap;
+
+  /// No description provided for @cardHintClick.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the card to read its chip'**
+  String get cardHintClick;
+
+  /// No description provided for @cardHintTurnBackTap.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the card again to turn it over'**
+  String get cardHintTurnBackTap;
+
+  /// No description provided for @cardHintTurnBackClick.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the card again to turn it over'**
+  String get cardHintTurnBackClick;
+
+  /// No description provided for @cardSurname.
+  ///
+  /// In en, this message translates to:
+  /// **'Alhyari'**
+  String get cardSurname;
+
+  /// No description provided for @cardGivenName.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdallah'**
+  String get cardGivenName;
+
+  /// No description provided for @cardFieldSurname.
+  ///
+  /// In en, this message translates to:
+  /// **'Surname'**
+  String get cardFieldSurname;
+
+  /// No description provided for @cardFieldGiven.
+  ///
+  /// In en, this message translates to:
+  /// **'Given name'**
+  String get cardFieldGiven;
+
+  /// No description provided for @cardFieldRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get cardFieldRole;
+
+  /// No description provided for @cardFieldBase.
+  ///
+  /// In en, this message translates to:
+  /// **'Based in'**
+  String get cardFieldBase;
+
+  /// No description provided for @cardRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Senior mobile engineer'**
+  String get cardRole;
+
+  /// No description provided for @cardBase.
+  ///
+  /// In en, this message translates to:
+  /// **'Amman, Brno from 2027'**
+  String get cardBase;
+
+  /// No description provided for @cardBackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Read from the chip'**
+  String get cardBackTitle;
+
+  /// No description provided for @cardOutcome1.
+  ///
+  /// In en, this message translates to:
+  /// **'Paper claims replaced by contactless smart-card checks'**
+  String get cardOutcome1;
+
+  /// No description provided for @cardOutcome2.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-second NFC reads across a wide range of Android phones'**
+  String get cardOutcome2;
+
+  /// No description provided for @cardOutcome3.
+  ///
+  /// In en, this message translates to:
+  /// **'35% fewer crashes and a steady 60 fps in data-heavy hospital apps'**
+  String get cardOutcome3;
+
+  /// No description provided for @cardSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over.'**
+  String get cardSemantics;
+
+  /// No description provided for @coverHintDrag.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag the card onto the reader, or click it.'**
+  String get coverHintDrag;
+
+  /// No description provided for @coverHintTap.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the card to read it.'**
+  String get coverHintTap;
+
+  /// No description provided for @coverGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'Access granted'**
+  String get coverGranted;
 }
 
 class _AppLocalizationsDelegate

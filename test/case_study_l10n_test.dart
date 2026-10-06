@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/features/case_study/presentation/widgets/case_study_prose.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_eskadenia.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_fais.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_nathealth.dart';
@@ -35,18 +36,29 @@ void main() {
       (tester) async {
     await _open(tester, const NatHealthCaseStudy(), const Locale('cs'),
         const Size(1280, 900));
-    expect(find.text('NATHEALTH · PŘÍPADOVÁ STUDIE'), findsOneWidget);
-    expect(find.text('VÝZVA'), findsOneWidget);
-    expect(find.text('CO JSEM VYTVOŘIL'), findsOneWidget);
+    expect(find.text('NATHEALTH · Případová studie'), findsOneWidget);
+    expect(find.text('Výzva'), findsOneWidget);
+    expect(find.text('Co jsem vytvořil'), findsOneWidget);
     expect(find.textContaining('Ověření karty za méně než sekundu'),
         findsOneWidget);
     // Lazy list: the note sits just below the first screen in Czech.
     await tester.scrollUntilVisible(
         find.text('Podrobný technický rozbor níže je v angličtině.'), 300,
         scrollable: find.byType(Scrollable).first);
-    await tester.scrollUntilVisible(find.text('PROBLÉM'), 300,
-        scrollable: find.byType(Scrollable).first);
-    expect(find.text('PROBLÉM'), findsWidgets);
+    // Found by widget: the chapter dock carries the same label.
+    final problem = find
+        .byWidgetPredicate((w) => w is SectionKicker && w.label == 'Problém');
+    // Scrolled through the article's own position: a drag at its centre
+    // lands on the floating chapter dock.
+    final article = tester.state<ScrollableState>(find.descendant(
+        of: find.byType(CustomScrollView), matching: find.byType(Scrollable)));
+    article.position.jumpTo(0);
+    await tester.pump();
+    for (int i = 0; i < 30 && problem.evaluate().isEmpty; i++) {
+      article.position.jumpTo(article.position.pixels + 300);
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(problem, findsOneWidget);
   });
 
   testWidgets('Arabic: right-to-left with translated frame', (tester) async {
@@ -70,7 +82,7 @@ void main() {
   testWidgets('English: no language note', (tester) async {
     await _open(tester, const NatHealthCaseStudy(), const Locale('en'),
         const Size(1280, 900));
-    expect(find.text('CHALLENGE'), findsOneWidget);
+    expect(find.text('Challenge'), findsOneWidget);
     expect(find.byIcon(Icons.translate_rounded), findsNothing);
   });
 

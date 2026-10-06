@@ -52,14 +52,13 @@ class ExpressPresetsBar extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         decoration: BoxDecoration(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.03)
-              : AppColors.slate100,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.03) : AppColors.ink100,
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.08)
-                : AppColors.slate200,
+                : AppColors.ink200,
           ),
         ),
         child: Column(
@@ -81,9 +80,8 @@ class ExpressPresetsBar extends StatelessWidget {
                       AppLocalizations.of(context)!.uiPresetsTitle,
                       style: TextStyle(
                         color: context.amberText,
-                        fontSize: AppTypography.editorial,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: 1.8,
                       ),
                     ),
                   ),

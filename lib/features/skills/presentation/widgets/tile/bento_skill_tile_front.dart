@@ -47,7 +47,7 @@ class TileFrontFace extends StatelessWidget {
                 ? categoryColor.withValues(alpha: isHovered ? 0.35 : 0.12)
                 : (isHovered
                     ? categoryColor.withValues(alpha: 0.25)
-                    : AppColors.slate900.withValues(alpha: 0.05)),
+                    : AppColors.ink900.withValues(alpha: 0.05)),
             blurRadius: isHovered ? 24 : 12,
             spreadRadius: isHovered ? 1 : 0,
             offset: Offset(0, isHovered ? 6 : 4),
@@ -103,7 +103,7 @@ class TileFrontFace extends StatelessWidget {
                                 : null,
                             child: Center(
                               child: Text(
-                                skill.name.toUpperCase(),
+                                skill.name,
                                 textAlign: TextAlign.center,
                                 maxLines: _kTitleMaxLines,
                                 overflow: TextOverflow.ellipsis,
@@ -112,7 +112,6 @@ class TileFrontFace extends StatelessWidget {
                                   color: context.onSurface,
                                   fontSize: isDesktop ? 22 : 14,
                                   fontWeight: FontWeight.w900,
-                                  letterSpacing: 1.2,
                                   height: isDesktop ? _kTitleLineHeight : null,
                                 ),
                               ),
@@ -130,11 +129,9 @@ class TileFrontFace extends StatelessWidget {
                             child: Text(
                               masteryLabel(skill.level, loc),
                               style: TextStyle(
-                                fontFamily: AppTypography.monoFont,
                                 color: context.onSurface,
                                 fontSize: isDesktop ? 11 : 9,
                                 fontWeight: FontWeight.w900,
-                                letterSpacing: 1.2,
                               ),
                             ),
                           ),

@@ -75,7 +75,7 @@ class _SmoothScrollBehavior extends MaterialScrollBehavior {
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({
     super.key,
-    this.initialTheme = ThemeMode.dark,
+    this.initialTheme = ThemeMode.light,
     this.initialLocale = const Locale('en'),
     required this.projectRepo,
     required this.experienceRepo,
@@ -149,43 +149,13 @@ class PortfolioApp extends StatelessWidget {
                       child: KeyboardFocusRing(child: child!),
                     );
                   },
-                  home: const _AccentTheme(child: HomeScreen()),
+                  home: const HomeScreen(),
                 );
               },
             );
           },
         ),
       ),
-    );
-  }
-}
-
-/// Applies the live section-accent color as a `Theme` override on top of
-/// the base MaterialApp theme. Only this subtree rebuilds on seed change.
-///
-/// Deliberately a snap, not an `AnimatedTheme` lerp: lerping `ThemeData`
-/// rebuilds every `Theme.of` dependent in every mounted page on each frame,
-/// ~10x the rebuild work of a page turn (≈70k vs ≈7k element rebuilds)
-/// while the slide is running. Accent surfaces that should fade (page
-/// background glow, nav pill) animate their own colors implicitly.
-class _AccentTheme extends StatelessWidget {
-  const _AccentTheme({required this.child});
-
-  final Widget child;
-
-  Widget _buildThemed(BuildContext context, Color seed, Widget staticChild) {
-    return Theme(
-      data: AppTheme.withAccent(Theme.of(context), seed),
-      child: staticChild,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      buildWhen: (prev, curr) => prev.seedColor != curr.seedColor,
-      builder: (context, state) =>
-          _buildThemed(context, state.seedColor, child),
     );
   }
 }

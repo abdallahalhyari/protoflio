@@ -42,17 +42,17 @@ class EditorialChip extends StatelessWidget {
       case ChipTone.primary:
         return scheme.primary;
       case ChipTone.amber:
-        return isDark ? AppColors.accentAmber : AppColors.accentAmberDeep;
+        return isDark ? AppColors.goldSoft : AppColors.goldDeep;
       case ChipTone.green:
-        return isDark ? AppColors.accentGreen : AppColors.accentGreenDeep;
+        return isDark ? AppColors.tealLight : AppColors.tealDeep;
       case ChipTone.sky:
-        return isDark ? AppColors.accentSky : AppColors.accentSkyDeep;
+        return isDark ? AppColors.tealLight : AppColors.tealDeep;
       case ChipTone.indigo:
-        return isDark ? AppColors.accentIndigo : AppColors.accentIndigoDeepText;
+        return isDark ? AppColors.tealLight : AppColors.tealDeep;
       case ChipTone.neutral:
         return isDark
             ? scheme.onSurface.withValues(alpha: 0.7)
-            : AppColors.slate700;
+            : AppColors.ink700;
     }
   }
 
@@ -81,8 +81,7 @@ class EditorialChip extends StatelessWidget {
 
     final hPad = dense ? 8.0 : 10.0;
     final vPad = dense ? 3.0 : 5.0;
-    final fontSize =
-        dense ? AppTypography.editorialSm : AppTypography.editorial;
+    final fontSize = dense ? AppTypography.label : AppTypography.label;
 
     final row = Row(
       mainAxisSize: MainAxisSize.min,
@@ -99,7 +98,6 @@ class EditorialChip extends StatelessWidget {
               color: fg,
               fontSize: fontSize,
               fontWeight: FontWeight.w800,
-              letterSpacing: 1.2,
             ),
           ),
         ),

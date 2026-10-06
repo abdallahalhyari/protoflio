@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:profile/shared/utils/bidi.dart';
 
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
@@ -29,8 +28,7 @@ class SectionKicker extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            fontSize: AppTypography.overline,
-            letterSpacing: latinTracking(context, 3),
+            fontSize: AppTypography.label,
             fontWeight: FontWeight.w800,
             color: scheme.onSurface.withValues(alpha: 0.9),
           ),
@@ -137,7 +135,7 @@ class CaseStudyLanguageNote extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                fontSize: AppTypography.small,
+                fontSize: AppTypography.body,
                 fontStyle: FontStyle.italic,
                 color: context.mutedText,
               ),

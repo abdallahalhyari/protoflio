@@ -37,7 +37,7 @@ class AppBarLanguageToggle extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.08)
-                        : AppColors.slate100,
+                        : AppColors.ink100,
                     borderRadius: BorderRadius.circular(AppRadius.chip),
                     border: Border.all(
                       color: context.divider,
@@ -47,9 +47,8 @@ class AppBarLanguageToggle extends StatelessWidget {
                     code,
                     style: TextStyle(
                       color: context.onSurface,
-                      fontSize: AppTypography.editorial,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 0.8,
                     ),
                   ),
                 ),

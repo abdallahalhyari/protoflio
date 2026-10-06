@@ -88,7 +88,7 @@ class _PuckState extends State<_Puck> {
                     ? primary.withValues(alpha: dark ? 0.6 : 0.5)
                     : (dark
                         ? Colors.white.withValues(alpha: 0.14)
-                        : AppColors.slate200),
+                        : AppColors.ink200),
                 width: _hovered ? 1.4 : 1.0,
               ),
             ),
@@ -131,7 +131,7 @@ class _LanguagePickerPuck extends StatelessWidget {
                 child: PopupMenuButton<String>(
                   tooltip: '',
                   icon: Icon(Icons.language_rounded,
-                      color: dark ? Colors.white : AppColors.slate900),
+                      color: dark ? Colors.white : AppColors.ink900),
                   onSelected: (val) {
                     HapticFeedback.lightImpact();
                     SoundService.instance.playClick();
@@ -171,7 +171,7 @@ class _ThemeTogglePuck extends StatelessWidget {
             child: IconButton(
               icon: Icon(
                 dark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                color: dark ? Colors.white : AppColors.slate900,
+                color: dark ? Colors.white : AppColors.ink900,
               ),
               onPressed: () {
                 HapticFeedback.lightImpact();
@@ -216,10 +216,10 @@ class _AudioTogglePuck extends StatelessWidget {
                             ? Icons.volume_up_rounded
                             : Icons.volume_off_rounded,
                         color: enabled
-                            ? (dark ? Colors.white : AppColors.slate900)
+                            ? (dark ? Colors.white : AppColors.ink900)
                             : (dark
                                 ? Colors.white.withValues(alpha: 0.60)
-                                : AppColors.slate400),
+                                : AppColors.ink400),
                         size: 18,
                       ),
                       if (enabled)
@@ -230,7 +230,7 @@ class _AudioTogglePuck extends StatelessWidget {
                             width: 5,
                             height: 5,
                             decoration: const BoxDecoration(
-                              color: AppColors.accentGreen,
+                              color: AppColors.teal,
                               shape: BoxShape.circle,
                             ),
                           ),

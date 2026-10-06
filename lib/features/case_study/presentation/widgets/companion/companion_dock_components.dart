@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/features/case_study/presentation/widgets/case_study_reading_companion.dart';
 
 class CompanionDockDivider extends StatelessWidget {
@@ -38,13 +37,12 @@ class CompanionReadingPercentPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
       decoration: BoxDecoration(
-        color:
-            isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.slate100,
+        color: isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.ink100,
         borderRadius: BorderRadius.circular(AppRadius.pill),
         border: Border.all(
           color: isDark
               ? Colors.white.withValues(alpha: AppAlpha.hover)
-              : AppColors.slate300,
+              : AppColors.ink300,
           width: 0.8,
         ),
       ),
@@ -64,11 +62,9 @@ class CompanionReadingPercentPill extends StatelessWidget {
                 ? '$pct%'
                 : '${AppLocalizations.of(context)!.studyReadPercent(pct)} · 3 MIN READ',
             style: TextStyle(
-              fontFamily: AppTypography.monoFont,
-              fontSize: AppTypography.micro,
+              fontSize: AppTypography.label,
               fontWeight: FontWeight.w900,
-              letterSpacing: latinTracking(context, 0.8),
-              color: isDark ? AppColors.accentCyan : AppColors.accentCyanDeep,
+              color: isDark ? AppColors.tealLight : AppColors.tealDeep,
             ),
           ),
         ],
@@ -137,9 +133,9 @@ class _CompanionChapterPillState extends State<CompanionChapterPill> {
                   gradient: isActive
                       ? LinearGradient(
                           colors: [
-                            AppColors.accentCyan
+                            AppColors.teal
                                 .withValues(alpha: isDark ? 0.26 : 0.18),
-                            AppColors.accentGreen
+                            AppColors.teal
                                 .withValues(alpha: isDark ? 0.20 : 0.12),
                           ],
                         )
@@ -149,21 +145,21 @@ class _CompanionChapterPillState extends State<CompanionChapterPill> {
                       : (_hovered
                           ? (isDark
                               ? Colors.white.withValues(alpha: 0.1)
-                              : AppColors.slate200)
+                              : AppColors.ink200)
                           : Colors.transparent),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(
                     color: isActive
-                        ? AppColors.accentCyan
+                        ? AppColors.teal
                         : (_hovered
-                            ? (isDark ? Colors.white30 : AppColors.slate400)
+                            ? (isDark ? Colors.white30 : AppColors.ink400)
                             : Colors.transparent),
                     width: isActive ? 1.3 : 1.0,
                   ),
                   boxShadow: isActive
                       ? [
                           BoxShadow(
-                            color: AppColors.accentCyan
+                            color: AppColors.teal
                                 .withValues(alpha: isDark ? 0.35 : 0.2),
                             blurRadius: 8,
                             spreadRadius: 0.5,
@@ -180,7 +176,7 @@ class _CompanionChapterPillState extends State<CompanionChapterPill> {
                         height: 5,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppColors.accentCyan,
+                          color: AppColors.teal,
                         ),
                       ),
                       const SizedBox(width: 5),
@@ -188,15 +184,13 @@ class _CompanionChapterPillState extends State<CompanionChapterPill> {
                     Text(
                       label,
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        fontSize: AppTypography.micro,
+                        fontSize: AppTypography.label,
                         fontWeight:
                             isActive ? FontWeight.w900 : FontWeight.w700,
-                        letterSpacing: latinTracking(context, 1.0),
                         color: isActive
                             ? (isDark
-                                ? AppColors.accentCyan
-                                : AppColors.accentCyanDeep)
+                                ? AppColors.tealLight
+                                : AppColors.tealDeep)
                             : (_hovered
                                 ? (context.onSurface)
                                 : (context.mutedText)),
@@ -262,24 +256,24 @@ class _CompanionBackToTopPillState extends State<CompanionBackToTopPill> {
                 decoration: BoxDecoration(
                   color: _hovered
                       ? (isDark
-                          ? AppColors.accentGreen.withValues(alpha: 0.22)
-                          : AppColors.accentGreen.withValues(alpha: 0.14))
+                          ? AppColors.teal.withValues(alpha: 0.22)
+                          : AppColors.teal.withValues(alpha: 0.14))
                       : (isDark
                           ? Colors.white.withValues(alpha: AppAlpha.whisper)
-                          : AppColors.slate100),
+                          : AppColors.ink100),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(
                     color: _hovered
-                        ? AppColors.accentGreen
+                        ? AppColors.teal
                         : (isDark
                             ? Colors.white.withValues(alpha: 0.18)
-                            : AppColors.slate300),
+                            : AppColors.ink300),
                     width: _hovered ? 1.3 : 1.0,
                   ),
                   boxShadow: _hovered
                       ? [
                           BoxShadow(
-                            color: AppColors.accentGreen
+                            color: AppColors.teal
                                 .withValues(alpha: isDark ? 0.35 : 0.2),
                             blurRadius: 10,
                             spreadRadius: 0.5,
@@ -294,7 +288,7 @@ class _CompanionBackToTopPillState extends State<CompanionBackToTopPill> {
                       Icons.arrow_upward_rounded,
                       size: 13,
                       color: _hovered
-                          ? (isDark ? Colors.white : AppColors.accentGreenDeep)
+                          ? (isDark ? Colors.white : AppColors.tealDeep)
                           : (context.mutedText),
                     ),
                     if (!widget.isCompact) ...[
@@ -302,14 +296,10 @@ class _CompanionBackToTopPillState extends State<CompanionBackToTopPill> {
                       Text(
                         AppLocalizations.of(context)!.studyTop,
                         style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          fontSize: AppTypography.micro,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: latinTracking(context, 1.2),
                           color: _hovered
-                              ? (isDark
-                                  ? Colors.white
-                                  : AppColors.accentGreenDeep)
+                              ? (isDark ? Colors.white : AppColors.tealDeep)
                               : (context.mutedText),
                         ),
                       ),
@@ -341,7 +331,7 @@ class CompanionMiniCircularProgressPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
       ..color =
-          isDark ? Colors.white.withValues(alpha: 0.15) : AppColors.slate300;
+          isDark ? Colors.white.withValues(alpha: 0.15) : AppColors.ink300;
     canvas.drawCircle(center, radius, trackPaint);
 
     if (progress > 0) {
@@ -350,7 +340,7 @@ class CompanionMiniCircularProgressPainter extends CustomPainter {
         ..strokeCap = StrokeCap.round
         ..strokeWidth = 2.2
         ..shader = const LinearGradient(
-          colors: [AppColors.accentCyan, AppColors.accentGreen],
+          colors: [AppColors.teal, AppColors.teal],
         ).createShader(Rect.fromCircle(center: center, radius: radius));
 
       const startAngle = -3.141592653589793 / 2;

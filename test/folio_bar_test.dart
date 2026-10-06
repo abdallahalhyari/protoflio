@@ -56,8 +56,8 @@ void main() {
     await tester
         .pumpWidget(_host(ValueNotifier<int>(2), onGoTo: (p) => went = p));
     await tester.pumpAndSettle();
-    expect(find.text('NEXT · SKILLS & STACK'), findsOneWidget);
-    await tester.tap(find.text('NEXT · SKILLS & STACK'));
+    expect(find.text('Next · Experience'), findsOneWidget);
+    await tester.tap(find.text('Next · Experience'));
     expect(went, 3);
   });
 
@@ -67,7 +67,7 @@ void main() {
     await tester
         .pumpWidget(_host(ValueNotifier<int>(6), onGoTo: (p) => went = p));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('BACK TO START'));
+    await tester.tap(find.text('Back to start'));
     expect(went, 0);
   });
 }

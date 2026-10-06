@@ -65,14 +65,14 @@ class _ChannelTileState extends State<ChannelTile> {
               ? (_hover
                   ? Colors.white.withValues(alpha: AppAlpha.whisper)
                   : Colors.white.withValues(alpha: 0.03))
-              : (_hover ? Colors.white : AppColors.slate50),
+              : (_hover ? Colors.white : AppColors.ink50),
           borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(
             color: _hover
                 ? d.accent.withValues(alpha: 0.55)
                 : (isDark
                     ? Colors.white.withValues(alpha: 0.10)
-                    : AppColors.slate200),
+                    : AppColors.ink200),
             width: _hover ? 1.4 : 1,
           ),
           boxShadow: [
@@ -112,9 +112,8 @@ class _ChannelTileState extends State<ChannelTile> {
                         d.label,
                         style: TextStyle(
                           color: labelColor,
-                          fontSize: AppTypography.editorialSm,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 2,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -124,9 +123,8 @@ class _ChannelTileState extends State<ChannelTile> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: context.onSurface,
-                          fontSize: AppTypography.smallLoose,
+                          fontSize: AppTypography.body,
                           fontWeight: FontWeight.w700,
-                          letterSpacing: 0.2,
                         ),
                       ),
                     ],
@@ -157,12 +155,11 @@ class _ChannelTileState extends State<ChannelTile> {
                         ),
                       ),
                       child: Text(
-                        d.primaryLabel.toUpperCase(),
+                        d.primaryLabel,
                         semanticsLabel: '',
                         style: const TextStyle(
-                          fontSize: AppTypography.caption,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
                         ),
                       ),
                     ),
@@ -180,7 +177,7 @@ class _ChannelTileState extends State<ChannelTile> {
                       side: BorderSide(
                         color: isDark
                             ? Colors.white.withValues(alpha: 0.28)
-                            : AppColors.slate300,
+                            : AppColors.ink300,
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 14, vertical: 10),
@@ -189,12 +186,11 @@ class _ChannelTileState extends State<ChannelTile> {
                       ),
                     ),
                     child: Text(
-                      d.secondaryLabel.toUpperCase(),
+                      d.secondaryLabel,
                       semanticsLabel: '',
                       style: const TextStyle(
-                        fontSize: AppTypography.caption,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w800,
-                        letterSpacing: 1.2,
                       ),
                     ),
                   ),

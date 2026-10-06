@@ -40,15 +40,15 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('PERSPECTIVES'), findsOneWidget);
-      expect(find.text('SPREAD'), findsOneWidget);
-      expect(find.text('ALIGN'), findsOneWidget);
+      expect(find.text('Perspectives'), findsOneWidget);
+      expect(find.text('Spread'), findsOneWidget);
+      expect(find.text('Align'), findsOneWidget);
 
-      await tester.tap(find.text('SPREAD'));
+      await tester.tap(find.text('Spread'));
       await tester.pumpAndSettle();
       expect(shuffled, isTrue);
 
-      await tester.tap(find.text('ALIGN'));
+      await tester.tap(find.text('Align'));
       await tester.pumpAndSettle();
       expect(reset, isTrue);
     });
@@ -58,9 +58,8 @@ void main() {
       await tester.pumpWidget(_wrap(const HatBioStrip(isMobile: false)));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('AMMAN · JORDAN'), findsOneWidget);
-      expect(
-          find.textContaining('BRNO · CZECH REPUBLIC · 2027'), findsOneWidget);
+      expect(find.textContaining('Amman, Jordan'), findsOneWidget);
+      expect(find.textContaining('Brno, Czech Republic, 2027'), findsOneWidget);
       expect(find.textContaining('Senior mobile engineer'), findsOneWidget);
     });
 
@@ -80,10 +79,10 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('01 THINKING'), findsOneWidget);
-      expect(find.text('02 COMMUNICATING'), findsOneWidget);
+      expect(find.text('01 Thinking'), findsOneWidget);
+      expect(find.text('02 Communicating'), findsOneWidget);
 
-      await tester.tap(find.text('02 COMMUNICATING'));
+      await tester.tap(find.text('02 Communicating'));
       await tester.pumpAndSettle();
       expect(selected, 1);
     });
@@ -104,11 +103,11 @@ void main() {
 
       expect(find.text('ROLE 03 / 06'), findsOneWidget);
 
-      await tester.tap(find.text('PREV'));
+      await tester.tap(find.text('Previous'));
       await tester.pumpAndSettle();
       expect(prev, isTrue);
 
-      await tester.tap(find.text('NEXT'));
+      await tester.tap(find.text('Next'));
       await tester.pumpAndSettle();
       expect(next, isTrue);
     });
@@ -117,7 +116,7 @@ void main() {
       await tester.pumpWidget(_wrap(const HatDragHint()));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('DRAG THE CARDS'), findsOneWidget);
+      expect(find.textContaining('Drag the cards'), findsOneWidget);
     });
 
     testWidgets('ContinuousMobileHatColumn renders mobile card showcase',
@@ -134,9 +133,9 @@ void main() {
       ));
       await tester.pump(const Duration(milliseconds: 300));
 
-      expect(find.text('FEATURE 06 · 6 ROLES'), findsOneWidget);
-      expect(find.text('PERSPECTIVES'), findsOneWidget);
-      expect(find.textContaining('TAP CARD TO FLIP'), findsOneWidget);
+      expect(find.text('Perspectives'), findsOneWidget);
+      expect(find.textContaining('Product-minded engineering'), findsOneWidget);
+      expect(find.textContaining('Tap a card to flip it'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
 
@@ -162,7 +161,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('01 / 06'), findsOneWidget);
-      expect(find.text('THINKING'), findsOneWidget);
+      expect(find.text('Thinking'), findsOneWidget);
       expect(find.byIcon(Icons.arrow_back_rounded), findsOneWidget);
       expect(find.byIcon(Icons.arrow_forward_rounded), findsOneWidget);
       expect(find.byIcon(Icons.auto_awesome_motion_rounded), findsOneWidget);
@@ -206,23 +205,20 @@ void main() {
       // instead, matching the existing HatsGridPage test in widget_test.dart.
       await tester.pump(const Duration(milliseconds: 300));
 
-      // "THINKING" appears twice at rest: once as the fanned card's own
-      // label (always visible) and once as HatConsoleDock's active-role
-      // pill (only the selected role). "COMMUNICATING" only has the card
-      // label, so the active pill switching roles is what moves it from
-      // 1 occurrence to 2.
-      expect(find.text('THINKING'), findsNWidgets(2));
-      expect(find.text('COMMUNICATING'), findsOneWidget);
+      // The active-role label is the only plain role name on the page
+      // (the pills are numbered: "01 Thinking"), so the arrows moving it
+      // is what proves the shortcuts reached the deck.
+      expect(find.text('Thinking'), findsOneWidget);
+      expect(find.text('Communicating'), findsNothing);
 
       await tester.sendKeyEvent(LogicalKeyboardKey.arrowRight);
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('COMMUNICATING'), findsNWidgets(2));
-      expect(find.text('THINKING'), findsOneWidget);
+      expect(find.text('Communicating'), findsOneWidget);
+      expect(find.text('Thinking'), findsNothing);
 
       await tester.sendKeyEvent(LogicalKeyboardKey.arrowLeft);
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.text('THINKING'), findsNWidgets(2));
-      expect(find.text('COMMUNICATING'), findsOneWidget);
+      expect(find.text('Thinking'), findsOneWidget);
     });
   });
 }

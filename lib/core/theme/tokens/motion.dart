@@ -29,7 +29,14 @@ class AppMotion {
   static const Duration heroEntry =
       Duration(milliseconds: 260); // intro wordmark
   static const Duration pageTurn =
-      Duration(milliseconds: 400); // desktop wheel page jump
+      Duration(milliseconds: 720); // desktop page turn: scan-in + recede
+  /// The cover reader: the card docks, the APDU exchange streams, 90 00
+  /// lands and the iris opens onto the work. The site's one orchestrated
+  /// motion.
+  static const Duration coverRead = Duration(milliseconds: 3400);
+
+  /// Idle bob of the floating card on the cover.
+  static const Duration coverFloat = Duration(seconds: 6);
   static const Duration cardFlip =
       Duration(milliseconds: 400); // skill / hat card flip
   static const Duration sectionScroll =

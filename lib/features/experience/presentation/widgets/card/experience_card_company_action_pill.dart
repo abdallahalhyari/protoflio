@@ -86,14 +86,14 @@ class _CompanyActionPillState extends State<CompanyActionPill> {
                             : primary.withValues(alpha: AppAlpha.hover))
                         : (isDark
                             ? Colors.white.withValues(alpha: AppAlpha.whisper)
-                            : AppColors.slate100),
+                            : AppColors.ink100),
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                     border: Border.all(
                       color: _hovered
                           ? primary.withValues(alpha: isDark ? 0.9 : 0.8)
                           : (isDark
                               ? Colors.white.withValues(alpha: 0.2)
-                              : AppColors.slate300),
+                              : AppColors.ink300),
                       width: _hovered ? 1.4 : 1.0,
                     ),
                     boxShadow: _hovered
@@ -124,7 +124,7 @@ class _CompanyActionPillState extends State<CompanyActionPill> {
                             'in',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: AppTypography.nano,
+                              fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
                               fontFamily: 'sans-serif',
                               height: 1.0,
@@ -144,15 +144,13 @@ class _CompanyActionPillState extends State<CompanyActionPill> {
                       Text(
                         widget.label,
                         style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          fontSize: AppTypography.micro,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
                           color: _hovered
                               ? (isDark ? Colors.white : primary)
                               : (isDark
                                   ? Colors.white.withValues(alpha: 0.88)
-                                  : AppColors.slate800),
+                                  : AppColors.ink800),
                         ),
                       ),
                       const SizedBox(width: 3),
@@ -161,7 +159,7 @@ class _CompanyActionPillState extends State<CompanyActionPill> {
                         size: 10,
                         color: _hovered
                             ? primary
-                            : (isDark ? Colors.white54 : AppColors.slate500),
+                            : (isDark ? Colors.white54 : AppColors.ink500),
                       ),
                     ],
                   ),

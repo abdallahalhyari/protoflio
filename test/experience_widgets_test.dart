@@ -27,9 +27,11 @@ void main() {
       await tester.pumpWidget(_wrap(const ExperienceHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
-      expect(find.text('FEATURE 02 · CAREER TRAJECTORY'), findsOneWidget);
-      expect(find.text('EXPERIENCE'), findsOneWidget);
-      expect(find.text('4 ROLES · ENTERPRISE IMPACT'), findsOneWidget);
+      expect(find.text('Multi-year development of enterprise mobile systems'),
+          findsOneWidget);
+      expect(find.text('Experience'), findsOneWidget);
+      expect(find.text('Multi-year development of enterprise mobile systems'),
+          findsOneWidget);
     });
 
     testWidgets('CredentialsBentoCard renders Academic Annex & Certifications',
@@ -42,8 +44,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('ACADEMIC ANNEX'), findsOneWidget);
-      expect(find.text('CERTIFICATION STAMPS'), findsOneWidget);
+      expect(find.text('Academic annex'), findsOneWidget);
+      expect(find.text('Certification stamps'), findsOneWidget);
       expect(find.textContaining('Al-Hussein Bin Talal University'),
           findsOneWidget);
       expect(find.textContaining('Udemy'), findsWidgets);
@@ -62,7 +64,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(exp.company), findsOneWidget);
-      expect(find.text(exp.role.toUpperCase()), findsOneWidget);
+      expect(find.text(exp.role), findsOneWidget);
     });
 
     testWidgets(
@@ -78,8 +80,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('WEBSITE'), findsOneWidget);
-      expect(find.text('LINKEDIN'), findsOneWidget);
+      expect(find.text('Website'), findsOneWidget);
+      expect(find.text('LinkedIn'), findsOneWidget);
       expect(find.byIcon(Icons.language_rounded), findsOneWidget);
       expect(find.text('in'), findsOneWidget);
     });

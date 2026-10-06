@@ -35,8 +35,7 @@ class ScrollToTopButton extends StatelessWidget {
                 color: context.glassRaised,
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: Border.all(
-                  color: AppColors.accentIndigo
-                      .withValues(alpha: isDark ? 0.5 : 0.4),
+                  color: AppColors.teal.withValues(alpha: isDark ? 0.5 : 0.4),
                   width: 1.2,
                 ),
                 boxShadow: [
@@ -50,7 +49,7 @@ class ScrollToTopButton extends StatelessWidget {
               ),
               child: Icon(
                 Icons.keyboard_arrow_up_rounded,
-                color: isDark ? Colors.white : AppColors.accentIndigo600,
+                color: isDark ? Colors.white : AppColors.teal,
                 size: 24,
               ),
             ),

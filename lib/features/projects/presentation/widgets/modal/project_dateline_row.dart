@@ -38,13 +38,11 @@ class ProjectDatelineRow extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadius.xs),
                 ),
                 child: Text(
-                  project.company.toUpperCase(),
+                  project.company,
                   style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
                     color: scheme.primary,
-                    fontSize: AppTypography.editorialSm,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: 1.2,
                   ),
                 ),
               ),
@@ -57,13 +55,11 @@ class ProjectDatelineRow extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.6)
-                        : AppColors.slate500,
-                    fontSize: AppTypography.editorialSm,
+                        : AppColors.ink500,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w700,
-                    letterSpacing: 1.0,
                   ),
                 ),
               ),
@@ -95,13 +91,11 @@ class ProjectDatelineRow extends StatelessWidget {
                             size: 12, color: scheme.primary),
                         const SizedBox(width: 4),
                         Text(
-                          'WEBSITE',
+                          'Website',
                           style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
                             color: scheme.primary,
-                            fontSize: AppTypography.micro,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 1,
                           ),
                         ),
                         const SizedBox(width: 3),
@@ -139,7 +133,7 @@ class ProjectDatelineRow extends StatelessWidget {
                             'in',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: AppTypography.nano,
+                              fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
                               fontFamily: 'sans-serif',
                               height: 1.0,
@@ -148,13 +142,11 @@ class ProjectDatelineRow extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         const Text(
-                          'LINKEDIN',
+                          'LinkedIn',
                           style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
                             color: AppColors.linkedIn,
-                            fontSize: AppTypography.micro,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 1,
                           ),
                         ),
                         const SizedBox(width: 3),

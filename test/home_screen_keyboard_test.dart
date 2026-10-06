@@ -26,7 +26,7 @@ Widget _wrap() {
 int? _folioIndex(WidgetTester tester) {
   for (final w in tester.widgetList<Text>(find.byType(Text))) {
     final s = w.data ?? '';
-    final m = RegExp(r'^FOLIO (\d+) / \d+$').firstMatch(s);
+    final m = RegExp(r'^(\d+) of \d+$').firstMatch(s);
     if (m != null) return int.parse(m.group(1)!);
   }
   return null;

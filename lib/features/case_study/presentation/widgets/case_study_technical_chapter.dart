@@ -87,7 +87,7 @@ class TechStepCard extends StatelessWidget {
               index.toString().padLeft(2, '0'),
               style: TextStyle(
                 fontFamily: AppTypography.displayFont,
-                fontSize: AppTypography.subtitle,
+                fontSize: AppTypography.lead,
                 fontWeight: FontWeight.w900,
                 color: accentText,
               ),
@@ -101,8 +101,7 @@ class TechStepCard extends StatelessWidget {
                 Text(
                   step.layer,
                   style: TextStyle(
-                    fontSize: AppTypography.editorial,
-                    letterSpacing: 2.4,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
                     color: accentText,
                   ),
@@ -111,7 +110,7 @@ class TechStepCard extends StatelessWidget {
                 Text(
                   step.title,
                   style: TextStyle(
-                    fontSize: AppTypography.subtitle,
+                    fontSize: AppTypography.lead,
                     fontWeight: FontWeight.w800,
                     color: scheme.onSurface,
                   ),

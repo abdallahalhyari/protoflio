@@ -43,9 +43,9 @@ class IntroCtaRow extends StatelessWidget {
     Color? color,
   }) {
     final effectiveColor =
-        color ?? (isDark ? Colors.white70 : AppColors.slate700);
+        color ?? (isDark ? Colors.white70 : IntroColors.slate700);
     final borderColor =
-        isDark ? (color ?? Colors.white24) : (color ?? AppColors.slate300);
+        isDark ? (color ?? Colors.white24) : (color ?? IntroColors.slate300);
 
     // One node named once: the label merges into the button, which keeps
     // its focus state; the visible text is left unsaid.
@@ -60,7 +60,7 @@ class IntroCtaRow extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: AppTypography.small,
+                fontSize: IntroType.small,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.2,
               ),
@@ -96,14 +96,14 @@ class IntroCtaRow extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: AppTypography.caption,
+                fontSize: IntroType.caption,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.2,
               ),
             ),
           ),
           style: TextButton.styleFrom(
-            foregroundColor: isDark ? Colors.white70 : AppColors.slate600,
+            foregroundColor: isDark ? Colors.white70 : IntroColors.slate600,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -142,7 +142,7 @@ class IntroCtaRow extends StatelessWidget {
                   maxWidth: MediaQuery.sizeOf(context).width * 0.9,
                   minHeight: 40),
               child: _ghostButton(
-                label: loc.downloadResume,
+                label: loc.introDownloadResume,
                 icon: Icons.download_rounded,
                 color: accent,
                 isDark: isDark,
@@ -238,11 +238,12 @@ class IntroCtaRow extends StatelessWidget {
                             Text(
                               '30-SEC INTRO',
                               style: TextStyle(
-                                fontSize: AppTypography.caption,
+                                fontSize: IntroType.caption,
                                 fontWeight: FontWeight.w800,
                                 letterSpacing: 1.2,
-                                color:
-                                    isDark ? Colors.white : AppColors.slate900,
+                                color: isDark
+                                    ? Colors.white
+                                    : IntroColors.slate900,
                               ),
                             ),
                           ],

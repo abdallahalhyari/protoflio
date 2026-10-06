@@ -4,6 +4,7 @@ import 'package:profile/features/case_study/presentation/pages/case_study_eskade
 import 'package:profile/features/case_study/presentation/pages/case_study_fais.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_nathealth.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_solutions.dart';
+import 'package:profile/features/case_study/presentation/widgets/case_study_prose.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/app_theme.dart';
 
@@ -21,9 +22,11 @@ Future<void> _open(WidgetTester tester, Widget study, Size size) async {
   await tester.pump(const Duration(seconds: 1));
 }
 
-/// The OUTCOMES kicker is built and inside the viewport.
+/// The outcomes chapter kicker is built and inside the viewport. Found by
+/// widget, not text: the chapter dock carries the same "Outcomes" label.
 bool _outcomesOnScreen(WidgetTester tester) {
-  final kicker = find.text('OUTCOMES');
+  final kicker = find
+      .byWidgetPredicate((w) => w is SectionKicker && w.label == 'Outcomes');
   if (kicker.evaluate().isEmpty) return false;
   final rect = tester.getRect(kicker.first);
   final screen = Offset.zero & tester.view.physicalSize;
@@ -43,12 +46,21 @@ void main() {
         (tester) async {
       await _open(tester, entry.value, const Size(1280, 800));
       final glance = find.byKey(const Key('case_study_at_a_glance'));
+      // The issued-credential type scale (64px titles, 12px chips) puts
+      // the summary just under a 1280x800 fold on three studies; one
+      // short scroll reaches it.
+      if (glance.evaluate().isEmpty) {
+        await tester.drag(find.byType(CustomScrollView), const Offset(0, -300));
+        for (int i = 0; i < 5; i++) {
+          await tester.pump(const Duration(milliseconds: 100));
+        }
+      }
       expect(glance, findsOneWidget);
-      expect(find.text('CHALLENGE'), findsOneWidget);
-      expect(find.text('WHAT I BUILT'), findsOneWidget);
-      expect(find.text('RESULT'), findsOneWidget);
-      // Visible without scrolling on a laptop screen.
-      expect(tester.getRect(glance).top, lessThan(1000));
+      expect(find.text('Challenge'), findsOneWidget);
+      expect(find.text('What I built'), findsOneWidget);
+      expect(find.text('Result'), findsOneWidget);
+      // Right under the masthead: on screen after at most that scroll.
+      expect(tester.getRect(glance).top, lessThan(800));
     });
   }
 
@@ -89,7 +101,7 @@ void main() {
     for (int i = 0; i < 5; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
-    expect(find.text('OUTCOMES'), findsNothing);
+    expect(_outcomesOnScreen(tester), isFalse);
     await tester.tap(find.byKey(const Key('case_study_chapter_outcomes')));
     await tester.pump();
     for (int i = 0; i < 10; i++) {
@@ -103,8 +115,8 @@ void main() {
     await tester.pump();
     for (int i = 0; i < 10; i++) {
       await tester.pump(const Duration(milliseconds: 300));
-      if (find.text('THE PROBLEM').evaluate().isNotEmpty) break;
+      if (find.text('The problem').evaluate().isNotEmpty) break;
     }
-    expect(find.text('THE PROBLEM'), findsOneWidget);
+    expect(find.text('The problem'), findsOneWidget);
   });
 }

@@ -5,10 +5,9 @@ import 'package:profile/features/case_study/presentation/pages/related_case_stud
 import 'package:profile/features/case_study/presentation/widgets/case_study_widgets.dart';
 import 'package:profile/features/projects/presentation/widgets/nfc_architecture_diagram.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/bidi.dart';
 import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
-import 'package:profile/shared/widgets/pulsing_dot.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 /// Deep-dive case study on the NatHealth TPA ecosystem — ISO-7816 smart-card
@@ -97,22 +96,22 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '04',
-            title: 'ISO-7816 APDU PROTOCOL ENGINEERING',
+            title: 'ISO-7816 APDU protocol engineering',
             steps: [
               TechStep(
-                layer: 'HARDWARE',
+                layer: 'Hardware',
                 title: 'Low-Level Transceive Pipeline',
                 body:
                     'Built thread-safe platform channels to execute raw ISO-7816 APDU command chains (SELECT AID, READ BINARY, VERIFY PIN) across 40+ smartphone NFC controller variants.',
               ),
               TechStep(
-                layer: 'SECURITY',
+                layer: 'Security',
                 title: 'Hardware-Backed Session Signing',
                 body:
                     'Stored private keys inside Android Keystore / iOS Secure Enclave. Every card read generates a cryptographically signed JWT payload, preventing replay attacks.',
               ),
               TechStep(
-                layer: 'RESILIENCE',
+                layer: 'Resilience',
                 title: 'Automated Recovery for Card Swipes',
                 body:
                     'Engineered automatic retry envelopes and state reconciliation for premature card removals during 3-step APDU handshakes.',
@@ -122,22 +121,22 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '05',
-            title: 'OFFLINE-FIRST QUEUE & BACKGROUND SYNC',
+            title: 'Offline-first queue & background sync',
             steps: [
               TechStep(
-                layer: 'STORAGE',
+                layer: 'Storage',
                 title: 'Encrypted SQLite Cache',
                 body:
                     'Designed an offline-first repository using SQLCipher. Clinical claims store locally when offline, encrypted with AES-256 keys derived from session tokens.',
               ),
               TechStep(
-                layer: 'SYNC',
+                layer: 'Sync',
                 title: 'WorkManager / BGTaskScheduler',
                 body:
                     'Wired system WorkManager tasks with exponential backoff and battery-aware constraints, flushing queued claims automatically upon network reconnection.',
               ),
               TechStep(
-                layer: 'CONFLICTS',
+                layer: 'Conflicts',
                 title: 'Deterministic Conflict Resolution',
                 body:
                     'Implemented server-side vector clocks and client-side transaction idempotency keys, eliminating duplicate claim filings during flaky connectivity.',
@@ -147,22 +146,22 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
             number: '06',
-            title: 'UI PERFORMANCE & GOVERNANCE',
+            title: 'UI performance & governance',
             steps: [
               TechStep(
-                layer: 'RASTER',
+                layer: 'Raster',
                 title: '120 FPS Claims Feed Rendering',
                 body:
                     'Isolated complex claim cards with RepaintBoundary, memoized expensive text painters, and eliminated unnecessary rebuilds across long scroll lists.',
               ),
               TechStep(
-                layer: 'TESTING',
+                layer: 'Testing',
                 title: 'End-to-End APDU Mock Harness',
                 body:
                     'Constructed a mock NFC channel provider for Flutter widget tests, allowing 100% automated test coverage of card verification flows without physical hardware.',
               ),
               TechStep(
-                layer: 'DEPS',
+                layer: 'Deps',
                 title: 'Modular Multi-Package Decoupling',
                 body:
                     'Extracted core security, network, and design system components into isolated internal packages with strict dependency isolation.',
@@ -242,20 +241,17 @@ class _Masthead extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          const PulsingDot(color: AppColors.accentGreen),
-          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              '${l10n.introSeniorEngineer} · 2024 — ${l10n.studyPresent}',
+              '${l10n.introSeniorEngineer}, 2024–${l10n.studyPresent}',
               // Two lines on phones rather than clipping the end date
               // ("2024 — PRES…").
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: AppTypography.editorial,
-                letterSpacing: latinTracking(context, 3),
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                color: scheme.onSurface.withValues(alpha: 0.6),
+                color: context.mutedText,
               ),
             ),
           ),
@@ -265,7 +261,7 @@ class _Masthead extends StatelessWidget {
           'NatHealth Mobile Suite',
           style: TextStyle(
             fontFamily: AppTypography.displayFont,
-            fontSize: isDesktop ? AppTypography.heroSm : AppTypography.display,
+            fontSize: isDesktop ? AppTypography.hero : AppTypography.display,
             fontWeight: FontWeight.w900,
             height: 1.0,
             color: scheme.onSurface,
@@ -296,7 +292,7 @@ class _Masthead extends StatelessWidget {
         Text(
           l10n.studyNatIntro,
           style: TextStyle(
-            fontSize: AppTypography.subtitle,
+            fontSize: AppTypography.lead,
             height: 1.55,
             color: scheme.onSurface.withValues(alpha: 0.85),
           ),

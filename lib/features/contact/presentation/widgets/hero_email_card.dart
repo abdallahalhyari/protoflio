@@ -25,7 +25,7 @@ class HeroEmailCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
     final isDark = context.isDarkMode;
-    const availabilityGreen = AppColors.accentGreen;
+    const availabilityGreen = AppColors.teal;
     final l10n = AppLocalizations.of(context)!;
 
     final ctaSend = FilledButton.icon(
@@ -37,9 +37,8 @@ class HeroEmailCard extends StatelessWidget {
         foregroundColor: scheme.onPrimary,
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
         textStyle: const TextStyle(
-          fontSize: AppTypography.overline,
+          fontSize: AppTypography.label,
           fontWeight: FontWeight.w900,
-          letterSpacing: 1.4,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -56,13 +55,12 @@ class HeroEmailCard extends StatelessWidget {
         side: BorderSide(
           color: isDark
               ? Colors.white.withValues(alpha: AppAlpha.border)
-              : AppColors.slate300,
+              : AppColors.ink300,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         textStyle: const TextStyle(
-          fontSize: AppTypography.captionSm,
+          fontSize: AppTypography.label,
           fontWeight: FontWeight.w800,
-          letterSpacing: 1.2,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -78,9 +76,8 @@ class HeroEmailCard extends StatelessWidget {
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
               textStyle: const TextStyle(
-                fontSize: AppTypography.captionSm,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -108,9 +105,8 @@ class HeroEmailCard extends StatelessWidget {
           style: TextStyle(
             // Full accent: at border opacity this measured 1.8:1.
             color: context.adaptiveAccentText(accent),
-            fontSize: AppTypography.editorial,
+            fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
-            letterSpacing: 2,
           ),
         ),
         const SizedBox(height: 8),
@@ -123,7 +119,6 @@ class HeroEmailCard extends StatelessWidget {
               color: context.onSurface,
               fontSize: isDesktop ? 22 : 16,
               fontWeight: FontWeight.w800,
-              letterSpacing: 0.3,
             ),
           ),
         ),
@@ -141,8 +136,8 @@ class HeroEmailCard extends StatelessWidget {
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.7)
-                      : AppColors.slate500,
-                  fontSize: AppTypography.overline,
+                      : AppColors.ink500,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w600,
                 ),
               ),

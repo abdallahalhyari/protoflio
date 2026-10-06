@@ -5,7 +5,6 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
-import 'package:profile/shared/widgets/holographic_physics.dart';
 
 import 'package:profile/features/skills/presentation/widgets/tile/bento_skill_tile_shared.dart';
 import 'package:profile/features/skills/presentation/widgets/tile/bento_skill_tile_front.dart';
@@ -93,50 +92,48 @@ class _BentoSkillTileState extends State<BentoSkillTile>
         widget.skill.name,
         masteryLabel(widget.skill.level, loc),
       ),
-      child: HolographicCardPhysics(
-        child: FocusableActionDetector(
-          actions: <Type, Action<Intent>>{
-            ActivateIntent: CallbackAction<ActivateIntent>(
-              onInvoke: (_) {
-                _toggleFlip();
-                return null;
+      child: FocusableActionDetector(
+        actions: <Type, Action<Intent>>{
+          ActivateIntent: CallbackAction<ActivateIntent>(
+            onInvoke: (_) {
+              _toggleFlip();
+              return null;
+            },
+          ),
+        },
+        onShowFocusHighlight: (show) {
+          if (show != _showFocus) setState(() => _showFocus = show);
+        },
+        onFocusChange: (focused) {
+          if (!focused) _setHovered(false);
+        },
+        child: MouseRegion(
+          onEnter: (_) => _setHovered(true),
+          onExit: (_) => _setHovered(false),
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: _toggleFlip,
+            child: AnimatedBuilder(
+              animation: _flipAnim,
+              builder: (context, child) {
+                final isBack = _flipAnim.value >= 0.5;
+                final angle = _flipAnim.value * math.pi;
+                final lift = math.sin(_flipAnim.value * math.pi) * 0.05;
+
+                final transform = Matrix4.identity()
+                  ..setEntry(3, 2, 0.001)
+                  ..scaleByDouble(1.0 + lift, 1.0 + lift, 1.0, 1.0)
+                  ..rotateY(angle);
+
+                return ExcludeSemantics(
+                  excluding: !isBack,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: transform,
+                    child: isBack ? backCard : frontCard,
+                  ),
+                );
               },
-            ),
-          },
-          onShowFocusHighlight: (show) {
-            if (show != _showFocus) setState(() => _showFocus = show);
-          },
-          onFocusChange: (focused) {
-            if (!focused) _setHovered(false);
-          },
-          child: MouseRegion(
-            onEnter: (_) => _setHovered(true),
-            onExit: (_) => _setHovered(false),
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: _toggleFlip,
-              child: AnimatedBuilder(
-                animation: _flipAnim,
-                builder: (context, child) {
-                  final isBack = _flipAnim.value >= 0.5;
-                  final angle = _flipAnim.value * math.pi;
-                  final lift = math.sin(_flipAnim.value * math.pi) * 0.05;
-
-                  final transform = Matrix4.identity()
-                    ..setEntry(3, 2, 0.001)
-                    ..scaleByDouble(1.0 + lift, 1.0 + lift, 1.0, 1.0)
-                    ..rotateY(angle);
-
-                  return ExcludeSemantics(
-                    excluding: !isBack,
-                    child: Transform(
-                      alignment: Alignment.center,
-                      transform: transform,
-                      child: isBack ? backCard : frontCard,
-                    ),
-                  );
-                },
-              ),
             ),
           ),
         ),

@@ -236,14 +236,9 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
   Widget _buildHeader(
       ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
     return SectionMasthead(
-      kicker: loc.projectsHeaderKicker,
-      title: loc.navWork.toUpperCase(),
+      title: loc.navWork,
       subtitle: loc.sectionSubtitleWork,
       isDesktop: isDesktop,
-      badgeIcon: Icons.work_outline_rounded,
-      badgeLabel: loc.badgeCaseStudies(
-        context.read<ProjectRepository>().getProjectCount(),
-      ),
     );
   }
 

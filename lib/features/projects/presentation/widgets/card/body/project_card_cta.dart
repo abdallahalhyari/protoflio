@@ -24,7 +24,7 @@ class ReadCaseStudyCta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctaColor = isDark ? scheme.primary : AppColors.accentIndigoDeepText;
+    final ctaColor = isDark ? scheme.primary : AppColors.tealDeep;
 
     return Semantics(
       button: true,
@@ -45,11 +45,9 @@ class ReadCaseStudyCta extends StatelessWidget {
                   child: Text(
                     AppLocalizations.of(context)!.uiReadCaseStudy,
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
                       color: ctaColor,
-                      fontSize: AppTypography.caption,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 1.0,
                     ),
                   ),
                 ),

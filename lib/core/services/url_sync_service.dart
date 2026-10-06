@@ -7,10 +7,10 @@ abstract class UrlSyncService {
 
   static const List<String> sectionHashes = [
     'home',
-    'experience',
     'work',
-    'stack',
     'engineering',
+    'experience',
+    'stack',
     'about',
     'contact',
   ];

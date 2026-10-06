@@ -21,10 +21,10 @@ class CvDossierCard extends StatelessWidget {
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
           color:
-              isDark ? AppColors.slate900.withValues(alpha: 0.7) : Colors.white,
+              isDark ? AppColors.ink900.withValues(alpha: 0.7) : Colors.white,
           borderRadius: BorderRadius.circular(AppRadius.lg),
           border: Border.all(
-            color: isDark ? accent.withValues(alpha: 0.4) : AppColors.slate200,
+            color: isDark ? accent.withValues(alpha: 0.4) : AppColors.ink200,
             width: 1.5,
           ),
           boxShadow: [
@@ -62,17 +62,16 @@ class CvDossierCard extends StatelessWidget {
                         l10n.contactAtsVerified,
                         style: TextStyle(
                           color: context.amberText,
-                          fontSize: AppTypography.editorialSm,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
-                          letterSpacing: 1.4,
                         ),
                       ),
                     ),
                     Text(
                       l10n.contactPdfSize,
                       style: TextStyle(
-                        color: isDark ? Colors.white60 : AppColors.slate500,
-                        fontSize: AppTypography.micro,
+                        color: isDark ? Colors.white60 : AppColors.ink500,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -83,9 +82,8 @@ class CvDossierCard extends StatelessWidget {
                   l10n.contactCvDossierTitle,
                   style: TextStyle(
                     color: context.onSurface,
-                    fontSize: AppTypography.subtitle,
+                    fontSize: AppTypography.lead,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 0.3,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -94,8 +92,8 @@ class CvDossierCard extends StatelessWidget {
                   style: TextStyle(
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.7)
-                        : AppColors.slate500,
-                    fontSize: AppTypography.overlineTight,
+                        : AppColors.ink500,
+                    fontSize: AppTypography.label,
                     height: 1.4,
                   ),
                 ),
@@ -115,9 +113,8 @@ class CvDossierCard extends StatelessWidget {
                   label: Text(
                     l10n.contactDownloadCvPdf,
                     style: const TextStyle(
-                      fontSize: AppTypography.overline,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 1.4,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -140,9 +137,8 @@ class CvDossierCard extends StatelessWidget {
                   label: Text(
                     l10n.contactPreview,
                     style: const TextStyle(
-                      fontSize: AppTypography.captionSm,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 1.2,
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
@@ -150,7 +146,7 @@ class CvDossierCard extends StatelessWidget {
                     side: BorderSide(
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.3)
-                          : AppColors.slate300,
+                          : AppColors.ink300,
                     ),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 14),

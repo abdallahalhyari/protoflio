@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/section_masthead.dart';
 
@@ -18,15 +16,9 @@ class SkillsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return SectionMasthead(
-      kicker: loc.skillsHeaderKicker,
       title: loc.skillsHeaderTitle,
       subtitle: loc.skillsHeaderSubtitle,
       isDesktop: isDesktop,
-      // Icon, not a '✦' glyph: CanvasKit has no system fonts, so the
-      // glyph pulled a 374 KB Noto Symbols 2 download.
-      badgeIcon: Icons.auto_awesome_rounded,
-      badgeLabel: AppLocalizations.of(context)!
-          .badgeSkills(context.read<SkillRepository>().getSkillCount()),
     );
   }
 }

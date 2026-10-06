@@ -9,24 +9,15 @@ import 'package:profile/core/theme/components/text_theme.dart';
 class AppTheme {
   AppTheme._();
 
-  /// Base themes seeded with [AppColors.seed]. The live section-accent
-  /// override is applied by `_AccentTheme` in `main.dart` so callers
-  /// never need to pass a dynamic seed here.
-  static final ThemeData _defaultLight =
-      _base(Brightness.light, AppColors.seed);
-  static final ThemeData _defaultDark = _base(Brightness.dark, AppColors.seed);
+  /// One accent for the whole site: contact gold, tuned per mode to stay
+  /// legible as text. Built once.
+  static final ThemeData _light =
+      withAccent(_base(Brightness.light, AppColors.seed), AppColors.seed);
+  static final ThemeData _dark =
+      withAccent(_base(Brightness.dark, AppColors.seed), AppColors.seed);
 
-  /// Base themes seeded with [AppColors.seed]. The live section-accent
-  /// override is applied by `_AccentTheme` in `main.dart` so callers
-  /// never need to pass a dynamic seed here.
-  static ThemeData light([Color seedColor = AppColors.seed]) =>
-      seedColor == AppColors.seed
-          ? _defaultLight
-          : _base(Brightness.light, seedColor);
-  static ThemeData dark([Color seedColor = AppColors.seed]) =>
-      seedColor == AppColors.seed
-          ? _defaultDark
-          : _base(Brightness.dark, seedColor);
+  static ThemeData light() => _light;
+  static ThemeData dark() => _dark;
 
   static Color _shift(Color c, double delta) {
     final hsl = HSLColor.fromColor(c);
@@ -36,7 +27,7 @@ class AppTheme {
         .toColor();
   }
 
-  /// [base] recoloured for a section accent: [seed] becomes the primary
+  /// [base] recoloured for an accent: [seed] becomes the primary
   /// and its hue neighbours the secondary/tertiary.
   ///
   /// The primary doubles as a text colour (eyebrows, links, chip labels),
@@ -47,7 +38,7 @@ class AppTheme {
   static ThemeData withAccent(ThemeData base, Color seed) {
     Color legible(Color c) => base.brightness == Brightness.dark
         ? AppColors.legibleOn(c, AppColors.darkCard, target: _accentContrast)
-        : AppColors.legibleOn(c, AppColors.slate100, target: _accentContrast);
+        : AppColors.legibleOn(c, AppColors.cardStock, target: _accentContrast);
     final primary = legible(seed);
     final secondary = legible(_shift(seed, 24));
     final tertiary = legible(_shift(seed, -24));
@@ -66,14 +57,13 @@ class AppTheme {
   /// Contrast an accent keeps against the plain card surface. Above the
   /// 4.5:1 minimum so it still passes on the accent-tinted chips and
   /// badges drawn on those cards.
-  static const double _accentContrast = 5.5;
+  static const double _accentContrast = 6.5;
 
   static ThemeData _base(Brightness brightness, Color seedColor) {
     final isDark = brightness == Brightness.dark;
-    final dynamicLightSurface = Color.alphaBlend(
-      seedColor.withValues(alpha: 0.03),
-      Colors.white,
-    );
+    // Light canvas is polycarbonate card stock; it no longer takes a
+    // tint from the seed, since there is only one accent.
+    const dynamicLightSurface = AppColors.paper;
 
     final baseScheme = ColorScheme.fromSeed(
       seedColor: seedColor,
@@ -94,7 +84,9 @@ class AppTheme {
           )
         : baseScheme.copyWith(
             surface: dynamicLightSurface,
-            onSurface: AppColors.slate900,
+            onSurface: AppColors.ink900,
+            surfaceContainer: AppColors.cardStock,
+            surfaceContainerHigh: AppColors.ink50,
           );
 
     final textTheme = AppTextTheme.build(scheme, isDark);
@@ -102,15 +94,16 @@ class AppTheme {
 
     final cardGlassColor = isDark
         ? AppColors.darkCard.withValues(alpha: 0.88)
-        : dynamicLightSurface;
+        : AppColors.cardStock;
 
     final dividerColor =
-        isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200;
+        isDark ? Colors.white.withValues(alpha: 0.12) : AppColors.ink300;
     final glassBorderColor =
-        isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200;
+        isDark ? Colors.white.withValues(alpha: 0.14) : AppColors.ink300;
 
     return ThemeData(
       useMaterial3: true,
+      fontFamily: AppTypography.bodyFont,
       colorScheme: scheme,
       scaffoldBackgroundColor:
           isDark ? AppColors.darkSurface : dynamicLightSurface,

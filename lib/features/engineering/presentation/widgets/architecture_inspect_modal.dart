@@ -107,13 +107,11 @@ class _ArchitectureInspectDialogState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'INSPECT BLUEPRINT // ZOOM & SIMULATE',
+                          'Inspect blueprint // zoom & simulate',
                           style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
                             color: scheme.primary,
-                            fontSize: AppTypography.micro,
+                            fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
-                            letterSpacing: 1.2,
                           ),
                         ),
                         Text(
@@ -122,7 +120,7 @@ class _ArchitectureInspectDialogState
                           style: TextStyle(
                             fontFamily: AppTypography.displayFont,
                             color: context.onSurface,
-                            fontSize: AppTypography.titleSm,
+                            fontSize: AppTypography.title,
                             fontWeight: FontWeight.w800,
                           ),
                         ),

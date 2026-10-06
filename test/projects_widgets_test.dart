@@ -46,9 +46,9 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('PRODUCTION PIPELINE TOPOLOGY'), findsOneWidget);
+      expect(find.text('Production pipeline topology'), findsOneWidget);
       expect(find.text('NFC APDU'), findsOneWidget);
-      expect(find.text('OFFLINE SQLITE'), findsOneWidget);
+      expect(find.text('Offline SQLite'), findsOneWidget);
     });
 
     testWidgets('NfcArchitectureDiagram renders full node topology',
@@ -61,7 +61,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('SYSTEM ARCHITECTURE TOPOLOGY'), findsOneWidget);
+      expect(find.text('System architecture topology'), findsOneWidget);
       expect(find.textContaining('NFC Hardware'), findsOneWidget);
       expect(find.textContaining('APDU Channel'), findsOneWidget);
       expect(find.textContaining('Clean Arch'), findsOneWidget);
@@ -123,7 +123,7 @@ void main() {
           find.byTooltip('Visit NatHealth official website'), findsOneWidget);
       expect(find.byTooltip('View NatHealth on LinkedIn'), findsOneWidget);
       expect(find.text('in'), findsOneWidget);
-      expect(find.text('100% OFFLINE SLA'), findsOneWidget);
+      expect(find.text('100% Offline SLA'), findsOneWidget);
     });
 
     testWidgets('InteractiveProjectCard renders interactive tech stack chips',
@@ -162,7 +162,7 @@ void main() {
           findsOneWidget);
 
       // Tap domain filter for Healthcare & Smart Cards
-      final healthcareChip = find.text('HEALTHCARE & SMART CARDS');
+      final healthcareChip = find.text('Healthcare & Smart Cards');
       expect(healthcareChip, findsOneWidget);
       await tester.tap(healthcareChip);
       await tester.pumpAndSettle();
@@ -173,7 +173,7 @@ void main() {
           find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
 
       // Tap ALL to reset
-      await tester.tap(find.text('ALL'));
+      await tester.tap(find.text('All'));
       await tester.pumpAndSettle();
 
       expect(find.text('NatHealth Mobile Suite'), findsOneWidget);

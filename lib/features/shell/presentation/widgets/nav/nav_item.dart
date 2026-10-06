@@ -134,14 +134,13 @@ class _NavItemState extends State<NavItem> with SingleTickerProviderStateMixin {
                             : hovered
                                 ? (isDark
                                     ? Colors.white.withValues(alpha: 0.92)
-                                    : AppColors.slate800)
+                                    : AppColors.ink800)
                                 : (context.mutedText),
                         fontSize: widget.dense
-                            ? AppTypography.caption + 1
-                            : AppTypography.small,
+                            ? AppTypography.label + 1
+                            : AppTypography.body,
                         fontWeight:
                             widget.active ? FontWeight.w800 : FontWeight.w600,
-                        letterSpacing: 0.3,
                       ),
                       child: Text(widget.label),
                     ),

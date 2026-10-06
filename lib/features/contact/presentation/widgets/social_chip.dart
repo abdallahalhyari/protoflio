@@ -40,9 +40,8 @@ class _SocialChipState extends State<SocialChip> {
           label: Text(
             widget.label,
             style: const TextStyle(
-              fontSize: AppTypography.caption,
+              fontSize: AppTypography.label,
               fontWeight: FontWeight.w900,
-              letterSpacing: 1.6,
             ),
           ),
           style: OutlinedButton.styleFrom(
@@ -52,7 +51,7 @@ class _SocialChipState extends State<SocialChip> {
                   ? primary.withValues(alpha: isDark ? 0.75 : 0.6)
                   : (isDark
                       ? Colors.white.withValues(alpha: AppAlpha.border)
-                      : AppColors.slate300),
+                      : AppColors.ink300),
               width: _hovered ? 1.4 : 1.0,
             ),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),

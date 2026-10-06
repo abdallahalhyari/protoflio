@@ -23,11 +23,11 @@ class NavSectionRow extends StatelessWidget {
     final activeColor = isDark
         ? item.accentColor
         : switch (item.accentColor.toARGB32()) {
-            0xFF06B6D4 => AppColors.accentSkyDeep,
-            0xFF10B981 => AppColors.accentGreenDeep,
-            0xFF8B5CF6 => AppColors.accentVioletDeep,
-            0xFFFBBF24 => AppColors.accentAmberDeep,
-            0xFFF43F5E => AppColors.accentRoseDeep,
+            0xFF06B6D4 => AppColors.tealDeep,
+            0xFF10B981 => AppColors.tealDeep,
+            0xFF8B5CF6 => AppColors.tealDeep,
+            0xFFFBBF24 => AppColors.goldDeep,
+            0xFFF43F5E => AppColors.signalDeep,
             _ => item.accentColor,
           };
 
@@ -42,14 +42,14 @@ class NavSectionRow extends StatelessWidget {
               ? item.accentColor.withValues(alpha: isDark ? 0.18 : 0.12)
               : (isDark
                   ? Colors.white.withValues(alpha: 0.04)
-                  : AppColors.slate50),
+                  : AppColors.ink50),
           borderRadius: BorderRadius.circular(AppRadius.md),
           border: Border.all(
             color: isActive
                 ? activeColor.withValues(alpha: isDark ? 0.6 : 0.55)
                 : (isDark
                     ? Colors.white.withValues(alpha: 0.07)
-                    : AppColors.slate200),
+                    : AppColors.ink200),
             width: isActive ? 1.5 : 1.0,
           ),
         ),
@@ -67,7 +67,7 @@ class NavSectionRow extends StatelessWidget {
               size: 18,
               color: isActive
                   ? activeColor
-                  : (isDark ? Colors.white60 : AppColors.slate500),
+                  : (isDark ? Colors.white60 : AppColors.ink500),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -82,10 +82,9 @@ class NavSectionRow extends StatelessWidget {
                           ? (context.onSurface)
                           : (isDark
                               ? Colors.white.withValues(alpha: 0.85)
-                              : AppColors.slate800),
-                      fontSize: AppTypography.small,
+                              : AppColors.ink800),
+                      fontSize: AppTypography.body,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 1.0,
                     ),
                   ),
                   const SizedBox(height: 1),
@@ -94,8 +93,8 @@ class NavSectionRow extends StatelessWidget {
                     style: TextStyle(
                       color: isActive
                           ? item.accentColor.withValues(alpha: 0.9)
-                          : (isDark ? Colors.white38 : AppColors.slate500),
-                      fontSize: AppTypography.editorial,
+                          : (isDark ? Colors.white38 : AppColors.ink500),
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -119,7 +118,7 @@ class NavSectionRow extends StatelessWidget {
                     child: Icon(
                       Icons.link_rounded,
                       size: 16,
-                      color: isDark ? Colors.white38 : AppColors.slate400,
+                      color: isDark ? Colors.white38 : AppColors.ink400,
                     ),
                   ),
                 ),
@@ -145,7 +144,7 @@ class NavSectionRow extends StatelessWidget {
               DirIcon(
                 Icons.chevron_right_rounded,
                 size: 16,
-                color: isDark ? Colors.white24 : AppColors.slate400,
+                color: isDark ? Colors.white24 : AppColors.ink400,
               ),
           ],
         ),
@@ -178,7 +177,7 @@ class NumberBadge extends StatelessWidget {
             ? accentColor
             : (isDark
                 ? Colors.white.withValues(alpha: 0.08)
-                : AppColors.slate200),
+                : AppColors.ink200),
         borderRadius: BorderRadius.circular(AppRadius.chip),
       ),
       child: Center(
@@ -186,9 +185,8 @@ class NumberBadge extends StatelessWidget {
           number,
           style: TextStyle(
             color: isActive ? Colors.black : (context.mutedText),
-            fontSize: AppTypography.caption,
+            fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
-            fontFamily: AppTypography.monoFont,
           ),
         ),
       ),

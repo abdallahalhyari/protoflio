@@ -43,70 +43,64 @@ extension SurfaceTone on BuildContext {
 
   /// Rest-state hairline border on any glass surface.
   Color get glassBorder =>
-      isDarkMode ? Colors.white.withValues(alpha: 0.14) : AppColors.slate200;
+      isDarkMode ? Colors.white.withValues(alpha: 0.14) : AppColors.ink300;
 
   /// Focused / hovered border — a step brighter than [glassBorder].
   Color get glassBorderStrong =>
-      isDarkMode ? Colors.white.withValues(alpha: 0.24) : AppColors.slate300;
+      isDarkMode ? Colors.white.withValues(alpha: 0.24) : AppColors.ink400;
 
   /// Dense frosted glass fill for content cards across all sections.
   /// Balanced at 88% in Dark and 92% in Light so background orbs
   /// peek through without compromising text legibility or WCAG contrast.
-  Color get cardGlass => isDarkMode
-      ? AppColors.darkCard.withValues(alpha: 0.88)
-      : Theme.of(this).scaffoldBackgroundColor.withValues(alpha: 0.92);
+  Color get cardGlass => isDarkMode ? AppColors.darkCard : AppColors.cardStock;
 
   /// Hover / active state for [cardGlass] — slightly denser for focus.
-  Color get cardGlassHover => isDarkMode
-      ? AppColors.darkSurfaceElevated.withValues(alpha: 0.95)
-      : Theme.of(this).scaffoldBackgroundColor.withValues(alpha: 0.96);
+  Color get cardGlassHover =>
+      isDarkMode ? AppColors.darkSurfaceElevated : Colors.white;
 
   /// Solid modal / dialog fill. Denser than [cardGlass] because full-screen
   /// dialogs should not let the canvas show through. Use on `Dialog`,
   /// full-page modals, floating dock panels.
-  Color get modalSurface => isDarkMode ? AppColors.darkModal : Colors.white;
+  Color get modalSurface =>
+      isDarkMode ? AppColors.darkModal : AppColors.cardStock;
 
   /// Primary body text on the current canvas.
-  Color get onSurface => isDarkMode ? Colors.white : AppColors.slate900;
+  Color get onSurface => isDarkMode ? Colors.white : AppColors.ink900;
 
   /// Muted text on the current canvas. Bumped from the old 0.60 in
   /// dark to 0.72 so 12pt copy passes 4.5:1 over `darkSurface`.
   Color get mutedText =>
-      isDarkMode ? Colors.white.withValues(alpha: 0.72) : AppColors.slate600;
+      isDarkMode ? Colors.white.withValues(alpha: 0.72) : AppColors.ink600;
 
   /// Very-muted meta text (folio bar counter, timestamp). Passes
   /// AA-large only — reserve for 11pt+ semibold.
   /// Quiet secondary text. Slate-600 in light mode: slate-500 fell to
   /// 4.3:1 on the slate-100 panels it sits on.
   Color get subtleText =>
-      isDarkMode ? Colors.white.withValues(alpha: 0.55) : AppColors.slate600;
+      isDarkMode ? Colors.white.withValues(alpha: 0.55) : AppColors.ink600;
 
   /// Divider hairline between rows / puck separators.
   Color get divider =>
-      isDarkMode ? Colors.white.withValues(alpha: 0.12) : AppColors.slate200;
+      isDarkMode ? Colors.white.withValues(alpha: 0.12) : AppColors.ink200;
 
   /// Signature accent used for the resume-download CTA.
   /// Amber in dark mode, deep rich bronze/amber in light mode for 5.8:1 contrast.
   Color get resumeAccent =>
-      isDarkMode ? AppColors.accentAmberSoft : AppColors.accentAmberDeep;
+      isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
 
   /// Border for the resume CTA.
-  Color get resumeBorder =>
-      isDarkMode ? AppColors.accentAmber : AppColors.accentAmberBright;
+  Color get resumeBorder => isDarkMode ? AppColors.goldSoft : AppColors.gold;
 
   /// Semantic accessible accent text colors (>4.5:1 contrast in both modes)
-  Color get amberText =>
-      isDarkMode ? AppColors.accentAmberSoft : AppColors.accentAmberDeep;
-  Color get greenText =>
-      isDarkMode ? AppColors.accentGreenLight : AppColors.accentGreenDeep;
-  Color get indigoText =>
-      isDarkMode ? AppColors.accentIndigoSoft : AppColors.accentIndigoDeepText;
+  Color get amberText => isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
+  Color get greenText => isDarkMode ? AppColors.tealLight : AppColors.tealDeep;
+  Color get indigoText => isDarkMode ? AppColors.tealLight : AppColors.tealDeep;
 
   /// [color] as legible text: its accessible deep counterpart in light
   /// mode; in dark mode lifted just enough to clear 5:1 on the card
   /// surface (mid-tones like violet sat at 4.3:1).
   Color adaptiveAccentText(Color color) => isDarkMode
-      ? AppColors.legibleOn(color, AppColors.darkCard, target: 5.0)
+      ? AppColors.legibleOn(color, AppColors.darkCard, target: 6.0)
       : AppColors.toAccessibleLightText(color);
 
   // ---------------------------------------------------------------------------
@@ -120,21 +114,14 @@ extension SurfaceTone on BuildContext {
   Color navSurfaceBorder(Color accent) =>
       accent.withValues(alpha: isDarkMode ? 0.35 : 0.22);
 
-  List<BoxShadow> ambientGlow(Color accent) => isDarkMode
-      ? [
-          BoxShadow(
-            color: accent.withValues(alpha: 0.15),
-            blurRadius: 20,
-            offset: const Offset(0, 4),
-          )
-        ]
-      : [
-          BoxShadow(
-            color: AppColors.shadowSoft,
-            blurRadius: 20,
-            offset: const Offset(0, 4),
-          )
-        ];
+  /// Resting lift for floating chrome. Ink-tinted, never coloured.
+  List<BoxShadow> ambientGlow(Color accent) => [
+        BoxShadow(
+          color: isDarkMode ? AppColors.shadowMedium : AppColors.shadowSoft,
+          blurRadius: 16,
+          offset: const Offset(0, 4),
+        ),
+      ];
 
   Color activeChipSurface(Color accent) =>
       accent.withValues(alpha: isDarkMode ? 0.24 : 0.14);
@@ -145,20 +132,10 @@ extension SurfaceTone on BuildContext {
   Color activeChipBorder(Color accent) =>
       accent.withValues(alpha: isDarkMode ? 0.55 : 0.40);
 
-  List<BoxShadow> activeChipShadow(Color accent) => [
-        BoxShadow(
-          color: accent.withValues(alpha: isDarkMode ? 0.22 : 0.12),
-          blurRadius: 10,
-          spreadRadius: 0.5,
-        ),
-      ];
+  /// Chips sit flat on the page; state shows in fill and border.
+  List<BoxShadow> activeChipShadow(Color accent) => const [];
 
-  List<BoxShadow> hoverChipShadow(Color accent) => [
-        BoxShadow(
-          color: accent.withValues(alpha: isDarkMode ? 0.10 : 0.06),
-          blurRadius: 8,
-        ),
-      ];
+  List<BoxShadow> hoverChipShadow(Color accent) => const [];
 
   // ---------------------------------------------------------------------------
   // Case Study Companion & Progress Indicators
@@ -178,21 +155,13 @@ extension SurfaceTone on BuildContext {
       ? AppColors.darkCanvas.withValues(alpha: 0.91)
       : Colors.white.withValues(alpha: 0.94);
 
-  Color get dockBorder => isDarkMode
-      ? AppColors.accentCyan.withValues(alpha: 0.28)
-      : AppColors.slate300.withValues(alpha: 0.9);
+  Color get dockBorder => glassBorder;
 
   List<BoxShadow> get dockShadows => [
         BoxShadow(
-          color: Colors.black.withValues(alpha: isDarkMode ? 0.55 : 0.16),
-          blurRadius: 28,
-          offset: const Offset(0, 10),
-        ),
-        BoxShadow(
-          color:
-              AppColors.accentCyan.withValues(alpha: isDarkMode ? 0.16 : 0.08),
-          blurRadius: 14,
-          spreadRadius: -2,
+          color: isDarkMode ? AppColors.shadowDeep : AppColors.shadowMedium,
+          blurRadius: 24,
+          offset: const Offset(0, 8),
         ),
       ];
 
@@ -203,8 +172,9 @@ extension SurfaceTone on BuildContext {
   // Card & Container Decoration Helpers
   // ---------------------------------------------------------------------------
 
-  /// Creates a unified card [BoxDecoration] with specular rim highlights,
-  /// frosted glass fill, and depth shadows.
+  /// The card recipe: an opaque card-stock fill, a hairline border that
+  /// takes the accent on hover/selection, and a soft ink shadow when
+  /// lifted. No coloured glow.
   BoxDecoration cardDecoration({
     Color? accent,
     bool isHovered = false,
@@ -216,33 +186,23 @@ extension SurfaceTone on BuildContext {
     final active = isHovered || isSelected;
     final fill = customFill ?? (active ? cardGlassHover : cardGlass);
     final borderColor = active
-        ? (accent ?? Theme.of(this).colorScheme.primary).withValues(
-            alpha: isDarkMode
-                ? (isSelected ? 0.85 : 0.65)
-                : (isSelected ? 0.95 : 0.75))
-        : (isDarkMode ? glassBorder : AppColors.slate200);
+        ? (accent ?? Theme.of(this).colorScheme.primary)
+            .withValues(alpha: isSelected ? 0.9 : 0.6)
+        : glassBorder;
 
     final defaultShadows = active
         ? [
             BoxShadow(
-              color: (accent ?? Theme.of(this).colorScheme.primary)
-                  .withValues(alpha: isDarkMode ? 0.28 : 0.16),
-              blurRadius: isSelected ? 28 : 20,
-              spreadRadius: isSelected ? 2 : 1,
-            ),
-            BoxShadow(
-              color: isDarkMode ? AppColors.shadowMedium : AppColors.shadowSoft,
-              blurRadius: 16,
+              color: isDarkMode ? AppColors.shadowDeep : AppColors.shadowMedium,
+              blurRadius: 18,
               offset: const Offset(0, 6),
             ),
           ]
         : [
             BoxShadow(
-              color: isDarkMode
-                  ? AppColors.shadowSoft
-                  : AppColors.slate900.withValues(alpha: 0.04),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+              color: AppColors.shadowSoft,
+              blurRadius: 6,
+              offset: const Offset(0, 1),
             ),
           ];
 
@@ -251,7 +211,7 @@ extension SurfaceTone on BuildContext {
       borderRadius: BorderRadius.circular(radius),
       border: Border.all(
         color: borderColor,
-        width: active ? (isSelected ? 2.0 : 1.4) : 1.0,
+        width: isSelected ? 1.5 : 1.0,
       ),
       boxShadow: shadows ?? defaultShadows,
     );

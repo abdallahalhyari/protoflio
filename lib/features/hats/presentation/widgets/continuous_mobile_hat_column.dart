@@ -46,8 +46,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
           // Same masthead as the other sections; the hand-rolled one drew
           // its kicker at border opacity, which barely read on dark.
           SectionMasthead(
-            kicker: loc.hatsHeaderKickerMobile,
-            title: loc.navAbout.toUpperCase(),
+            title: loc.navAbout,
             subtitle: loc.hatsHeaderSubtitle,
             isDesktop: false,
           ),
@@ -115,7 +114,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
                 border: Border.all(
                     color: isDark
                         ? Colors.white.withValues(alpha: 0.08)
-                        : AppColors.slate200),
+                        : AppColors.ink200),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -131,10 +130,9 @@ class ContinuousMobileHatColumn extends StatelessWidget {
                         style: TextStyle(
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.72)
-                              : AppColors.slate500,
-                          fontSize: AppTypography.editorialSm,
+                              : AppColors.ink500,
+                          fontSize: AppTypography.label,
                           fontWeight: FontWeight.w700,
-                          letterSpacing: 1.5,
                         ),
                       ),
                     ),

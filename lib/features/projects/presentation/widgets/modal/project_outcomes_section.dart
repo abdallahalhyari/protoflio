@@ -35,7 +35,7 @@ class ProjectOutcomesSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 1.5),
                 child: Icon(Icons.check_circle_outline_rounded,
-                    color: AppColors.accentGreen, size: isDesktop ? 13 : 11),
+                    color: AppColors.teal, size: isDesktop ? 13 : 11),
               ),
               const SizedBox(width: 5),
               Expanded(
@@ -43,13 +43,12 @@ class ProjectOutcomesSection extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: 'MEASURABLE OUTCOME: ',
+                        text: 'Measurable outcome: ',
                         style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          color: AppColors.accentGreen,
+                          color: AppColors.teal,
                           fontSize: isDesktop
-                              ? AppTypography.editorial
-                              : AppTypography.editorialSm,
+                              ? AppTypography.label
+                              : AppTypography.label,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -58,7 +57,7 @@ class ProjectOutcomesSection extends StatelessWidget {
                         style: TextStyle(
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.9)
-                              : AppColors.slate800,
+                              : AppColors.ink800,
                           fontSize: isDesktop ? 11 : 9.5,
                         ),
                       ),

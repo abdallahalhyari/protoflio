@@ -99,7 +99,7 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                 : step.color.withValues(alpha: 0.05))
             : (isDark
                 ? Colors.black.withValues(alpha: AppAlpha.border)
-                : AppColors.slate50));
+                : AppColors.ink50));
 
     final borderColor = isActive
         ? (isDark ? step.color : accent)
@@ -107,9 +107,7 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
             ? (isDark
                 ? step.color.withValues(alpha: 0.7)
                 : accent.withValues(alpha: 0.75))
-            : (isDark
-                ? step.color.withValues(alpha: 0.30)
-                : AppColors.slate200));
+            : (isDark ? step.color.withValues(alpha: 0.30) : AppColors.ink200));
 
     return RepaintBoundary(
       child: MouseRegion(
@@ -197,13 +195,11 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                                 step.layer,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontFamily: AppTypography.monoFont,
                                   color: accent,
                                   fontSize: isDesktop
-                                      ? AppTypography.editorialSm
-                                      : AppTypography.nano,
+                                      ? AppTypography.label
+                                      : AppTypography.label,
                                   fontWeight: FontWeight.w900,
-                                  letterSpacing: 1.2,
                                 ),
                               ),
                             ),
@@ -244,11 +240,9 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                                           AppLocalizations.of(context)!
                                               .uiActiveTrace,
                                           style: TextStyle(
-                                            fontFamily: AppTypography.monoFont,
-                                            fontSize: AppTypography.nano,
+                                            fontSize: AppTypography.label,
                                             fontWeight: FontWeight.w900,
                                             color: AppColors.onAccent(accent),
-                                            letterSpacing: 0.8,
                                           ),
                                         ),
                                       ],
@@ -265,8 +259,8 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                           style: TextStyle(
                             color: context.onSurface,
                             fontSize: isDesktop
-                                ? AppTypography.smallLoose
-                                : AppTypography.captionSm,
+                                ? AppTypography.body
+                                : AppTypography.label,
                             fontWeight: FontWeight.w800,
                           ),
                         ),
@@ -276,10 +270,10 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                           style: TextStyle(
                             color: isDark
                                 ? Colors.white.withValues(alpha: 0.90)
-                                : AppColors.slate700,
+                                : AppColors.ink700,
                             fontSize: isDesktop
-                                ? AppTypography.caption
-                                : AppTypography.editorialSm,
+                                ? AppTypography.label
+                                : AppTypography.label,
                             height: 1.4,
                             fontWeight: FontWeight.w500,
                           ),
@@ -346,7 +340,7 @@ class _TierConnector extends StatelessWidget {
                       ? primaryColor.withValues(alpha: isDark ? 0.20 : 0.12)
                       : (isDark
                           ? Colors.white.withValues(alpha: 0.04)
-                          : AppColors.slate100),
+                          : AppColors.ink100),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
                   border: Border.all(
                     color: connColor.withValues(alpha: isActive ? 0.7 : 0.4),

@@ -6,7 +6,6 @@ import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/engineering/domain/entities/architecture_topic.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/engineering/presentation/utils/architecture_labels.dart';
-import 'package:profile/shared/utils/bidi.dart';
 
 /// Horizontal pill tab bar to switch between production architecture blueprints.
 class ArchitectureTopicTabs extends StatelessWidget {
@@ -76,7 +75,7 @@ class ArchitectureTopicTabs extends StatelessWidget {
                   ? scheme.primary
                   : (isDark
                       ? scheme.onSurface.withValues(alpha: 0.15)
-                      : AppColors.slate300),
+                      : AppColors.ink300),
               width: isSelected ? 1.5 : 1.0,
             ),
             boxShadow: isSelected
@@ -91,7 +90,7 @@ class ArchitectureTopicTabs extends StatelessWidget {
                     ? []
                     : [
                         BoxShadow(
-                          color: AppColors.slate900.withValues(alpha: 0.04),
+                          color: AppColors.ink900.withValues(alpha: 0.04),
                           blurRadius: 6,
                           offset: const Offset(0, 1),
                         ),
@@ -107,21 +106,19 @@ class ArchitectureTopicTabs extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: isSelected
                       ? scheme.primary
-                      : (isDark ? Colors.white38 : AppColors.slate400),
+                      : (isDark ? Colors.white38 : AppColors.ink400),
                 ),
               ),
               const SizedBox(width: 8),
               Text(
                 architectureTopicLabel(
-                        AppLocalizations.of(context)!, topic.title)
-                    .toUpperCase(),
+                    AppLocalizations.of(context)!, topic.title),
                 style: TextStyle(
                   color: isSelected
                       ? (isDark ? Colors.white : scheme.primary)
                       : (context.mutedText),
-                  fontSize: AppTypography.captionSm,
+                  fontSize: AppTypography.label,
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                  letterSpacing: latinTracking(context, 0.8),
                 ),
               ),
             ],

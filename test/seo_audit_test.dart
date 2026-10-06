@@ -219,8 +219,8 @@ void main() {
       expect(manifest['name'], contains('Abdallah Alhyari'));
       expect(manifest['short_name'], 'Alhyari');
       expect(manifest['display'], 'standalone');
-      expect(manifest['theme_color'], '#0E0E10');
-      expect(manifest['background_color'], '#0E0E10');
+      expect(manifest['theme_color'], '#121D2F');
+      expect(manifest['background_color'], '#121D2F');
     });
 
     test('Manifest contains app shortcuts for quick deep-linking', () {

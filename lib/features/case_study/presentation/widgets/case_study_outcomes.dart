@@ -51,7 +51,7 @@ class OutcomeCard extends StatelessWidget {
                 textDirection: TextDirection.ltr,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
-                  fontSize: AppTypography.statDisplay,
+                  fontSize: AppTypography.display,
                   fontWeight: FontWeight.w900,
                   color: scheme.primary,
                   height: 1.0,
@@ -62,7 +62,7 @@ class OutcomeCard extends StatelessWidget {
             Text(
               body,
               style: TextStyle(
-                fontSize: AppTypography.small,
+                fontSize: AppTypography.body,
                 height: 1.35,
                 color: scheme.onSurface.withValues(alpha: 0.75),
               ),

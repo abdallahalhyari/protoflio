@@ -136,7 +136,7 @@ class _RelatedCardState extends State<_RelatedCard> {
                           widget.data.title,
                           style: TextStyle(
                             fontFamily: AppTypography.displayFont,
-                            fontSize: AppTypography.subtitle + 2,
+                            fontSize: AppTypography.lead + 2,
                             fontWeight: FontWeight.w900,
                             color: scheme.onSurface,
                           ),
@@ -145,7 +145,7 @@ class _RelatedCardState extends State<_RelatedCard> {
                         Text(
                           widget.data.subtitle,
                           style: TextStyle(
-                            fontSize: AppTypography.small,
+                            fontSize: AppTypography.body,
                             color: scheme.onSurface.withValues(alpha: 0.7),
                           ),
                         ),

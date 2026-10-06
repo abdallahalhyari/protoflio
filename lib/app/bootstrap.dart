@@ -166,7 +166,7 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
           context: ErrorDescription('Failed to read startup preferences.'),
         ),
       );
-      initTheme = ThemeMode.dark;
+      initTheme = ThemeMode.light;
       initLocale = const Locale('en');
     }
 
@@ -263,7 +263,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.dark();
-    final accent = AppColors.accentIndigo;
+    final accent = AppColors.teal;
     final panelBorder = Colors.white.withValues(alpha: 0.12);
 
     return Theme(
@@ -271,7 +271,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Material(
-          color: AppColors.darkNight,
+          color: AppColors.ink950,
           // The HTML boot screen's gradient: this screen only shows if the
           // content is slow, and then sits right where the boot screen was.
           child: DecoratedBox(
@@ -281,7 +281,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                 radius: 1.1,
                 colors: [
                   AppColors.bootGlow,
-                  AppColors.darkNight,
+                  AppColors.ink950,
                   AppColors.bootEdge,
                 ],
                 stops: [0.0, 0.52, 1.0],
@@ -322,9 +322,8 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                           ),
                         ),
                         Text(
-                          'ABDALLAH ALHYARI',
+                          'Abdallah Alhyari',
                           style: theme.textTheme.titleMedium?.copyWith(
-                            letterSpacing: 3,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
@@ -334,7 +333,6 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                           'Senior Flutter & Android Engineer',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: Colors.white.withValues(alpha: 0.72),
-                            letterSpacing: 0.2,
                           ),
                         ),
                         const SizedBox(height: 18),
@@ -353,7 +351,6 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                           'Loading portfolio…',
                           style: theme.textTheme.labelLarge?.copyWith(
                             color: Colors.white.withValues(alpha: 0.7),
-                            letterSpacing: 0.8,
                           ),
                         ),
                       ],
@@ -377,7 +374,7 @@ class _StartupErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.dark();
-    final accent = AppColors.accentIndigo;
+    final accent = AppColors.teal;
     final surface = AppColors.darkSurface;
 
     return Theme(

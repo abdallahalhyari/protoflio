@@ -12,7 +12,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navHome => 'الرئيسية';
 
   @override
-  String get navWork => 'المشاريع';
+  String get navWork => 'الأعمال';
 
   @override
   String get navEngineering => 'الهندسة';
@@ -21,7 +21,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navExperience => 'الخبرات';
 
   @override
-  String get navStack => 'المهارات والتقنيات';
+  String get navStack => 'المهارات';
 
   @override
   String get navAbout => 'رؤى';
@@ -42,7 +42,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sectionCertifications => 'الشهادات';
 
   @override
-  String get contactHeroEyebrow => 'البريد المباشر · الرد الأسرع';
+  String get contactHeroEyebrow => 'البريد الإلكتروني';
 
   @override
   String get contactReplyWindow => 'الرد خلال 24 ساعة · إنجليزي / عربي';
@@ -119,6 +119,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get downloadResume => 'تحميل السيرة الذاتية';
 
   @override
+  String get introDownloadResume => 'تحميل السيرة الذاتية';
+
+  @override
   String get contactMe => 'تواصل معي';
 
   @override
@@ -126,6 +129,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
+
+  @override
+  String get introRoleLine => 'مهندس تطبيقات هواتف أول';
 
   @override
   String get introRoleHeading => 'مهندس تطبيقات هواتف أول';
@@ -170,7 +176,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactPreview => 'معاينة';
 
   @override
-  String get footerRightsReserved => '© 2026 · جميع الحقوق محفوظة';
+  String get footerRightsReserved => '© 2026 عبدالله الحياري';
 
   @override
   String get contactPhone => 'هاتف';
@@ -236,7 +242,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introMasthead => '// الترويسة';
 
   @override
-  String get navSectionCover => 'الغلاف والملف الشخصي';
+  String get navSectionCover => 'الغلاف';
 
   @override
   String get navSubCover => 'مهندس تطبيقات فلاتر وأندرويد أول';
@@ -245,37 +251,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navSectionExperience => 'الخبرات';
 
   @override
-  String get navSubExperience => '+5 سنوات من هندسة الأنظمة المؤسسية';
+  String get navSubExperience => 'خمس سنوات من تطوير تطبيقات المؤسسات';
 
   @override
-  String get navSectionWork => 'أبرز الأعمال';
+  String get navSectionWork => 'الأعمال';
 
   @override
-  String get navSubWork => 'أنظمة الإنتاج ودراسات الحالة المتعمقة';
+  String get navSubWork => 'دراسات حالة من تطبيقات في بيئة الإنتاج';
 
   @override
-  String get navSectionStack => 'المهارات والتقنيات';
+  String get navSectionStack => 'المهارات';
 
   @override
-  String get navSubStack => 'مصفوفة الكفاءة الهندسية والتقنية';
+  String get navSubStack => 'الأدوات والتخصصات';
 
   @override
   String get navSectionEngineering => 'الهندسة';
 
   @override
-  String get navSubEngineering => 'مخططات معمارية وأنظمة تدعم وضع عدم الاتصال';
+  String get navSubEngineering => 'كيف بُنيت التطبيقات';
 
   @override
   String get navSectionAbout => 'رؤى';
 
   @override
-  String get navSubAbout => 'وجهات نظر معمارية وأدوار قيادية';
+  String get navSubAbout => 'كيف أعمل مع الفرق';
 
   @override
   String get navSectionContact => 'تواصل';
 
   @override
-  String get navSubContact => 'القنوات المباشرة وحالة التوفر';
+  String get navSubContact => 'البريد والهاتف والحسابات';
 
   @override
   String selectedRoleAnnouncement(String role) {
@@ -418,17 +424,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactHeaderKicker => 'القسم 07 · تواصل مباشر';
 
   @override
-  String get contactHeaderTitle => 'لنبنِ ما هو قادم.';
+  String get contactHeaderTitle => 'أخبرني بما تبنيه.';
 
   @override
   String get contactHeaderSubtitle =>
-      'أساعد الفرق على إطلاق منتجات جوال معقدة ببنية أوضح وتنفيذ أقوى وثقة أكبر في بيئة الإنتاج. متاح للقيادة الهندسية والاستراتيجية التقنية ومهام التسليم الحيوية للمنتج.';
+      'أبحث عن دور أول في تطوير تطبيقات الجوال في برنو أو عن بُعد ابتداءً من 2027، وأقبل خلال ذلك مراجعات المعمارية والعمل التعاقدي. البريد الإلكتروني أسرع طريقة للرد.';
 
   @override
   String get skillsHeaderKicker => 'القسم 04 · الأنظمة والتسليم';
 
   @override
-  String get skillsHeaderTitle => 'المهارات والهندسة';
+  String get skillsHeaderTitle => 'المهارات';
 
   @override
   String get skillsHeaderSubtitle =>
@@ -813,7 +819,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiActiveHours => 'ضمن ساعات العمل';
 
   @override
-  String get uiStandbyAsync => 'خارج الدوام · رد لاحق';
+  String get uiStandbyAsync => 'أرد خلال يوم';
 
   @override
   String get uiRelocating => 'الانتقال إلى برنو 2027';
@@ -904,4 +910,82 @@ class AppLocalizationsAr extends AppLocalizations {
   String badgeRoles(int count) {
     return '$count أدوار · أثر مؤسسي';
   }
+
+  @override
+  String get coverName => 'عبدالله الحياري';
+
+  @override
+  String get coverStatement =>
+      'تطبيقات جوال تعمل دون اتصال، وتقرأ البطاقات الذكية، وتحمي بيانات المرضى.';
+
+  @override
+  String get coverLead =>
+      'أنا مهندس فلاتر وأندرويد أول بخبرة خمس سنوات في تطبيقات المؤسسات للرعاية الصحية والتعليم والتجارة. أقيم في عمّان وأنتقل إلى برنو في 2027.';
+
+  @override
+  String get coverEmailPrefix => 'أو راسلني على';
+
+  @override
+  String get cardHintTap => 'انقر على البطاقة لقراءة شريحتها';
+
+  @override
+  String get cardHintClick => 'انقر على البطاقة لقراءة شريحتها';
+
+  @override
+  String get cardHintTurnBackTap => 'انقر على البطاقة مرة أخرى لقلبها';
+
+  @override
+  String get cardHintTurnBackClick => 'انقر على البطاقة مرة أخرى لقلبها';
+
+  @override
+  String get cardSurname => 'الحياري';
+
+  @override
+  String get cardGivenName => 'عبدالله';
+
+  @override
+  String get cardFieldSurname => 'اسم العائلة';
+
+  @override
+  String get cardFieldGiven => 'الاسم';
+
+  @override
+  String get cardFieldRole => 'الدور';
+
+  @override
+  String get cardFieldBase => 'مكان الإقامة';
+
+  @override
+  String get cardRole => 'مهندس تطبيقات جوال أول';
+
+  @override
+  String get cardBase => 'عمّان، وبرنو ابتداءً من 2027';
+
+  @override
+  String get cardBackTitle => 'مقروء من الشريحة';
+
+  @override
+  String get cardOutcome1 =>
+      'استبدال المطالبات الورقية بتحقق لاسلكي عبر البطاقة الذكية';
+
+  @override
+  String get cardOutcome2 =>
+      'قراءة NFC في أقل من ثانية على مجموعة واسعة من هواتف أندرويد';
+
+  @override
+  String get cardOutcome3 =>
+      'أعطال أقل بنسبة 35% وأداء ثابت بمعدل 60 إطارًا في الثانية في تطبيقات المستشفيات كثيفة البيانات';
+
+  @override
+  String get cardSemantics =>
+      'بطاقة تعريف عبدالله الحياري. فعّلها لقراءة الشريحة وقلب البطاقة.';
+
+  @override
+  String get coverHintDrag => 'اسحب البطاقة إلى القارئ أو انقر عليها.';
+
+  @override
+  String get coverHintTap => 'انقر على البطاقة لقراءتها.';
+
+  @override
+  String get coverGranted => 'تم السماح بالدخول';
 }

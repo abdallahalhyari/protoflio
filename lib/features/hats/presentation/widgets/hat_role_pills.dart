@@ -53,7 +53,7 @@ class HatRolePills extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: selectedIndex == i
-                      ? AppColors.hatGold.withValues(alpha: 0.28)
+                      ? AppColors.gold.withValues(alpha: 0.28)
                       : (isDark
                           ? Colors.black.withValues(alpha: 0.3)
                           : Colors.white.withValues(alpha: 0.85)),
@@ -62,8 +62,8 @@ class HatRolePills extends StatelessWidget {
                     color: selectedIndex == i
                         ? primary
                         : (isDark
-                            ? AppColors.hatGold.withValues(alpha: 0.4)
-                            : AppColors.slate300),
+                            ? AppColors.gold.withValues(alpha: 0.4)
+                            : AppColors.ink300),
                     width: selectedIndex == i ? 1.6 : 1.0,
                   ),
                   boxShadow: selectedIndex == i
@@ -87,23 +87,24 @@ class HatRolePills extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 5),
-                    Text(
+                    // Wraps inside the pill rather than overflowing it: at
+                    // 2x text a role name is wider than a narrow phone.
+                    Flexible(
+                        child: Text(
                       ltrContent(context,
-                          '0${i + 1} ${hatTitleLabel(AppLocalizations.of(context)!, hats[i].title).toUpperCase()}'),
+                          '0${i + 1} ${hatTitleLabel(AppLocalizations.of(context)!, hats[i].title)}'),
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
                         color: selectedIndex == i
                             ? (context.onSurface)
-                            : (isDark ? Colors.white70 : AppColors.slate700),
+                            : (isDark ? Colors.white70 : AppColors.ink700),
                         fontSize: isDesktop
-                            ? AppTypography.micro
-                            : AppTypography.nano,
+                            ? AppTypography.label
+                            : AppTypography.label,
                         fontWeight: selectedIndex == i
                             ? FontWeight.w900
                             : FontWeight.w700,
-                        letterSpacing: 0.8,
                       ),
-                    ),
+                    )),
                   ],
                 ),
               )),

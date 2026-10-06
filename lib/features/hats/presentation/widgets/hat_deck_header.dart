@@ -3,7 +3,6 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/shared/utils/bidi.dart';
 
 /// Top header for the Hats & Perspectives section, including title, subtitle,
 /// and desktop deck shuffle/align action buttons.
@@ -45,20 +44,18 @@ class HatDeckHeader extends StatelessWidget {
                     : loc.hatsHeaderKickerDesktop,
                 style: TextStyle(
                   color: context.adaptiveAccentText(scheme.primary),
-                  fontSize: AppTypography.editorial,
+                  fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: latinTracking(context, 3),
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                loc.navAbout.toUpperCase(),
+                loc.navAbout,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,
                   fontSize: isMobile ? 24 : 40,
                   fontWeight: FontWeight.w900,
-                  letterSpacing: latinTracking(context, 4),
                   height: 1,
                 ),
               ),
@@ -68,10 +65,9 @@ class HatDeckHeader extends StatelessWidget {
                 style: TextStyle(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.75)
-                      : AppColors.slate600,
+                      : AppColors.ink600,
                   fontSize: isMobile ? 11 : 12.5,
                   fontStyle: FontStyle.italic,
-                  letterSpacing: latinTracking(context, 0.5),
                 ),
               ),
             ],
@@ -84,8 +80,7 @@ class HatDeckHeader extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: onShuffle,
                 style: OutlinedButton.styleFrom(
-                  foregroundColor:
-                      isDark ? scheme.primary : AppColors.accentSkyDeep,
+                  foregroundColor: isDark ? scheme.primary : AppColors.tealDeep,
                   side:
                       BorderSide(color: scheme.primary.withValues(alpha: 0.6)),
                   padding:
@@ -94,7 +89,7 @@ class HatDeckHeader extends StatelessWidget {
                 icon: const Icon(Icons.auto_awesome_motion_rounded, size: 15),
                 label: Text(loc.spreadAction,
                     style: const TextStyle(
-                        fontSize: AppTypography.editorial,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w800)),
               ),
               const SizedBox(width: AppSpacing.sm),
@@ -108,7 +103,7 @@ class HatDeckHeader extends StatelessWidget {
                 ),
                 child: Text(loc.alignAction,
                     style: const TextStyle(
-                        fontSize: AppTypography.editorial,
+                        fontSize: AppTypography.label,
                         fontWeight: FontWeight.w700)),
               ),
               // Reserve the top-right toggle cluster's width

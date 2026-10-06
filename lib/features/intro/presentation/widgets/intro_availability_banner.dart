@@ -51,13 +51,13 @@ class IntroAvailabilityBanner extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isDark
-                      ? AppColors.accentGreenLight
-                      : AppColors.accentGreen,
+                      ? IntroColors.accentGreenLight
+                      : IntroColors.accentGreen,
                   boxShadow: [
                     BoxShadow(
                       color: (isDark
-                              ? AppColors.accentGreenLight
-                              : AppColors.accentGreen)
+                              ? IntroColors.accentGreenLight
+                              : IntroColors.accentGreen)
                           .withValues(alpha: 0.6),
                       blurRadius: 6,
                     ),
@@ -72,9 +72,7 @@ class IntroAvailabilityBanner extends StatelessWidget {
                   loc.introWorkEligibility,
                   style: TextStyle(
                     color: context.onSurface,
-                    fontSize: isWide
-                        ? AppTypography.captionSm
-                        : AppTypography.caption,
+                    fontSize: isWide ? IntroType.captionSm : IntroType.caption,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                   ),
