@@ -182,7 +182,8 @@ END:VCARD''';
                     onPressed: () {
                       HapticFeedback.lightImpact();
                       Clipboard.setData(const ClipboardData(text: vCardData));
-                      AppToast.show(context, message: 'vCard copied to clipboard');
+                      AppToast.show(context,
+                          message: 'vCard copied to clipboard');
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
