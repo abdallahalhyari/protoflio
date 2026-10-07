@@ -18,14 +18,23 @@ class AppColors {
   static const Color linkedIn = Color(0xFF0A66C2);
 
   // Light canvas: the card stock a credential is printed on.
-  static const Color paper = Color(0xFFEEF0EC); // polycarbonate
-  static const Color cardStock = Color(0xFFF7F8F5); // laminated card face
+  static const Color paper = Color(0xFFF0F3F6); // polycarbonate canvas
+  static const Color cardStock = Color(0xFFFFFFFF); // laminated card face
   static const Color lightSurface = paper;
 
   // Dark canvas: the same card stock printed in issuer ink, not obsidian.
   static const Color darkSurface = Color(0xFF16243B);
   static const Color darkSurfaceElevated = Color(0xFF1C2C46);
   static const Color darkCard = Color(0xFF1F3049);
+
+  // Ambient background stage tokens
+  static const Color stageLightStart = Color(0xFFFAFBFD);
+  static const Color stageLightMid = Color(0xFFF0F3F6);
+  static const Color stageLightEnd = Color(0xFFE8ECEF);
+
+  static const Color stageDarkStart = Color(0xFF142238);
+  static const Color stageDarkMid = Color(0xFF18273F);
+  static const Color stageDarkEnd = Color(0xFF152238);
 
   // Hat palette — the six perspective cards. Muted so they read as inks
   // printed on the same stock; 90% alpha so the card gradient shows.

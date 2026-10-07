@@ -16,11 +16,6 @@ import 'package:profile/features/shell/presentation/widgets/desktop_scroll_inter
 ///    little and fades into the surface, like a card dropped onto a pile.
 /// Turning backwards plays the same physics in reverse. Reduced motion cuts
 /// straight to the page.
-///
-/// The pager's own curve ([AppMotion.emphasized]) is the only easing: the
-/// turn reads the page position as is. Easing it again here put 70% of the
-/// reveal in the first 100ms, so the reader line flashed instead of
-/// sweeping.
 class MagazinePageTransformer extends StatelessWidget {
   final Widget child;
   final PageController controller;
@@ -40,6 +35,7 @@ class MagazinePageTransformer extends StatelessWidget {
 
     final double momentumTease = MomentumTeaseProvider.of(context);
     final surface = Theme.of(context).scaffoldBackgroundColor;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return AnimatedBuilder(
       animation: controller,
@@ -99,6 +95,7 @@ class MagazinePageTransformer extends StatelessWidget {
                   veil: veil,
                   veilColor: surface,
                   scan: reveal < 1 ? reveal : null,
+                  isDark: isDark,
                 ),
                 child: ClipRect(
                   clipper: _ScanClipper(reveal),
@@ -159,14 +156,14 @@ class _TurnPainter extends CustomPainter {
     required this.veil,
     required this.veilColor,
     required this.scan,
+    required this.isDark,
   });
 
-  /// 0 → 1: how far a receding page has faded into [veilColor]. The canvas
-  /// colour, not a fixed ink: on the light paper theme a dark wash read as
-  /// grey murk, where fading into the paper reads as sinking into the pile.
+  /// 0 → 1: how far a receding page has faded into [veilColor].
   final double veil;
   final Color veilColor;
   final double? scan;
+  final bool isDark;
 
   static final Paint _paint = Paint();
   static const double _shadowDepth = 36;
@@ -174,10 +171,13 @@ class _TurnPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (veil > 0) {
+      final fadeColor = isDark
+          ? AppColors.ink950.withValues(alpha: veil.clamp(0.0, 1.0))
+          : veilColor.withValues(alpha: (0.45 * veil).clamp(0.0, 1.0));
       _paint
         ..shader = null
         ..maskFilter = null
-        ..color = veilColor.withValues(alpha: veil.clamp(0.0, 1.0));
+        ..color = fadeColor;
       canvas.drawRect(Offset.zero & size, _paint);
     }
     final s = scan;
@@ -190,6 +190,7 @@ class _TurnPainter extends CustomPainter {
     // shadow onto the page it is covering.
     final shadowRect =
         Rect.fromLTRB(0, math.max(0.0, y - _shadowDepth), size.width, y);
+    final shadowAlpha = isDark ? 0.35 : 0.18;
     _paint
       ..maskFilter = null
       ..color = Colors.black
@@ -198,19 +199,23 @@ class _TurnPainter extends CustomPainter {
         end: Alignment.bottomCenter,
         colors: [
           AppColors.ink950.withValues(alpha: 0),
-          AppColors.ink950.withValues(alpha: 0.16 * strength),
+          AppColors.ink950.withValues(alpha: shadowAlpha * strength),
         ],
       ).createShader(shadowRect);
     canvas.drawRect(shadowRect, _paint);
 
+    // Reader scan line & gold aura glow
+    final goldGlow = isDark ? AppColors.gold : AppColors.goldDeep;
+    final goldLine = isDark ? AppColors.goldSoft : AppColors.gold;
+
     _paint
       ..shader = null
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 14)
-      ..color = AppColors.gold.withValues(alpha: 0.55 * strength);
+      ..color = goldGlow.withValues(alpha: 0.55 * strength);
     canvas.drawRect(Rect.fromLTWH(0, y - 6, size.width, 18), _paint);
     _paint
       ..maskFilter = null
-      ..color = AppColors.goldSoft.withValues(alpha: 0.95 * strength);
+      ..color = goldLine.withValues(alpha: 0.95 * strength);
     canvas.drawRect(Rect.fromLTWH(0, y, size.width, 2), _paint);
   }
 
@@ -218,5 +223,6 @@ class _TurnPainter extends CustomPainter {
   bool shouldRepaint(_TurnPainter oldDelegate) =>
       oldDelegate.veil != veil ||
       oldDelegate.veilColor != veilColor ||
-      oldDelegate.scan != scan;
+      oldDelegate.scan != scan ||
+      oldDelegate.isDark != isDark;
 }

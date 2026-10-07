@@ -19,6 +19,7 @@ import 'package:profile/features/contact/presentation/widgets/express_presets_ba
 import 'package:profile/features/contact/presentation/widgets/hero_email_card.dart';
 import 'package:profile/features/contact/presentation/widgets/inquiry_composer_dialog.dart';
 import 'package:profile/features/contact/presentation/widgets/telemetry_bar.dart';
+import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 import 'package:profile/shared/utils/mailto.dart';
@@ -150,8 +151,18 @@ class _ContactPageState extends State<ContactPage>
           onCopy: (value) => _copy(context, value),
         ),
         const SizedBox(height: AppSpacing.xl),
-        // 4. Recruiter-priority CV download.
-        const CvDossierCard(),
+        // 4. Recruiter-priority CV download & vCard QR.
+        Row(
+          children: [
+            const Expanded(child: CvDossierCard()),
+            const SizedBox(width: AppSpacing.md),
+            IconButton.filledTonal(
+              onPressed: () => unawaited(VCardQrDialog.show(context)),
+              icon: const Icon(Icons.qr_code_2_rounded),
+              tooltip: 'Save Recruiter vCard QR',
+            ),
+          ],
+        ),
         const SizedBox(height: AppSpacing.xl),
         // 5. Deep dive — engagement scopes for hiring managers who want more.
         EngagementMatrixSection(
