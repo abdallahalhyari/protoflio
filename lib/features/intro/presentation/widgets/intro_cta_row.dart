@@ -6,6 +6,7 @@ import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
 import 'package:profile/shared/widgets/primary_button.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
 import 'package:profile/features/intro/presentation/widgets/quick_profile_sheet.dart';
 
 class IntroCtaRow extends StatelessWidget {
@@ -254,6 +255,72 @@ class IntroCtaRow extends StatelessWidget {
                             const SizedBox(width: 6),
                             Text(
                               '30-SEC INTRO',
+                              style: TextStyle(
+                                fontSize: IntroType.caption,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 1.2,
+                                color: isDark
+                                    ? Colors.white
+                                    : IntroColors.slate900,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                  minHeight: 40),
+              child: Semantics(
+                button: true,
+                excludeSemantics: true,
+                label: 'Recruiter vCard QR',
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      SoundService.instance.playClick();
+                      VCardQrDialog.show(context);
+                    },
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 7),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? accent.withValues(alpha: 0.12)
+                            : accent.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                        border: Border.all(
+                          color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
+                          width: 1.2,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                accent.withValues(alpha: isDark ? 0.16 : 0.08),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.qr_code_2_rounded,
+                              size: 15,
+                              color: accent,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              'vCARD QR',
                               style: TextStyle(
                                 fontSize: IntroType.caption,
                                 fontWeight: FontWeight.w800,

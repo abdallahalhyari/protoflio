@@ -241,7 +241,7 @@
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      background: radial-gradient(ellipse at 50% 42%, #141B2E 0%, #0B101D 52%, #060911 100%);
+      background: radial-gradient(ellipse at 50% 42%, #1B2A41 0%, #16243B 52%, #121D2F 100%);
       color: #ffffff;
       z-index: 9999;
       opacity: 1;
@@ -282,13 +282,13 @@
       padding: 0 20px; border-radius: 999px;
       font: 700 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
-      color: #C7D2FE; border: 1px solid rgba(165, 180, 252, 0.45);
+      color: #E3CB8E; border: 1px solid rgba(227, 203, 142, 0.35);
       transition: background-color 0.15s ease, border-color 0.15s ease;
     }
-    .boot-actions a:hover { background: rgba(99, 102, 241, 0.14); border-color: #A5B4FC; }
-    .boot-actions a.primary { background: #4F46E5; border-color: #4F46E5; color: #FFFFFF; }
-    .boot-actions a.primary:hover { background: #4338CA; }
-    .boot-actions a:focus-visible { outline: 2px solid #A5B4FC; outline-offset: 3px; }
+    .boot-actions a:hover { background: rgba(176, 141, 60, 0.14); border-color: #E3CB8E; }
+    .boot-actions a.primary { background: #B08D3C; border-color: #B08D3C; color: #121D2F; }
+    .boot-actions a.primary:hover { background: #96782E; }
+    .boot-actions a:focus-visible { outline: 2px solid #E3CB8E; outline-offset: 3px; }
     @media (max-width: 420px) {
       .boot-role { letter-spacing: 0.1em; }
     }
@@ -341,17 +341,17 @@
       inset: -8px;
       border-radius: 50%;
       border: 2px solid transparent;
-      border-top-color: #6366F1;
-      border-right-color: #EC4899;
-      border-bottom-color: rgba(99, 102, 241, 0.15);
+      border-top-color: #B08D3C;
+      border-right-color: #2F6F6A;
+      border-bottom-color: rgba(176, 141, 60, 0.2);
       animation: boot-orbit 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
+      filter: drop-shadow(0 0 10px rgba(176, 141, 60, 0.5));
     }
     .boot-emblem {
       width: 58px;
       height: 58px;
       border-radius: 16px;
-      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+      background: linear-gradient(135deg, #B08D3C 0%, #8F6B22 50%, #2F6F6A 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -359,7 +359,7 @@
       font-size: 28px;
       font-weight: 900;
       color: #FFFFFF;
-      box-shadow: 0 0 32px rgba(99, 102, 241, 0.45), 0 0 64px rgba(139, 92, 246, 0.2);
+      box-shadow: 0 0 32px rgba(176, 141, 60, 0.45), 0 0 64px rgba(47, 111, 106, 0.25);
       animation: boot-pulse-glow 2s ease-in-out infinite alternate;
     }
     .boot-title {
@@ -377,7 +377,7 @@
       font-size: 12px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #A5B4FC;
+      color: #E3CB8E;
       font-weight: 700;
       margin-bottom: 14px;
     }
@@ -395,7 +395,7 @@
       bottom: 0;
       left: 0;
       width: 50%;
-      background: linear-gradient(90deg, transparent, #6366F1, #EC4899, #F59E0B, transparent);
+      background: linear-gradient(90deg, transparent, #B08D3C, #2F6F6A, #E3CB8E, transparent);
       border-radius: 999px;
       animation: boot-shimmer 1.4s ease-in-out infinite;
     }
@@ -404,8 +404,8 @@
       100% { transform: rotate(360deg); }
     }
     @keyframes boot-pulse-glow {
-      0% { transform: scale(0.98); box-shadow: 0 0 24px rgba(99, 102, 241, 0.35); }
-      100% { transform: scale(1.02); box-shadow: 0 0 42px rgba(99, 102, 241, 0.55), 0 0 70px rgba(236, 72, 153, 0.25); }
+      0% { transform: scale(0.98); box-shadow: 0 0 24px rgba(176, 141, 60, 0.35); }
+      100% { transform: scale(1.02); box-shadow: 0 0 42px rgba(176, 141, 60, 0.55), 0 0 70px rgba(47, 111, 106, 0.3); }
     }
     @keyframes boot-shimmer {
       0% { transform: translateX(-100%); }

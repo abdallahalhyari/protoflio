@@ -57,6 +57,17 @@ void main() {
     expect(cvOpened, isTrue);
   });
 
+  testWidgets('vCARD QR button on hero row opens VCardQrDialog',
+      (tester) async {
+    _size(tester, const Size(1440, 900));
+    await tester.pumpWidget(_hero(const Locale('en')));
+    await tester.tap(find.text('vCARD QR'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Recruiter vCard'), findsOneWidget);
+    expect(find.text('Scan with phone camera'), findsOneWidget);
+  });
+
   testWidgets('bottom sheet on phones', (tester) async {
     _size(tester, const Size(390, 844));
     await tester.pumpWidget(_hero(const Locale('en')));

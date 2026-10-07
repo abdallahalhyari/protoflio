@@ -274,7 +274,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.dark();
-    final accent = AppColors.teal;
+    final accent = AppColors.gold;
     final panelBorder = Colors.white.withValues(alpha: 0.12);
 
     return Theme(
@@ -283,17 +283,15 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
         textDirection: TextDirection.ltr,
         child: Material(
           color: AppColors.ink950,
-          // The HTML boot screen's gradient: this screen only shows if the
-          // content is slow, and then sits right where the boot screen was.
           child: DecoratedBox(
             decoration: const BoxDecoration(
               gradient: RadialGradient(
                 center: Alignment(0, -0.16),
                 radius: 1.1,
                 colors: [
-                  AppColors.bootGlow,
+                  AppColors.darkCanvas,
+                  AppColors.darkSurface,
                   AppColors.ink950,
-                  AppColors.bootEdge,
                 ],
                 stops: [0.0, 0.52, 1.0],
               ),
@@ -306,7 +304,7 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 28,
-                      vertical: 22,
+                      vertical: 24,
                     ),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.02),
@@ -314,9 +312,9 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                       border: Border.all(color: panelBorder),
                       boxShadow: [
                         BoxShadow(
-                          color: accent.withValues(alpha: 0.18),
-                          blurRadius: 34,
-                          spreadRadius: 8,
+                          color: accent.withValues(alpha: 0.22),
+                          blurRadius: 36,
+                          spreadRadius: 4,
                         ),
                       ],
                     ),
@@ -324,33 +322,60 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          width: 56,
-                          height: 4,
-                          margin: const EdgeInsets.only(bottom: 18),
+                          width: 52,
+                          height: 52,
+                          margin: const EdgeInsets.only(bottom: 16),
                           decoration: BoxDecoration(
-                            color: accent,
-                            borderRadius: BorderRadius.circular(999),
+                            borderRadius: BorderRadius.circular(14),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                AppColors.gold,
+                                AppColors.goldDeep,
+                                AppColors.teal,
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.gold.withValues(alpha: 0.40),
+                                blurRadius: 20,
+                              ),
+                            ],
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'A',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                         Text(
                           'Abdallah Alhyari',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.5,
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 6),
                         Text(
-                          'Senior Flutter & Android Engineer',
+                          'Senior Mobile Engineer · Flutter & Android',
                           style: theme.textTheme.bodyMedium?.copyWith(
-                            color: Colors.white.withValues(alpha: 0.72),
+                            color: AppColors.goldSoft,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.8,
                           ),
                         ),
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 20),
                         SizedBox(
                           width: 220,
                           child: LinearProgressIndicator(
-                            minHeight: 4,
+                            minHeight: 3,
                             borderRadius: BorderRadius.circular(999),
                             backgroundColor:
                                 Colors.white.withValues(alpha: 0.08),
