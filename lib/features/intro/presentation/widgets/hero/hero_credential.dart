@@ -115,21 +115,43 @@ class HeroCredential extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              // The portrait is a cut-out, so it sits on a tinted studio
+              // backdrop, head and shoulders whole, flush with the bottom.
               AspectRatio(
-                aspectRatio: isWide ? 2.1 : 1.9,
-                child: Semantics(
-                  image: true,
-                  label: l10n.semanticPortrait,
-                  excludeSemantics: true,
-                  child: Hero(
-                    tag: 'abdallah_avatar_headshot',
-                    child: RetryingAssetImage(
-                      'assets/my_image.webp',
-                      fit: BoxFit.cover,
-                      alignment: const Alignment(0, -0.55),
-                      cacheWidth: 920,
-                      filterQuality: FilterQuality.high,
-                      semanticLabel: l10n.semanticPortrait,
+                aspectRatio: isWide ? 1.45 : 1.35,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: isDark
+                          ? [
+                              AppColors.teal.withValues(alpha: 0.45),
+                              AppColors.gold.withValues(alpha: 0.30),
+                            ]
+                          : [
+                              AppColors.tealLight.withValues(alpha: 0.45),
+                              AppColors.goldSoft.withValues(alpha: 0.55),
+                            ],
+                    ),
+                  ),
+                  child: Semantics(
+                    image: true,
+                    label: l10n.semanticPortrait,
+                    excludeSemantics: true,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 14),
+                      child: Hero(
+                        tag: 'abdallah_avatar_headshot',
+                        child: RetryingAssetImage(
+                          'assets/my_image.webp',
+                          fit: BoxFit.contain,
+                          alignment: Alignment.bottomCenter,
+                          cacheWidth: 544,
+                          filterQuality: FilterQuality.high,
+                          semanticLabel: l10n.semanticPortrait,
+                        ),
+                      ),
                     ),
                   ),
                 ),
