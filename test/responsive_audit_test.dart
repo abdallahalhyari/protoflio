@@ -275,7 +275,7 @@ void main() {
       expect(tester.takeException(), isNull);
       expect(
           find.text(
-              'In-depth looks at architecture, implementation, and measurable outcomes.'),
+              'Four employers, four systems. Each case shows the problem, how it was built, and what changed.'),
           findsOneWidget);
     });
 
@@ -332,7 +332,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text("Tell me what you're building."), findsOneWidget);
+      expect(find.text("Have a difficult mobile problem?"), findsOneWidget);
     });
   });
 

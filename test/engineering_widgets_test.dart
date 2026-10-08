@@ -29,7 +29,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-          find.text('Production-tested architectures behind the mobile suites'),
+          find.text(
+              'The architectures behind my mobile suites: layers, offline sync, NFC and token security.'),
           findsOneWidget);
       expect(find.text('Engineering'), findsOneWidget);
     });

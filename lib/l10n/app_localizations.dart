@@ -655,13 +655,13 @@ abstract class AppLocalizations {
   /// No description provided for @sectionSubtitleWork.
   ///
   /// In en, this message translates to:
-  /// **'In-depth looks at architecture, implementation, and measurable outcomes.'**
+  /// **'Four employers, four systems. Each case shows the problem, how it was built, and what changed.'**
   String get sectionSubtitleWork;
 
   /// No description provided for @sectionSubtitleExperience.
   ///
   /// In en, this message translates to:
-  /// **'Multi-year development of enterprise mobile systems'**
+  /// **'Four roles since 2021, from shipping features to owning the native and security layer.'**
   String get sectionSubtitleExperience;
 
   /// No description provided for @projectsHeaderKicker.
@@ -829,13 +829,13 @@ abstract class AppLocalizations {
   /// No description provided for @contactHeaderTitle.
   ///
   /// In en, this message translates to:
-  /// **'Tell me what you\'re building.'**
+  /// **'Have a difficult mobile problem?'**
   String get contactHeaderTitle;
 
   /// No description provided for @contactHeaderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'I\'m looking for a senior mobile role in Brno or remote from 2027, and I take on architecture reviews and contract work in the meantime. Email gets the fastest reply.'**
+  /// **'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.'**
   String get contactHeaderSubtitle;
 
   /// No description provided for @skillsHeaderKicker.
@@ -853,13 +853,13 @@ abstract class AppLocalizations {
   /// No description provided for @skillsHeaderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.'**
+  /// **'What I work with and where I used it. Search a tool or filter by area.'**
   String get skillsHeaderSubtitle;
 
   /// No description provided for @sectionSubtitleEngineering.
   ///
   /// In en, this message translates to:
-  /// **'Production-tested architectures behind the mobile suites'**
+  /// **'The architectures behind my mobile suites: layers, offline sync, NFC and token security.'**
   String get sectionSubtitleEngineering;
 
   /// Hint on flippable skill / role cards for touch viewports.

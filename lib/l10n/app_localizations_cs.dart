@@ -310,11 +310,11 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get sectionSubtitleWork =>
-      'Podrobný pohled na architekturu, implementaci a měřitelné výsledky.';
+      'Čtyři zaměstnavatelé, čtyři systémy. Každý případ ukazuje problém, jak byl postaven a co se změnilo.';
 
   @override
   String get sectionSubtitleExperience =>
-      'Víceletý vývoj podnikových mobilních systémů';
+      'Čtyři role od roku 2021, od dodávání funkcí po vlastnictví nativní a bezpečnostní vrstvy.';
 
   @override
   String get projectsHeaderKicker => 'Část 03, vybrané projekty';
@@ -413,11 +413,11 @@ class AppLocalizationsCs extends AppLocalizations {
   String get contactHeaderKicker => 'Část 07, přímý kontakt';
 
   @override
-  String get contactHeaderTitle => 'Napište mi, na čem pracujete.';
+  String get contactHeaderTitle => 'Máte těžký mobilní problém?';
 
   @override
   String get contactHeaderSubtitle =>
-      'Od roku 2027 hledám seniorní mobilní roli v Brně nebo na dálku a mezitím přijímám architektonické revize a zakázky. Nejrychleji odpovídám na e-mail.';
+      'Pošlete mi ho. Přijímám revize mobilní architektury a zakázky a od února 2027 hledám seniorní mobilní roli v Brně. Nejrychleji odpovídám na e-mail.';
 
   @override
   String get skillsHeaderKicker => 'Část 04, systémy a dodávka';
@@ -427,11 +427,11 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get skillsHeaderSubtitle =>
-      'Flutter, Android, architektura platforem, zabezpečení a systémy dodávání pro odolné produktové týmy a důvěryhodné aplikace.';
+      'S čím pracuji a kde jsem to použil. Vyhledejte nástroj nebo filtrujte podle oblasti.';
 
   @override
   String get sectionSubtitleEngineering =>
-      'Architektury ověřené v produkci, na kterých stojí mobilní aplikace';
+      'Architektury za mými mobilními sadami: vrstvy, offline synchronizace, NFC a zabezpečení tokenů.';
 
   @override
   String get flipHintTap => 'Klepněte a otočte';

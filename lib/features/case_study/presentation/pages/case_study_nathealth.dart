@@ -71,7 +71,7 @@ class NatHealthCaseStudy extends StatelessWidget {
             'Lead Mobile Architect for NatHealth\'s cross-platform ecosystem.',
             'Wrote native Kotlin / Swift platform channels for ISO-7816 APDU command sequences.',
             'Designed local encrypted SQLite caching and WorkManager background upload queues.',
-            'Partnered with clinical security officers to satisfy HIPAA-grade data-at-rest requirements.',
+            'Partnered with clinical security officers to satisfy strict data-at-rest requirements.',
           ]),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(

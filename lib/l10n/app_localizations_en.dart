@@ -310,11 +310,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionSubtitleWork =>
-      'In-depth looks at architecture, implementation, and measurable outcomes.';
+      'Four employers, four systems. Each case shows the problem, how it was built, and what changed.';
 
   @override
   String get sectionSubtitleExperience =>
-      'Multi-year development of enterprise mobile systems';
+      'Four roles since 2021, from shipping features to owning the native and security layer.';
 
   @override
   String get projectsHeaderKicker => 'Selected work';
@@ -413,11 +413,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactHeaderKicker => 'Contact';
 
   @override
-  String get contactHeaderTitle => 'Tell me what you\'re building.';
+  String get contactHeaderTitle => 'Have a difficult mobile problem?';
 
   @override
   String get contactHeaderSubtitle =>
-      'I\'m looking for a senior mobile role in Brno or remote from 2027, and I take on architecture reviews and contract work in the meantime. Email gets the fastest reply.';
+      'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.';
 
   @override
   String get skillsHeaderKicker => 'Skills';
@@ -427,11 +427,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillsHeaderSubtitle =>
-      'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.';
+      'What I work with and where I used it. Search a tool or filter by area.';
 
   @override
   String get sectionSubtitleEngineering =>
-      'Production-tested architectures behind the mobile suites';
+      'The architectures behind my mobile suites: layers, offline sync, NFC and token security.';
 
   @override
   String get flipHintTap => 'Tap to flip';

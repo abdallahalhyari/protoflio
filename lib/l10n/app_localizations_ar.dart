@@ -308,11 +308,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sectionSubtitleWork =>
-      'نظرة معمّقة على البنية المعمارية والتنفيذ والنتائج القابلة للقياس.';
+      'أربع جهات عمل وأربعة أنظمة. تعرض كل حالة المشكلة وكيف بُني الحل وما الذي تغيّر.';
 
   @override
   String get sectionSubtitleExperience =>
-      'سنوات من تطوير أنظمة الهاتف المحمول للمؤسسات';
+      'أربعة أدوار منذ 2021، من إنجاز الميزات إلى تولّي الطبقة الأصلية وطبقة الأمان.';
 
   @override
   String get projectsHeaderKicker => 'القسم 03 · أعمال مختارة';
@@ -411,11 +411,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactHeaderKicker => 'القسم 07 · تواصل مباشر';
 
   @override
-  String get contactHeaderTitle => 'أخبرني بما تبنيه.';
+  String get contactHeaderTitle => 'هل لديك مشكلة صعبة في تطبيقات الهاتف؟';
 
   @override
   String get contactHeaderSubtitle =>
-      'أبحث عن دور أول في تطوير تطبيقات الجوال في برنو أو عن بُعد ابتداءً من 2027، وأقبل خلال ذلك مراجعات المعمارية والعمل التعاقدي. البريد الإلكتروني أسرع طريقة للرد.';
+      'أرسلها لي. أقبل مراجعات معمارية الهواتف والعمل التعاقدي الآن، وأبحث عن دور أول في تطبيقات الهاتف في برنو من فبراير 2027. البريد الإلكتروني أسرع طريقة للرد.';
 
   @override
   String get skillsHeaderKicker => 'القسم 04 · الأنظمة والتسليم';
@@ -425,11 +425,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get skillsHeaderSubtitle =>
-      'فلاتر وأندرويد، وبنية المنصات، والأمان، وأنظمة التسليم لبناء منتجات مرنة وتجارب جديرة بالثقة.';
+      'ما أعمل به وأين استخدمته. ابحث عن أداة أو صفِّ حسب المجال.';
 
   @override
   String get sectionSubtitleEngineering =>
-      'هياكل معمارية مُختبَرة في بيئات الإنتاج خلف تطبيقات الهاتف';
+      'البُنى المعمارية خلف تطبيقاتي: الطبقات، والمزامنة دون اتصال، وNFC، وأمان الرموز.';
 
   @override
   String get flipHintTap => 'اضغط للقلب';
