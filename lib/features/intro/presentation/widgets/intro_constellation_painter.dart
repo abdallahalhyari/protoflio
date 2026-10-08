@@ -96,18 +96,14 @@ class ConstellationPainter extends CustomPainter {
   Color _resolveColor(int colorIndex) {
     switch (colorIndex) {
       case 0:
-        return primary; // Electric Indigo
+        return primary;
       case 1:
-        return isDark
-            ? IntroColors.accentVioletLight
-            : IntroColors.accentViolet;
+        return isDark ? AppColors.tealLight : AppColors.teal;
       case 2:
-        return isDark ? IntroColors.accentSkySoft : IntroColors.accentSky;
+        return isDark ? AppColors.goldSoft : AppColors.gold;
       case 3:
       default:
-        return isDark
-            ? IntroColors.accentAmberSoft
-            : IntroColors.accentAmberBright;
+        return isDark ? AppColors.tealLight : AppColors.tealDeep;
     }
   }
 
@@ -147,8 +143,8 @@ class ConstellationPainter extends CustomPainter {
           final mNorm = 1.0 - (mDist / _maxMouseDist);
           final mAlpha = mNorm * (isDark ? 0.24 : 0.14);
 
-          _linePaint.color =
-              IntroColors.accentCyanLight.withValues(alpha: mAlpha);
+          _linePaint.color = (isDark ? AppColors.tealLight : AppColors.teal)
+              .withValues(alpha: mAlpha);
           _linePaint.strokeWidth = 1.0 * mNorm + 0.4;
           canvas.drawLine(Offset(p1.x, p1.y),
               Offset(mousePos!.dx, mousePos!.dy), _linePaint);

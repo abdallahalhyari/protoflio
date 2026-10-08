@@ -52,7 +52,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     ],
     technicalHighlights: [
       'Repository Pattern decouples native NFC hardware channels from presentation views.',
-      'Pure Domain entities ensure 100% test coverage without UI harness dependencies.',
+      'Pure Domain entities can be tested without any UI harness.',
       'Immutable Data Transfer Objects (DTOs) with defensive parsing prevent runtime crashes from unexpected null payloads.',
     ],
   ),
@@ -61,7 +61,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     title: 'Offline-First Synchronization',
     category: 'Data persistence',
     summary:
-        'Guaranteed data delivery through persistent local queueing, atomic SQLite mutations, and Android WorkManager background sync.',
+        'Reliable delivery through persistent local queueing, atomic SQLite writes, and Android WorkManager background sync.',
     whyChosen:
         'Healthcare practitioners and clinic staff operate in areas with fluctuating cellular connectivity. Claims and patient validations must never be lost or blocked by network drops.',
     diagramSteps: [
@@ -219,7 +219,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     summary:
         'Predictable, highly-testable reactive state container using the BLoC pattern with unidirectional data flow and strict event-to-state mapping.',
     whyChosen:
-        'Isolates UI from complex business logic. Enables time-travel debugging, flawless dependency injection, and guarantees that the presentation layer strictly reflects the current state without side effects.',
+        'Isolates UI from complex business logic. Makes state changes easy to trace and test, so the presentation layer reflects the current state without side effects.',
     diagramSteps: [
       DiagramStep(
         layer: 'UI / presentation',
@@ -259,7 +259,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
     ],
     technicalHighlights: [
-      'Extensive use of Freezed and Equatable to guarantee memory-efficient value equality and copyWith mutations.',
+      'Immutable value objects with value equality and copyWith updates.',
       'Complex asynchronous race conditions solved via restartable, sequential, and droppable event transformers (RxDart).',
       'Flawless automated unit testing achieved using bloc_test to verify precise event-state trajectories.',
     ],

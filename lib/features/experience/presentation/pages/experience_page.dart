@@ -69,10 +69,11 @@ class _ExperiencePageState extends State<ExperiencePage>
       return;
     }
 
-    // Trigger animation when the page comes into view
+    // Start as the page begins to arrive, so content is already rising as
+    // the scan line uncovers it instead of appearing after an empty reveal.
     final page =
         widget.controller!.page ?? widget.controller!.initialPage.toDouble();
-    final isFocused = (page - (widget.pageIndex ?? 0)).abs() < 0.3;
+    final isFocused = (page - (widget.pageIndex ?? 0)).abs() < 0.95;
 
     if (isFocused && !_bloc.state.isVisible) {
       _bloc.add(const ExperienceVisibilityChanged(true));
@@ -116,7 +117,7 @@ class _ExperiencePageState extends State<ExperiencePage>
             children: [
               // Header
               ExperienceHeader(isDesktop: isDesktop),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: AppSpacing.sectionContent),
 
               // Timeline Grid
               if (widget.isContinuousMobile)

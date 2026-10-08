@@ -5,6 +5,7 @@ import 'package:profile/shared/utils/hover_reset_offset_controller.dart';
 
 import 'package:profile/shared/widgets/primary_button_parallax_layer.dart';
 import 'package:profile/shared/widgets/primary_button_gradient_shell.dart';
+import 'package:profile/shared/widgets/magnetic_pull.dart';
 
 enum PrimaryButtonSize { sm, md, lg }
 
@@ -213,37 +214,40 @@ class _PrimaryButtonState extends State<PrimaryButton>
                     widget.onPressed!();
                   }
                 : null,
-            child: AnimatedScale(
-              scale: _isPressed ? 0.95 : 1.0,
-              duration: AppMotion.micro,
-              curve: Curves.easeOutCubic,
-              child: PrimaryButtonParallaxLayer(
-                parallaxOffset: _hover.offset,
-                child: PrimaryButtonGradientShell(
-                  containerKey: _key,
-                  base: base,
-                  scheme: scheme,
-                  hover: hover,
-                  enabled: _enabled,
-                  isFocused: _isFocused,
-                  isPill: widget.isPill,
-                  reduceMotion: reduceMotion,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: dims.hPad,
-                      vertical: dims.vPad,
-                    ),
-                    // Factor 1: hugs the label as before, but centres it
-                    // when a parent stretches the button (stacked CTAs).
-                    child: Center(
-                      widthFactor: 1,
-                      heightFactor: 1,
-                      child: content,
+            child: MagneticPull(
+              enabled: _enabled && !reduceMotion,
+              child: AnimatedScale(
+                scale: _isPressed ? 0.95 : 1.0,
+                duration: reduceMotion ? Duration.zero : AppMotion.micro,
+                curve: Curves.easeOutCubic,
+                child: PrimaryButtonParallaxLayer(
+                  parallaxOffset: _hover.offset,
+                  child: PrimaryButtonGradientShell(
+                    containerKey: _key,
+                    base: base,
+                    scheme: scheme,
+                    hover: hover,
+                    enabled: _enabled,
+                    isFocused: _isFocused,
+                    isPill: widget.isPill,
+                    reduceMotion: reduceMotion,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: dims.hPad,
+                        vertical: dims.vPad,
+                      ),
+                      // Factor 1: hugs the label as before, but centres it
+                      // when a parent stretches the button (stacked CTAs).
+                      child: Center(
+                        widthFactor: 1,
+                        heightFactor: 1,
+                        child: content,
+                      ),
                     ),
                   ),
-                ),
-              ), // PrimaryButtonParallaxLayer
-            ), // AnimatedScale
+                ), // PrimaryButtonParallaxLayer
+              ), // AnimatedScale
+            ), // MagneticPull
           ), // GestureDetector
         ), // MouseRegion
       ), // FocusableActionDetector

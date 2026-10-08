@@ -1,0 +1,2 @@
+# Hooks run by sh; CRLF on a Windows checkout breaks the shebang.
+.githooks/* text eol=lf

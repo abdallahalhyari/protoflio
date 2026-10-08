@@ -19,6 +19,14 @@ class InquiryTimezoneBanner extends StatelessWidget {
     final localFormatted =
         '${localTime.hour.toString().padLeft(2, '0')}:${localTime.minute.toString().padLeft(2, '0')}';
 
+    final localOffset = DateTime.now().timeZoneOffset;
+    final deltaHours = 3 - localOffset.inHours;
+    final deltaText = deltaHours == 0
+        ? 'Same timezone'
+        : (deltaHours > 0
+            ? 'Amman is ${deltaHours}h ahead'
+            : 'Amman is ${deltaHours.abs()}h behind');
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -42,7 +50,7 @@ class InquiryTimezoneBanner extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'AMMAN (UTC+3): $ammanFormatted · YOUR TIME: $localFormatted — ${isAmmanActive ? "ACTIVE RESPONSE WINDOW" : "ASYNC INQUIRY (REPLY WITHIN 24H)"}',
+              'AMMAN (UTC+3): $ammanFormatted ($deltaText) · YOUR TIME: $localFormatted — ${isAmmanActive ? "ACTIVE RESPONSE WINDOW" : "ASYNC INQUIRY (REPLY WITHIN 24H)"}',
               style: TextStyle(
                 color: isDark ? Colors.white70 : AppColors.ink700,
                 fontSize: AppTypography.label,

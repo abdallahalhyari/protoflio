@@ -64,7 +64,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 300));
 
         expect(find.textContaining('ABDALLAH'), findsWidgets);
-        expect(find.text('VIEW MY WORK'), findsOneWidget);
+        expect(find.text('View my work'), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });
@@ -78,8 +78,8 @@ void main() {
           brightness: brightness,
         ));
         await tester.pump(const Duration(milliseconds: 300));
-        expect(find.textContaining('In-depth looks at architecture'),
-            findsWidgets);
+        expect(
+            find.textContaining('Four employers, four systems'), findsWidgets);
         expect(tester.takeException(), isNull);
 
         // Mobile
@@ -90,8 +90,8 @@ void main() {
           size: const Size(390, 844),
         ));
         await tester.pump(const Duration(milliseconds: 300));
-        expect(find.textContaining('In-depth looks at architecture'),
-            findsWidgets);
+        expect(
+            find.textContaining('Four employers, four systems'), findsWidgets);
         expect(tester.takeException(), isNull);
 
         await tester.binding.setSurfaceSize(null);
@@ -171,8 +171,8 @@ void main() {
         ));
         await tester.pump(const Duration(milliseconds: 300));
 
-        expect(
-            find.textContaining("Tell me what you're building"), findsWidgets);
+        expect(find.textContaining("Have a difficult mobile problem?"),
+            findsWidgets);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });

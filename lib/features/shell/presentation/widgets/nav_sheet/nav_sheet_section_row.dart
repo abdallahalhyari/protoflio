@@ -78,11 +78,8 @@ class NavSectionRow extends StatelessWidget {
                   Text(
                     item.title,
                     style: TextStyle(
-                      color: isActive
-                          ? (context.onSurface)
-                          : (isDark
-                              ? Colors.white.withValues(alpha: 0.85)
-                              : AppColors.ink800),
+                      color:
+                          isActive ? (context.onSurface) : (context.onSurface),
                       fontSize: AppTypography.body,
                       fontWeight: FontWeight.w800,
                     ),

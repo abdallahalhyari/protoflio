@@ -5,17 +5,54 @@ class EmailService {
   EmailService._();
   static final EmailService instance = EmailService._();
 
-  // TODO: Replace these with your actual EmailJS credentials
-  static const String _serviceId = 'SERVICE_ID_HERE';
-  static const String _templateId = 'TEMPLATE_ID_HERE';
-  static const String _publicKey = 'PUBLIC_KEY_HERE';
+  static const String _envServiceId =
+      String.fromEnvironment('EMAILJS_SERVICE_ID');
+  static const String _envTemplateId =
+      String.fromEnvironment('EMAILJS_TEMPLATE_ID');
+  static const String _envPublicKey =
+      String.fromEnvironment('EMAILJS_PUBLIC_KEY');
+
+  String? _overrideServiceId;
+  String? _overrideTemplateId;
+  String? _overridePublicKey;
+
+  /// Configures or overrides EmailJS credentials at runtime.
+  void configure({
+    String? serviceId,
+    String? templateId,
+    String? publicKey,
+  }) {
+    _overrideServiceId = serviceId;
+    _overrideTemplateId = templateId;
+    _overridePublicKey = publicKey;
+  }
+
+  /// Resets runtime override credentials.
+  void reset() {
+    _overrideServiceId = null;
+    _overrideTemplateId = null;
+    _overridePublicKey = null;
+  }
+
+  String get serviceId =>
+      _overrideServiceId ??
+      (_envServiceId.isNotEmpty ? _envServiceId : 'SERVICE_ID_HERE');
+
+  String get templateId =>
+      _overrideTemplateId ??
+      (_envTemplateId.isNotEmpty ? _envTemplateId : 'TEMPLATE_ID_HERE');
+
+  String get publicKey =>
+      _overridePublicKey ??
+      (_envPublicKey.isNotEmpty ? _envPublicKey : 'PUBLIC_KEY_HERE');
 
   static const String _endpoint = 'https://api.emailjs.com/api/v1.0/email/send';
 
   /// False until real EmailJS credentials replace the placeholders. The
   /// inquiry composer then hands the draft to the visitor's email app
   /// instead of reporting every send as failed.
-  bool get isConfigured => _serviceId != 'SERVICE_ID_HERE';
+  bool get isConfigured =>
+      serviceId != 'SERVICE_ID_HERE' && serviceId.isNotEmpty;
 
   Future<bool> sendEmail({
     required String subject,
@@ -33,9 +70,9 @@ class EmailService {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          'service_id': _serviceId,
-          'template_id': _templateId,
-          'user_id': _publicKey,
+          'service_id': serviceId,
+          'template_id': templateId,
+          'user_id': publicKey,
           'template_params': {
             'subject': subject,
             'message': body,

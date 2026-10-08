@@ -14,6 +14,10 @@ class CardSpotlightOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.disableAnimationsOf(context)) {
+      return const SizedBox.shrink();
+    }
+
     return Positioned.fill(
       child: RepaintBoundary(
         child: ValueListenableBuilder<Offset>(

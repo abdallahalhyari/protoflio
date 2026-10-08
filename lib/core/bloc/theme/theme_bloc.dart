@@ -16,12 +16,12 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
 
   /// The mode to start in: a `?theme=light|dark` link wins (not saved, so
   /// it doesn't change a visitor's own choice), then the saved choice, then
-  /// light. Resolved before the first frame so the page never flips after
+  /// dark. Resolved before the first frame so the page never flips after
   /// painting. Only light and dark exist: nothing in the UI offers
   /// "system", and `isDark` would misread it.
   static ThemeMode resolveInitial({required Uri uri, String? stored}) {
     final requested = uri.queryParameters['theme']?.toLowerCase() ?? stored;
-    return requested == 'dark' ? ThemeMode.dark : ThemeMode.light;
+    return requested == 'light' ? ThemeMode.light : ThemeMode.dark;
   }
 
   Future<void> _onModeToggled(

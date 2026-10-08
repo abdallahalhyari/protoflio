@@ -4,4 +4,3 @@ export 'tokens/radius.dart';
 export 'tokens/motion.dart';
 export 'tokens/typography.dart';
 export 'tokens/colors.dart';
-export 'tokens/intro_tokens.dart';

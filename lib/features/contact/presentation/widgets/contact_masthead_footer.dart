@@ -34,9 +34,7 @@ class ContactMastheadFooter extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.72)
-                    : AppColors.ink500,
+                color: context.mutedText,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
               ),
@@ -110,9 +108,7 @@ class ContactMastheadFooter extends StatelessWidget {
                   child: Text(
                     'Colophon & dispatch',
                     style: TextStyle(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.60)
-                          : AppColors.ink500, // slate400 was 2.5:1
+                      color: context.mutedText, // slate400 was 2.5:1
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
                     ),

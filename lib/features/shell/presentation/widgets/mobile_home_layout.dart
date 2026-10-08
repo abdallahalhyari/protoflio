@@ -9,8 +9,8 @@ import 'package:profile/features/engineering/presentation/pages/engineering_page
     deferred as engineering_lib;
 import 'package:profile/features/experience/presentation/pages/experience_page.dart'
     deferred as experience_lib;
-import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart'
-    deferred as hats_lib;
+import 'package:profile/features/about/presentation/pages/about_page.dart'
+    deferred as about_lib;
 import 'package:profile/features/intro/presentation/pages/intro_page.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart'
     deferred as projects_lib;
@@ -174,9 +174,9 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: DeferredPage(
                     mountPriority: 5,
-                    loader: hats_lib.loadLibrary,
+                    loader: about_lib.loadLibrary,
                     builder: () =>
-                        hats_lib.HatsGridPage(isContinuousMobile: true),
+                        about_lib.AboutPage(isContinuousMobile: true),
                   ),
                 ),
               ),

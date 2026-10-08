@@ -43,11 +43,11 @@ extension SurfaceTone on BuildContext {
 
   /// Rest-state hairline border on any glass surface.
   Color get glassBorder =>
-      isDarkMode ? Colors.white.withValues(alpha: 0.14) : AppColors.ink300;
+      isDarkMode ? Colors.white.withValues(alpha: 0.14) : AppColors.ink200;
 
   /// Focused / hovered border — a step brighter than [glassBorder].
   Color get glassBorderStrong =>
-      isDarkMode ? Colors.white.withValues(alpha: 0.24) : AppColors.ink400;
+      isDarkMode ? Colors.white.withValues(alpha: 0.24) : AppColors.ink300;
 
   /// Dense frosted glass fill for content cards across all sections.
   /// Balanced at 88% in Dark and 92% in Light so background orbs
@@ -56,7 +56,7 @@ extension SurfaceTone on BuildContext {
 
   /// Hover / active state for [cardGlass] — slightly denser for focus.
   Color get cardGlassHover =>
-      isDarkMode ? AppColors.darkSurfaceElevated : Colors.white;
+      isDarkMode ? AppColors.darkSurfaceElevated : const Color(0xFFF8FAFC);
 
   /// Solid modal / dialog fill. Denser than [cardGlass] because full-screen
   /// dialogs should not let the canvas show through. Use on `Dialog`,

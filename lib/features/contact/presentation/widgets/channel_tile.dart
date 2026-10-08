@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/shared/utils/bidi.dart';
+import 'package:profile/shared/widgets/magnetic_pull.dart';
 
 class ChannelData {
   final String label;
@@ -140,26 +141,29 @@ class _ChannelTileState extends State<ChannelTile> {
                       child: Semantics(
                     button: true,
                     label: '${d.label}: ${d.primaryLabel}',
-                    child: FilledButton(
-                      onPressed: d.primaryAction,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: buttonFill,
-                        foregroundColor: buttonTextColor,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
-                          side: BorderSide(
-                            color: d.accent
-                                .withValues(alpha: isDark ? 0.45 : 0.35),
+                    child: MagneticPull(
+                      maxPull: 6.0, // Less pull for these smaller tiles
+                      child: FilledButton(
+                        onPressed: d.primaryAction,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: buttonFill,
+                          foregroundColor: buttonTextColor,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
+                            side: BorderSide(
+                              color: d.accent
+                                  .withValues(alpha: isDark ? 0.45 : 0.35),
+                            ),
                           ),
                         ),
-                      ),
-                      child: Text(
-                        d.primaryLabel,
-                        semanticsLabel: '',
-                        style: const TextStyle(
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
+                        child: Text(
+                          d.primaryLabel,
+                          semanticsLabel: '',
+                          style: const TextStyle(
+                            fontSize: AppTypography.label,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ),
                     ),
@@ -170,27 +174,30 @@ class _ChannelTileState extends State<ChannelTile> {
                     child: Semantics(
                   button: true,
                   label: '${d.label}: ${d.secondaryLabel}',
-                  child: OutlinedButton(
-                    onPressed: d.secondaryAction,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: context.onSurface,
-                      side: BorderSide(
-                        color: isDark
-                            ? Colors.white.withValues(alpha: 0.28)
-                            : AppColors.ink300,
+                  child: MagneticPull(
+                    maxPull: 6.0,
+                    child: OutlinedButton(
+                      onPressed: d.secondaryAction,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: context.onSurface,
+                        side: BorderSide(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.28)
+                              : AppColors.ink300,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.pill),
+                        ),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                      ),
-                    ),
-                    child: Text(
-                      d.secondaryLabel,
-                      semanticsLabel: '',
-                      style: const TextStyle(
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w800,
+                      child: Text(
+                        d.secondaryLabel,
+                        semanticsLabel: '',
+                        style: const TextStyle(
+                          fontSize: AppTypography.label,
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ),
                   ),

@@ -41,12 +41,12 @@ void main() {
     await tester.pumpWidget(_hero(const Locale('en'), onCv: () {
       cvOpened = true;
     }));
-    await tester.tap(find.text('30-SEC INTRO'));
+    await tester.tap(find.text('30-second intro'));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('quick_profile')), findsOneWidget);
     expect(find.byType(Dialog), findsOneWidget, reason: 'dialog on desktop');
-    expect(find.text('SENIOR FLUTTER & ANDROID ENGINEER'), findsWidgets);
+    expect(find.text('Senior Flutter & Android engineer'), findsWidgets);
     expect(
         find.text(
             '${CareerFacts.yearsOfExperience()}+ years in mobile engineering'),
@@ -57,10 +57,21 @@ void main() {
     expect(cvOpened, isTrue);
   });
 
+  testWidgets('vCARD QR button on hero row opens VCardQrDialog',
+      (tester) async {
+    _size(tester, const Size(1440, 900));
+    await tester.pumpWidget(_hero(const Locale('en')));
+    await tester.tap(find.text('vCard QR'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Recruiter vCard'), findsOneWidget);
+    expect(find.text('Scan with phone camera'), findsOneWidget);
+  });
+
   testWidgets('bottom sheet on phones', (tester) async {
     _size(tester, const Size(390, 844));
     await tester.pumpWidget(_hero(const Locale('en')));
-    await tester.tap(find.text('30-SEC INTRO'));
+    await tester.tap(find.text('30-second intro'));
     await tester.pumpAndSettle();
     expect(find.byType(BottomSheet), findsOneWidget);
     expect(find.byKey(const Key('quick_profile')), findsOneWidget);
@@ -81,7 +92,7 @@ void main() {
         .setMockMethodCallHandler(SystemChannels.platform, null));
 
     await tester.pumpWidget(_hero(const Locale('en')));
-    await tester.tap(find.text('30-SEC INTRO'));
+    await tester.tap(find.text('30-second intro'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('quick_profile_copy')));
     await tester.pumpAndSettle();

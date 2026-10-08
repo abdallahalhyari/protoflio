@@ -119,31 +119,11 @@ class _DeferredPageState extends State<DeferredPage>
         ),
       );
     } else {
-      final primary = Theme.of(context).colorScheme.primary;
       content = SizedBox(
         key: const ValueKey('load_placeholder'),
         height: widget.placeholderHeight,
-        child: Center(
-          child: Container(
-            width: 48,
-            height: 48,
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: primary.withValues(alpha: 0.08),
-              boxShadow: [
-                BoxShadow(
-                  color: primary.withValues(alpha: 0.18),
-                  blurRadius: 16,
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
-            child: CircularProgressIndicator(
-              strokeWidth: 2.5,
-              valueColor: AlwaysStoppedAnimation<Color>(primary),
-            ),
-          ),
+        child: const Center(
+          child: CircularProgressIndicator(),
         ),
       );
     }

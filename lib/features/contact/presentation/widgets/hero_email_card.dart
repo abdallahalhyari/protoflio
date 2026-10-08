@@ -134,9 +134,7 @@ class HeroEmailCard extends StatelessWidget {
                 l10n.contactReplyWindow,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.7)
-                      : AppColors.ink500,
+                  color: context.mutedText,
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w600,
                 ),

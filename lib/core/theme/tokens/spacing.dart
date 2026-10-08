@@ -8,4 +8,11 @@ class AppSpacing {
   static const double lg = 24;
   static const double xl = 32;
   static const double xxl = 48;
+
+  // Section rhythm, the same on every page: the masthead's rule, then
+  // [sectionControls] to the first control (search, filters, tabs), then
+  // [sectionContent] from the last control (or the rule, when a page has
+  // no controls) to the content.
+  static const double sectionControls = md;
+  static const double sectionContent = lg;
 }

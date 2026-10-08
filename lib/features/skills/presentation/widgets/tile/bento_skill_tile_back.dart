@@ -108,10 +108,8 @@ class TileBackFace extends StatelessWidget {
                         child: Text(
                           skill.description,
                           style: TextStyle(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.85)
-                                : AppColors.ink700,
-                            fontSize: isDesktop ? 12 : 10.5,
+                            color: context.onSurface,
+                            fontSize: AppTypography.label,
                             height: 1.4,
                           ),
                         ),

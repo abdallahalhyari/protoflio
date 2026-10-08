@@ -3,6 +3,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/shared/utils/mailto.dart';
 
@@ -54,6 +55,15 @@ class QuickProfileActions extends StatelessWidget {
           onPressed: () => _open(Uri.parse(linkedIn), 'quick_profile_linkedin'),
           icon: const Icon(Icons.open_in_new_rounded, size: 18),
           label: const Text('LinkedIn'),
+          style: OutlinedButton.styleFrom(minimumSize: const Size(0, 44)),
+        ),
+        OutlinedButton.icon(
+          onPressed: () {
+            SoundService.instance.playClick();
+            VCardQrDialog.show(context);
+          },
+          icon: const Icon(Icons.qr_code_2_rounded, size: 18),
+          label: const Text('vCard QR'),
           style: OutlinedButton.styleFrom(minimumSize: const Size(0, 44)),
         ),
         TextButton.icon(

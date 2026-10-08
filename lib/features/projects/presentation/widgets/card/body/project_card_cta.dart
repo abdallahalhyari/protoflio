@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-class ReadCaseStudyCta extends StatelessWidget {
+class ReadCaseStudyCta extends StatefulWidget {
   const ReadCaseStudyCta({
     super.key,
     required this.projectName,
@@ -23,37 +23,54 @@ class ReadCaseStudyCta extends StatelessWidget {
   final ValueChanged<bool> onFocusChange;
 
   @override
+  State<ReadCaseStudyCta> createState() => _ReadCaseStudyCtaState();
+}
+
+class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
+  bool _isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
-    final ctaColor = isDark ? scheme.primary : AppColors.tealDeep;
+    final ctaColor = widget.isDark ? widget.scheme.primary : AppColors.tealDeep;
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
 
     return Semantics(
       button: true,
-      label: AppLocalizations.of(context)!.readCaseStudyFor(projectName),
+      label: AppLocalizations.of(context)!.readCaseStudyFor(widget.projectName),
       child: InkWell(
-        onTap: onTap,
-        onFocusChange: onFocusChange,
+        onTapDown: (_) => setState(() => _isPressed = true),
+        onTapUp: (_) => setState(() => _isPressed = false),
+        onTapCancel: () => setState(() => _isPressed = false),
+        onTap: widget.onTap,
+        onFocusChange: widget.onFocusChange,
         borderRadius: BorderRadius.circular(AppRadius.xs),
         child: ExcludeSemantics(
-          child: AnimatedSlide(
-            offset:
-                isHovered && isDesktop ? const Offset(0.05, 0) : Offset.zero,
-            duration: AppMotion.cardHover,
-            curve: AppMotion.emphasized,
-            child: Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    AppLocalizations.of(context)!.uiReadCaseStudy,
-                    style: TextStyle(
-                      color: ctaColor,
-                      fontSize: AppTypography.label,
-                      fontWeight: FontWeight.w900,
+          child: AnimatedScale(
+            scale: _isPressed ? 0.96 : 1.0,
+            duration: reduceMotion ? Duration.zero : AppMotion.micro,
+            curve: Curves.easeOutCubic,
+            child: AnimatedSlide(
+              offset: widget.isHovered && widget.isDesktop
+                  ? const Offset(0.05, 0)
+                  : Offset.zero,
+              duration: reduceMotion ? Duration.zero : AppMotion.cardHover,
+              curve: AppMotion.emphasized,
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      AppLocalizations.of(context)!.uiReadCaseStudy,
+                      style: TextStyle(
+                        color: ctaColor,
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 6),
-                Icon(Icons.arrow_forward_rounded, size: 14, color: ctaColor),
-              ],
+                  const SizedBox(width: 6),
+                  Icon(Icons.arrow_forward_rounded, size: 14, color: ctaColor),
+                ],
+              ),
             ),
           ),
         ),

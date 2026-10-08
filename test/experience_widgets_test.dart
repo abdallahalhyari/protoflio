@@ -27,10 +27,14 @@ void main() {
       await tester.pumpWidget(_wrap(const ExperienceHeader(isDesktop: true)));
       await tester.pumpAndSettle();
 
-      expect(find.text('Multi-year development of enterprise mobile systems'),
+      expect(
+          find.text(
+              'Four roles since 2021, from shipping features to owning the native and security layer.'),
           findsOneWidget);
       expect(find.text('Experience'), findsOneWidget);
-      expect(find.text('Multi-year development of enterprise mobile systems'),
+      expect(
+          find.text(
+              'Four roles since 2021, from shipping features to owning the native and security layer.'),
           findsOneWidget);
     });
 

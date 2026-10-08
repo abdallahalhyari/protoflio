@@ -17,7 +17,7 @@ void main() {
 
     test('$code: refreshed page copy is fully localized', () {
       final localizedCopy = [
-        localized.introRoleHeading,
+        localized.introSeniorEngineer,
         localized.introValueProposition,
         localized.introSkillArchitecture,
         localized.introSkillProductDelivery,
@@ -37,7 +37,7 @@ void main() {
         localized.skillCardSemantics('Flutter', localized.skillMasteryLead),
       ];
       final englishCopy = [
-        english.introRoleHeading,
+        english.introSeniorEngineer,
         english.introValueProposition,
         english.introSkillArchitecture,
         english.introSkillProductDelivery,

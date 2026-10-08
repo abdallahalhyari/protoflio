@@ -252,9 +252,7 @@ class _SkillFilterChipState extends State<_SkillFilterChip> {
                             : (isDark
                                 ? scheme.onSurface.withValues(alpha: 0.7)
                                 : AppColors.ink700),
-                        fontSize: isDesktop
-                            ? AppTypography.label
-                            : AppTypography.label,
+                        fontSize: AppTypography.label,
                         fontWeight:
                             isSelected ? FontWeight.w800 : FontWeight.w600,
                       ),

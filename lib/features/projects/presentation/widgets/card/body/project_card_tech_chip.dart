@@ -42,6 +42,9 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
             : AppColors.toAccessibleLightText(widget.scheme.primary))
         : (widget.isDark ? Colors.white70 : AppColors.ink700);
 
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final animDuration = reduceMotion ? Duration.zero : AppMotion.snap;
+
     return Semantics(
       button: widget.onTap != null,
       selected: widget.isSelected,
@@ -53,12 +56,12 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
         onExit: (_) => setState(() => _isHovered = false),
         child: AnimatedScale(
           scale: _isHovered && widget.onTap != null ? 1.05 : 1.0,
-          duration: AppMotion.snap,
+          duration: animDuration,
           child: InkWell(
             onTap: widget.onTap,
             borderRadius: BorderRadius.circular(AppRadius.xs),
             child: AnimatedContainer(
-              duration: AppMotion.snap,
+              duration: animDuration,
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4.5),
               decoration: BoxDecoration(
                 color: _isHovered && widget.onTap != null

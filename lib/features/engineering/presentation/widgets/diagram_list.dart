@@ -33,14 +33,16 @@ class DiagramList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (int i = 0; i < topic.diagramSteps.length; i++) ...[
-          _DiagramTierItem(
-            key: ValueKey('tier_${topic.id}_$i'),
-            step: topic.diagramSteps[i],
-            index: i,
-            isActive: activeStepIndex != null && activeStepIndex == i,
-            isDesktop: isDesktop,
-            isDark: isDark,
-            onTap: onSelectStep != null ? () => onSelectStep!(i) : null,
+          RepaintBoundary(
+            child: _DiagramTierItem(
+              key: ValueKey('tier_${topic.id}_$i'),
+              step: topic.diagramSteps[i],
+              index: i,
+              isActive: activeStepIndex != null && activeStepIndex == i,
+              isDesktop: isDesktop,
+              isDark: isDark,
+              onTap: onSelectStep != null ? () => onSelectStep!(i) : null,
+            ),
           ),
           if (i < topic.diagramSteps.length - 1)
             _TierConnector(
@@ -268,9 +270,7 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                         Text(
                           ltrContent(context, step.details),
                           style: TextStyle(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.90)
-                                : AppColors.ink700,
+                            color: context.onSurface,
                             fontSize: isDesktop
                                 ? AppTypography.label
                                 : AppTypography.label,

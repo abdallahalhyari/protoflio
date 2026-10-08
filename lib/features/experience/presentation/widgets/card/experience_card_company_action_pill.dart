@@ -148,9 +148,7 @@ class _CompanyActionPillState extends State<CompanyActionPill> {
                           fontWeight: FontWeight.w900,
                           color: _hovered
                               ? (isDark ? Colors.white : primary)
-                              : (isDark
-                                  ? Colors.white.withValues(alpha: 0.88)
-                                  : AppColors.ink800),
+                              : (context.onSurface),
                         ),
                       ),
                       const SizedBox(width: 3),

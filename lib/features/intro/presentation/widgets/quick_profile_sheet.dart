@@ -164,7 +164,7 @@ class QuickProfileCard extends StatelessWidget {
                         ),
                       ]),
                       style: const TextStyle(
-                          fontSize: IntroType.small, height: 1.4),
+                          fontSize: AppTypography.body, height: 1.4),
                     ),
                   ),
               ],
@@ -200,9 +200,9 @@ class _Fact extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontSize: IntroType.micro,
+              fontSize: AppTypography.label,
               fontWeight: FontWeight.w900,
-              letterSpacing: 1.8,
+              letterSpacing: 0.2,
               color: context.mutedText,
             ),
           ),

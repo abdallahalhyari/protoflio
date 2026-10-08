@@ -24,7 +24,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navStack => 'Dovednosti';
 
   @override
-  String get navAbout => 'Perspektivy';
+  String get navAbout => 'O mně';
 
   @override
   String get navContact => 'Kontakt';
@@ -114,28 +114,25 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get viewMyWork => 'ZOBRAZIT PRÁCI';
+  String get viewMyWork => 'Zobrazit práci';
 
   @override
   String get downloadResume => 'Stáhnout životopis';
 
   @override
-  String get introDownloadResume => 'STÁHNOUT ŽIVOTOPIS';
+  String get introDownloadResume => 'Stáhnout CV';
 
   @override
-  String get contactMe => 'KONTAKTUJTE MĚ';
+  String get contactMe => 'Pojďme si promluvit';
 
   @override
-  String get copyEmail => 'KOPÍROVAT E-MAIL';
+  String get copyEmail => 'Kopírovat e-mail';
 
   @override
   String get introSeniorEngineer => 'Senior mobilní vývojář';
 
   @override
-  String get introRoleLine => 'SENIOR MOBILNÍ VÝVOJÁŘ';
-
-  @override
-  String get introRoleHeading => 'SENIOR VÝVOJÁŘ MOBILNÍCH APLIKACÍ';
+  String get introRoleLine => 'Senior mobilní vývojář';
 
   @override
   String get introValueProposition =>
@@ -148,11 +145,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introSkillProductDelivery => 'Dodávání produktů';
 
   @override
-  String get introWorkEligibility =>
-      'PŘESÍDLENÍ DO BRNA · 2027   •   OTEVŘEN SENIORNÍM ROLÍM';
+  String get introWorkEligibility => 'Přesídlení do Brna v roce 2027';
 
   @override
-  String get introAvailableContracts => 'K DISPOZICI PRO KONTRAKTY';
+  String get introAvailableContracts => 'K dispozici pro kontrakty';
 
   @override
   String get contactEngagementScopes => 'Možnosti spolupráce';
@@ -218,26 +214,17 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip => 'VYDÁNÍ 01 · EDICE PORTFOLIO · MMXXVI';
-
-  @override
   String get introTechStack =>
       'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
 
   @override
-  String get introBasedIn => 'LOKACE';
+  String get introBasedIn => 'Lokace';
 
   @override
-  String get introStatus => 'DOSTUPNOST';
+  String get introStatus => 'Dostupnost';
 
   @override
   String get introOpenForRoles => 'Otevřen pro seniorní role';
-
-  @override
-  String get introDiscipline => 'SPECIALIZACE';
-
-  @override
-  String get introMobileArch => 'Flutter · Android · Mobilní architektura';
 
   @override
   String get introMasthead => 'Hlavička';
@@ -323,11 +310,11 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get sectionSubtitleWork =>
-      'Podrobný pohled na architekturu, implementaci a měřitelné výsledky.';
+      'Čtyři zaměstnavatelé, čtyři systémy. Každý případ ukazuje problém, jak byl postaven a co se změnilo.';
 
   @override
   String get sectionSubtitleExperience =>
-      'Víceletý vývoj podnikových mobilních systémů';
+      'Čtyři role od roku 2021, od dodávání funkcí po vlastnictví nativní a bezpečnostní vrstvy.';
 
   @override
   String get projectsHeaderKicker => 'Část 03, vybrané projekty';
@@ -426,11 +413,11 @@ class AppLocalizationsCs extends AppLocalizations {
   String get contactHeaderKicker => 'Část 07, přímý kontakt';
 
   @override
-  String get contactHeaderTitle => 'Napište mi, na čem pracujete.';
+  String get contactHeaderTitle => 'Máte těžký mobilní problém?';
 
   @override
   String get contactHeaderSubtitle =>
-      'Od roku 2027 hledám seniorní mobilní roli v Brně nebo na dálku a mezitím přijímám architektonické revize a zakázky. Nejrychleji odpovídám na e-mail.';
+      'Pošlete mi ho. Přijímám revize mobilní architektury a zakázky a od února 2027 hledám seniorní mobilní roli v Brně. Nejrychleji odpovídám na e-mail.';
 
   @override
   String get skillsHeaderKicker => 'Část 04, systémy a dodávka';
@@ -440,11 +427,11 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get skillsHeaderSubtitle =>
-      'Flutter, Android, architektura platforem, zabezpečení a systémy dodávání pro odolné produktové týmy a důvěryhodné aplikace.';
+      'S čím pracuji a kde jsem to použil. Vyhledejte nástroj nebo filtrujte podle oblasti.';
 
   @override
   String get sectionSubtitleEngineering =>
-      'Architektury ověřené v produkci, na kterých stojí mobilní aplikace';
+      'Architektury za mými mobilními sadami: vrstvy, offline synchronizace, NFC a zabezpečení tokenů.';
 
   @override
   String get flipHintTap => 'Klepněte a otočte';
@@ -473,10 +460,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get quickProfileTitle => 'Shrnutí pro nábor';
 
   @override
-  String get quickProfileRole => 'POZICE';
+  String get quickProfileRole => 'Pozice';
 
   @override
-  String get quickProfileExperience => 'PRAXE';
+  String get quickProfileExperience => 'Praxe';
 
   @override
   String quickProfileYears(int years) {
@@ -484,10 +471,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get quickProfileStack => 'HLAVNÍ TECHNOLOGIE';
+  String get quickProfileStack => 'Hlavní technologie';
 
   @override
-  String get quickProfileRecent => 'POSLEDNÍ POZICE';
+  String get quickProfileRecent => 'Poslední pozice';
 
   @override
   String get quickProfileEmail => 'E-mail';
@@ -890,7 +877,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiKeySafeguards => 'Pojistky';
 
   @override
-  String get uiLatencyBudget => 'Rozpočet latence pro každou vrstvu';
+  String get uiLatencyBudget => 'Cílová latence jednotlivých vrstev';
 
   @override
   String get uiActiveTrace => 'Sledování';
@@ -996,4 +983,536 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get coverGranted => 'Přístup povolen';
+
+  @override
+  String get introPitch =>
+      'Vyvíjím produkční aplikace ve Flutteru a Androidu: offline synchronizaci, NFC čipové karty, bezpečné přihlášení. Zůstávám u nich i po vydání.';
+
+  @override
+  String get projectFigureValueNatHealth => '400 000+';
+
+  @override
+  String get projectFigureLabelNatHealth =>
+      'pojištěnců v Jordánsku, Palestině a Iráku. Papírové nároky nahradily NFC karty.';
+
+  @override
+  String get projectFigureValueEskadenia => '35 %';
+
+  @override
+  String get projectFigureLabelEskadenia =>
+      'méně pádů a stabilních 60 FPS v hustých nemocničních tabulkách.';
+
+  @override
+  String get projectFigureValueSolutions => '4,7+';
+
+  @override
+  String get projectFigureLabelSolutions =>
+      'hvězdičky v obchodě. Obě aplikace vydány včas.';
+
+  @override
+  String get heroFactAvailableLabel => 'Dostupnost';
+
+  @override
+  String get heroFactAvailableValue =>
+      'Nyní na dálku nebo na částečný úvazek. V Brně na místě od února 2027.';
+
+  @override
+  String get heroFactPermitLabel => 'Pracovní povolení';
+
+  @override
+  String get heroFactPermitValue =>
+      'Není potřeba v Česku, dokud studuji na plný úvazek.';
+
+  @override
+  String get heroFactBasedLabel => 'Působiště';
+
+  @override
+  String get heroFactBasedValue => 'Ammán, Jordánsko';
+
+  @override
+  String get heroFactFocusLabel => 'Zaměření';
+
+  @override
+  String get heroFactFocusValue =>
+      'NFC čipové karty, offline synchronizace, bezpečné přihlášení';
+
+  @override
+  String get heroFactLanguagesLabel => 'Jazyky';
+
+  @override
+  String get heroFactLanguagesValue =>
+      'angličtina (profesionální), arabština (rodilý mluvčí)';
+
+  @override
+  String get heroFactStudyLabel => 'Studium';
+
+  @override
+  String get heroFactStudyValue =>
+      'M.Sc. Open Informatics, Mendelova univerzita, od února 2027';
+
+  @override
+  String get traceCta => 'Sledovat klepnutí';
+
+  @override
+  String get traceAgain => 'Sledovat znovu';
+
+  @override
+  String get traceDone => 'Nárok zařazen do fronty, synchronizován a potvrzen.';
+
+  @override
+  String get traceHint =>
+      'Sledujte jeden NFC nárok všemi vrstvami. Najetím na krok si přečtete, co se v něm děje.';
+
+  @override
+  String get traceNote =>
+      'Názvy volání jsou ilustrativní. Tok je zjednodušený z mé práce na NFC nárocích v NatHealth.';
+
+  @override
+  String get traceRunning => 'Sleduji…';
+
+  @override
+  String get traceDetailFlutter =>
+      'Klepnutí se změní na typované volání v Dartu. UI se nikdy nedotkne hardwaru ani klíčů.';
+
+  @override
+  String get traceDetailChannel =>
+      'Volání překračují hranici Dart a Kotlin jako serializované zprávy. Chyby se vracejí jako typované chyby.';
+
+  @override
+  String get traceDetailNative =>
+      'Kotlin komunikuje s kartou přes ISO-DEP: výběr, ověření, čtení. To Flutter sám nezvládne.';
+
+  @override
+  String get traceDetailSecurity =>
+      'Tokeny se podepisují hardwarově chráněnými klíči. Bez sítě se nárok zařadí do fronty a WorkManager to zkusí znovu.';
+
+  @override
+  String get traceDetailBackend =>
+      'REST přes HTTPS s ověřením JWT. Odpověď serveru uzavře smyčku pro zařazený nárok.';
+
+  @override
+  String get traceStepFlutter => 'Flutter UI';
+
+  @override
+  String get traceStepChannel => 'Platform channel';
+
+  @override
+  String get traceStepNative => 'Native Android';
+
+  @override
+  String get traceStepSecurity => 'Zabezpečení a synchronizace';
+
+  @override
+  String get traceStepBackend => 'Backend';
+
+  @override
+  String get introTagline =>
+      'Mobilní inženýr, který staví software fungující za obrazovkou.';
+
+  @override
+  String get introPitch2 =>
+      'Produkční Flutter a nativní Android: NFC čipové karty, kryptografie, offline synchronizace a podnikové integrace.';
+
+  @override
+  String get letsTalk => 'Pojďme si promluvit';
+
+  @override
+  String get downloadCv => 'Stáhnout CV';
+
+  @override
+  String get aboutTitle => 'O mně';
+
+  @override
+  String get aboutSubtitle =>
+      'Jak pracuji jako inženýr, jaké problémy řeším a pár věcí, které si můžete sami vyzkoušet.';
+
+  @override
+  String get aboutTabProfile => 'Profil';
+
+  @override
+  String get aboutTabPlayground => 'Hřiště';
+
+  @override
+  String get aboutEngineerLabel => 'Inženýr';
+
+  @override
+  String get aboutEngineerValue => 'Flutter, Android a systémy kolem nich';
+
+  @override
+  String get aboutExperienceLabel => 'Praxe';
+
+  @override
+  String aboutExperienceValue(int years) {
+    return '$years+ let v mobilním vývoji';
+  }
+
+  @override
+  String get aboutFocusLabel => 'Zaměření';
+
+  @override
+  String get aboutFocusValue =>
+      'Mobilní systémy, nativní integrace, bezpečnost, podnikové aplikace';
+
+  @override
+  String get aboutHoodHint => 'Vyberte schopnost a uvidíte, jak ji používám.';
+
+  @override
+  String get aboutWhereLabel => 'Kde jsem ji použil';
+
+  @override
+  String get hoodNfcTitle => 'NFC';
+
+  @override
+  String get hoodNfcTag => 'Bezpečná komunikace a ověření s kartou.';
+
+  @override
+  String get hoodNfcDetail =>
+      'Nativní vrstva v Kotlinu komunikuje s čipovými kartami přes ISO 7816 APDU. Navrhl jsem rozhraní čtečky tak, aby více typů karet stálo za jedním kontraktem.';
+
+  @override
+  String get hoodNfcWhere => 'NatHealth';
+
+  @override
+  String get hoodCryptoTitle => 'Kryptografie';
+
+  @override
+  String get hoodCryptoTag => 'RSA, AES a PBKDF2 s pečlivou prací s klíči.';
+
+  @override
+  String get hoodCryptoDetail =>
+      'Dvoukrokové vydávání JWT, bezpečné ukládání tokenů a vazba zařízení přes GUID chrání citlivá data pacientů.';
+
+  @override
+  String get hoodCryptoWhere => 'NatHealth';
+
+  @override
+  String get hoodBackgroundTitle => 'Zpracování na pozadí';
+
+  @override
+  String get hoodBackgroundTag =>
+      'Spolehlivá synchronizace a zpracování zpráv.';
+
+  @override
+  String get hoodBackgroundDetail =>
+      'WorkManager spouští synchronizaci na pozadí, dotazování na stav a obnovu tokenů, takže práce doběhne, i když ji uživatel nesleduje.';
+
+  @override
+  String get hoodBackgroundWhere => 'NatHealth';
+
+  @override
+  String get hoodOfflineTitle => 'Offline-first';
+
+  @override
+  String get hoodOfflineTag =>
+      'Aplikace, které fungují, i když zmizí připojení.';
+
+  @override
+  String get hoodOfflineDetail =>
+      'Podání se ukládají v zařízení a odesílají po návratu sítě, s opakováním s exponenciálním odstupem a jednotným zacházením s chybami.';
+
+  @override
+  String get hoodOfflineWhere => 'NatHealth';
+
+  @override
+  String get hoodNativeTitle => 'Nativní integrace';
+
+  @override
+  String get hoodNativeTag =>
+      'Flutter propojený se složitým nativním Androidem.';
+
+  @override
+  String get hoodNativeDetail =>
+      'Platformní kanály spojují Dart s kódem v Kotlinu a Javě pro přístup k hardwaru, na který Flutter sám nedosáhne.';
+
+  @override
+  String get hoodNativeWhere => 'NatHealth';
+
+  @override
+  String get hoodEnterpriseTitle => 'Podnikové systémy';
+
+  @override
+  String get hoodEnterpriseTag =>
+      'Zdravotnictví, ERP a rozsáhlé podnikové procesy.';
+
+  @override
+  String get hoodEnterpriseDetail =>
+      'Modulární architektura a znovupoužitelné komponenty napříč klienty ze zdravotnictví, e-learningu a ERP, přestavěné bez odstavení aplikací.';
+
+  @override
+  String get hoodEnterpriseWhere => 'ESKADENIA Software';
+
+  @override
+  String get playKdfTitle => 'Odvození klíče';
+
+  @override
+  String get playKdfIntro =>
+      'PBKDF2-HMAC-SHA256 běžící ve vašem prohlížeči. Více iterací zpomalí každý pokus o uhodnutí hesla, útočníkovi i vám.';
+
+  @override
+  String get playKdfPassword => 'Heslo';
+
+  @override
+  String get playKdfIterations => 'Iterace';
+
+  @override
+  String get playKdfRun => 'Odvodit klíč';
+
+  @override
+  String get playKdfRunning => 'Odvozuji…';
+
+  @override
+  String get playKdfResult => 'Odvozený klíč (256 bitů)';
+
+  @override
+  String playKdfTime(int ms) {
+    return 'Trvalo to $ms ms na tomto zařízení.';
+  }
+
+  @override
+  String get playKdfNote =>
+      'Sůl je v ukázce pevná. Skutečné systémy používají náhodnou sůl pro každého uživatele.';
+
+  @override
+  String get playSyncTitle => 'Z offline do online';
+
+  @override
+  String get playSyncIntro =>
+      'Odesílejte nároky offline. Čekají ve frontě v zařízení a po připojení se synchronizují, s opakováním s exponenciálním odstupem.';
+
+  @override
+  String get playSyncOnline => 'Online';
+
+  @override
+  String get playSyncOffline => 'Offline';
+
+  @override
+  String get playSyncFlaky => 'Nestabilní síť';
+
+  @override
+  String get playSyncSubmit => 'Odeslat nárok';
+
+  @override
+  String get playSyncEmpty => 'Zatím žádné nároky. Odešlete jeden.';
+
+  @override
+  String get playSyncQueued => 'Ve frontě';
+
+  @override
+  String get playSyncSending => 'Odesílá se';
+
+  @override
+  String get playSyncSynced => 'Synchronizováno';
+
+  @override
+  String playSyncRetry(int seconds) {
+    return 'Znovu za $seconds s';
+  }
+
+  @override
+  String playSyncClaim(int number) {
+    return 'Nárok $number';
+  }
+
+  @override
+  String get playSyncNote => 'Simulace. Nepoužívá se žádná síť.';
+
+  @override
+  String get navPerspectives => 'Perspektivy';
+
+  @override
+  String get projectLblProblem => 'Problém';
+
+  @override
+  String get projectLblSystem => 'Systém';
+
+  @override
+  String get projectLblRole => 'Moje role';
+
+  @override
+  String get projectProblemNatHealth =>
+      'Papírové nároky, riziko podvodů a nespolehlivé připojení klinik zpomalovaly zpracování pojistných nároků.';
+
+  @override
+  String get projectSystemNatHealth =>
+      'Kotlin NFC most ke čipovým kartám, JWT s vazbou na zařízení a offline-first fronta WorkManager.';
+
+  @override
+  String get projectRoleNatHealth =>
+      'Vedl jsem architekturu aplikace, nativní NFC integraci a zabezpečení.';
+
+  @override
+  String get projectProblemEskadenia =>
+      'Starší nemocniční a univerzitní aplikace zahazovaly snímky, měly propletený stav a zabíraly příliš paměti.';
+
+  @override
+  String get projectSystemEskadenia =>
+      'Oddělené funkční balíčky MVVM, typované vrstvy REST a cachované repozitáře.';
+
+  @override
+  String get projectRoleEskadenia =>
+      'Vedl jsem architektonický refaktoring, profilování a vyčleňování balíčků.';
+
+  @override
+  String get projectProblemSolutions =>
+      'Dvě spotřebitelské aplikace s vysokým provozem, věrnostní systém a živé příběhy, bylo třeba dodat v těsných termínech.';
+
+  @override
+  String get projectSystemSolutions =>
+      'Sdílená knihovna komponent ve Flutteru, hardwarově urychlené pipeline kamery a videa, dynamické modely REST.';
+
+  @override
+  String get projectRoleSolutions =>
+      'Stanovil jsem standardy mobilního designu a vytvořil pipeline kamery a integraci backendu.';
+
+  @override
+  String get projectProblemFais =>
+      'Vícekrokový nákup a nepřetržité streamování médií musely běžet bez úniků paměti a souběhů stavů.';
+
+  @override
+  String get projectSystemFais =>
+      'Integrace nákupních API od začátku do konce s klíči idempotence a diagnostika živých problémů z telemetrie.';
+
+  @override
+  String get projectRoleFais =>
+      'Koordinoval jsem integraci backendu a frontendu a řešil produkční problémy.';
+
+  @override
+  String get playAesTitle => 'Šifrování a dešifrování';
+
+  @override
+  String get playAesIntro =>
+      'AES-256-CBC s klíčem odvozeným z vašeho hesla přes PBKDF2. Vše běží ve vašem prohlížeči.';
+
+  @override
+  String get playAesMessage => 'Zpráva';
+
+  @override
+  String get playAesPassword => 'Heslo';
+
+  @override
+  String get playAesEncrypt => 'Zašifrovat';
+
+  @override
+  String get playAesDecryptWith => 'Dešifrovat heslem';
+
+  @override
+  String get playAesDecrypt => 'Dešifrovat';
+
+  @override
+  String get playAesIv => 'IV';
+
+  @override
+  String get playAesCipher => 'Šifrový text';
+
+  @override
+  String get playAesPlain => 'Dešifrovaný text';
+
+  @override
+  String get playAesWrongKey =>
+      'Špatný klíč: výplň je neplatná, dešifrování se zastaví.';
+
+  @override
+  String get playAesNote =>
+      'CBC zprávu skryje, ale nepozná úpravu. Skutečné systémy přidávají MAC nebo používají režim AEAD, například GCM.';
+
+  @override
+  String get playApduTitle => 'Výměna s čipovou kartou';
+
+  @override
+  String get playApduIntro =>
+      'Příkaz APDU podle ISO 7816 a odpověď karty, bajt po bajtu. Karta je zde simulovaná.';
+
+  @override
+  String get playApduSelect => 'Vybrat aplikaci';
+
+  @override
+  String get playApduRead => 'Přečíst 16 bajtů';
+
+  @override
+  String get playApduUnknown => 'Vybrat neznámou aplikaci';
+
+  @override
+  String get playApduBadClass => 'Nepodporovaná třída';
+
+  @override
+  String get playApduCommand => 'Příkaz';
+
+  @override
+  String get playApduResponse => 'Odpověď';
+
+  @override
+  String get playApduData => 'Data';
+
+  @override
+  String get playApduStatus => 'Stav';
+
+  @override
+  String get playApduNote =>
+      'Simulace. Stavová slova jsou skutečné kódy ISO 7816-4.';
+
+  @override
+  String get apduSw9000 => 'Úspěch';
+
+  @override
+  String get apduSw6A82 => 'Soubor nebo aplikace nenalezena';
+
+  @override
+  String get apduSw6E00 => 'Třída není podporována';
+
+  @override
+  String get playChanTitle => 'Zpráva platformního kanálu';
+
+  @override
+  String get playChanIntro =>
+      'Volání z Flutteru do Kotlinu se před překročením hranice serializuje na bajty. Toto jsou skutečné bajty standardního kodeku Flutteru.';
+
+  @override
+  String get playChanMethod => 'Metoda';
+
+  @override
+  String get playChanTimeout => 'Časový limit (ms)';
+
+  @override
+  String playChanBytes(int count) {
+    return '$count bajtů na drátě';
+  }
+
+  @override
+  String get playChanDecoded => 'Dekódováno na nativní straně';
+
+  @override
+  String get playChanNote => 'Zakódováno pomocí StandardMethodCodec.';
+
+  @override
+  String get aboutTryIt => 'Vyzkoušet na hřišti';
+
+  @override
+  String get traceOpenPlayground => 'Vyzkoušejte tyto vrstvy sami';
+
+  @override
+  String get engBlueprint => 'Architektonický plán';
+
+  @override
+  String engTiers(int count) {
+    return 'Vrstev: $count';
+  }
+
+  @override
+  String engSwipeHint(int current, int total) {
+    return 'Přejetím nebo klepnutím přepnete plány ($current z $total)';
+  }
+
+  @override
+  String get engTryDemos =>
+      'Vyzkoušejte ukázky NFC, kryptografie a synchronizace';
+
+  @override
+  String get aboutStoryShort =>
+      'V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.';
+
+  @override
+  String get engTabArchitectures => 'Architektury';
+
+  @override
+  String get engTabCapabilities => 'Schopnosti';
 }

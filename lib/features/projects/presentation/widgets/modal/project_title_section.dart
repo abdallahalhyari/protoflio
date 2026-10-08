@@ -41,10 +41,8 @@ class ProjectTitleSection extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.85)
-                : AppColors.ink700,
-            fontSize: isDesktop ? 13 : 11.5,
+            color: context.onSurface,
+            fontSize: isDesktop ? AppTypography.body : AppTypography.label,
             height: 1.4,
             fontWeight: FontWeight.w500,
           ),

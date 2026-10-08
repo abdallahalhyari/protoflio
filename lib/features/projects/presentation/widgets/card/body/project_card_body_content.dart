@@ -6,10 +6,11 @@ import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/presentation/utils/project_copy.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/utils/bidi.dart';
+import 'package:profile/shared/widgets/labeled_line.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_tech_chip.dart';
-import 'package:profile/features/projects/presentation/widgets/card/body/project_card_outcome_line.dart';
+import 'package:profile/features/projects/presentation/widgets/card/body/project_card_figure_line.dart';
 import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_quick_links.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_router.dart';
 
@@ -43,29 +44,17 @@ class CardBodyContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     final outcome = localizedProjectOutcome(loc, project);
+    final figure = localizedProjectFigure(loc, project);
+    final caseCopy = localizedProjectCase(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
+    // Only the fixed-height desktop grid needs clamps; cards that size to
+    // content show every line instead of cutting the impact mid-sentence.
+    final clampLines = pinFoot ? 3 : null;
+    final clampOverflow = pinFoot ? TextOverflow.ellipsis : null;
 
     final titleBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (project.role != null) ...[
-          // A full sentence, so sentence case at caption size: set in
-          // 8.5px mono capitals inside a grey box it read as noise.
-          Text(
-            project.role!,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: AppTypography.label,
-              fontWeight: FontWeight.w600,
-              height: 1.35,
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.62)
-                  : AppColors.ink500,
-            ),
-          ),
-          const SizedBox(height: 6),
-        ],
         AnimatedDefaultTextStyle(
           duration: AppMotion.snap,
           style: TextStyle(
@@ -81,23 +70,52 @@ class CardBodyContent extends StatelessWidget {
           ),
           child: Text(
             project.name,
-            maxLines: isDesktop ? 1 : 2,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        const SizedBox(height: 6),
-        Text(
-          ltrContent(context, localizedProjectTagline(loc, project)),
-          style: TextStyle(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.75)
-                : AppColors.ink600,
-            fontSize: isDesktop ? 13 : 12,
-            height: 1.4,
+        const SizedBox(height: AppSpacing.sm),
+        if (caseCopy != null) ...[
+          LabeledLine(
+              label: loc.projectLblProblem,
+              text: caseCopy.problem,
+              maxLines: clampLines),
+          LabeledLine(
+              label: loc.projectLblSystem,
+              text: caseCopy.system,
+              maxLines: clampLines),
+          LabeledLine(
+              label: loc.projectLblRole,
+              text: caseCopy.role,
+              maxLines: clampLines),
+        ] else
+          Text(
+            ltrContent(context, localizedProjectTagline(loc, project)),
+            style: TextStyle(
+              color: context.mutedText,
+              fontSize: AppTypography.body,
+              height: 1.4,
+            ),
+            maxLines: clampLines,
+            overflow: clampOverflow,
           ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
+      ],
+    );
+
+    final middle = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        titleBlock,
+        if (outcome != null) ...[
+          const SizedBox(height: AppSpacing.md),
+          CardFigureLine(
+            value: figure?.value,
+            label: figure?.label ?? outcome,
+            scheme: scheme,
+            isDark: isDark,
+            maxLines: pinFoot ? 3 : null,
+          ),
+        ],
       ],
     );
 
@@ -106,27 +124,19 @@ class CardBodyContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          titleBlock,
-          if (outcome != null) ...[
-            const SizedBox(height: AppSpacing.sm),
-            if (pinFoot)
-              Flexible(
-                child: ClipRect(
-                  child: CardOutcomeLine(
-                    text: outcome,
-                    scheme: scheme,
-                    isDark: isDark,
-                  ),
+          if (pinFoot)
+            // Fixed-height grid: the copy takes whatever room the tags and
+            // the call to action leave, clipped rather than overflowing.
+            Expanded(
+              child: ClipRect(
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: middle,
                 ),
-              )
-            else
-              CardOutcomeLine(
-                text: outcome,
-                scheme: scheme,
-                isDark: isDark,
               ),
-          ],
-          if (pinFoot) const Spacer(),
+            )
+          else
+            middle,
           const SizedBox(height: AppSpacing.sm),
           Wrap(
             spacing: 6,

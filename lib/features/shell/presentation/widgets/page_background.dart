@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// The canvas behind every page: polycarbonate card stock in the theme's surface
-/// colour with a subtle radial ambient mesh glow driven by the active section primary accent.
+import 'package:profile/core/theme/tokens.dart';
+
+/// The canvas behind every page: an ambient, multi-tone stage that renders
+/// a subtle background depth in both light and dark modes.
 class PageBackground extends StatelessWidget {
   final Widget child;
 
@@ -17,26 +19,41 @@ class PageBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final surface = Theme.of(context).scaffoldBackgroundColor;
-    final primary = Theme.of(context).colorScheme.primary;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor =
-        overlay == null ? surface : Color.alphaBlend(overlay!, surface);
+    final surface = Theme.of(context).scaffoldBackgroundColor;
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: baseColor,
-        gradient: RadialGradient(
-          center: const Alignment(0.0, -0.6),
-          radius: 1.25,
-          colors: [
-            primary.withValues(alpha: isDark ? 0.08 : 0.04),
-            baseColor,
-          ],
-          stops: const [0.0, 1.0],
-        ),
-      ),
-      child: RepaintBoundary(child: child),
-    );
+    final bgGradient = isDark
+        ? const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.stageDarkStart,
+              AppColors.stageDarkMid,
+              AppColors.stageDarkEnd,
+            ],
+            stops: [0.0, 0.5, 1.0],
+          )
+        : const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.stageLightStart,
+              AppColors.stageLightMid,
+              AppColors.stageLightEnd,
+            ],
+            stops: [0.0, 0.45, 1.0],
+          );
+
+    final Widget backgroundWidget = overlay == null
+        ? DecoratedBox(
+            decoration: BoxDecoration(gradient: bgGradient),
+            child: child,
+          )
+        : ColoredBox(
+            color: Color.alphaBlend(overlay!, surface),
+            child: child,
+          );
+
+    return RepaintBoundary(child: backgroundWidget);
   }
 }

@@ -84,7 +84,7 @@ class CardOrdinalHeader extends StatelessWidget {
               ),
             ),
             Text(
-              'ROLE',
+              'Role',
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.6),
                 fontSize: AppTypography.label,
