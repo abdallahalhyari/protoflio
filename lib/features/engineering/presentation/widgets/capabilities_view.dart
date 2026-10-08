@@ -16,10 +16,10 @@ class _Capability {
   final String where;
 }
 
-/// "Under the hood": the kinds of problem I solve. Hover or tap a
+/// The capabilities behind the architectures: the kinds of problem I solve. Hover or tap a
 /// capability to read what it means and where I used it.
-class HoodTab extends StatefulWidget {
-  const HoodTab({super.key, required this.isDesktop, this.onTryDemo});
+class CapabilitiesView extends StatefulWidget {
+  const CapabilitiesView({super.key, required this.isDesktop, this.onTryDemo});
 
   final bool isDesktop;
 
@@ -27,10 +27,10 @@ class HoodTab extends StatefulWidget {
   final VoidCallback? onTryDemo;
 
   @override
-  State<HoodTab> createState() => _HoodTabState();
+  State<CapabilitiesView> createState() => _CapabilitiesViewState();
 }
 
-class _HoodTabState extends State<HoodTab> {
+class _CapabilitiesViewState extends State<CapabilitiesView> {
   int _selected = 0;
 
   @override

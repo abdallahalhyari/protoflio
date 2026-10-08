@@ -1121,9 +1121,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutTabProfile => 'الملف';
 
   @override
-  String get aboutTabHood => 'تحت الغطاء';
-
-  @override
   String get aboutTabPlayground => 'ساحة التجارب';
 
   @override
@@ -1146,9 +1143,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get aboutFocusValue =>
       'أنظمة الهواتف، والتكامل مع النظام الأصلي، والأمان، وتطبيقات المؤسسات';
-
-  @override
-  String get aboutStackLabel => 'الأدوات';
 
   @override
   String get aboutHoodHint => 'اختر قدرة لترى كيف أستخدمها.';
@@ -1370,15 +1364,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'نسّقت التكامل بين الخلفية والواجهة وحللت مشكلات الإنتاج.';
 
   @override
-  String get navAvailable => 'متاح لفرص جديدة';
-
-  @override
-  String get expLblChallenge => 'التحدي';
-
-  @override
-  String get expLblImpact => 'الأثر';
-
-  @override
   String get playAesTitle => 'التشفير وفك التشفير';
 
   @override
@@ -1511,30 +1496,8 @@ class AppLocalizationsAr extends AppLocalizations {
       'بدأت في تطبيقات الهواتف عام 2021. ومنذ ذلك الحين ينتقل عملي باستمرار إلى أسفل الطبقات، من الشاشات إلى طبقات النظام الأصلي والأمان والمزامنة تحتها. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.';
 
   @override
-  String get aboutJourneyTitle => 'كيف انتقل العمل إلى أسفل الطبقات';
+  String get engTabArchitectures => 'البُنى المعمارية';
 
   @override
-  String get aboutJourneyTop => 'أقرب إلى الشاشة';
-
-  @override
-  String get aboutJourneyBottom => 'أقرب إلى العتاد';
-
-  @override
-  String get aboutJourneyFais =>
-      'Flutter وAndroid لعمليات الدفع في التجارة وبث الوسائط.';
-
-  @override
-  String get aboutJourneySolutions =>
-      'مكتبة مكوّنات Flutter مشتركة ومسارات كاميرا لتطبيقين استهلاكيين.';
-
-  @override
-  String get aboutJourneyEskadenia =>
-      'أعدت هيكلة تطبيقات المستشفيات والجامعات القديمة إلى حزم معيارية قابلة للاختبار.';
-
-  @override
-  String get aboutJourneyNatHealth =>
-      'بطاقات NFC الذكية وأمان الرموز والمزامنة دون اتصال لمطالبات التأمين.';
-
-  @override
-  String get aboutJourneyNow => 'الآن';
+  String get engTabCapabilities => 'القدرات';
 }

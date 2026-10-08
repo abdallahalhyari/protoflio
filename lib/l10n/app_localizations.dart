@@ -2080,12 +2080,6 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get aboutTabProfile;
 
-  /// No description provided for @aboutTabHood.
-  ///
-  /// In en, this message translates to:
-  /// **'Under the hood'**
-  String get aboutTabHood;
-
   /// No description provided for @aboutTabPlayground.
   ///
   /// In en, this message translates to:
@@ -2127,12 +2121,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mobile systems, native integration, security, enterprise apps'**
   String get aboutFocusValue;
-
-  /// No description provided for @aboutStackLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Stack'**
-  String get aboutStackLabel;
 
   /// No description provided for @aboutHoodHint.
   ///
@@ -2518,24 +2506,6 @@ abstract class AppLocalizations {
   /// **'Coordinated backend and frontend integration and resolved production issues.'**
   String get projectRoleFais;
 
-  /// No description provided for @navAvailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Available for opportunities'**
-  String get navAvailable;
-
-  /// No description provided for @expLblChallenge.
-  ///
-  /// In en, this message translates to:
-  /// **'Challenge'**
-  String get expLblChallenge;
-
-  /// No description provided for @expLblImpact.
-  ///
-  /// In en, this message translates to:
-  /// **'Impact'**
-  String get expLblImpact;
-
   /// No description provided for @playAesTitle.
   ///
   /// In en, this message translates to:
@@ -2776,53 +2746,17 @@ abstract class AppLocalizations {
   /// **'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.'**
   String get aboutStoryShort;
 
-  /// No description provided for @aboutJourneyTitle.
+  /// No description provided for @engTabArchitectures.
   ///
   /// In en, this message translates to:
-  /// **'How the work moved down the stack'**
-  String get aboutJourneyTitle;
+  /// **'Architectures'**
+  String get engTabArchitectures;
 
-  /// No description provided for @aboutJourneyTop.
+  /// No description provided for @engTabCapabilities.
   ///
   /// In en, this message translates to:
-  /// **'Closer to the screen'**
-  String get aboutJourneyTop;
-
-  /// No description provided for @aboutJourneyBottom.
-  ///
-  /// In en, this message translates to:
-  /// **'Closer to the hardware'**
-  String get aboutJourneyBottom;
-
-  /// No description provided for @aboutJourneyFais.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter and Android for commerce checkouts and media streaming.'**
-  String get aboutJourneyFais;
-
-  /// No description provided for @aboutJourneySolutions.
-  ///
-  /// In en, this message translates to:
-  /// **'A shared Flutter component library and camera pipelines for two consumer apps.'**
-  String get aboutJourneySolutions;
-
-  /// No description provided for @aboutJourneyEskadenia.
-  ///
-  /// In en, this message translates to:
-  /// **'Refactored legacy hospital and university apps into modular, testable packages.'**
-  String get aboutJourneyEskadenia;
-
-  /// No description provided for @aboutJourneyNatHealth.
-  ///
-  /// In en, this message translates to:
-  /// **'NFC smart cards, token security and offline sync for insurance claims.'**
-  String get aboutJourneyNatHealth;
-
-  /// No description provided for @aboutJourneyNow.
-  ///
-  /// In en, this message translates to:
-  /// **'now'**
-  String get aboutJourneyNow;
+  /// **'Capabilities'**
+  String get engTabCapabilities;
 }
 
 class _AppLocalizationsDelegate

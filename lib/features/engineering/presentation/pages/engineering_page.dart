@@ -17,6 +17,11 @@ import 'package:profile/features/engineering/presentation/widgets/architecture_t
 import 'package:profile/features/engineering/presentation/widgets/engineering_header.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/shared/widgets/swipe_affordance.dart';
+import 'package:profile/shared/widgets/text_tabs.dart';
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/features/about/presentation/about_navigation.dart';
+import 'package:profile/features/engineering/presentation/widgets/capabilities_view.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 
 class EngineeringPage extends StatelessWidget {
   final bool isContinuousMobile;
@@ -66,6 +71,9 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
+  /// 0: the four architectures; 1: the capabilities behind them.
+  int _view = 0;
 
   Widget _buildSwipeAffordance(int selectedIndex) {
     return SwipeAffordance(
@@ -127,114 +135,182 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
           children: [
             EngineeringHeader(isDesktop: isDesktop),
             const SizedBox(height: AppSpacing.sm),
-            BlocSelector<ArchitectureSimulatorBloc, ArchitectureSimulatorState,
-                int>(
-              selector: (state) => state.selectedTopicIndex,
-              builder: (context, selectedTopicIndex) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ArchitectureTopicTabs(
-                      topics: kArchitectureTopics,
-                      selectedIndex: selectedTopicIndex,
-                      onSelectTopic: (index) {
-                        SoundService.instance.playClick();
-                        context
-                            .read<ArchitectureSimulatorBloc>()
-                            .add(SimulatorTopicSelected(index));
-                      },
-                    ),
-                    if (!isDesktop) _buildSwipeAffordance(selectedTopicIndex),
-                  ],
-                );
-              },
+            TextTabs(
+              labels: [
+                AppLocalizations.of(context)!.engTabArchitectures,
+                AppLocalizations.of(context)!.engTabCapabilities,
+              ],
+              selected: _view,
+              accent:
+                  context.isDarkMode ? AppColors.goldSoft : AppColors.goldDeep,
+              onSelect: (i) => setState(() => _view = i),
             ),
-            const SizedBox(height: AppSpacing.md),
-            if (widget.isContinuousMobile)
-              BlocBuilder<ArchitectureSimulatorBloc,
-                  ArchitectureSimulatorState>(
-                buildWhen: (prev, curr) =>
-                    prev.selectedTopicIndex != curr.selectedTopicIndex ||
-                    prev.currentStepIndex != curr.currentStepIndex,
-                builder: (context, state) {
-                  final activeTopic = state.currentTopic;
-                  final selectedTopicIndex = state.selectedTopicIndex;
-                  final currentStepIndex = state.currentStepIndex;
+            const SizedBox(height: AppSpacing.sm),
+            if (_view == 1) ...[
+              if (widget.isContinuousMobile)
+                CapabilitiesView(
+                  isDesktop: isDesktop,
+                  onTryDemo: _openPlayground,
+                )
+              else
+                Expanded(
+                  child: SingleChildScrollView(
+                    primary: false,
+                    child: CapabilitiesView(
+                      isDesktop: isDesktop,
+                      onTryDemo: _openPlayground,
+                    ),
+                  ),
+                ),
+            ] else ...[
+              BlocSelector<ArchitectureSimulatorBloc,
+                  ArchitectureSimulatorState, int>(
+                selector: (state) => state.selectedTopicIndex,
+                builder: (context, selectedTopicIndex) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ArchitectureTopicTabs(
+                        topics: kArchitectureTopics,
+                        selectedIndex: selectedTopicIndex,
+                        onSelectTopic: (index) {
+                          SoundService.instance.playClick();
+                          context
+                              .read<ArchitectureSimulatorBloc>()
+                              .add(SimulatorTopicSelected(index));
+                        },
+                      ),
+                      if (!isDesktop) _buildSwipeAffordance(selectedTopicIndex),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: AppSpacing.md),
+              if (widget.isContinuousMobile)
+                BlocBuilder<ArchitectureSimulatorBloc,
+                    ArchitectureSimulatorState>(
+                  buildWhen: (prev, curr) =>
+                      prev.selectedTopicIndex != curr.selectedTopicIndex ||
+                      prev.currentStepIndex != curr.currentStepIndex,
+                  builder: (context, state) {
+                    final activeTopic = state.currentTopic;
+                    final selectedTopicIndex = state.selectedTopicIndex;
+                    final currentStepIndex = state.currentStepIndex;
 
-                  return GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onHorizontalDragEnd: (details) {
-                      if (details.primaryVelocity != null) {
-                        if (details.primaryVelocity! < -200) {
-                          SoundService.instance.playClick();
-                          final nextIndex = (selectedTopicIndex + 1) %
-                              kArchitectureTopics.length;
-                          context
-                              .read<ArchitectureSimulatorBloc>()
-                              .add(SimulatorTopicSelected(nextIndex));
-                        } else if (details.primaryVelocity! > 200) {
-                          SoundService.instance.playClick();
-                          final prevIndex = (selectedTopicIndex -
-                                  1 +
-                                  kArchitectureTopics.length) %
-                              kArchitectureTopics.length;
-                          context
-                              .read<ArchitectureSimulatorBloc>()
-                              .add(SimulatorTopicSelected(prevIndex));
+                    return GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onHorizontalDragEnd: (details) {
+                        if (details.primaryVelocity != null) {
+                          if (details.primaryVelocity! < -200) {
+                            SoundService.instance.playClick();
+                            final nextIndex = (selectedTopicIndex + 1) %
+                                kArchitectureTopics.length;
+                            context
+                                .read<ArchitectureSimulatorBloc>()
+                                .add(SimulatorTopicSelected(nextIndex));
+                          } else if (details.primaryVelocity! > 200) {
+                            SoundService.instance.playClick();
+                            final prevIndex = (selectedTopicIndex -
+                                    1 +
+                                    kArchitectureTopics.length) %
+                                kArchitectureTopics.length;
+                            context
+                                .read<ArchitectureSimulatorBloc>()
+                                .add(SimulatorTopicSelected(prevIndex));
+                          }
                         }
-                      }
-                    },
-                    child: AnimatedSwitcher(
-                      duration: AppMotion.switcher,
-                      switchInCurve: AppMotion.emphasized,
-                      switchOutCurve: AppMotion.emphasizedAccel,
-                      transitionBuilder: (child, animation) => FadeTransition(
-                        opacity: animation,
-                        child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0.03, 0),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          child: ScaleTransition(
-                            scale: Tween<double>(begin: 0.98, end: 1.0)
-                                .animate(animation),
-                            child: child,
+                      },
+                      child: AnimatedSwitcher(
+                        duration: AppMotion.switcher,
+                        switchInCurve: AppMotion.emphasized,
+                        switchOutCurve: AppMotion.emphasizedAccel,
+                        transitionBuilder: (child, animation) => FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0.03, 0),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: ScaleTransition(
+                              scale: Tween<double>(begin: 0.98, end: 1.0)
+                                  .animate(animation),
+                              child: child,
+                            ),
+                          ),
+                        ),
+                        child: KeyedSubtree(
+                          key: ValueKey('arch_topic_${activeTopic.id}'),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _buildDiagramCard(
+                                context,
+                                activeTopic,
+                                currentStepIndex,
+                                isDesktop,
+                              ),
+                              const SizedBox(height: AppSpacing.md),
+                              ArchitectureDetailsCard(
+                                topic: activeTopic,
+                                isDesktop: isDesktop,
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      child: KeyedSubtree(
-                        key: ValueKey('arch_topic_${activeTopic.id}'),
-                        child: Column(
+                    );
+                  },
+                )
+              else
+                Expanded(
+                  child: isDesktop
+                      ? Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            _buildDiagramCard(
-                              context,
-                              activeTopic,
-                              currentStepIndex,
-                              isDesktop,
+                            Expanded(
+                              flex: 6,
+                              child: BlocBuilder<ArchitectureSimulatorBloc,
+                                  ArchitectureSimulatorState>(
+                                buildWhen: (prev, curr) =>
+                                    prev.selectedTopicIndex !=
+                                        curr.selectedTopicIndex ||
+                                    prev.currentStepIndex !=
+                                        curr.currentStepIndex,
+                                builder: (context, state) {
+                                  return _buildDiagramCard(
+                                    context,
+                                    state.currentTopic,
+                                    state.currentStepIndex,
+                                    isDesktop,
+                                  );
+                                },
+                              ),
                             ),
-                            const SizedBox(height: AppSpacing.md),
-                            ArchitectureDetailsCard(
-                              topic: activeTopic,
-                              isDesktop: isDesktop,
+                            const SizedBox(width: AppSpacing.lg),
+                            Expanded(
+                              flex: 5,
+                              child: BlocSelector<
+                                  ArchitectureSimulatorBloc,
+                                  ArchitectureSimulatorState,
+                                  ArchitectureTopic>(
+                                selector: (state) => state.currentTopic,
+                                builder: (context, activeTopic) {
+                                  return ArchitectureDetailsCard(
+                                    topic: activeTopic,
+                                    isDesktop: isDesktop,
+                                  );
+                                },
+                              ),
                             ),
                           ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              )
-            else
-              Expanded(
-                child: isDesktop
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            flex: 6,
-                            child: BlocBuilder<ArchitectureSimulatorBloc,
+                        )
+                      : ListView(
+                          primary: false,
+                          padding: EdgeInsets.zero,
+                          physics: const ClampingScrollPhysics(),
+                          children: [
+                            BlocBuilder<ArchitectureSimulatorBloc,
                                 ArchitectureSimulatorState>(
                               buildWhen: (prev, curr) =>
                                   prev.selectedTopicIndex !=
@@ -250,11 +326,8 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                                 );
                               },
                             ),
-                          ),
-                          const SizedBox(width: AppSpacing.lg),
-                          Expanded(
-                            flex: 5,
-                            child: BlocSelector<ArchitectureSimulatorBloc,
+                            const SizedBox(height: AppSpacing.md),
+                            BlocSelector<ArchitectureSimulatorBloc,
                                 ArchitectureSimulatorState, ArchitectureTopic>(
                               selector: (state) => state.currentTopic,
                               builder: (context, activeTopic) {
@@ -264,47 +337,20 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                                 );
                               },
                             ),
-                          ),
-                        ],
-                      )
-                    : ListView(
-                        primary: false,
-                        padding: EdgeInsets.zero,
-                        physics: const ClampingScrollPhysics(),
-                        children: [
-                          BlocBuilder<ArchitectureSimulatorBloc,
-                              ArchitectureSimulatorState>(
-                            buildWhen: (prev, curr) =>
-                                prev.selectedTopicIndex !=
-                                    curr.selectedTopicIndex ||
-                                prev.currentStepIndex != curr.currentStepIndex,
-                            builder: (context, state) {
-                              return _buildDiagramCard(
-                                context,
-                                state.currentTopic,
-                                state.currentStepIndex,
-                                isDesktop,
-                              );
-                            },
-                          ),
-                          const SizedBox(height: AppSpacing.md),
-                          BlocSelector<ArchitectureSimulatorBloc,
-                              ArchitectureSimulatorState, ArchitectureTopic>(
-                            selector: (state) => state.currentTopic,
-                            builder: (context, activeTopic) {
-                              return ArchitectureDetailsCard(
-                                topic: activeTopic,
-                                isDesktop: isDesktop,
-                              );
-                            },
-                          ),
-                          const SizedBox(height: AppSpacing.lg),
-                        ],
-                      ),
-              ),
+                            const SizedBox(height: AppSpacing.lg),
+                          ],
+                        ),
+                ),
+            ],
           ],
         ),
       ),
     );
+  }
+
+  void _openPlayground() {
+    SoundService.instance.playClick();
+    aboutTabRequest.value = AboutTabs.playground;
+    HomeController.maybeOf(context)?.goTo(5);
   }
 }

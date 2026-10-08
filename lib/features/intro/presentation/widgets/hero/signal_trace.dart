@@ -494,7 +494,7 @@ class _SignalTraceState extends State<SignalTrace>
               TextButton(
                 onPressed: () {
                   SoundService.instance.playClick();
-                  aboutTabRequest.value = 2;
+                  aboutTabRequest.value = AboutTabs.playground;
                   HomeController.maybeOf(context)?.goTo(5);
                 },
                 child: Text(

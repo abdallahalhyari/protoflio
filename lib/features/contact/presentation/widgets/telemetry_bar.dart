@@ -101,11 +101,6 @@ class _TelemetryBarState extends State<TelemetryBar> {
             tone: isDaytime ? ChipTone.amber : ChipTone.indigo,
             variant: ChipVariant.glass,
           ),
-          EditorialChip(
-            label: AppLocalizations.of(context)!.uiRelocating,
-            icon: Icons.flight_takeoff_rounded,
-            tone: ChipTone.amber,
-          ),
         ],
       ),
     );

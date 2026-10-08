@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/about/presentation/widgets/about_card.dart';
-import 'package:profile/features/about/presentation/widgets/journey.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/utils/career_facts.dart';
 
@@ -11,18 +10,6 @@ class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key, required this.isDesktop});
 
   final bool isDesktop;
-
-  static const _stack = [
-    'Flutter',
-    'Dart',
-    'Android',
-    'Kotlin',
-    'Java',
-    'NFC / ISO 7816',
-    'RSA · AES · PBKDF2',
-    'WorkManager',
-    'REST · SOAP',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -78,14 +65,6 @@ class ProfileTab extends StatelessWidget {
             text(l10n.aboutExperienceValue(CareerFacts.yearsOfExperience())),
           ),
           row(l10n.aboutFocusLabel, text(l10n.aboutFocusValue)),
-          row(
-            l10n.aboutStackLabel,
-            Wrap(
-              spacing: 6,
-              runSpacing: 6,
-              children: [for (final t in _stack) MonoTag(t)],
-            ),
-          ),
           row(l10n.heroFactLanguagesLabel, text(l10n.heroFactLanguagesValue)),
           row(l10n.heroFactStudyLabel, text(l10n.heroFactStudyValue)),
         ],
@@ -105,8 +84,6 @@ class ProfileTab extends StatelessWidget {
               color: context.onSurface.withValues(alpha: 0.88),
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
-          const Journey(),
         ],
       ),
     );

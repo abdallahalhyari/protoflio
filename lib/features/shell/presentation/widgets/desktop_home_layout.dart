@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:profile/features/shell/presentation/widgets/availability_badge.dart';
 import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 import 'package:profile/features/shell/presentation/widgets/desktop_scroll_interceptor.dart';
 import 'package:profile/features/shell/presentation/widgets/magazine_page_transformer.dart';
@@ -96,11 +95,6 @@ class DesktopHomeLayout extends StatelessWidget {
             left: 0,
             right: 0,
             child: SafeArea(child: TopNav()),
-          ),
-          const Positioned(
-            top: 12,
-            left: 16,
-            child: SafeArea(child: AvailabilityBadge()),
           ),
           const Positioned(
             top: 12,

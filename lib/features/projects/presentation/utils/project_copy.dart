@@ -83,31 +83,3 @@ String localizedProjectDomain(AppLocalizations loc, String domain) {
     _ => null,
   };
 }
-
-/// Challenge and impact for a job on the Experience timeline, taken from
-/// the matching case study so the two sections never disagree.
-({String challenge, String impact})? localizedCompanyCase(
-    AppLocalizations loc, String company) {
-  return switch (company) {
-    'NatHealth' => (
-        challenge: loc.projectProblemNatHealth,
-        impact:
-            '${loc.projectFigureValueNatHealth} ${loc.projectFigureLabelNatHealth}',
-      ),
-    'ESKADENIA Software' => (
-        challenge: loc.projectProblemEskadenia,
-        impact:
-            '${loc.projectFigureValueEskadenia} ${loc.projectFigureLabelEskadenia}',
-      ),
-    'Solutions Now IT' => (
-        challenge: loc.projectProblemSolutions,
-        impact:
-            '${loc.projectFigureValueSolutions} ${loc.projectFigureLabelSolutions}',
-      ),
-    'Future Advanced Internet Solutions' => (
-        challenge: loc.projectProblemFais,
-        impact: loc.projectOutcomeFais,
-      ),
-    _ => null,
-  };
-}

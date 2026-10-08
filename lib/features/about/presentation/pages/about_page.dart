@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/shared/widgets/page_activity.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
@@ -8,7 +7,6 @@ import 'package:profile/features/about/presentation/about_navigation.dart';
 import 'package:profile/features/about/presentation/widgets/aes_demo.dart';
 import 'package:profile/features/about/presentation/widgets/apdu_demo.dart';
 import 'package:profile/features/about/presentation/widgets/channel_demo.dart';
-import 'package:profile/features/about/presentation/widgets/hood_tab.dart';
 import 'package:profile/features/about/presentation/widgets/key_derivation_demo.dart';
 import 'package:profile/features/about/presentation/widgets/offline_sync_demo.dart';
 import 'package:profile/features/about/presentation/widgets/profile_tab.dart';
@@ -16,6 +14,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 import 'package:profile/shared/widgets/section_masthead.dart';
+import 'package:profile/shared/widgets/text_tabs.dart';
 
 /// About: the engineering profile, what sits under the hood, and a small
 /// playground of things that actually run.
@@ -42,9 +41,8 @@ class _AboutPageState extends State<AboutPage>
     final k = event.logicalKey;
     if (k == LogicalKeyboardKey.arrowRight ||
         k == LogicalKeyboardKey.arrowLeft) {
-      final rtl = Directionality.of(context) == TextDirection.rtl;
-      final forward = (k == LogicalKeyboardKey.arrowRight) != rtl;
-      setState(() => _tab = (_tab + (forward ? 1 : 2)) % 3);
+      // Two tabs: either arrow moves to the other one.
+      setState(() => _tab = 1 - _tab);
       return KeyEventResult.handled;
     }
     return KeyEventResult.ignored;
@@ -74,7 +72,7 @@ class _AboutPageState extends State<AboutPage>
     final requested = aboutTabRequest.value;
     if (requested == null || !mounted) return;
     aboutTabRequest.value = null;
-    setState(() => _tab = requested.clamp(0, 2));
+    setState(() => _tab = requested.clamp(0, 1));
   }
 
   @override
@@ -84,18 +82,10 @@ class _AboutPageState extends State<AboutPage>
     final isDesktop = AppBreakpoints.isDesktop(context);
     final gold = context.isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
 
-    final tabs = [
-      l10n.aboutTabProfile,
-      l10n.aboutTabHood,
-      l10n.aboutTabPlayground,
-    ];
+    final tabs = [l10n.aboutTabProfile, l10n.aboutTabPlayground];
 
     final body = switch (_tab) {
-      0 => ProfileTab(isDesktop: isDesktop),
-      1 => HoodTab(
-          isDesktop: isDesktop,
-          onTryDemo: () => setState(() => _tab = 2),
-        ),
+      AboutTabs.profile => ProfileTab(isDesktop: isDesktop),
       _ => const _PlaygroundGrid(),
     };
 
@@ -113,7 +103,7 @@ class _AboutPageState extends State<AboutPage>
               subtitle: l10n.aboutSubtitle,
               isDesktop: isDesktop,
             ),
-            _AboutTabs(
+            TextTabs(
               labels: tabs,
               selected: _tab,
               accent: gold,
@@ -177,82 +167,5 @@ class _PlaygroundGrid extends StatelessWidget {
         ],
       );
     });
-  }
-}
-
-/// Text tabs with a gold rule under the current one. Plain words rather
-/// than chips: the three views are places, not filters.
-class _AboutTabs extends StatelessWidget {
-  const _AboutTabs({
-    required this.labels,
-    required this.selected,
-    required this.accent,
-    required this.onSelect,
-  });
-
-  final List<String> labels;
-  final int selected;
-  final Color accent;
-  final ValueChanged<int> onSelect;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          for (var i = 0; i < labels.length; i++)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 28),
-              child: Semantics(
-                button: true,
-                selected: i == selected,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(AppRadius.xs),
-                  onTap: () {
-                    SoundService.instance.playSelection();
-                    onSelect(i);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: IntrinsicWidth(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          AnimatedDefaultTextStyle(
-                            duration: AppMotion.snap,
-                            style: TextStyle(
-                              fontFamily: AppTypography.bodyFont,
-                              fontSize: AppTypography.lead,
-                              fontWeight: i == selected
-                                  ? FontWeight.w700
-                                  : FontWeight.w500,
-                              color: i == selected
-                                  ? context.onSurface
-                                  : context.mutedText,
-                            ),
-                            child: Text(labels[i]),
-                          ),
-                          const SizedBox(height: 6),
-                          AnimatedContainer(
-                            duration: AppMotion.snap,
-                            height: 2,
-                            decoration: BoxDecoration(
-                              color: i == selected
-                                  ? accent
-                                  : accent.withValues(alpha: 0),
-                              borderRadius: BorderRadius.circular(1),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
   }
 }
