@@ -58,7 +58,7 @@ class ProjectOutcomesSection extends StatelessWidget {
                           color: isDark
                               ? Colors.white.withValues(alpha: 0.9)
                               : AppColors.ink800,
-                          fontSize: isDesktop ? 11 : 9.5,
+                          fontSize: AppTypography.label,
                         ),
                       ),
                     ],

@@ -225,7 +225,7 @@ class _DomainChipState extends State<_DomainChip> {
                       widget.label,
                       style: TextStyle(
                         color: textColor,
-                        fontSize: isDesktop ? AppTypography.label : 10,
+                        fontSize: AppTypography.label,
                         fontWeight:
                             isSelected ? FontWeight.w900 : FontWeight.w700,
                       ),

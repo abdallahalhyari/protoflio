@@ -51,7 +51,7 @@ class FlipHintPill extends StatelessWidget {
               AppLocalizations.of(context)?.flipHintTap ?? 'Tap to flip',
               style: TextStyle(
                 color: context.mutedText,
-                fontSize: isDesktop ? 9.5 : 10,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
               ),
             ),

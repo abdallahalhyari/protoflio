@@ -61,7 +61,7 @@ class HatPaginationRow extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                ltrAlways(context, 'ROLE 0${selectedIndex + 1} / 0$totalCount'),
+                ltrAlways(context, 'Role 0${selectedIndex + 1} / 0$totalCount'),
                 style: TextStyle(
                   color: primary,
                   fontSize: AppTypography.label,

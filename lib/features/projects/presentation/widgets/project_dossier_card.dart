@@ -57,7 +57,7 @@ class ProjectDossierCard extends StatelessWidget {
                   label,
                   style: TextStyle(
                     color: effectiveAccent,
-                    fontSize: isDesktop ? 10.0 : 9.0,
+                    fontSize: AppTypography.label,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
