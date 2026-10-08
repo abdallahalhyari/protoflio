@@ -2433,6 +2433,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Perspectives'**
   String get navPerspectives;
+
+  /// No description provided for @projectLblProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem'**
+  String get projectLblProblem;
+
+  /// No description provided for @projectLblSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get projectLblSystem;
+
+  /// No description provided for @projectLblRole.
+  ///
+  /// In en, this message translates to:
+  /// **'My role'**
+  String get projectLblRole;
+
+  /// No description provided for @projectProblemNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Paper claims, fraud risk and unreliable clinic connectivity slowed insurance claim processing.'**
+  String get projectProblemNatHealth;
+
+  /// No description provided for @projectSystemNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Kotlin NFC bridge to smart cards, JWT with device binding, and an offline-first WorkManager queue.'**
+  String get projectSystemNatHealth;
+
+  /// No description provided for @projectRoleNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Led mobile architecture, native NFC integration and security.'**
+  String get projectRoleNatHealth;
+
+  /// No description provided for @projectProblemEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy hospital and university apps dropped frames, tangled state together and used too much memory.'**
+  String get projectProblemEskadenia;
+
+  /// No description provided for @projectSystemEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Decoupled MVVM feature packages, typed REST layers and cached repositories.'**
+  String get projectSystemEskadenia;
+
+  /// No description provided for @projectRoleEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Led the architectural refactor, profiling and package extraction.'**
+  String get projectRoleEskadenia;
+
+  /// No description provided for @projectProblemSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Two high-volume consumer apps, a loyalty engine and real-time stories, had to ship on tight timelines.'**
+  String get projectProblemSolutions;
+
+  /// No description provided for @projectSystemSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'A shared Flutter component library, hardware-accelerated camera and video pipelines, dynamic REST models.'**
+  String get projectSystemSolutions;
+
+  /// No description provided for @projectRoleSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the mobile design standards, built the camera pipelines and backend integration.'**
+  String get projectRoleSolutions;
+
+  /// No description provided for @projectProblemFais.
+  ///
+  /// In en, this message translates to:
+  /// **'Multi-step checkout and continuous media streaming had to run without memory leaks or state races.'**
+  String get projectProblemFais;
+
+  /// No description provided for @projectSystemFais.
+  ///
+  /// In en, this message translates to:
+  /// **'End-to-end checkout API integration with idempotency keys, and live issue diagnosis from telemetry.'**
+  String get projectSystemFais;
+
+  /// No description provided for @projectRoleFais.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinated backend and frontend integration and resolved production issues.'**
+  String get projectRoleFais;
+
+  /// No description provided for @navAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Available for opportunities'**
+  String get navAvailable;
+
+  /// No description provided for @expLblChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge'**
+  String get expLblChallenge;
+
+  /// No description provided for @expLblImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Impact'**
+  String get expLblImpact;
 }
 
 class _AppLocalizationsDelegate

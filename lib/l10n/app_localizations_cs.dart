@@ -1328,4 +1328,70 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get navPerspectives => 'Perspektivy';
+
+  @override
+  String get projectLblProblem => 'Problém';
+
+  @override
+  String get projectLblSystem => 'Systém';
+
+  @override
+  String get projectLblRole => 'Moje role';
+
+  @override
+  String get projectProblemNatHealth =>
+      'Papírové nároky, riziko podvodů a nespolehlivé připojení klinik zpomalovaly zpracování pojistných nároků.';
+
+  @override
+  String get projectSystemNatHealth =>
+      'Kotlin NFC most ke čipovým kartám, JWT s vazbou na zařízení a offline-first fronta WorkManager.';
+
+  @override
+  String get projectRoleNatHealth =>
+      'Vedl jsem architekturu aplikace, nativní NFC integraci a zabezpečení.';
+
+  @override
+  String get projectProblemEskadenia =>
+      'Starší nemocniční a univerzitní aplikace zahazovaly snímky, měly propletený stav a zabíraly příliš paměti.';
+
+  @override
+  String get projectSystemEskadenia =>
+      'Oddělené funkční balíčky MVVM, typované vrstvy REST a cachované repozitáře.';
+
+  @override
+  String get projectRoleEskadenia =>
+      'Vedl jsem architektonický refaktoring, profilování a vyčleňování balíčků.';
+
+  @override
+  String get projectProblemSolutions =>
+      'Dvě spotřebitelské aplikace s vysokým provozem, věrnostní systém a živé příběhy, bylo třeba dodat v těsných termínech.';
+
+  @override
+  String get projectSystemSolutions =>
+      'Sdílená knihovna komponent ve Flutteru, hardwarově urychlené pipeline kamery a videa, dynamické modely REST.';
+
+  @override
+  String get projectRoleSolutions =>
+      'Stanovil jsem standardy mobilního designu a vytvořil pipeline kamery a integraci backendu.';
+
+  @override
+  String get projectProblemFais =>
+      'Vícekrokový nákup a nepřetržité streamování médií musely běžet bez úniků paměti a souběhů stavů.';
+
+  @override
+  String get projectSystemFais =>
+      'Integrace nákupních API od začátku do konce s klíči idempotence a diagnostika živých problémů z telemetrie.';
+
+  @override
+  String get projectRoleFais =>
+      'Koordinoval jsem integraci backendu a frontendu a řešil produkční problémy.';
+
+  @override
+  String get navAvailable => 'Otevřen novým příležitostem';
+
+  @override
+  String get expLblChallenge => 'Výzva';
+
+  @override
+  String get expLblImpact => 'Dopad';
 }

@@ -6,6 +6,7 @@ import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/presentation/utils/project_copy.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/utils/bidi.dart';
+import 'package:profile/shared/widgets/labeled_line.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_tech_chip.dart';
@@ -44,31 +45,16 @@ class CardBodyContent extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     final outcome = localizedProjectOutcome(loc, project);
     final figure = localizedProjectFigure(loc, project);
+    final caseCopy = localizedProjectCase(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
     // Only the fixed-height desktop grid needs clamps; cards that size to
     // content show every line instead of cutting the impact mid-sentence.
-    final clampLines = pinFoot ? 2 : null;
+    final clampLines = pinFoot ? 3 : null;
     final clampOverflow = pinFoot ? TextOverflow.ellipsis : null;
 
     final titleBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (project.role != null) ...[
-          // A full sentence, so sentence case at caption size: set in
-          // 8.5px mono capitals inside a grey box it read as noise.
-          Text(
-            project.role!,
-            maxLines: clampLines,
-            overflow: clampOverflow,
-            style: TextStyle(
-              fontSize: AppTypography.label,
-              fontWeight: FontWeight.w600,
-              height: 1.35,
-              color: context.mutedText,
-            ),
-          ),
-          const SizedBox(height: 6),
-        ],
         AnimatedDefaultTextStyle(
           duration: AppMotion.snap,
           style: TextStyle(
@@ -88,17 +74,31 @@ class CardBodyContent extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        const SizedBox(height: 6),
-        Text(
-          ltrContent(context, localizedProjectTagline(loc, project)),
-          style: TextStyle(
-            color: context.mutedText,
-            fontSize: isDesktop ? 13 : 12,
-            height: 1.4,
+        const SizedBox(height: AppSpacing.sm),
+        if (caseCopy != null) ...[
+          LabeledLine(
+              label: loc.projectLblProblem,
+              text: caseCopy.problem,
+              maxLines: clampLines),
+          LabeledLine(
+              label: loc.projectLblSystem,
+              text: caseCopy.system,
+              maxLines: clampLines),
+          LabeledLine(
+              label: loc.projectLblRole,
+              text: caseCopy.role,
+              maxLines: clampLines),
+        ] else
+          Text(
+            ltrContent(context, localizedProjectTagline(loc, project)),
+            style: TextStyle(
+              color: context.mutedText,
+              fontSize: AppTypography.body,
+              height: 1.4,
+            ),
+            maxLines: clampLines,
+            overflow: clampOverflow,
           ),
-          maxLines: clampLines,
-          overflow: clampOverflow,
-        ),
       ],
     );
 

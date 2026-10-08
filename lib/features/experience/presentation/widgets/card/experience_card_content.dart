@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:profile/features/projects/presentation/utils/project_copy.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/widgets/labeled_line.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
@@ -25,6 +28,9 @@ class CardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    final caseCopy =
+        loc == null ? null : localizedCompanyCase(loc, exp.company);
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
@@ -88,6 +94,11 @@ class CardContent extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 16),
+          if (loc != null && caseCopy != null) ...[
+            LabeledLine(label: loc.expLblChallenge, text: caseCopy.challenge),
+            LabeledLine(label: loc.expLblImpact, text: caseCopy.impact),
+            const SizedBox(height: 8),
+          ],
           ...exp.highlights
               .map((h) => HighlightBullet(text: h, scheme: scheme)),
         ],

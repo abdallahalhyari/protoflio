@@ -1326,4 +1326,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navPerspectives => 'Perspectives';
+
+  @override
+  String get projectLblProblem => 'Problem';
+
+  @override
+  String get projectLblSystem => 'System';
+
+  @override
+  String get projectLblRole => 'My role';
+
+  @override
+  String get projectProblemNatHealth =>
+      'Paper claims, fraud risk and unreliable clinic connectivity slowed insurance claim processing.';
+
+  @override
+  String get projectSystemNatHealth =>
+      'Kotlin NFC bridge to smart cards, JWT with device binding, and an offline-first WorkManager queue.';
+
+  @override
+  String get projectRoleNatHealth =>
+      'Led mobile architecture, native NFC integration and security.';
+
+  @override
+  String get projectProblemEskadenia =>
+      'Legacy hospital and university apps dropped frames, tangled state together and used too much memory.';
+
+  @override
+  String get projectSystemEskadenia =>
+      'Decoupled MVVM feature packages, typed REST layers and cached repositories.';
+
+  @override
+  String get projectRoleEskadenia =>
+      'Led the architectural refactor, profiling and package extraction.';
+
+  @override
+  String get projectProblemSolutions =>
+      'Two high-volume consumer apps, a loyalty engine and real-time stories, had to ship on tight timelines.';
+
+  @override
+  String get projectSystemSolutions =>
+      'A shared Flutter component library, hardware-accelerated camera and video pipelines, dynamic REST models.';
+
+  @override
+  String get projectRoleSolutions =>
+      'Set the mobile design standards, built the camera pipelines and backend integration.';
+
+  @override
+  String get projectProblemFais =>
+      'Multi-step checkout and continuous media streaming had to run without memory leaks or state races.';
+
+  @override
+  String get projectSystemFais =>
+      'End-to-end checkout API integration with idempotency keys, and live issue diagnosis from telemetry.';
+
+  @override
+  String get projectRoleFais =>
+      'Coordinated backend and frontend integration and resolved production issues.';
+
+  @override
+  String get navAvailable => 'Available for opportunities';
+
+  @override
+  String get expLblChallenge => 'Challenge';
+
+  @override
+  String get expLblImpact => 'Impact';
 }

@@ -54,3 +54,60 @@ String localizedProjectDomain(AppLocalizations loc, String domain) {
     _ => null,
   };
 }
+
+/// The case study in three lines: what was hard, how it was built, and
+/// what I personally did.
+({String problem, String system, String role})? localizedProjectCase(
+    AppLocalizations loc, Project project) {
+  return switch (project.company) {
+    'NatHealth' => (
+        problem: loc.projectProblemNatHealth,
+        system: loc.projectSystemNatHealth,
+        role: loc.projectRoleNatHealth,
+      ),
+    'ESKADENIA Software' => (
+        problem: loc.projectProblemEskadenia,
+        system: loc.projectSystemEskadenia,
+        role: loc.projectRoleEskadenia,
+      ),
+    'Solutions Now IT' => (
+        problem: loc.projectProblemSolutions,
+        system: loc.projectSystemSolutions,
+        role: loc.projectRoleSolutions,
+      ),
+    'Future Advanced Internet Solutions' => (
+        problem: loc.projectProblemFais,
+        system: loc.projectSystemFais,
+        role: loc.projectRoleFais,
+      ),
+    _ => null,
+  };
+}
+
+/// Challenge and impact for a job on the Experience timeline, taken from
+/// the matching case study so the two sections never disagree.
+({String challenge, String impact})? localizedCompanyCase(
+    AppLocalizations loc, String company) {
+  return switch (company) {
+    'NatHealth' => (
+        challenge: loc.projectProblemNatHealth,
+        impact:
+            '${loc.projectFigureValueNatHealth} ${loc.projectFigureLabelNatHealth}',
+      ),
+    'ESKADENIA Software' => (
+        challenge: loc.projectProblemEskadenia,
+        impact:
+            '${loc.projectFigureValueEskadenia} ${loc.projectFigureLabelEskadenia}',
+      ),
+    'Solutions Now IT' => (
+        challenge: loc.projectProblemSolutions,
+        impact:
+            '${loc.projectFigureValueSolutions} ${loc.projectFigureLabelSolutions}',
+      ),
+    'Future Advanced Internet Solutions' => (
+        challenge: loc.projectProblemFais,
+        impact: loc.projectOutcomeFais,
+      ),
+    _ => null,
+  };
+}

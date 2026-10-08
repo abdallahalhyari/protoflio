@@ -1315,4 +1315,70 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get navPerspectives => 'رؤى';
+
+  @override
+  String get projectLblProblem => 'المشكلة';
+
+  @override
+  String get projectLblSystem => 'النظام';
+
+  @override
+  String get projectLblRole => 'دوري';
+
+  @override
+  String get projectProblemNatHealth =>
+      'المطالبات الورقية ومخاطر الاحتيال وضعف اتصال العيادات أبطأت معالجة مطالبات التأمين.';
+
+  @override
+  String get projectSystemNatHealth =>
+      'جسر NFC بـ Kotlin إلى البطاقات الذكية، وJWT مع ربط الجهاز، وطابور WorkManager يعمل دون اتصال.';
+
+  @override
+  String get projectRoleNatHealth =>
+      'قدت بنية التطبيق وتكامل NFC الأصلي والأمان.';
+
+  @override
+  String get projectProblemEskadenia =>
+      'تطبيقات المستشفيات والجامعات القديمة كانت تُسقط الإطارات وتخلط الحالة وتستهلك ذاكرة كبيرة.';
+
+  @override
+  String get projectSystemEskadenia =>
+      'حزم ميزات MVVM منفصلة، وطبقات REST مُنمَّطة، ومستودعات مخزّنة مؤقتاً.';
+
+  @override
+  String get projectRoleEskadenia =>
+      'قدت إعادة الهيكلة المعمارية والتحليل واستخراج الحزم.';
+
+  @override
+  String get projectProblemSolutions =>
+      'تطبيقان استهلاكيان كبيران، محرك ولاء وقصص فورية، كان عليهما الإطلاق في مواعيد ضيقة.';
+
+  @override
+  String get projectSystemSolutions =>
+      'مكتبة مكوّنات Flutter مشتركة، ومسارات كاميرا وفيديو بتسريع عتادي، ونماذج REST ديناميكية.';
+
+  @override
+  String get projectRoleSolutions =>
+      'وضعت معايير تصميم الهواتف وبنيت مسارات الكاميرا وتكامل الخلفية.';
+
+  @override
+  String get projectProblemFais =>
+      'كان على الدفع متعدد الخطوات وبث الوسائط المستمر أن يعملا دون تسرّب ذاكرة أو تسابق حالات.';
+
+  @override
+  String get projectSystemFais =>
+      'تكامل شامل لواجهات الدفع مع مفاتيح idempotency، وتشخيص المشكلات الحية من بيانات القياس.';
+
+  @override
+  String get projectRoleFais =>
+      'نسّقت التكامل بين الخلفية والواجهة وحللت مشكلات الإنتاج.';
+
+  @override
+  String get navAvailable => 'متاح لفرص جديدة';
+
+  @override
+  String get expLblChallenge => 'التحدي';
+
+  @override
+  String get expLblImpact => 'الأثر';
 }

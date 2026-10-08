@@ -611,5 +611,23 @@
     }
   },
   "playSyncNote": "Simulation. No network is used.",
-  "navPerspectives": "Perspectives"
+  "navPerspectives": "Perspectives",
+  "projectLblProblem": "Problem",
+  "projectLblSystem": "System",
+  "projectLblRole": "My role",
+  "projectProblemNatHealth": "Paper claims, fraud risk and unreliable clinic connectivity slowed insurance claim processing.",
+  "projectSystemNatHealth": "Kotlin NFC bridge to smart cards, JWT with device binding, and an offline-first WorkManager queue.",
+  "projectRoleNatHealth": "Led mobile architecture, native NFC integration and security.",
+  "projectProblemEskadenia": "Legacy hospital and university apps dropped frames, tangled state together and used too much memory.",
+  "projectSystemEskadenia": "Decoupled MVVM feature packages, typed REST layers and cached repositories.",
+  "projectRoleEskadenia": "Led the architectural refactor, profiling and package extraction.",
+  "projectProblemSolutions": "Two high-volume consumer apps, a loyalty engine and real-time stories, had to ship on tight timelines.",
+  "projectSystemSolutions": "A shared Flutter component library, hardware-accelerated camera and video pipelines, dynamic REST models.",
+  "projectRoleSolutions": "Set the mobile design standards, built the camera pipelines and backend integration.",
+  "projectProblemFais": "Multi-step checkout and continuous media streaming had to run without memory leaks or state races.",
+  "projectSystemFais": "End-to-end checkout API integration with idempotency keys, and live issue diagnosis from telemetry.",
+  "projectRoleFais": "Coordinated backend and frontend integration and resolved production issues.",
+  "navAvailable": "Available for opportunities",
+  "expLblChallenge": "Challenge",
+  "expLblImpact": "Impact"
 }
