@@ -143,20 +143,26 @@ class SkillSearchBar extends StatelessWidget {
                         const SizedBox(width: 6),
                       ],
                       Flexible(
-                        child: Text(
-                          isFiltered
-                              ? l10n.skillsCountFiltered(
-                                  filteredCount, totalCount)
-                              : l10n.skillsCountAll(totalCount),
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: AppTypography.label,
-                            fontWeight: FontWeight.w800,
-                            color: isFiltered
-                                ? scheme.primary
-                                : scheme.onSurface.withValues(alpha: 0.7),
+                        // Its own node, announced when it changes; merged
+                        // into the field it doubled the field's name.
+                        child: Semantics(
+                          container: true,
+                          liveRegion: true,
+                          child: Text(
+                            isFiltered
+                                ? l10n.skillsCountFiltered(
+                                    filteredCount, totalCount)
+                                : l10n.skillsCountAll(totalCount),
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: AppTypography.label,
+                              fontWeight: FontWeight.w800,
+                              color: isFiltered
+                                  ? scheme.primary
+                                  : scheme.onSurface.withValues(alpha: 0.7),
+                            ),
                           ),
                         ),
                       ),

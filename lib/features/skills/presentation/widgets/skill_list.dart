@@ -12,10 +12,22 @@ import 'package:profile/l10n/app_localizations.dart';
 /// skill, where it was used and a four-step level; tap a row for the
 /// detail and tags.
 class SkillList extends StatelessWidget {
-  const SkillList({super.key, required this.skills, required this.isDesktop});
+  const SkillList({
+    super.key,
+    required this.skills,
+    required this.isDesktop,
+    this.order = const [],
+    this.groupKeys = const {},
+  });
 
   final List<Skill> skills;
   final bool isDesktop;
+
+  /// Group order (categories); groups not listed follow in data order.
+  final List<String> order;
+
+  /// Keys placed on each group's heading so an index can scroll to it.
+  final Map<String, GlobalKey> groupKeys;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +35,16 @@ class SkillList extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     // Group by category, keeping the order skills first appear in.
-    final groups = <String, List<Skill>>{};
+    final unordered = <String, List<Skill>>{};
     for (final s in skills) {
-      groups.putIfAbsent(s.category, () => []).add(s);
+      unordered.putIfAbsent(s.category, () => []).add(s);
     }
+    final groups = <String, List<Skill>>{
+      for (final c in order)
+        if (unordered.containsKey(c)) c: unordered[c]!,
+      for (final e in unordered.entries)
+        if (!order.contains(e.key)) e.key: e.value,
+    };
     final showHeadings = groups.length > 1;
 
     return Column(
@@ -35,6 +53,7 @@ class SkillList extends StatelessWidget {
         for (final entry in groups.entries) ...[
           if (showHeadings)
             Padding(
+              key: groupKeys[entry.key],
               // Groups are separated by a full step; the first sits right
               // under the filters.
               padding: EdgeInsets.only(
