@@ -192,12 +192,15 @@ class _OfflineSyncDemoState extends State<OfflineSyncDemo> {
                         ),
                       ),
                     ),
-                    Text(
-                      label(c),
-                      style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        fontSize: AppTypography.label,
-                        color: color(c),
+                    Flexible(
+                      child: Text(
+                        label(c),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: AppTypography.monoFont,
+                          fontSize: AppTypography.label,
+                          color: color(c),
+                        ),
                       ),
                     ),
                   ],

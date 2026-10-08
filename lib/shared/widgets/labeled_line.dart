@@ -27,14 +27,18 @@ class LabeledLine extends StatelessWidget {
         children: [
           SizedBox(
             width: 76,
-            child: Text(
-              label.toUpperCase(),
-              style: TextStyle(
-                fontSize: AppTypography.label,
-                height: 1.5,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
-                color: context.mutedText,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                label.toUpperCase(),
+                style: TextStyle(
+                  fontSize: AppTypography.label,
+                  height: 1.5,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
+                  color: context.mutedText,
+                ),
               ),
             ),
           ),

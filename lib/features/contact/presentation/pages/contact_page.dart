@@ -19,9 +19,9 @@ import 'package:profile/features/contact/presentation/widgets/express_presets_ba
 import 'package:profile/features/contact/presentation/widgets/hero_email_card.dart';
 import 'package:profile/features/contact/presentation/widgets/inquiry_composer_dialog.dart';
 import 'package:profile/features/contact/presentation/widgets/telemetry_bar.dart';
-import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
 import 'package:profile/features/hats/presentation/widgets/hat_bio_strip.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
+import 'package:profile/shared/widgets/page_activity.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 import 'package:profile/shared/utils/mailto.dart';
 
@@ -42,7 +42,18 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, ActivePageFocusMixin {
+  final FocusNode _focusNode = FocusNode(debugLabel: 'ContactFocus');
+
+  @override
+  FocusNode get pageFocusNode => _focusNode;
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   bool get wantKeepAlive => true;
 
@@ -98,108 +109,169 @@ class _ContactPageState extends State<ContactPage>
     super.build(context); // AutomaticKeepAliveClientMixin requirement
     final isDesktop = AppBreakpoints.isDesktop(context);
 
-    // Redesigned flow — hero above the fold, recruiter-friendly path
-    // (email + CV) prioritized, dense sections regrouped into a
-    // scannable rhythm.
-    final body = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const ContactHeader(),
-        const SizedBox(height: AppSpacing.md),
-        const TelemetryBar(),
-        const SizedBox(height: AppSpacing.xl),
-        // Executive Bio & Professional Profile Summary
-        HatBioStrip(isMobile: !isDesktop),
-        const SizedBox(height: AppSpacing.xl),
-        // 1. Primary CTA — send email, right up front.
-        HeroEmailCard(
-          email: _email,
-          isDesktop: isDesktop,
-          onSendEmail: () => _openMail(
-            subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
-          ),
-          onCopyEmail: () => _copy(context, _email),
-          onComposeInquiry: () {
-            SoundService.instance.playClick();
-            unawaited(showInquiryComposerDialog(context));
-          },
-        ),
-        const SizedBox(height: AppSpacing.lg),
-        // 2. Fast pre-filled subject lines beneath the primary CTA.
-        ExpressPresetsBar(
-          onSelectPreset: (subject, body) {
-            SoundService.instance.playClick();
-            final index =
-                ExpressPresetsBar.presets.indexWhere((p) => p.$2 == subject);
-            unawaited(
-              showInquiryComposerDialog(
-                context,
-                initialTrackIndex: index >= 0 ? index : 0,
-              ),
-            );
-          },
-        ),
-        const SizedBox(height: AppSpacing.xl),
-        // 3. Compact 2×2 channel grid (phone / whatsapp / linkedin / github).
-        ContactChannelsGrid(
-          phone: _phone,
-          phoneRaw: _phoneRaw,
-          whatsAppUrl: _whatsAppUrl,
-          linkedInHandle: _linkedInHandle,
-          linkedInUrl: _linkedInUrl,
-          githubHandle: _githubHandle,
-          githubUrl: _githubUrl,
-          isDesktop: isDesktop,
-          onOpenUrl: (url) => unawaited(_open(url)),
-          onCopy: (value) => _copy(context, value),
-        ),
-        const SizedBox(height: AppSpacing.xl),
-        // 4. Recruiter-priority CV download & vCard QR.
-        Row(
-          children: [
-            const Expanded(child: CvDossierCard()),
-            const SizedBox(width: AppSpacing.md),
-            IconButton.filledTonal(
-              onPressed: () => unawaited(VCardQrDialog.show(context)),
-              icon: const Icon(Icons.qr_code_2_rounded),
-              tooltip: 'Save Recruiter vCard QR',
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.xl),
-        // 5. Deep dive — engagement scopes for hiring managers who want more.
-        EngagementMatrixSection(
-          isDesktop: isDesktop,
-          onInquire: (subject, body) {
-            int trackIndex = 1;
-            if (subject.contains('Audit')) {
-              trackIndex = 1;
-            } else if (subject.contains('Production') ||
-                subject.contains('Engineering')) {
-              trackIndex = 2;
-            } else if (subject.contains('Leadership') ||
-                subject.contains('Advisory')) {
-              trackIndex = 3;
-            }
-            unawaited(
-              showInquiryComposerDialog(
-                context,
-                initialTrackIndex: trackIndex,
-              ),
-            );
-          },
-        ),
-        const SizedBox(height: AppSpacing.xl),
-        // No LinkedIn / GitHub chips here: the channel cards above already
-        // open and copy both.
-        const ContactMastheadFooter(),
-      ],
+    final header = const ContactHeader();
+    final telemetry = const TelemetryBar();
+    final bio = HatBioStrip(isMobile: !isDesktop);
+
+    final heroEmail = HeroEmailCard(
+      email: _email,
+      isDesktop: isDesktop,
+      onSendEmail: () => _openMail(
+        subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
+      ),
+      onCopyEmail: () => _copy(context, _email),
+      onComposeInquiry: () {
+        SoundService.instance.playClick();
+        unawaited(showInquiryComposerDialog(context));
+      },
     );
 
-    return ScrollableAppScreenShell(
-      isContinuousMobile: widget.isContinuousMobile,
-      child: body,
+    final presets = ExpressPresetsBar(
+      onSelectPreset: (subject, body) {
+        SoundService.instance.playClick();
+        final index =
+            ExpressPresetsBar.presets.indexWhere((p) => p.$2 == subject);
+        unawaited(
+          showInquiryComposerDialog(
+            context,
+            initialTrackIndex: index >= 0 ? index : 0,
+          ),
+        );
+      },
+    );
+
+    final channels = ContactChannelsGrid(
+      phone: _phone,
+      phoneRaw: _phoneRaw,
+      whatsAppUrl: _whatsAppUrl,
+      linkedInHandle: _linkedInHandle,
+      linkedInUrl: _linkedInUrl,
+      githubHandle: _githubHandle,
+      githubUrl: _githubUrl,
+      isDesktop: isDesktop,
+      onOpenUrl: (url) => unawaited(_open(url)),
+      onCopy: (value) => _copy(context, value),
+    );
+
+    final cvDossier = const CvDossierCard();
+
+    final engagementMatrix = EngagementMatrixSection(
+      isDesktop: isDesktop,
+      onInquire: (subject, body) {
+        int trackIndex = 1;
+        if (subject.contains('Audit')) {
+          trackIndex = 1;
+        } else if (subject.contains('Production') ||
+            subject.contains('Engineering')) {
+          trackIndex = 2;
+        } else if (subject.contains('Leadership') ||
+            subject.contains('Advisory')) {
+          trackIndex = 3;
+        }
+        unawaited(
+          showInquiryComposerDialog(
+            context,
+            initialTrackIndex: trackIndex,
+          ),
+        );
+      },
+    );
+
+    final footer = const ContactMastheadFooter();
+
+    Widget animate(Widget child, int delayIndex) {
+      return TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 0.0, end: 1.0),
+        duration: AppMotion.pageTurn,
+        curve: Curves.easeOutCubic,
+        builder: (context, value, animChild) {
+          return Opacity(
+            opacity: value,
+            child: Transform.translate(
+              offset: Offset(0, 20 * (1 - value)),
+              child: animChild,
+            ),
+          );
+        },
+        child: child,
+      );
+    }
+
+    Widget content() {
+      if (!isDesktop) {
+        final mobileItems = [
+          header,
+          telemetry,
+          bio,
+          heroEmail,
+          presets,
+          cvDossier,
+          channels,
+          engagementMatrix,
+          footer,
+        ];
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (int i = 0; i < mobileItems.length; i++) ...[
+              if (i > 0) const SizedBox(height: AppSpacing.lg),
+              animate(mobileItems[i], i),
+            ],
+          ],
+        );
+      }
+
+      // Premium Asymmetrical Bento Grid for Desktop
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          animate(header, 0),
+          const SizedBox(height: AppSpacing.md),
+          animate(telemetry, 1),
+          const SizedBox(height: AppSpacing.xl),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 5,
+                child: Column(
+                  children: [
+                    animate(bio, 2),
+                    const SizedBox(height: AppSpacing.xl),
+                    animate(heroEmail, 3),
+                    const SizedBox(height: AppSpacing.md),
+                    animate(presets, 4),
+                    const SizedBox(height: AppSpacing.xl),
+                    animate(channels, 5),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.xl),
+              Expanded(
+                flex: 4,
+                child: Column(
+                  children: [
+                    animate(cvDossier, 3),
+                    const SizedBox(height: AppSpacing.xl),
+                    animate(engagementMatrix, 4),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.xxl),
+          animate(footer, 6),
+        ],
+      );
+    }
+
+    return Focus(
+      focusNode: _focusNode,
+      child: ScrollableAppScreenShell(
+        isContinuousMobile: widget.isContinuousMobile,
+        child: content(),
+      ),
     );
   }
 }

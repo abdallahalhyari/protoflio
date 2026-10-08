@@ -59,22 +59,32 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
           duration: animDuration,
           child: InkWell(
             onTap: widget.onTap,
-            borderRadius: BorderRadius.circular(AppRadius.xs),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
             child: AnimatedContainer(
               duration: animDuration,
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4.5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                 color: _isHovered && widget.onTap != null
                     ? widget.scheme.primary
                         .withValues(alpha: widget.isDark ? 0.35 : 0.25)
                     : bg,
-                borderRadius: BorderRadius.circular(AppRadius.xs),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: Border.all(
                   color: _isHovered && widget.onTap != null
                       ? widget.scheme.primary
                       : border,
                   width: widget.isSelected ? 1.2 : 0.8,
                 ),
+                boxShadow: _isHovered && widget.onTap != null
+                    ? [
+                        BoxShadow(
+                          color: widget.scheme.primary
+                              .withValues(alpha: widget.isDark ? 0.4 : 0.2),
+                          blurRadius: 12,
+                          offset: const Offset(0, 2),
+                        )
+                      ]
+                    : null,
               ),
               child: Text(
                 widget.tag,
@@ -87,6 +97,7 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
                   fontWeight: widget.isSelected || _isHovered
                       ? FontWeight.w900
                       : FontWeight.w600,
+                  letterSpacing: 0.2,
                 ),
               ),
             ),

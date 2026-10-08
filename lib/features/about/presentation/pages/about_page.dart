@@ -148,7 +148,7 @@ class _PlaygroundGrid extends StatelessWidget {
       // Independent columns, so a tall demo does not leave a hole beside it.
       final columns = [
         for (var i = 0; i < cols; i++)
-          [for (var j = i; j < demos.length; j += cols) demos[j]],
+          [for (var j = i; j < demos.length; j += cols) (j, demos[j])],
       ];
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +160,23 @@ class _PlaygroundGrid extends StatelessWidget {
                 children: [
                   for (var j = 0; j < columns[i].length; j++) ...[
                     if (j > 0) const SizedBox(height: gap),
-                    columns[i][j],
+                    TweenAnimationBuilder<double>(
+                      tween: Tween<double>(begin: 0.0, end: 1.0),
+                      duration: Duration(
+                          milliseconds:
+                              500 + (columns[i][j].$1 * 100).clamp(0, 500)),
+                      curve: Curves.easeOutCubic,
+                      builder: (context, value, child) {
+                        return Opacity(
+                          opacity: value,
+                          child: Transform.translate(
+                            offset: Offset(0, 20 * (1 - value)),
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: columns[i][j].$2,
+                    ),
                   ],
                 ],
               ),

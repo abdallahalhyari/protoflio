@@ -13,7 +13,7 @@ void main() {
         home: Scaffold(
           body: DesktopKeyboardNav(
             focusNode: pageFocus,
-            pageCount: 7,
+            pageCount: 6,
             onNext: () => calls.add('next'),
             onPrev: () => calls.add('prev'),
             onGoTo: (i) => calls.add('goTo $i'),
@@ -57,8 +57,8 @@ void main() {
       'goTo 2', // E -> Engineering
       'goTo 3', // X -> Experience
       'goTo 4', // S -> Skills
-      'goTo 5', // H -> Hats
-      'goTo 6', // C -> Contact
+      'goTo 5', // H -> Hats / About
+      'goTo 5', // C -> Contact / About
     ]);
   });
 

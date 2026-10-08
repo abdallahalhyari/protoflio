@@ -79,8 +79,8 @@ class DesktopKeyboardNav extends StatelessWidget {
       onGoTo(5); // Hats / Perspectives
       return KeyEventResult.handled;
     }
-    if (k == LogicalKeyboardKey.keyC && pageCount > 6) {
-      onGoTo(6); // Contact
+    if (k == LogicalKeyboardKey.keyC && pageCount > 5) {
+      onGoTo(pageCount > 6 ? 6 : 5); // Contact
       return KeyEventResult.handled;
     }
 

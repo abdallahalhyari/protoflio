@@ -191,13 +191,34 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                               .clamp(320.0, 400.0)
                           : constraints.maxWidth * 0.75;
 
+                      if (isDesktop) {
+                        return Wrap(
+                          spacing: spacing,
+                          runSpacing: spacing,
+                          alignment: WrapAlignment.center,
+                          children: [
+                            for (int i = 0; i < filteredProjects.length; i++)
+                              SizedBox(
+                                width: itemWidth,
+                                height: itemHeight,
+                                child: _buildProjectItem(
+                                  project: filteredProjects[i],
+                                  index: i,
+                                  scheme: scheme,
+                                  isDesktop: isDesktop,
+                                  selectedTech: selectedTech,
+                                ),
+                              )
+                          ],
+                        );
+                      }
+
                       return SizedBox(
                         height: itemHeight,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          // Only pad on mobile since desktop layout is already constrained by maxWidth
-                          padding: EdgeInsets.symmetric(
-                              horizontal: isDesktop ? 0 : AppSpacing.md),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.md),
                           clipBehavior: Clip.none,
                           itemCount: filteredProjects.length,
                           separatorBuilder: (context, index) =>
@@ -243,15 +264,37 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     required bool isDesktop,
     required String? selectedTech,
   }) {
-    return InteractiveProjectCard(
-      project: project,
-      index: index,
-      scheme: scheme,
-      isDesktop: isDesktop,
-      selectedTech: selectedTech,
-      onSelectTech: (tech) {
-        context.read<ProjectsFilterBloc>().add(TechFilterToggled(tech));
+    // Basic stagger logic: delay slightly based on index, maxing out at a certain point.
+    // The tween animation builder handles the entrance without needing external delays right now.
+
+    return TweenAnimationBuilder<double>(
+      key: ValueKey('project_${project.name}_$index'),
+      tween: Tween<double>(begin: 0.0, end: 1.0),
+      duration: AppMotion.pageTurn,
+      curve: Curves.easeOutCubic,
+      builder: (context, value, child) {
+        // We delay the start of the animation by checking if the animation should have started.
+        // For a more precise stagger, we can just use the value directly with a modified curve or
+        // standard flutter animation tools. We'll simulate it beautifully by mapping value.
+        // Alternatively, since TweenAnimationBuilder starts immediately, we can map the value.
+        return Opacity(
+          opacity: value.clamp(0.0, 1.0),
+          child: Transform.translate(
+            offset: Offset(0, 30 * (1 - value)),
+            child: child,
+          ),
+        );
       },
+      child: InteractiveProjectCard(
+        project: project,
+        index: index,
+        scheme: scheme,
+        isDesktop: isDesktop,
+        selectedTech: selectedTech,
+        onSelectTech: (tech) {
+          context.read<ProjectsFilterBloc>().add(TechFilterToggled(tech));
+        },
+      ),
     );
   }
 }

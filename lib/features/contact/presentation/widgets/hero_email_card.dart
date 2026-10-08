@@ -35,7 +35,7 @@ class HeroEmailCard extends StatelessWidget {
       style: FilledButton.styleFrom(
         backgroundColor: accent,
         foregroundColor: scheme.onPrimary,
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         textStyle: const TextStyle(
           fontSize: AppTypography.label,
           fontWeight: FontWeight.w900,
@@ -57,7 +57,7 @@ class HeroEmailCard extends StatelessWidget {
               ? Colors.white.withValues(alpha: AppAlpha.border)
               : AppColors.ink300,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         textStyle: const TextStyle(
           fontSize: AppTypography.label,
           fontWeight: FontWeight.w800,
@@ -74,7 +74,7 @@ class HeroEmailCard extends StatelessWidget {
             icon: const Icon(Icons.edit_note_rounded, size: 16),
             label: Text(l10n.uiComposeInquiry),
             style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               textStyle: const TextStyle(
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
@@ -87,7 +87,7 @@ class HeroEmailCard extends StatelessWidget {
         : null;
 
     final actionRow = Wrap(
-      spacing: 10,
+      spacing: 8,
       runSpacing: 8,
       children: [
         ctaSend,
@@ -103,7 +103,6 @@ class HeroEmailCard extends StatelessWidget {
         Text(
           l10n.contactHeroEyebrow,
           style: TextStyle(
-            // Full accent: at border opacity this measured 1.8:1.
             color: context.adaptiveAccentText(accent),
             fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
@@ -126,9 +125,22 @@ class HeroEmailCard extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.check_circle_rounded,
-                color: context.adaptiveAccentText(availabilityGreen), size: 14),
-            const SizedBox(width: 6),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: availabilityGreen.withValues(alpha: 0.4),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                  )
+                ],
+              ),
+              child: Icon(Icons.check_circle_rounded,
+                  color: context.adaptiveAccentText(availabilityGreen),
+                  size: 14),
+            ),
+            const SizedBox(width: 8),
             Flexible(
               child: Text(
                 l10n.contactReplyWindow,
@@ -137,6 +149,7 @@ class HeroEmailCard extends StatelessWidget {
                   color: context.mutedText,
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w600,
+                  letterSpacing: 0.2,
                 ),
               ),
             ),
@@ -146,29 +159,39 @@ class HeroEmailCard extends StatelessWidget {
     );
 
     final card = Container(
-      padding: EdgeInsets.all(isDesktop ? AppSpacing.lg : AppSpacing.md),
+      padding: EdgeInsets.all(isDesktop ? AppSpacing.xl : AppSpacing.lg),
       decoration: BoxDecoration(
         color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.container),
+        gradient: isDark
+            ? RadialGradient(
+                center: Alignment.bottomRight,
+                radius: 2.2,
+                colors: [
+                  accent.withValues(alpha: 0.16),
+                  context.cardGlass,
+                ],
+              )
+            : null,
         border: Border.all(
-          color: accent.withValues(alpha: isDark ? 0.45 : 0.35),
-          width: 1.4,
+          color: accent.withValues(alpha: isDark ? 0.5 : 0.35),
+          width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: accent.withValues(alpha: isDark ? 0.10 : 0.06),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
+            color: accent.withValues(alpha: isDark ? 0.14 : 0.06),
+            blurRadius: 32,
+            offset: const Offset(0, 10),
+            spreadRadius: 2,
           ),
         ],
       ),
-      // Side-by-side only while the buttons fit; large text stacks them.
-      child: isDesktop && MediaQuery.textScalerOf(context).scale(1) <= 1.4
+      child: isDesktop && MediaQuery.textScalerOf(context).scale(1) <= 1.2
           ? Row(
               children: [
                 Expanded(child: emailBlock),
                 const SizedBox(width: AppSpacing.lg),
-                actionRow,
+                Flexible(child: actionRow),
               ],
             )
           : Column(

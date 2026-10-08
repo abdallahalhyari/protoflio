@@ -23,8 +23,7 @@ class TopNav extends StatelessWidget {
       l.navEngineering,
       l.navExperience,
       l.navStack,
-      l.navAbout,
-      l.navContact,
+      '${l.navAbout} & ${l.navContact}',
     ];
   }
 

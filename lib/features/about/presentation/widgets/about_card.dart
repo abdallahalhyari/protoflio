@@ -11,13 +11,43 @@ class AboutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.isDarkMode;
+    final primary = Theme.of(context).colorScheme.primary;
+
     return Container(
       width: double.infinity,
       padding: padding ?? const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: context.glassBorderStrong),
+        gradient: isDark
+            ? RadialGradient(
+                center: Alignment.topLeft,
+                radius: 1.5,
+                colors: [
+                  primary.withValues(alpha: 0.1),
+                  context.cardGlass,
+                ],
+              )
+            : null,
+        border: Border.all(
+          color: isDark
+              ? primary.withValues(alpha: 0.2)
+              : context.glassBorderStrong,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: isDark ? Colors.black26 : AppColors.shadowSoft,
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+          if (isDark)
+            BoxShadow(
+              color: primary.withValues(alpha: 0.05),
+              blurRadius: 32,
+              spreadRadius: 1,
+            )
+        ],
       ),
       child: child,
     );

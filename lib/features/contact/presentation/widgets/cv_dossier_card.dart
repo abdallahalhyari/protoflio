@@ -1,13 +1,23 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/services/cv_service.dart';
+import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
 
-class CvDossierCard extends StatelessWidget {
+class CvDossierCard extends StatefulWidget {
   const CvDossierCard({super.key});
+
+  @override
+  State<CvDossierCard> createState() => _CvDossierCardState();
+}
+
+class _CvDossierCardState extends State<CvDossierCard> {
+  bool _hover = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,28 +26,35 @@ class CvDossierCard extends StatelessWidget {
     final isDark = context.isDarkMode;
     final l10n = AppLocalizations.of(context)!;
 
-    return RepaintBoundary(
-      child: Container(
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: AppMotion.cardHover,
+        curve: AppMotion.emphasized,
         padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
-          color:
-              isDark ? AppColors.ink900.withValues(alpha: 0.7) : Colors.white,
-          borderRadius: BorderRadius.circular(AppRadius.lg),
+          color: isDark ? AppColors.darkCard : Colors.white,
+          borderRadius: BorderRadius.circular(AppRadius.container),
           border: Border.all(
-            color: isDark ? accent.withValues(alpha: 0.4) : AppColors.ink200,
-            width: 1.5,
+            color: _hover
+                ? accent.withValues(alpha: 0.6)
+                : (isDark ? accent.withValues(alpha: 0.35) : AppColors.ink200),
+            width: _hover ? 1.5 : 1.2,
           ),
           boxShadow: [
             BoxShadow(
-              color: accent.withValues(alpha: isDark ? 0.06 : 0.03),
-              blurRadius: 24,
+              color: accent.withValues(
+                  alpha:
+                      _hover ? (isDark ? 0.16 : 0.08) : (isDark ? 0.08 : 0.04)),
+              blurRadius: _hover ? 28 : 20,
               offset: const Offset(0, 8),
             ),
           ],
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final isNarrow = constraints.maxWidth < 750;
+            final isNarrow = constraints.maxWidth < 680;
 
             final metaBlock = Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +109,7 @@ class CvDossierCard extends StatelessWidget {
                   style: TextStyle(
                     color: context.mutedText,
                     fontSize: AppTypography.label,
-                    height: 1.4,
+                    height: 1.45,
                   ),
                 ),
               ],
@@ -104,6 +121,7 @@ class CvDossierCard extends StatelessWidget {
               children: [
                 ElevatedButton.icon(
                   onPressed: () async {
+                    SoundService.instance.playClick();
                     Analytics.ctaCvDownload();
                     await CvService.open(context);
                   },
@@ -119,7 +137,7 @@ class CvDossierCard extends StatelessWidget {
                     backgroundColor: accent,
                     foregroundColor: scheme.onPrimary,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 14),
+                        horizontal: 18, vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppRadius.pill),
                     ),
@@ -128,6 +146,7 @@ class CvDossierCard extends StatelessWidget {
                 ),
                 OutlinedButton.icon(
                   onPressed: () async {
+                    SoundService.instance.playClick();
                     Analytics.ctaCvDownload();
                     await CvService.open(context);
                   },
@@ -153,6 +172,27 @@ class CvDossierCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                FilledButton.tonalIcon(
+                  onPressed: () {
+                    SoundService.instance.playClick();
+                    unawaited(VCardQrDialog.show(context));
+                  },
+                  icon: const Icon(Icons.qr_code_2_rounded, size: 16),
+                  label: const Text(
+                    'vCard QR',
+                    style: TextStyle(
+                      fontSize: AppTypography.label,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                    ),
+                  ),
+                ),
               ],
             );
 
@@ -171,7 +211,7 @@ class CvDossierCard extends StatelessWidget {
               children: [
                 Expanded(child: metaBlock),
                 const SizedBox(width: AppSpacing.lg),
-                actionButtons,
+                Flexible(child: actionButtons),
               ],
             );
           },

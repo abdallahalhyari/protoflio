@@ -48,9 +48,7 @@ class CardBodyContent extends StatelessWidget {
     final caseCopy = localizedProjectCase(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
     final textScale = MediaQuery.textScalerOf(context).scale(1);
-    final maxCopyLines = pinFoot
-        ? (textScale > 1.3 ? 1 : 2)
-        : (textScale > 1.5 ? 1 : (textScale > 1.2 ? 2 : null));
+    final maxCopyLines = textScale > 1.1 ? 1 : (pinFoot ? 3 : 2);
     final clampLines = maxCopyLines;
     final clampOverflow = maxCopyLines != null ? TextOverflow.ellipsis : null;
 
@@ -156,14 +154,17 @@ class CardBodyContent extends StatelessWidget {
             ),
           )
         else
-          middle,
-        const SizedBox(height: AppSpacing.xs),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: AlignmentDirectional.centerStart,
-          child: Row(
-            children: [
-              ReadCaseStudyCta(
+          ClipRect(
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: middle,
+            ),
+          ),
+        const SizedBox(height: AppSpacing.sm),
+        Row(
+          children: [
+            Expanded(
+              child: ReadCaseStudyCta(
                 projectName: project.name,
                 scheme: scheme,
                 isHovered: isHovered,
@@ -172,25 +173,28 @@ class CardBodyContent extends StatelessWidget {
                 onTap: onOpenStudy,
                 onFocusChange: onFocusChange,
               ),
-              if (project.url != null ||
-                  project.linkedinUrl != null ||
-                  caseStudySlug != null) ...[
-                const SizedBox(width: AppSpacing.sm),
-                CompanyQuickLinks(
-                  project: project,
-                  scheme: scheme,
-                  caseStudySlug: caseStudySlug,
-                ),
-              ],
+            ),
+            if (project.url != null ||
+                project.linkedinUrl != null ||
+                caseStudySlug != null) ...[
+              const SizedBox(width: AppSpacing.sm),
+              CompanyQuickLinks(
+                project: project,
+                scheme: scheme,
+                caseStudySlug: caseStudySlug,
+              ),
             ],
-          ),
+          ],
         ),
       ],
     );
 
     return ClipRect(
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.sm,
+        ),
         child: content,
       ),
     );

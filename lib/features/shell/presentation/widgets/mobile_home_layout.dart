@@ -9,8 +9,6 @@ import 'package:profile/features/engineering/presentation/pages/engineering_page
     deferred as engineering_lib;
 import 'package:profile/features/experience/presentation/pages/experience_page.dart'
     deferred as experience_lib;
-import 'package:profile/features/about/presentation/pages/about_page.dart'
-    deferred as about_lib;
 import 'package:profile/features/intro/presentation/pages/intro_page.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart'
     deferred as projects_lib;
@@ -75,7 +73,7 @@ class MobileHomeLayout extends StatelessWidget {
                   onScrollDown: () => controller.scrollToMobileSection(1),
                   onViewWork: () => controller.scrollToMobileSection(1),
                   onDownloadResume: () => CvService.open(context),
-                  onContactMe: () => controller.scrollToMobileSection(6),
+                  onContactMe: () => controller.scrollToMobileSection(5),
                   isContinuousMobile: true,
                 ),
               ),
@@ -174,24 +172,6 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: DeferredPage(
                     mountPriority: 5,
-                    loader: about_lib.loadLibrary,
-                    builder: () =>
-                        about_lib.AboutPage(isContinuousMobile: true),
-                  ),
-                ),
-              ),
-            ),
-            MobileSectionDivider(number: '07', title: _dividerLabel(labels, 6)),
-            KeyedSubtree(
-              key: sectionKeys[6],
-              child: DeferredMount(
-                sectionIndex: 6,
-                placeholderHeight: 720,
-                distance: 1,
-                mountWhenIdleAfter: AppMotion.idleMount,
-                child: RepaintBoundary(
-                  child: DeferredPage(
-                    mountPriority: 6,
                     loader: contact_lib.loadLibrary,
                     builder: () =>
                         contact_lib.ContactPage(isContinuousMobile: true),

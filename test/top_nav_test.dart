@@ -80,7 +80,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(items.last);
     await tester.pumpAndSettle();
-    expect(goToArg, 6);
+    expect(goToArg, 5);
   });
 
   testWidgets('TopNav swallows tap on the already-active nav item',

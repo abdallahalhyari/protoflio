@@ -34,10 +34,7 @@ class ContactChannelsGrid extends StatelessWidget {
     required this.onCopy,
   });
 
-  static const _sky = AppColors.teal;
-  static const _availabilityGreen = AppColors.tealLight;
-  static const _indigo = AppColors.teal;
-  static const _accent = AppColors.teal;
+  static const _indicatorColor = AppColors.teal;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +55,7 @@ class ContactChannelsGrid extends StatelessWidget {
         // the WhatsApp card beside it.
         secondaryLabel: l10n.contactCopy,
         secondaryAction: () => onCopy(phoneRaw),
-        accent: _sky,
+        accent: AppColors.gold,
       ),
       ChannelData(
         label: l10n.contactWhatsapp,
@@ -71,7 +68,7 @@ class ContactChannelsGrid extends StatelessWidget {
         },
         secondaryLabel: l10n.contactCopy,
         secondaryAction: () => onCopy(whatsAppUrl),
-        accent: _availabilityGreen,
+        accent: AppColors.tealLight,
       ),
       ChannelData(
         label: l10n.contactLinkedin,
@@ -84,7 +81,7 @@ class ContactChannelsGrid extends StatelessWidget {
         },
         secondaryLabel: l10n.contactCopy,
         secondaryAction: () => onCopy(linkedInUrl),
-        accent: _indigo,
+        accent: AppColors.linkedIn,
       ),
       ChannelData(
         label: l10n.contactGithub,
@@ -97,7 +94,7 @@ class ContactChannelsGrid extends StatelessWidget {
         },
         secondaryLabel: l10n.contactCopy,
         secondaryAction: () => onCopy(githubUrl),
-        accent: _accent,
+        accent: isDark ? AppColors.ink300 : AppColors.ink800,
       ),
     ];
 
@@ -110,7 +107,7 @@ class ContactChannelsGrid extends StatelessWidget {
               width: 4,
               height: 18,
               decoration: BoxDecoration(
-                color: _sky,
+                color: _indicatorColor,
                 borderRadius: BorderRadius.circular(AppRadius.xxs),
               ),
             ),

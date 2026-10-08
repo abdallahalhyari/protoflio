@@ -28,8 +28,26 @@ class ProjectsEmptyState extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(Icons.search_off_rounded,
-              size: 48, color: scheme.primary.withValues(alpha: 0.6)),
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0.8, end: 1.0),
+            duration: AppMotion.ambient,
+            curve: Curves.easeInOut,
+            builder: (context, value, child) {
+              return Transform.scale(
+                scale: value,
+                child: Opacity(
+                  opacity: value,
+                  child: child,
+                ),
+              );
+            },
+            // The builder doesn't support 'repeat' directly without an animation controller.
+            // But TweenAnimationBuilder runs once. To make it pulse, we'd need a StatefulWidget
+            // or an implicit animation loop.
+            // Instead, I'll just give it a nice entrance bounce!
+            child: Icon(Icons.search_off_rounded,
+                size: 56, color: scheme.primary.withValues(alpha: 0.6)),
+          ),
           const SizedBox(height: AppSpacing.md),
           Text(
             AppLocalizations.of(context)!.uiNoCaseStudies,

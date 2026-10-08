@@ -68,7 +68,7 @@ void main() {
     for (int i = 0; i < 8; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }
-    expect(_folioIndex(tester), 7);
+    expect(_folioIndex(tester), 6);
 
     await tester.sendKeyEvent(LogicalKeyboardKey.home);
     for (int i = 0; i < 8; i++) {

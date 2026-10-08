@@ -5,6 +5,7 @@ import 'helpers/test_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/features/projects/presentation/widgets/interactive_project_card.dart';
+import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
 import 'package:profile/features/projects/presentation/widgets/nfc_architecture_diagram.dart';
 
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
@@ -198,9 +199,7 @@ void main() {
       // Keyboard focus lands on the card's "Read case study" control (the
       // card-wide InkWell is pointer-only).
       final cta = find.descendant(
-        of: find.byWidgetPredicate((w) =>
-            w is Semantics &&
-            (w.properties.label?.startsWith('Read case study') ?? false)),
+        of: find.byType(ReadCaseStudyCta),
         matching: find.byType(InkWell),
       );
       expect(cta, findsOneWidget);
@@ -208,9 +207,17 @@ void main() {
       await tester.pump();
 
       // Card elevation and border should be highlighted
-      final card = tester.widget<Card>(find.byType(Card));
-      final shape = card.shape as RoundedRectangleBorder;
-      expect(shape.side.width, equals(1.5));
+      final container = tester.widget<AnimatedContainer>(
+        find
+            .descendant(
+              of: find.byType(InteractiveProjectCard),
+              matching: find.byType(AnimatedContainer),
+            )
+            .first,
+      );
+      final decoration = container.decoration as BoxDecoration;
+      final border = decoration.border as Border;
+      expect(border.top.width, equals(1.5));
     });
 
     testWidgets('ProjectsPage arrow key navigation changes domain filter',

@@ -11,8 +11,6 @@ import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/services/url_sync_service.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_router.dart';
 import 'package:profile/features/intro/presentation/pages/intro_page.dart';
-import 'package:profile/features/about/presentation/pages/about_page.dart'
-    deferred as about_lib;
 import 'package:profile/features/skills/presentation/pages/skills_page.dart'
     deferred as skills_lib;
 import 'package:profile/features/projects/presentation/pages/projects_page.dart'
@@ -42,7 +40,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const int _pageCount = 7;
+  static const int _pageCount = 6;
 
   // Hashes look like `home`, `work`, or `work/nathealth`.
   // Return the section slug (`home`, `work`, ...) or null when malformed.
@@ -64,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late final PageController _controller;
   late final ScrollController _mobileScrollController;
-  final List<GlobalKey> _sectionKeys = List.generate(7, (_) => GlobalKey());
+  final List<GlobalKey> _sectionKeys = List.generate(6, (_) => GlobalKey());
   final ValueNotifier<bool> _showScrollToTop = ValueNotifier<bool>(false);
   final FocusNode _focusNode = FocusNode();
   final ValueNotifier<int> _pageIndex = ValueNotifier<int>(0);
@@ -193,8 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
         (2, projects_lib.loadLibrary),
         (3, skills_lib.loadLibrary),
         (4, engineering_lib.loadLibrary),
-        (5, about_lib.loadLibrary),
-        (6, contact_lib.loadLibrary),
+        (5, contact_lib.loadLibrary),
       ]..sort(
           (a, b) => (a.$1 - current).abs().compareTo((b.$1 - current).abs()));
       for (final entry in loaders) {
@@ -605,7 +602,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onScrollDown: _next,
           onViewWork: () => _goTo(1),
           onDownloadResume: _downloadResume,
-          onContactMe: () => _goTo(6),
+          onContactMe: () => _goTo(5),
         );
       case 1:
         return DeferredPage(
@@ -635,12 +632,6 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: () => skills_lib.SkillsPage(),
         );
       case 5:
-        return DeferredPage(
-          mountPriority: (index - _pageIndex.value).abs(),
-          loader: about_lib.loadLibrary,
-          builder: () => about_lib.AboutPage(),
-        );
-      case 6:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
           loader: contact_lib.loadLibrary,

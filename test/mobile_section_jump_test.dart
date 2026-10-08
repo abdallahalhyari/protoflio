@@ -32,7 +32,7 @@ void main() {
 
     final cases = <int, Type>{
       4: SkillsHeader,
-      6: ContactHeader,
+      5: ContactHeader,
       3: ExperienceHeader,
     };
     for (final entry in cases.entries) {

@@ -48,116 +48,72 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
-      child: AnimatedContainer(
-        duration: AppMotion.snap,
+      child: AnimatedScale(
+        scale: _hover ? 1.02 : 1.0,
+        duration: AppMotion.cardHover,
         curve: AppMotion.emphasized,
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: isDark
-              ? (_hover
-                  ? Colors.white.withValues(alpha: 0.08)
-                  : Colors.white.withValues(alpha: 0.04))
-              : (_hover ? Colors.white : AppColors.ink50),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(
-            color: _hover
-                ? (isDark ? t.accent : accentText).withValues(alpha: 0.6)
-                : (isDark
-                    ? Colors.white.withValues(alpha: 0.1)
-                    : AppColors.ink200),
-            width: 1.2,
-          ),
-          boxShadow: [
-            if (_hover)
-              BoxShadow(
-                color: t.accent.withValues(alpha: isDark ? 0.15 : 0.08),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 38,
-                  height: 38,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: t.accent.withValues(alpha: isDark ? 0.14 : 0.10),
-                    borderRadius: BorderRadius.circular(AppRadius.sm),
-                    border: Border.all(
-                      color: (isDark ? t.accent : accentText)
-                          .withValues(alpha: isDark ? 0.35 : 0.4),
-                    ),
-                  ),
-                  child: Icon(t.icon, size: 18, color: accentText),
+        child: AnimatedContainer(
+          duration: AppMotion.cardHover,
+          curve: AppMotion.emphasized,
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: isDark
+                ? (_hover
+                    ? Colors.white.withValues(alpha: 0.08)
+                    : Colors.white.withValues(alpha: 0.04))
+                : (_hover ? Colors.white : AppColors.ink50),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: _hover
+                  ? (isDark ? t.accent : accentText).withValues(alpha: 0.8)
+                  : (isDark
+                      ? Colors.white.withValues(alpha: 0.1)
+                      : AppColors.ink200),
+              width: 1.2,
+            ),
+            boxShadow: [
+              if (_hover)
+                BoxShadow(
+                  color: t.accent.withValues(alpha: isDark ? 0.25 : 0.12),
+                  blurRadius: 24,
+                  offset: const Offset(0, 10),
+                  spreadRadius: 2,
                 ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 38,
+                    height: 38,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: t.accent.withValues(alpha: isDark ? 0.10 : 0.08),
-                      borderRadius: BorderRadius.circular(AppRadius.xs),
-                    ),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        t.tag,
-                        style: TextStyle(
-                          color: accentText,
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
-                        ),
+                      color: t.accent.withValues(alpha: isDark ? 0.14 : 0.10),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                      border: Border.all(
+                        color: (isDark ? t.accent : accentText)
+                            .withValues(alpha: isDark ? 0.35 : 0.4),
                       ),
                     ),
+                    child: Icon(t.icon, size: 18, color: accentText),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              t.title,
-              style: TextStyle(
-                color: context.onSurface,
-                fontSize: AppTypography.body,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              t.description,
-              style: TextStyle(
-                color: context.mutedText,
-                fontSize: AppTypography.label,
-                height: 1.45,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Semantics(
-              button: true,
-              label: 'Inquire about ${t.title} consulting track',
-              child: InkWell(
-                onTap: () {
-                  SoundService.instance.playClick();
-                  t.onInquire(t.inquirySubject);
-                },
-                borderRadius: BorderRadius.circular(AppRadius.xs),
-                // Vertical padding lifts the tap target from ~14px (the
-                // micro label alone) past the 24px WCAG 2.2 minimum.
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 7, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: t.accent.withValues(alpha: isDark ? 0.10 : 0.08),
+                        borderRadius: BorderRadius.circular(AppRadius.xs),
+                      ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
                         child: Text(
-                          AppLocalizations.of(context)!.uiInquireTrack,
+                          t.tag,
                           style: TextStyle(
                             color: accentText,
                             fontSize: AppTypography.label,
@@ -165,15 +121,70 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 4),
-                      Icon(Icons.arrow_forward_rounded,
-                          size: 12, color: accentText),
-                    ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                t.title,
+                style: TextStyle(
+                  color: context.onSurface,
+                  fontSize: AppTypography.body,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                t.description,
+                style: TextStyle(
+                  color: context.mutedText,
+                  fontSize: AppTypography.label,
+                  height: 1.45,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Semantics(
+                button: true,
+                label: 'Inquire about ${t.title} consulting track',
+                child: InkWell(
+                  onTap: () {
+                    SoundService.instance.playClick();
+                    t.onInquire(t.inquirySubject);
+                  },
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                  // Vertical padding lifts the tap target from ~14px (the
+                  // micro label alone) past the 24px WCAG 2.2 minimum.
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            AppLocalizations.of(context)!.uiInquireTrack,
+                            style: TextStyle(
+                              color: accentText,
+                              fontSize: AppTypography.label,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        AnimatedPadding(
+                          duration: AppMotion.cardHover,
+                          curve: AppMotion.emphasized,
+                          padding: EdgeInsets.only(left: _hover ? 4.0 : 0.0),
+                          child: Icon(Icons.arrow_forward_rounded,
+                              size: 12, color: accentText),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

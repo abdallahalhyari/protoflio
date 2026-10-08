@@ -9,7 +9,7 @@ Widget _host(ValueNotifier<int> pageIndex, {void Function(int)? onGoTo}) {
   final controller = HomeController(
     pageIndex: pageIndex,
     showScrollToTop: ValueNotifier<bool>(false),
-    pageCount: 7,
+    pageCount: 6,
     goTo: (int page, {bool syncUrl = true}) => onGoTo?.call(page),
     next: () {},
     prev: () {},
@@ -29,13 +29,13 @@ Widget _host(ValueNotifier<int> pageIndex, {void Function(int)? onGoTo}) {
 }
 
 void main() {
-  testWidgets('FolioBar renders "0N / 07" counter for current page',
+  testWidgets('FolioBar renders "0N / 06" counter for current page',
       (tester) async {
     await tester.pumpWidget(_host(ValueNotifier<int>(2)));
     await tester.pumpAndSettle();
     // folioIndicator locale template renders "03 / 07" for pageIndex 2.
     expect(find.textContaining('03'), findsWidgets);
-    expect(find.textContaining('07'), findsWidgets);
+    expect(find.textContaining('06'), findsWidgets);
   });
 
   testWidgets('FolioBar updates label when pageIndex ticks', (tester) async {
@@ -65,7 +65,7 @@ void main() {
       (tester) async {
     int? went;
     await tester
-        .pumpWidget(_host(ValueNotifier<int>(6), onGoTo: (p) => went = p));
+        .pumpWidget(_host(ValueNotifier<int>(5), onGoTo: (p) => went = p));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Back to start'));
     expect(went, 0);
