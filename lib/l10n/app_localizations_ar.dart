@@ -24,7 +24,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navStack => 'المهارات';
 
   @override
-  String get navAbout => 'رؤى';
+  String get navAbout => 'نبذة';
 
   @override
   String get navContact => 'تواصل';
@@ -1109,4 +1109,210 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get downloadCv => 'تحميل السيرة الذاتية';
+
+  @override
+  String get aboutTitle => 'نبذة';
+
+  @override
+  String get aboutSubtitle =>
+      'كيف أعمل كمهندس، والمشكلات التي أحلّها، وبعض الأمور التي يمكنك تشغيلها بنفسك.';
+
+  @override
+  String get aboutTabProfile => 'الملف';
+
+  @override
+  String get aboutTabHood => 'تحت الغطاء';
+
+  @override
+  String get aboutTabPlayground => 'ساحة التجارب';
+
+  @override
+  String get aboutEngineerLabel => 'المهندس';
+
+  @override
+  String get aboutEngineerValue => 'Flutter وAndroid والأنظمة المحيطة بهما';
+
+  @override
+  String get aboutExperienceLabel => 'الخبرة';
+
+  @override
+  String aboutExperienceValue(int years) {
+    return 'أكثر من $years سنوات في تطبيقات الهواتف';
+  }
+
+  @override
+  String get aboutFocusLabel => 'التركيز';
+
+  @override
+  String get aboutFocusValue =>
+      'أنظمة الهواتف، والتكامل مع النظام الأصلي، والأمان، وتطبيقات المؤسسات';
+
+  @override
+  String get aboutStackLabel => 'الأدوات';
+
+  @override
+  String get aboutStory =>
+      'بدأت في تطبيقات الهواتف عام 2021 بإطلاق تطبيقات Flutter للتجارة والوسائط. وما أبقى اهتمامي هو الطبقة التي تحت الواجهة: Android الأصلي، وبطاقات NFC الذكية، والتشفير، والمزامنة في الخلفية.\n\nفي NatHealth أقود هذا العمل لمنصة مطالبات تُستخدم في الأردن وفلسطين والعراق. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.';
+
+  @override
+  String get aboutHoodHint => 'اختر قدرة لترى كيف أستخدمها.';
+
+  @override
+  String get aboutWhereLabel => 'أين استخدمتها';
+
+  @override
+  String get hoodNfcTitle => 'NFC';
+
+  @override
+  String get hoodNfcTag => 'اتصال ومصادقة آمنان مع البطاقات.';
+
+  @override
+  String get hoodNfcDetail =>
+      'طبقة Kotlin أصلية تتحدث مع البطاقات الذكية عبر ISO 7816 APDU. صممت واجهة قارئ البطاقات لتقف عدة تقنيات بطاقات خلف عقد واحد.';
+
+  @override
+  String get hoodNfcWhere => 'NatHealth';
+
+  @override
+  String get hoodCryptoTitle => 'التشفير';
+
+  @override
+  String get hoodCryptoTag => 'RSA وAES وPBKDF2 مع تعامل دقيق مع المفاتيح.';
+
+  @override
+  String get hoodCryptoDetail =>
+      'إصدار JWT على خطوتين، وتخزين آمن للرموز، وربط الجهاز بمعرّف GUID تحمي بيانات المرضى الحساسة.';
+
+  @override
+  String get hoodCryptoWhere => 'NatHealth';
+
+  @override
+  String get hoodBackgroundTitle => 'المعالجة في الخلفية';
+
+  @override
+  String get hoodBackgroundTag => 'مزامنة ومعالجة رسائل موثوقة.';
+
+  @override
+  String get hoodBackgroundDetail =>
+      'يشغّل WorkManager المزامنة في الخلفية واستعلام الحالة وتجديد الرموز، فيكتمل العمل دون أن يراقبه المستخدم.';
+
+  @override
+  String get hoodBackgroundWhere => 'NatHealth';
+
+  @override
+  String get hoodOfflineTitle => 'دون اتصال أولاً';
+
+  @override
+  String get hoodOfflineTag => 'تطبيقات تواصل العمل حين ينقطع الاتصال.';
+
+  @override
+  String get hoodOfflineDetail =>
+      'تُخزَّن الطلبات على الجهاز وتُرسل عند عودة الشبكة، مع إعادة محاولة بتراجع أسّي ومعالجة موحّدة للأخطاء.';
+
+  @override
+  String get hoodOfflineWhere => 'NatHealth';
+
+  @override
+  String get hoodNativeTitle => 'التكامل مع النظام الأصلي';
+
+  @override
+  String get hoodNativeTag => 'ربط Flutter بنظام Android الأصلي المعقّد.';
+
+  @override
+  String get hoodNativeDetail =>
+      'تربط قنوات المنصة بين Dart وشيفرة Kotlin وJava للوصول إلى العتاد الذي لا تبلغه Flutter وحدها.';
+
+  @override
+  String get hoodNativeWhere => 'NatHealth';
+
+  @override
+  String get hoodEnterpriseTitle => 'أنظمة المؤسسات';
+
+  @override
+  String get hoodEnterpriseTag => 'الرعاية الصحية وERP وسير العمل الكبيرة.';
+
+  @override
+  String get hoodEnterpriseDetail =>
+      'بنية معيارية ومكوّنات قابلة لإعادة الاستخدام عبر عملاء الرعاية الصحية والتعليم الإلكتروني وERP، أُعيد بناؤها دون إيقاف التطبيقات.';
+
+  @override
+  String get hoodEnterpriseWhere => 'ESKADENIA Software';
+
+  @override
+  String get playKdfTitle => 'اشتقاق المفتاح';
+
+  @override
+  String get playKdfIntro =>
+      'PBKDF2-HMAC-SHA256 يعمل في متصفحك. كلما زادت التكرارات أصبح كل تخمين لكلمة المرور أبطأ، على المهاجم وعليك.';
+
+  @override
+  String get playKdfPassword => 'كلمة المرور';
+
+  @override
+  String get playKdfIterations => 'التكرارات';
+
+  @override
+  String get playKdfRun => 'اشتقاق المفتاح';
+
+  @override
+  String get playKdfRunning => 'جارٍ الاشتقاق…';
+
+  @override
+  String get playKdfResult => 'المفتاح المشتق (256 بت)';
+
+  @override
+  String playKdfTime(int ms) {
+    return 'استغرق $ms مللي ثانية على هذا الجهاز.';
+  }
+
+  @override
+  String get playKdfNote =>
+      'الملح ثابت في هذا العرض. الأنظمة الحقيقية تستخدم ملحاً عشوائياً لكل مستخدم.';
+
+  @override
+  String get playSyncTitle => 'من دون اتصال إلى متصل';
+
+  @override
+  String get playSyncIntro =>
+      'قدّم مطالبات وأنت دون اتصال. تنتظر في الطابور على الجهاز وتُزامَن عند عودة الاتصال، مع إعادة المحاولة بتراجع أسّي.';
+
+  @override
+  String get playSyncOnline => 'متصل';
+
+  @override
+  String get playSyncOffline => 'دون اتصال';
+
+  @override
+  String get playSyncFlaky => 'شبكة غير مستقرة';
+
+  @override
+  String get playSyncSubmit => 'إرسال مطالبة';
+
+  @override
+  String get playSyncEmpty => 'لا مطالبات بعد. أرسل واحدة.';
+
+  @override
+  String get playSyncQueued => 'في الطابور';
+
+  @override
+  String get playSyncSending => 'قيد الإرسال';
+
+  @override
+  String get playSyncSynced => 'تمت المزامنة';
+
+  @override
+  String playSyncRetry(int seconds) {
+    return 'إعادة المحاولة بعد $seconds ث';
+  }
+
+  @override
+  String playSyncClaim(int number) {
+    return 'المطالبة $number';
+  }
+
+  @override
+  String get playSyncNote => 'محاكاة. لا تُستخدم أي شبكة.';
+
+  @override
+  String get navPerspectives => 'رؤى';
 }

@@ -11,8 +11,8 @@ import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/services/url_sync_service.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_router.dart';
 import 'package:profile/features/intro/presentation/pages/intro_page.dart';
-import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart'
-    deferred as hats_lib;
+import 'package:profile/features/about/presentation/pages/about_page.dart'
+    deferred as about_lib;
 import 'package:profile/features/skills/presentation/pages/skills_page.dart'
     deferred as skills_lib;
 import 'package:profile/features/projects/presentation/pages/projects_page.dart'
@@ -193,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
         (2, projects_lib.loadLibrary),
         (3, skills_lib.loadLibrary),
         (4, engineering_lib.loadLibrary),
-        (5, hats_lib.loadLibrary),
+        (5, about_lib.loadLibrary),
         (6, contact_lib.loadLibrary),
       ]..sort(
           (a, b) => (a.$1 - current).abs().compareTo((b.$1 - current).abs()));
@@ -218,7 +218,6 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       precacheImage(const AssetImage('assets/my_image.webp'), context);
-      precacheImage(const AssetImage('assets/hat.webp'), context);
       precacheImage(
           const AssetImage('assets/images/projects/nathealth.webp'), context);
       precacheImage(
@@ -227,16 +226,6 @@ class _HomeScreenState extends State<HomeScreen> {
           const AssetImage('assets/images/projects/solutions.webp'), context);
       precacheImage(
           const AssetImage('assets/images/projects/fais.webp'), context);
-      precacheImage(
-          const AssetImage('assets/images/hats/comms_hat.webp'), context);
-      precacheImage(
-          const AssetImage('assets/images/hats/dt_hat.webp'), context);
-      precacheImage(
-          const AssetImage('assets/images/hats/grad_cap.webp'), context);
-      precacheImage(
-          const AssetImage('assets/images/hats/hard_hat.webp'), context);
-      precacheImage(
-          const AssetImage('assets/images/hats/nurses_cap.webp'), context);
     });
   }
 
@@ -648,8 +637,8 @@ class _HomeScreenState extends State<HomeScreen> {
       case 5:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
-          loader: hats_lib.loadLibrary,
-          builder: () => hats_lib.HatsGridPage(),
+          loader: about_lib.loadLibrary,
+          builder: () => about_lib.AboutPage(),
         );
       case 6:
         return DeferredPage(

@@ -46,7 +46,7 @@ class ContinuousMobileHatColumn extends StatelessWidget {
           // Same masthead as the other sections; the hand-rolled one drew
           // its kicker at border opacity, which barely read on dark.
           SectionMasthead(
-            title: loc.navAbout,
+            title: loc.navPerspectives,
             subtitle: loc.hatsHeaderSubtitle,
             isDesktop: false,
           ),

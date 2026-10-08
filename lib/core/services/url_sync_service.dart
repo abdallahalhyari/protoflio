@@ -53,7 +53,7 @@ abstract class UrlSyncService {
       case 'stack':
         return 'Skills & Stack · Abdallah Alhyari';
       case 'about':
-        return 'Perspectives · Abdallah Alhyari';
+        return 'About · Abdallah Alhyari';
       case 'contact':
         return 'Contact & Recruiter Inquiries · Abdallah Alhyari';
       case 'home':

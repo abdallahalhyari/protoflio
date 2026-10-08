@@ -5,7 +5,7 @@
   "navEngineering": "Engineering",
   "navExperience": "Experience",
   "navStack": "Skills",
-  "navAbout": "Perspectives",
+  "navAbout": "About",
   "navContact": "Contact",
   "navResume": "CV",
   "introLocation": "Amman → Brno · 2027",
@@ -521,5 +521,95 @@
   "introTagline": "Mobile engineer building software that works beyond the screen.",
   "introPitch2": "Production Flutter and native Android: NFC smart cards, cryptography, offline-first sync and enterprise integrations.",
   "letsTalk": "Let's talk",
-  "downloadCv": "Download CV"
+  "downloadCv": "Download CV",
+  "aboutTitle": "About",
+  "aboutSubtitle": "How I work as an engineer, the problems I solve, and a few things you can run yourself.",
+  "aboutTabProfile": "Profile",
+  "aboutTabHood": "Under the hood",
+  "aboutTabPlayground": "Playground",
+  "aboutEngineerLabel": "Engineer",
+  "aboutEngineerValue": "Flutter, Android and the systems around them",
+  "aboutExperienceLabel": "Experience",
+  "aboutExperienceValue": "{years}+ years in mobile",
+  "@aboutExperienceValue": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "aboutFocusLabel": "Focus",
+  "aboutFocusValue": "Mobile systems, native integration, security, enterprise apps",
+  "aboutStackLabel": "Stack",
+  "aboutStory": "I started in mobile in 2021, shipping Flutter apps for commerce and media. The work that held my interest was the layer under the UI: native Android, NFC smart cards, cryptography and background sync.\n\nAt NatHealth I lead that work for a claims platform used across Jordan, Palestine and Iraq. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
+  "aboutHoodHint": "Select a capability to see how I use it.",
+  "aboutWhereLabel": "Where I used it",
+  "hoodNfcTitle": "NFC",
+  "hoodNfcTag": "Secure card communication and authentication.",
+  "hoodNfcDetail": "A native Kotlin layer talks to smart cards over ISO 7816 APDUs. I designed the card-reader interface so several card technologies sit behind one contract.",
+  "hoodNfcWhere": "NatHealth",
+  "hoodCryptoTitle": "Cryptography",
+  "hoodCryptoTag": "RSA, AES and PBKDF2, with careful key handling.",
+  "hoodCryptoDetail": "Two-step JWT issuance, secure token storage and GUID-based device binding keep sensitive patient data protected.",
+  "hoodCryptoWhere": "NatHealth",
+  "hoodBackgroundTitle": "Background processing",
+  "hoodBackgroundTag": "Reliable sync and message processing.",
+  "hoodBackgroundDetail": "WorkManager runs background sync, status polling and token refresh, so work finishes without the user watching.",
+  "hoodBackgroundWhere": "NatHealth",
+  "hoodOfflineTitle": "Offline-first",
+  "hoodOfflineTag": "Apps that keep working when connectivity disappears.",
+  "hoodOfflineDetail": "Submissions are stored on the device and sent when the network returns, with exponential-backoff retries and standard failure handling.",
+  "hoodOfflineWhere": "NatHealth",
+  "hoodNativeTitle": "Native integration",
+  "hoodNativeTag": "Flutter bridged to complex native Android.",
+  "hoodNativeDetail": "Platform channels connect Dart to Kotlin and Java code for hardware access that Flutter cannot reach on its own.",
+  "hoodNativeWhere": "NatHealth",
+  "hoodEnterpriseTitle": "Enterprise systems",
+  "hoodEnterpriseTag": "Healthcare, ERP and large business workflows.",
+  "hoodEnterpriseDetail": "Modular architecture and reusable components across healthcare, e-learning and ERP clients, rebuilt without taking the apps offline.",
+  "hoodEnterpriseWhere": "ESKADENIA Software",
+  "playKdfTitle": "Key derivation",
+  "playKdfIntro": "PBKDF2-HMAC-SHA256 running in your browser. More iterations make every password guess slower, for an attacker and for you.",
+  "playKdfPassword": "Password",
+  "playKdfIterations": "Iterations",
+  "playKdfRun": "Derive key",
+  "playKdfRunning": "Deriving…",
+  "playKdfResult": "Derived key (256 bit)",
+  "playKdfTime": "Took {ms} ms on this device.",
+  "@playKdfTime": {
+    "placeholders": {
+      "ms": {
+        "type": "int"
+      }
+    }
+  },
+  "playKdfNote": "The salt is fixed for this demo. Real systems use a random salt per user.",
+  "playSyncTitle": "Offline to online",
+  "playSyncIntro": "Submit claims while offline. They queue on the device and sync when you go back online, retrying with exponential backoff.",
+  "playSyncOnline": "Online",
+  "playSyncOffline": "Offline",
+  "playSyncFlaky": "Flaky network",
+  "playSyncSubmit": "Submit claim",
+  "playSyncEmpty": "No claims yet. Submit one.",
+  "playSyncQueued": "Queued",
+  "playSyncSending": "Sending",
+  "playSyncSynced": "Synced",
+  "playSyncRetry": "Retry in {seconds}s",
+  "@playSyncRetry": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playSyncClaim": "Claim {number}",
+  "@playSyncClaim": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "playSyncNote": "Simulation. No network is used.",
+  "navPerspectives": "Perspectives"
 }

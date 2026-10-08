@@ -133,7 +133,7 @@ abstract class AppLocalizations {
   /// No description provided for @navAbout.
   ///
   /// In en, this message translates to:
-  /// **'Perspectives'**
+  /// **'About'**
   String get navAbout;
 
   /// No description provided for @navContact.
@@ -2061,6 +2061,378 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Download CV'**
   String get downloadCv;
+
+  /// No description provided for @aboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutTitle;
+
+  /// No description provided for @aboutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How I work as an engineer, the problems I solve, and a few things you can run yourself.'**
+  String get aboutSubtitle;
+
+  /// No description provided for @aboutTabProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get aboutTabProfile;
+
+  /// No description provided for @aboutTabHood.
+  ///
+  /// In en, this message translates to:
+  /// **'Under the hood'**
+  String get aboutTabHood;
+
+  /// No description provided for @aboutTabPlayground.
+  ///
+  /// In en, this message translates to:
+  /// **'Playground'**
+  String get aboutTabPlayground;
+
+  /// No description provided for @aboutEngineerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Engineer'**
+  String get aboutEngineerLabel;
+
+  /// No description provided for @aboutEngineerValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter, Android and the systems around them'**
+  String get aboutEngineerValue;
+
+  /// No description provided for @aboutExperienceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get aboutExperienceLabel;
+
+  /// No description provided for @aboutExperienceValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{years}+ years in mobile'**
+  String aboutExperienceValue(int years);
+
+  /// No description provided for @aboutFocusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get aboutFocusLabel;
+
+  /// No description provided for @aboutFocusValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile systems, native integration, security, enterprise apps'**
+  String get aboutFocusValue;
+
+  /// No description provided for @aboutStackLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stack'**
+  String get aboutStackLabel;
+
+  /// No description provided for @aboutStory.
+  ///
+  /// In en, this message translates to:
+  /// **'I started in mobile in 2021, shipping Flutter apps for commerce and media. The work that held my interest was the layer under the UI: native Android, NFC smart cards, cryptography and background sync.\n\nAt NatHealth I lead that work for a claims platform used across Jordan, Palestine and Iraq. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.'**
+  String get aboutStory;
+
+  /// No description provided for @aboutHoodHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a capability to see how I use it.'**
+  String get aboutHoodHint;
+
+  /// No description provided for @aboutWhereLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Where I used it'**
+  String get aboutWhereLabel;
+
+  /// No description provided for @hoodNfcTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC'**
+  String get hoodNfcTitle;
+
+  /// No description provided for @hoodNfcTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure card communication and authentication.'**
+  String get hoodNfcTag;
+
+  /// No description provided for @hoodNfcDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'A native Kotlin layer talks to smart cards over ISO 7816 APDUs. I designed the card-reader interface so several card technologies sit behind one contract.'**
+  String get hoodNfcDetail;
+
+  /// No description provided for @hoodNfcWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodNfcWhere;
+
+  /// No description provided for @hoodCryptoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cryptography'**
+  String get hoodCryptoTitle;
+
+  /// No description provided for @hoodCryptoTag.
+  ///
+  /// In en, this message translates to:
+  /// **'RSA, AES and PBKDF2, with careful key handling.'**
+  String get hoodCryptoTag;
+
+  /// No description provided for @hoodCryptoDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-step JWT issuance, secure token storage and GUID-based device binding keep sensitive patient data protected.'**
+  String get hoodCryptoDetail;
+
+  /// No description provided for @hoodCryptoWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodCryptoWhere;
+
+  /// No description provided for @hoodBackgroundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Background processing'**
+  String get hoodBackgroundTitle;
+
+  /// No description provided for @hoodBackgroundTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Reliable sync and message processing.'**
+  String get hoodBackgroundTag;
+
+  /// No description provided for @hoodBackgroundDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'WorkManager runs background sync, status polling and token refresh, so work finishes without the user watching.'**
+  String get hoodBackgroundDetail;
+
+  /// No description provided for @hoodBackgroundWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodBackgroundWhere;
+
+  /// No description provided for @hoodOfflineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline-first'**
+  String get hoodOfflineTitle;
+
+  /// No description provided for @hoodOfflineTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps that keep working when connectivity disappears.'**
+  String get hoodOfflineTag;
+
+  /// No description provided for @hoodOfflineDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Submissions are stored on the device and sent when the network returns, with exponential-backoff retries and standard failure handling.'**
+  String get hoodOfflineDetail;
+
+  /// No description provided for @hoodOfflineWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodOfflineWhere;
+
+  /// No description provided for @hoodNativeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Native integration'**
+  String get hoodNativeTitle;
+
+  /// No description provided for @hoodNativeTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter bridged to complex native Android.'**
+  String get hoodNativeTag;
+
+  /// No description provided for @hoodNativeDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform channels connect Dart to Kotlin and Java code for hardware access that Flutter cannot reach on its own.'**
+  String get hoodNativeDetail;
+
+  /// No description provided for @hoodNativeWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodNativeWhere;
+
+  /// No description provided for @hoodEnterpriseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enterprise systems'**
+  String get hoodEnterpriseTitle;
+
+  /// No description provided for @hoodEnterpriseTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthcare, ERP and large business workflows.'**
+  String get hoodEnterpriseTag;
+
+  /// No description provided for @hoodEnterpriseDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Modular architecture and reusable components across healthcare, e-learning and ERP clients, rebuilt without taking the apps offline.'**
+  String get hoodEnterpriseDetail;
+
+  /// No description provided for @hoodEnterpriseWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'ESKADENIA Software'**
+  String get hoodEnterpriseWhere;
+
+  /// No description provided for @playKdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Key derivation'**
+  String get playKdfTitle;
+
+  /// No description provided for @playKdfIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'PBKDF2-HMAC-SHA256 running in your browser. More iterations make every password guess slower, for an attacker and for you.'**
+  String get playKdfIntro;
+
+  /// No description provided for @playKdfPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get playKdfPassword;
+
+  /// No description provided for @playKdfIterations.
+  ///
+  /// In en, this message translates to:
+  /// **'Iterations'**
+  String get playKdfIterations;
+
+  /// No description provided for @playKdfRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Derive key'**
+  String get playKdfRun;
+
+  /// No description provided for @playKdfRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Deriving…'**
+  String get playKdfRunning;
+
+  /// No description provided for @playKdfResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Derived key (256 bit)'**
+  String get playKdfResult;
+
+  /// No description provided for @playKdfTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Took {ms} ms on this device.'**
+  String playKdfTime(int ms);
+
+  /// No description provided for @playKdfNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The salt is fixed for this demo. Real systems use a random salt per user.'**
+  String get playKdfNote;
+
+  /// No description provided for @playSyncTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline to online'**
+  String get playSyncTitle;
+
+  /// No description provided for @playSyncIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit claims while offline. They queue on the device and sync when you go back online, retrying with exponential backoff.'**
+  String get playSyncIntro;
+
+  /// No description provided for @playSyncOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get playSyncOnline;
+
+  /// No description provided for @playSyncOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get playSyncOffline;
+
+  /// No description provided for @playSyncFlaky.
+  ///
+  /// In en, this message translates to:
+  /// **'Flaky network'**
+  String get playSyncFlaky;
+
+  /// No description provided for @playSyncSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit claim'**
+  String get playSyncSubmit;
+
+  /// No description provided for @playSyncEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No claims yet. Submit one.'**
+  String get playSyncEmpty;
+
+  /// No description provided for @playSyncQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get playSyncQueued;
+
+  /// No description provided for @playSyncSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending'**
+  String get playSyncSending;
+
+  /// No description provided for @playSyncSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced'**
+  String get playSyncSynced;
+
+  /// No description provided for @playSyncRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry in {seconds}s'**
+  String playSyncRetry(int seconds);
+
+  /// No description provided for @playSyncClaim.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim {number}'**
+  String playSyncClaim(int number);
+
+  /// No description provided for @playSyncNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulation. No network is used.'**
+  String get playSyncNote;
+
+  /// No description provided for @navPerspectives.
+  ///
+  /// In en, this message translates to:
+  /// **'Perspectives'**
+  String get navPerspectives;
 }
 
 class _AppLocalizationsDelegate

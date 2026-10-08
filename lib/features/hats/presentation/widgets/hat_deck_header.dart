@@ -50,7 +50,7 @@ class HatDeckHeader extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                loc.navAbout,
+                loc.navPerspectives,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,

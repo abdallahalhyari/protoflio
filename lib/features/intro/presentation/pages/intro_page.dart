@@ -35,12 +35,9 @@ class IntroPage extends StatefulWidget {
 class _IntroPageState extends State<IntroPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   /// The cover's one scripted entrance. Plays once; revisits stay still.
-  /// Starts at -0.2 so the first beat holds briefly while the loader
-  /// clears; the intervals clamp, so nothing moves until 0.
   late final AnimationController _reveal = AnimationController(
     vsync: this,
-    lowerBound: -0.2,
-    duration: AppMotion.coverEntrance * 1.2,
+    duration: AppMotion.coverEntrance,
   );
 
   @override

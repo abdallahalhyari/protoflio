@@ -24,7 +24,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navStack => 'Skills';
 
   @override
-  String get navAbout => 'Perspectives';
+  String get navAbout => 'About';
 
   @override
   String get navContact => 'Contact';
@@ -1117,4 +1117,213 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get downloadCv => 'Download CV';
+
+  @override
+  String get aboutTitle => 'About';
+
+  @override
+  String get aboutSubtitle =>
+      'How I work as an engineer, the problems I solve, and a few things you can run yourself.';
+
+  @override
+  String get aboutTabProfile => 'Profile';
+
+  @override
+  String get aboutTabHood => 'Under the hood';
+
+  @override
+  String get aboutTabPlayground => 'Playground';
+
+  @override
+  String get aboutEngineerLabel => 'Engineer';
+
+  @override
+  String get aboutEngineerValue =>
+      'Flutter, Android and the systems around them';
+
+  @override
+  String get aboutExperienceLabel => 'Experience';
+
+  @override
+  String aboutExperienceValue(int years) {
+    return '$years+ years in mobile';
+  }
+
+  @override
+  String get aboutFocusLabel => 'Focus';
+
+  @override
+  String get aboutFocusValue =>
+      'Mobile systems, native integration, security, enterprise apps';
+
+  @override
+  String get aboutStackLabel => 'Stack';
+
+  @override
+  String get aboutStory =>
+      'I started in mobile in 2021, shipping Flutter apps for commerce and media. The work that held my interest was the layer under the UI: native Android, NFC smart cards, cryptography and background sync.\n\nAt NatHealth I lead that work for a claims platform used across Jordan, Palestine and Iraq. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.';
+
+  @override
+  String get aboutHoodHint => 'Select a capability to see how I use it.';
+
+  @override
+  String get aboutWhereLabel => 'Where I used it';
+
+  @override
+  String get hoodNfcTitle => 'NFC';
+
+  @override
+  String get hoodNfcTag => 'Secure card communication and authentication.';
+
+  @override
+  String get hoodNfcDetail =>
+      'A native Kotlin layer talks to smart cards over ISO 7816 APDUs. I designed the card-reader interface so several card technologies sit behind one contract.';
+
+  @override
+  String get hoodNfcWhere => 'NatHealth';
+
+  @override
+  String get hoodCryptoTitle => 'Cryptography';
+
+  @override
+  String get hoodCryptoTag => 'RSA, AES and PBKDF2, with careful key handling.';
+
+  @override
+  String get hoodCryptoDetail =>
+      'Two-step JWT issuance, secure token storage and GUID-based device binding keep sensitive patient data protected.';
+
+  @override
+  String get hoodCryptoWhere => 'NatHealth';
+
+  @override
+  String get hoodBackgroundTitle => 'Background processing';
+
+  @override
+  String get hoodBackgroundTag => 'Reliable sync and message processing.';
+
+  @override
+  String get hoodBackgroundDetail =>
+      'WorkManager runs background sync, status polling and token refresh, so work finishes without the user watching.';
+
+  @override
+  String get hoodBackgroundWhere => 'NatHealth';
+
+  @override
+  String get hoodOfflineTitle => 'Offline-first';
+
+  @override
+  String get hoodOfflineTag =>
+      'Apps that keep working when connectivity disappears.';
+
+  @override
+  String get hoodOfflineDetail =>
+      'Submissions are stored on the device and sent when the network returns, with exponential-backoff retries and standard failure handling.';
+
+  @override
+  String get hoodOfflineWhere => 'NatHealth';
+
+  @override
+  String get hoodNativeTitle => 'Native integration';
+
+  @override
+  String get hoodNativeTag => 'Flutter bridged to complex native Android.';
+
+  @override
+  String get hoodNativeDetail =>
+      'Platform channels connect Dart to Kotlin and Java code for hardware access that Flutter cannot reach on its own.';
+
+  @override
+  String get hoodNativeWhere => 'NatHealth';
+
+  @override
+  String get hoodEnterpriseTitle => 'Enterprise systems';
+
+  @override
+  String get hoodEnterpriseTag =>
+      'Healthcare, ERP and large business workflows.';
+
+  @override
+  String get hoodEnterpriseDetail =>
+      'Modular architecture and reusable components across healthcare, e-learning and ERP clients, rebuilt without taking the apps offline.';
+
+  @override
+  String get hoodEnterpriseWhere => 'ESKADENIA Software';
+
+  @override
+  String get playKdfTitle => 'Key derivation';
+
+  @override
+  String get playKdfIntro =>
+      'PBKDF2-HMAC-SHA256 running in your browser. More iterations make every password guess slower, for an attacker and for you.';
+
+  @override
+  String get playKdfPassword => 'Password';
+
+  @override
+  String get playKdfIterations => 'Iterations';
+
+  @override
+  String get playKdfRun => 'Derive key';
+
+  @override
+  String get playKdfRunning => 'Deriving…';
+
+  @override
+  String get playKdfResult => 'Derived key (256 bit)';
+
+  @override
+  String playKdfTime(int ms) {
+    return 'Took $ms ms on this device.';
+  }
+
+  @override
+  String get playKdfNote =>
+      'The salt is fixed for this demo. Real systems use a random salt per user.';
+
+  @override
+  String get playSyncTitle => 'Offline to online';
+
+  @override
+  String get playSyncIntro =>
+      'Submit claims while offline. They queue on the device and sync when you go back online, retrying with exponential backoff.';
+
+  @override
+  String get playSyncOnline => 'Online';
+
+  @override
+  String get playSyncOffline => 'Offline';
+
+  @override
+  String get playSyncFlaky => 'Flaky network';
+
+  @override
+  String get playSyncSubmit => 'Submit claim';
+
+  @override
+  String get playSyncEmpty => 'No claims yet. Submit one.';
+
+  @override
+  String get playSyncQueued => 'Queued';
+
+  @override
+  String get playSyncSending => 'Sending';
+
+  @override
+  String get playSyncSynced => 'Synced';
+
+  @override
+  String playSyncRetry(int seconds) {
+    return 'Retry in ${seconds}s';
+  }
+
+  @override
+  String playSyncClaim(int number) {
+    return 'Claim $number';
+  }
+
+  @override
+  String get playSyncNote => 'Simulation. No network is used.';
+
+  @override
+  String get navPerspectives => 'Perspectives';
 }
