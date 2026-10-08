@@ -83,7 +83,7 @@ class HeroStatement extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                l10n.introSeniorEngineer,
+                l10n.introTagline,
                 style: TextStyle(
                   fontSize:
                       isWide ? AppTypography.heading : AppTypography.title,
@@ -96,7 +96,7 @@ class HeroStatement extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 540),
                 child: Text(
-                  l10n.introPitch,
+                  l10n.introPitch2,
                   style: TextStyle(
                     fontSize: AppTypography.lead,
                     height: 1.6,

@@ -120,10 +120,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get downloadResume => 'Stáhnout životopis';
 
   @override
-  String get introDownloadResume => 'Stáhnout životopis';
+  String get introDownloadResume => 'Stáhnout CV';
 
   @override
-  String get contactMe => 'Kontaktujte mě';
+  String get contactMe => 'Pojďme si promluvit';
 
   @override
   String get copyEmail => 'Kopírovat e-mail';
@@ -1049,4 +1049,73 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get heroFactStudyValue =>
       'M.Sc. Open Informatics, Mendelova univerzita, od února 2027';
+
+  @override
+  String get traceCta => 'Sledovat klepnutí';
+
+  @override
+  String get traceAgain => 'Sledovat znovu';
+
+  @override
+  String get traceDone => 'Nárok zařazen do fronty, synchronizován a potvrzen.';
+
+  @override
+  String get traceHint =>
+      'Sledujte jeden NFC nárok všemi vrstvami. Najetím na krok si přečtete, co se v něm děje.';
+
+  @override
+  String get traceNote =>
+      'Názvy volání jsou ilustrativní. Tok je zjednodušený z mé práce na NFC nárocích v NatHealth.';
+
+  @override
+  String get traceRunning => 'Sleduji…';
+
+  @override
+  String get traceDetailFlutter =>
+      'Klepnutí se změní na typované volání v Dartu. UI se nikdy nedotkne hardwaru ani klíčů.';
+
+  @override
+  String get traceDetailChannel =>
+      'Volání překračují hranici Dart a Kotlin jako serializované zprávy. Chyby se vracejí jako typované chyby.';
+
+  @override
+  String get traceDetailNative =>
+      'Kotlin komunikuje s kartou přes ISO-DEP: výběr, ověření, čtení. To Flutter sám nezvládne.';
+
+  @override
+  String get traceDetailSecurity =>
+      'Tokeny se podepisují hardwarově chráněnými klíči. Bez sítě se nárok zařadí do fronty a WorkManager to zkusí znovu.';
+
+  @override
+  String get traceDetailBackend =>
+      'REST přes HTTPS s ověřením JWT. Odpověď serveru uzavře smyčku pro zařazený nárok.';
+
+  @override
+  String get traceStepFlutter => 'Flutter UI';
+
+  @override
+  String get traceStepChannel => 'Platform channel';
+
+  @override
+  String get traceStepNative => 'Native Android';
+
+  @override
+  String get traceStepSecurity => 'Zabezpečení a synchronizace';
+
+  @override
+  String get traceStepBackend => 'Backend';
+
+  @override
+  String get introTagline =>
+      'Mobilní inženýr, který staví software fungující za obrazovkou.';
+
+  @override
+  String get introPitch2 =>
+      'Produkční Flutter a nativní Android: NFC čipové karty, kryptografie, offline synchronizace a podnikové integrace.';
+
+  @override
+  String get letsTalk => 'Pojďme si promluvit';
+
+  @override
+  String get downloadCv => 'Stáhnout CV';
 }

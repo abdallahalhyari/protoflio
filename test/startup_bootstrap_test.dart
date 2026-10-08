@@ -24,14 +24,14 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('readInitialThemeMode', () {
-    test('defaults to light for missing or invalid values', () async {
+    test('defaults to dark for missing or invalid values', () async {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
-      expect(readInitialThemeMode(prefs), ThemeMode.light);
+      expect(readInitialThemeMode(prefs), ThemeMode.dark);
 
       SharedPreferences.setMockInitialValues({'themeMode': 'invalid'});
       final invalidPrefs = await SharedPreferences.getInstance();
-      expect(readInitialThemeMode(invalidPrefs), ThemeMode.light);
+      expect(readInitialThemeMode(invalidPrefs), ThemeMode.dark);
     });
 
     test('reads supported theme preferences', () async {

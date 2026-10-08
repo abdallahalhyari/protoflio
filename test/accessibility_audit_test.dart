@@ -379,14 +379,14 @@ void main() {
         find.byWidgetPredicate((w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.contains('Download resume') ?? false)),
+            (w.properties.label?.contains('Download CV') ?? false)),
         findsOneWidget,
       );
       expect(
         find.byWidgetPredicate((w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.contains('Contact me') ?? false)),
+            (w.properties.label?.contains('Let\'s talk') ?? false)),
         findsOneWidget,
       );
       expect(

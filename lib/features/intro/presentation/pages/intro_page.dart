@@ -5,7 +5,7 @@ import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_constellation.dart';
 
 import 'package:profile/features/intro/presentation/widgets/hero/hero_statement.dart';
-import 'package:profile/features/intro/presentation/widgets/hero/hero_credential.dart';
+import 'package:profile/features/intro/presentation/widgets/hero/signal_trace.dart';
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 
 /// Cover: what a recruiter screens for, in one view.
@@ -90,7 +90,7 @@ class _IntroPageState extends State<IntroPage>
         ),
       ],
     );
-    final credential = HeroCredential(
+    final credential = SignalTrace(
       isDark: isDark,
       isWide: isWide,
       reveal: _reveal,

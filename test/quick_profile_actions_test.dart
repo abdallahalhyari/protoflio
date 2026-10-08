@@ -29,7 +29,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const Key('quick_profile_cv')), findsOneWidget);
-      expect(find.text('Download resume'), findsOneWidget);
+      expect(find.text('Download CV'), findsOneWidget);
 
       expect(find.text('Email'), findsOneWidget);
       expect(find.text('LinkedIn'), findsOneWidget);

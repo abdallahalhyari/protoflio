@@ -120,10 +120,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get downloadResume => 'Download CV';
 
   @override
-  String get introDownloadResume => 'Download resume';
+  String get introDownloadResume => 'Download CV';
 
   @override
-  String get contactMe => 'Contact me';
+  String get contactMe => 'Let\'s talk';
 
   @override
   String get copyEmail => 'Copy email';
@@ -1048,4 +1048,73 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get heroFactStudyValue =>
       'M.Sc. Open Informatics, Mendel University, from February 2027';
+
+  @override
+  String get traceCta => 'Trace a tap';
+
+  @override
+  String get traceAgain => 'Trace again';
+
+  @override
+  String get traceDone => 'Claim queued, synced and confirmed.';
+
+  @override
+  String get traceHint =>
+      'Follow one NFC claim through every layer. Hover a step to read what happens there.';
+
+  @override
+  String get traceNote =>
+      'Call names are illustrative. Flow simplified from my NFC claims work at NatHealth.';
+
+  @override
+  String get traceRunning => 'Tracing…';
+
+  @override
+  String get traceDetailFlutter =>
+      'A tap becomes a typed Dart call. The UI never touches hardware or keys.';
+
+  @override
+  String get traceDetailChannel =>
+      'Calls cross the Dart to Kotlin boundary as serialised messages. Failures come back as typed errors.';
+
+  @override
+  String get traceDetailNative =>
+      'Kotlin talks to the card over ISO-DEP: select, authenticate, read. This is the part Flutter cannot do alone.';
+
+  @override
+  String get traceDetailSecurity =>
+      'Tokens are signed with hardware-backed keys. With no network, the claim is queued and WorkManager retries it.';
+
+  @override
+  String get traceDetailBackend =>
+      'REST over HTTPS, authenticated with a JWT. The server\'s reply closes the loop for the queued claim.';
+
+  @override
+  String get traceStepFlutter => 'Flutter UI';
+
+  @override
+  String get traceStepChannel => 'Platform channel';
+
+  @override
+  String get traceStepNative => 'Native Android';
+
+  @override
+  String get traceStepSecurity => 'Security and sync';
+
+  @override
+  String get traceStepBackend => 'Backend';
+
+  @override
+  String get introTagline =>
+      'Mobile engineer building software that works beyond the screen.';
+
+  @override
+  String get introPitch2 =>
+      'Production Flutter and native Android: NFC smart cards, cryptography, offline-first sync and enterprise integrations.';
+
+  @override
+  String get letsTalk => 'Let\'s talk';
+
+  @override
+  String get downloadCv => 'Download CV';
 }

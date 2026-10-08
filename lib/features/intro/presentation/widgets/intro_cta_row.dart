@@ -205,13 +205,13 @@ class IntroCtaRow extends StatelessWidget {
         constraints: BoxConstraints(
             maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
         child: _ghostButton(
-          label: loc.introDownloadResume,
-          icon: Icons.download_rounded,
+          label: loc.contactMe,
+          icon: Icons.send_rounded,
           color: accent,
           isDark: isDark,
           onPressed: () {
             SoundService.instance.playClick();
-            onDownloadResume();
+            onContactMe();
           },
         ),
       ),
@@ -258,11 +258,11 @@ class IntroCtaRow extends StatelessWidget {
                   maxWidth: MediaQuery.sizeOf(context).width * 0.9,
                   minHeight: 40),
               child: _linkButton(
-                label: loc.contactMe,
-                icon: Icons.send_rounded,
+                label: loc.introDownloadResume,
+                icon: Icons.download_rounded,
                 onPressed: () {
                   SoundService.instance.playClick();
-                  onContactMe();
+                  onDownloadResume();
                 },
               ),
             ),

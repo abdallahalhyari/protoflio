@@ -307,13 +307,13 @@ abstract class AppLocalizations {
   /// Intro cover copy (the original design); downloadResume carries the site-wide wording.
   ///
   /// In en, this message translates to:
-  /// **'Download resume'**
+  /// **'Download CV'**
   String get introDownloadResume;
 
   /// No description provided for @contactMe.
   ///
   /// In en, this message translates to:
-  /// **'Contact me'**
+  /// **'Let\'s talk'**
   String get contactMe;
 
   /// No description provided for @copyEmail.
@@ -1941,6 +1941,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'M.Sc. Open Informatics, Mendel University, from February 2027'**
   String get heroFactStudyValue;
+
+  /// No description provided for @traceCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Trace a tap'**
+  String get traceCta;
+
+  /// No description provided for @traceAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Trace again'**
+  String get traceAgain;
+
+  /// No description provided for @traceDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim queued, synced and confirmed.'**
+  String get traceDone;
+
+  /// No description provided for @traceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow one NFC claim through every layer. Hover a step to read what happens there.'**
+  String get traceHint;
+
+  /// No description provided for @traceNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Call names are illustrative. Flow simplified from my NFC claims work at NatHealth.'**
+  String get traceNote;
+
+  /// No description provided for @traceRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracing…'**
+  String get traceRunning;
+
+  /// No description provided for @traceDetailFlutter.
+  ///
+  /// In en, this message translates to:
+  /// **'A tap becomes a typed Dart call. The UI never touches hardware or keys.'**
+  String get traceDetailFlutter;
+
+  /// No description provided for @traceDetailChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Calls cross the Dart to Kotlin boundary as serialised messages. Failures come back as typed errors.'**
+  String get traceDetailChannel;
+
+  /// No description provided for @traceDetailNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Kotlin talks to the card over ISO-DEP: select, authenticate, read. This is the part Flutter cannot do alone.'**
+  String get traceDetailNative;
+
+  /// No description provided for @traceDetailSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Tokens are signed with hardware-backed keys. With no network, the claim is queued and WorkManager retries it.'**
+  String get traceDetailSecurity;
+
+  /// No description provided for @traceDetailBackend.
+  ///
+  /// In en, this message translates to:
+  /// **'REST over HTTPS, authenticated with a JWT. The server\'s reply closes the loop for the queued claim.'**
+  String get traceDetailBackend;
+
+  /// No description provided for @traceStepFlutter.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter UI'**
+  String get traceStepFlutter;
+
+  /// No description provided for @traceStepChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform channel'**
+  String get traceStepChannel;
+
+  /// No description provided for @traceStepNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Native Android'**
+  String get traceStepNative;
+
+  /// No description provided for @traceStepSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security and sync'**
+  String get traceStepSecurity;
+
+  /// No description provided for @traceStepBackend.
+  ///
+  /// In en, this message translates to:
+  /// **'Backend'**
+  String get traceStepBackend;
+
+  /// No description provided for @introTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile engineer building software that works beyond the screen.'**
+  String get introTagline;
+
+  /// No description provided for @introPitch2.
+  ///
+  /// In en, this message translates to:
+  /// **'Production Flutter and native Android: NFC smart cards, cryptography, offline-first sync and enterprise integrations.'**
+  String get introPitch2;
+
+  /// No description provided for @letsTalk.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s talk'**
+  String get letsTalk;
+
+  /// No description provided for @downloadCv.
+  ///
+  /// In en, this message translates to:
+  /// **'Download CV'**
+  String get downloadCv;
 }
 
 class _AppLocalizationsDelegate
