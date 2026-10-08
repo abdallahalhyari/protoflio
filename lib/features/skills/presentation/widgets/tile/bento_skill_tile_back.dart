@@ -111,7 +111,7 @@ class TileBackFace extends StatelessWidget {
                             color: isDark
                                 ? Colors.white.withValues(alpha: 0.85)
                                 : AppColors.ink700,
-                            fontSize: isDesktop ? 12 : 10.5,
+                            fontSize: AppTypography.label,
                             height: 1.4,
                           ),
                         ),

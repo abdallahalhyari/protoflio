@@ -70,7 +70,7 @@ class ProjectDossierCard extends StatelessWidget {
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.95)
                     : AppColors.ink800,
-                fontSize: isDesktop ? 12.5 : 11.0,
+                fontSize: AppTypography.label,
                 height: 1.45,
               ),
             ),
@@ -112,7 +112,7 @@ class ProjectHighlightRow extends StatelessWidget {
             style: TextStyle(
               color: scheme.primary,
               fontWeight: FontWeight.w900,
-              fontSize: isDesktop ? 12.5 : 11.0,
+              fontSize: AppTypography.label,
             ),
           ),
           Expanded(
@@ -125,7 +125,7 @@ class ProjectHighlightRow extends StatelessWidget {
                       style: TextStyle(
                         color: isDark ? AppColors.goldSoft : AppColors.goldDeep,
                         fontWeight: FontWeight.w800,
-                        fontSize: isDesktop ? 12.0 : 10.5,
+                        fontSize: AppTypography.label,
                       ),
                     ),
                   TextSpan(
@@ -134,7 +134,7 @@ class ProjectHighlightRow extends StatelessWidget {
                       color: isDark
                           ? Colors.white.withValues(alpha: 0.9)
                           : AppColors.ink700,
-                      fontSize: isDesktop ? 12.0 : 10.5,
+                      fontSize: AppTypography.label,
                       height: 1.35,
                     ),
                   ),

@@ -175,7 +175,7 @@ class _ProjectCaseStudyModal extends StatelessWidget {
                                   color: isDark
                                       ? Colors.white.withValues(alpha: 0.8)
                                       : AppColors.ink700,
-                                  fontSize: isDesktop ? 12.0 : 11.0,
+                                  fontSize: AppTypography.label,
                                   height: 1.45,
                                 ),
                               ),
