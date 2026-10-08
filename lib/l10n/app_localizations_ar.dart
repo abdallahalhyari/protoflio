@@ -134,9 +134,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introRoleLine => 'مهندس تطبيقات هواتف أول';
 
   @override
-  String get introRoleHeading => 'مهندس تطبيقات هواتف أول';
-
-  @override
   String get introValueProposition =>
       'أصمم وأطلق منتجات جوال مرنة تحوّل الأنظمة المعقدة إلى تجارب استخدام واضحة وجديرة بالثقة.';
 
@@ -147,8 +144,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSkillProductDelivery => 'تسليم المنتجات';
 
   @override
-  String get introWorkEligibility =>
-      'الانتقال إلى برنو · 2027   •   متاح لأدوار مهندس أول';
+  String get introWorkEligibility => 'الانتقال إلى برنو في 2027';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
@@ -217,9 +213,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip => 'الإصدار 01 · نسخة معرض الأعمال · 2026';
-
-  @override
   String get introTechStack =>
       'فلاتر · أندرويد · آي أو إس · معمارية برمجيات · أنظمة دون اتصال · NFC · أمان · أنظمة الوقت الفعلي';
 
@@ -231,12 +224,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introOpenForRoles => 'متاح لأدوار هندسية قيادية';
-
-  @override
-  String get introDiscipline => 'التخصص';
-
-  @override
-  String get introMobileArch => 'فلاتر · أندرويد · معمارية الجوال';
 
   @override
   String get introMasthead => '// الترويسة';

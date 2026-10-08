@@ -295,7 +295,7 @@ abstract class AppLocalizations {
   /// No description provided for @viewMyWork.
   ///
   /// In en, this message translates to:
-  /// **'VIEW MY WORK'**
+  /// **'View my work'**
   String get viewMyWork;
 
   /// No description provided for @downloadResume.
@@ -307,19 +307,19 @@ abstract class AppLocalizations {
   /// Intro cover copy (the original design); downloadResume carries the site-wide wording.
   ///
   /// In en, this message translates to:
-  /// **'DOWNLOAD RESUME'**
+  /// **'Download resume'**
   String get introDownloadResume;
 
   /// No description provided for @contactMe.
   ///
   /// In en, this message translates to:
-  /// **'CONTACT ME'**
+  /// **'Contact me'**
   String get contactMe;
 
   /// No description provided for @copyEmail.
   ///
   /// In en, this message translates to:
-  /// **'COPY EMAIL'**
+  /// **'Copy email'**
   String get copyEmail;
 
   /// No description provided for @introSeniorEngineer.
@@ -331,14 +331,8 @@ abstract class AppLocalizations {
   /// Intro cover copy (the original design); introSeniorEngineer carries the site-wide wording.
   ///
   /// In en, this message translates to:
-  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
+  /// **'Senior Flutter & Android engineer'**
   String get introRoleLine;
-
-  /// No description provided for @introRoleHeading.
-  ///
-  /// In en, this message translates to:
-  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
-  String get introRoleHeading;
 
   /// No description provided for @introValueProposition.
   ///
@@ -361,13 +355,13 @@ abstract class AppLocalizations {
   /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
-  /// **'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES'**
+  /// **'Relocating to Brno in 2027'**
   String get introWorkEligibility;
 
   /// No description provided for @introAvailableContracts.
   ///
   /// In en, this message translates to:
-  /// **'AVAILABLE FOR CONTRACTS'**
+  /// **'Available for contracts'**
   String get introAvailableContracts;
 
   /// No description provided for @contactEngagementScopes.
@@ -490,12 +484,6 @@ abstract class AppLocalizations {
   /// **'{current} of {total}'**
   String folioIndicator(Object current, Object total);
 
-  /// No description provided for @introIssueStrip.
-  ///
-  /// In en, this message translates to:
-  /// **'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE'**
-  String get introIssueStrip;
-
   /// No description provided for @introTechStack.
   ///
   /// In en, this message translates to:
@@ -505,13 +493,13 @@ abstract class AppLocalizations {
   /// No description provided for @introBasedIn.
   ///
   /// In en, this message translates to:
-  /// **'LOCATION'**
+  /// **'Location'**
   String get introBasedIn;
 
   /// No description provided for @introStatus.
   ///
   /// In en, this message translates to:
-  /// **'AVAILABILITY'**
+  /// **'Availability'**
   String get introStatus;
 
   /// No description provided for @introOpenForRoles.
@@ -519,18 +507,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open to Senior Mobile Roles'**
   String get introOpenForRoles;
-
-  /// No description provided for @introDiscipline.
-  ///
-  /// In en, this message translates to:
-  /// **'SPECIALIZATION'**
-  String get introDiscipline;
-
-  /// No description provided for @introMobileArch.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter · Android · Mobile Architecture'**
-  String get introMobileArch;
 
   /// No description provided for @introMasthead.
   ///
@@ -937,13 +913,13 @@ abstract class AppLocalizations {
   /// No description provided for @quickProfileRole.
   ///
   /// In en, this message translates to:
-  /// **'ROLE'**
+  /// **'Role'**
   String get quickProfileRole;
 
   /// No description provided for @quickProfileExperience.
   ///
   /// In en, this message translates to:
-  /// **'EXPERIENCE'**
+  /// **'Experience'**
   String get quickProfileExperience;
 
   /// Years of professional experience.
@@ -955,13 +931,13 @@ abstract class AppLocalizations {
   /// No description provided for @quickProfileStack.
   ///
   /// In en, this message translates to:
-  /// **'CORE STACK'**
+  /// **'Core stack'**
   String get quickProfileStack;
 
   /// No description provided for @quickProfileRecent.
   ///
   /// In en, this message translates to:
-  /// **'RECENT ROLES'**
+  /// **'Recent roles'**
   String get quickProfileRecent;
 
   /// No description provided for @quickProfileEmail.

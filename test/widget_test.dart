@@ -31,7 +31,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
 
     expect(find.textContaining('ABDALLAH'), findsWidgets);
-    expect(find.text('VIEW MY WORK'), findsOneWidget);
+    expect(find.text('View my work'), findsOneWidget);
   });
 
   testWidgets(

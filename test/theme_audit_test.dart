@@ -64,7 +64,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 300));
 
         expect(find.textContaining('ABDALLAH'), findsWidgets);
-        expect(find.text('VIEW MY WORK'), findsOneWidget);
+        expect(find.text('View my work'), findsOneWidget);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);
       });

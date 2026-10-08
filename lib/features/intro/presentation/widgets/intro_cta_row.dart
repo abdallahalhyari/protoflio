@@ -67,7 +67,7 @@ class IntroCtaRow extends StatelessWidget {
               style: const TextStyle(
                 fontSize: AppTypography.body,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
+                letterSpacing: 0.3,
               ),
             ),
           ),
@@ -103,7 +103,7 @@ class IntroCtaRow extends StatelessWidget {
               style: const TextStyle(
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
+                letterSpacing: 0.3,
               ),
             ),
           ),
@@ -129,7 +129,7 @@ class IntroCtaRow extends StatelessWidget {
         label: loc.viewMyWork,
         trailingIcon: Icons.arrow_forward_rounded,
         isPill: true,
-        letterSpacing: 1.2,
+        letterSpacing: 0.3,
         onPressed: () {
           SoundService.instance.playClick();
           onViewWork();
@@ -260,11 +260,11 @@ class IntroCtaRow extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              '30-SEC INTRO',
+                              '30-second intro',
                               style: TextStyle(
                                 fontSize: AppTypography.label,
                                 fontWeight: FontWeight.w800,
-                                letterSpacing: 1.2,
+                                letterSpacing: 0.3,
                                 color: isDark ? Colors.white : AppColors.ink900,
                               ),
                             ),
@@ -324,11 +324,11 @@ class IntroCtaRow extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             Text(
-                              'vCARD QR',
+                              'vCard QR',
                               style: TextStyle(
                                 fontSize: AppTypography.label,
                                 fontWeight: FontWeight.w800,
-                                letterSpacing: 1.2,
+                                letterSpacing: 0.3,
                                 color: isDark ? Colors.white : AppColors.ink900,
                               ),
                             ),

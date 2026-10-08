@@ -114,28 +114,25 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get viewMyWork => 'ZOBRAZIT PRÁCI';
+  String get viewMyWork => 'Zobrazit práci';
 
   @override
   String get downloadResume => 'Stáhnout životopis';
 
   @override
-  String get introDownloadResume => 'STÁHNOUT ŽIVOTOPIS';
+  String get introDownloadResume => 'Stáhnout životopis';
 
   @override
-  String get contactMe => 'KONTAKTUJTE MĚ';
+  String get contactMe => 'Kontaktujte mě';
 
   @override
-  String get copyEmail => 'KOPÍROVAT E-MAIL';
+  String get copyEmail => 'Kopírovat e-mail';
 
   @override
   String get introSeniorEngineer => 'Senior mobilní vývojář';
 
   @override
-  String get introRoleLine => 'SENIOR MOBILNÍ VÝVOJÁŘ';
-
-  @override
-  String get introRoleHeading => 'SENIOR VÝVOJÁŘ MOBILNÍCH APLIKACÍ';
+  String get introRoleLine => 'Senior mobilní vývojář';
 
   @override
   String get introValueProposition =>
@@ -148,11 +145,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introSkillProductDelivery => 'Dodávání produktů';
 
   @override
-  String get introWorkEligibility =>
-      'PŘESÍDLENÍ DO BRNA · 2027   •   OTEVŘEN SENIORNÍM ROLÍM';
+  String get introWorkEligibility => 'Přesídlení do Brna v roce 2027';
 
   @override
-  String get introAvailableContracts => 'K DISPOZICI PRO KONTRAKTY';
+  String get introAvailableContracts => 'K dispozici pro kontrakty';
 
   @override
   String get contactEngagementScopes => 'Možnosti spolupráce';
@@ -218,26 +214,17 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip => 'VYDÁNÍ 01 · EDICE PORTFOLIO · MMXXVI';
-
-  @override
   String get introTechStack =>
       'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
 
   @override
-  String get introBasedIn => 'LOKACE';
+  String get introBasedIn => 'Lokace';
 
   @override
-  String get introStatus => 'DOSTUPNOST';
+  String get introStatus => 'Dostupnost';
 
   @override
   String get introOpenForRoles => 'Otevřen pro seniorní role';
-
-  @override
-  String get introDiscipline => 'SPECIALIZACE';
-
-  @override
-  String get introMobileArch => 'Flutter · Android · Mobilní architektura';
 
   @override
   String get introMasthead => 'Hlavička';
@@ -473,10 +460,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get quickProfileTitle => 'Shrnutí pro nábor';
 
   @override
-  String get quickProfileRole => 'POZICE';
+  String get quickProfileRole => 'Pozice';
 
   @override
-  String get quickProfileExperience => 'PRAXE';
+  String get quickProfileExperience => 'Praxe';
 
   @override
   String quickProfileYears(int years) {
@@ -484,10 +471,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get quickProfileStack => 'HLAVNÍ TECHNOLOGIE';
+  String get quickProfileStack => 'Hlavní technologie';
 
   @override
-  String get quickProfileRecent => 'POSLEDNÍ POZICE';
+  String get quickProfileRecent => 'Poslední pozice';
 
   @override
   String get quickProfileEmail => 'E-mail';

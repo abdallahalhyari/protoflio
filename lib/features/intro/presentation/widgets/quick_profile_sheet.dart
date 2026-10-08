@@ -202,7 +202,7 @@ class _Fact extends StatelessWidget {
             style: TextStyle(
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w900,
-              letterSpacing: 1.8,
+              letterSpacing: 0.2,
               color: context.mutedText,
             ),
           ),
