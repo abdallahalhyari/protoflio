@@ -49,7 +49,7 @@ END:VCARD''';
             BoxShadow(
               color: isDark
                   ? accent.withValues(alpha: 0.15)
-                  : Colors.black.withValues(alpha: 0.12),
+                  : Colors.black.withValues(alpha: AppAlpha.hover),
               blurRadius: 28,
               spreadRadius: 2,
               offset: const Offset(0, 8),
@@ -65,7 +65,7 @@ END:VCARD''';
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: accent.withValues(alpha: 0.12),
+                    color: accent.withValues(alpha: AppAlpha.hover),
                     borderRadius: BorderRadius.circular(AppRadius.xs),
                   ),
                   child: Icon(Icons.qr_code_scanner_rounded,
@@ -110,7 +110,7 @@ END:VCARD''';
                 border: Border.all(color: AppColors.ink200),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
+                    color: Colors.black.withValues(alpha: AppAlpha.whisper),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),

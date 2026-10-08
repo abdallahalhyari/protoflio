@@ -278,7 +278,7 @@ class _SignalTraceState extends State<SignalTrace>
                 colors: isDark
                     ? [
                         AppColors.teal.withValues(alpha: 0.5),
-                        AppColors.gold.withValues(alpha: 0.35),
+                        AppColors.gold.withValues(alpha: AppAlpha.border),
                       ]
                     : [
                         AppColors.tealLight.withValues(alpha: 0.55),

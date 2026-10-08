@@ -59,7 +59,7 @@ class CredentialsBentoCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadius.container),
             border: Border.all(
               color: isDark
-                  ? scheme.primary.withValues(alpha: 0.35)
+                  ? scheme.primary.withValues(alpha: AppAlpha.border)
                   : AppColors.ink300,
               width: isDark ? 1.5 : 1.0,
             ),

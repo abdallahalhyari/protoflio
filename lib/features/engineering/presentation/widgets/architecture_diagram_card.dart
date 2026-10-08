@@ -78,7 +78,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
                 color: isDark
-                    ? scheme.primary.withValues(alpha: 0.12)
+                    ? scheme.primary.withValues(alpha: AppAlpha.hover)
                     : AppColors.ink100,
                 borderRadius: BorderRadius.circular(AppRadius.xs),
                 border: Border.all(

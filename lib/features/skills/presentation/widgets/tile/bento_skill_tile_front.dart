@@ -46,7 +46,7 @@ class TileFrontFace extends StatelessWidget {
             color: isDark
                 ? categoryColor.withValues(alpha: isHovered ? 0.35 : 0.12)
                 : (isHovered
-                    ? categoryColor.withValues(alpha: 0.25)
+                    ? categoryColor.withValues(alpha: AppAlpha.fill)
                     : AppColors.ink900.withValues(alpha: 0.05)),
             blurRadius: isHovered ? 24 : 12,
             spreadRadius: isHovered ? 1 : 0,

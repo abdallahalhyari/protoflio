@@ -58,7 +58,7 @@ class _SpecSheetCardState extends State<SpecSheetCard> {
               ? (_isHovered
                   ? [
                       BoxShadow(
-                        color: primary.withValues(alpha: 0.12),
+                        color: primary.withValues(alpha: AppAlpha.hover),
                         blurRadius: 12,
                         spreadRadius: 1,
                       )

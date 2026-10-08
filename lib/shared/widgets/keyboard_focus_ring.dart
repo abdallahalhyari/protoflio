@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 /// Draws one clear outline around whatever currently holds keyboard focus.
 ///
@@ -137,7 +138,7 @@ class FocusRingPainter extends CustomPainter {
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3.5
-        ..color = color.withValues(alpha: 0.25)
+        ..color = color.withValues(alpha: AppAlpha.fill)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3),
     );
     canvas.drawRRect(
