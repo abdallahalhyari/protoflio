@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:profile/core/config/profile_links.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/core/services/sound_service.dart';
@@ -15,12 +17,16 @@ class IntroCtaRow extends StatelessWidget {
   final VoidCallback onDownloadResume;
   final VoidCallback onContactMe;
 
+  /// Left-align the rows (cover layout) instead of centring them.
+  final bool alignStart;
+
   const IntroCtaRow({
     super.key,
     required this.isDark,
     required this.onViewWork,
     required this.onDownloadResume,
     required this.onContactMe,
+    this.alignStart = false,
   });
 
   static const String _kEmail = 'alhyariabdallh@gmail.com';
@@ -44,9 +50,9 @@ class IntroCtaRow extends StatelessWidget {
     Color? color,
   }) {
     final effectiveColor =
-        color ?? (isDark ? Colors.white70 : IntroColors.slate700);
+        color ?? (isDark ? Colors.white70 : AppColors.ink700);
     final borderColor =
-        isDark ? (color ?? Colors.white24) : (color ?? IntroColors.slate300);
+        isDark ? (color ?? Colors.white24) : (color ?? AppColors.ink300);
 
     // One node named once: the label merges into the button, which keeps
     // its focus state; the visible text is left unsaid.
@@ -61,9 +67,9 @@ class IntroCtaRow extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: IntroType.small,
+                fontSize: AppTypography.body,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
+                letterSpacing: 0.3,
               ),
             ),
           ),
@@ -97,17 +103,83 @@ class IntroCtaRow extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: IntroType.caption,
+                fontSize: AppTypography.label,
                 fontWeight: FontWeight.w800,
-                letterSpacing: 1.2,
+                letterSpacing: 0.3,
               ),
             ),
           ),
           style: TextButton.styleFrom(
-            foregroundColor: isDark ? Colors.white70 : IntroColors.slate600,
+            foregroundColor: isDark ? Colors.white70 : AppColors.ink600,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppRadius.pill),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Tinted pill for the two quiet actions under the main buttons.
+  Widget _pill(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required String semanticsLabel,
+    required Color accent,
+    required VoidCallback onTap,
+  }) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
+      child: Semantics(
+        button: true,
+        excludeSemantics: true,
+        label: semanticsLabel,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              SoundService.instance.playClick();
+              onTap();
+            },
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+              decoration: BoxDecoration(
+                color: accent.withValues(alpha: isDark ? 0.12 : 0.08),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                border: Border.all(
+                  color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
+                  width: 1.2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: accent.withValues(alpha: isDark ? 0.16 : 0.08),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(icon, size: 15, color: accent),
+                    const SizedBox(width: 6),
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.3,
+                        color: isDark ? Colors.white : AppColors.ink900,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
@@ -125,25 +197,11 @@ class IntroCtaRow extends StatelessWidget {
         label: loc.viewMyWork,
         trailingIcon: Icons.arrow_forward_rounded,
         isPill: true,
-        letterSpacing: 1.2,
+        letterSpacing: 0.3,
         onPressed: () {
           SoundService.instance.playClick();
           onViewWork();
         },
-      ),
-      ConstrainedBox(
-        constraints: BoxConstraints(
-            maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
-        child: _ghostButton(
-          label: loc.introDownloadResume,
-          icon: Icons.download_rounded,
-          color: accent,
-          isDark: isDark,
-          onPressed: () {
-            SoundService.instance.playClick();
-            onDownloadResume();
-          },
-        ),
       ),
       ConstrainedBox(
         constraints: BoxConstraints(
@@ -162,10 +220,13 @@ class IntroCtaRow extends StatelessWidget {
     ];
     // Narrow phones: one column at a shared width. Centred in a Wrap the
     // three buttons each took their label's width and stacked unevenly.
+    final wrapAlign = alignStart ? WrapAlignment.start : WrapAlignment.center;
     final stackCtas = MediaQuery.sizeOf(context).width < AppBreakpoints.compact;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment:
+          alignStart ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
         if (stackCtas)
           ConstrainedBox(
@@ -184,16 +245,47 @@ class IntroCtaRow extends StatelessWidget {
           Wrap(
             spacing: 12,
             runSpacing: 10,
-            alignment: WrapAlignment.center,
+            alignment: wrapAlign,
             children: ctas,
           ),
         const SizedBox(height: AppSpacing.smd),
         Wrap(
           spacing: 12,
           runSpacing: 8,
-          alignment: WrapAlignment.center,
+          alignment: wrapAlign,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                  minHeight: 40),
+              child: _linkButton(
+                label: loc.introDownloadResume,
+                icon: Icons.download_rounded,
+                onPressed: () {
+                  SoundService.instance.playClick();
+                  onDownloadResume();
+                },
+              ),
+            ),
+            for (final link in const [
+              ('LinkedIn', Icons.open_in_new_rounded, ProfileLinks.linkedIn),
+              ('GitHub', Icons.open_in_new_rounded, ProfileLinks.github),
+            ])
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                    minHeight: 40),
+                child: _linkButton(
+                  label: link.$1,
+                  icon: link.$2,
+                  onPressed: () {
+                    SoundService.instance.playClick();
+                    launchUrl(Uri.parse(link.$3),
+                        mode: LaunchMode.externalApplication);
+                  },
+                ),
+              ),
             ConstrainedBox(
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.sizeOf(context).width * 0.9,
@@ -204,139 +296,25 @@ class IntroCtaRow extends StatelessWidget {
                 onPressed: () => _copyEmail(context),
               ),
             ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                  minHeight: 40),
-              child: Semantics(
-                button: true,
-                label: '30-second introduction video and executive summary',
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      SoundService.instance.playClick();
-                      showQuickProfile(
-                        context,
-                        onDownloadResume: onDownloadResume,
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(AppRadius.pill),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 7),
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? accent.withValues(alpha: 0.12)
-                            : accent.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                        border: Border.all(
-                          color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
-                          width: 1.2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                accent.withValues(alpha: isDark ? 0.16 : 0.08),
-                            blurRadius: 10,
-                          ),
-                        ],
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.play_circle_fill_rounded,
-                              size: 15,
-                              color: accent,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              '30-SEC INTRO',
-                              style: TextStyle(
-                                fontSize: IntroType.caption,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 1.2,
-                                color: isDark
-                                    ? Colors.white
-                                    : IntroColors.slate900,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+            _pill(
+              context,
+              icon: Icons.play_circle_fill_rounded,
+              label: '30-second intro',
+              semanticsLabel:
+                  '30-second introduction video and executive summary',
+              accent: accent,
+              onTap: () => showQuickProfile(
+                context,
+                onDownloadResume: onDownloadResume,
               ),
             ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                  minHeight: 40),
-              child: Semantics(
-                button: true,
-                excludeSemantics: true,
-                label: 'Recruiter vCard QR',
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      SoundService.instance.playClick();
-                      VCardQrDialog.show(context);
-                    },
-                    borderRadius: BorderRadius.circular(AppRadius.pill),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 7),
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? accent.withValues(alpha: 0.12)
-                            : accent.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                        border: Border.all(
-                          color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
-                          width: 1.2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                accent.withValues(alpha: isDark ? 0.16 : 0.08),
-                            blurRadius: 10,
-                          ),
-                        ],
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.qr_code_2_rounded,
-                              size: 15,
-                              color: accent,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              'vCARD QR',
-                              style: TextStyle(
-                                fontSize: IntroType.caption,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 1.2,
-                                color: isDark
-                                    ? Colors.white
-                                    : IntroColors.slate900,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            _pill(
+              context,
+              icon: Icons.qr_code_2_rounded,
+              label: 'vCard QR',
+              semanticsLabel: 'Recruiter vCard QR',
+              accent: accent,
+              onTap: () => VCardQrDialog.show(context),
             ),
           ],
         ),

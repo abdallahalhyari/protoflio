@@ -270,9 +270,7 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                         Text(
                           ltrContent(context, step.details),
                           style: TextStyle(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.90)
-                                : AppColors.ink700,
+                            color: context.onSurface,
                             fontSize: isDesktop
                                 ? AppTypography.label
                                 : AppTypography.label,

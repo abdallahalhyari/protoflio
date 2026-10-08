@@ -6,9 +6,8 @@ import 'package:profile/features/skills/presentation/bloc/skills_filter_bloc.dar
 import 'package:profile/features/skills/presentation/bloc/skills_filter_event.dart';
 import 'package:profile/features/skills/presentation/bloc/skills_filter_state.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
-import 'package:profile/shared/utils/grid_math.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
-import 'package:profile/features/skills/presentation/widgets/bento_skill_tile.dart';
+import 'package:profile/features/skills/presentation/widgets/skill_list.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_category_filters.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_empty_state.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_header.dart';
@@ -59,12 +58,6 @@ class _SkillsPageViewState extends State<_SkillsPageView>
   @override
   bool get wantKeepAlive => true;
 
-  /// Shortest tile that still fits icon, a two-line title, level badge
-  /// and flip hint at full size.
-  static const double _minDesktopTileHeight = 240;
-  static const double _minTileWidth = 220;
-  static const double _maxTileWidth = 300;
-
   static const List<String> _categories = [
     'ALL',
     'Domain Expertise',
@@ -90,7 +83,6 @@ class _SkillsPageViewState extends State<_SkillsPageView>
   @override
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
-    final scheme = Theme.of(context).colorScheme;
     final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocBuilder<SkillsFilterBloc, SkillsFilterState>(
@@ -109,67 +101,12 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                       .add(const SkillsFilterReset());
                 },
               )
-            : LayoutBuilder(
+            : SkillList(
                 key: ValueKey(
-                    'skills_grid_${selectedCategory}_${state.searchQuery}'),
-                builder: (context, constraints) {
-                  // Tile size follows the available height, so a short
-                  // viewport (13-14" laptop, ~650px tall) squeezed two rows
-                  // into ~120px-wide tiles and titles broke mid-word. Drop
-                  // to one row when two won't fit at a readable size, and
-                  // keep the width in a legible band either way.
-                  const spacing = 16.0;
-                  final rows = isDesktop &&
-                          constraints.maxHeight >=
-                              _minDesktopTileHeight * 2 + spacing
-                      ? 2
-                      : 1;
-                  final tileHeight =
-                      (constraints.maxHeight - spacing * (rows - 1)) / rows;
-                  final tileWidth = (tileHeight / (isDesktop ? 1.1 : 1.28))
-                      .clamp(_minTileWidth, _maxTileWidth);
-                  return GridView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsetsDirectional.only(end: 20),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: rows,
-                      mainAxisExtent: tileWidth,
-                      crossAxisSpacing: spacing,
-                      mainAxisSpacing: spacing,
-                    ),
-                    itemCount: displayedSkills.length,
-                    itemBuilder: (context, index) {
-                      final skill = displayedSkills[index];
-                      return RepaintBoundary(
-                        child: BentoSkillTile(
-                          skill: skill,
-                          categoryColor: SkillCategoryStyle.getColor(
-                              skill.category, scheme),
-                          categoryGradient: SkillCategoryStyle.getGradient(
-                              skill.category, scheme),
-                          isDesktop: isDesktop,
-                        ),
-                      );
-                    },
-                  );
-                },
+                    'skills_list_${selectedCategory}_${state.searchQuery}'),
+                skills: displayedSkills,
+                isDesktop: isDesktop,
               );
-
-        final grid = AnimatedSwitcher(
-          duration: AppMotion.switcher,
-          switchInCurve: AppMotion.emphasizedDecel,
-          switchOutCurve: Curves.easeOut,
-          layoutBuilder: (currentChild, previousChildren) {
-            return Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                ...previousChildren,
-                if (currentChild != null) currentChild,
-              ],
-            );
-          },
-          child: content,
-        );
 
         return AppScreenShell(
           maxWidth: kSectionMaxWidth,
@@ -180,7 +117,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SkillsHeader(isDesktop: isDesktop),
-              const SizedBox(height: AppSpacing.smd),
+              const SizedBox(height: AppSpacing.sectionControls),
               SkillSearchBar(
                 controller: _searchController,
                 onChanged: (val) {
@@ -198,7 +135,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                 filteredCount: displayedSkills.length,
                 isDesktop: isDesktop,
               ),
-              const SizedBox(height: AppSpacing.smd),
+              const SizedBox(height: AppSpacing.sm),
               SkillCategoryFilters(
                 categories: _categories,
                 selectedCategory: selectedCategory,
@@ -210,44 +147,16 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                 isDesktop: isDesktop,
                 counts: state.categoryCounts,
               ),
-              const SizedBox(height: AppSpacing.smd),
-              Container(
-                  height: 1,
-                  color: scheme.onSurface.withValues(alpha: AppAlpha.hover)),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.sectionContent),
               if (widget.isContinuousMobile)
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    const spacing = AppSpacing.smd;
-                    final tileW = columnWidth(constraints.maxWidth, 2, spacing);
-                    if (tileW <= 0) return const SizedBox.shrink();
-                    const tileH = 180.0;
-                    return Wrap(
-                      spacing: spacing,
-                      runSpacing: spacing,
-                      children: [
-                        for (final skill in displayedSkills)
-                          SizedBox(
-                            width: tileW,
-                            height: tileH,
-                            child: RepaintBoundary(
-                              child: BentoSkillTile(
-                                skill: skill,
-                                categoryColor: SkillCategoryStyle.getColor(
-                                    skill.category, scheme),
-                                categoryGradient:
-                                    SkillCategoryStyle.getGradient(
-                                        skill.category, scheme),
-                                isDesktop: false,
-                              ),
-                            ),
-                          ),
-                      ],
-                    );
-                  },
-                )
+                content
               else
-                Expanded(child: grid),
+                Expanded(
+                  child: SingleChildScrollView(
+                    primary: false,
+                    child: content,
+                  ),
+                ),
             ],
           ),
         );

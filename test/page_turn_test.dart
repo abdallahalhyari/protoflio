@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/features/about/presentation/pages/about_page.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
-import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/shell/presentation/pages/home_screen.dart';
@@ -175,13 +175,13 @@ void main() {
     await goTo(LogicalKeyboardKey.digit2);
     expect(focusInside<ProjectsPage>(), isTrue);
 
-    // Skills — the hat deck is pre-built next door.
+    // Skills — About is pre-built next door.
     await goTo(LogicalKeyboardKey.digit5);
     expect(focusInside<ProjectsPage>(), isFalse);
-    expect(focusInside<HatsGridPage>(), isFalse);
+    expect(focusInside<AboutPage>(), isFalse);
 
     await goTo(LogicalKeyboardKey.digit6);
-    expect(focusInside<HatsGridPage>(), isTrue);
+    expect(focusInside<AboutPage>(), isTrue);
 
     // Leaving the page must hand arrows back to section navigation.
     await goTo(LogicalKeyboardKey.arrowDown);

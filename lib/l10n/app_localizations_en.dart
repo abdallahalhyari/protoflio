@@ -24,7 +24,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navStack => 'Skills';
 
   @override
-  String get navAbout => 'Perspectives';
+  String get navAbout => 'About';
 
   @override
   String get navContact => 'Contact';
@@ -114,28 +114,25 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get viewMyWork => 'VIEW MY WORK';
+  String get viewMyWork => 'View my work';
 
   @override
   String get downloadResume => 'Download CV';
 
   @override
-  String get introDownloadResume => 'DOWNLOAD RESUME';
+  String get introDownloadResume => 'Download CV';
 
   @override
-  String get contactMe => 'CONTACT ME';
+  String get contactMe => 'Let\'s talk';
 
   @override
-  String get copyEmail => 'COPY EMAIL';
+  String get copyEmail => 'Copy email';
 
   @override
   String get introSeniorEngineer => 'Senior Flutter & Android engineer';
 
   @override
-  String get introRoleLine => 'SENIOR FLUTTER & ANDROID ENGINEER';
-
-  @override
-  String get introRoleHeading => 'SENIOR FLUTTER & ANDROID ENGINEER';
+  String get introRoleLine => 'Senior Flutter & Android engineer';
 
   @override
   String get introValueProposition =>
@@ -148,11 +145,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSkillProductDelivery => 'Product delivery';
 
   @override
-  String get introWorkEligibility =>
-      'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES';
+  String get introWorkEligibility => 'Relocating to Brno in 2027';
 
   @override
-  String get introAvailableContracts => 'AVAILABLE FOR CONTRACTS';
+  String get introAvailableContracts => 'Available for contracts';
 
   @override
   String get contactEngagementScopes => 'Ways to work together';
@@ -219,27 +215,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip =>
-      'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE';
-
-  @override
   String get introTechStack =>
       'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems';
 
   @override
-  String get introBasedIn => 'LOCATION';
+  String get introBasedIn => 'Location';
 
   @override
-  String get introStatus => 'AVAILABILITY';
+  String get introStatus => 'Availability';
 
   @override
   String get introOpenForRoles => 'Open to Senior Mobile Roles';
-
-  @override
-  String get introDiscipline => 'SPECIALIZATION';
-
-  @override
-  String get introMobileArch => 'Flutter · Android · Mobile Architecture';
 
   @override
   String get introMasthead => 'Masthead';
@@ -324,11 +310,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionSubtitleWork =>
-      'In-depth looks at architecture, implementation, and measurable outcomes.';
+      'Four employers, four systems. Each case shows the problem, how it was built, and what changed.';
 
   @override
   String get sectionSubtitleExperience =>
-      'Multi-year development of enterprise mobile systems';
+      'Four roles since 2021, from shipping features to owning the native and security layer.';
 
   @override
   String get projectsHeaderKicker => 'Selected work';
@@ -427,11 +413,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactHeaderKicker => 'Contact';
 
   @override
-  String get contactHeaderTitle => 'Tell me what you\'re building.';
+  String get contactHeaderTitle => 'Have a difficult mobile problem?';
 
   @override
   String get contactHeaderSubtitle =>
-      'I\'m looking for a senior mobile role in Brno or remote from 2027, and I take on architecture reviews and contract work in the meantime. Email gets the fastest reply.';
+      'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.';
 
   @override
   String get skillsHeaderKicker => 'Skills';
@@ -441,11 +427,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillsHeaderSubtitle =>
-      'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.';
+      'What I work with and where I used it. Search a tool or filter by area.';
 
   @override
   String get sectionSubtitleEngineering =>
-      'Production-tested architectures behind the mobile suites';
+      'The architectures behind my mobile suites: layers, offline sync, NFC and token security.';
 
   @override
   String get flipHintTap => 'Tap to flip';
@@ -474,10 +460,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quickProfileTitle => 'Hiring summary';
 
   @override
-  String get quickProfileRole => 'ROLE';
+  String get quickProfileRole => 'Role';
 
   @override
-  String get quickProfileExperience => 'EXPERIENCE';
+  String get quickProfileExperience => 'Experience';
 
   @override
   String quickProfileYears(int years) {
@@ -485,10 +471,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get quickProfileStack => 'CORE STACK';
+  String get quickProfileStack => 'Core stack';
 
   @override
-  String get quickProfileRecent => 'RECENT ROLES';
+  String get quickProfileRecent => 'Recent roles';
 
   @override
   String get quickProfileEmail => 'Email';
@@ -891,7 +877,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiKeySafeguards => 'Safeguards';
 
   @override
-  String get uiLatencyBudget => 'Latency budget per layer';
+  String get uiLatencyBudget => 'Latency target per layer';
 
   @override
   String get uiActiveTrace => 'Tracing';
@@ -996,4 +982,534 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coverGranted => 'Access granted';
+
+  @override
+  String get introPitch =>
+      'I build production Flutter and Android apps: offline-first sync, NFC smart cards, secure auth. I stay through release and after.';
+
+  @override
+  String get projectFigureValueNatHealth => '400,000+';
+
+  @override
+  String get projectFigureLabelNatHealth =>
+      'beneficiaries served across Jordan, Palestine and Iraq. Paper claims replaced by NFC cards.';
+
+  @override
+  String get projectFigureValueEskadenia => '35%';
+
+  @override
+  String get projectFigureLabelEskadenia =>
+      'fewer crashes, with a steady 60 FPS on dense hospital data tables.';
+
+  @override
+  String get projectFigureValueSolutions => '4.7+';
+
+  @override
+  String get projectFigureLabelSolutions =>
+      'star store rating. Both apps shipped on time.';
+
+  @override
+  String get heroFactAvailableLabel => 'Available';
+
+  @override
+  String get heroFactAvailableValue =>
+      'Remote or part-time now. On-site in Brno from February 2027.';
+
+  @override
+  String get heroFactPermitLabel => 'Work permit';
+
+  @override
+  String get heroFactPermitValue =>
+      'Not needed in Czechia while I study full-time.';
+
+  @override
+  String get heroFactBasedLabel => 'Based in';
+
+  @override
+  String get heroFactBasedValue => 'Amman, Jordan';
+
+  @override
+  String get heroFactFocusLabel => 'Focus';
+
+  @override
+  String get heroFactFocusValue =>
+      'NFC smart cards, offline-first sync, secure authentication';
+
+  @override
+  String get heroFactLanguagesLabel => 'Languages';
+
+  @override
+  String get heroFactLanguagesValue =>
+      'English (professional), Arabic (native)';
+
+  @override
+  String get heroFactStudyLabel => 'Studying';
+
+  @override
+  String get heroFactStudyValue =>
+      'M.Sc. Open Informatics, Mendel University, from February 2027';
+
+  @override
+  String get traceCta => 'Trace a tap';
+
+  @override
+  String get traceAgain => 'Trace again';
+
+  @override
+  String get traceDone => 'Claim queued, synced and confirmed.';
+
+  @override
+  String get traceHint =>
+      'Follow one NFC claim through every layer. Hover a step to read what happens there.';
+
+  @override
+  String get traceNote =>
+      'Call names are illustrative. Flow simplified from my NFC claims work at NatHealth.';
+
+  @override
+  String get traceRunning => 'Tracing…';
+
+  @override
+  String get traceDetailFlutter =>
+      'A tap becomes a typed Dart call. The UI never touches hardware or keys.';
+
+  @override
+  String get traceDetailChannel =>
+      'Calls cross the Dart to Kotlin boundary as serialised messages. Failures come back as typed errors.';
+
+  @override
+  String get traceDetailNative =>
+      'Kotlin talks to the card over ISO-DEP: select, authenticate, read. This is the part Flutter cannot do alone.';
+
+  @override
+  String get traceDetailSecurity =>
+      'Tokens are signed with hardware-backed keys. With no network, the claim is queued and WorkManager retries it.';
+
+  @override
+  String get traceDetailBackend =>
+      'REST over HTTPS, authenticated with a JWT. The server\'s reply closes the loop for the queued claim.';
+
+  @override
+  String get traceStepFlutter => 'Flutter UI';
+
+  @override
+  String get traceStepChannel => 'Platform channel';
+
+  @override
+  String get traceStepNative => 'Native Android';
+
+  @override
+  String get traceStepSecurity => 'Security and sync';
+
+  @override
+  String get traceStepBackend => 'Backend';
+
+  @override
+  String get introTagline =>
+      'Mobile engineer building software that works beyond the screen.';
+
+  @override
+  String get introPitch2 =>
+      'Production Flutter and native Android: NFC smart cards, cryptography, offline-first sync and enterprise integrations.';
+
+  @override
+  String get letsTalk => 'Let\'s talk';
+
+  @override
+  String get downloadCv => 'Download CV';
+
+  @override
+  String get aboutTitle => 'About';
+
+  @override
+  String get aboutSubtitle =>
+      'How I work as an engineer, the problems I solve, and a few things you can run yourself.';
+
+  @override
+  String get aboutTabProfile => 'Profile';
+
+  @override
+  String get aboutTabPlayground => 'Playground';
+
+  @override
+  String get aboutEngineerLabel => 'Engineer';
+
+  @override
+  String get aboutEngineerValue =>
+      'Flutter, Android and the systems around them';
+
+  @override
+  String get aboutExperienceLabel => 'Experience';
+
+  @override
+  String aboutExperienceValue(int years) {
+    return '$years+ years in mobile';
+  }
+
+  @override
+  String get aboutFocusLabel => 'Focus';
+
+  @override
+  String get aboutFocusValue =>
+      'Mobile systems, native integration, security, enterprise apps';
+
+  @override
+  String get aboutHoodHint => 'Select a capability to see how I use it.';
+
+  @override
+  String get aboutWhereLabel => 'Where I used it';
+
+  @override
+  String get hoodNfcTitle => 'NFC';
+
+  @override
+  String get hoodNfcTag => 'Secure card communication and authentication.';
+
+  @override
+  String get hoodNfcDetail =>
+      'A native Kotlin layer talks to smart cards over ISO 7816 APDUs. I designed the card-reader interface so several card technologies sit behind one contract.';
+
+  @override
+  String get hoodNfcWhere => 'NatHealth';
+
+  @override
+  String get hoodCryptoTitle => 'Cryptography';
+
+  @override
+  String get hoodCryptoTag => 'RSA, AES and PBKDF2, with careful key handling.';
+
+  @override
+  String get hoodCryptoDetail =>
+      'Two-step JWT issuance, secure token storage and GUID-based device binding keep sensitive patient data protected.';
+
+  @override
+  String get hoodCryptoWhere => 'NatHealth';
+
+  @override
+  String get hoodBackgroundTitle => 'Background processing';
+
+  @override
+  String get hoodBackgroundTag => 'Reliable sync and message processing.';
+
+  @override
+  String get hoodBackgroundDetail =>
+      'WorkManager runs background sync, status polling and token refresh, so work finishes without the user watching.';
+
+  @override
+  String get hoodBackgroundWhere => 'NatHealth';
+
+  @override
+  String get hoodOfflineTitle => 'Offline-first';
+
+  @override
+  String get hoodOfflineTag =>
+      'Apps that keep working when connectivity disappears.';
+
+  @override
+  String get hoodOfflineDetail =>
+      'Submissions are stored on the device and sent when the network returns, with exponential-backoff retries and standard failure handling.';
+
+  @override
+  String get hoodOfflineWhere => 'NatHealth';
+
+  @override
+  String get hoodNativeTitle => 'Native integration';
+
+  @override
+  String get hoodNativeTag => 'Flutter bridged to complex native Android.';
+
+  @override
+  String get hoodNativeDetail =>
+      'Platform channels connect Dart to Kotlin and Java code for hardware access that Flutter cannot reach on its own.';
+
+  @override
+  String get hoodNativeWhere => 'NatHealth';
+
+  @override
+  String get hoodEnterpriseTitle => 'Enterprise systems';
+
+  @override
+  String get hoodEnterpriseTag =>
+      'Healthcare, ERP and large business workflows.';
+
+  @override
+  String get hoodEnterpriseDetail =>
+      'Modular architecture and reusable components across healthcare, e-learning and ERP clients, rebuilt without taking the apps offline.';
+
+  @override
+  String get hoodEnterpriseWhere => 'ESKADENIA Software';
+
+  @override
+  String get playKdfTitle => 'Key derivation';
+
+  @override
+  String get playKdfIntro =>
+      'PBKDF2-HMAC-SHA256 running in your browser. More iterations make every password guess slower, for an attacker and for you.';
+
+  @override
+  String get playKdfPassword => 'Password';
+
+  @override
+  String get playKdfIterations => 'Iterations';
+
+  @override
+  String get playKdfRun => 'Derive key';
+
+  @override
+  String get playKdfRunning => 'Deriving…';
+
+  @override
+  String get playKdfResult => 'Derived key (256 bit)';
+
+  @override
+  String playKdfTime(int ms) {
+    return 'Took $ms ms on this device.';
+  }
+
+  @override
+  String get playKdfNote =>
+      'The salt is fixed for this demo. Real systems use a random salt per user.';
+
+  @override
+  String get playSyncTitle => 'Offline to online';
+
+  @override
+  String get playSyncIntro =>
+      'Submit claims while offline. They queue on the device and sync when you go back online, retrying with exponential backoff.';
+
+  @override
+  String get playSyncOnline => 'Online';
+
+  @override
+  String get playSyncOffline => 'Offline';
+
+  @override
+  String get playSyncFlaky => 'Flaky network';
+
+  @override
+  String get playSyncSubmit => 'Submit claim';
+
+  @override
+  String get playSyncEmpty => 'No claims yet. Submit one.';
+
+  @override
+  String get playSyncQueued => 'Queued';
+
+  @override
+  String get playSyncSending => 'Sending';
+
+  @override
+  String get playSyncSynced => 'Synced';
+
+  @override
+  String playSyncRetry(int seconds) {
+    return 'Retry in ${seconds}s';
+  }
+
+  @override
+  String playSyncClaim(int number) {
+    return 'Claim $number';
+  }
+
+  @override
+  String get playSyncNote => 'Simulation. No network is used.';
+
+  @override
+  String get navPerspectives => 'Perspectives';
+
+  @override
+  String get projectLblProblem => 'Problem';
+
+  @override
+  String get projectLblSystem => 'System';
+
+  @override
+  String get projectLblRole => 'My role';
+
+  @override
+  String get projectProblemNatHealth =>
+      'Paper claims, fraud risk and unreliable clinic connectivity slowed insurance claim processing.';
+
+  @override
+  String get projectSystemNatHealth =>
+      'Kotlin NFC bridge to smart cards, JWT with device binding, and an offline-first WorkManager queue.';
+
+  @override
+  String get projectRoleNatHealth =>
+      'Led mobile architecture, native NFC integration and security.';
+
+  @override
+  String get projectProblemEskadenia =>
+      'Legacy hospital and university apps dropped frames, tangled state together and used too much memory.';
+
+  @override
+  String get projectSystemEskadenia =>
+      'Decoupled MVVM feature packages, typed REST layers and cached repositories.';
+
+  @override
+  String get projectRoleEskadenia =>
+      'Led the architectural refactor, profiling and package extraction.';
+
+  @override
+  String get projectProblemSolutions =>
+      'Two high-volume consumer apps, a loyalty engine and real-time stories, had to ship on tight timelines.';
+
+  @override
+  String get projectSystemSolutions =>
+      'A shared Flutter component library, hardware-accelerated camera and video pipelines, dynamic REST models.';
+
+  @override
+  String get projectRoleSolutions =>
+      'Set the mobile design standards, built the camera pipelines and backend integration.';
+
+  @override
+  String get projectProblemFais =>
+      'Multi-step checkout and continuous media streaming had to run without memory leaks or state races.';
+
+  @override
+  String get projectSystemFais =>
+      'End-to-end checkout API integration with idempotency keys, and live issue diagnosis from telemetry.';
+
+  @override
+  String get projectRoleFais =>
+      'Coordinated backend and frontend integration and resolved production issues.';
+
+  @override
+  String get playAesTitle => 'Encrypt and decrypt';
+
+  @override
+  String get playAesIntro =>
+      'AES-256-CBC with a key derived from your password by PBKDF2. Everything runs in your browser.';
+
+  @override
+  String get playAesMessage => 'Message';
+
+  @override
+  String get playAesPassword => 'Password';
+
+  @override
+  String get playAesEncrypt => 'Encrypt';
+
+  @override
+  String get playAesDecryptWith => 'Decrypt with password';
+
+  @override
+  String get playAesDecrypt => 'Decrypt';
+
+  @override
+  String get playAesIv => 'IV';
+
+  @override
+  String get playAesCipher => 'Ciphertext';
+
+  @override
+  String get playAesPlain => 'Decrypted text';
+
+  @override
+  String get playAesWrongKey =>
+      'Wrong key: the padding is invalid, so decryption stops.';
+
+  @override
+  String get playAesNote =>
+      'CBC hides the message but does not detect tampering. Real systems add a MAC or use an AEAD mode such as GCM.';
+
+  @override
+  String get playApduTitle => 'Smart-card exchange';
+
+  @override
+  String get playApduIntro =>
+      'An ISO 7816 command APDU and the card\'s reply, byte by byte. The card here is simulated.';
+
+  @override
+  String get playApduSelect => 'Select application';
+
+  @override
+  String get playApduRead => 'Read 16 bytes';
+
+  @override
+  String get playApduUnknown => 'Select unknown application';
+
+  @override
+  String get playApduBadClass => 'Unsupported class';
+
+  @override
+  String get playApduCommand => 'Command';
+
+  @override
+  String get playApduResponse => 'Response';
+
+  @override
+  String get playApduData => 'Data';
+
+  @override
+  String get playApduStatus => 'Status';
+
+  @override
+  String get playApduNote =>
+      'Simulation. The status words are real ISO 7816-4 codes.';
+
+  @override
+  String get apduSw9000 => 'Success';
+
+  @override
+  String get apduSw6A82 => 'File or application not found';
+
+  @override
+  String get apduSw6E00 => 'Class not supported';
+
+  @override
+  String get playChanTitle => 'Platform channel message';
+
+  @override
+  String get playChanIntro =>
+      'A Flutter to Kotlin call is serialised into bytes before it crosses the boundary. These are the real bytes Flutter\'s standard codec produces.';
+
+  @override
+  String get playChanMethod => 'Method';
+
+  @override
+  String get playChanTimeout => 'Timeout (ms)';
+
+  @override
+  String playChanBytes(int count) {
+    return '$count bytes on the wire';
+  }
+
+  @override
+  String get playChanDecoded => 'Decoded on the native side';
+
+  @override
+  String get playChanNote => 'Encoded with StandardMethodCodec.';
+
+  @override
+  String get aboutTryIt => 'Try it in the Playground';
+
+  @override
+  String get traceOpenPlayground => 'Run these layers yourself';
+
+  @override
+  String get engBlueprint => 'Architecture blueprint';
+
+  @override
+  String engTiers(int count) {
+    return '$count tiers';
+  }
+
+  @override
+  String engSwipeHint(int current, int total) {
+    return 'Swipe or tap to switch blueprints ($current of $total)';
+  }
+
+  @override
+  String get engTryDemos => 'Try the NFC, crypto and sync demos';
+
+  @override
+  String get aboutStoryShort =>
+      'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.';
+
+  @override
+  String get engTabArchitectures => 'Architectures';
+
+  @override
+  String get engTabCapabilities => 'Capabilities';
 }

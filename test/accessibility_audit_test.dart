@@ -379,21 +379,21 @@ void main() {
         find.byWidgetPredicate((w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.contains('DOWNLOAD RESUME') ?? false)),
+            (w.properties.label?.contains('Download CV') ?? false)),
         findsOneWidget,
       );
       expect(
         find.byWidgetPredicate((w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.contains('CONTACT ME') ?? false)),
+            (w.properties.label?.contains('Let\'s talk') ?? false)),
         findsOneWidget,
       );
       expect(
         find.byWidgetPredicate((w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.contains('COPY EMAIL') ?? false)),
+            (w.properties.label?.contains('Copy email') ?? false)),
         findsOneWidget,
       );
     });

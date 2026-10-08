@@ -50,7 +50,7 @@ class HatDeckHeader extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                loc.navAbout,
+                loc.navPerspectives,
                 style: TextStyle(
                   fontFamily: AppTypography.displayFont,
                   color: context.onSurface,
@@ -63,10 +63,8 @@ class HatDeckHeader extends StatelessWidget {
               Text(
                 loc.hatsHeaderSubtitle,
                 style: TextStyle(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.75)
-                      : AppColors.ink600,
-                  fontSize: isMobile ? 11 : 12.5,
+                  color: context.mutedText,
+                  fontSize: AppTypography.label,
                   fontStyle: FontStyle.italic,
                 ),
               ),

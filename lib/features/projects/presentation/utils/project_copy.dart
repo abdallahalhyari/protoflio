@@ -33,3 +33,53 @@ String localizedProjectDomain(AppLocalizations loc, String domain) {
     _ => domain,
   };
 }
+
+/// The one number a card leads with, taken from the case study. Null when
+/// a project has no measured result to quote.
+({String value, String label})? localizedProjectFigure(
+    AppLocalizations loc, Project project) {
+  return switch (project.company) {
+    'NatHealth' => (
+        value: loc.projectFigureValueNatHealth,
+        label: loc.projectFigureLabelNatHealth,
+      ),
+    'ESKADENIA Software' => (
+        value: loc.projectFigureValueEskadenia,
+        label: loc.projectFigureLabelEskadenia,
+      ),
+    'Solutions Now IT' => (
+        value: loc.projectFigureValueSolutions,
+        label: loc.projectFigureLabelSolutions,
+      ),
+    _ => null,
+  };
+}
+
+/// The case study in three lines: what was hard, how it was built, and
+/// what I personally did.
+({String problem, String system, String role})? localizedProjectCase(
+    AppLocalizations loc, Project project) {
+  return switch (project.company) {
+    'NatHealth' => (
+        problem: loc.projectProblemNatHealth,
+        system: loc.projectSystemNatHealth,
+        role: loc.projectRoleNatHealth,
+      ),
+    'ESKADENIA Software' => (
+        problem: loc.projectProblemEskadenia,
+        system: loc.projectSystemEskadenia,
+        role: loc.projectRoleEskadenia,
+      ),
+    'Solutions Now IT' => (
+        problem: loc.projectProblemSolutions,
+        system: loc.projectSystemSolutions,
+        role: loc.projectRoleSolutions,
+      ),
+    'Future Advanced Internet Solutions' => (
+        problem: loc.projectProblemFais,
+        system: loc.projectSystemFais,
+        role: loc.projectRoleFais,
+      ),
+    _ => null,
+  };
+}

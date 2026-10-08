@@ -49,8 +49,7 @@ class HatBioStrip extends StatelessWidget {
           maxLines: isMobile ? null : 3,
           overflow: isMobile ? null : TextOverflow.ellipsis,
           style: TextStyle(
-            color:
-                isDark ? Colors.white.withValues(alpha: 0.9) : AppColors.ink700,
+            color: context.onSurface,
             fontSize: AppTypography.label,
             height: 1.45,
           ),
@@ -80,9 +79,7 @@ class HatBioStrip extends StatelessWidget {
             child: Text(
               ltrContent(context, bio),
               style: TextStyle(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.92)
-                    : AppColors.ink800,
+                color: context.onSurface,
                 fontSize: AppTypography.body,
                 height: 1.6,
               ),
@@ -117,8 +114,7 @@ class HatBioStrip extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color:
-                isDark ? Colors.white.withValues(alpha: 0.7) : AppColors.ink500,
+            color: context.mutedText,
             fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
           ),

@@ -29,7 +29,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-          find.text('Production-tested architectures behind the mobile suites'),
+          find.text(
+              'The architectures behind my mobile suites: layers, offline sync, NFC and token security.'),
           findsOneWidget);
       expect(find.text('Engineering'), findsOneWidget);
     });
@@ -73,7 +74,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Flowchart'), findsOneWidget);
-      expect(find.text('${topic.diagramSteps.length} TIERS'), findsOneWidget);
+      expect(find.text('${topic.diagramSteps.length} tiers'), findsOneWidget);
       expect(find.text(topic.diagramSteps.first.title), findsWidgets);
     });
 

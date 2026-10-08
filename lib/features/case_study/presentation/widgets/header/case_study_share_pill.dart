@@ -107,9 +107,7 @@ class _CaseStudySharePillState extends State<CaseStudySharePill> {
                               fontWeight: FontWeight.w900,
                               color: _hovered
                                   ? (isDark ? Colors.white : AppColors.tealDeep)
-                                  : (isDark
-                                      ? Colors.white.withValues(alpha: 0.88)
-                                      : AppColors.ink800),
+                                  : (context.onSurface),
                             ),
                           ),
                         ),

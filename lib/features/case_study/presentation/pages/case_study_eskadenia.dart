@@ -97,7 +97,7 @@ class EskadeniaCaseStudy extends StatelessWidget {
             'unaware of backend transport details. ViewModels consume domain '
             'Repositories backed by local SQLite/SQL Server cache layers and typed '
             'REST services, wired through lightweight service locators for seamless '
-            'mocking and 100% test isolation.',
+            'mocking and isolated tests.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(

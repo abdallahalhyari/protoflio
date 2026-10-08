@@ -130,7 +130,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             SliverToBoxAdapter(
               child: _buildHeader(scheme, loc, size, isDesktop),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
+            const SliverToBoxAdapter(
+                child: SizedBox(height: AppSpacing.sectionControls)),
             SliverToBoxAdapter(
               child: BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
                 buildWhen: (prev, curr) =>
@@ -158,7 +159,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                 },
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
+            const SliverToBoxAdapter(
+                child: SizedBox(height: AppSpacing.sectionContent)),
             SliverToBoxAdapter(
               child: BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
                 buildWhen: (prev, curr) =>
@@ -185,7 +187,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                         final double textScale =
                             MediaQuery.textScalerOf(context).scale(1);
                         final double itemHeight =
-                            520 + 160 * (textScale - 1).clamp(0.0, 1.0);
+                            660 + 160 * (textScale - 1).clamp(0.0, 1.0);
 
                         return Wrap(
                           spacing: spacing,

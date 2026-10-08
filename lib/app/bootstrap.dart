@@ -172,7 +172,7 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
           context: ErrorDescription('Failed to read startup preferences.'),
         ),
       );
-      initTheme = ThemeMode.light;
+      initTheme = ThemeMode.dark;
       initLocale = const Locale('en');
     }
 

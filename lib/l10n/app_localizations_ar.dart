@@ -24,7 +24,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navStack => 'المهارات';
 
   @override
-  String get navAbout => 'رؤى';
+  String get navAbout => 'نبذة';
 
   @override
   String get navContact => 'تواصل';
@@ -122,7 +122,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introDownloadResume => 'تحميل السيرة الذاتية';
 
   @override
-  String get contactMe => 'تواصل معي';
+  String get contactMe => 'لنتحدث';
 
   @override
   String get copyEmail => 'نسخ البريد';
@@ -132,9 +132,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introRoleLine => 'مهندس تطبيقات هواتف أول';
-
-  @override
-  String get introRoleHeading => 'مهندس تطبيقات هواتف أول';
 
   @override
   String get introValueProposition =>
@@ -147,8 +144,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSkillProductDelivery => 'تسليم المنتجات';
 
   @override
-  String get introWorkEligibility =>
-      'الانتقال إلى برنو · 2027   •   متاح لأدوار مهندس أول';
+  String get introWorkEligibility => 'الانتقال إلى برنو في 2027';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
@@ -217,9 +213,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get introIssueStrip => 'الإصدار 01 · نسخة معرض الأعمال · 2026';
-
-  @override
   String get introTechStack =>
       'فلاتر · أندرويد · آي أو إس · معمارية برمجيات · أنظمة دون اتصال · NFC · أمان · أنظمة الوقت الفعلي';
 
@@ -231,12 +224,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introOpenForRoles => 'متاح لأدوار هندسية قيادية';
-
-  @override
-  String get introDiscipline => 'التخصص';
-
-  @override
-  String get introMobileArch => 'فلاتر · أندرويد · معمارية الجوال';
 
   @override
   String get introMasthead => '// الترويسة';
@@ -321,11 +308,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sectionSubtitleWork =>
-      'نظرة معمّقة على البنية المعمارية والتنفيذ والنتائج القابلة للقياس.';
+      'أربع جهات عمل وأربعة أنظمة. تعرض كل حالة المشكلة وكيف بُني الحل وما الذي تغيّر.';
 
   @override
   String get sectionSubtitleExperience =>
-      'سنوات من تطوير أنظمة الهاتف المحمول للمؤسسات';
+      'أربعة أدوار منذ 2021، من إنجاز الميزات إلى تولّي الطبقة الأصلية وطبقة الأمان.';
 
   @override
   String get projectsHeaderKicker => 'القسم 03 · أعمال مختارة';
@@ -424,11 +411,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactHeaderKicker => 'القسم 07 · تواصل مباشر';
 
   @override
-  String get contactHeaderTitle => 'أخبرني بما تبنيه.';
+  String get contactHeaderTitle => 'هل لديك مشكلة صعبة في تطبيقات الهاتف؟';
 
   @override
   String get contactHeaderSubtitle =>
-      'أبحث عن دور أول في تطوير تطبيقات الجوال في برنو أو عن بُعد ابتداءً من 2027، وأقبل خلال ذلك مراجعات المعمارية والعمل التعاقدي. البريد الإلكتروني أسرع طريقة للرد.';
+      'أرسلها لي. أقبل مراجعات معمارية الهواتف والعمل التعاقدي الآن، وأبحث عن دور أول في تطبيقات الهاتف في برنو من فبراير 2027. البريد الإلكتروني أسرع طريقة للرد.';
 
   @override
   String get skillsHeaderKicker => 'القسم 04 · الأنظمة والتسليم';
@@ -438,11 +425,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get skillsHeaderSubtitle =>
-      'فلاتر وأندرويد، وبنية المنصات، والأمان، وأنظمة التسليم لبناء منتجات مرنة وتجارب جديرة بالثقة.';
+      'ما أعمل به وأين استخدمته. ابحث عن أداة أو صفِّ حسب المجال.';
 
   @override
   String get sectionSubtitleEngineering =>
-      'هياكل معمارية مُختبَرة في بيئات الإنتاج خلف تطبيقات الهاتف';
+      'البُنى المعمارية خلف تطبيقاتي: الطبقات، والمزامنة دون اتصال، وNFC، وأمان الرموز.';
 
   @override
   String get flipHintTap => 'اضغط للقلب';
@@ -883,7 +870,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiKeySafeguards => 'ضمانات التنفيذ الأساسية';
 
   @override
-  String get uiLatencyBudget => 'ميزانية زمن الاستجابة لكل طبقة';
+  String get uiLatencyBudget => 'هدف زمن الاستجابة لكل طبقة';
 
   @override
   String get uiActiveTrace => 'المسار النشط';
@@ -988,4 +975,529 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get coverGranted => 'تم السماح بالدخول';
+
+  @override
+  String get introPitch =>
+      'أبني تطبيقات Flutter وAndroid جاهزة للإنتاج: مزامنة تعمل دون اتصال، وبطاقات NFC ذكية، ومصادقة آمنة. وأبقى معها بعد الإطلاق.';
+
+  @override
+  String get projectFigureValueNatHealth => '+400,000';
+
+  @override
+  String get projectFigureLabelNatHealth =>
+      'مستفيد في الأردن وفلسطين والعراق. حلّت بطاقات NFC محل المطالبات الورقية.';
+
+  @override
+  String get projectFigureValueEskadenia => '35%';
+
+  @override
+  String get projectFigureLabelEskadenia =>
+      'أعطال أقل، مع 60 إطاراً في الثانية بثبات على جداول بيانات المستشفيات الكثيفة.';
+
+  @override
+  String get projectFigureValueSolutions => '+4.7';
+
+  @override
+  String get projectFigureLabelSolutions =>
+      'نجمة تقييم في المتجر. أُطلق التطبيقان في موعدهما.';
+
+  @override
+  String get heroFactAvailableLabel => 'التوفر';
+
+  @override
+  String get heroFactAvailableValue =>
+      'عن بُعد أو بدوام جزئي الآن. حضورياً في برنو من فبراير 2027.';
+
+  @override
+  String get heroFactPermitLabel => 'تصريح العمل';
+
+  @override
+  String get heroFactPermitValue =>
+      'غير مطلوب في التشيك أثناء دراستي بدوام كامل.';
+
+  @override
+  String get heroFactBasedLabel => 'مقيم في';
+
+  @override
+  String get heroFactBasedValue => 'عمّان، الأردن';
+
+  @override
+  String get heroFactFocusLabel => 'التخصص';
+
+  @override
+  String get heroFactFocusValue =>
+      'بطاقات NFC الذكية، والمزامنة دون اتصال، والمصادقة الآمنة';
+
+  @override
+  String get heroFactLanguagesLabel => 'اللغات';
+
+  @override
+  String get heroFactLanguagesValue => 'الإنجليزية (مهنية)، العربية (لغة أم)';
+
+  @override
+  String get heroFactStudyLabel => 'الدراسة';
+
+  @override
+  String get heroFactStudyValue =>
+      'ماجستير المعلوماتية المفتوحة، جامعة مندل، من فبراير 2027';
+
+  @override
+  String get traceCta => 'تتبّع نقرة';
+
+  @override
+  String get traceAgain => 'تتبّع مجدداً';
+
+  @override
+  String get traceDone => 'أُدرجت المطالبة في الطابور وتمت مزامنتها وتأكيدها.';
+
+  @override
+  String get traceHint =>
+      'تابع مطالبة NFC واحدة عبر كل طبقة. مرّر المؤشر فوق خطوة لقراءة ما يحدث فيها.';
+
+  @override
+  String get traceNote =>
+      'أسماء الاستدعاءات توضيحية. التدفق مبسّط من عملي على مطالبات NFC في NatHealth.';
+
+  @override
+  String get traceRunning => 'جارٍ التتبّع…';
+
+  @override
+  String get traceDetailFlutter =>
+      'تتحول النقرة إلى استدعاء Dart مُنمَّط. لا تلمس الواجهة العتاد أو المفاتيح أبداً.';
+
+  @override
+  String get traceDetailChannel =>
+      'تعبر الاستدعاءات حدّ Dart إلى Kotlin كرسائل مُسلسلة. وتعود الإخفاقات كأخطاء مُنمَّطة.';
+
+  @override
+  String get traceDetailNative =>
+      'يتحدث Kotlin إلى البطاقة عبر ISO-DEP: تحديد، ثم مصادقة، ثم قراءة. هذا ما لا تستطيعه Flutter وحدها.';
+
+  @override
+  String get traceDetailSecurity =>
+      'تُوقَّع الرموز بمفاتيح مدعومة بالعتاد. وعند غياب الشبكة تُوضع المطالبة في طابور ويعيد WorkManager المحاولة.';
+
+  @override
+  String get traceDetailBackend =>
+      'REST عبر HTTPS بمصادقة JWT. ويغلق ردّ الخادم الحلقة للمطالبة المنتظرة.';
+
+  @override
+  String get traceStepFlutter => 'Flutter UI';
+
+  @override
+  String get traceStepChannel => 'Platform channel';
+
+  @override
+  String get traceStepNative => 'Native Android';
+
+  @override
+  String get traceStepSecurity => 'الأمان والمزامنة';
+
+  @override
+  String get traceStepBackend => 'Backend';
+
+  @override
+  String get introTagline =>
+      'مهندس تطبيقات هواتف أبني برمجيات تعمل خلف الشاشة.';
+
+  @override
+  String get introPitch2 =>
+      'تطبيقات Flutter وAndroid الأصلية جاهزة للإنتاج: بطاقات NFC الذكية، والتشفير، والمزامنة دون اتصال، وتكاملات المؤسسات.';
+
+  @override
+  String get letsTalk => 'لنتحدث';
+
+  @override
+  String get downloadCv => 'تحميل السيرة الذاتية';
+
+  @override
+  String get aboutTitle => 'نبذة';
+
+  @override
+  String get aboutSubtitle =>
+      'كيف أعمل كمهندس، والمشكلات التي أحلّها، وبعض الأمور التي يمكنك تشغيلها بنفسك.';
+
+  @override
+  String get aboutTabProfile => 'الملف';
+
+  @override
+  String get aboutTabPlayground => 'ساحة التجارب';
+
+  @override
+  String get aboutEngineerLabel => 'المهندس';
+
+  @override
+  String get aboutEngineerValue => 'Flutter وAndroid والأنظمة المحيطة بهما';
+
+  @override
+  String get aboutExperienceLabel => 'الخبرة';
+
+  @override
+  String aboutExperienceValue(int years) {
+    return 'أكثر من $years سنوات في تطبيقات الهواتف';
+  }
+
+  @override
+  String get aboutFocusLabel => 'التركيز';
+
+  @override
+  String get aboutFocusValue =>
+      'أنظمة الهواتف، والتكامل مع النظام الأصلي، والأمان، وتطبيقات المؤسسات';
+
+  @override
+  String get aboutHoodHint => 'اختر قدرة لترى كيف أستخدمها.';
+
+  @override
+  String get aboutWhereLabel => 'أين استخدمتها';
+
+  @override
+  String get hoodNfcTitle => 'NFC';
+
+  @override
+  String get hoodNfcTag => 'اتصال ومصادقة آمنان مع البطاقات.';
+
+  @override
+  String get hoodNfcDetail =>
+      'طبقة Kotlin أصلية تتحدث مع البطاقات الذكية عبر ISO 7816 APDU. صممت واجهة قارئ البطاقات لتقف عدة تقنيات بطاقات خلف عقد واحد.';
+
+  @override
+  String get hoodNfcWhere => 'NatHealth';
+
+  @override
+  String get hoodCryptoTitle => 'التشفير';
+
+  @override
+  String get hoodCryptoTag => 'RSA وAES وPBKDF2 مع تعامل دقيق مع المفاتيح.';
+
+  @override
+  String get hoodCryptoDetail =>
+      'إصدار JWT على خطوتين، وتخزين آمن للرموز، وربط الجهاز بمعرّف GUID تحمي بيانات المرضى الحساسة.';
+
+  @override
+  String get hoodCryptoWhere => 'NatHealth';
+
+  @override
+  String get hoodBackgroundTitle => 'المعالجة في الخلفية';
+
+  @override
+  String get hoodBackgroundTag => 'مزامنة ومعالجة رسائل موثوقة.';
+
+  @override
+  String get hoodBackgroundDetail =>
+      'يشغّل WorkManager المزامنة في الخلفية واستعلام الحالة وتجديد الرموز، فيكتمل العمل دون أن يراقبه المستخدم.';
+
+  @override
+  String get hoodBackgroundWhere => 'NatHealth';
+
+  @override
+  String get hoodOfflineTitle => 'دون اتصال أولاً';
+
+  @override
+  String get hoodOfflineTag => 'تطبيقات تواصل العمل حين ينقطع الاتصال.';
+
+  @override
+  String get hoodOfflineDetail =>
+      'تُخزَّن الطلبات على الجهاز وتُرسل عند عودة الشبكة، مع إعادة محاولة بتراجع أسّي ومعالجة موحّدة للأخطاء.';
+
+  @override
+  String get hoodOfflineWhere => 'NatHealth';
+
+  @override
+  String get hoodNativeTitle => 'التكامل مع النظام الأصلي';
+
+  @override
+  String get hoodNativeTag => 'ربط Flutter بنظام Android الأصلي المعقّد.';
+
+  @override
+  String get hoodNativeDetail =>
+      'تربط قنوات المنصة بين Dart وشيفرة Kotlin وJava للوصول إلى العتاد الذي لا تبلغه Flutter وحدها.';
+
+  @override
+  String get hoodNativeWhere => 'NatHealth';
+
+  @override
+  String get hoodEnterpriseTitle => 'أنظمة المؤسسات';
+
+  @override
+  String get hoodEnterpriseTag => 'الرعاية الصحية وERP وسير العمل الكبيرة.';
+
+  @override
+  String get hoodEnterpriseDetail =>
+      'بنية معيارية ومكوّنات قابلة لإعادة الاستخدام عبر عملاء الرعاية الصحية والتعليم الإلكتروني وERP، أُعيد بناؤها دون إيقاف التطبيقات.';
+
+  @override
+  String get hoodEnterpriseWhere => 'ESKADENIA Software';
+
+  @override
+  String get playKdfTitle => 'اشتقاق المفتاح';
+
+  @override
+  String get playKdfIntro =>
+      'PBKDF2-HMAC-SHA256 يعمل في متصفحك. كلما زادت التكرارات أصبح كل تخمين لكلمة المرور أبطأ، على المهاجم وعليك.';
+
+  @override
+  String get playKdfPassword => 'كلمة المرور';
+
+  @override
+  String get playKdfIterations => 'التكرارات';
+
+  @override
+  String get playKdfRun => 'اشتقاق المفتاح';
+
+  @override
+  String get playKdfRunning => 'جارٍ الاشتقاق…';
+
+  @override
+  String get playKdfResult => 'المفتاح المشتق (256 بت)';
+
+  @override
+  String playKdfTime(int ms) {
+    return 'استغرق $ms مللي ثانية على هذا الجهاز.';
+  }
+
+  @override
+  String get playKdfNote =>
+      'الملح ثابت في هذا العرض. الأنظمة الحقيقية تستخدم ملحاً عشوائياً لكل مستخدم.';
+
+  @override
+  String get playSyncTitle => 'من دون اتصال إلى متصل';
+
+  @override
+  String get playSyncIntro =>
+      'قدّم مطالبات وأنت دون اتصال. تنتظر في الطابور على الجهاز وتُزامَن عند عودة الاتصال، مع إعادة المحاولة بتراجع أسّي.';
+
+  @override
+  String get playSyncOnline => 'متصل';
+
+  @override
+  String get playSyncOffline => 'دون اتصال';
+
+  @override
+  String get playSyncFlaky => 'شبكة غير مستقرة';
+
+  @override
+  String get playSyncSubmit => 'إرسال مطالبة';
+
+  @override
+  String get playSyncEmpty => 'لا مطالبات بعد. أرسل واحدة.';
+
+  @override
+  String get playSyncQueued => 'في الطابور';
+
+  @override
+  String get playSyncSending => 'قيد الإرسال';
+
+  @override
+  String get playSyncSynced => 'تمت المزامنة';
+
+  @override
+  String playSyncRetry(int seconds) {
+    return 'إعادة المحاولة بعد $seconds ث';
+  }
+
+  @override
+  String playSyncClaim(int number) {
+    return 'المطالبة $number';
+  }
+
+  @override
+  String get playSyncNote => 'محاكاة. لا تُستخدم أي شبكة.';
+
+  @override
+  String get navPerspectives => 'رؤى';
+
+  @override
+  String get projectLblProblem => 'المشكلة';
+
+  @override
+  String get projectLblSystem => 'النظام';
+
+  @override
+  String get projectLblRole => 'دوري';
+
+  @override
+  String get projectProblemNatHealth =>
+      'المطالبات الورقية ومخاطر الاحتيال وضعف اتصال العيادات أبطأت معالجة مطالبات التأمين.';
+
+  @override
+  String get projectSystemNatHealth =>
+      'جسر NFC بـ Kotlin إلى البطاقات الذكية، وJWT مع ربط الجهاز، وطابور WorkManager يعمل دون اتصال.';
+
+  @override
+  String get projectRoleNatHealth =>
+      'قدت بنية التطبيق وتكامل NFC الأصلي والأمان.';
+
+  @override
+  String get projectProblemEskadenia =>
+      'تطبيقات المستشفيات والجامعات القديمة كانت تُسقط الإطارات وتخلط الحالة وتستهلك ذاكرة كبيرة.';
+
+  @override
+  String get projectSystemEskadenia =>
+      'حزم ميزات MVVM منفصلة، وطبقات REST مُنمَّطة، ومستودعات مخزّنة مؤقتاً.';
+
+  @override
+  String get projectRoleEskadenia =>
+      'قدت إعادة الهيكلة المعمارية والتحليل واستخراج الحزم.';
+
+  @override
+  String get projectProblemSolutions =>
+      'تطبيقان استهلاكيان كبيران، محرك ولاء وقصص فورية، كان عليهما الإطلاق في مواعيد ضيقة.';
+
+  @override
+  String get projectSystemSolutions =>
+      'مكتبة مكوّنات Flutter مشتركة، ومسارات كاميرا وفيديو بتسريع عتادي، ونماذج REST ديناميكية.';
+
+  @override
+  String get projectRoleSolutions =>
+      'وضعت معايير تصميم الهواتف وبنيت مسارات الكاميرا وتكامل الخلفية.';
+
+  @override
+  String get projectProblemFais =>
+      'كان على الدفع متعدد الخطوات وبث الوسائط المستمر أن يعملا دون تسرّب ذاكرة أو تسابق حالات.';
+
+  @override
+  String get projectSystemFais =>
+      'تكامل شامل لواجهات الدفع مع مفاتيح idempotency، وتشخيص المشكلات الحية من بيانات القياس.';
+
+  @override
+  String get projectRoleFais =>
+      'نسّقت التكامل بين الخلفية والواجهة وحللت مشكلات الإنتاج.';
+
+  @override
+  String get playAesTitle => 'التشفير وفك التشفير';
+
+  @override
+  String get playAesIntro =>
+      'AES-256-CBC بمفتاح مشتق من كلمة المرور عبر PBKDF2. كل شيء يعمل في متصفحك.';
+
+  @override
+  String get playAesMessage => 'الرسالة';
+
+  @override
+  String get playAesPassword => 'كلمة المرور';
+
+  @override
+  String get playAesEncrypt => 'تشفير';
+
+  @override
+  String get playAesDecryptWith => 'فك التشفير بكلمة المرور';
+
+  @override
+  String get playAesDecrypt => 'فك التشفير';
+
+  @override
+  String get playAesIv => 'IV';
+
+  @override
+  String get playAesCipher => 'النص المشفّر';
+
+  @override
+  String get playAesPlain => 'النص بعد فك التشفير';
+
+  @override
+  String get playAesWrongKey =>
+      'مفتاح خاطئ: الحشو غير صالح لذا يتوقف فك التشفير.';
+
+  @override
+  String get playAesNote =>
+      'CBC يخفي الرسالة لكنه لا يكشف العبث. الأنظمة الحقيقية تضيف MAC أو تستخدم وضع AEAD مثل GCM.';
+
+  @override
+  String get playApduTitle => 'تبادل مع البطاقة الذكية';
+
+  @override
+  String get playApduIntro =>
+      'أمر APDU وفق ISO 7816 ورد البطاقة، بايتاً بايتاً. البطاقة هنا محاكاة.';
+
+  @override
+  String get playApduSelect => 'تحديد التطبيق';
+
+  @override
+  String get playApduRead => 'قراءة 16 بايت';
+
+  @override
+  String get playApduUnknown => 'تحديد تطبيق غير معروف';
+
+  @override
+  String get playApduBadClass => 'صنف غير مدعوم';
+
+  @override
+  String get playApduCommand => 'الأمر';
+
+  @override
+  String get playApduResponse => 'الرد';
+
+  @override
+  String get playApduData => 'البيانات';
+
+  @override
+  String get playApduStatus => 'الحالة';
+
+  @override
+  String get playApduNote => 'محاكاة. كلمات الحالة رموز ISO 7816-4 حقيقية.';
+
+  @override
+  String get apduSw9000 => 'نجاح';
+
+  @override
+  String get apduSw6A82 => 'الملف أو التطبيق غير موجود';
+
+  @override
+  String get apduSw6E00 => 'الصنف غير مدعوم';
+
+  @override
+  String get playChanTitle => 'رسالة قناة المنصة';
+
+  @override
+  String get playChanIntro =>
+      'يُسلسَل استدعاء من Flutter إلى Kotlin إلى بايتات قبل عبور الحدّ. هذه هي البايتات الحقيقية التي ينتجها المرمّز القياسي في Flutter.';
+
+  @override
+  String get playChanMethod => 'الدالة';
+
+  @override
+  String get playChanTimeout => 'المهلة (مللي ثانية)';
+
+  @override
+  String playChanBytes(int count) {
+    return '$count بايت على السلك';
+  }
+
+  @override
+  String get playChanDecoded => 'بعد فك الترميز في الجانب الأصلي';
+
+  @override
+  String get playChanNote => 'مرمَّز بـ StandardMethodCodec.';
+
+  @override
+  String get aboutTryIt => 'جرّبه في ساحة التجارب';
+
+  @override
+  String get traceOpenPlayground => 'شغّل هذه الطبقات بنفسك';
+
+  @override
+  String get engBlueprint => 'مخطط معماري';
+
+  @override
+  String engTiers(int count) {
+    return '$count طبقات';
+  }
+
+  @override
+  String engSwipeHint(int current, int total) {
+    return 'مرّر أو انقر لتبديل المخططات ($current من $total)';
+  }
+
+  @override
+  String get engTryDemos => 'جرّب عروض NFC والتشفير والمزامنة';
+
+  @override
+  String get aboutStoryShort =>
+      'بدأت في تطبيقات الهواتف عام 2021. ومنذ ذلك الحين ينتقل عملي باستمرار إلى أسفل الطبقات، من الشاشات إلى طبقات النظام الأصلي والأمان والمزامنة تحتها. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.';
+
+  @override
+  String get engTabArchitectures => 'البُنى المعمارية';
+
+  @override
+  String get engTabCapabilities => 'القدرات';
 }

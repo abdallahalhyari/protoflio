@@ -133,7 +133,7 @@ abstract class AppLocalizations {
   /// No description provided for @navAbout.
   ///
   /// In en, this message translates to:
-  /// **'Perspectives'**
+  /// **'About'**
   String get navAbout;
 
   /// No description provided for @navContact.
@@ -295,7 +295,7 @@ abstract class AppLocalizations {
   /// No description provided for @viewMyWork.
   ///
   /// In en, this message translates to:
-  /// **'VIEW MY WORK'**
+  /// **'View my work'**
   String get viewMyWork;
 
   /// No description provided for @downloadResume.
@@ -307,19 +307,19 @@ abstract class AppLocalizations {
   /// Intro cover copy (the original design); downloadResume carries the site-wide wording.
   ///
   /// In en, this message translates to:
-  /// **'DOWNLOAD RESUME'**
+  /// **'Download CV'**
   String get introDownloadResume;
 
   /// No description provided for @contactMe.
   ///
   /// In en, this message translates to:
-  /// **'CONTACT ME'**
+  /// **'Let\'s talk'**
   String get contactMe;
 
   /// No description provided for @copyEmail.
   ///
   /// In en, this message translates to:
-  /// **'COPY EMAIL'**
+  /// **'Copy email'**
   String get copyEmail;
 
   /// No description provided for @introSeniorEngineer.
@@ -331,14 +331,8 @@ abstract class AppLocalizations {
   /// Intro cover copy (the original design); introSeniorEngineer carries the site-wide wording.
   ///
   /// In en, this message translates to:
-  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
+  /// **'Senior Flutter & Android engineer'**
   String get introRoleLine;
-
-  /// No description provided for @introRoleHeading.
-  ///
-  /// In en, this message translates to:
-  /// **'SENIOR FLUTTER & ANDROID ENGINEER'**
-  String get introRoleHeading;
 
   /// No description provided for @introValueProposition.
   ///
@@ -361,13 +355,13 @@ abstract class AppLocalizations {
   /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
-  /// **'RELOCATING TO BRNO · 2027   •   OPEN TO SENIOR MOBILE ROLES'**
+  /// **'Relocating to Brno in 2027'**
   String get introWorkEligibility;
 
   /// No description provided for @introAvailableContracts.
   ///
   /// In en, this message translates to:
-  /// **'AVAILABLE FOR CONTRACTS'**
+  /// **'Available for contracts'**
   String get introAvailableContracts;
 
   /// No description provided for @contactEngagementScopes.
@@ -490,12 +484,6 @@ abstract class AppLocalizations {
   /// **'{current} of {total}'**
   String folioIndicator(Object current, Object total);
 
-  /// No description provided for @introIssueStrip.
-  ///
-  /// In en, this message translates to:
-  /// **'LOCATION: AMMAN → BRNO · 2027   |   AVAILABILITY: OPEN TO SENIOR MOBILE ROLES   |   SPECIALIZATION: FLUTTER · ANDROID · MOBILE ARCHITECTURE'**
-  String get introIssueStrip;
-
   /// No description provided for @introTechStack.
   ///
   /// In en, this message translates to:
@@ -505,13 +493,13 @@ abstract class AppLocalizations {
   /// No description provided for @introBasedIn.
   ///
   /// In en, this message translates to:
-  /// **'LOCATION'**
+  /// **'Location'**
   String get introBasedIn;
 
   /// No description provided for @introStatus.
   ///
   /// In en, this message translates to:
-  /// **'AVAILABILITY'**
+  /// **'Availability'**
   String get introStatus;
 
   /// No description provided for @introOpenForRoles.
@@ -519,18 +507,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open to Senior Mobile Roles'**
   String get introOpenForRoles;
-
-  /// No description provided for @introDiscipline.
-  ///
-  /// In en, this message translates to:
-  /// **'SPECIALIZATION'**
-  String get introDiscipline;
-
-  /// No description provided for @introMobileArch.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter · Android · Mobile Architecture'**
-  String get introMobileArch;
 
   /// No description provided for @introMasthead.
   ///
@@ -679,13 +655,13 @@ abstract class AppLocalizations {
   /// No description provided for @sectionSubtitleWork.
   ///
   /// In en, this message translates to:
-  /// **'In-depth looks at architecture, implementation, and measurable outcomes.'**
+  /// **'Four employers, four systems. Each case shows the problem, how it was built, and what changed.'**
   String get sectionSubtitleWork;
 
   /// No description provided for @sectionSubtitleExperience.
   ///
   /// In en, this message translates to:
-  /// **'Multi-year development of enterprise mobile systems'**
+  /// **'Four roles since 2021, from shipping features to owning the native and security layer.'**
   String get sectionSubtitleExperience;
 
   /// No description provided for @projectsHeaderKicker.
@@ -853,13 +829,13 @@ abstract class AppLocalizations {
   /// No description provided for @contactHeaderTitle.
   ///
   /// In en, this message translates to:
-  /// **'Tell me what you\'re building.'**
+  /// **'Have a difficult mobile problem?'**
   String get contactHeaderTitle;
 
   /// No description provided for @contactHeaderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'I\'m looking for a senior mobile role in Brno or remote from 2027, and I take on architecture reviews and contract work in the meantime. Email gets the fastest reply.'**
+  /// **'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.'**
   String get contactHeaderSubtitle;
 
   /// No description provided for @skillsHeaderKicker.
@@ -877,13 +853,13 @@ abstract class AppLocalizations {
   /// No description provided for @skillsHeaderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Flutter, Android, platform architecture, security, and delivery systems built for resilient product teams and high-trust experiences.'**
+  /// **'What I work with and where I used it. Search a tool or filter by area.'**
   String get skillsHeaderSubtitle;
 
   /// No description provided for @sectionSubtitleEngineering.
   ///
   /// In en, this message translates to:
-  /// **'Production-tested architectures behind the mobile suites'**
+  /// **'The architectures behind my mobile suites: layers, offline sync, NFC and token security.'**
   String get sectionSubtitleEngineering;
 
   /// Hint on flippable skill / role cards for touch viewports.
@@ -937,13 +913,13 @@ abstract class AppLocalizations {
   /// No description provided for @quickProfileRole.
   ///
   /// In en, this message translates to:
-  /// **'ROLE'**
+  /// **'Role'**
   String get quickProfileRole;
 
   /// No description provided for @quickProfileExperience.
   ///
   /// In en, this message translates to:
-  /// **'EXPERIENCE'**
+  /// **'Experience'**
   String get quickProfileExperience;
 
   /// Years of professional experience.
@@ -955,13 +931,13 @@ abstract class AppLocalizations {
   /// No description provided for @quickProfileStack.
   ///
   /// In en, this message translates to:
-  /// **'CORE STACK'**
+  /// **'Core stack'**
   String get quickProfileStack;
 
   /// No description provided for @quickProfileRecent.
   ///
   /// In en, this message translates to:
-  /// **'RECENT ROLES'**
+  /// **'Recent roles'**
   String get quickProfileRecent;
 
   /// No description provided for @quickProfileEmail.
@@ -1669,7 +1645,7 @@ abstract class AppLocalizations {
   /// No description provided for @uiLatencyBudget.
   ///
   /// In en, this message translates to:
-  /// **'Latency budget per layer'**
+  /// **'Latency target per layer'**
   String get uiLatencyBudget;
 
   /// No description provided for @uiActiveTrace.
@@ -1851,6 +1827,936 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Access granted'**
   String get coverGranted;
+
+  /// No description provided for @introPitch.
+  ///
+  /// In en, this message translates to:
+  /// **'I build production Flutter and Android apps: offline-first sync, NFC smart cards, secure auth. I stay through release and after.'**
+  String get introPitch;
+
+  /// No description provided for @projectFigureValueNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'400,000+'**
+  String get projectFigureValueNatHealth;
+
+  /// No description provided for @projectFigureLabelNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'beneficiaries served across Jordan, Palestine and Iraq. Paper claims replaced by NFC cards.'**
+  String get projectFigureLabelNatHealth;
+
+  /// No description provided for @projectFigureValueEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'35%'**
+  String get projectFigureValueEskadenia;
+
+  /// No description provided for @projectFigureLabelEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'fewer crashes, with a steady 60 FPS on dense hospital data tables.'**
+  String get projectFigureLabelEskadenia;
+
+  /// No description provided for @projectFigureValueSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'4.7+'**
+  String get projectFigureValueSolutions;
+
+  /// No description provided for @projectFigureLabelSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'star store rating. Both apps shipped on time.'**
+  String get projectFigureLabelSolutions;
+
+  /// No description provided for @heroFactAvailableLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get heroFactAvailableLabel;
+
+  /// No description provided for @heroFactAvailableValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote or part-time now. On-site in Brno from February 2027.'**
+  String get heroFactAvailableValue;
+
+  /// No description provided for @heroFactPermitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Work permit'**
+  String get heroFactPermitLabel;
+
+  /// No description provided for @heroFactPermitValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Not needed in Czechia while I study full-time.'**
+  String get heroFactPermitValue;
+
+  /// No description provided for @heroFactBasedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Based in'**
+  String get heroFactBasedLabel;
+
+  /// No description provided for @heroFactBasedValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Amman, Jordan'**
+  String get heroFactBasedValue;
+
+  /// No description provided for @heroFactFocusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get heroFactFocusLabel;
+
+  /// No description provided for @heroFactFocusValue.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC smart cards, offline-first sync, secure authentication'**
+  String get heroFactFocusValue;
+
+  /// No description provided for @heroFactLanguagesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get heroFactLanguagesLabel;
+
+  /// No description provided for @heroFactLanguagesValue.
+  ///
+  /// In en, this message translates to:
+  /// **'English (professional), Arabic (native)'**
+  String get heroFactLanguagesValue;
+
+  /// No description provided for @heroFactStudyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Studying'**
+  String get heroFactStudyLabel;
+
+  /// No description provided for @heroFactStudyValue.
+  ///
+  /// In en, this message translates to:
+  /// **'M.Sc. Open Informatics, Mendel University, from February 2027'**
+  String get heroFactStudyValue;
+
+  /// No description provided for @traceCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Trace a tap'**
+  String get traceCta;
+
+  /// No description provided for @traceAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Trace again'**
+  String get traceAgain;
+
+  /// No description provided for @traceDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim queued, synced and confirmed.'**
+  String get traceDone;
+
+  /// No description provided for @traceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow one NFC claim through every layer. Hover a step to read what happens there.'**
+  String get traceHint;
+
+  /// No description provided for @traceNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Call names are illustrative. Flow simplified from my NFC claims work at NatHealth.'**
+  String get traceNote;
+
+  /// No description provided for @traceRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracing…'**
+  String get traceRunning;
+
+  /// No description provided for @traceDetailFlutter.
+  ///
+  /// In en, this message translates to:
+  /// **'A tap becomes a typed Dart call. The UI never touches hardware or keys.'**
+  String get traceDetailFlutter;
+
+  /// No description provided for @traceDetailChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Calls cross the Dart to Kotlin boundary as serialised messages. Failures come back as typed errors.'**
+  String get traceDetailChannel;
+
+  /// No description provided for @traceDetailNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Kotlin talks to the card over ISO-DEP: select, authenticate, read. This is the part Flutter cannot do alone.'**
+  String get traceDetailNative;
+
+  /// No description provided for @traceDetailSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Tokens are signed with hardware-backed keys. With no network, the claim is queued and WorkManager retries it.'**
+  String get traceDetailSecurity;
+
+  /// No description provided for @traceDetailBackend.
+  ///
+  /// In en, this message translates to:
+  /// **'REST over HTTPS, authenticated with a JWT. The server\'s reply closes the loop for the queued claim.'**
+  String get traceDetailBackend;
+
+  /// No description provided for @traceStepFlutter.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter UI'**
+  String get traceStepFlutter;
+
+  /// No description provided for @traceStepChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform channel'**
+  String get traceStepChannel;
+
+  /// No description provided for @traceStepNative.
+  ///
+  /// In en, this message translates to:
+  /// **'Native Android'**
+  String get traceStepNative;
+
+  /// No description provided for @traceStepSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security and sync'**
+  String get traceStepSecurity;
+
+  /// No description provided for @traceStepBackend.
+  ///
+  /// In en, this message translates to:
+  /// **'Backend'**
+  String get traceStepBackend;
+
+  /// No description provided for @introTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile engineer building software that works beyond the screen.'**
+  String get introTagline;
+
+  /// No description provided for @introPitch2.
+  ///
+  /// In en, this message translates to:
+  /// **'Production Flutter and native Android: NFC smart cards, cryptography, offline-first sync and enterprise integrations.'**
+  String get introPitch2;
+
+  /// No description provided for @letsTalk.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s talk'**
+  String get letsTalk;
+
+  /// No description provided for @downloadCv.
+  ///
+  /// In en, this message translates to:
+  /// **'Download CV'**
+  String get downloadCv;
+
+  /// No description provided for @aboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutTitle;
+
+  /// No description provided for @aboutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How I work as an engineer, the problems I solve, and a few things you can run yourself.'**
+  String get aboutSubtitle;
+
+  /// No description provided for @aboutTabProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get aboutTabProfile;
+
+  /// No description provided for @aboutTabPlayground.
+  ///
+  /// In en, this message translates to:
+  /// **'Playground'**
+  String get aboutTabPlayground;
+
+  /// No description provided for @aboutEngineerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Engineer'**
+  String get aboutEngineerLabel;
+
+  /// No description provided for @aboutEngineerValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter, Android and the systems around them'**
+  String get aboutEngineerValue;
+
+  /// No description provided for @aboutExperienceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get aboutExperienceLabel;
+
+  /// No description provided for @aboutExperienceValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{years}+ years in mobile'**
+  String aboutExperienceValue(int years);
+
+  /// No description provided for @aboutFocusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get aboutFocusLabel;
+
+  /// No description provided for @aboutFocusValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile systems, native integration, security, enterprise apps'**
+  String get aboutFocusValue;
+
+  /// No description provided for @aboutHoodHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a capability to see how I use it.'**
+  String get aboutHoodHint;
+
+  /// No description provided for @aboutWhereLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Where I used it'**
+  String get aboutWhereLabel;
+
+  /// No description provided for @hoodNfcTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC'**
+  String get hoodNfcTitle;
+
+  /// No description provided for @hoodNfcTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Secure card communication and authentication.'**
+  String get hoodNfcTag;
+
+  /// No description provided for @hoodNfcDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'A native Kotlin layer talks to smart cards over ISO 7816 APDUs. I designed the card-reader interface so several card technologies sit behind one contract.'**
+  String get hoodNfcDetail;
+
+  /// No description provided for @hoodNfcWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodNfcWhere;
+
+  /// No description provided for @hoodCryptoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cryptography'**
+  String get hoodCryptoTitle;
+
+  /// No description provided for @hoodCryptoTag.
+  ///
+  /// In en, this message translates to:
+  /// **'RSA, AES and PBKDF2, with careful key handling.'**
+  String get hoodCryptoTag;
+
+  /// No description provided for @hoodCryptoDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-step JWT issuance, secure token storage and GUID-based device binding keep sensitive patient data protected.'**
+  String get hoodCryptoDetail;
+
+  /// No description provided for @hoodCryptoWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodCryptoWhere;
+
+  /// No description provided for @hoodBackgroundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Background processing'**
+  String get hoodBackgroundTitle;
+
+  /// No description provided for @hoodBackgroundTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Reliable sync and message processing.'**
+  String get hoodBackgroundTag;
+
+  /// No description provided for @hoodBackgroundDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'WorkManager runs background sync, status polling and token refresh, so work finishes without the user watching.'**
+  String get hoodBackgroundDetail;
+
+  /// No description provided for @hoodBackgroundWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodBackgroundWhere;
+
+  /// No description provided for @hoodOfflineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline-first'**
+  String get hoodOfflineTitle;
+
+  /// No description provided for @hoodOfflineTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps that keep working when connectivity disappears.'**
+  String get hoodOfflineTag;
+
+  /// No description provided for @hoodOfflineDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Submissions are stored on the device and sent when the network returns, with exponential-backoff retries and standard failure handling.'**
+  String get hoodOfflineDetail;
+
+  /// No description provided for @hoodOfflineWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodOfflineWhere;
+
+  /// No description provided for @hoodNativeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Native integration'**
+  String get hoodNativeTitle;
+
+  /// No description provided for @hoodNativeTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter bridged to complex native Android.'**
+  String get hoodNativeTag;
+
+  /// No description provided for @hoodNativeDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform channels connect Dart to Kotlin and Java code for hardware access that Flutter cannot reach on its own.'**
+  String get hoodNativeDetail;
+
+  /// No description provided for @hoodNativeWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth'**
+  String get hoodNativeWhere;
+
+  /// No description provided for @hoodEnterpriseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enterprise systems'**
+  String get hoodEnterpriseTitle;
+
+  /// No description provided for @hoodEnterpriseTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthcare, ERP and large business workflows.'**
+  String get hoodEnterpriseTag;
+
+  /// No description provided for @hoodEnterpriseDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Modular architecture and reusable components across healthcare, e-learning and ERP clients, rebuilt without taking the apps offline.'**
+  String get hoodEnterpriseDetail;
+
+  /// No description provided for @hoodEnterpriseWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'ESKADENIA Software'**
+  String get hoodEnterpriseWhere;
+
+  /// No description provided for @playKdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Key derivation'**
+  String get playKdfTitle;
+
+  /// No description provided for @playKdfIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'PBKDF2-HMAC-SHA256 running in your browser. More iterations make every password guess slower, for an attacker and for you.'**
+  String get playKdfIntro;
+
+  /// No description provided for @playKdfPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get playKdfPassword;
+
+  /// No description provided for @playKdfIterations.
+  ///
+  /// In en, this message translates to:
+  /// **'Iterations'**
+  String get playKdfIterations;
+
+  /// No description provided for @playKdfRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Derive key'**
+  String get playKdfRun;
+
+  /// No description provided for @playKdfRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Deriving…'**
+  String get playKdfRunning;
+
+  /// No description provided for @playKdfResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Derived key (256 bit)'**
+  String get playKdfResult;
+
+  /// No description provided for @playKdfTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Took {ms} ms on this device.'**
+  String playKdfTime(int ms);
+
+  /// No description provided for @playKdfNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The salt is fixed for this demo. Real systems use a random salt per user.'**
+  String get playKdfNote;
+
+  /// No description provided for @playSyncTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline to online'**
+  String get playSyncTitle;
+
+  /// No description provided for @playSyncIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit claims while offline. They queue on the device and sync when you go back online, retrying with exponential backoff.'**
+  String get playSyncIntro;
+
+  /// No description provided for @playSyncOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get playSyncOnline;
+
+  /// No description provided for @playSyncOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get playSyncOffline;
+
+  /// No description provided for @playSyncFlaky.
+  ///
+  /// In en, this message translates to:
+  /// **'Flaky network'**
+  String get playSyncFlaky;
+
+  /// No description provided for @playSyncSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit claim'**
+  String get playSyncSubmit;
+
+  /// No description provided for @playSyncEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No claims yet. Submit one.'**
+  String get playSyncEmpty;
+
+  /// No description provided for @playSyncQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get playSyncQueued;
+
+  /// No description provided for @playSyncSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending'**
+  String get playSyncSending;
+
+  /// No description provided for @playSyncSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Synced'**
+  String get playSyncSynced;
+
+  /// No description provided for @playSyncRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry in {seconds}s'**
+  String playSyncRetry(int seconds);
+
+  /// No description provided for @playSyncClaim.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim {number}'**
+  String playSyncClaim(int number);
+
+  /// No description provided for @playSyncNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulation. No network is used.'**
+  String get playSyncNote;
+
+  /// No description provided for @navPerspectives.
+  ///
+  /// In en, this message translates to:
+  /// **'Perspectives'**
+  String get navPerspectives;
+
+  /// No description provided for @projectLblProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem'**
+  String get projectLblProblem;
+
+  /// No description provided for @projectLblSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get projectLblSystem;
+
+  /// No description provided for @projectLblRole.
+  ///
+  /// In en, this message translates to:
+  /// **'My role'**
+  String get projectLblRole;
+
+  /// No description provided for @projectProblemNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Paper claims, fraud risk and unreliable clinic connectivity slowed insurance claim processing.'**
+  String get projectProblemNatHealth;
+
+  /// No description provided for @projectSystemNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Kotlin NFC bridge to smart cards, JWT with device binding, and an offline-first WorkManager queue.'**
+  String get projectSystemNatHealth;
+
+  /// No description provided for @projectRoleNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Led mobile architecture, native NFC integration and security.'**
+  String get projectRoleNatHealth;
+
+  /// No description provided for @projectProblemEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy hospital and university apps dropped frames, tangled state together and used too much memory.'**
+  String get projectProblemEskadenia;
+
+  /// No description provided for @projectSystemEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Decoupled MVVM feature packages, typed REST layers and cached repositories.'**
+  String get projectSystemEskadenia;
+
+  /// No description provided for @projectRoleEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Led the architectural refactor, profiling and package extraction.'**
+  String get projectRoleEskadenia;
+
+  /// No description provided for @projectProblemSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Two high-volume consumer apps, a loyalty engine and real-time stories, had to ship on tight timelines.'**
+  String get projectProblemSolutions;
+
+  /// No description provided for @projectSystemSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'A shared Flutter component library, hardware-accelerated camera and video pipelines, dynamic REST models.'**
+  String get projectSystemSolutions;
+
+  /// No description provided for @projectRoleSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the mobile design standards, built the camera pipelines and backend integration.'**
+  String get projectRoleSolutions;
+
+  /// No description provided for @projectProblemFais.
+  ///
+  /// In en, this message translates to:
+  /// **'Multi-step checkout and continuous media streaming had to run without memory leaks or state races.'**
+  String get projectProblemFais;
+
+  /// No description provided for @projectSystemFais.
+  ///
+  /// In en, this message translates to:
+  /// **'End-to-end checkout API integration with idempotency keys, and live issue diagnosis from telemetry.'**
+  String get projectSystemFais;
+
+  /// No description provided for @projectRoleFais.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinated backend and frontend integration and resolved production issues.'**
+  String get projectRoleFais;
+
+  /// No description provided for @playAesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt and decrypt'**
+  String get playAesTitle;
+
+  /// No description provided for @playAesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-256-CBC with a key derived from your password by PBKDF2. Everything runs in your browser.'**
+  String get playAesIntro;
+
+  /// No description provided for @playAesMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get playAesMessage;
+
+  /// No description provided for @playAesPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get playAesPassword;
+
+  /// No description provided for @playAesEncrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt'**
+  String get playAesEncrypt;
+
+  /// No description provided for @playAesDecryptWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrypt with password'**
+  String get playAesDecryptWith;
+
+  /// No description provided for @playAesDecrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrypt'**
+  String get playAesDecrypt;
+
+  /// No description provided for @playAesIv.
+  ///
+  /// In en, this message translates to:
+  /// **'IV'**
+  String get playAesIv;
+
+  /// No description provided for @playAesCipher.
+  ///
+  /// In en, this message translates to:
+  /// **'Ciphertext'**
+  String get playAesCipher;
+
+  /// No description provided for @playAesPlain.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrypted text'**
+  String get playAesPlain;
+
+  /// No description provided for @playAesWrongKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong key: the padding is invalid, so decryption stops.'**
+  String get playAesWrongKey;
+
+  /// No description provided for @playAesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'CBC hides the message but does not detect tampering. Real systems add a MAC or use an AEAD mode such as GCM.'**
+  String get playAesNote;
+
+  /// No description provided for @playApduTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart-card exchange'**
+  String get playApduTitle;
+
+  /// No description provided for @playApduIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'An ISO 7816 command APDU and the card\'s reply, byte by byte. The card here is simulated.'**
+  String get playApduIntro;
+
+  /// No description provided for @playApduSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select application'**
+  String get playApduSelect;
+
+  /// No description provided for @playApduRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Read 16 bytes'**
+  String get playApduRead;
+
+  /// No description provided for @playApduUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Select unknown application'**
+  String get playApduUnknown;
+
+  /// No description provided for @playApduBadClass.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupported class'**
+  String get playApduBadClass;
+
+  /// No description provided for @playApduCommand.
+  ///
+  /// In en, this message translates to:
+  /// **'Command'**
+  String get playApduCommand;
+
+  /// No description provided for @playApduResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Response'**
+  String get playApduResponse;
+
+  /// No description provided for @playApduData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get playApduData;
+
+  /// No description provided for @playApduStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get playApduStatus;
+
+  /// No description provided for @playApduNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulation. The status words are real ISO 7816-4 codes.'**
+  String get playApduNote;
+
+  /// No description provided for @apduSw9000.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get apduSw9000;
+
+  /// No description provided for @apduSw6A82.
+  ///
+  /// In en, this message translates to:
+  /// **'File or application not found'**
+  String get apduSw6A82;
+
+  /// No description provided for @apduSw6E00.
+  ///
+  /// In en, this message translates to:
+  /// **'Class not supported'**
+  String get apduSw6E00;
+
+  /// No description provided for @playChanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform channel message'**
+  String get playChanTitle;
+
+  /// No description provided for @playChanIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'A Flutter to Kotlin call is serialised into bytes before it crosses the boundary. These are the real bytes Flutter\'s standard codec produces.'**
+  String get playChanIntro;
+
+  /// No description provided for @playChanMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get playChanMethod;
+
+  /// No description provided for @playChanTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout (ms)'**
+  String get playChanTimeout;
+
+  /// No description provided for @playChanBytes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bytes on the wire'**
+  String playChanBytes(int count);
+
+  /// No description provided for @playChanDecoded.
+  ///
+  /// In en, this message translates to:
+  /// **'Decoded on the native side'**
+  String get playChanDecoded;
+
+  /// No description provided for @playChanNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Encoded with StandardMethodCodec.'**
+  String get playChanNote;
+
+  /// No description provided for @aboutTryIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Try it in the Playground'**
+  String get aboutTryIt;
+
+  /// No description provided for @traceOpenPlayground.
+  ///
+  /// In en, this message translates to:
+  /// **'Run these layers yourself'**
+  String get traceOpenPlayground;
+
+  /// No description provided for @engBlueprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Architecture blueprint'**
+  String get engBlueprint;
+
+  /// No description provided for @engTiers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tiers'**
+  String engTiers(int count);
+
+  /// No description provided for @engSwipeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe or tap to switch blueprints ({current} of {total})'**
+  String engSwipeHint(int current, int total);
+
+  /// No description provided for @engTryDemos.
+  ///
+  /// In en, this message translates to:
+  /// **'Try the NFC, crypto and sync demos'**
+  String get engTryDemos;
+
+  /// No description provided for @aboutStoryShort.
+  ///
+  /// In en, this message translates to:
+  /// **'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.'**
+  String get aboutStoryShort;
+
+  /// No description provided for @engTabArchitectures.
+  ///
+  /// In en, this message translates to:
+  /// **'Architectures'**
+  String get engTabArchitectures;
+
+  /// No description provided for @engTabCapabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Capabilities'**
+  String get engTabCapabilities;
 }
 
 class _AppLocalizationsDelegate

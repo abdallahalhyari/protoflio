@@ -19,7 +19,7 @@ class SpecSheetCard extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
 
   /// Border and row-rule colour in light mode. The intro keeps its own
-  /// palette, so it passes `IntroColors.slate200`.
+  /// palette, so it passes `AppColors.ink200`.
   final Color lightLineColor;
 
   @override

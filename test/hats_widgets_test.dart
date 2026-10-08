@@ -101,7 +101,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('ROLE 03 / 06'), findsOneWidget);
+      expect(find.text('Role 03 / 06'), findsOneWidget);
 
       await tester.tap(find.text('Previous'));
       await tester.pumpAndSettle();

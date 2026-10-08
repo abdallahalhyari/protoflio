@@ -14,6 +14,7 @@ class RetryingAssetImage extends StatefulWidget {
     this.path, {
     super.key,
     this.fit,
+    this.alignment = Alignment.center,
     this.cacheWidth,
     this.cacheHeight,
     this.filterQuality = FilterQuality.medium,
@@ -24,6 +25,7 @@ class RetryingAssetImage extends StatefulWidget {
 
   final String path;
   final BoxFit? fit;
+  final Alignment alignment;
   final int? cacheWidth;
   final int? cacheHeight;
   final FilterQuality filterQuality;
@@ -68,6 +70,7 @@ class _RetryingAssetImageState extends State<RetryingAssetImage> {
         widget.path,
         key: ValueKey(_attempt),
         fit: widget.fit,
+        alignment: widget.alignment,
         cacheWidth: widget.cacheWidth,
         cacheHeight: widget.cacheHeight,
         filterQuality: widget.filterQuality,

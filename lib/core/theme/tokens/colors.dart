@@ -23,18 +23,18 @@ class AppColors {
   static const Color lightSurface = paper;
 
   // Dark canvas: the same card stock printed in issuer ink, not obsidian.
-  static const Color darkSurface = Color(0xFF16243B);
-  static const Color darkSurfaceElevated = Color(0xFF1C2C46);
-  static const Color darkCard = Color(0xFF1F3049);
+  static const Color darkSurface = Color(0xFF0E141C);
+  static const Color darkSurfaceElevated = Color(0xFF151D28);
+  static const Color darkCard = Color(0xFF111923);
 
   // Ambient background stage tokens
   static const Color stageLightStart = Color(0xFFFAFBFD);
   static const Color stageLightMid = Color(0xFFF0F3F6);
   static const Color stageLightEnd = Color(0xFFE8ECEF);
 
-  static const Color stageDarkStart = Color(0xFF142238);
-  static const Color stageDarkMid = Color(0xFF18273F);
-  static const Color stageDarkEnd = Color(0xFF152238);
+  static const Color stageDarkStart = Color(0xFF0D131B);
+  static const Color stageDarkMid = Color(0xFF0B1018);
+  static const Color stageDarkEnd = Color(0xFF090E14);
 
   // Hat palette — the six perspective cards. Muted so they read as inks
   // printed on the same stock; 90% alpha so the card gradient shows.
@@ -62,9 +62,9 @@ class AppColors {
   static const Color signalDeep = Color(0xFF93321F); // text on paper (6.6:1)
 
   // Dark bg variants — layered issuer-ink tones.
-  static const Color darkCanvas = Color(0xFF18273F);
-  static const Color darkCanvasElevated = Color(0xFF22344F);
-  static const Color darkNight = Color(0xFF152238);
+  static const Color darkCanvas = Color(0xFF0B1018);
+  static const Color darkCanvasElevated = Color(0xFF151D28);
+  static const Color darkNight = Color(0xFF080D13);
 
   // The HTML boot screen's background (web/index.html, #boot-loader).
   // Flutter's own loading screen repeats it so the two never flash
@@ -73,7 +73,7 @@ class AppColors {
   static const Color bootEdge = ink950;
 
   // Modal surface — opaque fill for full-screen dialogs.
-  static const Color darkModal = Color(0xFF1A2940);
+  static const Color darkModal = Color(0xFF0F1620);
 
   // Semantic status tokens. Aliases to the three hues so a rebrand
   // cascades. Use these for indicators instead of raw accents.
@@ -137,7 +137,7 @@ class AppColors {
   static const Color ink700 = Color(0xFF34425A);
   static const Color ink800 = Color(0xFF24324A);
   static const Color ink900 = Color(0xFF1B2A41); // issuer ink
-  static const Color ink950 = Color(0xFF121D2F);
+  static const Color ink950 = Color(0xFF0B1018);
 
   // Neutral shadow tokens — `shadowSoft` for resting cards,
   // `shadowMedium` under lifted surfaces. Ink-tinted, never coloured.

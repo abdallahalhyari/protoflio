@@ -88,7 +88,10 @@ class ArchitectureDiagramCard extends StatelessWidget {
                 ),
               ),
               child: Text(
-                ltrAlways(context, '${topic.diagramSteps.length} TIERS'),
+                ltrAlways(
+                    context,
+                    AppLocalizations.of(context)!
+                        .engTiers(topic.diagramSteps.length)),
                 style: TextStyle(
                   color: accentText,
                   fontSize: AppTypography.label,

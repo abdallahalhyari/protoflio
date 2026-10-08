@@ -31,9 +31,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Contact'), findsOneWidget);
-      expect(find.text("Tell me what you're building."), findsOneWidget);
+      expect(find.text("Have a difficult mobile problem?"), findsOneWidget);
       expect(
-        find.textContaining("I'm looking for a senior mobile role"),
+        find.textContaining('I am looking for a senior mobile role'),
         findsOneWidget,
       );
     });

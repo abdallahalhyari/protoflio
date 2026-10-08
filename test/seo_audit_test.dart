@@ -39,7 +39,7 @@ void main() {
       );
       expect(
         service.titleForHash('about'),
-        'Perspectives · Abdallah Alhyari',
+        'About · Abdallah Alhyari',
       );
       expect(
         service.titleForHash('contact'),
