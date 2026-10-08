@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,6 +59,39 @@ void main() {
       final mono = File('fonts/ShareTechMono-Regular.ttf');
       expect(mono.existsSync(), isTrue);
       expect(mono.lengthSync(), lessThanOrEqualTo(48 * 1024));
+    });
+
+    // A character none of the bundled fonts has makes the web engine fetch
+    // a Noto fallback from Google and then lay out all the text again: the
+    // intro's "→" did that on every visit, a blocking task on phones.
+    test('Every character in the copy is in a bundled font', () {
+      final covered = <int>{
+        for (final font in [
+          'fonts/ReadexPro.ttf',
+          'fonts/ShareTechMono-Regular.ttf',
+          'fonts/Tenada.ttf',
+        ])
+          ..._cmapCodePoints(File(font).readAsBytesSync()),
+      };
+      final missing = <String>{};
+      for (final arb in Directory('lib/l10n')
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.arb'))) {
+        final copy = jsonDecode(arb.readAsStringSync()) as Map<String, dynamic>;
+        for (final entry in copy.entries) {
+          if (entry.key.startsWith('@') || entry.value is! String) continue;
+          for (final rune in (entry.value as String).runes) {
+            // Line breaks and bidi marks are never drawn.
+            if (rune < 0x20 || (rune >= 0x200B && rune <= 0x200F)) continue;
+            if (!covered.contains(rune)) {
+              missing.add('U+${rune.toRadixString(16).toUpperCase()} '
+                  '${String.fromCharCode(rune)} in ${arb.path} ${entry.key}');
+            }
+          }
+        }
+      }
+      expect(missing, isEmpty);
     });
   });
 
@@ -203,4 +238,52 @@ void main() {
           isTrue);
     });
   });
+}
+
+/// The code points a TrueType font maps, from its cmap format 4 and 12
+/// subtables.
+Set<int> _cmapCodePoints(Uint8List bytes) {
+  final data = ByteData.sublistView(bytes);
+  var cmap = -1;
+  for (var i = 0; i < data.getUint16(4); i++) {
+    final record = 12 + i * 16;
+    if (String.fromCharCodes(bytes, record, record + 4) == 'cmap') {
+      cmap = data.getUint32(record + 8);
+    }
+  }
+  expect(cmap, isNot(-1), reason: 'font has no cmap table');
+  final points = <int>{};
+  for (var i = 0; i < data.getUint16(cmap + 2); i++) {
+    final sub = cmap + data.getUint32(cmap + 4 + i * 8 + 4);
+    switch (data.getUint16(sub)) {
+      case 4:
+        final segments = data.getUint16(sub + 6) ~/ 2;
+        final ends = sub + 14;
+        final starts = ends + segments * 2 + 2;
+        final deltas = starts + segments * 2;
+        final offsets = deltas + segments * 2;
+        for (var s = 0; s < segments; s++) {
+          final start = data.getUint16(starts + s * 2);
+          final end = data.getUint16(ends + s * 2);
+          final delta = data.getUint16(deltas + s * 2);
+          final offset = data.getUint16(offsets + s * 2);
+          for (var c = start; c <= end && c != 0xFFFF; c++) {
+            final glyph = offset == 0
+                ? (c + delta) & 0xFFFF
+                : data.getUint16(offsets + s * 2 + offset + (c - start) * 2);
+            if (glyph != 0) points.add(c);
+          }
+        }
+      case 12:
+        for (var g = 0; g < data.getUint32(sub + 12); g++) {
+          final group = sub + 16 + g * 12;
+          for (var c = data.getUint32(group);
+              c <= data.getUint32(group + 4);
+              c++) {
+            points.add(c);
+          }
+        }
+    }
+  }
+  return points;
 }
