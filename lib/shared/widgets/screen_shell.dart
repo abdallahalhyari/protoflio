@@ -100,11 +100,13 @@ class AppScreenShell extends StatelessWidget {
         (!wide && reserveBottomNav) ? kBottomNavReserve : 0.0;
 
     final side = sideInset(context, maxWidth, hPad: hPad);
+    // On phones the page-progress rail floats at the trailing edge; a few
+    // extra pixels there keep body copy from running underneath it.
     final shellPadding = padding ??
-        EdgeInsets.fromLTRB(
+        EdgeInsetsDirectional.fromSTEB(
           side,
           verticalPadding + topExtra,
-          side,
+          wide ? side : side + 8,
           verticalPadding + mobileBottomExtra,
         );
 
