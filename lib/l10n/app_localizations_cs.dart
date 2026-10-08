@@ -1504,4 +1504,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get aboutTryIt => 'Vyzkoušet na hřišti';
+
+  @override
+  String get traceOpenPlayground => 'Vyzkoušejte tyto vrstvy sami';
 }

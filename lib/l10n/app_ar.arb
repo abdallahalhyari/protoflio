@@ -440,5 +440,6 @@
   "playChanBytes": "{count} بايت على السلك",
   "playChanDecoded": "بعد فك الترميز في الجانب الأصلي",
   "playChanNote": "مرمَّز بـ StandardMethodCodec.",
-  "aboutTryIt": "جرّبه في ساحة التجارب"
+  "aboutTryIt": "جرّبه في ساحة التجارب",
+  "traceOpenPlayground": "شغّل هذه الطبقات بنفسك"
 }

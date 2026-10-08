@@ -440,5 +440,6 @@
   "playChanBytes": "{count} bajtů na drátě",
   "playChanDecoded": "Dekódováno na nativní straně",
   "playChanNote": "Zakódováno pomocí StandardMethodCodec.",
-  "aboutTryIt": "Vyzkoušet na hřišti"
+  "aboutTryIt": "Vyzkoušet na hřišti",
+  "traceOpenPlayground": "Vyzkoušejte tyto vrstvy sami"
 }

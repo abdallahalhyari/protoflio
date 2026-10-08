@@ -1490,4 +1490,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get aboutTryIt => 'جرّبه في ساحة التجارب';
+
+  @override
+  String get traceOpenPlayground => 'شغّل هذه الطبقات بنفسك';
 }

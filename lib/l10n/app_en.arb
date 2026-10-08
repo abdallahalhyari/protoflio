@@ -670,5 +670,6 @@
   },
   "playChanDecoded": "Decoded on the native side",
   "playChanNote": "Encoded with StandardMethodCodec.",
-  "aboutTryIt": "Try it in the Playground"
+  "aboutTryIt": "Try it in the Playground",
+  "traceOpenPlayground": "Run these layers yourself"
 }

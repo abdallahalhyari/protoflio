@@ -1502,4 +1502,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutTryIt => 'Try it in the Playground';
+
+  @override
+  String get traceOpenPlayground => 'Run these layers yourself';
 }

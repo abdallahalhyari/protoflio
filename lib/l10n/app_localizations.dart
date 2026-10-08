@@ -2745,6 +2745,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try it in the Playground'**
   String get aboutTryIt;
+
+  /// No description provided for @traceOpenPlayground.
+  ///
+  /// In en, this message translates to:
+  /// **'Run these layers yourself'**
+  String get traceOpenPlayground;
 }
 
 class _AppLocalizationsDelegate

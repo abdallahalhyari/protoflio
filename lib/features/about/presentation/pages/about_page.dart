@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/about/presentation/about_navigation.dart';
 import 'package:profile/features/about/presentation/widgets/aes_demo.dart';
 import 'package:profile/features/about/presentation/widgets/apdu_demo.dart';
 import 'package:profile/features/about/presentation/widgets/channel_demo.dart';
@@ -30,6 +31,27 @@ class _AboutPageState extends State<AboutPage>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    aboutTabRequest.addListener(_consumeRequest);
+    // A request made before this page was built (it loads lazily).
+    WidgetsBinding.instance.addPostFrameCallback((_) => _consumeRequest());
+  }
+
+  @override
+  void dispose() {
+    aboutTabRequest.removeListener(_consumeRequest);
+    super.dispose();
+  }
+
+  void _consumeRequest() {
+    final requested = aboutTabRequest.value;
+    if (requested == null || !mounted) return;
+    aboutTabRequest.value = null;
+    setState(() => _tab = requested.clamp(0, 2));
+  }
 
   @override
   Widget build(BuildContext context) {

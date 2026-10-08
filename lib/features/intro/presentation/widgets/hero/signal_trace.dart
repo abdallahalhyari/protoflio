@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/about/presentation/about_navigation.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
@@ -407,7 +409,9 @@ class _SignalTraceState extends State<SignalTrace>
             ),
           ),
           const SizedBox(height: 12),
-          Row(
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
             children: [
               OutlinedButton(
                 onPressed: running ? null : _replay,
@@ -427,6 +431,21 @@ class _SignalTraceState extends State<SignalTrace>
                   style: const TextStyle(
                     fontSize: AppTypography.body,
                     fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  SoundService.instance.playClick();
+                  aboutTabRequest.value = 2;
+                  HomeController.maybeOf(context)?.goTo(5);
+                },
+                child: Text(
+                  l10n.traceOpenPlayground,
+                  style: TextStyle(
+                    fontSize: AppTypography.body,
+                    fontWeight: FontWeight.w600,
+                    color: context.mutedText,
                   ),
                 ),
               ),
