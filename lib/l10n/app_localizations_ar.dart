@@ -1381,4 +1381,113 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get expLblImpact => 'الأثر';
+
+  @override
+  String get playAesTitle => 'التشفير وفك التشفير';
+
+  @override
+  String get playAesIntro =>
+      'AES-256-CBC بمفتاح مشتق من كلمة المرور عبر PBKDF2. كل شيء يعمل في متصفحك.';
+
+  @override
+  String get playAesMessage => 'الرسالة';
+
+  @override
+  String get playAesPassword => 'كلمة المرور';
+
+  @override
+  String get playAesEncrypt => 'تشفير';
+
+  @override
+  String get playAesDecryptWith => 'فك التشفير بكلمة المرور';
+
+  @override
+  String get playAesDecrypt => 'فك التشفير';
+
+  @override
+  String get playAesIv => 'IV';
+
+  @override
+  String get playAesCipher => 'النص المشفّر';
+
+  @override
+  String get playAesPlain => 'النص بعد فك التشفير';
+
+  @override
+  String get playAesWrongKey =>
+      'مفتاح خاطئ: الحشو غير صالح لذا يتوقف فك التشفير.';
+
+  @override
+  String get playAesNote =>
+      'CBC يخفي الرسالة لكنه لا يكشف العبث. الأنظمة الحقيقية تضيف MAC أو تستخدم وضع AEAD مثل GCM.';
+
+  @override
+  String get playApduTitle => 'تبادل مع البطاقة الذكية';
+
+  @override
+  String get playApduIntro =>
+      'أمر APDU وفق ISO 7816 ورد البطاقة، بايتاً بايتاً. البطاقة هنا محاكاة.';
+
+  @override
+  String get playApduSelect => 'تحديد التطبيق';
+
+  @override
+  String get playApduRead => 'قراءة 16 بايت';
+
+  @override
+  String get playApduUnknown => 'تحديد تطبيق غير معروف';
+
+  @override
+  String get playApduBadClass => 'صنف غير مدعوم';
+
+  @override
+  String get playApduCommand => 'الأمر';
+
+  @override
+  String get playApduResponse => 'الرد';
+
+  @override
+  String get playApduData => 'البيانات';
+
+  @override
+  String get playApduStatus => 'الحالة';
+
+  @override
+  String get playApduNote => 'محاكاة. كلمات الحالة رموز ISO 7816-4 حقيقية.';
+
+  @override
+  String get apduSw9000 => 'نجاح';
+
+  @override
+  String get apduSw6A82 => 'الملف أو التطبيق غير موجود';
+
+  @override
+  String get apduSw6E00 => 'الصنف غير مدعوم';
+
+  @override
+  String get playChanTitle => 'رسالة قناة المنصة';
+
+  @override
+  String get playChanIntro =>
+      'يُسلسَل استدعاء من Flutter إلى Kotlin إلى بايتات قبل عبور الحدّ. هذه هي البايتات الحقيقية التي ينتجها المرمّز القياسي في Flutter.';
+
+  @override
+  String get playChanMethod => 'الدالة';
+
+  @override
+  String get playChanTimeout => 'المهلة (مللي ثانية)';
+
+  @override
+  String playChanBytes(int count) {
+    return '$count بايت على السلك';
+  }
+
+  @override
+  String get playChanDecoded => 'بعد فك الترميز في الجانب الأصلي';
+
+  @override
+  String get playChanNote => 'مرمَّز بـ StandardMethodCodec.';
+
+  @override
+  String get aboutTryIt => 'جرّبه في ساحة التجارب';
 }

@@ -1394,4 +1394,114 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get expLblImpact => 'Dopad';
+
+  @override
+  String get playAesTitle => 'Šifrování a dešifrování';
+
+  @override
+  String get playAesIntro =>
+      'AES-256-CBC s klíčem odvozeným z vašeho hesla přes PBKDF2. Vše běží ve vašem prohlížeči.';
+
+  @override
+  String get playAesMessage => 'Zpráva';
+
+  @override
+  String get playAesPassword => 'Heslo';
+
+  @override
+  String get playAesEncrypt => 'Zašifrovat';
+
+  @override
+  String get playAesDecryptWith => 'Dešifrovat heslem';
+
+  @override
+  String get playAesDecrypt => 'Dešifrovat';
+
+  @override
+  String get playAesIv => 'IV';
+
+  @override
+  String get playAesCipher => 'Šifrový text';
+
+  @override
+  String get playAesPlain => 'Dešifrovaný text';
+
+  @override
+  String get playAesWrongKey =>
+      'Špatný klíč: výplň je neplatná, dešifrování se zastaví.';
+
+  @override
+  String get playAesNote =>
+      'CBC zprávu skryje, ale nepozná úpravu. Skutečné systémy přidávají MAC nebo používají režim AEAD, například GCM.';
+
+  @override
+  String get playApduTitle => 'Výměna s čipovou kartou';
+
+  @override
+  String get playApduIntro =>
+      'Příkaz APDU podle ISO 7816 a odpověď karty, bajt po bajtu. Karta je zde simulovaná.';
+
+  @override
+  String get playApduSelect => 'Vybrat aplikaci';
+
+  @override
+  String get playApduRead => 'Přečíst 16 bajtů';
+
+  @override
+  String get playApduUnknown => 'Vybrat neznámou aplikaci';
+
+  @override
+  String get playApduBadClass => 'Nepodporovaná třída';
+
+  @override
+  String get playApduCommand => 'Příkaz';
+
+  @override
+  String get playApduResponse => 'Odpověď';
+
+  @override
+  String get playApduData => 'Data';
+
+  @override
+  String get playApduStatus => 'Stav';
+
+  @override
+  String get playApduNote =>
+      'Simulace. Stavová slova jsou skutečné kódy ISO 7816-4.';
+
+  @override
+  String get apduSw9000 => 'Úspěch';
+
+  @override
+  String get apduSw6A82 => 'Soubor nebo aplikace nenalezena';
+
+  @override
+  String get apduSw6E00 => 'Třída není podporována';
+
+  @override
+  String get playChanTitle => 'Zpráva platformního kanálu';
+
+  @override
+  String get playChanIntro =>
+      'Volání z Flutteru do Kotlinu se před překročením hranice serializuje na bajty. Toto jsou skutečné bajty standardního kodeku Flutteru.';
+
+  @override
+  String get playChanMethod => 'Metoda';
+
+  @override
+  String get playChanTimeout => 'Časový limit (ms)';
+
+  @override
+  String playChanBytes(int count) {
+    return '$count bajtů na drátě';
+  }
+
+  @override
+  String get playChanDecoded => 'Dekódováno na nativní straně';
+
+  @override
+  String get playChanNote => 'Zakódováno pomocí StandardMethodCodec.';
+
+  @override
+  String get aboutTryIt => 'Vyzkoušet na hřišti';
 }

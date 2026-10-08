@@ -2541,6 +2541,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Impact'**
   String get expLblImpact;
+
+  /// No description provided for @playAesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt and decrypt'**
+  String get playAesTitle;
+
+  /// No description provided for @playAesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'AES-256-CBC with a key derived from your password by PBKDF2. Everything runs in your browser.'**
+  String get playAesIntro;
+
+  /// No description provided for @playAesMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get playAesMessage;
+
+  /// No description provided for @playAesPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get playAesPassword;
+
+  /// No description provided for @playAesEncrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt'**
+  String get playAesEncrypt;
+
+  /// No description provided for @playAesDecryptWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrypt with password'**
+  String get playAesDecryptWith;
+
+  /// No description provided for @playAesDecrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrypt'**
+  String get playAesDecrypt;
+
+  /// No description provided for @playAesIv.
+  ///
+  /// In en, this message translates to:
+  /// **'IV'**
+  String get playAesIv;
+
+  /// No description provided for @playAesCipher.
+  ///
+  /// In en, this message translates to:
+  /// **'Ciphertext'**
+  String get playAesCipher;
+
+  /// No description provided for @playAesPlain.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrypted text'**
+  String get playAesPlain;
+
+  /// No description provided for @playAesWrongKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong key: the padding is invalid, so decryption stops.'**
+  String get playAesWrongKey;
+
+  /// No description provided for @playAesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'CBC hides the message but does not detect tampering. Real systems add a MAC or use an AEAD mode such as GCM.'**
+  String get playAesNote;
+
+  /// No description provided for @playApduTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart-card exchange'**
+  String get playApduTitle;
+
+  /// No description provided for @playApduIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'An ISO 7816 command APDU and the card\'s reply, byte by byte. The card here is simulated.'**
+  String get playApduIntro;
+
+  /// No description provided for @playApduSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select application'**
+  String get playApduSelect;
+
+  /// No description provided for @playApduRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Read 16 bytes'**
+  String get playApduRead;
+
+  /// No description provided for @playApduUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Select unknown application'**
+  String get playApduUnknown;
+
+  /// No description provided for @playApduBadClass.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupported class'**
+  String get playApduBadClass;
+
+  /// No description provided for @playApduCommand.
+  ///
+  /// In en, this message translates to:
+  /// **'Command'**
+  String get playApduCommand;
+
+  /// No description provided for @playApduResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Response'**
+  String get playApduResponse;
+
+  /// No description provided for @playApduData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get playApduData;
+
+  /// No description provided for @playApduStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get playApduStatus;
+
+  /// No description provided for @playApduNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulation. The status words are real ISO 7816-4 codes.'**
+  String get playApduNote;
+
+  /// No description provided for @apduSw9000.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get apduSw9000;
+
+  /// No description provided for @apduSw6A82.
+  ///
+  /// In en, this message translates to:
+  /// **'File or application not found'**
+  String get apduSw6A82;
+
+  /// No description provided for @apduSw6E00.
+  ///
+  /// In en, this message translates to:
+  /// **'Class not supported'**
+  String get apduSw6E00;
+
+  /// No description provided for @playChanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform channel message'**
+  String get playChanTitle;
+
+  /// No description provided for @playChanIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'A Flutter to Kotlin call is serialised into bytes before it crosses the boundary. These are the real bytes Flutter\'s standard codec produces.'**
+  String get playChanIntro;
+
+  /// No description provided for @playChanMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get playChanMethod;
+
+  /// No description provided for @playChanTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout (ms)'**
+  String get playChanTimeout;
+
+  /// No description provided for @playChanBytes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bytes on the wire'**
+  String playChanBytes(int count);
+
+  /// No description provided for @playChanDecoded.
+  ///
+  /// In en, this message translates to:
+  /// **'Decoded on the native side'**
+  String get playChanDecoded;
+
+  /// No description provided for @playChanNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Encoded with StandardMethodCodec.'**
+  String get playChanNote;
+
+  /// No description provided for @aboutTryIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Try it in the Playground'**
+  String get aboutTryIt;
 }
 
 class _AppLocalizationsDelegate

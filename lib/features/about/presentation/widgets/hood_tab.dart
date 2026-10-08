@@ -6,7 +6,9 @@ import 'package:profile/features/about/presentation/widgets/about_card.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 class _Capability {
-  const _Capability(this.mono, this.title, this.tag, this.detail, this.where);
+  const _Capability(this.mono, this.title, this.tag, this.detail, this.where,
+      {this.hasDemo = false});
+  final bool hasDemo;
   final String mono;
   final String title;
   final String tag;
@@ -17,9 +19,12 @@ class _Capability {
 /// "Under the hood": the kinds of problem I solve. Hover or tap a
 /// capability to read what it means and where I used it.
 class HoodTab extends StatefulWidget {
-  const HoodTab({super.key, required this.isDesktop});
+  const HoodTab({super.key, required this.isDesktop, this.onTryDemo});
 
   final bool isDesktop;
+
+  /// Opens the Playground, for the capabilities that have a live demo.
+  final VoidCallback? onTryDemo;
 
   @override
   State<HoodTab> createState() => _HoodTabState();
@@ -35,9 +40,11 @@ class _HoodTabState extends State<HoodTab> {
 
     final items = [
       _Capability('ISO 7816 · APDU', l10n.hoodNfcTitle, l10n.hoodNfcTag,
-          l10n.hoodNfcDetail, l10n.hoodNfcWhere),
+          l10n.hoodNfcDetail, l10n.hoodNfcWhere,
+          hasDemo: true),
       _Capability('RSA · AES · PBKDF2', l10n.hoodCryptoTitle,
-          l10n.hoodCryptoTag, l10n.hoodCryptoDetail, l10n.hoodCryptoWhere),
+          l10n.hoodCryptoTag, l10n.hoodCryptoDetail, l10n.hoodCryptoWhere,
+          hasDemo: true),
       _Capability(
           'WorkManager',
           l10n.hoodBackgroundTitle,
@@ -45,9 +52,11 @@ class _HoodTabState extends State<HoodTab> {
           l10n.hoodBackgroundDetail,
           l10n.hoodBackgroundWhere),
       _Capability('queue · retry · sync', l10n.hoodOfflineTitle,
-          l10n.hoodOfflineTag, l10n.hoodOfflineDetail, l10n.hoodOfflineWhere),
+          l10n.hoodOfflineTag, l10n.hoodOfflineDetail, l10n.hoodOfflineWhere,
+          hasDemo: true),
       _Capability('MethodChannel', l10n.hoodNativeTitle, l10n.hoodNativeTag,
-          l10n.hoodNativeDetail, l10n.hoodNativeWhere),
+          l10n.hoodNativeDetail, l10n.hoodNativeWhere,
+          hasDemo: true),
       _Capability(
           'HIS · ERP · LMS',
           l10n.hoodEnterpriseTitle,
@@ -169,6 +178,13 @@ class _HoodTabState extends State<HoodTab> {
                 color: context.onSurface,
               ),
             ),
+            if (sel.hasDemo && widget.onTryDemo != null) ...[
+              const SizedBox(height: AppSpacing.md),
+              OutlinedButton(
+                onPressed: widget.onTryDemo,
+                child: Text(l10n.aboutTryIt),
+              ),
+            ],
           ],
         ),
       ),

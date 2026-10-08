@@ -1392,4 +1392,114 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expLblImpact => 'Impact';
+
+  @override
+  String get playAesTitle => 'Encrypt and decrypt';
+
+  @override
+  String get playAesIntro =>
+      'AES-256-CBC with a key derived from your password by PBKDF2. Everything runs in your browser.';
+
+  @override
+  String get playAesMessage => 'Message';
+
+  @override
+  String get playAesPassword => 'Password';
+
+  @override
+  String get playAesEncrypt => 'Encrypt';
+
+  @override
+  String get playAesDecryptWith => 'Decrypt with password';
+
+  @override
+  String get playAesDecrypt => 'Decrypt';
+
+  @override
+  String get playAesIv => 'IV';
+
+  @override
+  String get playAesCipher => 'Ciphertext';
+
+  @override
+  String get playAesPlain => 'Decrypted text';
+
+  @override
+  String get playAesWrongKey =>
+      'Wrong key: the padding is invalid, so decryption stops.';
+
+  @override
+  String get playAesNote =>
+      'CBC hides the message but does not detect tampering. Real systems add a MAC or use an AEAD mode such as GCM.';
+
+  @override
+  String get playApduTitle => 'Smart-card exchange';
+
+  @override
+  String get playApduIntro =>
+      'An ISO 7816 command APDU and the card\'s reply, byte by byte. The card here is simulated.';
+
+  @override
+  String get playApduSelect => 'Select application';
+
+  @override
+  String get playApduRead => 'Read 16 bytes';
+
+  @override
+  String get playApduUnknown => 'Select unknown application';
+
+  @override
+  String get playApduBadClass => 'Unsupported class';
+
+  @override
+  String get playApduCommand => 'Command';
+
+  @override
+  String get playApduResponse => 'Response';
+
+  @override
+  String get playApduData => 'Data';
+
+  @override
+  String get playApduStatus => 'Status';
+
+  @override
+  String get playApduNote =>
+      'Simulation. The status words are real ISO 7816-4 codes.';
+
+  @override
+  String get apduSw9000 => 'Success';
+
+  @override
+  String get apduSw6A82 => 'File or application not found';
+
+  @override
+  String get apduSw6E00 => 'Class not supported';
+
+  @override
+  String get playChanTitle => 'Platform channel message';
+
+  @override
+  String get playChanIntro =>
+      'A Flutter to Kotlin call is serialised into bytes before it crosses the boundary. These are the real bytes Flutter\'s standard codec produces.';
+
+  @override
+  String get playChanMethod => 'Method';
+
+  @override
+  String get playChanTimeout => 'Timeout (ms)';
+
+  @override
+  String playChanBytes(int count) {
+    return '$count bytes on the wire';
+  }
+
+  @override
+  String get playChanDecoded => 'Decoded on the native side';
+
+  @override
+  String get playChanNote => 'Encoded with StandardMethodCodec.';
+
+  @override
+  String get aboutTryIt => 'Try it in the Playground';
 }

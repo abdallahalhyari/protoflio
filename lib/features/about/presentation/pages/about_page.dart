@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/about/presentation/widgets/aes_demo.dart';
+import 'package:profile/features/about/presentation/widgets/apdu_demo.dart';
+import 'package:profile/features/about/presentation/widgets/channel_demo.dart';
 import 'package:profile/features/about/presentation/widgets/hood_tab.dart';
 import 'package:profile/features/about/presentation/widgets/key_derivation_demo.dart';
 import 'package:profile/features/about/presentation/widgets/offline_sync_demo.dart';
@@ -43,24 +46,11 @@ class _AboutPageState extends State<AboutPage>
 
     final body = switch (_tab) {
       0 => ProfileTab(isDesktop: isDesktop),
-      1 => HoodTab(isDesktop: isDesktop),
-      _ => isDesktop
-          ? const Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: KeyDerivationDemo()),
-                SizedBox(width: AppSpacing.lg),
-                Expanded(child: OfflineSyncDemo()),
-              ],
-            )
-          : const Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                KeyDerivationDemo(),
-                SizedBox(height: AppSpacing.md),
-                OfflineSyncDemo(),
-              ],
-            ),
+      1 => HoodTab(
+          isDesktop: isDesktop,
+          onTryDemo: () => setState(() => _tab = 2),
+        ),
+      _ => const _PlaygroundGrid(),
     };
 
     return ScrollableAppScreenShell(
@@ -101,5 +91,48 @@ class _AboutPageState extends State<AboutPage>
         ],
       ),
     );
+  }
+}
+
+/// The five demos: two columns on wide screens, one column otherwise.
+class _PlaygroundGrid extends StatelessWidget {
+  const _PlaygroundGrid();
+
+  @override
+  Widget build(BuildContext context) {
+    const gap = AppSpacing.lg;
+    final demos = <Widget>[
+      const ChannelDemo(),
+      const ApduDemo(),
+      const KeyDerivationDemo(),
+      const AesDemo(),
+      const OfflineSyncDemo(),
+    ];
+    return LayoutBuilder(builder: (context, c) {
+      final cols = c.maxWidth >= 900 ? 2 : 1;
+      // Independent columns, so a tall demo does not leave a hole beside it.
+      final columns = [
+        for (var i = 0; i < cols; i++)
+          [for (var j = i; j < demos.length; j += cols) demos[j]],
+      ];
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (var i = 0; i < columns.length; i++) ...[
+            if (i > 0) const SizedBox(width: gap),
+            Expanded(
+              child: Column(
+                children: [
+                  for (var j = 0; j < columns[i].length; j++) ...[
+                    if (j > 0) const SizedBox(height: gap),
+                    columns[i][j],
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ],
+      );
+    });
   }
 }

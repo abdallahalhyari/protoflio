@@ -629,5 +629,46 @@
   "projectRoleFais": "Coordinated backend and frontend integration and resolved production issues.",
   "navAvailable": "Available for opportunities",
   "expLblChallenge": "Challenge",
-  "expLblImpact": "Impact"
+  "expLblImpact": "Impact",
+  "playAesTitle": "Encrypt and decrypt",
+  "playAesIntro": "AES-256-CBC with a key derived from your password by PBKDF2. Everything runs in your browser.",
+  "playAesMessage": "Message",
+  "playAesPassword": "Password",
+  "playAesEncrypt": "Encrypt",
+  "playAesDecryptWith": "Decrypt with password",
+  "playAesDecrypt": "Decrypt",
+  "playAesIv": "IV",
+  "playAesCipher": "Ciphertext",
+  "playAesPlain": "Decrypted text",
+  "playAesWrongKey": "Wrong key: the padding is invalid, so decryption stops.",
+  "playAesNote": "CBC hides the message but does not detect tampering. Real systems add a MAC or use an AEAD mode such as GCM.",
+  "playApduTitle": "Smart-card exchange",
+  "playApduIntro": "An ISO 7816 command APDU and the card's reply, byte by byte. The card here is simulated.",
+  "playApduSelect": "Select application",
+  "playApduRead": "Read 16 bytes",
+  "playApduUnknown": "Select unknown application",
+  "playApduBadClass": "Unsupported class",
+  "playApduCommand": "Command",
+  "playApduResponse": "Response",
+  "playApduData": "Data",
+  "playApduStatus": "Status",
+  "playApduNote": "Simulation. The status words are real ISO 7816-4 codes.",
+  "apduSw9000": "Success",
+  "apduSw6A82": "File or application not found",
+  "apduSw6E00": "Class not supported",
+  "playChanTitle": "Platform channel message",
+  "playChanIntro": "A Flutter to Kotlin call is serialised into bytes before it crosses the boundary. These are the real bytes Flutter's standard codec produces.",
+  "playChanMethod": "Method",
+  "playChanTimeout": "Timeout (ms)",
+  "playChanBytes": "{count} bytes on the wire",
+  "@playChanBytes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playChanDecoded": "Decoded on the native side",
+  "playChanNote": "Encoded with StandardMethodCodec.",
+  "aboutTryIt": "Try it in the Playground"
 }
