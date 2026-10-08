@@ -9,7 +9,7 @@ import 'package:profile/shared/utils/bidi.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_cta.dart';
 import 'package:profile/features/projects/presentation/widgets/card/body/project_card_tech_chip.dart';
-import 'package:profile/features/projects/presentation/widgets/card/body/project_card_outcome_line.dart';
+import 'package:profile/features/projects/presentation/widgets/card/body/project_card_figure_line.dart';
 import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_quick_links.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_router.dart';
 
@@ -43,6 +43,7 @@ class CardBodyContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     final outcome = localizedProjectOutcome(loc, project);
+    final figure = localizedProjectFigure(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
     // Only the fixed-height desktop grid needs clamps; cards that size to
     // content show every line instead of cutting the impact mid-sentence.
@@ -85,7 +86,7 @@ class CardBodyContent extends StatelessWidget {
           ),
           child: Text(
             project.name,
-            maxLines: isDesktop ? 1 : 2,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -112,24 +113,14 @@ class CardBodyContent extends StatelessWidget {
         children: [
           titleBlock,
           if (outcome != null) ...[
-            const SizedBox(height: AppSpacing.sm),
-            if (pinFoot)
-              Flexible(
-                child: ClipRect(
-                  child: CardOutcomeLine(
-                    text: outcome,
-                    scheme: scheme,
-                    isDark: isDark,
-                  ),
-                ),
-              )
-            else
-              CardOutcomeLine(
-                text: outcome,
-                scheme: scheme,
-                isDark: isDark,
-                maxLines: null,
-              ),
+            const SizedBox(height: AppSpacing.md),
+            CardFigureLine(
+              value: figure?.value,
+              label: figure?.label ?? outcome,
+              scheme: scheme,
+              isDark: isDark,
+              maxLines: pinFoot ? 3 : null,
+            ),
           ],
           if (pinFoot) const Spacer(),
           const SizedBox(height: AppSpacing.sm),

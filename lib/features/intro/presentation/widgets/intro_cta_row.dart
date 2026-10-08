@@ -15,12 +15,16 @@ class IntroCtaRow extends StatelessWidget {
   final VoidCallback onDownloadResume;
   final VoidCallback onContactMe;
 
+  /// Left-align the rows (cover layout) instead of centring them.
+  final bool alignStart;
+
   const IntroCtaRow({
     super.key,
     required this.isDark,
     required this.onViewWork,
     required this.onDownloadResume,
     required this.onContactMe,
+    this.alignStart = false,
   });
 
   static const String _kEmail = 'alhyariabdallh@gmail.com';
@@ -145,27 +149,16 @@ class IntroCtaRow extends StatelessWidget {
           },
         ),
       ),
-      ConstrainedBox(
-        constraints: BoxConstraints(
-            maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
-        child: _ghostButton(
-          label: loc.contactMe,
-          icon: Icons.send_rounded,
-          color: accent,
-          isDark: isDark,
-          onPressed: () {
-            SoundService.instance.playClick();
-            onContactMe();
-          },
-        ),
-      ),
     ];
     // Narrow phones: one column at a shared width. Centred in a Wrap the
     // three buttons each took their label's width and stacked unevenly.
+    final wrapAlign = alignStart ? WrapAlignment.start : WrapAlignment.center;
     final stackCtas = MediaQuery.sizeOf(context).width < AppBreakpoints.compact;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment:
+          alignStart ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
         if (stackCtas)
           ConstrainedBox(
@@ -184,16 +177,29 @@ class IntroCtaRow extends StatelessWidget {
           Wrap(
             spacing: 12,
             runSpacing: 10,
-            alignment: WrapAlignment.center,
+            alignment: wrapAlign,
             children: ctas,
           ),
         const SizedBox(height: AppSpacing.smd),
         Wrap(
           spacing: 12,
           runSpacing: 8,
-          alignment: WrapAlignment.center,
+          alignment: wrapAlign,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                  minHeight: 40),
+              child: _linkButton(
+                label: loc.contactMe,
+                icon: Icons.send_rounded,
+                onPressed: () {
+                  SoundService.instance.playClick();
+                  onContactMe();
+                },
+              ),
+            ),
             ConstrainedBox(
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.sizeOf(context).width * 0.9,

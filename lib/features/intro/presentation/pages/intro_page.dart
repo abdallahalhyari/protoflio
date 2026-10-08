@@ -1,24 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
-import 'package:profile/features/intro/presentation/widgets/intro_footer_strip.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
-import 'package:profile/features/shell/presentation/widgets/scroll_explore_hint.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_constellation.dart';
 
-import 'package:profile/features/intro/presentation/widgets/intro_proof_row.dart';
-import 'package:profile/features/intro/presentation/widgets/hero/hero_wordmark.dart';
-import 'package:profile/features/intro/presentation/widgets/hero/hero_subline.dart';
-import 'package:profile/features/intro/presentation/widgets/hero/hero_role_block.dart';
+import 'package:profile/features/intro/presentation/widgets/hero/hero_statement.dart';
+import 'package:profile/features/intro/presentation/widgets/hero/hero_credential.dart';
+import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 
-/// Intro reimagined as a premium magazine cover:
-///   [issue strip]      TOP — small caps run + registration marks
-///   ABDALLAH           HERO — outlined Tenada wordmark, full-bleed
-///   ALHYARI • portrait  SUB — solid subline sitting next to a boxed portrait
-///   [role kicker]      MID — role tagline stack over hairline rules
-///   [CTA row]          BODY — 3 CTAs (view work / resume / contact)
-///   [footer strip]     BASE — 3-column masthead footer: location · status · disciplines
+/// Cover: what a recruiter screens for, in one view.
+///   statement   availability, name, role, one sentence, two actions
+///   credential  portrait on card stock with three shipped results
+/// Side by side on desktop, stacked on narrower screens.
 class IntroPage extends StatefulWidget {
   final VoidCallback onScrollDown;
   final VoidCallback? onViewWork;
@@ -40,8 +33,15 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage>
-    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
-  late final AnimationController _rimController;
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+  /// The cover's one scripted entrance. Plays once; revisits stay still.
+  /// Starts at -0.2 so the first beat holds briefly while the loader
+  /// clears; the intervals clamp, so nothing moves until 0.
+  late final AnimationController _reveal = AnimationController(
+    vsync: this,
+    lowerBound: -0.2,
+    duration: AppMotion.coverEntrance * 1.2,
+  );
 
   @override
   bool get wantKeepAlive => true;
@@ -49,29 +49,12 @@ class _IntroPageState extends State<IntroPage>
   @override
   void initState() {
     super.initState();
-    _rimController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 10),
-    );
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (AppMedia.reduceMotion(context)) {
-      _rimController.stop();
-    } else {
-      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
-        _rimController.value = 1.0;
-      } else {
-        _rimController.repeat();
-      }
-    }
+    _reveal.forward();
   }
 
   @override
   void dispose() {
-    _rimController.dispose();
+    _reveal.dispose();
     super.dispose();
   }
 
@@ -81,59 +64,64 @@ class _IntroPageState extends State<IntroPage>
     final size = MediaQuery.sizeOf(context);
     final isWide = AppBreakpoints.isDesktop(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isCompactH = isWide && size.height < 920;
 
-    final body = Column(
+    final statement = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        HeroWordmark(
-            size: size, isDark: isDark, isCompactH: isCompactH, isWide: isWide),
-        SizedBox(
-            height:
-                isCompactH ? 8.0 : (isWide ? AppSpacing.smd : AppSpacing.xs)),
-        HeroSubline(
-            size: size,
-            isWide: isWide,
+        HeroStatement(
+          size: size,
+          isDark: isDark,
+          isWide: isWide,
+          reveal: _reveal,
+        ),
+        SizedBox(height: isWide ? AppSpacing.xl : AppSpacing.lg),
+        HeroStep(
+          animation: _reveal,
+          begin: 0.55,
+          end: 0.95,
+          child: IntroCtaRow(
             isDark: isDark,
-            isCompactH: isCompactH,
-            rimAnimation: _rimController),
-        SizedBox(
-            height:
-                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
-        HeroRoleBlock(size: size, isDark: isDark, isCompactH: isCompactH),
-        SizedBox(
-            height:
-                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
-        IntroCtaRow(
-          isDark: isDark,
-          onViewWork: widget.onViewWork ?? widget.onScrollDown,
-          onDownloadResume: widget.onDownloadResume ?? widget.onScrollDown,
-          onContactMe: widget.onContactMe ?? widget.onScrollDown,
-        ),
-        SizedBox(
-            height:
-                isCompactH ? 12.0 : (isWide ? AppSpacing.lg : AppSpacing.md)),
-        IntroProofRow(isDark: isDark, isWide: isWide),
-        SizedBox(
-            height:
-                isCompactH ? 14.0 : (isWide ? AppSpacing.xl : AppSpacing.lg)),
-        IntroFooterStrip(
-          isDark: isDark,
-          onContactMe: widget.onContactMe,
-          onViewWork: widget.onViewWork,
-        ),
-        if (isWide && !widget.isContinuousMobile && size.height >= 1000) ...[
-          const SizedBox(height: AppSpacing.md),
-          ScrollExploreHint(
-            onTap: () {
-              SoundService.instance.playClick();
-              widget.onScrollDown();
-            },
+            alignStart: true,
+            onViewWork: widget.onViewWork ?? widget.onScrollDown,
+            onDownloadResume: widget.onDownloadResume ?? widget.onScrollDown,
+            onContactMe: widget.onContactMe ?? widget.onScrollDown,
           ),
-        ],
+        ),
       ],
     );
+    final credential = HeroCredential(
+      isDark: isDark,
+      isWide: isWide,
+      reveal: _reveal,
+      onContactMe: widget.onContactMe,
+    );
+
+    final body = isWide
+        ? Row(
+            children: [
+              Expanded(flex: 6, child: statement),
+              const SizedBox(width: AppSpacing.xl),
+              Expanded(
+                flex: 4,
+                child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: credential,
+                ),
+              ),
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              statement,
+              const SizedBox(height: AppSpacing.xl),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: credential,
+              ),
+            ],
+          );
 
     return IntroConstellation(
       isDark: isDark,

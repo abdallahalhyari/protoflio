@@ -996,4 +996,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coverGranted => 'Access granted';
+
+  @override
+  String get introPitch =>
+      'I build production Flutter and Android apps: offline-first sync, NFC smart cards, secure auth. I stay through release and after.';
+
+  @override
+  String get projectFigureValueNatHealth => '400,000+';
+
+  @override
+  String get projectFigureLabelNatHealth =>
+      'beneficiaries served across Jordan, Palestine and Iraq. Paper claims replaced by NFC cards.';
+
+  @override
+  String get projectFigureValueEskadenia => '35%';
+
+  @override
+  String get projectFigureLabelEskadenia =>
+      'fewer crashes, with a steady 60 FPS on dense hospital data tables.';
+
+  @override
+  String get projectFigureValueSolutions => '4.7+';
+
+  @override
+  String get projectFigureLabelSolutions =>
+      'star store rating. Both apps shipped on time.';
+
+  @override
+  String get heroFactAvailableLabel => 'Available';
+
+  @override
+  String get heroFactAvailableValue =>
+      'Remote or part-time now. On-site in Brno from February 2027.';
+
+  @override
+  String get heroFactPermitLabel => 'Work permit';
+
+  @override
+  String get heroFactPermitValue =>
+      'Not needed in Czechia while I study full-time.';
+
+  @override
+  String get heroFactBasedLabel => 'Based in';
+
+  @override
+  String get heroFactBasedValue => 'Amman, Jordan';
+
+  @override
+  String get heroFactFocusLabel => 'Focus';
+
+  @override
+  String get heroFactFocusValue =>
+      'NFC smart cards, offline-first sync, secure authentication';
+
+  @override
+  String get heroFactLanguagesLabel => 'Languages';
+
+  @override
+  String get heroFactLanguagesValue =>
+      'English (professional), Arabic (native)';
+
+  @override
+  String get heroFactStudyLabel => 'Studying';
+
+  @override
+  String get heroFactStudyValue =>
+      'M.Sc. Open Informatics, Mendel University, from February 2027';
 }

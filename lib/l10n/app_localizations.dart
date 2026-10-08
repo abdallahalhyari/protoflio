@@ -1851,6 +1851,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Access granted'**
   String get coverGranted;
+
+  /// No description provided for @introPitch.
+  ///
+  /// In en, this message translates to:
+  /// **'I build production Flutter and Android apps: offline-first sync, NFC smart cards, secure auth. I stay through release and after.'**
+  String get introPitch;
+
+  /// No description provided for @projectFigureValueNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'400,000+'**
+  String get projectFigureValueNatHealth;
+
+  /// No description provided for @projectFigureLabelNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'beneficiaries served across Jordan, Palestine and Iraq. Paper claims replaced by NFC cards.'**
+  String get projectFigureLabelNatHealth;
+
+  /// No description provided for @projectFigureValueEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'35%'**
+  String get projectFigureValueEskadenia;
+
+  /// No description provided for @projectFigureLabelEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'fewer crashes, with a steady 60 FPS on dense hospital data tables.'**
+  String get projectFigureLabelEskadenia;
+
+  /// No description provided for @projectFigureValueSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'4.7+'**
+  String get projectFigureValueSolutions;
+
+  /// No description provided for @projectFigureLabelSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'star store rating. Both apps shipped on time.'**
+  String get projectFigureLabelSolutions;
+
+  /// No description provided for @heroFactAvailableLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get heroFactAvailableLabel;
+
+  /// No description provided for @heroFactAvailableValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote or part-time now. On-site in Brno from February 2027.'**
+  String get heroFactAvailableValue;
+
+  /// No description provided for @heroFactPermitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Work permit'**
+  String get heroFactPermitLabel;
+
+  /// No description provided for @heroFactPermitValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Not needed in Czechia while I study full-time.'**
+  String get heroFactPermitValue;
+
+  /// No description provided for @heroFactBasedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Based in'**
+  String get heroFactBasedLabel;
+
+  /// No description provided for @heroFactBasedValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Amman, Jordan'**
+  String get heroFactBasedValue;
+
+  /// No description provided for @heroFactFocusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus'**
+  String get heroFactFocusLabel;
+
+  /// No description provided for @heroFactFocusValue.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC smart cards, offline-first sync, secure authentication'**
+  String get heroFactFocusValue;
+
+  /// No description provided for @heroFactLanguagesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get heroFactLanguagesLabel;
+
+  /// No description provided for @heroFactLanguagesValue.
+  ///
+  /// In en, this message translates to:
+  /// **'English (professional), Arabic (native)'**
+  String get heroFactLanguagesValue;
+
+  /// No description provided for @heroFactStudyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Studying'**
+  String get heroFactStudyLabel;
+
+  /// No description provided for @heroFactStudyValue.
+  ///
+  /// In en, this message translates to:
+  /// **'M.Sc. Open Informatics, Mendel University, from February 2027'**
+  String get heroFactStudyValue;
 }
 
 class _AppLocalizationsDelegate

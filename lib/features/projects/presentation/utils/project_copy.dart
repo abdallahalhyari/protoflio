@@ -33,3 +33,24 @@ String localizedProjectDomain(AppLocalizations loc, String domain) {
     _ => domain,
   };
 }
+
+/// The one number a card leads with, taken from the case study. Null when
+/// a project has no measured result to quote.
+({String value, String label})? localizedProjectFigure(
+    AppLocalizations loc, Project project) {
+  return switch (project.company) {
+    'NatHealth' => (
+        value: loc.projectFigureValueNatHealth,
+        label: loc.projectFigureLabelNatHealth,
+      ),
+    'ESKADENIA Software' => (
+        value: loc.projectFigureValueEskadenia,
+        label: loc.projectFigureLabelEskadenia,
+      ),
+    'Solutions Now IT' => (
+        value: loc.projectFigureValueSolutions,
+        label: loc.projectFigureLabelSolutions,
+      ),
+    _ => null,
+  };
+}

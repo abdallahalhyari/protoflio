@@ -996,4 +996,70 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get coverGranted => 'Přístup povolen';
+
+  @override
+  String get introPitch =>
+      'Vyvíjím produkční aplikace ve Flutteru a Androidu: offline synchronizaci, NFC čipové karty, bezpečné přihlášení. Zůstávám u nich i po vydání.';
+
+  @override
+  String get projectFigureValueNatHealth => '400 000+';
+
+  @override
+  String get projectFigureLabelNatHealth =>
+      'pojištěnců v Jordánsku, Palestině a Iráku. Papírové nároky nahradily NFC karty.';
+
+  @override
+  String get projectFigureValueEskadenia => '35 %';
+
+  @override
+  String get projectFigureLabelEskadenia =>
+      'méně pádů a stabilních 60 FPS v hustých nemocničních tabulkách.';
+
+  @override
+  String get projectFigureValueSolutions => '4,7+';
+
+  @override
+  String get projectFigureLabelSolutions =>
+      'hvězdičky v obchodě. Obě aplikace vydány včas.';
+
+  @override
+  String get heroFactAvailableLabel => 'Dostupnost';
+
+  @override
+  String get heroFactAvailableValue =>
+      'Nyní na dálku nebo na částečný úvazek. V Brně na místě od února 2027.';
+
+  @override
+  String get heroFactPermitLabel => 'Pracovní povolení';
+
+  @override
+  String get heroFactPermitValue =>
+      'Není potřeba v Česku, dokud studuji na plný úvazek.';
+
+  @override
+  String get heroFactBasedLabel => 'Působiště';
+
+  @override
+  String get heroFactBasedValue => 'Ammán, Jordánsko';
+
+  @override
+  String get heroFactFocusLabel => 'Zaměření';
+
+  @override
+  String get heroFactFocusValue =>
+      'NFC čipové karty, offline synchronizace, bezpečné přihlášení';
+
+  @override
+  String get heroFactLanguagesLabel => 'Jazyky';
+
+  @override
+  String get heroFactLanguagesValue =>
+      'angličtina (profesionální), arabština (rodilý mluvčí)';
+
+  @override
+  String get heroFactStudyLabel => 'Studium';
+
+  @override
+  String get heroFactStudyValue =>
+      'M.Sc. Open Informatics, Mendelova univerzita, od února 2027';
 }

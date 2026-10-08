@@ -316,6 +316,14 @@
     }
     #consent-banner button.primary { background: #B08D3C; border-color: #B08D3C; color: #121D2F; }
     #consent-banner button:focus-visible { outline: 2px solid #E3CB8E; outline-offset: 2px; }
+    /* Wide screens: tuck into the corner above the shortcuts chip so the
+       first view of the page (portrait, folio, nav) stays clear. */
+    @media (min-width: 900px) {
+      #consent-banner {
+        left: auto; right: 16px; bottom: 64px; transform: none;
+        flex-wrap: nowrap; max-width: 420px;
+      }
+    }
     #boot-loader.hidden {
       opacity: 0;
       transform: scale(1.025);
@@ -767,9 +775,9 @@
       function read(){ try { return localStorage.getItem(KEY); } catch(_) { return null; } }
       function save(v){ try { localStorage.setItem(KEY, v); } catch(_) {} }
       var COPY = {
-        en: { label: 'Analytics consent', text: 'This site uses Google Analytics to count visits. OK to enable it?', no: 'Decline', yes: 'Allow' },
-        ar: { label: 'الموافقة على التحليلات', text: 'يستخدم هذا الموقع Google Analytics لإحصاء الزيارات. هل توافق على تفعيله؟', no: 'رفض', yes: 'سماح' },
-        cs: { label: 'Souhlas s analytikou', text: 'Tento web používá Google Analytics k počítání návštěv. Souhlasíte s jeho použitím?', no: 'Odmítnout', yes: 'Povolit' }
+        en: { label: 'Analytics consent', text: 'Count visits with Google Analytics?', no: 'Decline', yes: 'Allow' },
+        ar: { label: 'الموافقة على التحليلات', text: 'هل تسمح بإحصاء الزيارات عبر Google Analytics؟', no: 'رفض', yes: 'سماح' },
+        cs: { label: 'Souhlas s analytikou', text: 'Počítat návštěvy přes Google Analytics?', no: 'Odmítnout', yes: 'Povolit' }
       };
       // Same precedence as the app: ?lang= > saved app locale > browser.
       function lang(){

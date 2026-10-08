@@ -35,6 +35,10 @@ class AppMotion {
   /// motion.
   static const Duration coverRead = Duration(milliseconds: 3400);
 
+  /// The cover's scripted entrance: availability, name rising line by
+  /// line, role and pitch, actions, then the portrait. Plays once.
+  static const Duration coverEntrance = Duration(milliseconds: 1300);
+
   /// Idle bob of the floating card on the cover.
   static const Duration coverFloat = Duration(seconds: 6);
   static const Duration cardFlip =

@@ -988,4 +988,69 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get coverGranted => 'تم السماح بالدخول';
+
+  @override
+  String get introPitch =>
+      'أبني تطبيقات Flutter وAndroid جاهزة للإنتاج: مزامنة تعمل دون اتصال، وبطاقات NFC ذكية، ومصادقة آمنة. وأبقى معها بعد الإطلاق.';
+
+  @override
+  String get projectFigureValueNatHealth => '+400,000';
+
+  @override
+  String get projectFigureLabelNatHealth =>
+      'مستفيد في الأردن وفلسطين والعراق. حلّت بطاقات NFC محل المطالبات الورقية.';
+
+  @override
+  String get projectFigureValueEskadenia => '35%';
+
+  @override
+  String get projectFigureLabelEskadenia =>
+      'أعطال أقل، مع 60 إطاراً في الثانية بثبات على جداول بيانات المستشفيات الكثيفة.';
+
+  @override
+  String get projectFigureValueSolutions => '+4.7';
+
+  @override
+  String get projectFigureLabelSolutions =>
+      'نجمة تقييم في المتجر. أُطلق التطبيقان في موعدهما.';
+
+  @override
+  String get heroFactAvailableLabel => 'التوفر';
+
+  @override
+  String get heroFactAvailableValue =>
+      'عن بُعد أو بدوام جزئي الآن. حضورياً في برنو من فبراير 2027.';
+
+  @override
+  String get heroFactPermitLabel => 'تصريح العمل';
+
+  @override
+  String get heroFactPermitValue =>
+      'غير مطلوب في التشيك أثناء دراستي بدوام كامل.';
+
+  @override
+  String get heroFactBasedLabel => 'مقيم في';
+
+  @override
+  String get heroFactBasedValue => 'عمّان، الأردن';
+
+  @override
+  String get heroFactFocusLabel => 'التخصص';
+
+  @override
+  String get heroFactFocusValue =>
+      'بطاقات NFC الذكية، والمزامنة دون اتصال، والمصادقة الآمنة';
+
+  @override
+  String get heroFactLanguagesLabel => 'اللغات';
+
+  @override
+  String get heroFactLanguagesValue => 'الإنجليزية (مهنية)، العربية (لغة أم)';
+
+  @override
+  String get heroFactStudyLabel => 'الدراسة';
+
+  @override
+  String get heroFactStudyValue =>
+      'ماجستير المعلوماتية المفتوحة، جامعة مندل، من فبراير 2027';
 }
