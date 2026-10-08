@@ -64,9 +64,7 @@ class CardBodyContent extends StatelessWidget {
               fontSize: AppTypography.label,
               fontWeight: FontWeight.w600,
               height: 1.35,
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.62)
-                  : AppColors.ink500,
+              color: context.mutedText,
             ),
           ),
           const SizedBox(height: 6),
@@ -94,9 +92,7 @@ class CardBodyContent extends StatelessWidget {
         Text(
           ltrContent(context, localizedProjectTagline(loc, project)),
           style: TextStyle(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.75)
-                : AppColors.ink600,
+            color: context.mutedText,
             fontSize: isDesktop ? 13 : 12,
             height: 1.4,
           ),

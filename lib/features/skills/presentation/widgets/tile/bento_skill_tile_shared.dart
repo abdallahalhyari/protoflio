@@ -44,17 +44,13 @@ class FlipHintPill extends StatelessWidget {
             Icon(
               Icons.touch_app_rounded,
               size: 11,
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.6)
-                  : AppColors.ink500,
+              color: context.mutedText,
             ),
             const SizedBox(width: 4),
             Text(
               AppLocalizations.of(context)?.flipHintTap ?? 'Tap to flip',
               style: TextStyle(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.6)
-                    : AppColors.ink600,
+                color: context.mutedText,
                 fontSize: isDesktop ? 9.5 : 10,
                 fontWeight: FontWeight.w800,
               ),
@@ -63,9 +59,7 @@ class FlipHintPill extends StatelessWidget {
             Icon(
               Icons.refresh_rounded,
               size: 11,
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.6)
-                  : AppColors.ink500,
+              color: context.mutedText,
             ),
           ],
         ),

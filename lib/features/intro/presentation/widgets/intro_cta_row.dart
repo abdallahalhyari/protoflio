@@ -119,6 +119,72 @@ class IntroCtaRow extends StatelessWidget {
     );
   }
 
+  /// Tinted pill for the two quiet actions under the main buttons.
+  Widget _pill(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required String semanticsLabel,
+    required Color accent,
+    required VoidCallback onTap,
+  }) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
+      child: Semantics(
+        button: true,
+        excludeSemantics: true,
+        label: semanticsLabel,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              SoundService.instance.playClick();
+              onTap();
+            },
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+              decoration: BoxDecoration(
+                color: accent.withValues(alpha: isDark ? 0.12 : 0.08),
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                border: Border.all(
+                  color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
+                  width: 1.2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: accent.withValues(alpha: isDark ? 0.16 : 0.08),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(icon, size: 15, color: accent),
+                    const SizedBox(width: 6),
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.3,
+                        color: isDark ? Colors.white : AppColors.ink900,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
@@ -210,135 +276,25 @@ class IntroCtaRow extends StatelessWidget {
                 onPressed: () => _copyEmail(context),
               ),
             ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                  minHeight: 40),
-              child: Semantics(
-                button: true,
-                label: '30-second introduction video and executive summary',
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      SoundService.instance.playClick();
-                      showQuickProfile(
-                        context,
-                        onDownloadResume: onDownloadResume,
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(AppRadius.pill),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 7),
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? accent.withValues(alpha: 0.12)
-                            : accent.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                        border: Border.all(
-                          color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
-                          width: 1.2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                accent.withValues(alpha: isDark ? 0.16 : 0.08),
-                            blurRadius: 10,
-                          ),
-                        ],
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.play_circle_fill_rounded,
-                              size: 15,
-                              color: accent,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              '30-second intro',
-                              style: TextStyle(
-                                fontSize: AppTypography.label,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 0.3,
-                                color: isDark ? Colors.white : AppColors.ink900,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+            _pill(
+              context,
+              icon: Icons.play_circle_fill_rounded,
+              label: '30-second intro',
+              semanticsLabel:
+                  '30-second introduction video and executive summary',
+              accent: accent,
+              onTap: () => showQuickProfile(
+                context,
+                onDownloadResume: onDownloadResume,
               ),
             ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                  minHeight: 40),
-              child: Semantics(
-                button: true,
-                excludeSemantics: true,
-                label: 'Recruiter vCard QR',
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      SoundService.instance.playClick();
-                      VCardQrDialog.show(context);
-                    },
-                    borderRadius: BorderRadius.circular(AppRadius.pill),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 7),
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? accent.withValues(alpha: 0.12)
-                            : accent.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                        border: Border.all(
-                          color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
-                          width: 1.2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                accent.withValues(alpha: isDark ? 0.16 : 0.08),
-                            blurRadius: 10,
-                          ),
-                        ],
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.qr_code_2_rounded,
-                              size: 15,
-                              color: accent,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              'vCard QR',
-                              style: TextStyle(
-                                fontSize: AppTypography.label,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 0.3,
-                                color: isDark ? Colors.white : AppColors.ink900,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            _pill(
+              context,
+              icon: Icons.qr_code_2_rounded,
+              label: 'vCard QR',
+              semanticsLabel: 'Recruiter vCard QR',
+              accent: accent,
+              onTap: () => VCardQrDialog.show(context),
             ),
           ],
         ),

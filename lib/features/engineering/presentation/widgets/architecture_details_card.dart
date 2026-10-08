@@ -64,8 +64,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
         ltrContent(context, topic.summary),
         style: TextStyle(
           fontSize: AppTypography.body,
-          color:
-              isDark ? Colors.white.withValues(alpha: 0.92) : AppColors.ink800,
+          color: context.onSurface,
           height: 1.5,
           fontWeight: FontWeight.w500,
         ),
@@ -114,9 +113,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
             Text(
               ltrContent(context, topic.whyChosen),
               style: TextStyle(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.94)
-                    : AppColors.ink900,
+                color: context.onSurface,
                 fontSize: AppTypography.label,
                 height: 1.5,
                 fontWeight: FontWeight.w500,
@@ -173,9 +170,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 child: Text(
                   ltrContent(context, item),
                   style: TextStyle(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.90)
-                        : AppColors.ink800,
+                    color: context.onSurface,
                     fontSize: AppTypography.label,
                     height: 1.45,
                     fontWeight: FontWeight.w500,

@@ -63,9 +63,7 @@ class HatDeckHeader extends StatelessWidget {
               Text(
                 loc.hatsHeaderSubtitle,
                 style: TextStyle(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.75)
-                      : AppColors.ink600,
+                  color: context.mutedText,
                   fontSize: AppTypography.label,
                   fontStyle: FontStyle.italic,
                 ),

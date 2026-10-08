@@ -67,9 +67,7 @@ class ProjectDossierCard extends StatelessWidget {
             Text(
               value,
               style: TextStyle(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.95)
-                    : AppColors.ink800,
+                color: context.onSurface,
                 fontSize: AppTypography.label,
                 height: 1.45,
               ),
@@ -131,9 +129,7 @@ class ProjectHighlightRow extends StatelessWidget {
                   TextSpan(
                     text: rest.trim(),
                     style: TextStyle(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.9)
-                          : AppColors.ink700,
+                      color: context.onSurface,
                       fontSize: AppTypography.label,
                       height: 1.35,
                     ),

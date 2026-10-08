@@ -162,11 +162,7 @@ class _DomainChipState extends State<_DomainChip> {
 
     final textColor = isSelected
         ? context.adaptiveAccentText(scheme.primary)
-        : (isInteractive
-            ? (context.onSurface)
-            : (isDark
-                ? Colors.white.withValues(alpha: 0.85)
-                : AppColors.ink700));
+        : context.onSurface;
 
     return Semantics(
       button: true,
