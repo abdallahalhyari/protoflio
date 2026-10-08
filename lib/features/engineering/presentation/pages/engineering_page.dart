@@ -186,7 +186,7 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                   );
                 },
               ),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.sectionContent),
               if (widget.isContinuousMobile)
                 BlocBuilder<ArchitectureSimulatorBloc,
                     ArchitectureSimulatorState>(

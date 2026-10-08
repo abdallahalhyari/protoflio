@@ -83,7 +83,6 @@ class _SkillsPageViewState extends State<_SkillsPageView>
   @override
   Widget build(BuildContext context) {
     super.build(context); // AutomaticKeepAliveClientMixin requirement
-    final scheme = Theme.of(context).colorScheme;
     final isDesktop = AppBreakpoints.isDesktop(context);
 
     return BlocBuilder<SkillsFilterBloc, SkillsFilterState>(
@@ -118,7 +117,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SkillsHeader(isDesktop: isDesktop),
-              const SizedBox(height: AppSpacing.smd),
+              const SizedBox(height: AppSpacing.sectionControls),
               SkillSearchBar(
                 controller: _searchController,
                 onChanged: (val) {
@@ -136,7 +135,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                 filteredCount: displayedSkills.length,
                 isDesktop: isDesktop,
               ),
-              const SizedBox(height: AppSpacing.smd),
+              const SizedBox(height: AppSpacing.sm),
               SkillCategoryFilters(
                 categories: _categories,
                 selectedCategory: selectedCategory,
@@ -148,11 +147,7 @@ class _SkillsPageViewState extends State<_SkillsPageView>
                 isDesktop: isDesktop,
                 counts: state.categoryCounts,
               ),
-              const SizedBox(height: AppSpacing.smd),
-              Container(
-                  height: 1,
-                  color: scheme.onSurface.withValues(alpha: AppAlpha.hover)),
-              const SizedBox(height: AppSpacing.md),
+              const SizedBox(height: AppSpacing.sectionContent),
               if (widget.isContinuousMobile)
                 content
               else

@@ -35,7 +35,12 @@ class SkillList extends StatelessWidget {
         for (final entry in groups.entries) ...[
           if (showHeadings)
             Padding(
-              padding: const EdgeInsets.only(top: AppSpacing.md, bottom: 6),
+              // Groups are separated by a full step; the first sits right
+              // under the filters.
+              padding: EdgeInsets.only(
+                top: entry.key == groups.keys.first ? 0 : AppSpacing.lg,
+                bottom: AppSpacing.sm,
+              ),
               child: Text(
                 skillCategoryLabel(l10n, entry.key),
                 style: TextStyle(

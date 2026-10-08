@@ -117,7 +117,7 @@ class _ExperiencePageState extends State<ExperiencePage>
             children: [
               // Header
               ExperienceHeader(isDesktop: isDesktop),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: AppSpacing.sectionContent),
 
               // Timeline Grid
               if (widget.isContinuousMobile)

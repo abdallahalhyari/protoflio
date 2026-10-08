@@ -130,7 +130,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             SliverToBoxAdapter(
               child: _buildHeader(scheme, loc, size, isDesktop),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
+            const SliverToBoxAdapter(
+                child: SizedBox(height: AppSpacing.sectionControls)),
             SliverToBoxAdapter(
               child: BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
                 buildWhen: (prev, curr) =>
@@ -158,7 +159,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                 },
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
+            const SliverToBoxAdapter(
+                child: SizedBox(height: AppSpacing.sectionContent)),
             SliverToBoxAdapter(
               child: BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
                 buildWhen: (prev, curr) =>

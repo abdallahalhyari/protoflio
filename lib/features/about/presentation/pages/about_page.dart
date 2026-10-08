@@ -103,13 +103,15 @@ class _AboutPageState extends State<AboutPage>
               subtitle: l10n.aboutSubtitle,
               isDesktop: isDesktop,
             ),
+            const SizedBox(height: AppSpacing.sm),
             TextTabs(
               labels: tabs,
               selected: _tab,
               accent: gold,
               onSelect: (i) => setState(() => _tab = i),
             ),
-            const SizedBox(height: AppSpacing.lg),
+            // TextTabs carries 8px of its own padding below.
+            const SizedBox(height: AppSpacing.md),
             AnimatedSwitcher(
               duration: AppMotion.switcher,
               child: ConstrainedBox(
