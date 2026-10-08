@@ -2134,12 +2134,6 @@ abstract class AppLocalizations {
   /// **'Stack'**
   String get aboutStackLabel;
 
-  /// No description provided for @aboutStory.
-  ///
-  /// In en, this message translates to:
-  /// **'I started in mobile in 2021, shipping Flutter apps for commerce and media. The work that held my interest was the layer under the UI: native Android, NFC smart cards, cryptography and background sync.\n\nAt NatHealth I lead that work for a claims platform used across Jordan, Palestine and Iraq. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.'**
-  String get aboutStory;
-
   /// No description provided for @aboutHoodHint.
   ///
   /// In en, this message translates to:
@@ -2775,6 +2769,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try the NFC, crypto and sync demos'**
   String get engTryDemos;
+
+  /// No description provided for @aboutStoryShort.
+  ///
+  /// In en, this message translates to:
+  /// **'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.'**
+  String get aboutStoryShort;
+
+  /// No description provided for @aboutJourneyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How the work moved down the stack'**
+  String get aboutJourneyTitle;
+
+  /// No description provided for @aboutJourneyTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Closer to the screen'**
+  String get aboutJourneyTop;
+
+  /// No description provided for @aboutJourneyBottom.
+  ///
+  /// In en, this message translates to:
+  /// **'Closer to the hardware'**
+  String get aboutJourneyBottom;
+
+  /// No description provided for @aboutJourneyFais.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter and Android for commerce checkouts and media streaming.'**
+  String get aboutJourneyFais;
+
+  /// No description provided for @aboutJourneySolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'A shared Flutter component library and camera pipelines for two consumer apps.'**
+  String get aboutJourneySolutions;
+
+  /// No description provided for @aboutJourneyEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Refactored legacy hospital and university apps into modular, testable packages.'**
+  String get aboutJourneyEskadenia;
+
+  /// No description provided for @aboutJourneyNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC smart cards, token security and offline sync for insurance claims.'**
+  String get aboutJourneyNatHealth;
+
+  /// No description provided for @aboutJourneyNow.
+  ///
+  /// In en, this message translates to:
+  /// **'now'**
+  String get aboutJourneyNow;
 }
 
 class _AppLocalizationsDelegate

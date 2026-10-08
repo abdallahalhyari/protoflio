@@ -1160,10 +1160,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutStackLabel => 'Stack';
 
   @override
-  String get aboutStory =>
-      'I started in mobile in 2021, shipping Flutter apps for commerce and media. The work that held my interest was the layer under the UI: native Android, NFC smart cards, cryptography and background sync.\n\nAt NatHealth I lead that work for a claims platform used across Jordan, Palestine and Iraq. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.';
-
-  @override
   String get aboutHoodHint => 'Select a capability to see how I use it.';
 
   @override
@@ -1521,4 +1517,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get engTryDemos => 'Try the NFC, crypto and sync demos';
+
+  @override
+  String get aboutStoryShort =>
+      'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.';
+
+  @override
+  String get aboutJourneyTitle => 'How the work moved down the stack';
+
+  @override
+  String get aboutJourneyTop => 'Closer to the screen';
+
+  @override
+  String get aboutJourneyBottom => 'Closer to the hardware';
+
+  @override
+  String get aboutJourneyFais =>
+      'Flutter and Android for commerce checkouts and media streaming.';
+
+  @override
+  String get aboutJourneySolutions =>
+      'A shared Flutter component library and camera pipelines for two consumer apps.';
+
+  @override
+  String get aboutJourneyEskadenia =>
+      'Refactored legacy hospital and university apps into modular, testable packages.';
+
+  @override
+  String get aboutJourneyNatHealth =>
+      'NFC smart cards, token security and offline sync for insurance claims.';
+
+  @override
+  String get aboutJourneyNow => 'now';
 }

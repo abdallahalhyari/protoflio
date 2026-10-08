@@ -1151,10 +1151,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutStackLabel => 'الأدوات';
 
   @override
-  String get aboutStory =>
-      'بدأت في تطبيقات الهواتف عام 2021 بإطلاق تطبيقات Flutter للتجارة والوسائط. وما أبقى اهتمامي هو الطبقة التي تحت الواجهة: Android الأصلي، وبطاقات NFC الذكية، والتشفير، والمزامنة في الخلفية.\n\nفي NatHealth أقود هذا العمل لمنصة مطالبات تُستخدم في الأردن وفلسطين والعراق. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.';
-
-  @override
   String get aboutHoodHint => 'اختر قدرة لترى كيف أستخدمها.';
 
   @override
@@ -1509,4 +1505,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get engTryDemos => 'جرّب عروض NFC والتشفير والمزامنة';
+
+  @override
+  String get aboutStoryShort =>
+      'بدأت في تطبيقات الهواتف عام 2021. ومنذ ذلك الحين ينتقل عملي باستمرار إلى أسفل الطبقات، من الشاشات إلى طبقات النظام الأصلي والأمان والمزامنة تحتها. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.';
+
+  @override
+  String get aboutJourneyTitle => 'كيف انتقل العمل إلى أسفل الطبقات';
+
+  @override
+  String get aboutJourneyTop => 'أقرب إلى الشاشة';
+
+  @override
+  String get aboutJourneyBottom => 'أقرب إلى العتاد';
+
+  @override
+  String get aboutJourneyFais =>
+      'Flutter وAndroid لعمليات الدفع في التجارة وبث الوسائط.';
+
+  @override
+  String get aboutJourneySolutions =>
+      'مكتبة مكوّنات Flutter مشتركة ومسارات كاميرا لتطبيقين استهلاكيين.';
+
+  @override
+  String get aboutJourneyEskadenia =>
+      'أعدت هيكلة تطبيقات المستشفيات والجامعات القديمة إلى حزم معيارية قابلة للاختبار.';
+
+  @override
+  String get aboutJourneyNatHealth =>
+      'بطاقات NFC الذكية وأمان الرموز والمزامنة دون اتصال لمطالبات التأمين.';
+
+  @override
+  String get aboutJourneyNow => 'الآن';
 }

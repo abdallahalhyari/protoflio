@@ -1160,10 +1160,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get aboutStackLabel => 'Technologie';
 
   @override
-  String get aboutStory =>
-      'V mobilním vývoji jsem začal v roce 2021 s Flutter aplikacemi pro obchod a média. Nejvíc mě drží vrstva pod UI: nativní Android, NFC čipové karty, kryptografie a synchronizace na pozadí.\n\nV NatHealth tuto práci vedu pro platformu nároků používanou v Jordánsku, Palestině a Iráku. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.';
-
-  @override
   String get aboutHoodHint => 'Vyberte schopnost a uvidíte, jak ji používám.';
 
   @override
@@ -1524,4 +1520,36 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get engTryDemos =>
       'Vyzkoušejte ukázky NFC, kryptografie a synchronizace';
+
+  @override
+  String get aboutStoryShort =>
+      'V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.';
+
+  @override
+  String get aboutJourneyTitle => 'Jak se práce posouvala níž v zásobníku';
+
+  @override
+  String get aboutJourneyTop => 'Blíž obrazovce';
+
+  @override
+  String get aboutJourneyBottom => 'Blíž hardwaru';
+
+  @override
+  String get aboutJourneyFais =>
+      'Flutter a Android pro nákupní procesy a streamování médií.';
+
+  @override
+  String get aboutJourneySolutions =>
+      'Sdílená knihovna komponent ve Flutteru a pipeline kamery pro dvě spotřebitelské aplikace.';
+
+  @override
+  String get aboutJourneyEskadenia =>
+      'Refaktoring starších nemocničních a univerzitních aplikací do modulárních, testovatelných balíčků.';
+
+  @override
+  String get aboutJourneyNatHealth =>
+      'NFC čipové karty, zabezpečení tokenů a offline synchronizace pro pojistné nároky.';
+
+  @override
+  String get aboutJourneyNow => 'dosud';
 }

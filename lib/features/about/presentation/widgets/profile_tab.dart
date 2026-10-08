@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/about/presentation/widgets/about_card.dart';
+import 'package:profile/features/about/presentation/widgets/journey.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/utils/career_facts.dart';
 
@@ -93,13 +94,20 @@ class ProfileTab extends StatelessWidget {
 
     final story = ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 560),
-      child: Text(
-        l10n.aboutStory,
-        style: TextStyle(
-          fontSize: AppTypography.lead,
-          height: 1.65,
-          color: context.onSurface.withValues(alpha: 0.88),
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.aboutStoryShort,
+            style: TextStyle(
+              fontSize: AppTypography.lead,
+              height: 1.65,
+              color: context.onSurface.withValues(alpha: 0.88),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const Journey(),
+        ],
       ),
     );
 

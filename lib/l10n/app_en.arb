@@ -541,7 +541,6 @@
   "aboutFocusLabel": "Focus",
   "aboutFocusValue": "Mobile systems, native integration, security, enterprise apps",
   "aboutStackLabel": "Stack",
-  "aboutStory": "I started in mobile in 2021, shipping Flutter apps for commerce and media. The work that held my interest was the layer under the UI: native Android, NFC smart cards, cryptography and background sync.\n\nAt NatHealth I lead that work for a claims platform used across Jordan, Palestine and Iraq. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
   "aboutHoodHint": "Select a capability to see how I use it.",
   "aboutWhereLabel": "Where I used it",
   "hoodNfcTitle": "NFC",
@@ -692,5 +691,14 @@
       }
     }
   },
-  "engTryDemos": "Try the NFC, crypto and sync demos"
+  "engTryDemos": "Try the NFC, crypto and sync demos",
+  "aboutStoryShort": "I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
+  "aboutJourneyTitle": "How the work moved down the stack",
+  "aboutJourneyTop": "Closer to the screen",
+  "aboutJourneyBottom": "Closer to the hardware",
+  "aboutJourneyFais": "Flutter and Android for commerce checkouts and media streaming.",
+  "aboutJourneySolutions": "A shared Flutter component library and camera pipelines for two consumer apps.",
+  "aboutJourneyEskadenia": "Refactored legacy hospital and university apps into modular, testable packages.",
+  "aboutJourneyNatHealth": "NFC smart cards, token security and offline sync for insurance claims.",
+  "aboutJourneyNow": "now"
 }

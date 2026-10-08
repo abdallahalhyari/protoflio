@@ -339,7 +339,6 @@
   "aboutFocusLabel": "Zaměření",
   "aboutFocusValue": "Mobilní systémy, nativní integrace, bezpečnost, podnikové aplikace",
   "aboutStackLabel": "Technologie",
-  "aboutStory": "V mobilním vývoji jsem začal v roce 2021 s Flutter aplikacemi pro obchod a média. Nejvíc mě drží vrstva pod UI: nativní Android, NFC čipové karty, kryptografie a synchronizace na pozadí.\n\nV NatHealth tuto práci vedu pro platformu nároků používanou v Jordánsku, Palestině a Iráku. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.",
   "aboutHoodHint": "Vyberte schopnost a uvidíte, jak ji používám.",
   "aboutWhereLabel": "Kde jsem ji použil",
   "hoodNfcTitle": "NFC",
@@ -445,5 +444,14 @@
   "engBlueprint": "Architektonický plán",
   "engTiers": "Vrstev: {count}",
   "engSwipeHint": "Přejetím nebo klepnutím přepnete plány ({current} z {total})",
-  "engTryDemos": "Vyzkoušejte ukázky NFC, kryptografie a synchronizace"
+  "engTryDemos": "Vyzkoušejte ukázky NFC, kryptografie a synchronizace",
+  "aboutStoryShort": "V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.",
+  "aboutJourneyTitle": "Jak se práce posouvala níž v zásobníku",
+  "aboutJourneyTop": "Blíž obrazovce",
+  "aboutJourneyBottom": "Blíž hardwaru",
+  "aboutJourneyFais": "Flutter a Android pro nákupní procesy a streamování médií.",
+  "aboutJourneySolutions": "Sdílená knihovna komponent ve Flutteru a pipeline kamery pro dvě spotřebitelské aplikace.",
+  "aboutJourneyEskadenia": "Refaktoring starších nemocničních a univerzitních aplikací do modulárních, testovatelných balíčků.",
+  "aboutJourneyNatHealth": "NFC čipové karty, zabezpečení tokenů a offline synchronizace pro pojistné nároky.",
+  "aboutJourneyNow": "dosud"
 }
