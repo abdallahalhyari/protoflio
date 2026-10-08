@@ -51,8 +51,8 @@ class CardHeroImage extends StatelessWidget {
                 );
               },
               child: AnimatedScale(
-                scale: hovered ? 1.08 : 1.0,
-                duration: AppMotion.lg,
+                scale: hovered ? 1.10 : 1.0,
+                duration: AppMotion.ambient,
                 curve: AppMotion.emphasizedDecel,
                 child: Hero(
                   tag: heroTag,
@@ -96,12 +96,35 @@ class CardHeroImage extends StatelessWidget {
             Positioned(
               left: AppSpacing.md,
               bottom: AppSpacing.md,
-              child: Text(
-                project.company,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: AppTypography.label,
-                  fontWeight: FontWeight.w900,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.60),
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.22),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.business_center_rounded,
+                      size: 12,
+                      color: isDark ? AppColors.goldSoft : AppColors.gold,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      project.company,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.3,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

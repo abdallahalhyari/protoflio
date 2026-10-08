@@ -20,6 +20,7 @@ import 'package:profile/features/contact/presentation/widgets/hero_email_card.da
 import 'package:profile/features/contact/presentation/widgets/inquiry_composer_dialog.dart';
 import 'package:profile/features/contact/presentation/widgets/telemetry_bar.dart';
 import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
+import 'package:profile/features/hats/presentation/widgets/hat_bio_strip.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 import 'package:profile/shared/utils/mailto.dart';
@@ -107,6 +108,9 @@ class _ContactPageState extends State<ContactPage>
         const ContactHeader(),
         const SizedBox(height: AppSpacing.md),
         const TelemetryBar(),
+        const SizedBox(height: AppSpacing.xl),
+        // Executive Bio & Professional Profile Summary
+        HatBioStrip(isMobile: !isDesktop),
         const SizedBox(height: AppSpacing.xl),
         // 1. Primary CTA — send email, right up front.
         HeroEmailCard(

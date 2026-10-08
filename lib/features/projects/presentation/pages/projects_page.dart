@@ -179,51 +179,42 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                         );
                       }
 
-                      if (isDesktop) {
-                        const double spacing = AppSpacing.lg;
-                        final double itemWidth =
-                            columnWidth(constraints.maxWidth, 2, spacing);
-                        if (itemWidth <= 0) return const SizedBox.shrink();
-                        final double textScale =
-                            MediaQuery.textScalerOf(context).scale(1);
-                        final double itemHeight =
-                            660 + 160 * (textScale - 1).clamp(0.0, 1.0);
+                      final double textScale =
+                          MediaQuery.textScalerOf(context).scale(1);
+                      final double itemHeight = isDesktop
+                          ? 540 + 160 * (textScale - 1).clamp(0.0, 1.0)
+                          : 500 + 160 * (textScale - 1).clamp(0.0, 1.0);
 
-                        return Wrap(
-                          spacing: spacing,
-                          runSpacing: spacing,
-                          children: [
-                            for (int i = 0; i < filteredProjects.length; i++)
-                              SizedBox(
-                                width: itemWidth,
-                                height: itemHeight,
-                                child: _buildProjectItem(
-                                  project: filteredProjects[i],
-                                  index: i,
-                                  scheme: scheme,
-                                  isDesktop: isDesktop,
-                                  selectedTech: selectedTech,
-                                ),
+                      const double spacing = AppSpacing.lg;
+                      final double itemWidth = isDesktop
+                          ? columnWidth(constraints.maxWidth, 3, spacing)
+                              .clamp(320.0, 400.0)
+                          : constraints.maxWidth * 0.75;
+
+                      return SizedBox(
+                        height: itemHeight,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          // Only pad on mobile since desktop layout is already constrained by maxWidth
+                          padding: EdgeInsets.symmetric(
+                              horizontal: isDesktop ? 0 : AppSpacing.md),
+                          clipBehavior: Clip.none,
+                          itemCount: filteredProjects.length,
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: spacing),
+                          itemBuilder: (context, i) {
+                            return SizedBox(
+                              width: itemWidth,
+                              child: _buildProjectItem(
+                                project: filteredProjects[i],
+                                index: i,
+                                scheme: scheme,
+                                isDesktop: isDesktop,
+                                selectedTech: selectedTech,
                               ),
-                          ],
-                        );
-                      }
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          for (int i = 0; i < filteredProjects.length; i++) ...[
-                            _buildProjectItem(
-                              project: filteredProjects[i],
-                              index: i,
-                              scheme: scheme,
-                              isDesktop: isDesktop,
-                              selectedTech: selectedTech,
-                            ),
-                            if (i < filteredProjects.length - 1)
-                              const SizedBox(height: AppSpacing.md),
-                          ],
-                        ],
+                            );
+                          },
+                        ),
                       );
                     },
                   );

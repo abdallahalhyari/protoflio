@@ -47,10 +47,12 @@ class CardBodyContent extends StatelessWidget {
     final figure = localizedProjectFigure(loc, project);
     final caseCopy = localizedProjectCase(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
-    // Only the fixed-height desktop grid needs clamps; cards that size to
-    // content show every line instead of cutting the impact mid-sentence.
-    final clampLines = pinFoot ? 3 : null;
-    final clampOverflow = pinFoot ? TextOverflow.ellipsis : null;
+    final textScale = MediaQuery.textScalerOf(context).scale(1);
+    final maxCopyLines = pinFoot
+        ? (textScale > 1.3 ? 1 : 2)
+        : (textScale > 1.5 ? 1 : (textScale > 1.2 ? 2 : null));
+    final clampLines = maxCopyLines;
+    final clampOverflow = maxCopyLines != null ? TextOverflow.ellipsis : null;
 
     final titleBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,8 +66,9 @@ class CardBodyContent extends StatelessWidget {
                     ? scheme.primary
                     : AppColors.toAccessibleLightText(scheme.primary))
                 : (context.onSurface),
-            fontSize: isDesktop ? 22 : 18,
+            fontSize: isDesktop ? 26 : 22,
             fontWeight: FontWeight.w900,
+            letterSpacing: -0.5,
             height: 1.1,
           ),
           child: Text(
@@ -75,6 +78,26 @@ class CardBodyContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
+        Wrap(
+          spacing: 6,
+          runSpacing: 4,
+          children: [
+            for (final tag in project.stack.take(isDesktop ? 4 : 3))
+              CardTechTagChip(
+                tag: tag,
+                isSelected: selectedTech == tag,
+                scheme: scheme,
+                isDark: isDark,
+                onTap: onSelectTech != null
+                    ? () {
+                        SoundService.instance.playSelection();
+                        onSelectTech!(tag);
+                      }
+                    : null,
+              ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.md),
         if (caseCopy != null) ...[
           LabeledLine(
               label: loc.projectLblProblem,
@@ -119,57 +142,35 @@ class CardBodyContent extends StatelessWidget {
       ],
     );
 
-    return Padding(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (pinFoot)
-            // Fixed-height grid: the copy takes whatever room the tags and
-            // the call to action leave, clipped rather than overflowing.
-            Expanded(
-              child: ClipRect(
-                child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: middle,
-                ),
+    final Widget content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: pinFoot ? MainAxisSize.max : MainAxisSize.min,
+      children: [
+        if (pinFoot)
+          Expanded(
+            child: ClipRect(
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: middle,
               ),
-            )
-          else
-            middle,
-          const SizedBox(height: AppSpacing.sm),
-          Wrap(
-            spacing: 6,
-            runSpacing: 4,
+            ),
+          )
+        else
+          middle,
+        const SizedBox(height: AppSpacing.xs),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: AlignmentDirectional.centerStart,
+          child: Row(
             children: [
-              for (final tag in project.stack.take(isDesktop ? 4 : 3))
-                CardTechTagChip(
-                  tag: tag,
-                  isSelected: selectedTech == tag,
-                  scheme: scheme,
-                  isDark: isDark,
-                  onTap: onSelectTech != null
-                      ? () {
-                          SoundService.instance.playSelection();
-                          onSelectTech!(tag);
-                        }
-                      : null,
-                ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Row(
-            children: [
-              Expanded(
-                child: ReadCaseStudyCta(
-                  projectName: project.name,
-                  scheme: scheme,
-                  isHovered: isHovered,
-                  isDesktop: isDesktop,
-                  isDark: isDark,
-                  onTap: onOpenStudy,
-                  onFocusChange: onFocusChange,
-                ),
+              ReadCaseStudyCta(
+                projectName: project.name,
+                scheme: scheme,
+                isHovered: isHovered,
+                isDesktop: isDesktop,
+                isDark: isDark,
+                onTap: onOpenStudy,
+                onFocusChange: onFocusChange,
               ),
               if (project.url != null ||
                   project.linkedinUrl != null ||
@@ -183,7 +184,14 @@ class CardBodyContent extends StatelessWidget {
               ],
             ],
           ),
-        ],
+        ),
+      ],
+    );
+
+    return ClipRect(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: content,
       ),
     );
   }

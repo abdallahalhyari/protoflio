@@ -26,13 +26,14 @@ class LabeledLine extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 68,
+            width: 76,
             child: Text(
-              label,
+              label.toUpperCase(),
               style: TextStyle(
                 fontSize: AppTypography.label,
                 height: 1.5,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.2,
                 color: context.mutedText,
               ),
             ),

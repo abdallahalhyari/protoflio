@@ -84,10 +84,11 @@ void main() {
         .pumpWidget(createTestApp(const ProjectsPage(), const Size(400, 800)));
     await tester.pumpAndSettle();
 
-    // Mobile lists every case study; the last one scrolls into view.
-    await tester.scrollUntilVisible(
-        find.text('M-Commerce & Media-Streaming Clients'), 200,
-        scrollable: find.byType(Scrollable).first);
+    // Mobile lists every case study; scroll horizontal ListView to reveal the last project card
+    final listView = find.byType(ListView);
+    await tester.drag(listView, const Offset(-800, 0));
+    await tester.pumpAndSettle();
+
     expect(find.text('M-Commerce & Media-Streaming Clients'), findsOneWidget);
 
     await tester.binding.setSurfaceSize(null);

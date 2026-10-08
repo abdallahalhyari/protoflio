@@ -127,7 +127,8 @@ class _HolographicCardPhysicsState extends State<HolographicCardPhysics>
                                                 Theme.of(context)
                                                     .colorScheme
                                                     .onSurface
-                                                    .withValues(alpha: AppAlpha.hover),
+                                                    .withValues(
+                                                        alpha: AppAlpha.hover),
                                                 Theme.of(context)
                                                     .colorScheme
                                                     .onSurface

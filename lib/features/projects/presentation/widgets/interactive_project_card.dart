@@ -68,7 +68,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
         CaseStudyRouter.slugForCompany(widget.project.company);
 
     return LayoutBuilder(builder: (context, constraints) {
-      final pinFoot = widget.isDesktop && constraints.hasBoundedHeight;
+      final pinFoot = constraints.hasBoundedHeight;
       return RepaintBoundary(
         child: Semantics(
           container: true,
@@ -97,14 +97,14 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                         ? [
                             BoxShadow(
                               color:
-                                  widget.scheme.primary.withValues(alpha: 0.28),
-                              blurRadius: 28,
-                              spreadRadius: 1,
+                                  widget.scheme.primary.withValues(alpha: 0.32),
+                              blurRadius: 32,
+                              spreadRadius: 2,
                             ),
                             BoxShadow(
-                              color: AppColors.teal.withValues(alpha: 0.15),
-                              blurRadius: 36,
-                              spreadRadius: 2,
+                              color: AppColors.teal.withValues(alpha: 0.18),
+                              blurRadius: 48,
+                              spreadRadius: 4,
                             ),
                           ]
                         : [],
