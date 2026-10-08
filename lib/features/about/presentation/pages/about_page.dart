@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:profile/shared/widgets/page_activity.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/about/presentation/about_navigation.dart';
@@ -26,7 +28,27 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, ActivePageFocusMixin {
+  final FocusNode _focusNode = FocusNode(debugLabel: 'AboutFocus');
+
+  // Claims focus when About is the visible page, so left / right switch tabs
+  // and up / down fall through to section navigation.
+  @override
+  FocusNode get pageFocusNode => _focusNode;
+
+  KeyEventResult _onKey(FocusNode node, KeyEvent event) {
+    if (event is! KeyDownEvent) return KeyEventResult.ignored;
+    final k = event.logicalKey;
+    if (k == LogicalKeyboardKey.arrowRight ||
+        k == LogicalKeyboardKey.arrowLeft) {
+      final rtl = Directionality.of(context) == TextDirection.rtl;
+      final forward = (k == LogicalKeyboardKey.arrowRight) != rtl;
+      setState(() => _tab = (_tab + (forward ? 1 : 2)) % 3);
+      return KeyEventResult.handled;
+    }
+    return KeyEventResult.ignored;
+  }
+
   int _tab = 0;
 
   @override
@@ -43,6 +65,7 @@ class _AboutPageState extends State<AboutPage>
   @override
   void dispose() {
     aboutTabRequest.removeListener(_consumeRequest);
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -75,42 +98,46 @@ class _AboutPageState extends State<AboutPage>
       _ => const _PlaygroundGrid(),
     };
 
-    return ScrollableAppScreenShell(
-      maxWidth: kSectionMaxWidth,
-      isContinuousMobile: widget.isContinuousMobile,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SectionMasthead(
-            title: l10n.aboutTitle,
-            subtitle: l10n.aboutSubtitle,
-            isDesktop: isDesktop,
-          ),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              for (var i = 0; i < tabs.length; i++)
-                ChoiceChip(
-                  label: Text(tabs[i]),
-                  selected: _tab == i,
-                  selectedColor: gold.withValues(alpha: 0.18),
-                  onSelected: (_) => setState(() => _tab = i),
-                ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          AnimatedSwitcher(
-            duration: AppMotion.switcher,
-            child: ConstrainedBox(
-              key: ValueKey(_tab),
-              // Same minimum height on every tab, so the header does not
-              // jump when the content is shorter.
-              constraints: const BoxConstraints(minHeight: 460),
-              child: body,
+    return Focus(
+      focusNode: _focusNode,
+      onKeyEvent: _onKey,
+      child: ScrollableAppScreenShell(
+        maxWidth: kSectionMaxWidth,
+        isContinuousMobile: widget.isContinuousMobile,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SectionMasthead(
+              title: l10n.aboutTitle,
+              subtitle: l10n.aboutSubtitle,
+              isDesktop: isDesktop,
             ),
-          ),
-        ],
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (var i = 0; i < tabs.length; i++)
+                  ChoiceChip(
+                    label: Text(tabs[i]),
+                    selected: _tab == i,
+                    selectedColor: gold.withValues(alpha: 0.18),
+                    onSelected: (_) => setState(() => _tab = i),
+                  ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            AnimatedSwitcher(
+              duration: AppMotion.switcher,
+              child: ConstrainedBox(
+                key: ValueKey(_tab),
+                // Same minimum height on every tab, so the header does not
+                // jump when the content is shorter.
+                constraints: const BoxConstraints(minHeight: 460),
+                child: body,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

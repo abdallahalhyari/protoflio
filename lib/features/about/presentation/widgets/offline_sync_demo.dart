@@ -61,7 +61,7 @@ class _OfflineSyncDemoState extends State<OfflineSyncDemo> {
         if (pending.isEmpty) break;
         final claim = pending.first;
         setState(() => claim.state = _ClaimState.sending);
-        await Future<void>.delayed(const Duration(milliseconds: 700));
+        await Future<void>.delayed(AppMotion.xl);
         if (!mounted) return;
         if (!_online) {
           setState(() => claim.state = _ClaimState.queued);

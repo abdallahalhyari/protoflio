@@ -41,8 +41,8 @@ class SkillList extends StatelessWidget {
                 style: TextStyle(
                   fontSize: AppTypography.body,
                   fontWeight: FontWeight.w700,
-                  color: SkillCategoryStyle.getTextColor(
-                      entry.key, scheme, context.isDarkMode),
+                  color: context.adaptiveAccentText(
+                      SkillCategoryStyle.getColor(entry.key, scheme)),
                 ),
               ),
             ),
@@ -58,8 +58,8 @@ class SkillList extends StatelessWidget {
                     width: w,
                     child: _SkillRow(
                       skill: s,
-                      color: SkillCategoryStyle.getTextColor(
-                          s.category, scheme, context.isDarkMode),
+                      color: context.adaptiveAccentText(
+                          SkillCategoryStyle.getColor(s.category, scheme)),
                     ),
                   ),
               ],

@@ -13,8 +13,8 @@ void main() {
     ThemeMode resolve(String url, [String? stored]) =>
         ThemeBloc.resolveInitial(uri: Uri.parse(url), stored: stored);
 
-    test('defaults to light', () {
-      expect(resolve('https://a.app/'), ThemeMode.light);
+    test('defaults to dark', () {
+      expect(resolve('https://a.app/'), ThemeMode.dark);
     });
 
     test('uses the saved choice', () {
@@ -27,9 +27,9 @@ void main() {
       expect(resolve('https://a.app/?theme=DARK', 'light'), ThemeMode.dark);
     });
 
-    test('anything else (including a stale "system") is light', () {
-      expect(resolve('https://a.app/', 'system'), ThemeMode.light);
-      expect(resolve('https://a.app/?theme=sepia'), ThemeMode.light);
+    test('anything else (including a stale "system") is dark', () {
+      expect(resolve('https://a.app/', 'system'), ThemeMode.dark);
+      expect(resolve('https://a.app/?theme=sepia'), ThemeMode.dark);
     });
   });
 

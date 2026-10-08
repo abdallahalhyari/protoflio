@@ -39,11 +39,17 @@ class _SignalTraceState extends State<SignalTrace>
   /// Row height follows the viewport: short screens get tighter rows so
   /// the footer (replay, link) stays in reach.
   double _rowHeight = 66;
+
+  /// Each row is at least [_rowHeight] and grows with its text (large text
+  /// scales, narrow phones). Measured after layout so the packet path and
+  /// node dots follow the real positions.
+  final List<GlobalKey> _rowKeys = List.generate(_steps, (_) => GlobalKey());
+  List<double> _heights = List.filled(_steps, 66);
   static const int _steps = 5;
 
   late final AnimationController _run = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 6200),
+    duration: AppMotion.traceRun,
   );
 
   int? _pinned;
@@ -95,7 +101,26 @@ class _SignalTraceState extends State<SignalTrace>
     return (active: arrived ? k : k - 1, y: t >= 1 ? _center(_steps - 1) : y);
   }
 
-  double _center(int i) => _rowHeight * i + _rowHeight / 2;
+  double _center(int i) {
+    var top = 0.0;
+    for (var k = 0; k < i; k++) {
+      top += _heights[k];
+    }
+    return top + _heights[i] / 2;
+  }
+
+  void _measureRows() {
+    if (!mounted) return;
+    final next = [
+      for (var i = 0; i < _steps; i++)
+        (_rowKeys[i].currentContext?.size?.height ?? _heights[i]),
+    ];
+    var changed = false;
+    for (var i = 0; i < _steps; i++) {
+      if ((next[i] - _heights[i]).abs() > 0.5) changed = true;
+    }
+    if (changed) setState(() => _heights = next);
+  }
 
   void _pin(int? index) {
     if (_pinned == index) return;
@@ -124,9 +149,14 @@ class _SignalTraceState extends State<SignalTrace>
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _measureRows());
     final view = MediaQuery.sizeOf(context);
     // Wide and short only: on phones the call lines may wrap to two rows.
-    _rowHeight = view.height < 760 && view.width >= 700 ? 54 : 66;
+    final wideScreen = view.width >= 700;
+    // Short laptops (1280x800 and the like): tighter rows, and the note
+    // moves into an info tooltip, so the whole cover fits without scrolling.
+    final compact = wideScreen && view.height < 860;
+    _rowHeight = compact ? 48 : (wideScreen && view.height < 960 ? 54 : 66);
     final l10n = AppLocalizations.of(context)!;
     final isDark = widget.isDark;
     final rule = context.glassBorderStrong;
@@ -163,7 +193,12 @@ class _SignalTraceState extends State<SignalTrace>
     final finished = _run.value >= 1 && _pinned == null;
     final running = _run.isAnimating;
 
-    final detail = shown == null ? l10n.traceHint : steps[shown].$3;
+    // Hint, one detail per layer, then the done message.
+    final messages = [
+      l10n.traceHint,
+      for (final st in steps) st.$3,
+      l10n.traceDone,
+    ];
 
     final mono = TextStyle(
       fontFamily: AppTypography.monoFont,
@@ -176,8 +211,9 @@ class _SignalTraceState extends State<SignalTrace>
       final reached = pos.active >= i;
       final titleColor =
           active ? context.onSurface : (reached ? context.onSurface : muted);
-      return SizedBox(
-        height: _rowHeight,
+      return ConstrainedBox(
+        key: _rowKeys[i],
+        constraints: BoxConstraints(minHeight: _rowHeight),
         child: MouseRegion(
           onEnter: (_) => _pin(i),
           onExit: (_) => _pin(null),
@@ -194,7 +230,7 @@ class _SignalTraceState extends State<SignalTrace>
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -213,7 +249,7 @@ class _SignalTraceState extends State<SignalTrace>
                         overflow: TextOverflow.ellipsis,
                         textDirection: TextDirection.ltr,
                         style: mono.copyWith(
-                          color: active ? gold : muted.withValues(alpha: 0.8),
+                          color: active ? gold : muted,
                         ),
                       ),
                     ],
@@ -227,7 +263,7 @@ class _SignalTraceState extends State<SignalTrace>
     }
 
     final header = Padding(
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 14),
+      padding: const EdgeInsets.fromLTRB(20, 14, 20, 12),
       child: Row(
         children: [
           Container(
@@ -362,14 +398,13 @@ class _SignalTraceState extends State<SignalTrace>
     final trace = Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 12, 0),
       child: SizedBox(
-        height: _rowHeight * _steps,
         child: Stack(
           children: [
             Positioned.fill(
               child: CustomPaint(
                 painter: _TracePainter(
                   steps: _steps,
-                  rowHeight: _rowHeight,
+                  heights: _heights,
                   active: pos.active,
                   packetY: _run.value > 0 ? pos.y : null,
                   rule: rule,
@@ -386,31 +421,37 @@ class _SignalTraceState extends State<SignalTrace>
     );
 
     final footer = Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 18),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AnimatedSize(
-            duration: AppMotion.snap,
-            alignment: Alignment.topLeft,
-            child: Container(
-              width: double.infinity,
-              constraints: const BoxConstraints(minHeight: 64),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-                border: Border.all(color: rule),
-                color: context.onSurface.withValues(alpha: 0.04),
-              ),
-              child: Text(
-                finished ? l10n.traceDone : detail,
-                key: ValueKey(finished ? 'done' : detail),
-                style: TextStyle(
-                  fontSize: AppTypography.body,
-                  height: 1.45,
-                  color: finished ? live : context.onSurface,
-                ),
-              ),
+          // Every message the box can show is laid out at once and only the
+          // current one is visible, so the card never changes height while
+          // the packet runs (content below it must not shift).
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+              border: Border.all(color: rule),
+              color: context.onSurface.withValues(alpha: 0.04),
+            ),
+            child: IndexedStack(
+              index: finished
+                  ? messages.length - 1
+                  : (shown == null ? 0 : shown + 1),
+              children: [
+                for (var i = 0; i < messages.length; i++)
+                  Text(
+                    messages[i],
+                    style: TextStyle(
+                      fontSize: AppTypography.body,
+                      height: 1.45,
+                      color:
+                          i == messages.length - 1 ? live : context.onSurface,
+                    ),
+                  ),
+              ],
             ),
           ),
           const SizedBox(height: 12),
@@ -422,6 +463,7 @@ class _SignalTraceState extends State<SignalTrace>
                 onPressed: running ? null : _replay,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: gold,
+                  disabledForegroundColor: context.mutedText,
                   side: BorderSide(color: gold.withValues(alpha: 0.7)),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
@@ -429,14 +471,24 @@ class _SignalTraceState extends State<SignalTrace>
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                   ),
                 ),
-                child: Text(
-                  running
-                      ? l10n.traceRunning
-                      : (_run.value >= 1 ? l10n.traceAgain : l10n.traceCta),
-                  style: const TextStyle(
-                    fontSize: AppTypography.body,
-                    fontWeight: FontWeight.w700,
-                  ),
+                // Sized to the longest label so the row never re-wraps.
+                child: IndexedStack(
+                  alignment: Alignment.center,
+                  index: running ? 1 : (_run.value >= 1 ? 2 : 0),
+                  children: [
+                    for (final label in [
+                      l10n.traceCta,
+                      l10n.traceRunning,
+                      l10n.traceAgain,
+                    ])
+                      Text(
+                        label,
+                        style: const TextStyle(
+                          fontSize: AppTypography.body,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                  ],
                 ),
               ),
               TextButton(
@@ -454,17 +506,25 @@ class _SignalTraceState extends State<SignalTrace>
                   ),
                 ),
               ),
+              if (compact)
+                Tooltip(
+                  message: l10n.traceNote,
+                  child:
+                      Icon(Icons.info_outline_rounded, size: 18, color: muted),
+                ),
             ],
           ),
-          const SizedBox(height: 10),
-          Text(
-            l10n.traceNote,
-            style: TextStyle(
-              fontSize: AppTypography.label,
-              height: 1.4,
-              color: muted,
+          if (!compact) ...[
+            const SizedBox(height: 4),
+            Text(
+              l10n.traceNote,
+              style: TextStyle(
+                fontSize: AppTypography.label,
+                height: 1.4,
+                color: muted,
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
@@ -497,7 +557,7 @@ class _SignalTraceState extends State<SignalTrace>
 class _TracePainter extends CustomPainter {
   _TracePainter({
     required this.steps,
-    required this.rowHeight,
+    required this.heights,
     required this.active,
     required this.packetY,
     required this.rule,
@@ -507,7 +567,7 @@ class _TracePainter extends CustomPainter {
   });
 
   final int steps;
-  final double rowHeight;
+  final List<double> heights;
   final int active;
   final double? packetY;
   final Color rule;
@@ -518,7 +578,13 @@ class _TracePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final x = rtl ? size.width - 14 : 14.0;
-    double c(int i) => rowHeight * i + rowHeight / 2;
+    double c(int i) {
+      var top = 0.0;
+      for (var k = 0; k < i; k++) {
+        top += heights[k];
+      }
+      return top + heights[i] / 2;
+    }
 
     final base = Paint()
       ..color = rule
@@ -566,6 +632,7 @@ class _TracePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_TracePainter old) =>
+      old.heights != heights ||
       old.active != active ||
       old.packetY != packetY ||
       old.rule != rule ||

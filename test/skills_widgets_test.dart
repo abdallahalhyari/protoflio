@@ -38,7 +38,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Skills'), findsOneWidget);
-      expect(find.textContaining('Flutter, Android, platform architecture'),
+      expect(find.textContaining('What I work with and where I used it'),
           findsOneWidget);
     });
 
@@ -49,11 +49,11 @@ void main() {
 
       final arabic = await AppLocalizations.delegate.load(const Locale('ar'));
       expect(arabic.skillsHeaderTitle, 'المهارات');
-      expect(arabic.skillsHeaderSubtitle, contains('أندرويد'));
+      expect(arabic.skillsHeaderSubtitle, contains('ابحث'));
 
       final czech = await AppLocalizations.delegate.load(const Locale('cs'));
       expect(czech.skillsHeaderTitle, 'Dovednosti');
-      expect(czech.skillsHeaderSubtitle, contains('Flutter'));
+      expect(czech.skillsHeaderSubtitle, contains('Vyhledejte'));
     });
 
     testWidgets(

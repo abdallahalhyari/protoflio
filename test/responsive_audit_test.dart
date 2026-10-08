@@ -318,7 +318,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('About'), findsOneWidget);
+      expect(find.text('Perspectives'), findsOneWidget);
     });
 
     testWidgets('ContactPage renders cleanly on compact 320x568',

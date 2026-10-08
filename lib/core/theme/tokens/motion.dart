@@ -39,6 +39,9 @@ class AppMotion {
   /// line, role and pitch, actions, then the portrait. Plays once.
   static const Duration coverEntrance = Duration(milliseconds: 1300);
 
+  /// One pass of the hero's "Trace a tap": a packet through five layers.
+  static const Duration traceRun = Duration(milliseconds: 6200);
+
   /// Idle bob of the floating card on the cover.
   static const Duration coverFloat = Duration(seconds: 6);
   static const Duration cardFlip =

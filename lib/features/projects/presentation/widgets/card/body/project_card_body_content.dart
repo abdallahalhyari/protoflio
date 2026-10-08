@@ -102,23 +102,41 @@ class CardBodyContent extends StatelessWidget {
       ],
     );
 
+    final middle = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        titleBlock,
+        if (outcome != null) ...[
+          const SizedBox(height: AppSpacing.md),
+          CardFigureLine(
+            value: figure?.value,
+            label: figure?.label ?? outcome,
+            scheme: scheme,
+            isDark: isDark,
+            maxLines: pinFoot ? 3 : null,
+          ),
+        ],
+      ],
+    );
+
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          titleBlock,
-          if (outcome != null) ...[
-            const SizedBox(height: AppSpacing.md),
-            CardFigureLine(
-              value: figure?.value,
-              label: figure?.label ?? outcome,
-              scheme: scheme,
-              isDark: isDark,
-              maxLines: pinFoot ? 3 : null,
-            ),
-          ],
-          if (pinFoot) const Spacer(),
+          if (pinFoot)
+            // Fixed-height grid: the copy takes whatever room the tags and
+            // the call to action leave, clipped rather than overflowing.
+            Expanded(
+              child: ClipRect(
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: middle,
+                ),
+              ),
+            )
+          else
+            middle,
           const SizedBox(height: AppSpacing.sm),
           Wrap(
             spacing: 6,

@@ -33,7 +33,7 @@ void main() {
       expect(find.text('Contact'), findsOneWidget);
       expect(find.text("Have a difficult mobile problem?"), findsOneWidget);
       expect(
-        find.textContaining("I'm looking for a senior mobile role"),
+        find.textContaining('I am looking for a senior mobile role'),
         findsOneWidget,
       );
     });

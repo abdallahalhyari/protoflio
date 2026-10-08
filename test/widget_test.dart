@@ -42,7 +42,7 @@ void main() {
     await tester.pumpWidget(createTestApp(const HatsGridPage()));
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('About'), findsOneWidget);
+    expect(find.text('Perspectives'), findsOneWidget);
     expect(find.text('Spread'), findsOneWidget);
     expect(find.text('Align'), findsOneWidget);
     expect(find.textContaining('Thinking'), findsWidgets);
