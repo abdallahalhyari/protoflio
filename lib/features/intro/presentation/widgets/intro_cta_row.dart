@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:profile/core/config/profile_links.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/core/services/sound_service.dart';
@@ -266,6 +268,24 @@ class IntroCtaRow extends StatelessWidget {
                 },
               ),
             ),
+            for (final link in const [
+              ('LinkedIn', Icons.open_in_new_rounded, ProfileLinks.linkedIn),
+              ('GitHub', Icons.open_in_new_rounded, ProfileLinks.github),
+            ])
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.sizeOf(context).width * 0.9,
+                    minHeight: 40),
+                child: _linkButton(
+                  label: link.$1,
+                  icon: link.$2,
+                  onPressed: () {
+                    SoundService.instance.playClick();
+                    launchUrl(Uri.parse(link.$3),
+                        mode: LaunchMode.externalApplication);
+                  },
+                ),
+              ),
             ConstrainedBox(
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.sizeOf(context).width * 0.9,
