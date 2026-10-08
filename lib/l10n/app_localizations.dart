@@ -1645,7 +1645,7 @@ abstract class AppLocalizations {
   /// No description provided for @uiLatencyBudget.
   ///
   /// In en, this message translates to:
-  /// **'Latency budget per layer'**
+  /// **'Latency target per layer'**
   String get uiLatencyBudget;
 
   /// No description provided for @uiActiveTrace.
@@ -2751,6 +2751,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Run these layers yourself'**
   String get traceOpenPlayground;
+
+  /// No description provided for @engBlueprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Architecture blueprint'**
+  String get engBlueprint;
+
+  /// No description provided for @engTiers.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tiers'**
+  String engTiers(int count);
+
+  /// No description provided for @engSwipeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe or tap to switch blueprints ({current} of {total})'**
+  String engSwipeHint(int current, int total);
+
+  /// No description provided for @engTryDemos.
+  ///
+  /// In en, this message translates to:
+  /// **'Try the NFC, crypto and sync demos'**
+  String get engTryDemos;
 }
 
 class _AppLocalizationsDelegate

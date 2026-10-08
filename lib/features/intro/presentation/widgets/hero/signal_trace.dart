@@ -36,7 +36,9 @@ class SignalTrace extends StatefulWidget {
 
 class _SignalTraceState extends State<SignalTrace>
     with SingleTickerProviderStateMixin {
-  static const double _rowHeight = 66;
+  /// Row height follows the viewport: short screens get tighter rows so
+  /// the footer (replay, link) stays in reach.
+  double _rowHeight = 66;
   static const int _steps = 5;
 
   late final AnimationController _run = AnimationController(
@@ -122,6 +124,9 @@ class _SignalTraceState extends State<SignalTrace>
 
   @override
   Widget build(BuildContext context) {
+    final view = MediaQuery.sizeOf(context);
+    // Wide and short only: on phones the call lines may wrap to two rows.
+    _rowHeight = view.height < 760 && view.width >= 700 ? 54 : 66;
     final l10n = AppLocalizations.of(context)!;
     final isDark = widget.isDark;
     final rule = context.glassBorderStrong;

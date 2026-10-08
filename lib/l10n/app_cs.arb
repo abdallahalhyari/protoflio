@@ -257,7 +257,7 @@
   "uiArchFlowchart": "Diagram",
   "uiArchRationale": "Proč tato volba",
   "uiKeySafeguards": "Pojistky",
-  "uiLatencyBudget": "Rozpočet latence pro každou vrstvu",
+  "uiLatencyBudget": "Cílová latence jednotlivých vrstev",
   "uiActiveTrace": "Sledování",
   "uiLatestDispatch": "Současná role",
   "badgeSkills": "{count} disciplín",
@@ -441,5 +441,9 @@
   "playChanDecoded": "Dekódováno na nativní straně",
   "playChanNote": "Zakódováno pomocí StandardMethodCodec.",
   "aboutTryIt": "Vyzkoušet na hřišti",
-  "traceOpenPlayground": "Vyzkoušejte tyto vrstvy sami"
+  "traceOpenPlayground": "Vyzkoušejte tyto vrstvy sami",
+  "engBlueprint": "Architektonický plán",
+  "engTiers": "Vrstev: {count}",
+  "engSwipeHint": "Přejetím nebo klepnutím přepnete plány ({current} z {total})",
+  "engTryDemos": "Vyzkoušejte ukázky NFC, kryptografie a synchronizace"
 }

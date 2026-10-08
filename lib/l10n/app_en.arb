@@ -424,7 +424,7 @@
   "uiArchFlowchart": "Flowchart",
   "uiArchRationale": "Why this choice",
   "uiKeySafeguards": "Safeguards",
-  "uiLatencyBudget": "Latency budget per layer",
+  "uiLatencyBudget": "Latency target per layer",
   "uiActiveTrace": "Tracing",
   "uiLatestDispatch": "Current role",
   "badgeSkills": "{count} disciplines",
@@ -671,5 +671,26 @@
   "playChanDecoded": "Decoded on the native side",
   "playChanNote": "Encoded with StandardMethodCodec.",
   "aboutTryIt": "Try it in the Playground",
-  "traceOpenPlayground": "Run these layers yourself"
+  "traceOpenPlayground": "Run these layers yourself",
+  "engBlueprint": "Architecture blueprint",
+  "engTiers": "{count} tiers",
+  "@engTiers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "engSwipeHint": "Swipe or tap to switch blueprints ({current} of {total})",
+  "@engSwipeHint": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "engTryDemos": "Try the NFC, crypto and sync demos"
 }

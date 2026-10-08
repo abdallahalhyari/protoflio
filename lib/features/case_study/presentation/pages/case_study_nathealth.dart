@@ -158,7 +158,7 @@ class NatHealthCaseStudy extends StatelessWidget {
                 layer: 'Testing',
                 title: 'End-to-End APDU Mock Harness',
                 body:
-                    'Constructed a mock NFC channel provider for Flutter widget tests, allowing 100% automated test coverage of card verification flows without physical hardware.',
+                    'Constructed a mock NFC channel provider for Flutter widget tests, allowing automated tests of card verification flows without physical hardware.',
               ),
               TechStep(
                 layer: 'Deps',

@@ -877,7 +877,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiKeySafeguards => 'Pojistky';
 
   @override
-  String get uiLatencyBudget => 'Rozpočet latence pro každou vrstvu';
+  String get uiLatencyBudget => 'Cílová latence jednotlivých vrstev';
 
   @override
   String get uiActiveTrace => 'Sledování';
@@ -1507,4 +1507,21 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get traceOpenPlayground => 'Vyzkoušejte tyto vrstvy sami';
+
+  @override
+  String get engBlueprint => 'Architektonický plán';
+
+  @override
+  String engTiers(int count) {
+    return 'Vrstev: $count';
+  }
+
+  @override
+  String engSwipeHint(int current, int total) {
+    return 'Přejetím nebo klepnutím přepnete plány ($current z $total)';
+  }
+
+  @override
+  String get engTryDemos =>
+      'Vyzkoušejte ukázky NFC, kryptografie a synchronizace';
 }

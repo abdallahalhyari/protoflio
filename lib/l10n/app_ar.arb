@@ -257,7 +257,7 @@
   "uiArchFlowchart": "مخطط البنية",
   "uiArchRationale": "مبررات البنية (لماذا هذا الخيار)",
   "uiKeySafeguards": "ضمانات التنفيذ الأساسية",
-  "uiLatencyBudget": "ميزانية زمن الاستجابة لكل طبقة",
+  "uiLatencyBudget": "هدف زمن الاستجابة لكل طبقة",
   "uiActiveTrace": "المسار النشط",
   "uiLatestDispatch": "الأحدث",
   "badgeSkills": "{count} تخصصًا أساسيًا",
@@ -441,5 +441,9 @@
   "playChanDecoded": "بعد فك الترميز في الجانب الأصلي",
   "playChanNote": "مرمَّز بـ StandardMethodCodec.",
   "aboutTryIt": "جرّبه في ساحة التجارب",
-  "traceOpenPlayground": "شغّل هذه الطبقات بنفسك"
+  "traceOpenPlayground": "شغّل هذه الطبقات بنفسك",
+  "engBlueprint": "مخطط معماري",
+  "engTiers": "{count} طبقات",
+  "engSwipeHint": "مرّر أو انقر لتبديل المخططات ({current} من {total})",
+  "engTryDemos": "جرّب عروض NFC والتشفير والمزامنة"
 }

@@ -870,7 +870,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiKeySafeguards => 'ضمانات التنفيذ الأساسية';
 
   @override
-  String get uiLatencyBudget => 'ميزانية زمن الاستجابة لكل طبقة';
+  String get uiLatencyBudget => 'هدف زمن الاستجابة لكل طبقة';
 
   @override
   String get uiActiveTrace => 'المسار النشط';
@@ -1493,4 +1493,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get traceOpenPlayground => 'شغّل هذه الطبقات بنفسك';
+
+  @override
+  String get engBlueprint => 'مخطط معماري';
+
+  @override
+  String engTiers(int count) {
+    return '$count طبقات';
+  }
+
+  @override
+  String engSwipeHint(int current, int total) {
+    return 'مرّر أو انقر لتبديل المخططات ($current من $total)';
+  }
+
+  @override
+  String get engTryDemos => 'جرّب عروض NFC والتشفير والمزامنة';
 }

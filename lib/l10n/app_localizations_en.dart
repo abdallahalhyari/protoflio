@@ -877,7 +877,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiKeySafeguards => 'Safeguards';
 
   @override
-  String get uiLatencyBudget => 'Latency budget per layer';
+  String get uiLatencyBudget => 'Latency target per layer';
 
   @override
   String get uiActiveTrace => 'Tracing';
@@ -1505,4 +1505,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get traceOpenPlayground => 'Run these layers yourself';
+
+  @override
+  String get engBlueprint => 'Architecture blueprint';
+
+  @override
+  String engTiers(int count) {
+    return '$count tiers';
+  }
+
+  @override
+  String engSwipeHint(int current, int total) {
+    return 'Swipe or tap to switch blueprints ($current of $total)';
+  }
+
+  @override
+  String get engTryDemos => 'Try the NFC, crypto and sync demos';
 }

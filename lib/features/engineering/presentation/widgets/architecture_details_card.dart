@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/features/about/presentation/about_navigation.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
@@ -38,7 +41,7 @@ class ArchitectureDetailsCard extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                'ARCHITECTURE BLUEPRINT // ${topic.id}',
+                AppLocalizations.of(context)!.engBlueprint,
                 style: TextStyle(
                   fontSize: AppTypography.label,
                   fontWeight: FontWeight.w900,
@@ -203,6 +206,18 @@ class ArchitectureDetailsCard extends StatelessWidget {
         const SizedBox(height: 8),
         for (final step in budgets) _BudgetRow(step: step, isDark: isDark),
       ],
+      const SizedBox(height: 8),
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: OutlinedButton(
+          onPressed: () {
+            SoundService.instance.playClick();
+            aboutTabRequest.value = 2;
+            HomeController.maybeOf(context)?.goTo(5);
+          },
+          child: Text(AppLocalizations.of(context)!.engTryDemos),
+        ),
+      ),
     ];
 
     final Widget content = isDesktop

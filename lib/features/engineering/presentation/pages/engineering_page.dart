@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/services/sound_service.dart';
@@ -69,8 +70,8 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
   Widget _buildSwipeAffordance(int selectedIndex) {
     return SwipeAffordance(
       margin: const EdgeInsets.only(top: 6),
-      label:
-          'SWIPE OR TAP TO SWITCH ARCHITECTURAL BLUEPRINTS (${selectedIndex + 1}/${kArchitectureTopics.length})',
+      label: AppLocalizations.of(context)!
+          .engSwipeHint(selectedIndex + 1, kArchitectureTopics.length),
     );
   }
 
