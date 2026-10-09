@@ -66,74 +66,10 @@ class _ExecutiveIdentityHero extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
 
-    final avatar = Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          width: isDesktop ? 98 : 82,
-          height: isDesktop ? 98 : 82,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: [
-                accent,
-                isDark ? AppColors.tealLight : AppColors.tealDeep,
-                AppColors.gold,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: accent.withValues(alpha: isDark ? 0.38 : 0.22),
-                blurRadius: 24,
-                offset: const Offset(0, 6),
-                spreadRadius: 2,
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(3.0),
-          child: ClipOval(
-            child: ColoredBox(
-              color: isDark ? AppColors.darkCard : Colors.white,
-              child: const RetryingAssetImage(
-                'assets/my_image.webp',
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-                filterQuality: FilterQuality.high,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: Container(
-            width: 26,
-            height: 26,
-            decoration: BoxDecoration(
-              color: isDark ? AppColors.darkCard : Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: isDark ? AppColors.tealLight : AppColors.tealDeep,
-                width: 2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Icon(
-              Icons.verified_rounded,
-              size: 16,
-              color: isDark ? AppColors.tealLight : AppColors.tealDeep,
-            ),
-          ),
-        ),
-      ],
+    final avatar = _InteractiveAvatar(
+      isDesktop: isDesktop,
+      isDark: isDark,
+      accent: accent,
     );
 
     final titleBlock = Column(
@@ -301,81 +237,10 @@ class _ExecutiveIdentityHero extends StatelessWidget {
             for (final s in stats)
               SizedBox(
                 width: itemWidth,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.03)
-                        : Colors.white,
-                    borderRadius: BorderRadius.circular(AppRadius.card),
-                    border: Border.all(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.08)
-                          : AppColors.ink200,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color:
-                            Colors.black.withValues(alpha: isDark ? 0.2 : 0.03),
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 36,
-                        height: 36,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: accent.withValues(alpha: isDark ? 0.12 : 0.08),
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                          border: Border.all(
-                            color: accent.withValues(alpha: 0.3),
-                          ),
-                        ),
-                        child: Icon(s.$4,
-                            size: 18,
-                            color: context.adaptiveAccentText(accent)),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: AlignmentDirectional.centerStart,
-                              child: Text(
-                                s.$1,
-                                style: TextStyle(
-                                  fontFamily: AppTypography.displayFont,
-                                  fontSize: AppTypography.heading,
-                                  fontWeight: FontWeight.w900,
-                                  color: context.onSurface,
-                                  height: 1.1,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              s.$2,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: AppTypography.label,
-                                fontWeight: FontWeight.w800,
-                                color: context.mutedText,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                child: _InteractiveMetricCard(
+                  stat: s,
+                  accent: accent,
+                  isDark: isDark,
                 ),
               ),
           ],
@@ -433,6 +298,253 @@ class _ExecutiveIdentityHero extends StatelessWidget {
           const SizedBox(height: AppSpacing.xl),
           metricsRow,
         ],
+      ),
+    );
+  }
+}
+
+class _InteractiveAvatar extends StatefulWidget {
+  final bool isDesktop;
+  final bool isDark;
+  final Color accent;
+
+  const _InteractiveAvatar({
+    required this.isDesktop,
+    required this.isDark,
+    required this.accent,
+  });
+
+  @override
+  State<_InteractiveAvatar> createState() => _InteractiveAvatarState();
+}
+
+class _InteractiveAvatarState extends State<_InteractiveAvatar> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDesktop = widget.isDesktop;
+    final isDark = widget.isDark;
+    final accent = widget.accent;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedScale(
+        scale: _hover ? 1.05 : 1.0,
+        duration: AppMotion.cardHover,
+        curve: AppMotion.emphasized,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            AnimatedContainer(
+              duration: AppMotion.cardHover,
+              curve: AppMotion.emphasized,
+              width: isDesktop ? 98 : 82,
+              height: isDesktop ? 98 : 82,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    accent,
+                    isDark ? AppColors.tealLight : AppColors.tealDeep,
+                    AppColors.gold,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: accent.withValues(
+                      alpha: _hover
+                          ? (isDark ? 0.60 : 0.35)
+                          : (isDark ? 0.38 : 0.22),
+                    ),
+                    blurRadius: _hover ? 32 : 24,
+                    offset: const Offset(0, 6),
+                    spreadRadius: _hover ? 3 : 2,
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.all(3.0),
+              child: ClipOval(
+                child: ColoredBox(
+                  color: isDark ? AppColors.darkCard : Colors.white,
+                  child: const RetryingAssetImage(
+                    'assets/my_image.webp',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                    filterQuality: FilterQuality.high,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                width: 26,
+                height: 26,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.darkCard : Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isDark ? AppColors.tealLight : AppColors.tealDeep,
+                    width: 2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  Icons.verified_rounded,
+                  size: 16,
+                  color: isDark ? AppColors.tealLight : AppColors.tealDeep,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InteractiveMetricCard extends StatefulWidget {
+  final (String, String, String, IconData) stat;
+  final Color accent;
+  final bool isDark;
+
+  const _InteractiveMetricCard({
+    required this.stat,
+    required this.accent,
+    required this.isDark,
+  });
+
+  @override
+  State<_InteractiveMetricCard> createState() => _InteractiveMetricCardState();
+}
+
+class _InteractiveMetricCardState extends State<_InteractiveMetricCard> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = widget.stat;
+    final isDark = widget.isDark;
+    final accent = widget.accent;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedScale(
+        scale: _hover ? 1.025 : 1.0,
+        duration: AppMotion.cardHover,
+        curve: AppMotion.emphasized,
+        child: AnimatedContainer(
+          duration: AppMotion.cardHover,
+          curve: AppMotion.emphasized,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            color: isDark
+                ? (_hover
+                    ? accent.withValues(alpha: 0.08)
+                    : Colors.white.withValues(alpha: 0.03))
+                : (_hover ? Colors.white : Colors.white),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: _hover
+                  ? accent.withValues(alpha: isDark ? 0.60 : 0.50)
+                  : (isDark
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : AppColors.ink200),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: _hover
+                    ? accent.withValues(alpha: isDark ? 0.24 : 0.12)
+                    : Colors.black.withValues(alpha: isDark ? 0.2 : 0.03),
+                blurRadius: _hover ? 18 : 10,
+                offset: _hover ? const Offset(0, 5) : const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              AnimatedContainer(
+                duration: AppMotion.cardHover,
+                curve: AppMotion.emphasized,
+                width: 38,
+                height: 38,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: _hover
+                      ? accent.withValues(alpha: isDark ? 0.24 : 0.16)
+                      : accent.withValues(alpha: isDark ? 0.12 : 0.08),
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  border: Border.all(
+                    color: _hover
+                        ? accent.withValues(alpha: isDark ? 0.70 : 0.50)
+                        : accent.withValues(alpha: 0.3),
+                  ),
+                  boxShadow: _hover
+                      ? [
+                          BoxShadow(
+                            color: accent.withValues(alpha: isDark ? 0.35 : 0.18),
+                            blurRadius: 10,
+                          ),
+                        ]
+                      : null,
+                ),
+                child: Icon(
+                  s.$4,
+                  size: 19,
+                  color: context.adaptiveAccentText(accent),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        s.$1,
+                        style: TextStyle(
+                          fontFamily: AppTypography.displayFont,
+                          fontSize: AppTypography.heading,
+                          fontWeight: FontWeight.w900,
+                          color: _hover
+                              ? context.adaptiveAccentText(accent)
+                              : context.onSurface,
+                          height: 1.1,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      s.$2,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w800,
+                        color: _hover ? context.onSurface : context.mutedText,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -612,52 +724,12 @@ class _StoryAndDossierSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          for (final p in pillars) ...[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 24,
-                    height: 24,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: accent.withValues(alpha: isDark ? 0.15 : 0.08),
-                      borderRadius: BorderRadius.circular(AppRadius.xs),
-                    ),
-                    child: Icon(p.$1,
-                        size: 14, color: context.adaptiveAccentText(accent)),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '${p.$2} — ',
-                            style: TextStyle(
-                              fontSize: AppTypography.label,
-                              fontWeight: FontWeight.w800,
-                              color: context.onSurface,
-                            ),
-                          ),
-                          TextSpan(
-                            text: p.$3,
-                            style: TextStyle(
-                              fontSize: AppTypography.label,
-                              height: 1.45,
-                              color: context.mutedText,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+          for (final p in pillars)
+            _InteractivePillarTile(
+              pillar: p,
+              accent: accent,
+              isDark: isDark,
             ),
-          ],
         ],
       ),
     );
@@ -1186,29 +1258,10 @@ class _TechArsenalSection extends StatelessWidget {
                             runSpacing: 6,
                             children: [
                               for (final skill in cat.$2)
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 9, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    color: isDark
-                                        ? Colors.white.withValues(alpha: 0.04)
-                                        : AppColors.ink100,
-                                    borderRadius:
-                                        BorderRadius.circular(AppRadius.chip),
-                                    border: Border.all(
-                                      color: isDark
-                                          ? Colors.white.withValues(alpha: 0.08)
-                                          : AppColors.ink200,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    skill,
-                                    style: TextStyle(
-                                      fontSize: AppTypography.label,
-                                      fontWeight: FontWeight.w700,
-                                      color: context.onSurface,
-                                    ),
-                                  ),
+                                _InteractiveSkillChip(
+                                  skill: skill,
+                                  accent: accent,
+                                  isDark: isDark,
                                 ),
                             ],
                           ),
@@ -1448,3 +1501,184 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
     );
   }
 }
+
+class _InteractivePillarTile extends StatefulWidget {
+  final (IconData, String, String) pillar;
+  final Color accent;
+  final bool isDark;
+
+  const _InteractivePillarTile({
+    required this.pillar,
+    required this.accent,
+    required this.isDark,
+  });
+
+  @override
+  State<_InteractivePillarTile> createState() => _InteractivePillarTileState();
+}
+
+class _InteractivePillarTileState extends State<_InteractivePillarTile> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = widget.pillar;
+    final accent = widget.accent;
+    final isDark = widget.isDark;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedContainer(
+        duration: AppMotion.cardHover,
+        curve: AppMotion.emphasized,
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(
+          color: _hover
+              ? accent.withValues(alpha: isDark ? 0.08 : 0.05)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(AppRadius.sm),
+          border: Border.all(
+            color: _hover
+                ? accent.withValues(alpha: isDark ? 0.35 : 0.25)
+                : Colors.transparent,
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AnimatedContainer(
+              duration: AppMotion.cardHover,
+              curve: AppMotion.emphasized,
+              width: 26,
+              height: 26,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: _hover
+                    ? accent.withValues(alpha: isDark ? 0.28 : 0.16)
+                    : accent.withValues(alpha: isDark ? 0.15 : 0.08),
+                borderRadius: BorderRadius.circular(AppRadius.xs),
+                boxShadow: _hover
+                    ? [
+                        BoxShadow(
+                          color: accent.withValues(alpha: isDark ? 0.35 : 0.15),
+                          blurRadius: 8,
+                        ),
+                      ]
+                    : null,
+              ),
+              child: Icon(
+                p.$1,
+                size: 15,
+                color: context.adaptiveAccentText(accent),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '${p.$2} — ',
+                      style: TextStyle(
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w800,
+                        color: _hover
+                            ? context.adaptiveAccentText(accent)
+                            : context.onSurface,
+                      ),
+                    ),
+                    TextSpan(
+                      text: p.$3,
+                      style: TextStyle(
+                        fontSize: AppTypography.label,
+                        height: 1.45,
+                        color: context.mutedText,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InteractiveSkillChip extends StatefulWidget {
+  final String skill;
+  final Color accent;
+  final bool isDark;
+
+  const _InteractiveSkillChip({
+    required this.skill,
+    required this.accent,
+    required this.isDark,
+  });
+
+  @override
+  State<_InteractiveSkillChip> createState() => _InteractiveSkillChipState();
+}
+
+class _InteractiveSkillChipState extends State<_InteractiveSkillChip> {
+  bool _hover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = widget.isDark;
+    final accent = widget.accent;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hover = true),
+      onExit: (_) => setState(() => _hover = false),
+      child: AnimatedScale(
+        scale: _hover ? 1.05 : 1.0,
+        duration: AppMotion.snap,
+        curve: AppMotion.emphasized,
+        child: AnimatedContainer(
+          duration: AppMotion.snap,
+          curve: AppMotion.emphasized,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            color: _hover
+                ? accent.withValues(alpha: isDark ? 0.20 : 0.12)
+                : (isDark
+                    ? Colors.white.withValues(alpha: 0.04)
+                    : AppColors.ink100),
+            borderRadius: BorderRadius.circular(AppRadius.chip),
+            border: Border.all(
+              color: _hover
+                  ? accent.withValues(alpha: isDark ? 0.65 : 0.45)
+                  : (isDark
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : AppColors.ink200),
+            ),
+            boxShadow: [
+              if (_hover)
+                BoxShadow(
+                  color: accent.withValues(alpha: isDark ? 0.25 : 0.10),
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+            ],
+          ),
+          child: Text(
+            widget.skill,
+            style: TextStyle(
+              fontFamily: AppTypography.monoFont,
+              fontSize: AppTypography.label,
+              fontWeight: _hover ? FontWeight.w800 : FontWeight.w700,
+              color: _hover
+                  ? context.adaptiveAccentText(accent)
+                  : context.onSurface,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
