@@ -138,14 +138,11 @@ class _KeyboardShortcutHint extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.04)
-            : AppColors.ink100,
+        color: isDark ? Colors.white.withValues(alpha: 0.04) : AppColors.ink100,
         borderRadius: BorderRadius.circular(AppRadius.xs),
         border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.09)
-              : AppColors.ink200,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.09) : AppColors.ink200,
         ),
       ),
       child: Row(
@@ -180,14 +177,11 @@ class _KeyPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.white.withValues(alpha: 0.08)
-            : Colors.white,
+        color: isDark ? Colors.white.withValues(alpha: 0.08) : Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.hairline),
         border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.16)
-              : AppColors.ink300,
+          color:
+              isDark ? Colors.white.withValues(alpha: 0.16) : AppColors.ink300,
         ),
       ),
       child: Text(
@@ -337,9 +331,7 @@ class _DomainChipState extends State<_DomainChip> {
                       size: 13,
                       color: isSelected
                           ? textColor
-                          : (isInteractive
-                              ? textColor
-                              : context.mutedText),
+                          : (isInteractive ? textColor : context.mutedText),
                     ),
                     const SizedBox(width: 6),
                     Text(

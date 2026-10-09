@@ -213,8 +213,7 @@ class _HeroEmailCardState extends State<HeroEmailCard> {
     final card = AnimatedContainer(
       duration: AppMotion.cardHover,
       curve: AppMotion.emphasized,
-      padding:
-          EdgeInsets.all(widget.isDesktop ? AppSpacing.xl : AppSpacing.lg),
+      padding: EdgeInsets.all(widget.isDesktop ? AppSpacing.xl : AppSpacing.lg),
       decoration: BoxDecoration(
         color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.container),
@@ -236,29 +235,31 @@ class _HeroEmailCardState extends State<HeroEmailCard> {
         boxShadow: [
           BoxShadow(
             color: accent.withValues(
-                alpha: _hover ? (isDark ? 0.20 : 0.10) : (isDark ? 0.12 : 0.05)),
+                alpha:
+                    _hover ? (isDark ? 0.20 : 0.10) : (isDark ? 0.12 : 0.05)),
             blurRadius: _hover ? 36 : 24,
             offset: const Offset(0, 8),
             spreadRadius: _hover ? 3 : 1,
           ),
         ],
       ),
-      child: widget.isDesktop && MediaQuery.textScalerOf(context).scale(1) <= 1.2
-          ? Row(
-              children: [
-                Expanded(child: emailBlock),
-                const SizedBox(width: AppSpacing.lg),
-                Flexible(child: actionRow),
-              ],
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                emailBlock,
-                const SizedBox(height: AppSpacing.md),
-                actionRow,
-              ],
-            ),
+      child:
+          widget.isDesktop && MediaQuery.textScalerOf(context).scale(1) <= 1.2
+              ? Row(
+                  children: [
+                    Expanded(child: emailBlock),
+                    const SizedBox(width: AppSpacing.lg),
+                    Flexible(child: actionRow),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    emailBlock,
+                    const SizedBox(height: AppSpacing.md),
+                    actionRow,
+                  ],
+                ),
     );
 
     return MouseRegion(
@@ -268,4 +269,3 @@ class _HeroEmailCardState extends State<HeroEmailCard> {
     );
   }
 }
-

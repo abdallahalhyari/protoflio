@@ -26,6 +26,7 @@ class ProfileTab extends StatelessWidget {
       _UnderTheHoodSection(isDesktop: isDesktop),
       _TechArsenalSection(isDesktop: isDesktop),
       _PlaygroundCalloutBanner(isDesktop: isDesktop),
+      _ContactCalloutBanner(isDesktop: isDesktop),
     ];
 
     return Column(
@@ -143,7 +144,8 @@ class _ExecutiveIdentityHero extends StatelessWidget {
       children: [
         ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.sizeOf(context).width - 48,
+            maxWidth: (MediaQuery.sizeOf(context).width - 48)
+                .clamp(0.0, double.infinity),
           ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
@@ -198,9 +200,8 @@ class _ExecutiveIdentityHero extends StatelessWidget {
             'Senior Mobile Systems Engineer · Mobile Solutions Architect',
             textAlign: isDesktop ? TextAlign.start : TextAlign.center,
             style: TextStyle(
-              fontSize: isDesktop
-                  ? AppTypography.lead - 1
-                  : AppTypography.cardBody,
+              fontSize:
+                  isDesktop ? AppTypography.lead - 1 : AppTypography.cardBody,
               fontWeight: FontWeight.w700,
               color: context.adaptiveAccentText(accent),
             ),
@@ -291,7 +292,8 @@ class _ExecutiveIdentityHero extends StatelessWidget {
       builder: (context, constraints) {
         final cols = constraints.maxWidth > 700 ? 4 : 2;
         final itemWidth =
-            (constraints.maxWidth - ((cols - 1) * AppSpacing.md)) / cols;
+            ((constraints.maxWidth - ((cols - 1) * AppSpacing.md)) / cols)
+                .clamp(0.0, double.infinity);
 
         return Wrap(
           spacing: AppSpacing.md,
@@ -436,8 +438,6 @@ class _ExecutiveIdentityHero extends StatelessWidget {
     );
   }
 }
-
-
 
 /// 2. Engineering Narrative & Technical Factsheet Dossier
 class _StoryAndDossierSection extends StatelessWidget {
@@ -911,15 +911,16 @@ class _CapabilityCardState extends State<_CapabilityCard> {
                           widget.accent.withValues(alpha: isDark ? 0.16 : 0.10),
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                       border: Border.all(
-                        color: widget.accent.withValues(alpha: isDark ? 0.45 : 0.35),
+                        color: widget.accent
+                            .withValues(alpha: isDark ? 0.45 : 0.35),
                       ),
                     ),
                     child: Icon(widget.icon, size: 20, color: accentText),
                   ),
                   Flexible(
                     child: Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
                         color: isDark
                             ? Colors.white.withValues(alpha: 0.06)
@@ -1035,7 +1036,6 @@ class _CapabilityCardState extends State<_CapabilityCard> {
     );
   }
 }
-
 
 /// 4. Technical Arsenal & Skills Domain Matrix
 class _TechArsenalSection extends StatelessWidget {
@@ -1288,13 +1288,13 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 3),
                               decoration: BoxDecoration(
-                                color: accent
-                                    .withValues(alpha: isDark ? 0.16 : 0.10),
+                                color: accent.withValues(
+                                    alpha: isDark ? 0.16 : 0.10),
                                 borderRadius:
                                     BorderRadius.circular(AppRadius.xs),
                                 border: Border.all(
-                                  color: accent
-                                      .withValues(alpha: isDark ? 0.4 : 0.25),
+                                  color: accent.withValues(
+                                      alpha: isDark ? 0.4 : 0.25),
                                 ),
                               ),
                               child: Row(
@@ -1302,7 +1302,8 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
                                 children: [
                                   Icon(Icons.terminal_rounded,
                                       size: 14,
-                                      color: context.adaptiveAccentText(accent)),
+                                      color:
+                                          context.adaptiveAccentText(accent)),
                                   const SizedBox(width: 6),
                                   Flexible(
                                     child: Text(
@@ -1312,7 +1313,8 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
                                         fontFamily: AppTypography.monoFont,
                                         fontSize: AppTypography.label,
                                         fontWeight: FontWeight.w900,
-                                        color: context.adaptiveAccentText(accent),
+                                        color:
+                                            context.adaptiveAccentText(accent),
                                         letterSpacing: 0.5,
                                       ),
                                     ),
@@ -1379,8 +1381,7 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color:
-                              accent.withValues(alpha: isDark ? 0.16 : 0.10),
+                          color: accent.withValues(alpha: isDark ? 0.16 : 0.10),
                           borderRadius: BorderRadius.circular(AppRadius.xs),
                           border: Border.all(
                             color:
@@ -1459,3 +1460,223 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
   }
 }
 
+/// 6. Direct Contact & Advisory Inquiry Invitation Callout Banner
+class _ContactCalloutBanner extends StatelessWidget {
+  const _ContactCalloutBanner({required this.isDesktop});
+
+  final bool isDesktop;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final accent = scheme.primary;
+    final gold = context.isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
+    final isDark = context.isDarkMode;
+
+    return Container(
+      padding: EdgeInsets.all(isDesktop ? AppSpacing.xl : AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkCard : AppColors.ink50,
+        borderRadius: BorderRadius.circular(AppRadius.container),
+        gradient: LinearGradient(
+          colors: [
+            gold.withValues(alpha: isDark ? 0.18 : 0.08),
+            isDark ? AppColors.darkCard : Colors.white,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(
+          color: gold.withValues(alpha: isDark ? 0.45 : 0.3),
+          width: 1.3,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: gold.withValues(alpha: isDark ? 0.12 : 0.05),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: isDesktop
+          ? Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 3),
+                              decoration: BoxDecoration(
+                                color: gold.withValues(
+                                    alpha: isDark ? 0.16 : 0.10),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadius.xs),
+                                border: Border.all(
+                                  color: gold.withValues(
+                                      alpha: isDark ? 0.4 : 0.25),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.send_rounded,
+                                      size: 14,
+                                      color: context.adaptiveAccentText(gold)),
+                                  const SizedBox(width: 6),
+                                  Flexible(
+                                    child: Text(
+                                      'DIRECT EXECUTIVE OUTREACH',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontFamily: AppTypography.monoFont,
+                                        fontSize: AppTypography.label,
+                                        fontWeight: FontWeight.w900,
+                                        color: context.adaptiveAccentText(gold),
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Ready to discuss a senior role or engineering advisory?',
+                        style: TextStyle(
+                          fontFamily: AppTypography.displayFont,
+                          fontSize: AppTypography.lead,
+                          fontWeight: FontWeight.w900,
+                          color: context.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Command trust with direct email, WhatsApp, and structured consulting tracks.',
+                        style: TextStyle(
+                          fontSize: AppTypography.label,
+                          color: context.mutedText,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.xl),
+                FilledButton.icon(
+                  onPressed: () {
+                    SoundService.instance.playClick();
+                    aboutTabRequest.value = AboutTabs.contact;
+                  },
+                  icon: const Icon(Icons.mail_rounded, size: 18),
+                  label: const Text('Get In Touch'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: accent,
+                    foregroundColor: scheme.onPrimary,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 22, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                    ),
+                    textStyle: const TextStyle(
+                      fontSize: AppTypography.label,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: gold.withValues(alpha: isDark ? 0.16 : 0.10),
+                          borderRadius: BorderRadius.circular(AppRadius.xs),
+                          border: Border.all(
+                            color: gold.withValues(alpha: isDark ? 0.4 : 0.25),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.send_rounded,
+                                size: 14,
+                                color: context.adaptiveAccentText(gold)),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                'DIRECT EXECUTIVE OUTREACH',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontFamily: AppTypography.monoFont,
+                                  fontSize: AppTypography.label,
+                                  fontWeight: FontWeight.w900,
+                                  color: context.adaptiveAccentText(gold),
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Ready to discuss a senior role or engineering advisory?',
+                  style: TextStyle(
+                    fontFamily: AppTypography.displayFont,
+                    fontSize: AppTypography.body,
+                    fontWeight: FontWeight.w900,
+                    color: context.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Command trust with direct email, WhatsApp, and structured consulting tracks.',
+                  style: TextStyle(
+                    fontSize: AppTypography.label,
+                    color: context.mutedText,
+                    height: 1.45,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                FilledButton.icon(
+                  onPressed: () {
+                    SoundService.instance.playClick();
+                    aboutTabRequest.value = AboutTabs.contact;
+                  },
+                  icon: const Icon(Icons.mail_rounded, size: 16),
+                  label: const Text('Get In Touch'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: accent,
+                    foregroundColor: scheme.onPrimary,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.pill),
+                    ),
+                    textStyle: const TextStyle(
+                      fontSize: AppTypography.label,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+}

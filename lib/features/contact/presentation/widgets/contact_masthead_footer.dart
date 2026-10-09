@@ -194,4 +194,3 @@ class ContactMastheadFooter extends StatelessWidget {
     );
   }
 }
-

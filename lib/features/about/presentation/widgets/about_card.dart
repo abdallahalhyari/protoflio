@@ -35,7 +35,6 @@ class AboutCard extends StatelessWidget {
               ? primary.withValues(alpha: 0.25)
               : context.glassBorderStrong,
         ),
-
         boxShadow: [
           BoxShadow(
             color: isDark ? Colors.black38 : AppColors.shadowSoft,
@@ -54,7 +53,6 @@ class AboutCard extends StatelessWidget {
     );
   }
 }
-
 
 /// Technical tag: tool names set in the mono face.
 class MonoTag extends StatelessWidget {

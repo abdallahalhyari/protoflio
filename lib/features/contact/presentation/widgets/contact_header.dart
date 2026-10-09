@@ -208,4 +208,3 @@ class ContactHeader extends StatelessWidget {
     );
   }
 }
-

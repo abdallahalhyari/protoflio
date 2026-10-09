@@ -249,4 +249,3 @@ class _CvDossierCardState extends State<CvDossierCard> {
     );
   }
 }
-

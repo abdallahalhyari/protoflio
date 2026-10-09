@@ -77,7 +77,8 @@ class ExpressPresetsBar extends StatelessWidget {
                   height: 22,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: AppColors.gold.withValues(alpha: isDark ? 0.16 : 0.10),
+                    color:
+                        AppColors.gold.withValues(alpha: isDark ? 0.16 : 0.10),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -130,4 +131,3 @@ class ExpressPresetsBar extends StatelessWidget {
     );
   }
 }
-

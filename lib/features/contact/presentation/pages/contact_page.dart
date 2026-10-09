@@ -3,13 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
-import 'package:profile/l10n/app_localizations.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:profile/core/theme/tokens.dart';
-
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/services/sound_service.dart';
-
+import 'package:profile/core/theme/surface_tone.dart';
+import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/about/presentation/about_navigation.dart';
+import 'package:profile/features/about/presentation/widgets/aes_demo.dart';
+import 'package:profile/features/about/presentation/widgets/apdu_demo.dart';
+import 'package:profile/features/about/presentation/widgets/channel_demo.dart';
+import 'package:profile/features/about/presentation/widgets/key_derivation_demo.dart';
+import 'package:profile/features/about/presentation/widgets/offline_sync_demo.dart';
+import 'package:profile/features/about/presentation/widgets/profile_tab.dart';
 import 'package:profile/features/contact/presentation/widgets/contact_channels_grid.dart';
 import 'package:profile/features/contact/presentation/widgets/contact_header.dart';
 import 'package:profile/features/contact/presentation/widgets/contact_masthead_footer.dart';
@@ -20,21 +24,27 @@ import 'package:profile/features/contact/presentation/widgets/hero_email_card.da
 import 'package:profile/features/contact/presentation/widgets/inquiry_composer_dialog.dart';
 import 'package:profile/features/contact/presentation/widgets/telemetry_bar.dart';
 import 'package:profile/features/hats/presentation/widgets/hat_bio_strip.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/utils/mailto.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
 import 'package:profile/shared/widgets/page_activity.dart';
+import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
-import 'package:profile/shared/utils/mailto.dart';
+import 'package:profile/shared/widgets/section_masthead.dart';
+import 'package:profile/shared/widgets/text_tabs.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-/// Executive-grade editorial contact dossier and consulting portal.
-/// Commands trust with real-time timezone telemetry, consulting engagement matrix,
-/// express one-tap email presets, direct verified communication channels,
-/// and ATS-compliant CV download/preview actions.
+/// Unified Executive About & Direct Reach Out Dossier.
+/// Merges Executive Profile & Credentials, Live Interactive Playground Demos,
+/// and direct consulting engagement options into an integrated 3-tab experience.
 class ContactPage extends StatefulWidget {
   final bool isContinuousMobile;
+  final int? initialTab;
 
   const ContactPage({
     super.key,
     this.isContinuousMobile = false,
+    this.initialTab,
   });
 
   @override
@@ -45,13 +55,30 @@ class _ContactPageState extends State<ContactPage>
     with AutomaticKeepAliveClientMixin, ActivePageFocusMixin {
   final FocusNode _focusNode = FocusNode(debugLabel: 'ContactFocus');
 
+  late int _tab;
+
   @override
   FocusNode get pageFocusNode => _focusNode;
 
   @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _tab = widget.initialTab ?? AboutTabs.contact;
+    aboutTabRequest.addListener(_consumeRequest);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _consumeRequest());
+  }
+
+  KeyEventResult _onKey(FocusNode node, KeyEvent event) {
+    if (event is! KeyDownEvent) return KeyEventResult.ignored;
+    final k = event.logicalKey;
+    if (k == LogicalKeyboardKey.arrowRight) {
+      setState(() => _tab = (_tab + 1) % 3);
+      return KeyEventResult.handled;
+    } else if (k == LogicalKeyboardKey.arrowLeft) {
+      setState(() => _tab = (_tab - 1 + 3) % 3);
+      return KeyEventResult.handled;
+    }
+    return KeyEventResult.ignored;
   }
 
   @override
@@ -66,6 +93,20 @@ class _ContactPageState extends State<ContactPage>
   static const _linkedInHandle = 'abdallah-alhyari';
   static const _githubUrl = 'https://github.com/abdallahalhyari';
   static const _githubHandle = 'abdallahalhyari';
+
+  @override
+  void dispose() {
+    aboutTabRequest.removeListener(_consumeRequest);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _consumeRequest() {
+    final requested = aboutTabRequest.value;
+    if (requested == null || !mounted) return;
+    aboutTabRequest.value = null;
+    setState(() => _tab = requested.clamp(0, 2));
+  }
 
   Future<void> _open(String url) async {
     SoundService.instance.playClick();
@@ -85,7 +126,6 @@ class _ContactPageState extends State<ContactPage>
     await Clipboard.setData(ClipboardData(text: value));
     if (!context.mounted) return;
 
-    // Announce to screen readers for accessibility
     final announcement =
         AppLocalizations.of(context)?.copiedToClipboard(value) ??
             'Copied $value to clipboard';
@@ -104,11 +144,7 @@ class _ContactPageState extends State<ContactPage>
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    super.build(context); // AutomaticKeepAliveClientMixin requirement
-    final isDesktop = AppBreakpoints.isDesktop(context);
-
+  Widget _buildContactPortal(bool isDesktop) {
     final header = const ContactHeader();
     final telemetry = const TelemetryBar();
     final bio = HatBioStrip(isMobile: !isDesktop);
@@ -197,81 +233,204 @@ class _ContactPageState extends State<ContactPage>
       );
     }
 
-    Widget content() {
-      if (!isDesktop) {
-        final mobileItems = [
-          header,
-          telemetry,
-          bio,
-          heroEmail,
-          presets,
-          cvDossier,
-          channels,
-          engagementMatrix,
-          footer,
-        ];
+    if (!isDesktop) {
+      final mobileItems = [
+        header,
+        telemetry,
+        bio,
+        heroEmail,
+        presets,
+        cvDossier,
+        channels,
+        engagementMatrix,
+        footer,
+      ];
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (int i = 0; i < mobileItems.length; i++) ...[
-              if (i > 0) const SizedBox(height: AppSpacing.lg),
-              animate(mobileItems[i], i),
-            ],
-          ],
-        );
-      }
-
-      // Premium Asymmetrical Bento Grid for Desktop
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          animate(header, 0),
-          const SizedBox(height: AppSpacing.md),
-          animate(telemetry, 1),
-          const SizedBox(height: AppSpacing.xl),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 5,
-                child: Column(
-                  children: [
-                    animate(bio, 2),
-                    const SizedBox(height: AppSpacing.xl),
-                    animate(heroEmail, 3),
-                    const SizedBox(height: AppSpacing.md),
-                    animate(presets, 4),
-                    const SizedBox(height: AppSpacing.xl),
-                    animate(channels, 5),
-                  ],
-                ),
-              ),
-              const SizedBox(width: AppSpacing.xl),
-              Expanded(
-                flex: 4,
-                child: Column(
-                  children: [
-                    animate(cvDossier, 3),
-                    const SizedBox(height: AppSpacing.xl),
-                    animate(engagementMatrix, 4),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          animate(footer, 6),
+          for (int i = 0; i < mobileItems.length; i++) ...[
+            if (i > 0) const SizedBox(height: AppSpacing.lg),
+            animate(mobileItems[i], i),
+          ],
         ],
       );
     }
 
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        animate(header, 0),
+        const SizedBox(height: AppSpacing.md),
+        animate(telemetry, 1),
+        const SizedBox(height: AppSpacing.xl),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 5,
+              child: Column(
+                children: [
+                  animate(bio, 2),
+                  const SizedBox(height: AppSpacing.xl),
+                  animate(heroEmail, 3),
+                  const SizedBox(height: AppSpacing.md),
+                  animate(presets, 4),
+                  const SizedBox(height: AppSpacing.xl),
+                  animate(channels, 5),
+                ],
+              ),
+            ),
+            const SizedBox(width: AppSpacing.xl),
+            Expanded(
+              flex: 4,
+              child: Column(
+                children: [
+                  animate(cvDossier, 3),
+                  const SizedBox(height: AppSpacing.xl),
+                  animate(engagementMatrix, 4),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.xxl),
+        animate(footer, 6),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final l10n = AppLocalizations.of(context)!;
+    final isDesktop = AppBreakpoints.isDesktop(context);
+    final gold = context.isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
+
+    if (widget.isContinuousMobile) {
+      return Focus(
+        focusNode: _focusNode,
+        child: ScrollableAppScreenShell(
+          isContinuousMobile: true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildContactPortal(false),
+              const SizedBox(height: AppSpacing.xxl),
+              ProfileTab(isDesktop: false),
+              const SizedBox(height: AppSpacing.xxl),
+              const _PlaygroundGrid(),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final tabs = <String>[
+      l10n.aboutTabProfile,
+      l10n.aboutTabPlayground,
+      'Get In Touch',
+    ];
+
+    final Widget body = switch (_tab) {
+      AboutTabs.profile => ProfileTab(isDesktop: isDesktop),
+      AboutTabs.playground => const _PlaygroundGrid(),
+      _ => _buildContactPortal(isDesktop),
+    };
+
     return Focus(
       focusNode: _focusNode,
+      onKeyEvent: _onKey,
       child: ScrollableAppScreenShell(
-        isContinuousMobile: widget.isContinuousMobile,
-        child: content(),
+        maxWidth: kSectionMaxWidth,
+        isContinuousMobile: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SectionMasthead(
+              title: l10n.aboutTitle,
+              subtitle: _tab == AboutTabs.contact
+                  ? l10n.contactHeaderSubtitle
+                  : l10n.aboutSubtitle,
+              isDesktop: isDesktop,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            TextTabs(
+              labels: tabs,
+              selected: _tab,
+              accent: gold,
+              onSelect: (i) => setState(() => _tab = i),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            AnimatedSwitcher(
+              duration: AppMotion.switcher,
+              child: ConstrainedBox(
+                key: ValueKey(_tab),
+                constraints: const BoxConstraints(minHeight: 460),
+                child: body,
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+}
+
+/// The five interactive demos: two columns on wide screens, one column otherwise.
+class _PlaygroundGrid extends StatelessWidget {
+  const _PlaygroundGrid();
+
+  @override
+  Widget build(BuildContext context) {
+    const gap = AppSpacing.lg;
+    final demos = <Widget>[
+      const ChannelDemo(),
+      const ApduDemo(),
+      const KeyDerivationDemo(),
+      const AesDemo(),
+      const OfflineSyncDemo(),
+    ];
+    return LayoutBuilder(builder: (context, c) {
+      final cols = c.maxWidth >= 900 ? 2 : 1;
+      final columns = [
+        for (var i = 0; i < cols; i++)
+          [for (var j = i; j < demos.length; j += cols) (j, demos[j])],
+      ];
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (var i = 0; i < columns.length; i++) ...[
+            if (i > 0) const SizedBox(width: gap),
+            Expanded(
+              child: Column(
+                children: [
+                  for (var j = 0; j < columns[i].length; j++) ...[
+                    if (j > 0) const SizedBox(height: gap),
+                    TweenAnimationBuilder<double>(
+                      tween: Tween<double>(begin: 0.0, end: 1.0),
+                      duration: Duration(
+                          milliseconds:
+                              500 + (columns[i][j].$1 * 100).clamp(0, 500)),
+                      curve: Curves.easeOutCubic,
+                      builder: (context, value, child) {
+                        return Opacity(
+                          opacity: value,
+                          child: Transform.translate(
+                            offset: Offset(0, 20 * (1 - value)),
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: columns[i][j].$2,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ],
+      );
+    });
   }
 }

@@ -133,13 +133,11 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
               child: _buildHeader(scheme, loc, size, isDesktop),
             ),
             if (isDesktop) ...[
-              const SliverToBoxAdapter(
-                  child: SizedBox(height: AppSpacing.sm)),
+              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.sm)),
               SliverToBoxAdapter(
                 child: _buildHallmarksStrip(scheme, isDark, isDesktop),
               ),
-              const SliverToBoxAdapter(
-                  child: SizedBox(height: AppSpacing.md)),
+              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
             ] else ...[
               const SliverToBoxAdapter(
                   child: SizedBox(height: AppSpacing.sectionControls)),
@@ -202,10 +200,11 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                           ? columnWidth(constraints.maxWidth, 3, spacing)
                               .clamp(320.0, 400.0)
                           : constraints.maxWidth * 0.75;
-                      final double mobileCardWidth = filteredProjects.length == 1
-                          ? (constraints.maxWidth - AppSpacing.md * 2)
-                              .clamp(290.0, 480.0)
-                          : itemWidth;
+                      final double mobileCardWidth =
+                          filteredProjects.length == 1
+                              ? (constraints.maxWidth - AppSpacing.md * 2)
+                                  .clamp(290.0, 480.0)
+                              : itemWidth;
 
                       if (isDesktop) {
                         return Wrap(
@@ -264,8 +263,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     );
   }
 
-  Widget _buildHallmarksStrip(
-      ColorScheme scheme, bool isDark, bool isDesktop) {
+  Widget _buildHallmarksStrip(ColorScheme scheme, bool isDark, bool isDesktop) {
     return Wrap(
       spacing: 8,
       runSpacing: 8,

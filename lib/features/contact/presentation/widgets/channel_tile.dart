@@ -215,4 +215,3 @@ class _ChannelTileState extends State<ChannelTile> {
     );
   }
 }
-

@@ -69,7 +69,8 @@ class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
               boxShadow: widget.isHovered
                   ? [
                       BoxShadow(
-                        color: ctaColor.withValues(alpha: widget.isDark ? 0.25 : 0.12),
+                        color: ctaColor.withValues(
+                            alpha: widget.isDark ? 0.25 : 0.12),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),

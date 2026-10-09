@@ -75,7 +75,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('About'), findsOneWidget);
-      expect(find.text('Profile'), findsOneWidget);
+      expect(find.text('Profile'), findsWidgets);
       expect(find.text('Playground'), findsOneWidget);
 
       // Initially on profile tab
