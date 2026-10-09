@@ -79,7 +79,7 @@ class _SmoothScrollBehavior extends MaterialScrollBehavior {
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({
     super.key,
-    this.initialTheme = ThemeMode.light,
+    this.initialTheme = ThemeMode.dark,
     this.initialLocale = const Locale('en'),
     required this.projectRepo,
     required this.experienceRepo,

@@ -15,7 +15,6 @@ class HighlightBullet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.isDarkMode;
     final int colonIndex = text.indexOf(':');
     final bool hasColon = colonIndex != -1;
     final isolate = needsLtrIsolate(context, text);

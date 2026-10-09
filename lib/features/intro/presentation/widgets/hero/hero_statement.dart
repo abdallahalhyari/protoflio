@@ -25,8 +25,9 @@ class HeroStatement extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final scheme = Theme.of(context).colorScheme;
+    final compactHeight = isWide && size.height < 940;
     final nameSize = isWide
-        ? (size.width * 0.085).clamp(72.0, 116.0)
+        ? (size.width * 0.075).clamp(64.0, compactHeight ? 76.0 : 96.0)
         : (size.width * 0.17).clamp(52.0, 84.0);
 
     final nameStyle = TextStyle(
@@ -43,7 +44,9 @@ class HeroStatement extends StatelessWidget {
           child: Text(text, style: nameStyle.copyWith(color: color)),
         );
 
-    final gap = isWide ? AppSpacing.lg : AppSpacing.md;
+    final gap = compactHeight
+        ? AppSpacing.xs
+        : (isWide ? AppSpacing.md : AppSpacing.sm);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,8 +57,8 @@ class HeroStatement extends StatelessWidget {
           begin: 0.02,
           end: 0.38,
           child: Container(
-            margin: const EdgeInsets.only(bottom: AppSpacing.md),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
             decoration: BoxDecoration(
               color: isDark ? AppColors.darkCard : Colors.white,
               borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -135,29 +138,110 @@ class HeroStatement extends StatelessWidget {
               Text(
                 l10n.introTagline,
                 style: TextStyle(
-                  fontSize:
-                      isWide ? AppTypography.heading : AppTypography.title,
+                  fontSize: isWide
+                      ? (compactHeight ? AppTypography.title : AppTypography.heading)
+                      : AppTypography.title,
                   fontWeight: FontWeight.w700,
-                  height: 1.2,
+                  height: 1.15,
                   color: context.onSurface,
                 ),
               ),
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: 6),
               ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 540),
+                constraints: const BoxConstraints(maxWidth: 560),
                 child: Text(
-                  l10n.introPitch2,
+                  '“I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.”',
                   style: TextStyle(
-                    fontSize: AppTypography.lead,
-                    height: 1.6,
-                    color: context.onSurface
-                        .withValues(alpha: isDark ? 0.82 : 0.78),
+                    fontSize: compactHeight ? AppTypography.body : AppTypography.lead,
+                    height: 1.4,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w600,
+                    color: context.onSurface.withValues(alpha: isDark ? 0.95 : 0.90),
                   ),
                 ),
+              ),
+              if (!compactHeight) ...[
+                const SizedBox(height: 6),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 560),
+                  child: Text(
+                    l10n.introPitch2,
+                    style: TextStyle(
+                      fontSize: AppTypography.body,
+                      height: 1.45,
+                      color: context.onSurface
+                          .withValues(alpha: isDark ? 0.82 : 0.78),
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 8),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 560),
+                child: _buildTechPills(context, scheme, isDark),
               ),
             ],
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildTechPills(BuildContext context, ColorScheme scheme, bool isDark) {
+    const pills = [
+      ('Flutter & Dart', Icons.flutter_dash_rounded),
+      ('Android · Kotlin', Icons.android_rounded),
+      ('ISO-7816 NFC', Icons.nfc_rounded),
+      ('Offline-First Sync', Icons.sync_rounded),
+      ('Clean Architecture', Icons.architecture_rounded),
+    ];
+
+    final screenWidth = MediaQuery.sizeOf(context).width;
+
+    return Wrap(
+      spacing: 6,
+      runSpacing: 6,
+      children: [
+        for (final item in pills)
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: (screenWidth - 48).clamp(100.0, 280.0)),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? scheme.primary.withValues(alpha: 0.10)
+                    : AppColors.ink100,
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                border: Border.all(
+                  color: scheme.primary.withValues(alpha: isDark ? 0.35 : 0.25),
+                ),
+              ),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      item.$2,
+                      size: 12,
+                      color: context.adaptiveAccentText(scheme.primary),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      item.$1,
+                      style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.2,
+                        color: isDark ? Colors.white : AppColors.ink900,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }

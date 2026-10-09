@@ -21,6 +21,7 @@ import 'package:profile/features/experience/presentation/pages/experience_page.d
     deferred as experience_lib;
 import 'package:profile/features/contact/presentation/pages/contact_page.dart'
     deferred as contact_lib;
+import 'package:profile/features/about/presentation/about_navigation.dart';
 
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/shell/presentation/widgets/deferred_page.dart';
@@ -95,7 +96,14 @@ class _HomeScreenState extends State<HomeScreen> {
     final initialSlug = _slugFromHash(initialHash);
 
     if (initialSection != null) {
-      _pageIndex.value = UrlSyncService.instance.hashToIndex(initialSection);
+      _pageIndex.value = UrlSyncService.instance
+          .hashToIndex(initialSection)
+          .clamp(0, _pageCount - 1);
+      if (initialSection == 'perspectives' || initialSection == 'about') {
+        aboutTabRequest.value = AboutTabs.profile;
+      } else if (initialSection == 'contact') {
+        aboutTabRequest.value = AboutTabs.contact;
+      }
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final knownSlug =
             initialSlug == null || CaseStudyRouter.has(initialSlug);
@@ -157,7 +165,14 @@ class _HomeScreenState extends State<HomeScreen> {
       CaseStudyRouter.closeFromUrl();
       if (slug != null) UrlSyncService.instance.updateHash('work');
       if (section != null) {
-        final target = UrlSyncService.instance.hashToIndex(section);
+        if (section == 'perspectives' || section == 'about') {
+          aboutTabRequest.value = AboutTabs.profile;
+        } else if (section == 'contact') {
+          aboutTabRequest.value = AboutTabs.contact;
+        }
+        final target = UrlSyncService.instance
+            .hashToIndex(section)
+            .clamp(0, _pageCount - 1);
         if (target != _pageIndex.value && mounted) {
           _goTo(target, syncUrl: false);
         }

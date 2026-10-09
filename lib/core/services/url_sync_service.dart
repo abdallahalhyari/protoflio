@@ -16,11 +16,32 @@ abstract class UrlSyncService {
   ];
 
   /// Section index for [hash]; a sub-route (`work/nathealth`) maps to its
-  /// section, anything unknown to home.
+  /// section, anything unknown to home. Supports canonical and alias slugs
+  /// (#home, #experience, #projects, #skills, #engineering, #perspectives, #contact).
   int hashToIndex(String hash) {
     final clean = hash.replaceAll('#', '').split('/').first.toLowerCase();
-    final idx = sectionHashes.indexOf(clean);
-    return idx != -1 ? idx : 0;
+    switch (clean) {
+      case 'home':
+        return 0;
+      case 'work':
+      case 'projects':
+        return 1;
+      case 'engineering':
+        return 2;
+      case 'experience':
+        return 3;
+      case 'stack':
+      case 'skills':
+        return 4;
+      case 'about':
+      case 'perspectives':
+        return 5;
+      case 'contact':
+        return 6;
+      default:
+        final idx = sectionHashes.indexOf(clean);
+        return idx != -1 ? idx : 0;
+    }
   }
 
   String indexToHash(int index) {
@@ -37,6 +58,7 @@ abstract class UrlSyncService {
     final clean = hash.replaceAll('#', '').toLowerCase();
     switch (clean) {
       case 'work':
+      case 'projects':
         return 'Selected Work & Case Studies · Abdallah Alhyari';
       case 'work/nathealth':
         return 'NatHealth Smart-Card Case Study · Abdallah Alhyari';
@@ -51,7 +73,10 @@ abstract class UrlSyncService {
       case 'experience':
         return 'Experience & Career · Abdallah Alhyari';
       case 'stack':
+      case 'skills':
         return 'Skills & Stack · Abdallah Alhyari';
+      case 'perspectives':
+        return 'Engineering Perspectives · Abdallah Alhyari';
       case 'about':
         return 'About · Abdallah Alhyari';
       case 'contact':

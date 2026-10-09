@@ -53,6 +53,28 @@ class FolioBar extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Container(
+                  margin: const EdgeInsetsDirectional.only(end: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withValues(
+                          alpha: context.isDarkMode ? 0.16 : 0.10,
+                        ),
+                    borderRadius: BorderRadius.circular(AppRadius.xs),
+                  ),
+                  child: Text(
+                    'FOLIO',
+                    style: TextStyle(
+                      fontFamily: AppTypography.monoFont,
+                      color: context.adaptiveAccentText(
+                        Theme.of(context).colorScheme.primary,
+                      ),
+                      fontSize: AppTypography.label,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                ),
                 ExcludeSemantics(
                     child: AnimatedSwitcher(
                   duration: AppMotion.switcher,

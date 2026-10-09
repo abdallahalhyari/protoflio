@@ -72,7 +72,11 @@ class _IntroPageState extends State<IntroPage>
           isWide: isWide,
           reveal: _reveal,
         ),
-        SizedBox(height: isWide ? AppSpacing.xl : AppSpacing.lg),
+        SizedBox(
+          height: isWide
+              ? (size.height < 940 ? AppSpacing.md : AppSpacing.xl)
+              : AppSpacing.lg,
+        ),
         HeroStep(
           animation: _reveal,
           begin: 0.55,
