@@ -21,17 +21,32 @@ class CredentialsBentoCard extends StatelessWidget {
   Widget _buildSectionHeader(
       String title, ColorScheme scheme, Color accentColor) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.only(bottom: 6),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: accentColor, width: 2)),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontFamily: AppTypography.displayFont,
-          color: scheme.onSurface,
-          fontSize: AppTypography.lead,
+        border: Border(
+          bottom: BorderSide(
+            color: accentColor.withValues(alpha: 0.6),
+            width: 1.5,
+          ),
         ),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.workspace_premium_rounded, size: 16, color: accentColor),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontFamily: AppTypography.displayFont,
+                color: scheme.onSurface,
+                fontSize: AppTypography.lead,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

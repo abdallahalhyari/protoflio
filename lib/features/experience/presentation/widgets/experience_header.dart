@@ -20,6 +20,7 @@ class ExperienceHeader extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SectionMasthead(
+          kicker: '04 · CAREER TRAJECTORY',
           title: loc.navExperience,
           subtitle: loc.sectionSubtitleExperience,
           isDesktop: isDesktop,
