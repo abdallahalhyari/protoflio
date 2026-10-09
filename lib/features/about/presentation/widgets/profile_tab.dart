@@ -494,7 +494,8 @@ class _InteractiveMetricCardState extends State<_InteractiveMetricCard> {
                   boxShadow: _hover
                       ? [
                           BoxShadow(
-                            color: accent.withValues(alpha: isDark ? 0.35 : 0.18),
+                            color:
+                                accent.withValues(alpha: isDark ? 0.35 : 0.18),
                             blurRadius: 10,
                           ),
                         ]
@@ -1681,4 +1682,3 @@ class _InteractiveSkillChipState extends State<_InteractiveSkillChip> {
     );
   }
 }
-

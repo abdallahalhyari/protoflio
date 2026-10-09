@@ -115,18 +115,34 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                               .withValues(alpha: isDark ? 0.3 : 0.2),
                         ),
                       ),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          t.tag,
-                          style: TextStyle(
-                            fontFamily: AppTypography.monoFont,
-                            color: accentText,
-                            fontSize: AppTypography.label,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 0.3,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 5,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: accentText,
+                              shape: BoxShape.circle,
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 5),
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                t.tag,
+                                style: TextStyle(
+                                  fontFamily: AppTypography.monoFont,
+                                  color: accentText,
+                                  fontSize: AppTypography.label,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 0.3,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

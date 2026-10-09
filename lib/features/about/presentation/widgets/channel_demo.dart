@@ -38,6 +38,9 @@ class _ChannelDemoState extends State<ChannelDemo> {
     final decoded = codec.decodeMethodCall(data);
 
     return AboutCard(
+      headerKicker: 'METHOD-CHANNEL // CODEC',
+      headerTitle: 'STANDARD_METHOD_CODEC WIRE TRACE',
+      engineStatus: 'ACTIVE',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -67,6 +67,14 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
     final caseStudySlug =
         CaseStudyRouter.slugForCompany(widget.project.company);
 
+    final domainAccent = switch (widget.project.domain) {
+      'Healthcare & Smart Cards' => AppColors.tealLight,
+      'Enterprise HIS & LMS' => widget.scheme.primary,
+      'Fleet & Telematics' => AppColors.teal,
+      'M-Commerce & Streaming' => AppColors.goldSoft,
+      _ => widget.scheme.primary,
+    };
+
     return LayoutBuilder(builder: (context, constraints) {
       final pinFoot = constraints.hasBoundedHeight;
       return RepaintBoundary(
@@ -104,10 +112,10 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                             ),
                             radius: 1.5,
                             colors: [
-                              widget.scheme.primary.withValues(alpha: 0.12),
+                              domainAccent.withValues(alpha: 0.14),
                               context.cardGlassHover,
                             ],
-                            stops: const [0.0, 0.5],
+                            stops: const [0.0, 0.55],
                           )
                         : null,
                     color: isInteractive && !isDark
@@ -115,8 +123,9 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                         : (isInteractive ? null : context.cardGlass),
                     border: Border.all(
                       color: isInteractive
-                          ? widget.scheme.primary
-                              .withValues(alpha: isDark ? 0.75 : 0.65)
+                          ? (isDark
+                              ? domainAccent.withValues(alpha: 0.85)
+                              : widget.scheme.primary.withValues(alpha: 0.75))
                           : (isDark
                               ? Colors.white.withValues(alpha: 0.14)
                               : AppColors.ink200),
@@ -126,24 +135,24 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                         ? (isInteractive
                             ? [
                                 BoxShadow(
-                                  color: widget.scheme.primary
-                                      .withValues(alpha: 0.4),
-                                  blurRadius: 40,
+                                  color: domainAccent.withValues(alpha: 0.35),
+                                  blurRadius: 36,
                                   spreadRadius: 2,
                                 ),
                                 BoxShadow(
-                                  color: AppColors.teal.withValues(alpha: 0.2),
-                                  blurRadius: 60,
-                                  spreadRadius: 8,
+                                  color: widget.scheme.primary
+                                      .withValues(alpha: 0.20),
+                                  blurRadius: 55,
+                                  spreadRadius: 6,
                                 ),
                               ]
                             : [])
                         : (isInteractive
                             ? [
                                 BoxShadow(
-                                  color: Color.lerp(widget.scheme.primary,
-                                          Colors.black, 0.5)!
-                                      .withValues(alpha: 0.3),
+                                  color: Color.lerp(
+                                          domainAccent, Colors.black, 0.45)!
+                                      .withValues(alpha: 0.28),
                                   blurRadius: 24,
                                   spreadRadius: 4,
                                   offset: const Offset(0, 12),

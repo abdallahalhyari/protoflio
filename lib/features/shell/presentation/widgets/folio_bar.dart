@@ -55,7 +55,8 @@ class FolioBar extends StatelessWidget {
               children: [
                 Container(
                   margin: const EdgeInsetsDirectional.only(end: 6),
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary.withValues(
                           alpha: context.isDarkMode ? 0.16 : 0.10,

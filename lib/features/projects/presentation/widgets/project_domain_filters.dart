@@ -226,6 +226,21 @@ class _DomainChipState extends State<_DomainChip> {
   bool _isHovered = false;
   bool _isFocused = false;
 
+  Color _accentForDomain(String raw, ColorScheme scheme) {
+    switch (raw) {
+      case 'Healthcare & Smart Cards':
+        return AppColors.tealLight;
+      case 'Enterprise HIS & LMS':
+        return scheme.primary;
+      case 'Fleet & Telematics':
+        return AppColors.teal;
+      case 'M-Commerce & Streaming':
+        return AppColors.goldSoft;
+      default:
+        return scheme.primary;
+    }
+  }
+
   IconData _iconForDomain(String raw) {
     switch (raw) {
       case 'ALL':
@@ -250,23 +265,26 @@ class _DomainChipState extends State<_DomainChip> {
     final scheme = widget.scheme;
     final isDesktop = widget.isDesktop;
     final isInteractive = _isHovered || _isFocused;
+    final domainAccent = _accentForDomain(widget.domainRaw, scheme);
 
     final activeBg = isSelected
-        ? scheme.primary.withValues(alpha: isDark ? 0.22 : 0.15)
+        ? domainAccent.withValues(alpha: isDark ? 0.22 : 0.15)
         : (isInteractive
-            ? scheme.primary.withValues(alpha: isDark ? 0.08 : 0.05)
+            ? domainAccent.withValues(alpha: isDark ? 0.09 : 0.05)
             : (isDark
                 ? Colors.white.withValues(alpha: 0.05)
                 : AppColors.ink100));
 
     final activeBorder = isSelected
-        ? scheme.primary.withValues(alpha: isDark ? 0.7 : 0.6)
+        ? domainAccent.withValues(alpha: isDark ? 0.8 : 0.65)
         : (isInteractive
-            ? scheme.primary.withValues(alpha: isDark ? 0.45 : 0.35)
+            ? domainAccent.withValues(alpha: isDark ? 0.5 : 0.38)
             : (context.divider));
 
     final textColor = isSelected
-        ? context.adaptiveAccentText(scheme.primary)
+        ? (isDark
+            ? domainAccent
+            : AppColors.toAccessibleLightText(domainAccent))
         : context.onSurface;
 
     return Semantics(
@@ -306,18 +324,19 @@ class _DomainChipState extends State<_DomainChip> {
                   boxShadow: isSelected
                       ? [
                           BoxShadow(
-                            color: scheme.primary
-                                .withValues(alpha: isDark ? 0.25 : 0.15),
-                            blurRadius: 10,
+                            color: domainAccent.withValues(
+                                alpha: isDark ? 0.30 : 0.18),
+                            blurRadius: 12,
+                            spreadRadius: 1,
                             offset: const Offset(0, 2),
                           ),
                         ]
                       : (isInteractive && !isSelected
                           ? [
                               BoxShadow(
-                                color: scheme.primary
-                                    .withValues(alpha: isDark ? 0.08 : 0.04),
-                                blurRadius: 4,
+                                color: domainAccent.withValues(
+                                    alpha: isDark ? 0.10 : 0.05),
+                                blurRadius: 6,
                                 offset: const Offset(0, 1),
                               ),
                             ]
@@ -349,12 +368,12 @@ class _DomainChipState extends State<_DomainChip> {
                         width: 5,
                         height: 5,
                         decoration: BoxDecoration(
-                          color: textColor,
+                          color: domainAccent,
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: scheme.primary.withValues(alpha: 0.6),
-                              blurRadius: 4,
+                              color: domainAccent.withValues(alpha: 0.8),
+                              blurRadius: 5,
                               spreadRadius: 1,
                             ),
                           ],
@@ -368,16 +387,26 @@ class _DomainChipState extends State<_DomainChip> {
                           horizontal: 5, vertical: 1.5),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? scheme.primary
+                            ? domainAccent
                             : (isInteractive
-                                ? scheme.primary
-                                    .withValues(alpha: isDark ? 0.15 : 0.1)
+                                ? domainAccent.withValues(
+                                    alpha: isDark ? 0.18 : 0.12)
                                 : (context.divider)),
                         borderRadius: BorderRadius.circular(AppRadius.chip),
+                        boxShadow: isSelected
+                            ? [
+                                BoxShadow(
+                                  color: domainAccent.withValues(
+                                      alpha: isDark ? 0.4 : 0.2),
+                                  blurRadius: 6,
+                                ),
+                              ]
+                            : null,
                       ),
                       child: Text(
                         '${widget.count}',
                         style: TextStyle(
+                          fontFamily: AppTypography.monoFont,
                           color: isSelected ? scheme.onPrimary : textColor,
                           fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,

@@ -66,7 +66,7 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
               decoration: BoxDecoration(
                 color: _isHovered && widget.onTap != null
                     ? widget.scheme.primary
-                        .withValues(alpha: widget.isDark ? 0.35 : 0.25)
+                        .withValues(alpha: widget.isDark ? 0.32 : 0.22)
                     : bg,
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: Border.all(
@@ -75,13 +75,14 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
                       : border,
                   width: widget.isSelected ? 1.2 : 0.8,
                 ),
-                boxShadow: _isHovered && widget.onTap != null
+                boxShadow: (widget.isSelected ||
+                        (_isHovered && widget.onTap != null))
                     ? [
                         BoxShadow(
                           color: widget.scheme.primary
-                              .withValues(alpha: widget.isDark ? 0.4 : 0.2),
-                          blurRadius: 12,
-                          offset: const Offset(0, 2),
+                              .withValues(alpha: widget.isDark ? 0.38 : 0.18),
+                          blurRadius: widget.isSelected ? 10 : 8,
+                          offset: const Offset(0, 1.5),
                         )
                       ]
                     : null,
@@ -90,14 +91,15 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
                 widget.tag,
                 semanticsLabel: '',
                 style: TextStyle(
+                  fontFamily: AppTypography.monoFont,
                   color: _isHovered && widget.onTap != null && !widget.isDark
                       ? AppColors.toAccessibleLightText(widget.scheme.primary)
                       : text,
                   fontSize: AppTypography.label,
                   fontWeight: widget.isSelected || _isHovered
                       ? FontWeight.w900
-                      : FontWeight.w600,
-                  letterSpacing: 0.2,
+                      : FontWeight.w700,
+                  letterSpacing: 0.3,
                 ),
               ),
             ),

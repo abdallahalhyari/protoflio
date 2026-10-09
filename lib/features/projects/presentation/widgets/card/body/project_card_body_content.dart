@@ -55,6 +55,23 @@ class CardBodyContent extends StatelessWidget {
     final titleBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          project.company.toUpperCase(),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontFamily: AppTypography.monoFont,
+            fontSize: AppTypography.label - 1,
+            fontWeight: FontWeight.w900,
+            color: isHovered
+                ? (isDark
+                    ? scheme.primary
+                    : AppColors.toAccessibleLightText(scheme.primary))
+                : context.mutedText,
+            letterSpacing: 0.8,
+          ),
+        ),
+        const SizedBox(height: 5),
         AnimatedDefaultTextStyle(
           duration: AppMotion.snap,
           style: TextStyle(

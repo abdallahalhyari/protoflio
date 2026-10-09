@@ -68,7 +68,13 @@ class _KeyDerivationDemoState extends State<KeyDerivationDemo> {
     final gold = context.isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
     final live = context.isDarkMode ? AppColors.tealLight : AppColors.tealDeep;
 
+    final isDark = context.isDarkMode;
+
     return AboutCard(
+      headerKicker: 'PBKDF2-HMAC-SHA256 // CRYPTO',
+      headerTitle: 'HARDWARE KEY DERIVATION BENCHMARK',
+      engineStatus:
+          _running ? 'COMPUTING' : (_hex != null ? 'DERIVED' : 'READY'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -127,9 +133,13 @@ class _KeyDerivationDemoState extends State<KeyDerivationDemo> {
             ],
           ),
           const SizedBox(height: AppSpacing.md),
-          FilledButton(
+          FilledButton.icon(
             onPressed: _running ? null : _run,
-            child: Text(_running ? l10n.playKdfRunning : l10n.playKdfRun),
+            icon: Icon(
+              _running ? Icons.hourglass_top_rounded : Icons.bolt_rounded,
+              size: 18,
+            ),
+            label: Text(_running ? l10n.playKdfRunning : l10n.playKdfRun),
           ),
           if (_running) ...[
             const SizedBox(height: AppSpacing.sm),
@@ -145,24 +155,52 @@ class _KeyDerivationDemoState extends State<KeyDerivationDemo> {
               ),
             ),
             const SizedBox(height: 4),
-            SelectableText(
-              _hex!,
-              textDirection: TextDirection.ltr,
-              style: TextStyle(
-                fontFamily: AppTypography.monoFont,
-                fontSize: AppTypography.body,
-                height: 1.5,
-                color: gold,
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? Colors.black.withValues(alpha: 0.35)
+                    : AppColors.ink100.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(AppRadius.sm),
+                border: Border.all(
+                  color: gold.withValues(alpha: isDark ? 0.3 : 0.2),
+                  width: 0.8,
+                ),
+              ),
+              child: SelectableText(
+                _hex!,
+                textDirection: TextDirection.ltr,
+                style: TextStyle(
+                  fontFamily: AppTypography.monoFont,
+                  fontSize: AppTypography.body,
+                  height: 1.5,
+                  color: gold,
+                ),
               ),
             ),
-            const SizedBox(height: 6),
-            Text(
-              l10n.playKdfTime(_ms ?? 0),
-              style: TextStyle(
-                fontSize: AppTypography.label,
-                color: live,
-                fontWeight: FontWeight.w700,
-              ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: live,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  l10n.playKdfTime(_ms ?? 0),
+                  style: TextStyle(
+                    fontFamily: AppTypography.monoFont,
+                    fontSize: AppTypography.label,
+                    color: live,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
           ],
           const SizedBox(height: AppSpacing.sm),

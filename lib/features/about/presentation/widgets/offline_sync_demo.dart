@@ -112,7 +112,14 @@ class _OfflineSyncDemoState extends State<OfflineSyncDemo> {
           _ClaimState.synced => live,
         };
 
+    final isDark = context.isDarkMode;
+
     return AboutCard(
+      headerKicker: 'OFFLINE-FIRST // PIPELINE',
+      headerTitle: 'EXPONENTIAL BACKOFF REPLICATION',
+      engineStatus: _draining
+          ? 'DRAINING_QUEUE'
+          : (_online ? 'ONLINE_IDLE' : 'OFFLINE_BUFFERING'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -157,7 +164,11 @@ class _OfflineSyncDemoState extends State<OfflineSyncDemo> {
             ],
           ),
           const SizedBox(height: AppSpacing.md),
-          FilledButton(onPressed: _submit, child: Text(l10n.playSyncSubmit)),
+          FilledButton.icon(
+            onPressed: _submit,
+            icon: const Icon(Icons.add_task_rounded, size: 16),
+            label: Text(l10n.playSyncSubmit),
+          ),
           const SizedBox(height: AppSpacing.md),
           if (_claims.isEmpty)
             Text(
@@ -169,8 +180,20 @@ class _OfflineSyncDemoState extends State<OfflineSyncDemo> {
             )
           else
             for (final c in _claims.reversed.take(5))
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 3),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.02)
+                      : AppColors.ink50,
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  border: Border.all(
+                    color: color(c).withValues(alpha: isDark ? 0.3 : 0.2),
+                    width: 0.8,
+                  ),
+                ),
                 child: Row(
                   children: [
                     AnimatedContainer(
@@ -180,6 +203,12 @@ class _OfflineSyncDemoState extends State<OfflineSyncDemo> {
                       decoration: BoxDecoration(
                         color: color(c),
                         shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: color(c).withValues(alpha: 0.5),
+                            blurRadius: 4,
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -188,6 +217,7 @@ class _OfflineSyncDemoState extends State<OfflineSyncDemo> {
                         l10n.playSyncClaim(c.number),
                         style: TextStyle(
                           fontSize: AppTypography.body,
+                          fontWeight: FontWeight.w600,
                           color: context.onSurface,
                         ),
                       ),
@@ -199,6 +229,7 @@ class _OfflineSyncDemoState extends State<OfflineSyncDemo> {
                         style: TextStyle(
                           fontFamily: AppTypography.monoFont,
                           fontSize: AppTypography.label,
+                          fontWeight: FontWeight.w700,
                           color: color(c),
                         ),
                       ),

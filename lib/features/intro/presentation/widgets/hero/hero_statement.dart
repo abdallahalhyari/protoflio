@@ -139,7 +139,9 @@ class HeroStatement extends StatelessWidget {
                 l10n.introTagline,
                 style: TextStyle(
                   fontSize: isWide
-                      ? (compactHeight ? AppTypography.title : AppTypography.heading)
+                      ? (compactHeight
+                          ? AppTypography.title
+                          : AppTypography.heading)
                       : AppTypography.title,
                   fontWeight: FontWeight.w700,
                   height: 1.15,
@@ -152,11 +154,13 @@ class HeroStatement extends StatelessWidget {
                 child: Text(
                   '“I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.”',
                   style: TextStyle(
-                    fontSize: compactHeight ? AppTypography.body : AppTypography.lead,
+                    fontSize:
+                        compactHeight ? AppTypography.body : AppTypography.lead,
                     height: 1.4,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w600,
-                    color: context.onSurface.withValues(alpha: isDark ? 0.95 : 0.90),
+                    color: context.onSurface
+                        .withValues(alpha: isDark ? 0.95 : 0.90),
                   ),
                 ),
               ),
@@ -187,7 +191,8 @@ class HeroStatement extends StatelessWidget {
     );
   }
 
-  Widget _buildTechPills(BuildContext context, ColorScheme scheme, bool isDark) {
+  Widget _buildTechPills(
+      BuildContext context, ColorScheme scheme, bool isDark) {
     const pills = [
       ('Flutter & Dart', Icons.flutter_dash_rounded),
       ('Android · Kotlin', Icons.android_rounded),
@@ -204,7 +209,8 @@ class HeroStatement extends StatelessWidget {
       children: [
         for (final item in pills)
           ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: (screenWidth - 48).clamp(100.0, 280.0)),
+            constraints: BoxConstraints(
+                maxWidth: (screenWidth - 48).clamp(100.0, 280.0)),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
               decoration: BoxDecoration(

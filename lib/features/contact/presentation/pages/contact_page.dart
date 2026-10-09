@@ -342,6 +342,11 @@ class _ContactPageState extends State<ContactPage>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SectionMasthead(
+              kicker: _tab == AboutTabs.contact
+                  ? '06 · DISPATCH & DIRECT CHANNELS'
+                  : (_tab == AboutTabs.playground
+                      ? '06 · INTERACTIVE HARDWARE & CRYPTO LAB'
+                      : '06 · EXECUTIVE CREDENTIALS & DOSSIER'),
               title: l10n.aboutTitle,
               subtitle: _tab == AboutTabs.contact
                   ? l10n.contactHeaderSubtitle

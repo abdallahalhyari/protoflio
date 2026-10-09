@@ -44,28 +44,56 @@ class SkillSearchBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
           decoration: BoxDecoration(
             color: isDark
-                ? Colors.white.withValues(alpha: 0.04)
-                : AppColors.ink100.withValues(alpha: 0.8),
+                ? (isFiltered
+                    ? scheme.primary.withValues(alpha: 0.05)
+                    : Colors.white.withValues(alpha: 0.04))
+                : (isFiltered
+                    ? scheme.primary.withValues(alpha: 0.04)
+                    : AppColors.ink100.withValues(alpha: 0.8)),
             borderRadius: BorderRadius.circular(AppRadius.pill),
             border: Border.all(
               color: isFiltered
-                  ? scheme.primary.withValues(alpha: 0.5)
+                  ? scheme.primary.withValues(alpha: 0.6)
                   : (isDark
                       ? Colors.white.withValues(alpha: 0.08)
                       : AppColors.ink200),
               width: isFiltered ? 1.2 : 1.0,
             ),
+            boxShadow: isFiltered
+                ? [
+                    BoxShadow(
+                      color: scheme.primary
+                          .withValues(alpha: isDark ? 0.22 : 0.10),
+                      blurRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                  ]
+                : null,
           ),
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.only(start: 6, end: 8),
-                child: Icon(
-                  Icons.search_rounded,
-                  size: 18,
-                  color: isFiltered
-                      ? scheme.primary
-                      : scheme.onSurface.withValues(alpha: 0.6),
+                padding: const EdgeInsetsDirectional.only(start: 4, end: 8),
+                child: Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    color: isFiltered
+                        ? scheme.primary.withValues(alpha: isDark ? 0.22 : 0.12)
+                        : (isDark
+                            ? Colors.white.withValues(alpha: 0.04)
+                            : AppColors.ink200.withValues(alpha: 0.4)),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.search_rounded,
+                      size: 16,
+                      color: isFiltered
+                          ? scheme.primary
+                          : scheme.onSurface.withValues(alpha: 0.6),
+                    ),
+                  ),
                 ),
               ),
               Expanded(
@@ -83,7 +111,6 @@ class SkillSearchBar extends StatelessWidget {
                     hintStyle: TextStyle(
                       fontSize:
                           isDesktop ? AppTypography.body : AppTypography.label,
-                      // The muted text tone clears 4.5:1 on both themes.
                       color: context.mutedText,
                       fontWeight: FontWeight.w500,
                     ),
@@ -100,7 +127,7 @@ class SkillSearchBar extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   constraints:
                       const BoxConstraints(minWidth: 28, minHeight: 28),
-                  color: scheme.onSurface.withValues(alpha: 0.6),
+                  color: scheme.onSurface.withValues(alpha: 0.7),
                   onPressed: () {
                     SoundService.instance.playClick();
                     onClear();
@@ -117,15 +144,18 @@ class SkillSearchBar extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: isFiltered
-                        ? scheme.primary.withValues(alpha: isDark ? 0.16 : 0.12)
+                        ? scheme.primary.withValues(alpha: isDark ? 0.18 : 0.12)
                         : (isDark
                             ? Colors.white.withValues(alpha: AppAlpha.whisper)
                             : Colors.black.withValues(alpha: 0.05)),
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                     border: Border.all(
                       color: isFiltered
-                          ? scheme.primary.withValues(alpha: AppAlpha.border)
-                          : Colors.transparent,
+                          ? scheme.primary.withValues(alpha: 0.4)
+                          : (isDark
+                              ? Colors.white.withValues(alpha: 0.06)
+                              : Colors.transparent),
+                      width: 0.8,
                     ),
                   ),
                   child: Row(
@@ -138,6 +168,12 @@ class SkillSearchBar extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: scheme.primary,
                             shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: scheme.primary.withValues(alpha: 0.6),
+                                blurRadius: 4,
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(width: 6),
@@ -157,8 +193,12 @@ class SkillSearchBar extends StatelessWidget {
                             softWrap: false,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
+                              fontFamily: AppTypography.monoFont,
                               fontSize: AppTypography.label,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures()
+                              ],
                               color: isFiltered
                                   ? scheme.primary
                                   : scheme.onSurface.withValues(alpha: 0.7),

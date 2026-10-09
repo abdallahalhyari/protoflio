@@ -41,6 +41,15 @@ class ChannelTile extends StatefulWidget {
 class _ChannelTileState extends State<ChannelTile> {
   bool _hover = false;
 
+  static String _channelBadge(String label) {
+    final upper = label.toUpperCase();
+    if (upper.contains('EMAIL')) return '< 24H SLA';
+    if (upper.contains('PHONE') || upper.contains('WHATSAPP')) return 'DIRECT';
+    if (upper.contains('LINKEDIN')) return 'NETWORK';
+    if (upper.contains('GITHUB')) return 'REPO';
+    return 'SYNC';
+  }
+
   @override
   Widget build(BuildContext context) {
     final d = widget.data;
@@ -129,6 +138,43 @@ class _ChannelTileState extends State<ChannelTile> {
                             color: context.onSurface,
                             fontSize: AppTypography.body,
                             fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: d.accent.withValues(alpha: isDark ? 0.12 : 0.08),
+                      borderRadius: BorderRadius.circular(AppRadius.chip),
+                      border: Border.all(
+                        color: d.accent.withValues(alpha: isDark ? 0.35 : 0.25),
+                        width: 0.8,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 4,
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: labelColor,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          _channelBadge(d.label),
+                          style: TextStyle(
+                            fontFamily: AppTypography.monoFont,
+                            fontSize: AppTypography.label - 3,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.5,
+                            color: labelColor,
                           ),
                         ),
                       ],

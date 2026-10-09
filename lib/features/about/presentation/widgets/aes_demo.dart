@@ -96,7 +96,16 @@ class _AesDemoState extends State<AesDemo> {
       color: context.onSurface,
     );
 
+    final isDark = context.isDarkMode;
+
     return AboutCard(
+      headerKicker: 'AES-256-CBC // CIPHER',
+      headerTitle: 'SYMMETRIC ENCRYPTION ENGINE',
+      engineStatus: _busy
+          ? 'CIPHER_BUSY'
+          : (_failed
+              ? 'MAC_MISMATCH'
+              : (enc != null ? 'CIPHER_ACTIVE' : 'IDLE')),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -132,9 +141,10 @@ class _AesDemoState extends State<AesDemo> {
             decoration: deco(l10n.playAesPassword),
           ),
           const SizedBox(height: AppSpacing.sm),
-          FilledButton(
+          FilledButton.icon(
             onPressed: _busy ? null : _encrypt,
-            child: Text(l10n.playAesEncrypt),
+            icon: const Icon(Icons.lock_outline_rounded, size: 16),
+            label: Text(l10n.playAesEncrypt),
           ),
           if (enc != null) ...[
             MonoField(
@@ -153,18 +163,43 @@ class _AesDemoState extends State<AesDemo> {
               decoration: deco(l10n.playAesDecryptWith),
             ),
             const SizedBox(height: AppSpacing.sm),
-            OutlinedButton(
+            OutlinedButton.icon(
               onPressed: _busy ? null : _decrypt,
-              child: Text(l10n.playAesDecrypt),
+              icon: const Icon(Icons.lock_open_rounded, size: 16),
+              label: Text(l10n.playAesDecrypt),
             ),
             if (_failed)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  l10n.playAesWrongKey,
-                  style: TextStyle(
-                    fontSize: AppTypography.body,
-                    color: AppColors.signalLight,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.signalLight
+                        .withValues(alpha: isDark ? 0.12 : 0.08),
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                    border: Border.all(
+                      color: AppColors.signalLight
+                          .withValues(alpha: isDark ? 0.35 : 0.25),
+                      width: 0.8,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.error_outline_rounded,
+                          size: 16, color: AppColors.signalLight),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          l10n.playAesWrongKey,
+                          style: const TextStyle(
+                            fontSize: AppTypography.body,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.signalLight,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               )

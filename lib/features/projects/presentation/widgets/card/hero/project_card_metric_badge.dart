@@ -17,17 +17,17 @@ class CardMetricBadge extends StatelessWidget {
       top: AppSpacing.sm,
       left: AppSpacing.sm,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4.5),
         decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.78),
+          color: Colors.black.withValues(alpha: 0.85),
           borderRadius: BorderRadius.circular(AppRadius.xs),
           border: Border.all(
-            color: primary.withValues(alpha: 0.65),
+            color: primary.withValues(alpha: 0.75),
           ),
           boxShadow: [
             BoxShadow(
-              color: primary.withValues(alpha: 0.35),
-              blurRadius: 8,
+              color: primary.withValues(alpha: 0.40),
+              blurRadius: 10,
               spreadRadius: 1,
             ),
           ],
@@ -35,15 +35,27 @@ class CardMetricBadge extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.verified_rounded, size: 12, color: primary),
-            const SizedBox(width: 5),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: primary.withValues(alpha: 0.6),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Icon(Icons.verified_rounded, size: 12, color: primary),
+            ),
+            const SizedBox(width: 6),
             Text(
               text,
               style: const TextStyle(
+                fontFamily: AppTypography.monoFont,
                 color: Colors.white,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 0.2,
+                letterSpacing: 0.3,
               ),
             ),
           ],

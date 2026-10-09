@@ -297,6 +297,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
   Widget _buildHeader(
       ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
     return SectionMasthead(
+      kicker: '02 · SELECTED PRODUCTION WORKS',
       title: loc.navWork,
       subtitle: loc.sectionSubtitleWork,
       isDesktop: isDesktop,
@@ -338,7 +339,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
   }
 }
 
-class _HallmarkPill extends StatelessWidget {
+class _HallmarkPill extends StatefulWidget {
   final IconData icon;
   final String title;
   final String subtitle;
@@ -354,65 +355,109 @@ class _HallmarkPill extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final fgAccent = accentColor;
-    final borderColor =
-        isDark ? Colors.white.withValues(alpha: 0.10) : AppColors.ink200;
-    final bgColor = isDark
-        ? Colors.white.withValues(alpha: 0.04)
-        : AppColors.ink100.withValues(alpha: 0.6);
+  State<_HallmarkPill> createState() => _HallmarkPillState();
+}
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(AppRadius.xs),
-        border: Border.all(color: borderColor),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: isDark ? 0.16 : 0.12),
-              borderRadius: BorderRadius.circular(AppRadius.hairline),
+class _HallmarkPillState extends State<_HallmarkPill> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = widget.isDark;
+    final fgAccent = widget.accentColor;
+    final isHovered = _isHovered;
+
+    final borderColor = isHovered
+        ? widget.accentColor.withValues(alpha: isDark ? 0.6 : 0.45)
+        : (isDark ? Colors.white.withValues(alpha: 0.10) : AppColors.ink200);
+
+    final bgColor = isHovered
+        ? widget.accentColor.withValues(alpha: isDark ? 0.12 : 0.08)
+        : (isDark
+            ? Colors.white.withValues(alpha: 0.04)
+            : AppColors.ink100.withValues(alpha: 0.6));
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.basic,
+      child: AnimatedScale(
+        scale: isHovered ? 1.02 : 1.0,
+        duration: AppMotion.snap,
+        curve: AppMotion.emphasized,
+        child: AnimatedContainer(
+          duration: AppMotion.snap,
+          padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(AppRadius.xs),
+            border: Border.all(
+              color: borderColor,
+              width: isHovered ? 1.2 : 1.0,
             ),
-            child: Icon(icon, size: 13, color: fgAccent),
+            boxShadow: isHovered
+                ? [
+                    BoxShadow(
+                      color: widget.accentColor
+                          .withValues(alpha: isDark ? 0.25 : 0.12),
+                      blurRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                  ]
+                : null,
           ),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: context.onSurface,
-                    fontSize: AppTypography.label,
-                    fontWeight: FontWeight.w800,
-                    height: 1.1,
-                  ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedContainer(
+                duration: AppMotion.snap,
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: isHovered
+                      ? widget.accentColor
+                          .withValues(alpha: isDark ? 0.28 : 0.20)
+                      : widget.accentColor
+                          .withValues(alpha: isDark ? 0.16 : 0.12),
+                  borderRadius: BorderRadius.circular(AppRadius.hairline),
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: context.mutedText,
-                    fontSize: AppTypography.label - 2,
-                    fontWeight: FontWeight.w600,
-                    height: 1.1,
-                  ),
+                child: Icon(widget.icon, size: 13, color: fgAccent),
+              ),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      widget.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: context.onSurface,
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w800,
+                        height: 1.1,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      widget.subtitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
+                        color: context.mutedText,
+                        fontSize: AppTypography.label - 2,
+                        fontWeight: FontWeight.w600,
+                        height: 1.1,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

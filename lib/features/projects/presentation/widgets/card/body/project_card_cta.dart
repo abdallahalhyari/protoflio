@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
@@ -52,7 +53,10 @@ class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
           onTapDown: (_) => setState(() => _isPressed = true),
           onTapUp: (_) => setState(() => _isPressed = false),
           onTapCancel: () => setState(() => _isPressed = false),
-          onTap: widget.onTap,
+          onTap: () {
+            SoundService.instance.playClick();
+            widget.onTap();
+          },
           onFocusChange: widget.onFocusChange,
           borderRadius: BorderRadius.circular(AppRadius.xs),
           child: AnimatedContainer(
@@ -70,8 +74,8 @@ class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
                   ? [
                       BoxShadow(
                         color: ctaColor.withValues(
-                            alpha: widget.isDark ? 0.25 : 0.12),
-                        blurRadius: 8,
+                            alpha: widget.isDark ? 0.32 : 0.18),
+                        blurRadius: 10,
                         offset: const Offset(0, 2),
                       ),
                     ]
@@ -94,6 +98,7 @@ class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
                           color: ctaColor,
                           fontSize: AppTypography.label,
                           fontWeight: FontWeight.w900,
+                          letterSpacing: 0.3,
                         ),
                       ),
                     ),

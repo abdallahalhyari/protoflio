@@ -67,34 +67,56 @@ class _ApduDemoState extends State<ApduDemo> {
         ? (c.length > 5 + c[4] ? c[5 + c[4]] : null)
         : (c.length > 4 ? c[4] : null);
 
+    final isDark = context.isDarkMode;
     Widget field(String name, List<int> bytes, Color color) => Padding(
-          padding: const EdgeInsets.only(right: 12, bottom: 6),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                textDirection: TextDirection.ltr,
-                style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
-                  fontSize: AppTypography.label,
-                  color: context.mutedText,
-                ),
+          padding: const EdgeInsets.only(right: 8, bottom: 8),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? color.withValues(alpha: 0.10)
+                  : color.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+              border: Border.all(
+                color: color.withValues(alpha: isDark ? 0.35 : 0.25),
+                width: 0.8,
               ),
-              Text(
-                hexBytes(bytes),
-                textDirection: TextDirection.ltr,
-                style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
-                  fontSize: AppTypography.body,
-                  color: color,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  name,
+                  textDirection: TextDirection.ltr,
+                  style: TextStyle(
+                    fontFamily: AppTypography.monoFont,
+                    fontSize: AppTypography.label - 2,
+                    fontWeight: FontWeight.w700,
+                    color: context.mutedText,
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 2),
+                Text(
+                  hexBytes(bytes),
+                  textDirection: TextDirection.ltr,
+                  style: TextStyle(
+                    fontFamily: AppTypography.monoFont,
+                    fontSize: AppTypography.body,
+                    fontWeight: FontWeight.w700,
+                    color: color,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
 
     return AboutCard(
+      headerKicker: 'ISO-7816-4 // SMART CARD',
+      headerTitle: 'TRANSPARENT APDU CHANNEL',
+      engineStatus:
+          ok ? 'SW_9000_OK' : 'SW_${ex.sw.toRadixString(16).toUpperCase()}',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -157,11 +179,12 @@ class _ApduDemoState extends State<ApduDemo> {
           ),
           const SizedBox(height: 4),
           Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               if (ex.data.isNotEmpty) ...[
                 field('Data', ex.data, context.onSurface),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
+                  padding: const EdgeInsets.only(bottom: 6, left: 4, right: 8),
                   child: Text(
                     '"${String.fromCharCodes(ex.data)}"',
                     textDirection: TextDirection.ltr,
@@ -177,12 +200,49 @@ class _ApduDemoState extends State<ApduDemo> {
                   ok ? live : AppColors.signalLight),
             ],
           ),
-          Text(
-            '${l10n.playApduStatus}: ${_swMeaning(l10n, ex.sw)}',
-            style: TextStyle(
-              fontSize: AppTypography.body,
-              fontWeight: FontWeight.w700,
-              color: ok ? live : AppColors.signalLight,
+          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: (ok ? live : AppColors.signalLight)
+                  .withValues(alpha: isDark ? 0.12 : 0.08),
+              borderRadius: BorderRadius.circular(AppRadius.sm),
+              border: Border.all(
+                color: (ok ? live : AppColors.signalLight)
+                    .withValues(alpha: isDark ? 0.35 : 0.25),
+                width: 0.8,
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: ok ? live : AppColors.signalLight,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: (ok ? live : AppColors.signalLight)
+                            .withValues(alpha: 0.5),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${l10n.playApduStatus}: ${_swMeaning(l10n, ex.sw)}',
+                    style: TextStyle(
+                      fontFamily: AppTypography.monoFont,
+                      fontSize: AppTypography.body,
+                      fontWeight: FontWeight.w700,
+                      color: ok ? live : AppColors.signalLight,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
