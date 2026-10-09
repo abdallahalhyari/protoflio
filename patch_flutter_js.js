@@ -198,6 +198,4 @@ function injectPartPrefetch() {
   }
 }
 
-if (process.env.PREFETCH_PARTS === '1') {
-  injectPartPrefetch();
-}
+injectPartPrefetch();

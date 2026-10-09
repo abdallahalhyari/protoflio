@@ -176,6 +176,9 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
       initLocale = const Locale('en');
     }
 
+    PaintingBinding.instance.imageCache.maximumSizeBytes = 100 * 1024 * 1024;
+    PaintingBinding.instance.imageCache.maximumSize = 100;
+
     if (!ServiceLocator.instance.isRegistered<ProjectRepository>()) {
       ServiceLocator.instance.setup();
     }
