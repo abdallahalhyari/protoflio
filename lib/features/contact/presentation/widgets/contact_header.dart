@@ -130,64 +130,6 @@ class ContactHeader extends StatelessWidget {
     );
   }
 
-  Widget _hallmarksStrip(BuildContext context) {
-    final isDark = context.isDarkMode;
-    final pills = [
-      (Icons.verified_rounded, 'Direct Engineer Line'),
-      (Icons.timer_rounded, 'Response SLA < 24 Hours'),
-      (Icons.public_rounded, 'Global Remote & Relocation'),
-    ];
-
-    return Center(
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: AppSpacing.sm,
-        runSpacing: AppSpacing.xs,
-        children: [
-          for (final (icon, text) in pills)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.04)
-                    : AppColors.ink100,
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-                border: Border.all(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.08)
-                      : AppColors.ink200,
-                ),
-              ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      icon,
-                      size: 13,
-                      color: isDark ? AppColors.tealLight : AppColors.tealDeep,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      text,
-                      style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        color: context.mutedText,
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -198,12 +140,10 @@ class ContactHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _issueStrip(context, isDark, loc),
-        const SizedBox(height: AppSpacing.lg),
+        const SizedBox(height: AppSpacing.md),
         _headline(size, context, loc),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: AppSpacing.sm),
         _lede(size, context, loc),
-        const SizedBox(height: AppSpacing.md),
-        _hallmarksStrip(context),
       ],
     );
   }

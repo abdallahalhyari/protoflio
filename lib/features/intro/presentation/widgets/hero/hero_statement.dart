@@ -49,6 +49,56 @@ class HeroStatement extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        HeroStep(
+          animation: reveal,
+          begin: 0.02,
+          end: 0.38,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: AppSpacing.md),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.darkCard : Colors.white,
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              border: Border.all(
+                color: scheme.primary.withValues(alpha: isDark ? 0.4 : 0.3),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: scheme.primary.withValues(alpha: isDark ? 0.12 : 0.05),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.teal,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    'PRINCIPAL MOBILE SYSTEMS ARCHITECT · STAFF LEAD',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: AppTypography.monoFont,
+                      fontSize: AppTypography.label,
+                      fontWeight: FontWeight.w900,
+                      color: context.adaptiveAccentText(scheme.primary),
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         Semantics(
           header: true,
           headingLevel: 1,

@@ -23,7 +23,6 @@ import 'package:profile/features/contact/presentation/widgets/express_presets_ba
 import 'package:profile/features/contact/presentation/widgets/hero_email_card.dart';
 import 'package:profile/features/contact/presentation/widgets/inquiry_composer_dialog.dart';
 import 'package:profile/features/contact/presentation/widgets/telemetry_bar.dart';
-import 'package:profile/features/hats/presentation/widgets/hat_bio_strip.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/utils/mailto.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
@@ -147,7 +146,6 @@ class _ContactPageState extends State<ContactPage>
   Widget _buildContactPortal(bool isDesktop) {
     final header = const ContactHeader();
     final telemetry = const TelemetryBar();
-    final bio = HatBioStrip(isMobile: !isDesktop);
 
     final heroEmail = HeroEmailCard(
       email: _email,
@@ -237,11 +235,10 @@ class _ContactPageState extends State<ContactPage>
       final mobileItems = [
         header,
         telemetry,
-        bio,
         heroEmail,
         presets,
-        cvDossier,
         channels,
+        cvDossier,
         engagementMatrix,
         footer,
       ];
@@ -271,31 +268,29 @@ class _ContactPageState extends State<ContactPage>
               flex: 5,
               child: Column(
                 children: [
-                  animate(bio, 2),
-                  const SizedBox(height: AppSpacing.xl),
-                  animate(heroEmail, 3),
+                  animate(heroEmail, 2),
                   const SizedBox(height: AppSpacing.md),
-                  animate(presets, 4),
+                  animate(presets, 3),
                   const SizedBox(height: AppSpacing.xl),
-                  animate(channels, 5),
+                  animate(channels, 4),
                 ],
               ),
             ),
             const SizedBox(width: AppSpacing.xl),
             Expanded(
-              flex: 4,
+              flex: 5,
               child: Column(
                 children: [
-                  animate(cvDossier, 3),
+                  animate(cvDossier, 2),
                   const SizedBox(height: AppSpacing.xl),
-                  animate(engagementMatrix, 4),
+                  animate(engagementMatrix, 3),
                 ],
               ),
             ),
           ],
         ),
         const SizedBox(height: AppSpacing.xxl),
-        animate(footer, 6),
+        animate(footer, 5),
       ],
     );
   }
@@ -343,7 +338,6 @@ class _ContactPageState extends State<ContactPage>
       onKeyEvent: _onKey,
       child: ScrollableAppScreenShell(
         maxWidth: kSectionMaxWidth,
-        isContinuousMobile: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
