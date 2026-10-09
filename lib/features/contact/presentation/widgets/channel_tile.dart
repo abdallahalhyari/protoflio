@@ -46,167 +46,173 @@ class _ChannelTileState extends State<ChannelTile> {
     final d = widget.data;
     final isDark = context.isDarkMode;
     final labelColor = context.adaptiveAccentText(d.accent);
-    // Tonal, not solid: four saturated sky/green/indigo/violet fills
-    // outranked the hero email card's Send Email, the section's real
-    // primary action. The tint matches the icon chip; the label keeps the
-    // contrast-checked accent text colour. Hover fills it in.
+    // Tonal button fill
     final buttonFill = d.accent.withValues(
-        alpha: _hover ? (isDark ? 0.24 : 0.18) : (isDark ? 0.14 : 0.10));
+        alpha: _hover ? (isDark ? 0.26 : 0.20) : (isDark ? 0.14 : 0.10));
     final buttonTextColor = labelColor;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
-      child: AnimatedContainer(
-        duration: AppMotion.chipHover,
-        curve: Curves.easeOut,
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: isDark
-              ? (_hover
-                  ? Colors.white.withValues(alpha: AppAlpha.whisper)
-                  : Colors.white.withValues(alpha: 0.03))
-              : (_hover ? Colors.white : AppColors.ink50),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(
-            color: _hover
-                ? d.accent.withValues(alpha: 0.55)
-                : (isDark
-                    ? Colors.white.withValues(alpha: 0.10)
-                    : AppColors.ink200),
-            width: _hover ? 1.4 : 1,
+      child: AnimatedScale(
+        scale: _hover ? 1.015 : 1.0,
+        duration: AppMotion.cardHover,
+        curve: AppMotion.emphasized,
+        child: AnimatedContainer(
+          duration: AppMotion.chipHover,
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: isDark
+                ? (_hover
+                    ? Colors.white.withValues(alpha: AppAlpha.whisper)
+                    : Colors.white.withValues(alpha: 0.03))
+                : (_hover ? Colors.white : AppColors.ink50),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: _hover
+                  ? d.accent.withValues(alpha: isDark ? 0.75 : 0.6)
+                  : (isDark
+                      ? Colors.white.withValues(alpha: 0.10)
+                      : AppColors.ink200),
+              width: _hover ? 1.5 : 1,
+            ),
+            boxShadow: [
+              if (_hover)
+                BoxShadow(
+                  color: d.accent.withValues(alpha: isDark ? 0.22 : 0.12),
+                  blurRadius: 22,
+                  offset: const Offset(0, 8),
+                  spreadRadius: 1,
+                ),
+            ],
           ),
-          boxShadow: [
-            if (_hover)
-              BoxShadow(
-                color: d.accent.withValues(alpha: isDark ? 0.18 : 0.10),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: d.accent.withValues(alpha: isDark ? 0.14 : 0.10),
-                    borderRadius: BorderRadius.circular(AppRadius.smd),
-                    border: Border.all(
-                      color: d.accent.withValues(alpha: isDark ? 0.45 : 0.35),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 42,
+                    height: 42,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: d.accent.withValues(alpha: isDark ? 0.16 : 0.12),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                      border: Border.all(
+                        color: d.accent.withValues(alpha: isDark ? 0.5 : 0.35),
+                      ),
+                    ),
+                    child: Icon(d.icon, size: 20, color: labelColor),
+                  ),
+                  const SizedBox(width: AppSpacing.smd),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          d.label,
+                          style: TextStyle(
+                            fontFamily: AppTypography.monoFont,
+                            color: labelColor,
+                            fontSize: AppTypography.label,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          ltrAlways(context, d.value),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: context.onSurface,
+                            fontSize: AppTypography.body,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Icon(d.icon, size: 20, color: labelColor),
-                ),
-                const SizedBox(width: AppSpacing.smd),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        d.label,
-                        style: TextStyle(
-                          color: labelColor,
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        ltrAlways(context, d.value),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: context.onSurface,
-                          fontSize: AppTypography.body,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.smd),
-            Row(
-              children: [
-                Expanded(
-                  child: MergeSemantics(
-                      child: Semantics(
-                    button: true,
-                    label: '${d.label}: ${d.primaryLabel}',
-                    child: MagneticPull(
-                      maxPull: 6.0, // Less pull for these smaller tiles
-                      child: FilledButton(
-                        onPressed: d.primaryAction,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: buttonFill,
-                          foregroundColor: buttonTextColor,
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppRadius.pill),
-                            side: BorderSide(
-                              color: d.accent
-                                  .withValues(alpha: isDark ? 0.45 : 0.35),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.smd),
+              Row(
+                children: [
+                  Expanded(
+                    child: MergeSemantics(
+                        child: Semantics(
+                      button: true,
+                      label: '${d.label}: ${d.primaryLabel}',
+                      child: MagneticPull(
+                        maxPull: 6.0,
+                        child: FilledButton(
+                          onPressed: d.primaryAction,
+                          style: FilledButton.styleFrom(
+                            backgroundColor: buttonFill,
+                            foregroundColor: buttonTextColor,
+                            padding: const EdgeInsets.symmetric(vertical: 11),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(AppRadius.pill),
+                              side: BorderSide(
+                                color: d.accent
+                                    .withValues(alpha: isDark ? 0.5 : 0.4),
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            d.primaryLabel,
+                            semanticsLabel: '',
+                            style: const TextStyle(
+                              fontSize: AppTypography.label,
+                              fontWeight: FontWeight.w900,
                             ),
                           ),
                         ),
+                      ),
+                    )),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  MergeSemantics(
+                      child: Semantics(
+                    button: true,
+                    label: '${d.label}: ${d.secondaryLabel}',
+                    child: MagneticPull(
+                      maxPull: 6.0,
+                      child: OutlinedButton(
+                        onPressed: d.secondaryAction,
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: context.onSurface,
+                          side: BorderSide(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.28)
+                                : AppColors.ink300,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 11),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
+                          ),
+                        ),
                         child: Text(
-                          d.primaryLabel,
+                          d.secondaryLabel,
                           semanticsLabel: '',
                           style: const TextStyle(
                             fontSize: AppTypography.label,
-                            fontWeight: FontWeight.w900,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                       ),
                     ),
                   )),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                MergeSemantics(
-                    child: Semantics(
-                  button: true,
-                  label: '${d.label}: ${d.secondaryLabel}',
-                  child: MagneticPull(
-                    maxPull: 6.0,
-                    child: OutlinedButton(
-                      onPressed: d.secondaryAction,
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: context.onSurface,
-                        side: BorderSide(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: 0.28)
-                              : AppColors.ink300,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 14, vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
-                        ),
-                      ),
-                      child: Text(
-                        d.secondaryLabel,
-                        semanticsLabel: '',
-                        style: const TextStyle(
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

@@ -34,9 +34,11 @@ class ContactMastheadFooter extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
+                fontFamily: AppTypography.monoFont,
                 color: context.mutedText,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
+                letterSpacing: 0.3,
               ),
             ),
             const SizedBox(height: 4),
@@ -81,11 +83,12 @@ class ContactMastheadFooter extends StatelessWidget {
               spacing: 6,
               runSpacing: 4,
               children: [
-                Icon(Icons.shield_rounded, size: 13, color: availabilityGreen),
+                Icon(Icons.shield_rounded, size: 14, color: availabilityGreen),
                 Text(
                   'Verified senior mobile architect, direct communication',
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    fontFamily: AppTypography.monoFont,
                     color: context.mutedText,
                     fontSize: AppTypography.label,
                     fontWeight: FontWeight.w800,
@@ -102,15 +105,17 @@ class ContactMastheadFooter extends StatelessWidget {
             rule(),
             Flexible(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
                     'Colophon & dispatch',
                     style: TextStyle(
-                      color: context.mutedText, // slate400 was 2.5:1
+                      fontFamily: AppTypography.monoFont,
+                      color: context.mutedText,
                       fontSize: AppTypography.label,
                       fontWeight: FontWeight.w900,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ),
@@ -123,38 +128,52 @@ class ContactMastheadFooter extends StatelessWidget {
         if (isMobile)
           SpecSheetCard(rows: blocks)
         else
-          Wrap(
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: AppSpacing.lg,
-            runSpacing: AppSpacing.sm,
-            children: [
-              blocks[0],
-              Container(
-                width: 1,
-                height: 28,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.02)
+                  : AppColors.ink50.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              border: Border.all(
                 color: isDark
-                    ? Colors.white.withValues(alpha: 0.2)
-                    : AppColors.ink300,
+                    ? Colors.white.withValues(alpha: 0.06)
+                    : AppColors.ink200.withValues(alpha: 0.6),
               ),
-              blocks[1],
-              Container(
-                width: 1,
-                height: 28,
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.2)
-                    : AppColors.ink300,
-              ),
-              blocks[2],
-              Container(
-                width: 1,
-                height: 28,
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.2)
-                    : AppColors.ink300,
-              ),
-              blocks[3],
-            ],
+            ),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: AppSpacing.xl,
+              runSpacing: AppSpacing.sm,
+              children: [
+                blocks[0],
+                Container(
+                  width: 1,
+                  height: 28,
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.15)
+                      : AppColors.ink300,
+                ),
+                blocks[1],
+                Container(
+                  width: 1,
+                  height: 28,
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.15)
+                      : AppColors.ink300,
+                ),
+                blocks[2],
+                Container(
+                  width: 1,
+                  height: 28,
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.15)
+                      : AppColors.ink300,
+                ),
+                blocks[3],
+              ],
+            ),
           ),
         if (kIsWeb) ...[
           const SizedBox(height: AppSpacing.md),
@@ -163,6 +182,7 @@ class ContactMastheadFooter extends StatelessWidget {
             child: Text(
               'Analytics preferences',
               style: TextStyle(
+                fontFamily: AppTypography.monoFont,
                 color: context.subtleText,
                 fontSize: AppTypography.label,
                 decoration: TextDecoration.underline,
@@ -174,3 +194,4 @@ class ContactMastheadFooter extends StatelessWidget {
     );
   }
 }
+

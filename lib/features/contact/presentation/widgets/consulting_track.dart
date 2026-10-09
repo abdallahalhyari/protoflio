@@ -45,6 +45,7 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
     final t = widget.track;
     final isDark = context.isDarkMode;
     final accentText = context.adaptiveAccentText(t.accent);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
@@ -59,8 +60,8 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
           decoration: BoxDecoration(
             color: isDark
                 ? (_hover
-                    ? Colors.white.withValues(alpha: 0.08)
-                    : Colors.white.withValues(alpha: 0.04))
+                    ? Colors.white.withValues(alpha: 0.07)
+                    : Colors.white.withValues(alpha: 0.035))
                 : (_hover ? Colors.white : AppColors.ink50),
             borderRadius: BorderRadius.circular(AppRadius.card),
             border: Border.all(
@@ -69,13 +70,13 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                   : (isDark
                       ? Colors.white.withValues(alpha: 0.1)
                       : AppColors.ink200),
-              width: 1.2,
+              width: _hover ? 1.4 : 1.1,
             ),
             boxShadow: [
               if (_hover)
                 BoxShadow(
                   color: t.accent.withValues(alpha: isDark ? 0.25 : 0.12),
-                  blurRadius: 24,
+                  blurRadius: 28,
                   offset: const Offset(0, 10),
                   spreadRadius: 2,
                 ),
@@ -88,36 +89,42 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: 38,
-                    height: 38,
+                    width: 40,
+                    height: 40,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: t.accent.withValues(alpha: isDark ? 0.14 : 0.10),
+                      color: t.accent.withValues(alpha: isDark ? 0.16 : 0.12),
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                       border: Border.all(
                         color: (isDark ? t.accent : accentText)
-                            .withValues(alpha: isDark ? 0.35 : 0.4),
+                            .withValues(alpha: isDark ? 0.45 : 0.4),
                       ),
                     ),
-                    child: Icon(t.icon, size: 18, color: accentText),
+                    child: Icon(t.icon, size: 20, color: accentText),
                   ),
                   const SizedBox(width: 8),
                   Flexible(
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 7, vertical: 3),
+                          horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: t.accent.withValues(alpha: isDark ? 0.10 : 0.08),
+                        color: t.accent.withValues(alpha: isDark ? 0.12 : 0.08),
                         borderRadius: BorderRadius.circular(AppRadius.xs),
+                        border: Border.all(
+                          color: (isDark ? t.accent : accentText)
+                              .withValues(alpha: isDark ? 0.3 : 0.2),
+                        ),
                       ),
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
                           t.tag,
                           style: TextStyle(
+                            fontFamily: AppTypography.monoFont,
                             color: accentText,
                             fontSize: AppTypography.label,
                             fontWeight: FontWeight.w900,
+                            letterSpacing: 0.3,
                           ),
                         ),
                       ),
@@ -129,9 +136,10 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
               Text(
                 t.title,
                 style: TextStyle(
+                  fontFamily: AppTypography.displayFont,
                   color: context.onSurface,
                   fontSize: AppTypography.body,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
               const SizedBox(height: 6),
@@ -153,8 +161,6 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                     t.onInquire(t.inquirySubject);
                   },
                   borderRadius: BorderRadius.circular(AppRadius.xs),
-                  // Vertical padding lifts the tap target from ~14px (the
-                  // micro label alone) past the 24px WCAG 2.2 minimum.
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Row(
@@ -164,19 +170,24 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
                           child: Text(
                             AppLocalizations.of(context)!.uiInquireTrack,
                             style: TextStyle(
+                              fontFamily: AppTypography.monoFont,
                               color: accentText,
                               fontSize: AppTypography.label,
                               fontWeight: FontWeight.w900,
+                              letterSpacing: 0.3,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 6),
                         AnimatedPadding(
                           duration: AppMotion.cardHover,
                           curve: AppMotion.emphasized,
-                          padding: EdgeInsets.only(left: _hover ? 4.0 : 0.0),
-                          child: Icon(Icons.arrow_forward_rounded,
-                              size: 12, color: accentText),
+                          padding: EdgeInsets.only(left: _hover ? 6.0 : 0.0),
+                          child: Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 13,
+                            color: accentText,
+                          ),
                         ),
                       ],
                     ),
@@ -190,3 +201,4 @@ class _BentoTrackCardState extends State<BentoTrackCard> {
     );
   }
 }
+

@@ -52,26 +52,41 @@ class ExpressPresetsBar extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         decoration: BoxDecoration(
-          color:
-              isDark ? Colors.white.withValues(alpha: 0.03) : AppColors.ink100,
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          color: context.cardGlass,
+          borderRadius: BorderRadius.circular(AppRadius.card),
           border: Border.all(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.08)
                 : AppColors.ink200,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: isDark ? 0.12 : 0.02),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(
-                  Icons.bolt_rounded,
-                  size: 16,
-                  color: context.amberText,
+                Container(
+                  width: 22,
+                  height: 22,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppColors.gold.withValues(alpha: isDark ? 0.16 : 0.10),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.bolt_rounded,
+                    size: 14,
+                    color: context.amberText,
+                  ),
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 8),
                 Expanded(
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
@@ -79,9 +94,11 @@ class ExpressPresetsBar extends StatelessWidget {
                     child: Text(
                       AppLocalizations.of(context)!.uiPresetsTitle,
                       style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
                         color: context.amberText,
                         fontSize: AppTypography.label,
                         fontWeight: FontWeight.w900,
+                        letterSpacing: 0.3,
                       ),
                     ),
                   ),
@@ -113,3 +130,4 @@ class ExpressPresetsBar extends StatelessWidget {
     );
   }
 }
+

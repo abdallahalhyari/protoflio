@@ -50,7 +50,7 @@ class CardBodyContent extends StatelessWidget {
     final textScale = MediaQuery.textScalerOf(context).scale(1);
     final maxCopyLines = textScale > 1.1 ? 1 : (pinFoot ? 3 : 2);
     final clampLines = maxCopyLines;
-    final clampOverflow = maxCopyLines != null ? TextOverflow.ellipsis : null;
+    const clampOverflow = TextOverflow.ellipsis;
 
     final titleBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,6 +79,7 @@ class CardBodyContent extends StatelessWidget {
         Wrap(
           spacing: 6,
           runSpacing: 4,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             for (final tag in project.stack.take(isDesktop ? 4 : 3))
               CardTechTagChip(
@@ -93,22 +94,65 @@ class CardBodyContent extends StatelessWidget {
                       }
                     : null,
               ),
+            if (project.stack.length > (isDesktop ? 4 : 3))
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 6, vertical: 3.5),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.05)
+                      : AppColors.ink100,
+                  borderRadius: BorderRadius.circular(AppRadius.pill),
+                  border: Border.all(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.08)
+                        : AppColors.ink200,
+                  ),
+                ),
+                child: Text(
+                  '+${project.stack.length - (isDesktop ? 4 : 3)}',
+                  style: TextStyle(
+                    color: context.mutedText,
+                    fontSize: AppTypography.label - 2,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
           ],
         ),
         const SizedBox(height: AppSpacing.md),
         if (caseCopy != null) ...[
-          LabeledLine(
-              label: loc.projectLblProblem,
-              text: caseCopy.problem,
-              maxLines: clampLines),
-          LabeledLine(
-              label: loc.projectLblSystem,
-              text: caseCopy.system,
-              maxLines: clampLines),
-          LabeledLine(
-              label: loc.projectLblRole,
-              text: caseCopy.role,
-              maxLines: clampLines),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.03)
+                  : AppColors.ink100.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+              border: Border.all(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.08)
+                    : AppColors.ink200,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LabeledLine(
+                    label: loc.projectLblProblem,
+                    text: caseCopy.problem,
+                    maxLines: clampLines),
+                LabeledLine(
+                    label: loc.projectLblSystem,
+                    text: caseCopy.system,
+                    maxLines: clampLines),
+                LabeledLine(
+                    label: loc.projectLblRole,
+                    text: caseCopy.role,
+                    maxLines: clampLines),
+              ],
+            ),
+          ),
         ] else
           Text(
             ltrContent(context, localizedProjectTagline(loc, project)),

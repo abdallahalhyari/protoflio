@@ -36,11 +36,11 @@ class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final activeBg = ctaColor.withValues(
       alpha: widget.isHovered
-          ? (widget.isDark ? 0.18 : 0.10)
+          ? (widget.isDark ? 0.20 : 0.12)
           : (widget.isDark ? 0.08 : 0.04),
     );
     final activeBorder = ctaColor.withValues(
-      alpha: widget.isHovered ? 0.45 : 0.22,
+      alpha: widget.isHovered ? 0.55 : 0.25,
     );
 
     return Semantics(
@@ -62,7 +62,19 @@ class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
             decoration: BoxDecoration(
               color: activeBg,
               borderRadius: BorderRadius.circular(AppRadius.xs),
-              border: Border.all(color: activeBorder),
+              border: Border.all(
+                color: activeBorder,
+                width: widget.isHovered ? 1.2 : 1.0,
+              ),
+              boxShadow: widget.isHovered
+                  ? [
+                      BoxShadow(
+                        color: ctaColor.withValues(alpha: widget.isDark ? 0.25 : 0.12),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ]
+                  : null,
             ),
             child: ExcludeSemantics(
               child: AnimatedScale(

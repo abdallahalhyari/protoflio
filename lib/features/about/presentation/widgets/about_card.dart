@@ -23,28 +23,29 @@ class AboutCard extends StatelessWidget {
         gradient: isDark
             ? RadialGradient(
                 center: Alignment.topLeft,
-                radius: 1.5,
+                radius: 1.8,
                 colors: [
-                  primary.withValues(alpha: 0.1),
+                  primary.withValues(alpha: 0.12),
                   context.cardGlass,
                 ],
               )
             : null,
         border: Border.all(
           color: isDark
-              ? primary.withValues(alpha: 0.2)
+              ? primary.withValues(alpha: 0.25)
               : context.glassBorderStrong,
         ),
+
         boxShadow: [
           BoxShadow(
-            color: isDark ? Colors.black26 : AppColors.shadowSoft,
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: isDark ? Colors.black38 : AppColors.shadowSoft,
+            blurRadius: 20,
+            offset: const Offset(0, 6),
           ),
           if (isDark)
             BoxShadow(
-              color: primary.withValues(alpha: 0.05),
-              blurRadius: 32,
+              color: primary.withValues(alpha: 0.08),
+              blurRadius: 36,
               spreadRadius: 1,
             )
         ],
@@ -53,6 +54,7 @@ class AboutCard extends StatelessWidget {
     );
   }
 }
+
 
 /// Technical tag: tool names set in the mono face.
 class MonoTag extends StatelessWidget {

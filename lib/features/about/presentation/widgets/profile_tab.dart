@@ -66,39 +66,74 @@ class _ExecutiveIdentityHero extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final accent = scheme.primary;
 
-    final avatar = Container(
-      width: isDesktop ? 96 : 80,
-      height: isDesktop ? 96 : 80,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [
-            accent,
-            isDark ? AppColors.tealLight : AppColors.tealDeep,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: accent.withValues(alpha: isDark ? 0.35 : 0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 6),
+    final avatar = Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: isDesktop ? 98 : 82,
+          height: isDesktop ? 98 : 82,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              colors: [
+                accent,
+                isDark ? AppColors.tealLight : AppColors.tealDeep,
+                AppColors.gold,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: accent.withValues(alpha: isDark ? 0.38 : 0.22),
+                blurRadius: 24,
+                offset: const Offset(0, 6),
+                spreadRadius: 2,
+              ),
+            ],
           ),
-        ],
-      ),
-      padding: const EdgeInsets.all(2.5),
-      child: ClipOval(
-        child: ColoredBox(
-          color: isDark ? AppColors.darkCard : Colors.white,
-          child: const RetryingAssetImage(
-            'assets/my_image.webp',
-            fit: BoxFit.cover,
-            alignment: Alignment.topCenter,
-            filterQuality: FilterQuality.high,
+          padding: const EdgeInsets.all(3.0),
+          child: ClipOval(
+            child: ColoredBox(
+              color: isDark ? AppColors.darkCard : Colors.white,
+              child: const RetryingAssetImage(
+                'assets/my_image.webp',
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+                filterQuality: FilterQuality.high,
+              ),
+            ),
           ),
         ),
-      ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: Container(
+            width: 26,
+            height: 26,
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.darkCard : Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isDark ? AppColors.tealLight : AppColors.tealDeep,
+                width: 2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.verified_rounded,
+              size: 16,
+              color: isDark ? AppColors.tealLight : AppColors.tealDeep,
+            ),
+          ),
+        ),
+      ],
     );
 
     final titleBlock = Column(
@@ -122,7 +157,9 @@ class _ExecutiveIdentityHero extends StatelessWidget {
                   'Abdallah Alhyari',
                   style: TextStyle(
                     fontFamily: AppTypography.displayFont,
-                    fontSize: isDesktop ? 26 : 22,
+                    fontSize: isDesktop
+                        ? AppTypography.heading - 2
+                        : AppTypography.title + 2,
                     fontWeight: FontWeight.w900,
                     color: context.onSurface,
                     letterSpacing: -0.5,
@@ -136,7 +173,7 @@ class _ExecutiveIdentityHero extends StatelessWidget {
                     color: accent.withValues(alpha: isDark ? 0.18 : 0.12),
                     borderRadius: BorderRadius.circular(AppRadius.xs),
                     border: Border.all(
-                      color: accent.withValues(alpha: isDark ? 0.4 : 0.3),
+                      color: accent.withValues(alpha: isDark ? 0.45 : 0.35),
                     ),
                   ),
                   child: Text(
@@ -161,8 +198,10 @@ class _ExecutiveIdentityHero extends StatelessWidget {
             'Senior Mobile Systems Engineer · Mobile Solutions Architect',
             textAlign: isDesktop ? TextAlign.start : TextAlign.center,
             style: TextStyle(
-              fontSize: isDesktop ? 15 : 13.5,
-              fontWeight: FontWeight.w600,
+              fontSize: isDesktop
+                  ? AppTypography.lead - 1
+                  : AppTypography.cardBody,
+              fontWeight: FontWeight.w700,
               color: context.adaptiveAccentText(accent),
             ),
           ),
@@ -197,6 +236,7 @@ class _ExecutiveIdentityHero extends StatelessWidget {
                     Text(
                       'Available for Senior Roles',
                       style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
                         color: context.greenText,
                         fontSize: AppTypography.label,
                         fontWeight: FontWeight.w800,
@@ -396,6 +436,8 @@ class _ExecutiveIdentityHero extends StatelessWidget {
     );
   }
 }
+
+
 
 /// 2. Engineering Narrative & Technical Factsheet Dossier
 class _StoryAndDossierSection extends StatelessWidget {
@@ -821,149 +863,179 @@ class _CapabilityCardState extends State<_CapabilityCard> {
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
-      child: AnimatedContainer(
+      child: AnimatedScale(
+        scale: _hover ? 1.015 : 1.0,
         duration: AppMotion.cardHover,
         curve: AppMotion.emphasized,
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: isDark
-              ? (_hover
-                  ? Colors.white.withValues(alpha: 0.06)
-                  : Colors.white.withValues(alpha: 0.03))
-              : (_hover ? Colors.white : AppColors.ink50),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(
-            color: _hover
-                ? widget.accent.withValues(alpha: 0.6)
-                : (isDark
-                    ? Colors.white.withValues(alpha: 0.08)
-                    : AppColors.ink200),
-            width: _hover ? 1.4 : 1.0,
-          ),
-          boxShadow: [
-            if (_hover)
-              BoxShadow(
-                color: widget.accent.withValues(alpha: isDark ? 0.2 : 0.08),
-                blurRadius: 18,
-                offset: const Offset(0, 6),
-              ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 38,
-                  height: 38,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color:
-                        widget.accent.withValues(alpha: isDark ? 0.16 : 0.10),
-                    borderRadius: BorderRadius.circular(AppRadius.sm),
-                    border: Border.all(
-                      color: widget.accent.withValues(alpha: 0.35),
-                    ),
-                  ),
-                  child: Icon(widget.icon, size: 20, color: accentText),
+        child: AnimatedContainer(
+          duration: AppMotion.cardHover,
+          curve: AppMotion.emphasized,
+          padding: const EdgeInsets.all(AppSpacing.md),
+          decoration: BoxDecoration(
+            color: isDark
+                ? (_hover
+                    ? Colors.white.withValues(alpha: 0.07)
+                    : Colors.white.withValues(alpha: 0.03))
+                : (_hover ? Colors.white : AppColors.ink50),
+            borderRadius: BorderRadius.circular(AppRadius.card),
+            border: Border.all(
+              color: _hover
+                  ? widget.accent.withValues(alpha: isDark ? 0.75 : 0.6)
+                  : (isDark
+                      ? Colors.white.withValues(alpha: 0.08)
+                      : AppColors.ink200),
+              width: _hover ? 1.4 : 1.0,
+            ),
+            boxShadow: [
+              if (_hover)
+                BoxShadow(
+                  color: widget.accent.withValues(alpha: isDark ? 0.22 : 0.10),
+                  blurRadius: 22,
+                  offset: const Offset(0, 8),
+                  spreadRadius: 1,
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.06)
-                        : AppColors.ink100,
-                    borderRadius: BorderRadius.circular(AppRadius.xs),
-                    border: Border.all(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.1)
-                          : AppColors.ink200,
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color:
+                          widget.accent.withValues(alpha: isDark ? 0.16 : 0.10),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                      border: Border.all(
+                        color: widget.accent.withValues(alpha: isDark ? 0.45 : 0.35),
+                      ),
                     ),
+                    child: Icon(widget.icon, size: 20, color: accentText),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.business_rounded,
-                          size: 11, color: context.mutedText),
-                      const SizedBox(width: 4),
-                      Text(
-                        widget.where,
-                        style: TextStyle(
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w700,
-                          color: context.onSurface,
+                  Flexible(
+                    child: Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.06)
+                            : AppColors.ink100,
+                        borderRadius: BorderRadius.circular(AppRadius.xs),
+                        border: Border.all(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : AppColors.ink200,
                         ),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.business_rounded,
+                              size: 11, color: context.mutedText),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              widget.where,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: AppTypography.monoFont,
+                                fontSize: AppTypography.label,
+                                fontWeight: FontWeight.w700,
+                                color: context.onSurface,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                widget.title,
+                style: TextStyle(
+                  fontFamily: AppTypography.displayFont,
+                  fontSize: AppTypography.lead,
+                  fontWeight: FontWeight.w900,
+                  color: context.onSurface,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                widget.tag,
+                style: TextStyle(
+                  fontFamily: AppTypography.monoFont,
+                  fontSize: AppTypography.label,
+                  fontWeight: FontWeight.w800,
+                  color: accentText,
+                  letterSpacing: 0.3,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                widget.detail,
+                style: TextStyle(
+                  fontSize: AppTypography.label,
+                  height: 1.5,
+                  color: context.mutedText,
+                ),
+              ),
+              if (widget.hasDemo) ...[
+                const SizedBox(height: AppSpacing.md),
+                InkWell(
+                  onTap: () {
+                    SoundService.instance.playClick();
+                    aboutTabRequest.value = AboutTabs.playground;
+                  },
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Test in Playground',
+                            style: TextStyle(
+                              fontFamily: AppTypography.monoFont,
+                              fontSize: AppTypography.label,
+                              fontWeight: FontWeight.w900,
+                              color: accentText,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          AnimatedPadding(
+                            duration: AppMotion.cardHover,
+                            curve: AppMotion.emphasized,
+                            padding: EdgeInsets.only(left: _hover ? 6.0 : 0.0),
+                            child: Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 13,
+                              color: accentText,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              widget.title,
-              style: TextStyle(
-                fontSize: AppTypography.lead,
-                fontWeight: FontWeight.w800,
-                color: context.onSurface,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              widget.tag,
-              style: TextStyle(
-                fontSize: AppTypography.label,
-                fontWeight: FontWeight.w700,
-                color: accentText,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              widget.detail,
-              style: TextStyle(
-                fontSize: AppTypography.label,
-                height: 1.5,
-                color: context.mutedText,
-              ),
-            ),
-            if (widget.hasDemo) ...[
-              const SizedBox(height: AppSpacing.md),
-              InkWell(
-                onTap: () {
-                  SoundService.instance.playClick();
-                  aboutTabRequest.value = AboutTabs.playground;
-                },
-                borderRadius: BorderRadius.circular(AppRadius.xs),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Test in Playground',
-                        style: TextStyle(
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
-                          color: accentText,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Icon(Icons.arrow_forward_rounded,
-                          size: 12, color: accentText),
-                    ],
-                  ),
-                ),
-              ),
             ],
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
 
 /// 4. Technical Arsenal & Skills Domain Matrix
 class _TechArsenalSection extends StatelessWidget {
@@ -1183,20 +1255,22 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.container),
         gradient: LinearGradient(
           colors: [
-            accent.withValues(alpha: isDark ? 0.16 : 0.08),
+            accent.withValues(alpha: isDark ? 0.18 : 0.08),
             isDark ? AppColors.darkCard : Colors.white,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: accent.withValues(alpha: isDark ? 0.35 : 0.25),
+          color: accent.withValues(alpha: isDark ? 0.45 : 0.3),
+          width: 1.3,
         ),
         boxShadow: [
           BoxShadow(
-            color: accent.withValues(alpha: isDark ? 0.08 : 0.04),
-            blurRadius: 20,
-            offset: const Offset(0, 6),
+            color: accent.withValues(alpha: isDark ? 0.12 : 0.05),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+            spreadRadius: 1,
           ),
         ],
       ),
@@ -1209,31 +1283,53 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.terminal_rounded,
-                              size: 18,
-                              color: context.adaptiveAccentText(accent)),
-                          const SizedBox(width: 8),
                           Flexible(
-                            child: Text(
-                              'LIVE ENGINEERING PLAYGROUND',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontFamily: AppTypography.monoFont,
-                                fontSize: AppTypography.label,
-                                fontWeight: FontWeight.w900,
-                                color: context.adaptiveAccentText(accent),
-                                letterSpacing: 0.5,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 3),
+                              decoration: BoxDecoration(
+                                color: accent
+                                    .withValues(alpha: isDark ? 0.16 : 0.10),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadius.xs),
+                                border: Border.all(
+                                  color: accent
+                                      .withValues(alpha: isDark ? 0.4 : 0.25),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.terminal_rounded,
+                                      size: 14,
+                                      color: context.adaptiveAccentText(accent)),
+                                  const SizedBox(width: 6),
+                                  Flexible(
+                                    child: Text(
+                                      'LIVE ENGINEERING PLAYGROUND',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontFamily: AppTypography.monoFont,
+                                        fontSize: AppTypography.label,
+                                        fontWeight: FontWeight.w900,
+                                        color: context.adaptiveAccentText(accent),
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 10),
                       Text(
                         'Run cryptography and smart-card simulations directly in your browser.',
                         style: TextStyle(
+                          fontFamily: AppTypography.displayFont,
                           fontSize: AppTypography.lead,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w900,
                           color: context.onSurface,
                         ),
                       ),
@@ -1243,6 +1339,7 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
                         style: TextStyle(
                           fontSize: AppTypography.label,
                           color: context.mutedText,
+                          height: 1.45,
                         ),
                       ),
                     ],
@@ -1277,30 +1374,52 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.terminal_rounded,
-                        size: 18, color: context.adaptiveAccentText(accent)),
-                    const SizedBox(width: 8),
                     Flexible(
-                      child: Text(
-                        'LIVE ENGINEERING PLAYGROUND',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
-                          color: context.adaptiveAccentText(accent),
-                          letterSpacing: 0.5,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color:
+                              accent.withValues(alpha: isDark ? 0.16 : 0.10),
+                          borderRadius: BorderRadius.circular(AppRadius.xs),
+                          border: Border.all(
+                            color:
+                                accent.withValues(alpha: isDark ? 0.4 : 0.25),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.terminal_rounded,
+                                size: 14,
+                                color: context.adaptiveAccentText(accent)),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                'LIVE ENGINEERING PLAYGROUND',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontFamily: AppTypography.monoFont,
+                                  fontSize: AppTypography.label,
+                                  fontWeight: FontWeight.w900,
+                                  color: context.adaptiveAccentText(accent),
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
                 Text(
                   'Run cryptography and smart-card simulations directly in your browser.',
                   style: TextStyle(
+                    fontFamily: AppTypography.displayFont,
                     fontSize: AppTypography.body,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w900,
                     color: context.onSurface,
                   ),
                 ),
@@ -1310,6 +1429,7 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
                   style: TextStyle(
                     fontSize: AppTypography.label,
                     color: context.mutedText,
+                    height: 1.45,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -1338,3 +1458,4 @@ class _PlaygroundCalloutBanner extends StatelessWidget {
     );
   }
 }
+

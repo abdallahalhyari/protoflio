@@ -122,12 +122,14 @@ class _AboutPageState extends State<AboutPage>
                 child: body,
               ),
             ),
+
           ],
         ),
       ),
     );
   }
 }
+
 
 /// The five demos: two columns on wide screens, one column otherwise.
 class _PlaygroundGrid extends StatelessWidget {

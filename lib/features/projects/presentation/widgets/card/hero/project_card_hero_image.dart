@@ -100,6 +100,44 @@ class CardHeroImage extends StatelessWidget {
                 primary: scheme.primary,
               ),
             Positioned(
+              top: AppSpacing.sm,
+              right: AppSpacing.sm,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.72),
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.20),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 5,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: _domainAccent(project.domain, scheme),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      _domainShortTag(project.domain),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: AppTypography.label - 2,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0.4,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
               left: AppSpacing.md,
               bottom: AppSpacing.md,
               right: AppSpacing.md,
@@ -108,21 +146,28 @@ class CardHeroImage extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 4.5),
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.60),
+                      color: Colors.black.withValues(alpha: 0.72),
                       borderRadius: BorderRadius.circular(AppRadius.xs),
                       border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.22),
+                        color: Colors.white.withValues(alpha: 0.25),
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.40),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
                           Icons.business_center_rounded,
-                          size: 12,
+                          size: 13,
                           color: isDark ? AppColors.goldSoft : AppColors.gold,
                         ),
                         const SizedBox(width: 6),
@@ -141,9 +186,50 @@ class CardHeroImage extends StatelessWidget {
                 ),
               ),
             ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                height: 1,
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.12)
+                    : AppColors.ink200,
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Color _domainAccent(String domain, ColorScheme scheme) {
+    switch (domain) {
+      case 'Healthcare & Smart Cards':
+        return AppColors.teal;
+      case 'Enterprise HIS & LMS':
+        return scheme.primary;
+      case 'Fleet & Telematics':
+        return AppColors.tealLight;
+      case 'M-Commerce & Streaming':
+        return AppColors.gold;
+      default:
+        return scheme.primary;
+    }
+  }
+
+  String _domainShortTag(String domain) {
+    switch (domain) {
+      case 'Healthcare & Smart Cards':
+        return 'NFC / HEALTH';
+      case 'Enterprise HIS & LMS':
+        return 'HIS / LMS';
+      case 'Fleet & Telematics':
+        return 'TELEMATICS';
+      case 'M-Commerce & Streaming':
+        return 'STREAMING';
+      default:
+        return domain.toUpperCase();
+    }
   }
 }

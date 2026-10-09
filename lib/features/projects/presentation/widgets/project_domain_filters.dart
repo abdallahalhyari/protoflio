@@ -37,39 +37,57 @@ class ProjectDomainFilters extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          child: Row(
-            children: [
-              for (final domain in domains) ...[
-                _DomainChip(
-                  label: localizedProjectDomain(loc, domain),
-                  count: domainCounts[domain] ?? 0,
-                  isSelected: domain == selectedDomain,
-                  scheme: scheme,
-                  isDark: isDark,
-                  isDesktop: isDesktop,
-                  onTap: () {
-                    SoundService.instance.playSelection();
-                    onSelectDomain(domain);
-                  },
+        Row(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  children: [
+                    for (final domain in domains) ...[
+                      _DomainChip(
+                        domainRaw: domain,
+                        label: localizedProjectDomain(loc, domain),
+                        count: domainCounts[domain] ?? 0,
+                        isSelected: domain == selectedDomain,
+                        scheme: scheme,
+                        isDark: isDark,
+                        isDesktop: isDesktop,
+                        onTap: () {
+                          SoundService.instance.playSelection();
+                          onSelectDomain(domain);
+                        },
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                    ],
+                  ],
                 ),
-                const SizedBox(width: AppSpacing.sm),
-              ],
+              ),
+            ),
+            if (isDesktop) ...[
+              const SizedBox(width: AppSpacing.md),
+              _KeyboardShortcutHint(isDark: isDark),
             ],
-          ),
+          ],
         ),
         if (selectedTech != null) ...[
           const SizedBox(height: AppSpacing.sm),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              color: scheme.primary.withValues(alpha: AppAlpha.hover),
+              color: scheme.primary.withValues(alpha: isDark ? 0.18 : 0.08),
               borderRadius: BorderRadius.circular(AppRadius.sm),
               border: Border.all(
-                color: scheme.primary.withValues(alpha: AppAlpha.border),
+                color: scheme.primary.withValues(alpha: isDark ? 0.5 : 0.35),
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: scheme.primary.withValues(alpha: isDark ? 0.12 : 0.05),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -111,7 +129,82 @@ class ProjectDomainFilters extends StatelessWidget {
   }
 }
 
+class _KeyboardShortcutHint extends StatelessWidget {
+  final bool isDark;
+  const _KeyboardShortcutHint({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.04)
+            : AppColors.ink100,
+        borderRadius: BorderRadius.circular(AppRadius.xs),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.09)
+              : AppColors.ink200,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _KeyPill(label: '←', isDark: isDark),
+          const SizedBox(width: 3),
+          _KeyPill(label: '→', isDark: isDark),
+          const SizedBox(width: 6),
+          Text(
+            'Switch domain',
+            style: TextStyle(
+              color: context.mutedText,
+              fontSize: AppTypography.label - 1,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _KeyPill extends StatelessWidget {
+  final String label;
+  final bool isDark;
+
+  const _KeyPill({required this.label, required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.08)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(AppRadius.hairline),
+        border: Border.all(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.16)
+              : AppColors.ink300,
+        ),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: context.onSurface,
+          fontSize: AppTypography.label - 2,
+          fontWeight: FontWeight.w900,
+          height: 1.0,
+        ),
+      ),
+    );
+  }
+}
+
 class _DomainChip extends StatefulWidget {
+  final String domainRaw;
   final String label;
   final int count;
   final bool isSelected;
@@ -121,6 +214,7 @@ class _DomainChip extends StatefulWidget {
   final VoidCallback onTap;
 
   const _DomainChip({
+    required this.domainRaw,
     required this.label,
     required this.count,
     required this.isSelected,
@@ -137,6 +231,23 @@ class _DomainChip extends StatefulWidget {
 class _DomainChipState extends State<_DomainChip> {
   bool _isHovered = false;
   bool _isFocused = false;
+
+  IconData _iconForDomain(String raw) {
+    switch (raw) {
+      case 'ALL':
+        return Icons.auto_awesome_mosaic_rounded;
+      case 'Healthcare & Smart Cards':
+        return Icons.contactless_rounded;
+      case 'Enterprise HIS & LMS':
+        return Icons.apartment_rounded;
+      case 'Fleet & Telematics':
+        return Icons.navigation_rounded;
+      case 'M-Commerce & Streaming':
+        return Icons.play_circle_fill_rounded;
+      default:
+        return Icons.folder_open_rounded;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -202,8 +313,8 @@ class _DomainChipState extends State<_DomainChip> {
                       ? [
                           BoxShadow(
                             color: scheme.primary
-                                .withValues(alpha: isDark ? 0.2 : 0.1),
-                            blurRadius: 8,
+                                .withValues(alpha: isDark ? 0.25 : 0.15),
+                            blurRadius: 10,
                             offset: const Offset(0, 2),
                           ),
                         ]
@@ -221,6 +332,16 @@ class _DomainChipState extends State<_DomainChip> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Icon(
+                      _iconForDomain(widget.domainRaw),
+                      size: 13,
+                      color: isSelected
+                          ? textColor
+                          : (isInteractive
+                              ? textColor
+                              : context.mutedText),
+                    ),
+                    const SizedBox(width: 6),
                     Text(
                       widget.label,
                       style: TextStyle(
@@ -230,13 +351,29 @@ class _DomainChipState extends State<_DomainChip> {
                             isSelected ? FontWeight.w900 : FontWeight.w700,
                       ),
                     ),
+                    if (isSelected) ...[
+                      const SizedBox(width: 5),
+                      Container(
+                        width: 5,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          color: textColor,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: scheme.primary.withValues(alpha: 0.6),
+                              blurRadius: 4,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                     const SizedBox(width: 6),
                     AnimatedContainer(
                       duration: AppMotion.snap,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5, vertical: 1.5),
-                      // Selected: a solid count. A primary tint on the
-                      // already tinted chip left the number at 3:1.
                       decoration: BoxDecoration(
                         color: isSelected
                             ? scheme.primary

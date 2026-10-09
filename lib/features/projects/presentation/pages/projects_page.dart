@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_bloc.dart';
 import 'package:profile/features/projects/presentation/bloc/projects_filter_event.dart';
@@ -92,6 +93,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     final scheme = theme.colorScheme;
     final size = MediaQuery.sizeOf(context);
     final isDesktop = AppBreakpoints.isDesktop(context);
+    final isDark = context.isDarkMode;
     final loc = AppLocalizations.of(context)!;
 
     return Focus(
@@ -130,8 +132,18 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             SliverToBoxAdapter(
               child: _buildHeader(scheme, loc, size, isDesktop),
             ),
-            const SliverToBoxAdapter(
-                child: SizedBox(height: AppSpacing.sectionControls)),
+            if (isDesktop) ...[
+              const SliverToBoxAdapter(
+                  child: SizedBox(height: AppSpacing.sm)),
+              SliverToBoxAdapter(
+                child: _buildHallmarksStrip(scheme, isDark, isDesktop),
+              ),
+              const SliverToBoxAdapter(
+                  child: SizedBox(height: AppSpacing.md)),
+            ] else ...[
+              const SliverToBoxAdapter(
+                  child: SizedBox(height: AppSpacing.sectionControls)),
+            ],
             SliverToBoxAdapter(
               child: BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
                 buildWhen: (prev, curr) =>
@@ -182,7 +194,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                       final double textScale =
                           MediaQuery.textScalerOf(context).scale(1);
                       final double itemHeight = isDesktop
-                          ? 540 + 160 * (textScale - 1).clamp(0.0, 1.0)
+                          ? 560 + 170 * (textScale - 1).clamp(0.0, 1.2)
                           : 500 + 160 * (textScale - 1).clamp(0.0, 1.0);
 
                       const double spacing = AppSpacing.lg;
@@ -190,6 +202,10 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                           ? columnWidth(constraints.maxWidth, 3, spacing)
                               .clamp(320.0, 400.0)
                           : constraints.maxWidth * 0.75;
+                      final double mobileCardWidth = filteredProjects.length == 1
+                          ? (constraints.maxWidth - AppSpacing.md * 2)
+                              .clamp(290.0, 480.0)
+                          : itemWidth;
 
                       if (isDesktop) {
                         return Wrap(
@@ -225,7 +241,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                               const SizedBox(width: spacing),
                           itemBuilder: (context, i) {
                             return SizedBox(
-                              width: itemWidth,
+                              width: mobileCardWidth,
                               child: _buildProjectItem(
                                 project: filteredProjects[i],
                                 index: i,
@@ -248,6 +264,38 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     );
   }
 
+  Widget _buildHallmarksStrip(
+      ColorScheme scheme, bool isDark, bool isDesktop) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        _HallmarkPill(
+          icon: Icons.contactless_rounded,
+          title: 'APDU NFC & Smart Cards',
+          subtitle: 'ISO-7816 • Keystore JWT',
+          accentColor: isDark ? AppColors.tealLight : AppColors.tealDeep,
+          isDark: isDark,
+        ),
+        _HallmarkPill(
+          icon: Icons.cloud_sync_rounded,
+          title: 'Zero-Loss Offline Queues',
+          subtitle: 'SQLite • WorkManager',
+          accentColor: isDark ? AppColors.tealLight : AppColors.tealDeep,
+          isDark: isDark,
+        ),
+        _HallmarkPill(
+          icon: Icons.speed_rounded,
+          title: 'Sustained 60 FPS Engine',
+          subtitle: 'Clean Arch • MVVM Profiling',
+          accentColor: isDark ? AppColors.goldSoft : AppColors.goldDeep,
+          isDark: isDark,
+        ),
+      ],
+    );
+  }
+
   Widget _buildHeader(
       ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
     return SectionMasthead(
@@ -264,23 +312,16 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     required bool isDesktop,
     required String? selectedTech,
   }) {
-    // Basic stagger logic: delay slightly based on index, maxing out at a certain point.
-    // The tween animation builder handles the entrance without needing external delays right now.
-
     return TweenAnimationBuilder<double>(
       key: ValueKey('project_${project.name}_$index'),
       tween: Tween<double>(begin: 0.0, end: 1.0),
       duration: AppMotion.pageTurn,
       curve: Curves.easeOutCubic,
       builder: (context, value, child) {
-        // We delay the start of the animation by checking if the animation should have started.
-        // For a more precise stagger, we can just use the value directly with a modified curve or
-        // standard flutter animation tools. We'll simulate it beautifully by mapping value.
-        // Alternatively, since TweenAnimationBuilder starts immediately, we can map the value.
         return Opacity(
           opacity: value.clamp(0.0, 1.0),
           child: Transform.translate(
-            offset: Offset(0, 30 * (1 - value)),
+            offset: Offset(0, 24 * (1 - value)),
             child: child,
           ),
         );
@@ -294,6 +335,86 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
         onSelectTech: (tech) {
           context.read<ProjectsFilterBloc>().add(TechFilterToggled(tech));
         },
+      ),
+    );
+  }
+}
+
+class _HallmarkPill extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color accentColor;
+  final bool isDark;
+
+  const _HallmarkPill({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.accentColor,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final fgAccent = accentColor;
+    final borderColor =
+        isDark ? Colors.white.withValues(alpha: 0.10) : AppColors.ink200;
+    final bgColor = isDark
+        ? Colors.white.withValues(alpha: 0.04)
+        : AppColors.ink100.withValues(alpha: 0.6);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(AppRadius.xs),
+        border: Border.all(color: borderColor),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: accentColor.withValues(alpha: isDark ? 0.16 : 0.12),
+              borderRadius: BorderRadius.circular(AppRadius.hairline),
+            ),
+            child: Icon(icon, size: 13, color: fgAccent),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: context.onSurface,
+                    fontSize: AppTypography.label,
+                    fontWeight: FontWeight.w800,
+                    height: 1.1,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: context.mutedText,
+                    fontSize: AppTypography.label - 2,
+                    fontWeight: FontWeight.w600,
+                    height: 1.1,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

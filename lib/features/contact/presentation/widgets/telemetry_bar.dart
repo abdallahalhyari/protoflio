@@ -46,63 +46,92 @@ class _TelemetryBarState extends State<TelemetryBar> {
     final isDaytime = hour >= 6 && hour < 18;
     final isDark = context.isDarkMode;
 
-    Widget pill({required Widget child, Color? border}) => Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    final dotColor = isDark ? AppColors.tealLight : AppColors.tealDeep;
+
+    Widget pill({required Widget child, Color? border, Color? background}) =>
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.04)
-                : Colors.white.withValues(alpha: 0.85),
+            color: background ??
+                (isDark
+                    ? Colors.white.withValues(alpha: 0.04)
+                    : Colors.white.withValues(alpha: 0.9)),
             borderRadius: BorderRadius.circular(AppRadius.pill),
             border: Border.all(
               color: border ?? context.glassBorder,
+              width: 1.1,
             ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.03),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: child,
         );
 
     return Center(
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: 8,
-        runSpacing: 8,
-        children: [
-          pill(
-            border: (isDark ? AppColors.tealLight : AppColors.tealDeep)
-                .withValues(alpha: 0.45),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                PulsingDot(
-                    color: isDark ? AppColors.tealLight : AppColors.tealDeep),
-                const SizedBox(width: 6),
-                Flexible(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      isOfficeHours
-                          ? AppLocalizations.of(context)!.uiActiveHours
-                          : AppLocalizations.of(context)!.uiStandbyAsync,
-                      style: TextStyle(
-                        color: context.greenText,
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w900,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.02)
+              : AppColors.ink50.withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(AppRadius.pill),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.06)
+                : AppColors.ink200.withValues(alpha: 0.6),
+          ),
+        ),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            pill(
+              border: dotColor.withValues(alpha: isDark ? 0.45 : 0.35),
+              background: dotColor.withValues(alpha: isDark ? 0.08 : 0.05),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PulsingDot(color: dotColor),
+                  const SizedBox(width: 7),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        isOfficeHours
+                            ? AppLocalizations.of(context)!.uiActiveHours
+                            : AppLocalizations.of(context)!.uiStandbyAsync,
+                        style: TextStyle(
+                          fontFamily: AppTypography.monoFont,
+                          color: context.greenText,
+                          fontSize: AppTypography.label,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 0.3,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          EditorialChip(
-            label: 'AMMAN $displayHour:$minute $period (UTC+3)',
-            icon:
-                isDaytime ? Icons.wb_sunny_rounded : Icons.nights_stay_rounded,
-            tone: isDaytime ? ChipTone.amber : ChipTone.indigo,
-            variant: ChipVariant.glass,
-          ),
-        ],
+            EditorialChip(
+              label: 'AMMAN $displayHour:$minute $period (UTC+3)',
+              icon: isDaytime
+                  ? Icons.wb_sunny_rounded
+                  : Icons.nights_stay_rounded,
+              tone: isDaytime ? ChipTone.amber : ChipTone.indigo,
+              variant: ChipVariant.glass,
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
