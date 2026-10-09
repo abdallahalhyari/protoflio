@@ -14,11 +14,13 @@ class SectionMasthead extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.isDesktop,
+    this.kicker,
   });
 
   final String title;
   final String subtitle;
   final bool isDesktop;
+  final String? kicker;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,19 @@ class SectionMasthead extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (kicker != null) ...[
+          Text(
+            kicker!,
+            style: TextStyle(
+              fontFamily: AppTypography.monoFont,
+              fontSize: AppTypography.label,
+              fontWeight: FontWeight.w900,
+              color: context.adaptiveAccentText(scheme.primary),
+              letterSpacing: 0.8,
+            ),
+          ),
+          const SizedBox(height: 6),
+        ],
         Semantics(
           header: true,
           child: Text(

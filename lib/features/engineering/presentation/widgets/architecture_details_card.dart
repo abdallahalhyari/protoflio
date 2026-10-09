@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/services/sound_service.dart';
-import 'package:profile/features/about/presentation/about_navigation.dart';
-import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
-
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/about/presentation/about_navigation.dart';
 import 'package:profile/features/engineering/domain/entities/architecture_topic.dart';
-import 'package:profile/shared/utils/bidi.dart';
-import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/engineering/presentation/utils/architecture_labels.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/utils/bidi.dart';
 
-/// Card container displaying architecture rationale, summary, and technical safeguards.
+/// Card container displaying architecture rationale, summary, technical safeguards,
+/// and tabular tier latency budget metrics.
 class ArchitectureDetailsCard extends StatelessWidget {
   final ArchitectureTopic topic;
   final bool isDesktop;
@@ -26,196 +26,58 @@ class ArchitectureDetailsCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
     final accentText = context.adaptiveAccentText(scheme.primary);
+    final l10n = AppLocalizations.of(context)!;
+
     final budgets = topic.diagramSteps
         .where((s) => s.latencyBudget != null)
         .toList(growable: false);
 
     final items = <Widget>[
-      // Section Eyebrow & Title
-      Row(
-        children: [
-          Icon(Icons.layers_rounded,
-              size: AppTypography.body, color: accentText),
-          const SizedBox(width: 6),
-          Flexible(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                AppLocalizations.of(context)!.engBlueprint,
-                style: TextStyle(
-                  fontSize: AppTypography.label,
-                  fontWeight: FontWeight.w900,
-                  color: accentText,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 6),
-      Text(
-        architectureTopicLabel(AppLocalizations.of(context)!, topic.title),
-        style: TextStyle(
-          fontSize: isDesktop ? AppTypography.title : AppTypography.title,
-          fontWeight: FontWeight.w900,
-          color: context.onSurface,
-          height: 1.2,
-        ),
-      ),
-      const SizedBox(height: 8),
-      Text(
-        ltrContent(context, topic.summary),
-        style: TextStyle(
-          fontSize: AppTypography.body,
-          color: context.onSurface,
-          height: 1.5,
-          fontWeight: FontWeight.w500,
-        ),
+      _HeaderBlock(
+        topic: topic,
+        isDesktop: isDesktop,
+        accentText: accentText,
       ),
       const SizedBox(height: 14),
-
-      // Architectural Rationale Container
-      Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: scheme.primary.withValues(alpha: isDark ? 0.09 : 0.06),
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          border: Border.all(
-            color: scheme.primary.withValues(alpha: isDark ? 0.32 : 0.40),
-            width: 1.2,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.04),
-              blurRadius: 12,
-              spreadRadius: -2,
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.psychology_rounded, color: accentText, size: 16),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    AppLocalizations.of(context)!.uiArchRationale,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: accentText,
-                      fontSize: AppTypography.label,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              ltrContent(context, topic.whyChosen),
-              style: TextStyle(
-                color: context.onSurface,
-                fontSize: AppTypography.label,
-                height: 1.5,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
+      _RationaleBox(
+        rationale: topic.whyChosen,
+        accentText: accentText,
+        scheme: scheme,
+        isDark: isDark,
       ),
       const SizedBox(height: 14),
-
-      // Technical Highlights / Key Implementation Safeguards
-      Row(
-        children: [
-          Icon(Icons.security_rounded, size: 15, color: accentText),
-          const SizedBox(width: 6),
-          Flexible(
-            child: Text(
-              AppLocalizations.of(context)!.uiKeySafeguards,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: accentText,
-                fontSize: AppTypography.label,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ),
-        ],
+      _SafeguardsList(
+        highlights: topic.technicalHighlights,
+        accentText: accentText,
       ),
-      const SizedBox(height: 8),
-      for (final item in topic.technicalHighlights) ...[
-        Padding(
-          padding: const EdgeInsets.only(bottom: 6),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 4, right: 8),
-                child: Container(
-                  width: 5,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: accentText,
-                    boxShadow: [
-                      BoxShadow(
-                        color: accentText.withValues(alpha: 0.5),
-                        blurRadius: 4,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  ltrContent(context, item),
-                  style: TextStyle(
-                    color: context.onSurface,
-                    fontSize: AppTypography.label,
-                    height: 1.45,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
       if (budgets.isNotEmpty) ...[
         const SizedBox(height: 14),
-        Row(
-          children: [
-            Icon(Icons.speed_rounded, size: 15, color: accentText),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                AppLocalizations.of(context)!.uiLatencyBudget,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: accentText,
-                  fontSize: AppTypography.label,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            ),
-          ],
+        _BudgetTable(
+          steps: budgets,
+          accentText: accentText,
+          isDark: isDark,
         ),
-        const SizedBox(height: 8),
-        for (final step in budgets) _BudgetRow(step: step, isDark: isDark),
       ],
-      const SizedBox(height: 8),
+      const SizedBox(height: 12),
       Align(
         alignment: AlignmentDirectional.centerStart,
-        child: OutlinedButton(
+        child: OutlinedButton.icon(
           onPressed: () {
             SoundService.instance.playClick();
             aboutTabRequest.value = AboutTabs.playground;
             HomeController.maybeOf(context)?.goTo(5);
           },
-          child: Text(AppLocalizations.of(context)!.engTryDemos),
+          icon: const Icon(Icons.play_circle_fill_rounded, size: 16),
+          label: Text(l10n.engTryDemos),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            side: BorderSide(
+              color: scheme.primary.withValues(alpha: isDark ? 0.6 : 0.4),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+            ),
+          ),
         ),
       ),
     ];
@@ -256,6 +118,256 @@ class ArchitectureDetailsCard extends StatelessWidget {
         ),
         child: content,
       ),
+    );
+  }
+}
+
+class _HeaderBlock extends StatelessWidget {
+  const _HeaderBlock({
+    required this.topic,
+    required this.isDesktop,
+    required this.accentText,
+  });
+
+  final ArchitectureTopic topic;
+  final bool isDesktop;
+  final Color accentText;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.layers_rounded,
+                size: AppTypography.body, color: accentText),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                l10n.engBlueprint,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: AppTypography.label,
+                  fontWeight: FontWeight.w900,
+                  color: accentText,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Text(
+          architectureTopicLabel(l10n, topic.title),
+          style: TextStyle(
+            fontSize: isDesktop ? AppTypography.title : AppTypography.title,
+            fontWeight: FontWeight.w900,
+            color: context.onSurface,
+            height: 1.2,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          ltrContent(context, topic.summary),
+          style: TextStyle(
+            fontSize: AppTypography.body,
+            color: context.onSurface,
+            height: 1.5,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _RationaleBox extends StatelessWidget {
+  const _RationaleBox({
+    required this.rationale,
+    required this.accentText,
+    required this.scheme,
+    required this.isDark,
+  });
+
+  final String rationale;
+  final Color accentText;
+  final ColorScheme scheme;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: scheme.primary.withValues(alpha: isDark ? 0.09 : 0.06),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(
+          color: scheme.primary.withValues(alpha: isDark ? 0.32 : 0.40),
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.04),
+            blurRadius: 12,
+            spreadRadius: -2,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.psychology_rounded, color: accentText, size: 16),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  l10n.uiArchRationale,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: accentText,
+                    fontSize: AppTypography.label,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            ltrContent(context, rationale),
+            style: TextStyle(
+              color: context.onSurface,
+              fontSize: AppTypography.label,
+              height: 1.5,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SafeguardsList extends StatelessWidget {
+  const _SafeguardsList({
+    required this.highlights,
+    required this.accentText,
+  });
+
+  final List<String> highlights;
+  final Color accentText;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.security_rounded, size: 15, color: accentText),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                l10n.uiKeySafeguards,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: accentText,
+                  fontSize: AppTypography.label,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        for (final item in highlights)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, right: 8),
+                  child: Container(
+                    width: 5,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: accentText,
+                      boxShadow: [
+                        BoxShadow(
+                          color: accentText.withValues(alpha: 0.5),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    ltrContent(context, item),
+                    style: TextStyle(
+                      color: context.onSurface,
+                      fontSize: AppTypography.label,
+                      height: 1.45,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _BudgetTable extends StatelessWidget {
+  const _BudgetTable({
+    required this.steps,
+    required this.accentText,
+    required this.isDark,
+  });
+
+  final List<DiagramStep> steps;
+  final Color accentText;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.speed_rounded, size: 15, color: accentText),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                l10n.uiLatencyBudget,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: accentText,
+                  fontSize: AppTypography.label,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        for (final step in steps) _BudgetRow(step: step, isDark: isDark),
+      ],
     );
   }
 }
@@ -347,6 +459,7 @@ class _BudgetRow extends StatelessWidget {
               ltrAlways(context, step.latencyBudget!),
               textAlign: TextAlign.center,
               style: TextStyle(
+                fontFamily: AppTypography.monoFont,
                 color: tone,
                 fontSize: AppTypography.label,
                 fontWeight: FontWeight.w900,
