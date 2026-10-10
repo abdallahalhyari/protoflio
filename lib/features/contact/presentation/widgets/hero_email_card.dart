@@ -210,6 +210,24 @@ class _HeroEmailCardState extends State<HeroEmailCard> {
       ],
     );
 
+    final contentBody =
+        widget.isDesktop && MediaQuery.textScalerOf(context).scale(1) <= 1.2
+            ? Row(
+                children: [
+                  Expanded(child: emailBlock),
+                  const SizedBox(width: AppSpacing.lg),
+                  Flexible(child: actionRow),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  emailBlock,
+                  const SizedBox(height: AppSpacing.md),
+                  actionRow,
+                ],
+              );
+
     final card = AnimatedContainer(
       duration: AppMotion.cardHover,
       curve: AppMotion.emphasized,
@@ -229,37 +247,105 @@ class _HeroEmailCardState extends State<HeroEmailCard> {
             : null,
         border: Border.all(
           color: accent.withValues(
-              alpha: _hover ? (isDark ? 0.7 : 0.5) : (isDark ? 0.45 : 0.3)),
+              alpha: _hover ? (isDark ? 0.75 : 0.55) : (isDark ? 0.45 : 0.3)),
           width: _hover ? 1.6 : 1.3,
         ),
         boxShadow: [
           BoxShadow(
             color: accent.withValues(
                 alpha:
-                    _hover ? (isDark ? 0.20 : 0.10) : (isDark ? 0.12 : 0.05)),
+                    _hover ? (isDark ? 0.22 : 0.12) : (isDark ? 0.12 : 0.05)),
             blurRadius: _hover ? 36 : 24,
             offset: const Offset(0, 8),
             spreadRadius: _hover ? 3 : 1,
           ),
         ],
       ),
-      child:
-          widget.isDesktop && MediaQuery.textScalerOf(context).scale(1) <= 1.2
-              ? Row(
-                  children: [
-                    Expanded(child: emailBlock),
-                    const SizedBox(width: AppSpacing.lg),
-                    Flexible(child: actionRow),
-                  ],
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    emailBlock,
-                    const SizedBox(height: AppSpacing.md),
-                    actionRow,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 7,
+                height: 7,
+                decoration: const BoxDecoration(
+                  color: AppColors.signalLight,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Container(
+                width: 7,
+                height: 7,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.goldSoft : AppColors.goldDeep,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Container(
+                width: 7,
+                height: 7,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.tealLight : AppColors.tealDeep,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'DISPATCH PROTOCOL // 06 · DIRECT REACH-OUT',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontFamily: AppTypography.monoFont,
+                    fontSize: AppTypography.label - 2,
+                    fontWeight: FontWeight.w800,
+                    color: context.adaptiveAccentText(accent),
+                    letterSpacing: 0.8,
+                  ),
+                ),
+              ),
+              Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.tealLight : AppColors.tealDeep,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: (isDark ? AppColors.tealLight : AppColors.tealDeep)
+                          .withValues(alpha: 0.6),
+                      blurRadius: 4,
+                    ),
                   ],
                 ),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'AVAILABLE',
+                style: TextStyle(
+                  fontFamily: AppTypography.monoFont,
+                  fontSize: AppTypography.label - 2,
+                  fontWeight: FontWeight.w800,
+                  color: isDark ? AppColors.tealLight : AppColors.tealDeep,
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Divider(
+            height: 1,
+            thickness: 0.8,
+            color: context.glassBorderStrong.withValues(alpha: 0.5),
+          ),
+          const SizedBox(height: 16),
+          contentBody,
+        ],
+      ),
     );
 
     return MouseRegion(

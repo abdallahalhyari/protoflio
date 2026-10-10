@@ -128,6 +128,12 @@ class _TelemetryBarState extends State<TelemetryBar> {
               tone: isDaytime ? ChipTone.amber : ChipTone.indigo,
               variant: ChipVariant.glass,
             ),
+            EditorialChip(
+              label: 'SLA: < 24H RESPONSE',
+              icon: Icons.bolt_rounded,
+              tone: ChipTone.green,
+              variant: ChipVariant.glass,
+            ),
           ],
         ),
       ),

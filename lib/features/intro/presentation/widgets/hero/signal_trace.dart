@@ -7,6 +7,7 @@ import 'package:profile/features/shell/presentation/controllers/home_controller.
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
+import 'package:profile/shared/widgets/pulsing_dot.dart';
 
 /// The cover's signature: one NFC claim traced through every layer of a
 /// mobile system, Flutter UI to backend. A packet travels the path and each
@@ -356,12 +357,7 @@ class _SignalTraceState extends State<SignalTrace>
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 6, right: 10),
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        decoration:
-                            BoxDecoration(color: live, shape: BoxShape.circle),
-                      ),
+                      child: PulsingDot(color: live),
                     ),
                     Expanded(
                       child: Text(
@@ -541,12 +537,43 @@ class _SignalTraceState extends State<SignalTrace>
             color: isDark ? AppColors.darkCard : AppColors.cardStock,
             borderRadius: BorderRadius.circular(AppRadius.card),
             border: Border.all(color: rule),
+            boxShadow: [
+              BoxShadow(
+                color: isDark
+                    ? AppColors.teal.withValues(alpha: 0.12)
+                    : AppColors.shadowSoft,
+                blurRadius: 28,
+                offset: const Offset(0, 8),
+              ),
+            ],
           ),
           clipBehavior: Clip.antiAlias,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [header, availability, trace, footer],
+          child: Stack(
+            children: [
+              if (isDark)
+                Positioned(
+                  top: 0,
+                  left: 20,
+                  right: 20,
+                  child: Container(
+                    height: 1.5,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.transparent,
+                          gold.withValues(alpha: 0.5),
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [header, availability, trace, footer],
+              ),
+            ],
           ),
         ),
       ),

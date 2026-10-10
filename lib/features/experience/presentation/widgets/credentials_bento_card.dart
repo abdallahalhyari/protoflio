@@ -19,20 +19,29 @@ class CredentialsBentoCard extends StatelessWidget {
   });
 
   Widget _buildSectionHeader(
-      String title, ColorScheme scheme, Color accentColor) {
+      String title, ColorScheme scheme, Color accentColor,
+      {IconData icon = Icons.workspace_premium_rounded}) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: accentColor.withValues(alpha: 0.6),
-            width: 1.5,
+            color: accentColor.withValues(alpha: 0.4),
+            width: 1.2,
           ),
         ),
       ),
       child: Row(
         children: [
-          Icon(Icons.workspace_premium_rounded, size: 16, color: accentColor),
+          Container(
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: accentColor.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(AppRadius.xs),
+              border: Border.all(color: accentColor.withValues(alpha: 0.3)),
+            ),
+            child: Icon(icon, size: 14, color: accentColor),
+          ),
           const SizedBox(width: 8),
           Flexible(
             child: Text(
@@ -72,22 +81,32 @@ class CredentialsBentoCard extends StatelessWidget {
           margin: EdgeInsets.only(bottom: isDesktop ? 0 : AppSpacing.lg),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.container),
+            gradient: isDark
+                ? RadialGradient(
+                    center: Alignment.topLeft,
+                    radius: 2.0,
+                    colors: [
+                      scheme.primary.withValues(alpha: 0.08),
+                      context.cardGlass,
+                    ],
+                  )
+                : null,
             border: Border.all(
               color: isDark
-                  ? scheme.primary.withValues(alpha: AppAlpha.border)
+                  ? scheme.primary.withValues(alpha: 0.3)
                   : AppColors.ink300,
               width: isDark ? 1.5 : 1.0,
             ),
             color: context.cardGlass,
-            boxShadow: isDark
-                ? []
-                : [
-                    BoxShadow(
-                      color: AppColors.ink900.withValues(alpha: 0.05),
-                      blurRadius: 16,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+            boxShadow: [
+              BoxShadow(
+                color: isDark
+                    ? scheme.primary.withValues(alpha: 0.06)
+                    : AppColors.ink900.withValues(alpha: 0.05),
+                blurRadius: 18,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: RepaintBoundary(
             child: ClipRRect(
@@ -117,6 +136,7 @@ class CredentialsBentoCard extends StatelessWidget {
                           eduTitle,
                           scheme,
                           accentText,
+                          icon: Icons.school_rounded,
                         ),
                         const SizedBox(height: 12),
                         ...context
@@ -161,6 +181,7 @@ class CredentialsBentoCard extends StatelessWidget {
                           certTitle,
                           scheme,
                           accentText,
+                          icon: Icons.verified_user_rounded,
                         ),
                         const SizedBox(height: 12),
                         ...context

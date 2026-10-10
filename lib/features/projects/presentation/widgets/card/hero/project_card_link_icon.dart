@@ -52,6 +52,7 @@ class _ProjectCardLinkIconState extends State<ProjectCardLinkIcon> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final activeColor =
         widget.isLinkedIn ? AppColors.linkedIn : widget.scheme.primary;
 
@@ -85,12 +86,16 @@ class _ProjectCardLinkIconState extends State<ProjectCardLinkIcon> {
                   decoration: BoxDecoration(
                     color: _hovered
                         ? activeColor.withValues(alpha: 0.85)
-                        : Colors.black.withValues(alpha: 0.55),
+                        : (isDark
+                            ? Colors.white.withValues(alpha: 0.08)
+                            : AppColors.ink100),
                     borderRadius: BorderRadius.circular(AppRadius.xs),
                     border: Border.all(
                       color: _hovered
-                          ? Colors.white
-                          : Colors.white.withValues(alpha: AppAlpha.fill),
+                          ? activeColor
+                          : (isDark
+                              ? Colors.white.withValues(alpha: 0.16)
+                              : AppColors.ink300),
                     ),
                     boxShadow: _hovered
                         ? [
@@ -128,7 +133,11 @@ class _ProjectCardLinkIconState extends State<ProjectCardLinkIcon> {
                       : Icon(
                           widget.icon ?? Icons.language_rounded,
                           size: 14,
-                          color: Colors.white,
+                          color: _hovered
+                              ? Colors.white
+                              : (isDark
+                                  ? Colors.white.withValues(alpha: 0.85)
+                                  : AppColors.ink800),
                         ),
                 ),
               )),

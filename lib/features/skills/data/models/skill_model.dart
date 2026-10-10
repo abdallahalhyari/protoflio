@@ -14,9 +14,10 @@ class SkillModel extends Skill {
   });
 
   factory SkillModel.fromJson(Map<String, dynamic> json) {
+    final name = json['name'] as String;
     return SkillModel(
-      name: json['name'] as String,
-      icon: skillIconFor(json['iconCodePoint'] as int),
+      name: name,
+      icon: skillIconFor(json['iconCodePoint'] as int, name),
       level: (json['level'] as num).toDouble(),
       category: json['category'] as String? ?? 'Mobile Systems',
       description: json['description'] as String? ?? '',
@@ -39,9 +40,61 @@ class SkillModel extends Skill {
     };
   }
 
-  /// Const icon for a skills.json code point; unknown values get a neutral fallback.
-  static IconData skillIconFor(int codePoint) =>
-      _skillIcons[codePoint] ?? Icons.auto_awesome_rounded;
+  /// Const icon for a skills.json code point with resilient name-based fallback.
+  static IconData skillIconFor(int codePoint, [String? skillName]) {
+    final direct = _skillIcons[codePoint];
+    if (direct != null) return direct;
+
+    if (skillName != null) {
+      final normalized = skillName.toLowerCase();
+      if (normalized.contains('flutter')) return Icons.flutter_dash_rounded;
+      if (normalized.contains('android')) return Icons.android_rounded;
+      if (normalized.contains('nfc') || normalized.contains('smart card')) {
+        return Icons.contactless_rounded;
+      }
+      if (normalized.contains('qr') || normalized.contains('barcode')) {
+        return Icons.qr_code_scanner_rounded;
+      }
+      if (normalized.contains('jwt') || normalized.contains('auth')) {
+        return Icons.verified_user_rounded;
+      }
+      if (normalized.contains('crypto')) return Icons.lock_rounded;
+      if (normalized.contains('clean') ||
+          normalized.contains('mvvm') ||
+          normalized.contains('arch')) {
+        return Icons.architecture_rounded;
+      }
+      if (normalized.contains('offline') || normalized.contains('sync')) {
+        return Icons.sync_rounded;
+      }
+      if (normalized.contains('rest') || normalized.contains('soap')) {
+        return Icons.cloud_sync_rounded;
+      }
+      if (normalized.contains('firebase')) {
+        return Icons.local_fire_department_rounded;
+      }
+      if (normalized.contains('aws') || normalized.contains('cloud')) {
+        return Icons.cloud_queue_rounded;
+      }
+      if (normalized.contains('sql') || normalized.contains('server')) {
+        return Icons.storage_rounded;
+      }
+      if (normalized.contains('git')) return Icons.merge_type_rounded;
+      if (normalized.contains('algorithm')) return Icons.data_object_rounded;
+      if (normalized.contains('health')) return Icons.health_and_safety_rounded;
+      if (normalized.contains('commerce') ||
+          normalized.contains('enterprise')) {
+        return Icons.storefront_rounded;
+      }
+      if (normalized.contains('comm') || normalized.contains('multinational')) {
+        return Icons.translate_rounded;
+      }
+      if (normalized.contains('ios') || normalized.contains('swift')) {
+        return Icons.apple_rounded;
+      }
+    }
+    return Icons.code_rounded;
+  }
 
   static const Map<int, IconData> _skillIcons = {
     62819: Icons.android_rounded,
@@ -65,4 +118,5 @@ class SkillModel extends Skill {
 }
 
 /// Helper mapping code points from bundled data to const IconData.
-IconData skillIconFor(int codePoint) => SkillModel.skillIconFor(codePoint);
+IconData skillIconFor(int codePoint, [String? skillName]) =>
+    SkillModel.skillIconFor(codePoint, skillName);

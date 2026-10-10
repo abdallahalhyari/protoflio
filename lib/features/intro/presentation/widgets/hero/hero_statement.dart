@@ -3,6 +3,7 @@ import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/widgets/pulsing_dot.dart';
 
 /// Left column of the cover: availability, the name, the role and one
 /// plain sentence about the work. Everything a recruiter screens for sits
@@ -76,14 +77,7 @@ class HeroStatement extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.teal,
-                  ),
-                ),
+                PulsingDot(color: AppColors.tealLight),
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(

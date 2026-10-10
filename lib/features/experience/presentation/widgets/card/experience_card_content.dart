@@ -26,7 +26,10 @@ class CardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppSpacing.md),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: isDesktop ? 12 : AppSpacing.md,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,27 +39,27 @@ class CardContent extends StatelessWidget {
             scheme: scheme,
             isDark: isDark,
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: isDesktop ? 10 : 14),
           Text(
             exp.company,
             style: TextStyle(
               fontFamily: AppTypography.displayFont,
               color: scheme.onSurface,
-              fontSize: isDesktop ? 28 : 22,
+              fontSize: isDesktop ? 22 : 20,
               fontWeight: FontWeight.w900,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 3),
           Text(
             exp.role,
             style: TextStyle(
               color: context.adaptiveAccentText(scheme.primary),
-              fontSize: isDesktop ? 14 : 12.5,
+              fontSize: isDesktop ? 13 : 12.5,
               fontWeight: FontWeight.w900,
             ),
           ),
           if (exp.websiteUrl != null || exp.linkedinUrl != null) ...[
-            const SizedBox(height: 12),
+            SizedBox(height: isDesktop ? 8 : 12),
             Wrap(
               spacing: 8,
               runSpacing: 6,
@@ -87,7 +90,7 @@ class CardContent extends StatelessWidget {
               ],
             ),
           ],
-          const SizedBox(height: 16),
+          SizedBox(height: isDesktop ? 10 : 16),
           ...exp.highlights
               .map((h) => HighlightBullet(text: h, scheme: scheme)),
         ],

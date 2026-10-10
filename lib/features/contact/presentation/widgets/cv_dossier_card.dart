@@ -37,17 +37,28 @@ class _CvDossierCardState extends State<CvDossierCard> {
         decoration: BoxDecoration(
           color: isDark ? AppColors.darkCard : Colors.white,
           borderRadius: BorderRadius.circular(AppRadius.container),
+          gradient: isDark
+              ? RadialGradient(
+                  center: Alignment.topLeft,
+                  radius: 2.2,
+                  colors: [
+                    AppColors.gold.withValues(alpha: _hover ? 0.12 : 0.06),
+                    accent.withValues(alpha: 0.08),
+                    AppColors.darkCard,
+                  ],
+                )
+              : null,
           border: Border.all(
             color: _hover
-                ? accent.withValues(alpha: isDark ? 0.7 : 0.5)
+                ? AppColors.gold.withValues(alpha: isDark ? 0.8 : 0.6)
                 : (isDark ? accent.withValues(alpha: 0.35) : AppColors.ink200),
             width: _hover ? 1.5 : 1.2,
           ),
           boxShadow: [
             BoxShadow(
-              color: accent.withValues(
-                  alpha:
-                      _hover ? (isDark ? 0.20 : 0.09) : (isDark ? 0.08 : 0.04)),
+              color: _hover
+                  ? AppColors.gold.withValues(alpha: isDark ? 0.22 : 0.10)
+                  : accent.withValues(alpha: isDark ? 0.08 : 0.04),
               blurRadius: _hover ? 32 : 20,
               offset: const Offset(0, 8),
               spreadRadius: _hover ? 2 : 0,
@@ -71,10 +82,11 @@ class _CvDossierCardState extends State<CvDossierCard> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: accent.withValues(alpha: isDark ? 0.18 : 0.12),
+                        color: AppColors.gold
+                            .withValues(alpha: isDark ? 0.18 : 0.12),
                         borderRadius: BorderRadius.circular(AppRadius.xs),
                         border: Border.all(
-                          color: accent.withValues(alpha: 0.4),
+                          color: AppColors.gold.withValues(alpha: 0.45),
                         ),
                       ),
                       child: FittedBox(

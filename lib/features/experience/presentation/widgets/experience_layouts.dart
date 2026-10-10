@@ -66,7 +66,6 @@ class ExperienceDesktopGrid extends StatelessWidget {
               children: [
                 if (experiences.isNotEmpty)
                   Expanded(
-                    flex: 5,
                     child: AnimatedExperienceNode(
                       exp: experiences[0],
                       isVisible: state.isVisible,
@@ -75,10 +74,9 @@ class ExperienceDesktopGrid extends StatelessWidget {
                       isDesktop: true,
                     ),
                   ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: AppSpacing.md),
                 if (experiences.length > 2)
                   Expanded(
-                    flex: 4,
                     child: AnimatedExperienceNode(
                       exp: experiences[2],
                       isVisible: state.isVisible,
@@ -91,7 +89,7 @@ class ExperienceDesktopGrid extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.lg),
+        const SizedBox(width: AppSpacing.md),
 
         // Column 2: Experiences 1 and 3
         Expanded(
@@ -104,7 +102,6 @@ class ExperienceDesktopGrid extends StatelessWidget {
               children: [
                 if (experiences.length > 1)
                   Expanded(
-                    flex: 5,
                     child: AnimatedExperienceNode(
                       exp: experiences[1],
                       isVisible: state.isVisible,
@@ -113,10 +110,9 @@ class ExperienceDesktopGrid extends StatelessWidget {
                       isDesktop: true,
                     ),
                   ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: AppSpacing.md),
                 if (experiences.length > 3)
                   Expanded(
-                    flex: 4,
                     child: AnimatedExperienceNode(
                       exp: experiences[3],
                       isVisible: state.isVisible,
@@ -129,7 +125,7 @@ class ExperienceDesktopGrid extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.lg),
+        const SizedBox(width: AppSpacing.md),
 
         // Column 3: Credentials Bento
         Expanded(

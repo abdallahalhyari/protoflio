@@ -75,25 +75,37 @@ class _ChannelTileState extends State<ChannelTile> {
             color: isDark
                 ? (_hover
                     ? Colors.white.withValues(alpha: AppAlpha.whisper)
-                    : Colors.white.withValues(alpha: 0.03))
+                    : context.cardGlass)
                 : (_hover ? Colors.white : AppColors.ink50),
             borderRadius: BorderRadius.circular(AppRadius.card),
+            gradient: isDark
+                ? RadialGradient(
+                    center: Alignment.topLeft,
+                    radius: 2.0,
+                    colors: [
+                      d.accent.withValues(alpha: _hover ? 0.18 : 0.07),
+                      context.cardGlass,
+                    ],
+                  )
+                : null,
             border: Border.all(
               color: _hover
-                  ? d.accent.withValues(alpha: isDark ? 0.75 : 0.6)
+                  ? d.accent.withValues(alpha: isDark ? 0.80 : 0.65)
                   : (isDark
-                      ? Colors.white.withValues(alpha: 0.10)
+                      ? Colors.white.withValues(alpha: 0.12)
                       : AppColors.ink200),
               width: _hover ? 1.5 : 1,
             ),
             boxShadow: [
-              if (_hover)
-                BoxShadow(
-                  color: d.accent.withValues(alpha: isDark ? 0.22 : 0.12),
-                  blurRadius: 22,
-                  offset: const Offset(0, 8),
-                  spreadRadius: 1,
-                ),
+              BoxShadow(
+                color: d.accent.withValues(
+                    alpha: _hover
+                        ? (isDark ? 0.26 : 0.14)
+                        : (isDark ? 0.08 : 0.03)),
+                blurRadius: _hover ? 26 : 14,
+                offset: const Offset(0, 8),
+                spreadRadius: _hover ? 2 : 0,
+              ),
             ],
           ),
           child: Column(
@@ -101,18 +113,36 @@ class _ChannelTileState extends State<ChannelTile> {
             children: [
               Row(
                 children: [
-                  Container(
-                    width: 42,
-                    height: 42,
+                  AnimatedContainer(
+                    duration: AppMotion.snap,
+                    width: 44,
+                    height: 44,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: d.accent.withValues(alpha: isDark ? 0.16 : 0.12),
+                      color: d.accent.withValues(
+                          alpha: _hover
+                              ? (isDark ? 0.22 : 0.16)
+                              : (isDark ? 0.14 : 0.10)),
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                       border: Border.all(
-                        color: d.accent.withValues(alpha: isDark ? 0.5 : 0.35),
+                        color: d.accent.withValues(
+                            alpha: _hover
+                                ? (isDark ? 0.75 : 0.55)
+                                : (isDark ? 0.40 : 0.30)),
+                        width: 1.2,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: d.accent.withValues(
+                              alpha: _hover
+                                  ? (isDark ? 0.35 : 0.20)
+                                  : (isDark ? 0.12 : 0.06)),
+                          blurRadius: _hover ? 14 : 6,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
-                    child: Icon(d.icon, size: 20, color: labelColor),
+                    child: Icon(d.icon, size: 21, color: labelColor),
                   ),
                   const SizedBox(width: AppSpacing.smd),
                   Expanded(

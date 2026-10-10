@@ -40,7 +40,11 @@ class DesktopToolbar extends StatelessWidget {
 }
 
 class _Puck extends StatefulWidget {
-  const _Puck({required this.dark, required this.child});
+  const _Puck({
+    required this.dark,
+    required this.child,
+  });
+
   final bool dark;
   final Widget child;
 
@@ -60,46 +64,43 @@ class _PuckState extends State<_Puck> {
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedScale(
-        scale: _hovered ? 1.06 : 1.0,
+        scale: _hovered ? 1.05 : 1.0,
         duration: AppMotion.chipHover,
         curve: AppMotion.emphasized,
         child: AnimatedContainer(
           duration: AppMotion.chipHover,
           curve: AppMotion.emphasized,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            boxShadow: _hovered
-                ? [
-                    BoxShadow(
-                      color: primary.withValues(alpha: dark ? 0.35 : 0.18),
-                      blurRadius: 10,
-                      spreadRadius: 1,
-                    ),
-                  ]
-                : null,
-          ),
-          child: Material(
-            color: dark ? Colors.black45 : Colors.white.withValues(alpha: 0.9),
-            elevation: dark ? 0 : (_hovered ? 4 : 2),
-            shadowColor: Colors.black12,
-            shape: CircleBorder(
-              side: BorderSide(
+            color: dark
+                ? (_hovered
+                    ? Colors.white.withValues(alpha: 0.12)
+                    : Colors.white.withValues(alpha: 0.06))
+                : (_hovered
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.92)),
+            border: Border.all(
+              color: _hovered
+                  ? primary.withValues(alpha: dark ? 0.7 : 0.6)
+                  : (dark
+                      ? Colors.white.withValues(alpha: 0.18)
+                      : AppColors.ink300),
+              width: _hovered ? 1.4 : 1.0,
+            ),
+            boxShadow: [
+              BoxShadow(
                 color: _hovered
-                    ? primary.withValues(alpha: dark ? 0.6 : 0.5)
-                    : (dark
-                        ? Colors.white.withValues(alpha: 0.14)
-                        : AppColors.ink200),
-                width: _hovered ? 1.4 : 1.0,
+                    ? primary.withValues(alpha: dark ? 0.28 : 0.16)
+                    : Colors.black.withValues(alpha: dark ? 0.25 : 0.06),
+                blurRadius: _hovered ? 12 : 6,
+                spreadRadius: _hovered ? 1 : 0,
+                offset: const Offset(0, 2),
               ),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-              customBorder: const CircleBorder(),
-              splashColor: primary.withValues(alpha: 0.18),
-              highlightColor: primary.withValues(alpha: 0.08),
-              child: widget.child,
-            ),
+            ],
           ),
+          child: Center(child: widget.child),
         ),
       ),
     );
@@ -130,8 +131,10 @@ class _LanguagePickerPuck extends StatelessWidget {
                 excludeFromSemantics: true,
                 child: PopupMenuButton<String>(
                   tooltip: '',
+                  padding: EdgeInsets.zero,
+                  iconSize: 18,
                   icon: Icon(Icons.language_rounded,
-                      color: dark ? Colors.white : AppColors.ink900),
+                      color: dark ? Colors.white : AppColors.ink900, size: 18),
                   onSelected: (val) {
                     HapticFeedback.lightImpact();
                     SoundService.instance.playClick();
@@ -169,9 +172,12 @@ class _ThemeTogglePuck extends StatelessWidget {
             message: dark ? 'Switch to light' : 'Switch to dark',
             excludeFromSemantics: true,
             child: IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
               icon: Icon(
                 dark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
                 color: dark ? Colors.white : AppColors.ink900,
+                size: 18,
               ),
               onPressed: () {
                 HapticFeedback.lightImpact();
@@ -208,6 +214,9 @@ class _AudioTogglePuck extends StatelessWidget {
                     : 'Sound Effects: MUTED (Click to enable)',
                 excludeFromSemantics: true,
                 child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints:
+                      const BoxConstraints(minWidth: 40, minHeight: 40),
                   icon: Stack(
                     clipBehavior: Clip.none,
                     children: [

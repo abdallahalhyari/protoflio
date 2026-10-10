@@ -448,100 +448,125 @@ class _InteractiveMetricCardState extends State<_InteractiveMetricCard> {
         child: AnimatedContainer(
           duration: AppMotion.cardHover,
           curve: AppMotion.emphasized,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           decoration: BoxDecoration(
             color: isDark
                 ? (_hover
-                    ? accent.withValues(alpha: 0.08)
+                    ? accent.withValues(alpha: 0.09)
                     : Colors.white.withValues(alpha: 0.03))
                 : (_hover ? Colors.white : Colors.white),
             borderRadius: BorderRadius.circular(AppRadius.card),
             border: Border.all(
               color: _hover
-                  ? accent.withValues(alpha: isDark ? 0.60 : 0.50)
+                  ? accent.withValues(alpha: isDark ? 0.70 : 0.55)
                   : (isDark
                       ? Colors.white.withValues(alpha: 0.08)
                       : AppColors.ink200),
+              width: _hover ? 1.3 : 1.0,
             ),
             boxShadow: [
               BoxShadow(
                 color: _hover
-                    ? accent.withValues(alpha: isDark ? 0.24 : 0.12)
+                    ? accent.withValues(alpha: isDark ? 0.28 : 0.14)
                     : Colors.black.withValues(alpha: isDark ? 0.2 : 0.03),
-                blurRadius: _hover ? 18 : 10,
-                offset: _hover ? const Offset(0, 5) : const Offset(0, 3),
+                blurRadius: _hover ? 20 : 10,
+                offset: _hover ? const Offset(0, 6) : const Offset(0, 3),
               ),
             ],
           ),
-          child: Row(
+          child: Stack(
+            clipBehavior: Clip.none,
             children: [
-              AnimatedContainer(
-                duration: AppMotion.cardHover,
-                curve: AppMotion.emphasized,
-                width: 38,
-                height: 38,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: _hover
-                      ? accent.withValues(alpha: isDark ? 0.24 : 0.16)
-                      : accent.withValues(alpha: isDark ? 0.12 : 0.08),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                  border: Border.all(
-                    color: _hover
-                        ? accent.withValues(alpha: isDark ? 0.70 : 0.50)
-                        : accent.withValues(alpha: 0.3),
+              Positioned(
+                top: -12,
+                left: 10,
+                right: 10,
+                child: Container(
+                  height: 1.5,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.transparent,
+                        accent.withValues(
+                            alpha: _hover ? 0.9 : (isDark ? 0.45 : 0.25)),
+                        Colors.transparent,
+                      ],
+                    ),
                   ),
-                  boxShadow: _hover
-                      ? [
-                          BoxShadow(
-                            color:
-                                accent.withValues(alpha: isDark ? 0.35 : 0.18),
-                            blurRadius: 10,
-                          ),
-                        ]
-                      : null,
-                ),
-                child: Icon(
-                  s.$4,
-                  size: 19,
-                  color: context.adaptiveAccentText(accent),
                 ),
               ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        s.$1,
-                        style: TextStyle(
-                          fontFamily: AppTypography.displayFont,
-                          fontSize: AppTypography.heading,
-                          fontWeight: FontWeight.w900,
-                          color: _hover
-                              ? context.adaptiveAccentText(accent)
-                              : context.onSurface,
-                          height: 1.1,
+              Row(
+                children: [
+                  AnimatedContainer(
+                    duration: AppMotion.cardHover,
+                    curve: AppMotion.emphasized,
+                    width: 36,
+                    height: 36,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: _hover
+                          ? accent.withValues(alpha: isDark ? 0.26 : 0.18)
+                          : accent.withValues(alpha: isDark ? 0.12 : 0.08),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                      border: Border.all(
+                        color: _hover
+                            ? accent.withValues(alpha: isDark ? 0.75 : 0.55)
+                            : accent.withValues(alpha: 0.3),
+                      ),
+                      boxShadow: _hover
+                          ? [
+                              BoxShadow(
+                                color: accent.withValues(
+                                    alpha: isDark ? 0.4 : 0.2),
+                                blurRadius: 10,
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: Icon(
+                      s.$4,
+                      size: 18,
+                      color: context.adaptiveAccentText(accent),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(
+                            s.$1,
+                            style: TextStyle(
+                              fontFamily: AppTypography.displayFont,
+                              fontSize: AppTypography.heading,
+                              fontWeight: FontWeight.w900,
+                              color: _hover
+                                  ? context.adaptiveAccentText(accent)
+                                  : context.onSurface,
+                              height: 1.1,
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 2),
+                        Text(
+                          s.$2,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: AppTypography.label,
+                            fontWeight: FontWeight.w800,
+                            color:
+                                _hover ? context.onSurface : context.mutedText,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      s.$2,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w800,
-                        color: _hover ? context.onSurface : context.mutedText,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -576,15 +601,31 @@ class _StoryAndDossierSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: 108,
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: AppTypography.body,
-                    height: 1.4,
-                    color: context.mutedText,
-                    fontWeight: FontWeight.w600,
-                  ),
+                width: 112,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 4,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: accent.withValues(alpha: 0.7),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        label,
+                        style: TextStyle(
+                          fontFamily: AppTypography.monoFont,
+                          fontSize: AppTypography.label,
+                          height: 1.4,
+                          color: context.mutedText,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(child: value),
@@ -605,7 +646,10 @@ class _StoryAndDossierSection extends StatelessWidget {
         );
 
     final dossierCard = AboutCard(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      terminalHeader: true,
+      headerKicker: 'SPEC SHEET // 06 · ARCHITECT DOSSIER',
+      engineStatus: 'VERIFIED',
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -628,7 +672,7 @@ class _StoryAndDossierSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           row(l10n.aboutEngineerLabel, factText(l10n.aboutEngineerValue),
               first: true),
           row(
@@ -667,13 +711,23 @@ class _StoryAndDossierSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: context.glassBorder),
+        border: Border.all(
+          color: isDark
+              ? accent.withValues(alpha: 0.35)
+              : context.glassBorderStrong,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.04),
+            blurRadius: 20,
+            offset: const Offset(0, 6),
           ),
+          if (isDark)
+            BoxShadow(
+              color: accent.withValues(alpha: 0.06),
+              blurRadius: 32,
+              spreadRadius: 1,
+            ),
         ],
       ),
       child: Column(
@@ -699,13 +753,24 @@ class _StoryAndDossierSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Text(
-            ltrContent(context, l10n.aboutStoryShort),
-            style: TextStyle(
-              fontSize: AppTypography.lead,
-              height: 1.65,
-              fontWeight: FontWeight.w500,
-              color: context.onSurface.withValues(alpha: 0.95),
+          Container(
+            padding: const EdgeInsets.only(left: 12),
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: accent.withValues(alpha: isDark ? 0.6 : 0.4),
+                  width: 2.5,
+                ),
+              ),
+            ),
+            child: Text(
+              ltrContent(context, l10n.aboutStoryShort),
+              style: TextStyle(
+                fontSize: AppTypography.lead,
+                height: 1.65,
+                fontWeight: FontWeight.w500,
+                color: context.onSurface.withValues(alpha: 0.95),
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.lg),

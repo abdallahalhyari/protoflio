@@ -147,6 +147,24 @@ class _ExperienceCardState extends State<ExperienceCard> {
                         ),
                       ),
                     ),
+                    if (active)
+                      Positioned(
+                        top: 0,
+                        left: 16,
+                        right: 16,
+                        child: Container(
+                          height: 1.5,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.transparent,
+                                scheme.primary.withValues(alpha: 0.8),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     Positioned(
                       right: -10,
                       bottom: -20,

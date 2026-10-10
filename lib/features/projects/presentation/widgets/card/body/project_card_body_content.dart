@@ -48,7 +48,7 @@ class CardBodyContent extends StatelessWidget {
     final caseCopy = localizedProjectCase(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
     final textScale = MediaQuery.textScalerOf(context).scale(1);
-    final maxCopyLines = textScale > 1.1 ? 1 : (pinFoot ? 3 : 2);
+    final maxCopyLines = textScale > 1.15 ? 1 : 2;
     final clampLines = maxCopyLines;
     const clampOverflow = TextOverflow.ellipsis;
 
@@ -137,7 +137,7 @@ class CardBodyContent extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.md),
+        const SizedBox(height: 10),
         if (caseCopy != null) ...[
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -189,13 +189,13 @@ class CardBodyContent extends StatelessWidget {
       children: [
         titleBlock,
         if (outcome != null) ...[
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: 10),
           CardFigureLine(
             value: figure?.value,
             label: figure?.label ?? outcome,
             scheme: scheme,
             isDark: isDark,
-            maxLines: pinFoot ? 3 : null,
+            maxLines: pinFoot ? 2 : null,
           ),
         ],
       ],

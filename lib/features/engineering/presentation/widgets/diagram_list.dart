@@ -125,8 +125,8 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
             child: AnimatedContainer(
               duration: AppMotion.snap,
               padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 16 : 12,
-                vertical: isDesktop ? 12 : 10,
+                horizontal: isDesktop ? 14 : 10,
+                vertical: isDesktop ? 8 : 7,
               ),
               decoration: BoxDecoration(
                 color: cardBg,
@@ -155,7 +155,7 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                   AnimatedContainer(
                     duration: AppMotion.snap,
                     padding: EdgeInsets.all(
-                      isDesktop ? (isActive ? 9 : 8) : (isActive ? 7 : 6),
+                      isDesktop ? (isActive ? 7 : 6) : (isActive ? 6 : 5),
                     ),
                     decoration: BoxDecoration(
                       color: step.color.withValues(
@@ -182,10 +182,10 @@ class _DiagramTierItemState extends State<_DiagramTierItem> {
                     child: Icon(
                       step.icon,
                       color: accent,
-                      size: isDesktop ? 18 : 16,
+                      size: isDesktop ? 16 : 14,
                     ),
                   ),
-                  SizedBox(width: isDesktop ? 14 : 10),
+                  SizedBox(width: isDesktop ? 12 : 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,14 +311,14 @@ class _TierConnector extends StatelessWidget {
 
     return RepaintBoundary(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2),
+        padding: const EdgeInsets.symmetric(vertical: 1),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: isActive ? 2.0 : 1.0,
-                height: 10,
+                height: 4,
                 decoration: BoxDecoration(
                   color: connColor,
                   boxShadow: isActive
@@ -333,8 +333,7 @@ class _TierConnector extends StatelessWidget {
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                 decoration: BoxDecoration(
                   color: isActive
                       ? primaryColor.withValues(alpha: isDark ? 0.20 : 0.12)
@@ -357,12 +356,12 @@ class _TierConnector extends StatelessWidget {
                 child: Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: connColor,
-                  size: isActive ? 16 : 14,
+                  size: isActive ? 13 : 11,
                 ),
               ),
               Container(
                 width: isActive ? 2.0 : 1.0,
-                height: 10,
+                height: 4,
                 decoration: BoxDecoration(
                   color: connColor,
                   boxShadow: isActive
