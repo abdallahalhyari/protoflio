@@ -68,25 +68,14 @@ void main() {
       expect(find.text('Open Playground'), findsOneWidget);
     });
 
-    testWidgets(
-        'AboutPage renders tabs and toggles between Profile and Playground',
+    testWidgets('AboutPage renders executive profile details and direct email',
         (tester) async {
       await tester.pumpWidget(_wrap(const AboutPage()));
       await tester.pumpAndSettle();
 
       expect(find.text('About'), findsOneWidget);
-      expect(find.text('Profile'), findsWidgets);
-      expect(find.text('Playground'), findsOneWidget);
-
-      // Initially on profile tab
       expect(find.text('Abdallah Alhyari'), findsOneWidget);
-
-      // Tap playground tab
-      await tester.tap(find.text('Playground'));
-      await tester.pumpAndSettle();
-
-      // Playground demos should be visible
-      expect(find.text('Platform channel message'), findsOneWidget);
+      expect(find.text('alhyariabdallh@gmail.com'), findsOneWidget);
     });
   });
 }
