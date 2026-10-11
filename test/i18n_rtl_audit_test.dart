@@ -8,7 +8,6 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/contact/presentation/pages/contact_page.dart';
 import 'package:profile/features/engineering/presentation/pages/engineering_page.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
-import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart';
 import 'package:profile/features/intro/presentation/pages/intro_page.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/skills/presentation/pages/skills_page.dart';
@@ -232,18 +231,7 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('HatsGridPage renders cleanly in Arabic (RTL) and Czech (LTR)',
-        (tester) async {
-      await tester.binding.setSurfaceSize(const Size(1200, 900));
-      addTearDown(() => tester.binding.setSurfaceSize(null));
 
-      await tester.pumpWidget(_buildLocalizedHarness(
-        const HatsGridPage(),
-        const Locale('ar'),
-      ));
-      await tester.pump(const Duration(milliseconds: 300));
-      expect(tester.takeException(), isNull);
-    });
 
     testWidgets(
         'ContactPage renders cleanly in Arabic (RTL) with localized feedback toast',

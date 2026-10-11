@@ -10,7 +10,6 @@ import 'package:profile/features/projects/presentation/pages/projects_page.dart'
 import 'package:profile/features/engineering/presentation/pages/engineering_page.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
 import 'package:profile/features/skills/presentation/pages/skills_page.dart';
-import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart';
 import 'package:profile/features/contact/presentation/pages/contact_page.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/shell/presentation/widgets/portfolio_nav.dart';
@@ -146,20 +145,7 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-      testWidgets(
-          '$modeName - HatsGridPage renders perspectives and action buttons',
-          (tester) async {
-        await tester.binding.setSurfaceSize(const Size(1200, 900));
-        await tester.pumpWidget(createThemedTestApp(
-          child: const HatsGridPage(),
-          brightness: brightness,
-        ));
-        await tester.pump(const Duration(milliseconds: 300));
 
-        expect(find.text('Perspectives'), findsWidgets);
-        expect(tester.takeException(), isNull);
-        await tester.binding.setSurfaceSize(null);
-      });
 
       testWidgets(
           '$modeName - ContactPage renders availability and communication channels',

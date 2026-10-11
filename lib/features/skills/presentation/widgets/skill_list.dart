@@ -5,7 +5,6 @@ import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
 import 'package:profile/features/skills/presentation/utils/skill_category_labels.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_category_filters.dart';
-import 'package:profile/features/skills/presentation/widgets/tile/bento_skill_tile_shared.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 /// Skills as a dense, scannable list grouped by area. Each row shows the
@@ -141,6 +140,13 @@ class _SkillRowState extends State<_SkillRow> {
               ? 2
               : 1;
 
+  String _masteryLabel(double level, AppLocalizations l10n) {
+    if (level >= 0.9) return l10n.skillMasteryLead;
+    if (level >= 0.75) return l10n.skillMasteryCore;
+    if (level >= 0.55) return l10n.skillMasterySolid;
+    return l10n.skillMasteryGrowing;
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -148,7 +154,7 @@ class _SkillRowState extends State<_SkillRow> {
     final isDark = context.isDarkMode;
     final rule = context.glassBorder;
     final steps = _steps(s.level);
-    final label = masteryLabel(s.level, l10n);
+    final label = _masteryLabel(s.level, l10n);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),

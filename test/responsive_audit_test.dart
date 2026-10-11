@@ -11,7 +11,6 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/contact/presentation/pages/contact_page.dart';
 import 'package:profile/features/engineering/presentation/pages/engineering_page.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
-import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart';
 import 'package:profile/features/intro/presentation/pages/intro_page.dart';
 import 'package:profile/features/projects/presentation/pages/project_modal.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
@@ -307,19 +306,7 @@ void main() {
       expect(find.text('Engineering'), findsOneWidget);
     });
 
-    testWidgets('HatsGridPage renders cleanly on compact 320x568',
-        (tester) async {
-      _setViewport(tester, compactSize);
-      await tester.pumpWidget(_buildViewportHarness(
-        const HatsGridPage(isContinuousMobile: true),
-        compactSize,
-        scrollable: true,
-      ));
-      await tester.pump(const Duration(milliseconds: 300));
 
-      expect(tester.takeException(), isNull);
-      expect(find.text('Perspectives'), findsOneWidget);
-    });
 
     testWidgets('ContactPage renders cleanly on compact 320x568',
         (tester) async {

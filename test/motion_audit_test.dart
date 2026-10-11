@@ -9,7 +9,6 @@ import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/projects/presentation/pages/project_modal.dart';
-import 'package:profile/features/hats/presentation/widgets/hat_role_pills.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_pager.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_progress_rail.dart';
 import 'package:profile/features/shell/presentation/widgets/portfolio_nav.dart';
@@ -267,31 +266,7 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('HatRolePills triggers role selection on tap', (tester) async {
-      int selected = 0;
 
-      await tester.pumpWidget(
-        _wrapWithMedia(
-          child: HatRolePills(
-            selectedIndex: selected,
-            isDesktop: true,
-            onSelectRole: (idx) {
-              selected = idx;
-            },
-          ),
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      final pills = find.byType(InkWell);
-      expect(pills, findsWidgets);
-
-      await tester.tap(pills.at(2));
-      await tester.pumpAndSettle();
-
-      expect(selected, 2);
-      expect(tester.takeException(), isNull);
-    });
 
     testWidgets(
         'NavItem uses AppMotion.emphasized curve on selection transition',

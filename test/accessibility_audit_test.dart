@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/test_data.dart';
@@ -11,8 +10,6 @@ import 'package:profile/features/engineering/data/datasources/architecture_data.
 
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
-import 'package:profile/features/contact/presentation/widgets/channel_tile.dart';
-import 'package:profile/features/contact/presentation/widgets/consulting_track.dart';
 import 'package:profile/features/contact/presentation/widgets/contact_header.dart';
 import 'package:profile/features/shell/presentation/widgets/desktop_toolbar.dart';
 import 'package:profile/features/engineering/presentation/widgets/architecture_diagram_card.dart';
@@ -20,13 +17,11 @@ import 'package:profile/features/engineering/presentation/widgets/engineering_he
 import 'package:profile/features/experience/presentation/widgets/experience_card.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
 import 'package:profile/features/shell/presentation/widgets/folio_bar.dart';
-import 'package:profile/features/hats/presentation/widgets/hat_role_pills.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
 import 'package:profile/features/shell/presentation/widgets/keyboard_hint_chip.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_app_bar.dart';
 import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
-import 'package:profile/features/skills/presentation/widgets/bento_skill_tile.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_header.dart';
 import 'package:profile/core/theme/app_theme.dart';
 
@@ -166,92 +161,6 @@ void main() {
       );
     });
 
-    testWidgets('HatRolePills announces role position and selected state',
-        (tester) async {
-      await tester.pumpWidget(_wrapWithHarness(
-        child: HatRolePills(
-          selectedIndex: 1,
-          isDesktop: true,
-          onSelectRole: (_) {},
-        ),
-      ));
-      await tester.pumpAndSettle();
-
-      // Active pill (index 1)
-      final selectedPill = find.byWidgetPredicate(
-        (w) =>
-            w is Semantics &&
-            w.properties.button == true &&
-            w.properties.selected == true &&
-            (w.properties.label?.contains('Role 2 of') ?? false),
-      );
-      expect(selectedPill, findsOneWidget);
-
-      // Unselected pill (index 0)
-      final unselectedPill = find.byWidgetPredicate(
-        (w) =>
-            w is Semantics &&
-            w.properties.button == true &&
-            w.properties.selected == false &&
-            (w.properties.label?.contains('Role 1 of') ?? false),
-      );
-      expect(unselectedPill, findsOneWidget);
-    });
-
-    testWidgets(
-        'BentoSkillTile announces skill name, mastery level, and flip hint',
-        (tester) async {
-      final skill = testSkills.first;
-      await tester.pumpWidget(_wrapWithHarness(
-        child: BentoSkillTile(
-          skill: skill,
-          categoryColor: Colors.blue,
-          categoryGradient: const [Colors.blue, Colors.cyan],
-          isDesktop: true,
-        ),
-      ));
-      await tester.pumpAndSettle();
-
-      final skillSemantics = find.byWidgetPredicate(
-        (w) =>
-            w is Semantics &&
-            w.properties.button == true &&
-            (w.properties.label?.contains(skill.name) ?? false) &&
-            (w.properties.label?.contains('flip') ?? false),
-      );
-      expect(skillSemantics, findsOneWidget);
-    });
-
-    testWidgets('BentoSkillTile flips with the keyboard (Tab, then Enter)',
-        (tester) async {
-      final skill = testSkills.first;
-      await tester.pumpWidget(_wrapWithHarness(
-        child: SizedBox(
-          width: 260,
-          height: 280,
-          child: BentoSkillTile(
-            skill: skill,
-            categoryColor: Colors.blue,
-            categoryGradient: const [Colors.blue, Colors.cyan],
-            isDesktop: true,
-          ),
-        ),
-      ));
-      await tester.pumpAndSettle();
-      // The description lives on the back face only.
-      expect(find.text(skill.description), findsNothing);
-
-      await tester.sendKeyEvent(LogicalKeyboardKey.tab);
-      await tester.pump();
-      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
-      await tester.pumpAndSettle();
-      expect(find.text(skill.description), findsOneWidget);
-
-      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
-      await tester.pumpAndSettle();
-      expect(find.text(skill.description), findsNothing);
-    });
-
     testWidgets(
         'ExperienceCard declares container semantics and action buttons',
         (tester) async {
@@ -285,66 +194,6 @@ void main() {
         );
         expect(actionPillSemantics, findsWidgets);
       }
-    });
-
-    testWidgets('BentoTrackCard declares button semantics on inquire action',
-        (tester) async {
-      final track = ConsultingTrack(
-        tag: 'ARCHITECTURE',
-        title: 'Full Engine Audit',
-        description: 'Comprehensive evaluation of code quality and scale.',
-        icon: Icons.architecture_rounded,
-        accent: Colors.amber,
-        inquirySubject: 'Engine Audit',
-        onInquire: (_) {},
-      );
-
-      await tester
-          .pumpWidget(_wrapWithHarness(child: BentoTrackCard(track: track)));
-      await tester.pumpAndSettle();
-
-      final inquireSemantics = find.byWidgetPredicate(
-        (w) =>
-            w is Semantics &&
-            w.properties.button == true &&
-            (w.properties.label?.contains('Inquire about Full Engine Audit') ??
-                false),
-      );
-      expect(inquireSemantics, findsOneWidget);
-    });
-
-    testWidgets(
-        'ChannelTile declares button semantics for primary and secondary actions',
-        (tester) async {
-      final data = ChannelData(
-        label: 'TELEGRAM',
-        value: '@alhyari',
-        icon: Icons.send,
-        primaryLabel: 'Message',
-        primaryAction: () {},
-        secondaryLabel: 'Copy',
-        secondaryAction: () {},
-        accent: Colors.blue,
-      );
-
-      await tester.pumpWidget(_wrapWithHarness(child: ChannelTile(data: data)));
-      await tester.pumpAndSettle();
-
-      final primaryBtn = find.byWidgetPredicate(
-        (w) =>
-            w is Semantics &&
-            w.properties.button == true &&
-            (w.properties.label?.contains('TELEGRAM: Message') ?? false),
-      );
-      expect(primaryBtn, findsOneWidget);
-
-      final secondaryBtn = find.byWidgetPredicate(
-        (w) =>
-            w is Semantics &&
-            w.properties.button == true &&
-            (w.properties.label?.contains('TELEGRAM: Copy') ?? false),
-      );
-      expect(secondaryBtn, findsOneWidget);
     });
 
     testWidgets('KeyboardHintChip declares button semantics', (tester) async {

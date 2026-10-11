@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/main.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/skills/presentation/pages/skills_page.dart';
 import 'package:profile/features/engineering/presentation/pages/engineering_page.dart';
@@ -34,38 +33,7 @@ void main() {
     expect(find.text('View my work'), findsOneWidget);
   });
 
-  testWidgets(
-      'HatsGridPage renders and role selector updates state (desktop & mobile)',
-      (tester) async {
-    // Desktop layout
-    await tester.binding.setSurfaceSize(const Size(1200, 900));
-    await tester.pumpWidget(createTestApp(const HatsGridPage()));
-    await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('Perspectives'), findsOneWidget);
-    expect(find.text('Spread'), findsOneWidget);
-    expect(find.text('Align'), findsOneWidget);
-    expect(find.textContaining('Thinking'), findsWidgets);
-
-    // Tap role pill
-    await tester.tap(find.text('02 Communicating'));
-    await tester.pump(const Duration(milliseconds: 200));
-
-    // Mobile layout
-    await tester.binding.setSurfaceSize(const Size(400, 800));
-    await tester
-        .pumpWidget(createTestApp(const HatsGridPage(), const Size(400, 800)));
-    await tester.pump(const Duration(milliseconds: 300));
-
-    expect(find.text('Previous'), findsOneWidget);
-    expect(find.text('Next'), findsOneWidget);
-
-    await tester.tap(find.text('Next'), warnIfMissed: false);
-    await tester.pump(const Duration(milliseconds: 200));
-
-    // Reset surface size
-    await tester.binding.setSurfaceSize(null);
-  });
 
   testWidgets(
       'ProjectsPage renders master-detail and mobile tabs without scroll issues',

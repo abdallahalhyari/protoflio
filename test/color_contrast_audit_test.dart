@@ -8,7 +8,6 @@ import 'package:profile/features/case_study/presentation/pages/case_study_nathea
 import 'package:profile/features/contact/presentation/pages/contact_page.dart';
 import 'package:profile/features/engineering/presentation/pages/engineering_page.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
-import 'package:profile/features/hats/presentation/pages/hats_grid_page.dart';
 import 'package:profile/features/intro/presentation/pages/intro_page.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/skills/presentation/pages/skills_page.dart';
@@ -227,7 +226,6 @@ void main() {
     'Experience': () =>
         ExperiencePage(controller: PageController(), pageIndex: 3),
     'Skills': () => const SkillsPage(),
-    'Perspectives': () => const HatsGridPage(),
     'Contact': () => const ContactPage(),
     'Case study': () => const NatHealthCaseStudy(),
   };

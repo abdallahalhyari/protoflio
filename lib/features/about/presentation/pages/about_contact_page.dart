@@ -379,7 +379,6 @@ class _AboutContactPageState extends State<AboutContactPage>
         children: [
           isDesktop
               ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     avatar,
                     const SizedBox(width: AppSpacing.lg),

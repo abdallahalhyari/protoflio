@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/test_data.dart';
 import 'package:profile/features/case_study/presentation/pages/case_study_nathealth.dart';
-
-import 'package:profile/features/hats/presentation/widgets/hat_playing_card.dart';
 import 'package:profile/features/shell/presentation/widgets/shortcut_help_dialog.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_search_bar.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -111,27 +109,7 @@ void main() {
     expect(errors, isEmpty);
   });
 
-  testWidgets('hat card flip hint fits in Czech', (tester) async {
-    final errors =
-        await _errorsDuring(tester, const Size(1280, 800), 1.0, () async {
-      await tester.pumpWidget(_host(
-        Scaffold(
-          body: Stack(
-            children: [
-              HatPlayingCard(
-                hat: testHats.first,
-                index: 0,
-                position: const Offset(100, 100),
-              ),
-            ],
-          ),
-        ),
-        const Locale('cs'),
-      ));
-      await _settle(tester, 4);
-    });
-    expect(errors, isEmpty);
-  });
+
 
   testWidgets('shortcut help dialog scrolls in a short window', (tester) async {
     final errors =
