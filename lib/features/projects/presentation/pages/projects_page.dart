@@ -385,82 +385,66 @@ class _HallmarkPillState extends State<_HallmarkPill> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       cursor: SystemMouseCursors.basic,
-      child: AnimatedScale(
-        scale: isHovered ? 1.02 : 1.0,
+      child: AnimatedContainer(
         duration: AppMotion.snap,
-        curve: AppMotion.emphasized,
-        child: AnimatedContainer(
-          duration: AppMotion.snap,
-          padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
-          decoration: BoxDecoration(
-            color: bgColor,
-            borderRadius: BorderRadius.circular(AppRadius.xs),
-            border: Border.all(
-              color: borderColor,
-              width: isHovered ? 1.2 : 1.0,
+        padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(AppRadius.xs),
+          border: Border.all(
+            color: borderColor,
+            width: isHovered ? 1.1 : 1.0,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedContainer(
+              duration: AppMotion.snap,
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: isHovered
+                    ? widget.accentColor.withValues(alpha: isDark ? 0.28 : 0.20)
+                    : widget.accentColor
+                        .withValues(alpha: isDark ? 0.16 : 0.12),
+                borderRadius: BorderRadius.circular(AppRadius.hairline),
+              ),
+              child: Icon(widget.icon, size: 13, color: fgAccent),
             ),
-            boxShadow: isHovered
-                ? [
-                    BoxShadow(
-                      color: widget.accentColor
-                          .withValues(alpha: isDark ? 0.25 : 0.12),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: context.onSurface,
+                      fontSize: AppTypography.label,
+                      fontWeight: FontWeight.w800,
+                      height: 1.1,
                     ),
-                  ]
-                : null,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AnimatedContainer(
-                duration: AppMotion.snap,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: isHovered
-                      ? widget.accentColor
-                          .withValues(alpha: isDark ? 0.28 : 0.20)
-                      : widget.accentColor
-                          .withValues(alpha: isDark ? 0.16 : 0.12),
-                  borderRadius: BorderRadius.circular(AppRadius.hairline),
-                ),
-                child: Icon(widget.icon, size: 13, color: fgAccent),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    widget.subtitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: AppTypography.monoFont,
+                      color: context.mutedText,
+                      fontSize: AppTypography.label - 2,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      widget.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: context.onSurface,
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w800,
-                        height: 1.1,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      widget.subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        color: context.mutedText,
-                        fontSize: AppTypography.label - 2,
-                        fontWeight: FontWeight.w600,
-                        height: 1.1,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

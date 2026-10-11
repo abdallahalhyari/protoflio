@@ -93,7 +93,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
               opacity: widget.isDimmed ? 0.35 : 1.0,
               duration: AppMotion.snap,
               child: AnimatedScale(
-                scale: isInteractive ? 1.02 : 1.0,
+                scale: isInteractive ? 1.005 : 1.0,
                 duration: AppMotion.cardHover,
                 curve: AppMotion.emphasized,
                 child: AnimatedContainer(
@@ -131,40 +131,17 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
                               : AppColors.ink200),
                       width: isInteractive ? 1.5 : 1.0,
                     ),
-                    boxShadow: isDark
-                        ? (isInteractive
-                            ? [
-                                BoxShadow(
-                                  color: domainAccent.withValues(alpha: 0.35),
-                                  blurRadius: 36,
-                                  spreadRadius: 2,
-                                ),
-                                BoxShadow(
-                                  color: widget.scheme.primary
-                                      .withValues(alpha: 0.20),
-                                  blurRadius: 55,
-                                  spreadRadius: 6,
-                                ),
-                              ]
-                            : [])
-                        : (isInteractive
-                            ? [
-                                BoxShadow(
-                                  color: Color.lerp(
-                                          domainAccent, Colors.black, 0.45)!
-                                      .withValues(alpha: 0.28),
-                                  blurRadius: 24,
-                                  spreadRadius: 4,
-                                  offset: const Offset(0, 12),
-                                )
-                              ]
-                            : [
-                                BoxShadow(
-                                  color: AppColors.shadowSoft,
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 4),
-                                )
-                              ]),
+                    boxShadow: isInteractive
+                        ? [
+                            BoxShadow(
+                              color:
+                                  (isDark ? domainAccent : AppColors.shadowSoft)
+                                      .withValues(alpha: isDark ? 0.1 : 0.65),
+                              blurRadius: isDark ? 14 : 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ]
+                        : null,
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppRadius.card),

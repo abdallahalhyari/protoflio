@@ -152,14 +152,7 @@ class IntroCtaRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(AppRadius.pill),
                 border: Border.all(
                   color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
-                  width: 1.2,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: accent.withValues(alpha: isDark ? 0.16 : 0.08),
-                    blurRadius: 10,
-                  ),
-                ],
               ),
               child: FittedBox(
                 fit: BoxFit.scaleDown,

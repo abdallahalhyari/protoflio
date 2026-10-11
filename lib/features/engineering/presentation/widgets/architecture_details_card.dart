@@ -106,15 +106,6 @@ class ArchitectureDetailsCard extends StatelessWidget {
                 ? Colors.white.withValues(alpha: 0.14)
                 : AppColors.ink200,
           ),
-          boxShadow: isDark
-              ? const []
-              : [
-                  BoxShadow(
-                    color: AppColors.ink900.withValues(alpha: 0.05),
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
         ),
         child: content,
       ),
@@ -204,19 +195,11 @@ class _RationaleBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: scheme.primary.withValues(alpha: isDark ? 0.09 : 0.06),
+        color: scheme.primary.withValues(alpha: isDark ? 0.06 : 0.035),
         borderRadius: BorderRadius.circular(AppRadius.md),
         border: Border.all(
-          color: scheme.primary.withValues(alpha: isDark ? 0.32 : 0.40),
-          width: 1.2,
+          color: scheme.primary.withValues(alpha: isDark ? 0.22 : 0.24),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: scheme.primary.withValues(alpha: isDark ? 0.08 : 0.04),
-            blurRadius: 12,
-            spreadRadius: -2,
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -390,15 +373,8 @@ class _BudgetRow extends StatelessWidget {
         color: isDark ? step.color.withValues(alpha: 0.08) : Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.sm),
         border: Border.all(
-          color: step.color.withValues(alpha: isDark ? 0.30 : 0.35),
+          color: step.color.withValues(alpha: isDark ? 0.24 : 0.28),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: step.color.withValues(alpha: isDark ? 0.06 : 0.03),
-            blurRadius: 8,
-            offset: const Offset(0, 1),
-          ),
-        ],
       ),
       child: Row(
         children: [

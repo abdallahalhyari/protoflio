@@ -81,13 +81,6 @@ class ProjectDomainFilters extends StatelessWidget {
               border: Border.all(
                 color: scheme.primary.withValues(alpha: isDark ? 0.5 : 0.35),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: scheme.primary.withValues(alpha: isDark ? 0.12 : 0.05),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -268,17 +261,17 @@ class _DomainChipState extends State<_DomainChip> {
     final domainAccent = _accentForDomain(widget.domainRaw, scheme);
 
     final activeBg = isSelected
-        ? domainAccent.withValues(alpha: isDark ? 0.22 : 0.15)
+        ? domainAccent.withValues(alpha: isDark ? 0.14 : 0.08)
         : (isInteractive
-            ? domainAccent.withValues(alpha: isDark ? 0.09 : 0.05)
+            ? domainAccent.withValues(alpha: isDark ? 0.06 : 0.035)
             : (isDark
                 ? Colors.white.withValues(alpha: 0.05)
                 : AppColors.ink100));
 
     final activeBorder = isSelected
-        ? domainAccent.withValues(alpha: isDark ? 0.8 : 0.65)
+        ? domainAccent.withValues(alpha: isDark ? 0.65 : 0.55)
         : (isInteractive
-            ? domainAccent.withValues(alpha: isDark ? 0.5 : 0.38)
+            ? domainAccent.withValues(alpha: isDark ? 0.38 : 0.3)
             : (context.divider));
 
     final textColor = isSelected
@@ -296,127 +289,86 @@ class _DomainChipState extends State<_DomainChip> {
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
         cursor: SystemMouseCursors.click,
-        child: AnimatedScale(
-          scale: isInteractive && !isSelected && isDesktop ? 1.03 : 1.0,
-          duration: AppMotion.snap,
-          curve: AppMotion.emphasized,
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: widget.onTap,
-              onFocusChange: (focused) => setState(() => _isFocused = focused),
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              child: ExcludeSemantics(
-                  child: AnimatedContainer(
-                duration: AppMotion.snap,
-                curve: AppMotion.standard,
-                padding: EdgeInsets.symmetric(
-                  horizontal: isDesktop ? 12 : 10,
-                  vertical: isDesktop ? 7 : 6,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: widget.onTap,
+            onFocusChange: (focused) => setState(() => _isFocused = focused),
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            child: ExcludeSemantics(
+                child: AnimatedContainer(
+              duration: AppMotion.snap,
+              curve: AppMotion.standard,
+              padding: EdgeInsets.symmetric(
+                horizontal: isDesktop ? 12 : 10,
+                vertical: isDesktop ? 7 : 6,
+              ),
+              decoration: BoxDecoration(
+                color: activeBg,
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                border: Border.all(
+                  color: activeBorder,
+                  width: isSelected || _isFocused ? 1.25 : 1.0,
                 ),
-                decoration: BoxDecoration(
-                  color: activeBg,
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: activeBorder,
-                    width: isSelected || _isFocused ? 1.5 : 1.0,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    _iconForDomain(widget.domainRaw),
+                    size: 13,
+                    color: isSelected
+                        ? textColor
+                        : (isInteractive ? textColor : context.mutedText),
                   ),
-                  boxShadow: isSelected
-                      ? [
-                          BoxShadow(
-                            color: domainAccent.withValues(
-                                alpha: isDark ? 0.30 : 0.18),
-                            blurRadius: 12,
-                            spreadRadius: 1,
-                            offset: const Offset(0, 2),
-                          ),
-                        ]
-                      : (isInteractive && !isSelected
-                          ? [
-                              BoxShadow(
-                                color: domainAccent.withValues(
-                                    alpha: isDark ? 0.10 : 0.05),
-                                blurRadius: 6,
-                                offset: const Offset(0, 1),
-                              ),
-                            ]
-                          : null),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      _iconForDomain(widget.domainRaw),
-                      size: 13,
-                      color: isSelected
-                          ? textColor
-                          : (isInteractive ? textColor : context.mutedText),
+                  const SizedBox(width: 6),
+                  Text(
+                    widget.label,
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: AppTypography.label,
+                      fontWeight:
+                          isSelected ? FontWeight.w900 : FontWeight.w700,
                     ),
-                    const SizedBox(width: 6),
-                    Text(
-                      widget.label,
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: AppTypography.label,
-                        fontWeight:
-                            isSelected ? FontWeight.w900 : FontWeight.w700,
-                      ),
-                    ),
-                    if (isSelected) ...[
-                      const SizedBox(width: 5),
-                      Container(
-                        width: 5,
-                        height: 5,
-                        decoration: BoxDecoration(
-                          color: domainAccent,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: domainAccent.withValues(alpha: 0.8),
-                              blurRadius: 5,
-                              spreadRadius: 1,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                    const SizedBox(width: 6),
-                    AnimatedContainer(
-                      duration: AppMotion.snap,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 1.5),
+                  ),
+                  if (isSelected) ...[
+                    const SizedBox(width: 5),
+                    Container(
+                      width: 5,
+                      height: 5,
                       decoration: BoxDecoration(
-                        color: isSelected
-                            ? domainAccent
-                            : (isInteractive
-                                ? domainAccent.withValues(
-                                    alpha: isDark ? 0.18 : 0.12)
-                                : (context.divider)),
-                        borderRadius: BorderRadius.circular(AppRadius.chip),
-                        boxShadow: isSelected
-                            ? [
-                                BoxShadow(
-                                  color: domainAccent.withValues(
-                                      alpha: isDark ? 0.4 : 0.2),
-                                  blurRadius: 6,
-                                ),
-                              ]
-                            : null,
-                      ),
-                      child: Text(
-                        '${widget.count}',
-                        style: TextStyle(
-                          fontFamily: AppTypography.monoFont,
-                          color: isSelected ? scheme.onPrimary : textColor,
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
-                        ),
+                        color: domainAccent,
+                        shape: BoxShape.circle,
                       ),
                     ),
                   ],
-                ),
-              )),
-            ),
+                  const SizedBox(width: 6),
+                  AnimatedContainer(
+                    duration: AppMotion.snap,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 5, vertical: 1.5),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? domainAccent
+                          : (isInteractive
+                              ? domainAccent.withValues(
+                                  alpha: isDark ? 0.18 : 0.12)
+                              : (context.divider)),
+                      borderRadius: BorderRadius.circular(AppRadius.chip),
+                    ),
+                    child: Text(
+                      '${widget.count}',
+                      style: TextStyle(
+                        fontFamily: AppTypography.monoFont,
+                        color: isSelected ? scheme.onPrimary : textColor,
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )),
           ),
         ),
       ),

@@ -66,13 +66,6 @@ class HeroStatement extends StatelessWidget {
               border: Border.all(
                 color: scheme.primary.withValues(alpha: isDark ? 0.4 : 0.3),
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: scheme.primary.withValues(alpha: isDark ? 0.12 : 0.05),
-                  blurRadius: 16,
-                  offset: const Offset(0, 4),
-                ),
-              ],
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,

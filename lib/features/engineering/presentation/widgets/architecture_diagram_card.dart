@@ -128,15 +128,6 @@ class ArchitectureDiagramCard extends StatelessWidget {
                   ? Colors.white.withValues(alpha: 0.14)
                   : AppColors.ink200,
             ),
-            boxShadow: isDark
-                ? const []
-                : [
-                    BoxShadow(
-                      color: AppColors.ink900.withValues(alpha: 0.05),
-                      blurRadius: 16,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
           ),
           child: isDesktop
               ? SingleChildScrollView(

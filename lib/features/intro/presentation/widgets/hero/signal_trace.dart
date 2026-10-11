@@ -540,10 +540,10 @@ class _SignalTraceState extends State<SignalTrace>
             boxShadow: [
               BoxShadow(
                 color: isDark
-                    ? AppColors.teal.withValues(alpha: 0.12)
-                    : AppColors.shadowSoft,
-                blurRadius: 28,
-                offset: const Offset(0, 8),
+                    ? Colors.black.withValues(alpha: 0.16)
+                    : AppColors.shadowSoft.withValues(alpha: 0.55),
+                blurRadius: 16,
+                offset: const Offset(0, 4),
               ),
             ],
           ),

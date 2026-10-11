@@ -65,7 +65,7 @@ class ArchitectureTopicTabs extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
             color: isSelected
-                ? scheme.primary.withValues(alpha: isDark ? 0.18 : 0.12)
+                ? scheme.primary.withValues(alpha: isDark ? 0.14 : 0.08)
                 : (isDark
                     ? scheme.surface.withValues(alpha: 0.4)
                     : Colors.white.withValues(alpha: 0.85)),
@@ -76,25 +76,8 @@ class ArchitectureTopicTabs extends StatelessWidget {
                   : (isDark
                       ? scheme.onSurface.withValues(alpha: 0.15)
                       : AppColors.ink300),
-              width: isSelected ? 1.5 : 1.0,
+              width: isSelected ? 1.25 : 1.0,
             ),
-            boxShadow: isSelected
-                ? [
-                    BoxShadow(
-                      color: scheme.primary
-                          .withValues(alpha: isDark ? 0.25 : 0.15),
-                      blurRadius: 16,
-                    ),
-                  ]
-                : (isDark
-                    ? []
-                    : [
-                        BoxShadow(
-                          color: AppColors.ink900.withValues(alpha: 0.04),
-                          blurRadius: 6,
-                          offset: const Offset(0, 1),
-                        ),
-                      ]),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
