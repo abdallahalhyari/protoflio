@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/locale/locale_event.dart';
 import 'package:profile/core/bloc/locale/locale_state.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
@@ -13,6 +14,7 @@ class AppBarLanguageToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final l10n = AppLocalizations.of(context)!;
 
     return BlocBuilder<LocaleBloc, LocaleState>(
       builder: (_, localeState) {
@@ -20,9 +22,9 @@ class AppBarLanguageToggle extends StatelessWidget {
         final code = loc.languageCode.toUpperCase();
         return Semantics(
           button: true,
-          label: 'Change language. Current: $code',
+          label: l10n.changeLanguageCurrent(code),
           child: Tooltip(
-            message: 'Change language ($code)',
+            message: '${l10n.changeLanguage} ($code)',
             excludeFromSemantics: true,
             child: InkWell(
               borderRadius: BorderRadius.circular(AppRadius.chip),

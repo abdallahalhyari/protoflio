@@ -25,6 +25,44 @@
   "keyboardHintEnd": "Poslední stránka",
   "closeTooltip": "Zavřít",
   "showHelpShortcut": "Zobrazit tuto nápovědu",
+  "changeLanguage": "Změnit jazyk",
+  "changeLanguageCurrent": "Změnit jazyk. Aktuální: {code}",
+  "@changeLanguageCurrent": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "switchToLightMode": "Přepnout na světlý režim",
+  "switchToDarkMode": "Přepnout na tmavý režim",
+  "muteSoundEffects": "Ztlumit zvukové efekty",
+  "enableSoundEffects": "Zapnout zvukové efekty",
+  "soundEffectsOnTooltip": "Zvukové efekty: zapnuté (kliknutím ztlumíte)",
+  "soundEffectsMutedTooltip": "Zvukové efekty: ztlumené (kliknutím zapnete)",
+  "openNavigationMenu": "Otevřít navigační nabídku",
+  "menuLabel": "NABÍDKA",
+  "sectionNavigationLabel": "Navigace mezi sekcemi",
+  "downloadResumePdf": "Stáhnout životopis (PDF)",
+  "previousSection": "Předchozí sekce",
+  "nextSection": "Další sekce",
+  "scrollToTop": "Přejít nahoru",
+  "goToSection": "Přejít na sekci {section}",
+  "@goToSection": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "pageNumber": "Stránka {number}",
+  "@pageNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "resumeOpenError": "Nepodařilo se otevřít životopis — navštivte {publicUrl}",
   "projectOpenError": "Nepodařilo se otevřít {url}",
   "spreadAction": "Rozložit",
@@ -101,6 +139,14 @@
   "projectDomainFleet": "Vozové parky a telematika",
   "projectDomainCommerce": "Mobilní obchod a streamování",
   "projectTechFilter": "Filtr technologie: {technology}",
+  "projectSwitchDomain": "Přepnout oblast",
+  "projectHallmarkNfc": "Platforma čipových karet NFC",
+  "projectHallmarkNfcDetail": "ISO-7816 · Hardwarově chráněné klíče",
+  "projectHallmarkOffline": "Synchronizace nároků offline",
+  "projectHallmarkOfflineDetail": "SQLite · WorkManager",
+  "projectHallmarkPerformance": "Výkonné podnikové rozhraní",
+  "projectHallmarkPerformanceDetail": "60 FPS · o 35 % méně pádů",
+  "projectDossierDecision": "Klíčové rozhodnutí",
   "readCaseStudyFor": "Přečíst případovou studii: {project}",
   "projectTaglineNatHealth": "Kritická zdravotnická platforma s NFC kartami pro digitální péči, pojistné nároky a dodržování předpisů.",
   "projectTaglineEskadenia": "Výkonné podnikové mobilní aplikace pro nemocniční informační systémy a vzdělávací platformy.",
@@ -124,6 +170,7 @@
   "contactHeaderTitle": "Máte těžký mobilní problém?",
   "contactHeaderSubtitle": "Pošlete mi ho. Přijímám revize mobilní architektury a zakázky a od února 2027 hledám seniorní mobilní roli v Brně. Nejrychleji odpovídám na e-mail.",
   "skillsHeaderKicker": "Část 04, systémy a dodávka",
+  "skillSpecImplementation": "DETAILY A PRAXE",
   "skillsHeaderTitle": "Dovednosti",
   "skillsHeaderSubtitle": "S čím pracuji a kde jsem to použil. Vyhledejte nástroj nebo filtrujte podle oblasti.",
   "sectionSubtitleEngineering": "Architektury za mými mobilními sadami: vrstvy, offline synchronizace, NFC a zabezpečení tokenů.",
@@ -133,7 +180,7 @@
   "folioBackToStart": "Zpět na začátek",
   "welcomeBack": "Vítejte zpět — pokračovat v sekci {section}?",
   "continueAction": "Pokračovat",
-  "quickProfile": "Profil za 30 s",
+  "quickProfile": "Profil pro náboráře",
   "quickProfileTitle": "Shrnutí pro nábor",
   "quickProfileRole": "Pozice",
   "quickProfileExperience": "Praxe",
@@ -143,6 +190,12 @@
   "quickProfileEmail": "E-mail",
   "quickProfileCopy": "Kopírovat shrnutí",
   "quickProfileCopied": "Shrnutí profilu zkopírováno",
+  "quickProfileVcard": "QR vizitka",
+  "vcardDialogTitle": "Kontaktní karta pro náboráře",
+  "vcardScanHint": "Naskenujte fotoaparátem telefonu",
+  "vcardCopyText": "Kopírovat kontaktní kartu",
+  "vcardCopied": "Kontaktní karta zkopírována do schránky",
+  "done": "Hotovo",
   "studyCaseStudy": "Případová studie",
   "studyProblem": "Problém",
   "studyRole": "Moje role",

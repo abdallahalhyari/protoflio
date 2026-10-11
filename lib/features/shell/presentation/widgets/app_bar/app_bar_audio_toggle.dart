@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 
@@ -10,6 +11,7 @@ class AppBarAudioToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final l10n = AppLocalizations.of(context)!;
 
     return ValueListenableBuilder<bool>(
       valueListenable: SoundService.instance.isEnabled,
@@ -18,9 +20,10 @@ class AppBarAudioToggle extends StatelessWidget {
           child: Semantics(
             button: true,
             toggled: enabled,
-            label: enabled ? 'Mute sound effects' : 'Enable sound effects',
+            label: enabled ? l10n.muteSoundEffects : l10n.enableSoundEffects,
             child: Tooltip(
-              message: enabled ? 'Mute sound effects' : 'Enable sound effects',
+              message:
+                  enabled ? l10n.muteSoundEffects : l10n.enableSoundEffects,
               excludeFromSemantics: true,
               child: IconButton(
                 iconSize: 18,

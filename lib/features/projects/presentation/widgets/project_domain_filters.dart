@@ -153,7 +153,7 @@ class _KeyboardShortcutHint extends StatelessWidget {
           _KeyPill(label: '→', isDark: isDark),
           const SizedBox(width: 6),
           Text(
-            'Switch domain',
+            AppLocalizations.of(context)!.projectSwitchDomain,
             style: TextStyle(
               color: context.mutedText,
               fontSize: AppTypography.label - 1,

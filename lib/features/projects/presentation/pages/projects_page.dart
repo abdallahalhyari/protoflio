@@ -132,16 +132,19 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
             SliverToBoxAdapter(
               child: _buildHeader(scheme, loc, size, isDesktop),
             ),
-            if (isDesktop) ...[
-              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.sm)),
-              SliverToBoxAdapter(
-                child: _buildHallmarksStrip(scheme, isDark, isDesktop),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
-            ] else ...[
-              const SliverToBoxAdapter(
-                  child: SizedBox(height: AppSpacing.sectionControls)),
-            ],
+            SliverToBoxAdapter(
+              child: SizedBox(
+                  height:
+                      isDesktop ? AppSpacing.sm : AppSpacing.sectionControls),
+            ),
+            SliverToBoxAdapter(
+              child: _buildHallmarksStrip(loc, scheme, isDark),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                  height:
+                      isDesktop ? AppSpacing.md : AppSpacing.sectionControls),
+            ),
             SliverToBoxAdapter(
               child: BlocBuilder<ProjectsFilterBloc, ProjectsFilterState>(
                 buildWhen: (prev, curr) =>
@@ -263,7 +266,8 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     );
   }
 
-  Widget _buildHallmarksStrip(ColorScheme scheme, bool isDark, bool isDesktop) {
+  Widget _buildHallmarksStrip(
+      AppLocalizations loc, ColorScheme scheme, bool isDark) {
     return Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -271,22 +275,22 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
       children: [
         _HallmarkPill(
           icon: Icons.contactless_rounded,
-          title: 'APDU NFC & Smart Cards',
-          subtitle: 'ISO-7816 • Keystore JWT',
+          title: loc.projectHallmarkNfc,
+          subtitle: loc.projectHallmarkNfcDetail,
           accentColor: isDark ? AppColors.tealLight : AppColors.tealDeep,
           isDark: isDark,
         ),
         _HallmarkPill(
           icon: Icons.cloud_sync_rounded,
-          title: 'Zero-Loss Offline Queues',
-          subtitle: 'SQLite • WorkManager',
+          title: loc.projectHallmarkOffline,
+          subtitle: loc.projectHallmarkOfflineDetail,
           accentColor: isDark ? AppColors.tealLight : AppColors.tealDeep,
           isDark: isDark,
         ),
         _HallmarkPill(
           icon: Icons.speed_rounded,
-          title: 'Sustained 60 FPS Engine',
-          subtitle: 'Clean Arch • MVVM Profiling',
+          title: loc.projectHallmarkPerformance,
+          subtitle: loc.projectHallmarkPerformanceDetail,
           accentColor: isDark ? AppColors.goldSoft : AppColors.goldDeep,
           isDark: isDark,
         ),
@@ -297,7 +301,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
   Widget _buildHeader(
       ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
     return SectionMasthead(
-      kicker: '02 · SELECTED PRODUCTION WORKS',
+      kicker: loc.projectsHeaderKicker,
       title: loc.navWork,
       subtitle: loc.sectionSubtitleWork,
       isDesktop: isDesktop,

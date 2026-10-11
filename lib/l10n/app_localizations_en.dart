@@ -87,6 +87,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get showHelpShortcut => 'Show this help';
 
   @override
+  String get changeLanguage => 'Change language';
+
+  @override
+  String changeLanguageCurrent(String code) {
+    return 'Change language. Current: $code';
+  }
+
+  @override
+  String get switchToLightMode => 'Switch to light mode';
+
+  @override
+  String get switchToDarkMode => 'Switch to dark mode';
+
+  @override
+  String get muteSoundEffects => 'Mute sound effects';
+
+  @override
+  String get enableSoundEffects => 'Enable sound effects';
+
+  @override
+  String get soundEffectsOnTooltip => 'Sound Effects: ON (Click to mute)';
+
+  @override
+  String get soundEffectsMutedTooltip =>
+      'Sound Effects: MUTED (Click to enable)';
+
+  @override
+  String get openNavigationMenu => 'Open navigation menu';
+
+  @override
+  String get menuLabel => 'MENU';
+
+  @override
+  String get sectionNavigationLabel => 'Section navigation';
+
+  @override
+  String get downloadResumePdf => 'Download CV (PDF)';
+
+  @override
+  String get previousSection => 'Previous section';
+
+  @override
+  String get nextSection => 'Next section';
+
+  @override
+  String get scrollToTop => 'Scroll to top';
+
+  @override
+  String goToSection(String section) {
+    return 'Go to $section';
+  }
+
+  @override
+  String pageNumber(int number) {
+    return 'Page $number';
+  }
+
+  @override
   String resumeOpenError(Object publicUrl) {
     return 'Could not open resume — visit $publicUrl';
   }
@@ -340,6 +398,30 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get projectSwitchDomain => 'Switch domain';
+
+  @override
+  String get projectHallmarkNfc => 'NFC smart-card platform';
+
+  @override
+  String get projectHallmarkNfcDetail => 'ISO-7816 · Hardware-backed keys';
+
+  @override
+  String get projectHallmarkOffline => 'Offline-first claims sync';
+
+  @override
+  String get projectHallmarkOfflineDetail => 'SQLite · WorkManager';
+
+  @override
+  String get projectHallmarkPerformance => 'Performance-focused enterprise UI';
+
+  @override
+  String get projectHallmarkPerformanceDetail => '60 FPS · 35% fewer crashes';
+
+  @override
+  String get projectDossierDecision => 'Key decision';
+
+  @override
   String readCaseStudyFor(String project) {
     return 'Read case study for $project';
   }
@@ -420,7 +502,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.';
 
   @override
-  String get skillsHeaderKicker => 'Skills';
+  String get skillsHeaderKicker => 'Technical disciplines';
+
+  @override
+  String get skillSpecImplementation => 'DETAILS & EVIDENCE';
 
   @override
   String get skillsHeaderTitle => 'Skills';
@@ -454,7 +539,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continueAction => 'Continue';
 
   @override
-  String get quickProfile => '30-second profile';
+  String get quickProfile => 'Hiring profile';
 
   @override
   String get quickProfileTitle => 'Hiring summary';
@@ -484,6 +569,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quickProfileCopied => 'Profile summary copied';
+
+  @override
+  String get quickProfileVcard => 'vCard QR';
+
+  @override
+  String get vcardDialogTitle => 'Recruiter contact card';
+
+  @override
+  String get vcardScanHint => 'Scan with your phone camera';
+
+  @override
+  String get vcardCopyText => 'Copy contact card';
+
+  @override
+  String get vcardCopied => 'Contact card copied to clipboard';
+
+  @override
+  String get done => 'Done';
 
   @override
   String get studyCaseStudy => 'Case study';

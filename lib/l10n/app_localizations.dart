@@ -250,6 +250,108 @@ abstract class AppLocalizations {
   /// **'Show this help'**
   String get showHelpShortcut;
 
+  /// No description provided for @changeLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change language'**
+  String get changeLanguage;
+
+  /// No description provided for @changeLanguageCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Change language. Current: {code}'**
+  String changeLanguageCurrent(String code);
+
+  /// No description provided for @switchToLightMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to light mode'**
+  String get switchToLightMode;
+
+  /// No description provided for @switchToDarkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to dark mode'**
+  String get switchToDarkMode;
+
+  /// No description provided for @muteSoundEffects.
+  ///
+  /// In en, this message translates to:
+  /// **'Mute sound effects'**
+  String get muteSoundEffects;
+
+  /// No description provided for @enableSoundEffects.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable sound effects'**
+  String get enableSoundEffects;
+
+  /// No description provided for @soundEffectsOnTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound Effects: ON (Click to mute)'**
+  String get soundEffectsOnTooltip;
+
+  /// No description provided for @soundEffectsMutedTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound Effects: MUTED (Click to enable)'**
+  String get soundEffectsMutedTooltip;
+
+  /// No description provided for @openNavigationMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Open navigation menu'**
+  String get openNavigationMenu;
+
+  /// No description provided for @menuLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'MENU'**
+  String get menuLabel;
+
+  /// No description provided for @sectionNavigationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Section navigation'**
+  String get sectionNavigationLabel;
+
+  /// No description provided for @downloadResumePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Download CV (PDF)'**
+  String get downloadResumePdf;
+
+  /// No description provided for @previousSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous section'**
+  String get previousSection;
+
+  /// No description provided for @nextSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Next section'**
+  String get nextSection;
+
+  /// No description provided for @scrollToTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll to top'**
+  String get scrollToTop;
+
+  /// No description provided for @goToSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to {section}'**
+  String goToSection(String section);
+
+  /// No description provided for @pageNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {number}'**
+  String pageNumber(int number);
+
   /// No description provided for @resumeOpenError.
   ///
   /// In en, this message translates to:
@@ -706,6 +808,54 @@ abstract class AppLocalizations {
   /// **'Filtered by {technology}'**
   String projectTechFilter(String technology);
 
+  /// No description provided for @projectSwitchDomain.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch domain'**
+  String get projectSwitchDomain;
+
+  /// No description provided for @projectHallmarkNfc.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC smart-card platform'**
+  String get projectHallmarkNfc;
+
+  /// No description provided for @projectHallmarkNfcDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'ISO-7816 · Hardware-backed keys'**
+  String get projectHallmarkNfcDetail;
+
+  /// No description provided for @projectHallmarkOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline-first claims sync'**
+  String get projectHallmarkOffline;
+
+  /// No description provided for @projectHallmarkOfflineDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'SQLite · WorkManager'**
+  String get projectHallmarkOfflineDetail;
+
+  /// No description provided for @projectHallmarkPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance-focused enterprise UI'**
+  String get projectHallmarkPerformance;
+
+  /// No description provided for @projectHallmarkPerformanceDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'60 FPS · 35% fewer crashes'**
+  String get projectHallmarkPerformanceDetail;
+
+  /// No description provided for @projectDossierDecision.
+  ///
+  /// In en, this message translates to:
+  /// **'Key decision'**
+  String get projectDossierDecision;
+
   /// No description provided for @readCaseStudyFor.
   ///
   /// In en, this message translates to:
@@ -841,8 +991,14 @@ abstract class AppLocalizations {
   /// No description provided for @skillsHeaderKicker.
   ///
   /// In en, this message translates to:
-  /// **'Skills'**
+  /// **'Technical disciplines'**
   String get skillsHeaderKicker;
+
+  /// No description provided for @skillSpecImplementation.
+  ///
+  /// In en, this message translates to:
+  /// **'DETAILS & EVIDENCE'**
+  String get skillSpecImplementation;
 
   /// No description provided for @skillsHeaderTitle.
   ///
@@ -901,7 +1057,7 @@ abstract class AppLocalizations {
   /// Hero link that opens the recruiter summary sheet.
   ///
   /// In en, this message translates to:
-  /// **'30-second profile'**
+  /// **'Hiring profile'**
   String get quickProfile;
 
   /// No description provided for @quickProfileTitle.
@@ -957,6 +1113,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile summary copied'**
   String get quickProfileCopied;
+
+  /// No description provided for @quickProfileVcard.
+  ///
+  /// In en, this message translates to:
+  /// **'vCard QR'**
+  String get quickProfileVcard;
+
+  /// No description provided for @vcardDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recruiter contact card'**
+  String get vcardDialogTitle;
+
+  /// No description provided for @vcardScanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan with your phone camera'**
+  String get vcardScanHint;
+
+  /// No description provided for @vcardCopyText.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy contact card'**
+  String get vcardCopyText;
+
+  /// No description provided for @vcardCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact card copied to clipboard'**
+  String get vcardCopied;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
 
   /// No description provided for @studyCaseStudy.
   ///

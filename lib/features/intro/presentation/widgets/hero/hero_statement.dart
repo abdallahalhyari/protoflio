@@ -81,7 +81,7 @@ class HeroStatement extends StatelessWidget {
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
-                    'PRINCIPAL MOBILE SYSTEMS ARCHITECT · STAFF LEAD',
+                    l10n.introRoleLine,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontFamily: AppTypography.monoFont,
@@ -146,33 +146,17 @@ class HeroStatement extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 560),
                 child: Text(
-                  '“I design and ship resilient mobile products that turn complex systems into calm, trustworthy user experiences.”',
+                  l10n.introValueProposition,
                   style: TextStyle(
                     fontSize:
                         compactHeight ? AppTypography.body : AppTypography.lead,
                     height: 1.4,
-                    fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w600,
                     color: context.onSurface
                         .withValues(alpha: isDark ? 0.95 : 0.90),
                   ),
                 ),
               ),
-              if (!compactHeight) ...[
-                const SizedBox(height: 6),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 560),
-                  child: Text(
-                    l10n.introPitch2,
-                    style: TextStyle(
-                      fontSize: AppTypography.body,
-                      height: 1.45,
-                      color: context.onSurface
-                          .withValues(alpha: isDark ? 0.82 : 0.78),
-                    ),
-                  ),
-                ),
-              ],
               const SizedBox(height: 8),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 560),

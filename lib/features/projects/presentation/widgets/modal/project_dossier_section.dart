@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/presentation/widgets/nfc_architecture_diagram.dart';
@@ -19,6 +20,7 @@ class ProjectDossierSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -30,7 +32,7 @@ class ProjectDossierSection extends StatelessWidget {
         ),
         if (project.problem != null)
           ProjectDossierCard(
-            label: 'Core problem',
+            label: loc.studyProblem,
             value: project.problem!,
             accentColor: AppColors.signalLight,
             isDesktop: isDesktop,
@@ -38,7 +40,7 @@ class ProjectDossierSection extends StatelessWidget {
           ),
         if (project.architecture != null)
           ProjectDossierCard(
-            label: 'Architecture',
+            label: loc.studyArchitecture,
             value: project.architecture!,
             accentColor: AppColors.teal,
             isDesktop: isDesktop,
@@ -51,7 +53,7 @@ class ProjectDossierSection extends StatelessWidget {
           ),
         if (project.solution != null)
           ProjectDossierCard(
-            label: 'Engineering solution',
+            label: loc.studyBuilt,
             value: project.solution!,
             accentColor: AppColors.teal,
             isDesktop: isDesktop,
@@ -60,7 +62,7 @@ class ProjectDossierSection extends StatelessWidget {
         if (project.technicalDecisions != null &&
             project.technicalDecisions!.isNotEmpty)
           ProjectDossierCard(
-            label: 'Decision',
+            label: loc.projectDossierDecision,
             value: project.technicalDecisions!.first,
             accentColor: AppColors.goldSoft,
             isDesktop: isDesktop,
@@ -68,7 +70,7 @@ class ProjectDossierSection extends StatelessWidget {
           ),
         if (project.lessonsLearned != null)
           ProjectDossierCard(
-            label: 'Lesson learned',
+            label: loc.studyLessons,
             value: project.lessonsLearned!,
             accentColor: AppColors.gold,
             isDesktop: isDesktop,

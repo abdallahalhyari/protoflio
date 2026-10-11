@@ -60,7 +60,7 @@ class MobileFooter extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'Senior mobile engineer, system architect',
+            AppLocalizations.of(context)!.introRoleLine,
             style: TextStyle(
               color: context.mutedText,
               fontSize: AppTypography.label,

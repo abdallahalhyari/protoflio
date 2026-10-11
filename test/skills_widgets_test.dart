@@ -5,9 +5,11 @@ import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/features/skills/presentation/widgets/skill_category_filters.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_search_bar.dart';
+import 'package:profile/features/skills/presentation/widgets/skill_list.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_empty_state.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_header.dart';
 import 'package:profile/core/theme/app_theme.dart';
+import 'helpers/test_data.dart';
 
 Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
   return MaterialApp(
@@ -40,6 +42,26 @@ void main() {
       expect(find.text('Skills'), findsOneWidget);
       expect(find.textContaining('What I work with and where I used it'),
           findsOneWidget);
+    });
+
+    testWidgets('skill detail uses localized editorial evidence label',
+        (tester) async {
+      final skill = testSkills.first;
+      await tester.pumpWidget(_wrap(
+        SkillList(
+          skills: [skill],
+          isDesktop: false,
+        ),
+      ));
+      await tester.tap(find.text(skill.name));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text(
+            lookupAppLocalizations(const Locale('en')).skillSpecImplementation),
+        findsOneWidget,
+      );
+      expect(find.text(skill.description), findsOneWidget);
     });
 
     test('Skills header copy is translated in every supported locale',

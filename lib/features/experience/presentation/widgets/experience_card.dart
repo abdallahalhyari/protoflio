@@ -32,18 +32,6 @@ class _ExperienceCardState extends State<ExperienceCard> {
 
   bool get _isCurrent => widget.exp.period.toLowerCase().contains('present');
 
-  String get _watermark {
-    if (_isCurrent) return 'NOW';
-    final parts = widget.exp.period.split(' ');
-    if (parts.isNotEmpty) {
-      final last = parts.last;
-      if (last.length == 4) return last;
-    }
-    return widget.exp.company.isNotEmpty
-        ? widget.exp.company.substring(0, 1).toUpperCase()
-        : '';
-  }
-
   @override
   Widget build(BuildContext context) {
     final scheme = widget.scheme;
@@ -68,118 +56,34 @@ class _ExperienceCardState extends State<ExperienceCard> {
         child: MouseRegion(
           onEnter: (_) => setState(() => _hover = true),
           onExit: (_) => setState(() => _hover = false),
-          child: AnimatedScale(
-            scale: active ? 1.02 : 1.0,
+          child: AnimatedContainer(
             duration: AppMotion.cardHover,
             curve: AppMotion.emphasized,
-            child: AnimatedContainer(
-              duration: AppMotion.cardHover,
-              curve: AppMotion.emphasized,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.lg),
-                border: Border.all(
-                  color: active
-                      ? scheme.primary.withValues(
-                          alpha: isDark
-                              ? (widget.isSelected ? 0.9 : 0.6)
-                              : (widget.isSelected ? 1.0 : 0.8))
-                      : (isDark ? context.glassBorderStrong : AppColors.ink200),
-                  width: active ? (widget.isSelected ? 2.0 : 1.5) : 1.0,
-                ),
-                boxShadow: active
-                    ? [
-                        BoxShadow(
-                          color: scheme.primary.withValues(
-                              alpha: isDark
-                                  ? (widget.isSelected ? 0.35 : 0.22)
-                                  : (widget.isSelected ? 0.25 : 0.16)),
-                          blurRadius: widget.isSelected ? 32 : 24,
-                          spreadRadius: widget.isSelected ? 3 : 2,
-                        ),
-                        BoxShadow(
-                          color: isDark
-                              ? AppColors.shadowMedium
-                              : AppColors.shadowSoft,
-                          blurRadius: 12,
-                          offset: const Offset(0, 10),
-                        ),
-                      ]
-                    : [
-                        BoxShadow(
-                            color: isDark
-                                ? AppColors.shadowSoft
-                                : AppColors.ink900.withValues(alpha: 0.04),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4)),
-                      ],
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: active ? context.cardGlassHover : context.cardGlass,
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              border: Border.all(
+                color: active
+                    ? scheme.primary
+                        .withValues(alpha: widget.isSelected ? 0.75 : 0.45)
+                    : (isDark ? context.glassBorderStrong : AppColors.ink200),
+                width: widget.isSelected ? 1.5 : 1.0,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppRadius.lg),
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: RepaintBoundary(
-                        child: AnimatedContainer(
-                          duration: AppMotion.cardHover,
-                          curve: AppMotion.emphasized,
-                          color: active
-                              ? context.cardGlassHover
-                              : context.cardGlass,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      bottom: 0,
-                      width: 4,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: _isCurrent
-                              ? AppColors.teal
-                              : scheme.primary
-                                  .withValues(alpha: active ? 0.85 : 0.45),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(AppRadius.lg),
-                            bottomLeft: Radius.circular(AppRadius.lg),
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (active)
-                      Positioned(
-                        top: 0,
-                        left: 16,
-                        right: 16,
-                        child: Container(
-                          height: 1.5,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.transparent,
-                                scheme.primary.withValues(alpha: 0.8),
-                                Colors.transparent,
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    Positioned(
-                      right: -10,
-                      bottom: -20,
-                      child: Text(
-                        _watermark,
-                        style: TextStyle(
-                          fontFamily: AppTypography.displayFont,
-                          fontSize: widget.isDesktop ? 160 : 90,
-                          color: scheme.onSurface
-                              .withValues(alpha: isDark ? 0.04 : 0.02),
-                          height: 1.0,
-                        ),
-                      ),
-                    ),
-                    Builder(
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              child: Row(
+                children: [
+                  AnimatedContainer(
+                    duration: AppMotion.cardHover,
+                    width: 3,
+                    color: _isCurrent
+                        ? AppColors.teal
+                        : scheme.primary.withValues(alpha: active ? 0.65 : 0.3),
+                  ),
+                  Expanded(
+                    child: Builder(
                       builder: (context) {
                         final content = CardContent(
                           exp: widget.exp,
@@ -195,8 +99,8 @@ class _ExperienceCardState extends State<ExperienceCard> {
                             : content;
                       },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

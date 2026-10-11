@@ -39,6 +39,7 @@ class TopNav extends StatelessWidget {
 
   Widget _build(BuildContext context, int current) {
     final accent = Theme.of(context).colorScheme.primary;
+    final l10n = AppLocalizations.of(context)!;
 
     final width = MediaQuery.sizeOf(context).width;
     final isDesktop = AppBreakpoints.isDesktop(context);
@@ -47,7 +48,7 @@ class TopNav extends StatelessWidget {
 
     final compactResume = width < AppBreakpoints.desktop;
     final denseLinks = width < kDenseNavBelow;
-    final resumeLabel = AppLocalizations.of(context)!.navResume;
+    final resumeLabel = l10n.navResume;
     void onResume() {
       HapticFeedback.lightImpact();
       SoundService.instance.playClick();
@@ -66,7 +67,7 @@ class TopNav extends StatelessWidget {
     return Semantics(
       container: true,
       explicitChildNodes: true,
-      label: 'Section navigation',
+      label: l10n.sectionNavigationLabel,
       child: Padding(
         padding: offsetForToolbar
             ? const EdgeInsets.only(left: AppSpacing.md, right: 170)
@@ -133,7 +134,7 @@ class TopNav extends StatelessWidget {
                       MergeSemantics(
                         child: Semantics(
                           button: true,
-                          label: 'Download Resume PDF',
+                          label: l10n.downloadResumePdf,
                           child: compactResume
                               ? Tooltip(
                                   message: resumeLabel,

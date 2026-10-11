@@ -40,6 +40,10 @@ void main() {
     // Localized Arabic label for MMXXVI issue strip (kept English) means we
     // still find the Latin wordmark. What we care about is Directionality.
     expect(_dirFor(tester, find.byType(IntroPage)), TextDirection.rtl);
+    final l10n = lookupAppLocalizations(const Locale('ar'));
+    expect(find.text(l10n.introRoleLine), findsOneWidget);
+    expect(find.text(l10n.introValueProposition), findsOneWidget);
+    expect(find.text(l10n.quickProfile), findsOneWidget);
     // No exceptions during layout.
     expect(tester.takeException(), isNull);
   });

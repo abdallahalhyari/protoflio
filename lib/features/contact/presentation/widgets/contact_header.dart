@@ -73,37 +73,24 @@ class ContactHeader extends StatelessWidget {
   }
 
   Widget _headline(Size size, BuildContext context, AppLocalizations loc) {
-    final isDark = context.isDarkMode;
     final fs = (size.width * 0.055).clamp(32.0, 68.0);
 
     return Semantics(
       header: true,
-      child: ShaderMask(
-        shaderCallback: (bounds) {
-          return LinearGradient(
-            colors: [
-              context.onSurface,
-              isDark ? Colors.white : AppColors.ink800,
-              _accent,
-              context.onSurface,
-            ],
-            stops: const [0.0, 0.35, 0.7, 1.0],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ).createShader(bounds);
-        },
-        child: Text(
-          loc.contactHeaderTitle,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: AppTypography.displayFont,
-            fontSize: fs,
-            fontWeight: FontWeight.w900,
-            color: context.onSurface, // High contrast fallback
-            height: 1.05,
-            shadows: isDark
-                ? const [Shadow(blurRadius: 30, color: Colors.black54)]
-                : const [Shadow(color: Colors.black12, blurRadius: 10)],
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 920),
+          child: Text(
+            loc.contactHeaderTitle,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: AppTypography.displayFont,
+              fontSize: fs,
+              fontWeight: FontWeight.w800,
+              color: context.onSurface,
+              letterSpacing: -1.2,
+              height: 1.1,
+            ),
           ),
         ),
       ),
@@ -113,7 +100,7 @@ class ContactHeader extends StatelessWidget {
   Widget _lede(Size size, BuildContext context, AppLocalizations loc) {
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 760),
+        constraints: const BoxConstraints(maxWidth: 680),
         child: Text(
           ltrContent(
             context,
@@ -122,8 +109,8 @@ class ContactHeader extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: context.mutedText,
-            fontSize: (size.width * 0.014).clamp(13.5, 17.0),
-            height: 1.6,
+            fontSize: (size.width * 0.014).clamp(14.0, 16.0),
+            height: 1.65,
           ),
         ),
       ),

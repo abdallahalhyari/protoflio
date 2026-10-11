@@ -81,32 +81,10 @@ class CredentialsBentoCard extends StatelessWidget {
           margin: EdgeInsets.only(bottom: isDesktop ? 0 : AppSpacing.lg),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadius.container),
-            gradient: isDark
-                ? RadialGradient(
-                    center: Alignment.topLeft,
-                    radius: 2.0,
-                    colors: [
-                      scheme.primary.withValues(alpha: 0.08),
-                      context.cardGlass,
-                    ],
-                  )
-                : null,
             border: Border.all(
-              color: isDark
-                  ? scheme.primary.withValues(alpha: 0.3)
-                  : AppColors.ink300,
-              width: isDark ? 1.5 : 1.0,
+              color: isDark ? context.glassBorderStrong : AppColors.ink300,
             ),
             color: context.cardGlass,
-            boxShadow: [
-              BoxShadow(
-                color: isDark
-                    ? scheme.primary.withValues(alpha: 0.06)
-                    : AppColors.ink900.withValues(alpha: 0.05),
-                blurRadius: 18,
-                offset: const Offset(0, 4),
-              ),
-            ],
           ),
           child: RepaintBoundary(
             child: ClipRRect(

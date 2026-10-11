@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/shared/widgets/directional_icon.dart';
@@ -35,6 +36,7 @@ class _MobilePagerContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final pageCount = controller.pageCount;
     final isDark = context.isDarkMode;
+    final l10n = AppLocalizations.of(context)!;
 
     final canPrev = page > 0;
     final canNext = page < pageCount - 1;
@@ -94,7 +96,7 @@ class _MobilePagerContent extends StatelessWidget {
           children: [
             iconButton(
               icon: Icons.chevron_left_rounded,
-              label: 'Previous section',
+              label: l10n.previousSection,
               onTap: canPrev
                   ? () {
                       SoundService.instance.playPageTurn();
@@ -133,7 +135,7 @@ class _MobilePagerContent extends StatelessWidget {
             const SizedBox(width: 6),
             iconButton(
               icon: Icons.chevron_right_rounded,
-              label: 'Next section',
+              label: l10n.nextSection,
               onTap: canNext
                   ? () {
                       SoundService.instance.playPageTurn();

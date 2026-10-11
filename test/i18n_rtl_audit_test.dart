@@ -201,6 +201,9 @@ void main() {
       expect(tester.takeException(), isNull);
       final l10n = lookupAppLocalizations(const Locale('ar'));
       expect(find.text(l10n.sectionSubtitleWork), findsOneWidget);
+      expect(find.text(l10n.projectHallmarkNfc), findsOneWidget);
+      expect(find.text(l10n.projectHallmarkOffline), findsOneWidget);
+      expect(find.text(l10n.projectHallmarkPerformance), findsOneWidget);
     });
 
     testWidgets(
@@ -230,8 +233,6 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
       expect(tester.takeException(), isNull);
     });
-
-
 
     testWidgets(
         'ContactPage renders cleanly in Arabic (RTL) with localized feedback toast',

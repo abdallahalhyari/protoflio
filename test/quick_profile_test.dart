@@ -41,7 +41,8 @@ void main() {
     await tester.pumpWidget(_hero(const Locale('en'), onCv: () {
       cvOpened = true;
     }));
-    await tester.tap(find.text('30-second intro'));
+    await tester.tap(
+        find.text(lookupAppLocalizations(const Locale('en')).quickProfile));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('quick_profile')), findsOneWidget);
@@ -61,17 +62,37 @@ void main() {
       (tester) async {
     _size(tester, const Size(1440, 900));
     await tester.pumpWidget(_hero(const Locale('en')));
-    await tester.tap(find.text('vCard QR'));
+    await tester.tap(find
+        .text(lookupAppLocalizations(const Locale('en')).quickProfileVcard));
     await tester.pumpAndSettle();
 
-    expect(find.text('Recruiter vCard'), findsOneWidget);
-    expect(find.text('Scan with phone camera'), findsOneWidget);
+    final l10n = lookupAppLocalizations(const Locale('en'));
+    expect(find.text(l10n.vcardDialogTitle), findsOneWidget);
+    expect(find.text(l10n.vcardScanHint), findsOneWidget);
   });
+
+  for (final locale in const [Locale('ar'), Locale('cs')]) {
+    testWidgets('vCard dialog is localized in ${locale.languageCode}',
+        (tester) async {
+      _size(tester, const Size(390, 844));
+      final l10n = lookupAppLocalizations(locale);
+      await tester.pumpWidget(_hero(locale));
+      await tester.tap(find.text(l10n.quickProfileVcard));
+      await tester.pumpAndSettle();
+
+      expect(find.text(l10n.vcardDialogTitle), findsOneWidget);
+      expect(find.text(l10n.vcardScanHint), findsOneWidget);
+      expect(find.text(l10n.vcardCopyText), findsOneWidget);
+      expect(find.text(l10n.done), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+  }
 
   testWidgets('bottom sheet on phones', (tester) async {
     _size(tester, const Size(390, 844));
     await tester.pumpWidget(_hero(const Locale('en')));
-    await tester.tap(find.text('30-second intro'));
+    await tester.tap(
+        find.text(lookupAppLocalizations(const Locale('en')).quickProfile));
     await tester.pumpAndSettle();
     expect(find.byType(BottomSheet), findsOneWidget);
     expect(find.byKey(const Key('quick_profile')), findsOneWidget);
@@ -92,7 +113,8 @@ void main() {
         .setMockMethodCallHandler(SystemChannels.platform, null));
 
     await tester.pumpWidget(_hero(const Locale('en')));
-    await tester.tap(find.text('30-second intro'));
+    await tester.tap(
+        find.text(lookupAppLocalizations(const Locale('en')).quickProfile));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('quick_profile_copy')));
     await tester.pumpAndSettle();

@@ -7,6 +7,7 @@ import 'package:profile/core/bloc/locale/locale_state.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_event.dart';
 import 'package:profile/core/bloc/theme/theme_state.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
 
@@ -118,6 +119,7 @@ class _LanguagePickerPuck extends StatelessWidget {
       child: BlocBuilder<LocaleBloc, LocaleState>(
         builder: (context, localeState) {
           final locale = localeState.locale;
+          final l10n = AppLocalizations.of(context)!;
           // One node, named once: the label merges into the menu button
           // (which keeps its focus state, so screen readers follow Tab),
           // and the hover tooltip stays out of the spoken name.
@@ -125,9 +127,9 @@ class _LanguagePickerPuck extends StatelessWidget {
             child: Semantics(
               button: true,
               label:
-                  'Change language. Current: ${locale.languageCode.toUpperCase()}',
+                  l10n.changeLanguageCurrent(locale.languageCode.toUpperCase()),
               child: Tooltip(
-                message: 'Change Language',
+                message: l10n.changeLanguage,
                 excludeFromSemantics: true,
                 child: PopupMenuButton<String>(
                   tooltip: '',
@@ -161,15 +163,16 @@ class _ThemeTogglePuck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return MergeSemantics(
       child: Semantics(
         button: true,
         toggled: dark,
-        label: dark ? 'Switch to light mode' : 'Switch to dark mode',
+        label: dark ? l10n.switchToLightMode : l10n.switchToDarkMode,
         child: _Puck(
           dark: dark,
           child: Tooltip(
-            message: dark ? 'Switch to light' : 'Switch to dark',
+            message: dark ? l10n.switchToLightMode : l10n.switchToDarkMode,
             excludeFromSemantics: true,
             child: IconButton(
               padding: EdgeInsets.zero,
@@ -198,6 +201,7 @@ class _AudioTogglePuck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ValueListenableBuilder<bool>(
       valueListenable: SoundService.instance.isEnabled,
       builder: (context, enabled, _) {
@@ -205,13 +209,13 @@ class _AudioTogglePuck extends StatelessWidget {
           child: Semantics(
             button: true,
             toggled: enabled,
-            label: enabled ? 'Mute sound effects' : 'Enable sound effects',
+            label: enabled ? l10n.muteSoundEffects : l10n.enableSoundEffects,
             child: _Puck(
               dark: dark,
               child: Tooltip(
                 message: enabled
-                    ? 'Sound Effects: ON (Click to mute)'
-                    : 'Sound Effects: MUTED (Click to enable)',
+                    ? l10n.soundEffectsOnTooltip
+                    : l10n.soundEffectsMutedTooltip,
                 excludeFromSemantics: true,
                 child: IconButton(
                   padding: EdgeInsets.zero,

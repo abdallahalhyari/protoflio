@@ -164,23 +164,13 @@ class _AboutContactPageState extends State<AboutContactPage>
           height: isDesktop ? 96 : 80,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: [
-                accent,
-                isDark ? AppColors.tealLight : AppColors.tealDeep,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+            color: isDark ? AppColors.darkCard : Colors.white,
+            border: Border.all(
+              color: context.glassBorderStrong,
+              width: 1.5,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: accent.withValues(alpha: isDark ? 0.35 : 0.2),
-                blurRadius: 20,
-                offset: const Offset(0, 6),
-              ),
-            ],
           ),
-          padding: const EdgeInsets.all(2.5),
+          padding: const EdgeInsets.all(3),
           child: ClipOval(
             child: ColoredBox(
               color: isDark ? AppColors.darkCard : Colors.white,
@@ -365,14 +355,9 @@ class _AboutContactPageState extends State<AboutContactPage>
       decoration: BoxDecoration(
         color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.container),
-        border: Border.all(color: context.glassBorderStrong),
-        boxShadow: [
-          BoxShadow(
-            color: isDark ? Colors.black38 : AppColors.shadowSoft,
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-          ),
-        ],
+        border: Border.all(
+          color: isDark ? context.glassBorderStrong : AppColors.ink200,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -395,56 +380,66 @@ class _AboutContactPageState extends State<AboutContactPage>
           const SizedBox(height: AppSpacing.lg),
           Container(height: 1, color: context.divider),
           const SizedBox(height: AppSpacing.md),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final columns = constraints.maxWidth >= 760
+                  ? 4
+                  : (constraints.maxWidth >= 360 ? 2 : 1);
+              final spacing = AppSpacing.sm;
+              final itemWidth =
+                  (constraints.maxWidth - (spacing * (columns - 1))) / columns;
 
-          // Stat Pills
-          Wrap(
-            alignment: WrapAlignment.spaceAround,
-            spacing: AppSpacing.md,
-            runSpacing: AppSpacing.sm,
-            children: [
-              for (final s in stats)
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.03)
-                          : AppColors.ink100,
-                      borderRadius: BorderRadius.circular(AppRadius.pill),
-                      border: Border.all(
-                        color: isDark
-                            ? Colors.white.withValues(alpha: 0.08)
-                            : AppColors.ink200,
+              return Wrap(
+                spacing: spacing,
+                runSpacing: spacing,
+                children: [
+                  for (final stat in stats)
+                    SizedBox(
+                      width: itemWidth,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md,
+                          vertical: AppSpacing.sm,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.025)
+                              : AppColors.ink50,
+                          borderRadius: BorderRadius.circular(AppRadius.sm),
+                          border: Border.all(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.08)
+                                : AppColors.ink200,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              stat.$1,
+                              style: TextStyle(
+                                fontFamily: AppTypography.displayFont,
+                                fontSize: AppTypography.heading,
+                                fontWeight: FontWeight.w800,
+                                color: context.adaptiveAccentText(accent),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              stat.$2,
+                              style: TextStyle(
+                                fontSize: AppTypography.label,
+                                fontWeight: FontWeight.w600,
+                                color: context.mutedText,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          s.$1,
-                          style: TextStyle(
-                            fontFamily: AppTypography.displayFont,
-                            fontSize: AppTypography.body,
-                            fontWeight: FontWeight.w900,
-                            color: context.adaptiveAccentText(accent),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          s.$2,
-                          style: TextStyle(
-                            fontSize: AppTypography.label,
-                            fontWeight: FontWeight.w700,
-                            color: context.mutedText,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-            ],
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -463,26 +458,9 @@ class _AboutContactPageState extends State<AboutContactPage>
       decoration: BoxDecoration(
         color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.container),
-        gradient: LinearGradient(
-          colors: [
-            accent.withValues(alpha: isDark ? 0.16 : 0.08),
-            isDark ? AppColors.darkCard : Colors.white,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
         border: Border.all(
-          color: accent.withValues(alpha: isDark ? 0.5 : 0.35),
-          width: 1.5,
+          color: context.glassBorderStrong,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: accent.withValues(alpha: isDark ? 0.15 : 0.08),
-            blurRadius: 32,
-            offset: const Offset(0, 12),
-            spreadRadius: 2,
-          ),
-        ],
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {

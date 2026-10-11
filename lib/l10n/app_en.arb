@@ -33,6 +33,44 @@
   "keyboardHintEnd": "End   last page",
   "closeTooltip": "Close",
   "showHelpShortcut": "Show this help",
+  "changeLanguage": "Change language",
+  "changeLanguageCurrent": "Change language. Current: {code}",
+  "@changeLanguageCurrent": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "switchToLightMode": "Switch to light mode",
+  "switchToDarkMode": "Switch to dark mode",
+  "muteSoundEffects": "Mute sound effects",
+  "enableSoundEffects": "Enable sound effects",
+  "soundEffectsOnTooltip": "Sound Effects: ON (Click to mute)",
+  "soundEffectsMutedTooltip": "Sound Effects: MUTED (Click to enable)",
+  "openNavigationMenu": "Open navigation menu",
+  "menuLabel": "MENU",
+  "sectionNavigationLabel": "Section navigation",
+  "downloadResumePdf": "Download CV (PDF)",
+  "previousSection": "Previous section",
+  "nextSection": "Next section",
+  "scrollToTop": "Scroll to top",
+  "goToSection": "Go to {section}",
+  "@goToSection": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "pageNumber": "Page {number}",
+  "@pageNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "resumeOpenError": "Could not open resume — visit {publicUrl}",
   "projectOpenError": "Could not open {url}",
   "spreadAction": "Spread",
@@ -154,6 +192,14 @@
   "projectDomainFleet": "Fleet & Telematics",
   "projectDomainCommerce": "M-Commerce & Streaming",
   "projectTechFilter": "Filtered by {technology}",
+  "projectSwitchDomain": "Switch domain",
+  "projectHallmarkNfc": "NFC smart-card platform",
+  "projectHallmarkNfcDetail": "ISO-7816 · Hardware-backed keys",
+  "projectHallmarkOffline": "Offline-first claims sync",
+  "projectHallmarkOfflineDetail": "SQLite · WorkManager",
+  "projectHallmarkPerformance": "Performance-focused enterprise UI",
+  "projectHallmarkPerformanceDetail": "60 FPS · 35% fewer crashes",
+  "projectDossierDecision": "Key decision",
   "@projectTechFilter": {
     "placeholders": {
       "technology": {
@@ -200,7 +246,8 @@
   "contactHeaderKicker": "Contact",
   "contactHeaderTitle": "Have a difficult mobile problem?",
   "contactHeaderSubtitle": "Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.",
-  "skillsHeaderKicker": "Skills",
+  "skillsHeaderKicker": "Technical disciplines",
+  "skillSpecImplementation": "DETAILS & EVIDENCE",
   "skillsHeaderTitle": "Skills",
   "skillsHeaderSubtitle": "What I work with and where I used it. Search a tool or filter by area.",
   "sectionSubtitleEngineering": "The architectures behind my mobile suites: layers, offline sync, NFC and token security.",
@@ -227,7 +274,7 @@
   "@folioNext": {
     "description": "Desktop footer link to the next section."
   },
-  "quickProfile": "30-second profile",
+  "quickProfile": "Hiring profile",
   "quickProfileTitle": "Hiring summary",
   "quickProfileRole": "Role",
   "quickProfileExperience": "Experience",
@@ -237,6 +284,12 @@
   "quickProfileEmail": "Email",
   "quickProfileCopy": "Copy summary",
   "quickProfileCopied": "Profile summary copied",
+  "quickProfileVcard": "vCard QR",
+  "vcardDialogTitle": "Recruiter contact card",
+  "vcardScanHint": "Scan with your phone camera",
+  "vcardCopyText": "Copy contact card",
+  "vcardCopied": "Contact card copied to clipboard",
+  "done": "Done",
   "@quickProfile": {
     "description": "Hero link that opens the recruiter summary sheet."
   },

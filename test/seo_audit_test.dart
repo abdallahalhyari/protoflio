@@ -99,6 +99,25 @@ void main() {
       expect(indexHtml.contains('<link rel="alternate" hreflang="en"'), isTrue);
     });
 
+    test('Search preview presents the senior mobile profile and project impact',
+        () {
+      expect(
+        indexHtml,
+        contains(
+            '<title>Abdallah Alhyari | Senior Flutter &amp; Android Engineer</title>'),
+      );
+      expect(
+        indexHtml,
+        contains('NFC healthcare systems serve 400,000+ beneficiaries'),
+      );
+      expect(indexHtml, contains('60 FPS with 35% fewer crashes'));
+      expect(
+        indexHtml,
+        contains(
+            '<meta property="og:title" content="Abdallah Alhyari | Senior Flutter &amp; Android Engineer">'),
+      );
+    });
+
     test('Contains rich Open Graph protocol tags for social previews', () {
       expect(indexHtml.contains('<meta property="og:type" content="website">'),
           isTrue);
@@ -170,7 +189,7 @@ void main() {
       final person = nodeOf('Person');
       expect(person, isNotNull);
       expect(person!['name'], 'Abdallah Alhyari');
-      expect(person['jobTitle'], contains('Flutter'));
+      expect(person['jobTitle'], 'Senior Flutter & Android Engineer');
       expect(person['email'], 'mailto:alhyariabdallh@gmail.com');
       expect(
           (person['worksFor'] as Map<String, dynamic>?)?['name'], 'NatHealth');

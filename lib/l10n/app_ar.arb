@@ -25,6 +25,44 @@
   "keyboardHintEnd": "الصفحة الأخيرة",
   "closeTooltip": "إغلاق",
   "showHelpShortcut": "عرض هذه المساعدة",
+  "changeLanguage": "تغيير اللغة",
+  "changeLanguageCurrent": "تغيير اللغة. الحالية: {code}",
+  "@changeLanguageCurrent": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "switchToLightMode": "التبديل إلى الوضع الفاتح",
+  "switchToDarkMode": "التبديل إلى الوضع الداكن",
+  "muteSoundEffects": "كتم المؤثرات الصوتية",
+  "enableSoundEffects": "تشغيل المؤثرات الصوتية",
+  "soundEffectsOnTooltip": "المؤثرات الصوتية: تعمل (انقر للكتم)",
+  "soundEffectsMutedTooltip": "المؤثرات الصوتية: مكتومة (انقر للتشغيل)",
+  "openNavigationMenu": "فتح قائمة التنقل",
+  "menuLabel": "القائمة",
+  "sectionNavigationLabel": "التنقل بين الأقسام",
+  "downloadResumePdf": "تحميل السيرة الذاتية بصيغة PDF",
+  "previousSection": "القسم السابق",
+  "nextSection": "القسم التالي",
+  "scrollToTop": "التمرير إلى الأعلى",
+  "goToSection": "الانتقال إلى {section}",
+  "@goToSection": {
+    "placeholders": {
+      "section": {
+        "type": "String"
+      }
+    }
+  },
+  "pageNumber": "الصفحة {number}",
+  "@pageNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "resumeOpenError": "تعذر فتح السيرة الذاتية — قم بزيارة {publicUrl}",
   "projectOpenError": "تعذر فتح {url}",
   "spreadAction": "توزيع",
@@ -101,6 +139,14 @@
   "projectDomainFleet": "الأساطيل والاتصالات عن بُعد",
   "projectDomainCommerce": "التجارة الإلكترونية والبث",
   "projectTechFilter": "تصفية بالتقنية: {technology}",
+  "projectSwitchDomain": "تبديل المجال",
+  "projectHallmarkNfc": "منصة البطاقات الذكية NFC",
+  "projectHallmarkNfcDetail": "ISO-7816 · مفاتيح مدعومة بالعتاد",
+  "projectHallmarkOffline": "مزامنة المطالبات دون اتصال",
+  "projectHallmarkOfflineDetail": "SQLite · WorkManager",
+  "projectHallmarkPerformance": "واجهات مؤسسات عالية الأداء",
+  "projectHallmarkPerformanceDetail": "60 إطاراً/ثانية · أعطال أقل 35٪",
+  "projectDossierDecision": "القرار الهندسي",
   "readCaseStudyFor": "اقرأ دراسة حالة: {project}",
   "projectTaglineNatHealth": "منصة صحية حيوية تستخدم بطاقات NFC الذكية للرعاية الرقمية والمطالبات والامتثال التنظيمي.",
   "projectTaglineEskadenia": "تطبيقات مؤسسية عالية الأداء لأنظمة معلومات المستشفيات ومنصات التعليم.",
@@ -124,6 +170,7 @@
   "contactHeaderTitle": "هل لديك مشكلة صعبة في تطبيقات الهاتف؟",
   "contactHeaderSubtitle": "أرسلها لي. أقبل مراجعات معمارية الهواتف والعمل التعاقدي الآن، وأبحث عن دور أول في تطبيقات الهاتف في برنو من فبراير 2027. البريد الإلكتروني أسرع طريقة للرد.",
   "skillsHeaderKicker": "القسم 04 · الأنظمة والتسليم",
+  "skillSpecImplementation": "التفاصيل والأدلة",
   "skillsHeaderTitle": "المهارات",
   "skillsHeaderSubtitle": "ما أعمل به وأين استخدمته. ابحث عن أداة أو صفِّ حسب المجال.",
   "sectionSubtitleEngineering": "البُنى المعمارية خلف تطبيقاتي: الطبقات، والمزامنة دون اتصال، وNFC، وأمان الرموز.",
@@ -133,7 +180,7 @@
   "folioBackToStart": "العودة إلى البداية",
   "welcomeBack": "مرحبًا بعودتك — هل تريد المتابعة من {section}؟",
   "continueAction": "متابعة",
-  "quickProfile": "ملف في 30 ثانية",
+  "quickProfile": "ملف للتوظيف",
   "quickProfileTitle": "ملخص للتوظيف",
   "quickProfileRole": "الدور",
   "quickProfileExperience": "الخبرة",
@@ -143,6 +190,12 @@
   "quickProfileEmail": "البريد الإلكتروني",
   "quickProfileCopy": "نسخ الملخص",
   "quickProfileCopied": "تم نسخ ملخص الملف",
+  "quickProfileVcard": "رمز QR لبطاقة التواصل",
+  "vcardDialogTitle": "بطاقة التواصل للتوظيف",
+  "vcardScanHint": "امسح الرمز بكاميرا الهاتف",
+  "vcardCopyText": "نسخ بطاقة التواصل",
+  "vcardCopied": "تم نسخ بطاقة التواصل",
+  "done": "تم",
   "studyCaseStudy": "دراسة حالة",
   "studyProblem": "المشكلة",
   "studyRole": "دوري",

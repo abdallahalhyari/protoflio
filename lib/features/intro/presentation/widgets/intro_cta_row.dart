@@ -298,10 +298,9 @@ class IntroCtaRow extends StatelessWidget {
             ),
             _pill(
               context,
-              icon: Icons.play_circle_fill_rounded,
-              label: '30-second intro',
-              semanticsLabel:
-                  '30-second introduction video and executive summary',
+              icon: Icons.badge_rounded,
+              label: loc.quickProfile,
+              semanticsLabel: loc.quickProfileTitle,
               accent: accent,
               onTap: () => showQuickProfile(
                 context,
@@ -311,8 +310,8 @@ class IntroCtaRow extends StatelessWidget {
             _pill(
               context,
               icon: Icons.qr_code_2_rounded,
-              label: 'vCard QR',
-              semanticsLabel: 'Recruiter vCard QR',
+              label: loc.quickProfileVcard,
+              semanticsLabel: loc.vcardDialogTitle,
               accent: accent,
               onTap: () => VCardQrDialog.show(context),
             ),

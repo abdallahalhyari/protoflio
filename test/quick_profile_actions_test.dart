@@ -33,6 +33,10 @@ void main() {
 
       expect(find.text('Email'), findsOneWidget);
       expect(find.text('LinkedIn'), findsOneWidget);
+      expect(
+        find.text(lookupAppLocalizations(const Locale('en')).quickProfileVcard),
+        findsOneWidget,
+      );
 
       expect(find.byKey(const Key('quick_profile_copy')), findsOneWidget);
       expect(find.text('Copy summary'), findsOneWidget);

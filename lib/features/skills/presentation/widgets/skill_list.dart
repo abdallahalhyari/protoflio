@@ -163,41 +163,23 @@ class _SkillRowState extends State<_SkillRow> {
         duration: AppMotion.snap,
         decoration: BoxDecoration(
           color: _open
-              ? widget.color.withValues(alpha: isDark ? 0.08 : 0.05)
+              ? (isDark ? Colors.white.withValues(alpha: 0.045) : Colors.white)
               : (_hovered
                   ? (isDark
-                      ? Colors.white.withValues(alpha: 0.035)
-                      : AppColors.ink50)
+                      ? Colors.white.withValues(alpha: 0.025)
+                      : Colors.white)
                   : (isDark
                       ? Colors.white.withValues(alpha: 0.015)
-                      : AppColors.ink50.withValues(alpha: 0.5))),
-          borderRadius: BorderRadius.circular(AppRadius.md),
+                      : AppColors.ink50.withValues(alpha: 0.35))),
+          borderRadius: BorderRadius.circular(AppRadius.sm),
           border: Border.all(
             color: _open
-                ? widget.color.withValues(alpha: 0.45)
+                ? widget.color.withValues(alpha: 0.55)
                 : (_hovered
                     ? widget.color.withValues(alpha: 0.25)
                     : rule.withValues(alpha: isDark ? 0.5 : 0.7)),
-            width: _open ? 1.0 : 0.8,
+            width: _open ? 1.2 : 0.8,
           ),
-          boxShadow: _open
-              ? [
-                  BoxShadow(
-                    color: widget.color.withValues(alpha: isDark ? 0.12 : 0.06),
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
-                  ),
-                ]
-              : (_hovered
-                  ? [
-                      BoxShadow(
-                        color: widget.color
-                            .withValues(alpha: isDark ? 0.08 : 0.04),
-                        blurRadius: 6,
-                        offset: const Offset(0, 2),
-                      ),
-                    ]
-                  : null),
         ),
         child: Semantics(
           button: true,
@@ -205,7 +187,7 @@ class _SkillRowState extends State<_SkillRow> {
           label: '${s.name}. $label. ${s.provenIn}',
           excludeSemantics: true,
           child: InkWell(
-            borderRadius: BorderRadius.circular(AppRadius.md),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
             onTap: () {
               SoundService.instance.playSelection();
               setState(() => _open = !_open);
@@ -223,12 +205,7 @@ class _SkillRowState extends State<_SkillRow> {
                         decoration: BoxDecoration(
                           color: widget.color
                               .withValues(alpha: isDark ? 0.14 : 0.08),
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                          border: Border.all(
-                            color: widget.color
-                                .withValues(alpha: _open ? 0.4 : 0.2),
-                            width: 0.8,
-                          ),
+                          borderRadius: BorderRadius.circular(AppRadius.xs),
                         ),
                         child: Center(
                           child: Icon(s.icon, size: 18, color: widget.color),
@@ -344,13 +321,13 @@ class _SkillRowState extends State<_SkillRow> {
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
-                                      'SPEC & IMPLEMENTATION',
+                                      l10n.skillSpecImplementation,
                                       style: TextStyle(
                                         fontFamily: AppTypography.monoFont,
                                         fontSize: AppTypography.label - 2,
                                         fontWeight: FontWeight.w700,
                                         letterSpacing: 0.8,
-                                        color: widget.color,
+                                        color: context.mutedText,
                                       ),
                                     ),
                                   ],

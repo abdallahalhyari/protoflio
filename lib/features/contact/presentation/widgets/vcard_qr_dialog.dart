@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
@@ -34,6 +35,7 @@ END:VCARD''';
     final isDark = context.isDarkMode;
     final theme = Theme.of(context);
     final accent = theme.colorScheme.primary;
+    final l10n = AppLocalizations.of(context)!;
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -77,14 +79,14 @@ END:VCARD''';
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Recruiter vCard',
+                        l10n.vcardDialogTitle,
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w800,
                           color: context.onSurface,
                         ),
                       ),
                       Text(
-                        'Scan with phone camera',
+                        l10n.vcardScanHint,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: context.onSurface.withValues(alpha: 0.65),
                         ),
@@ -95,7 +97,7 @@ END:VCARD''';
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close_rounded, size: 20),
-                  tooltip: 'Close',
+                  tooltip: l10n.closeTooltip,
                 ),
               ],
             ),
@@ -155,7 +157,7 @@ END:VCARD''';
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'Senior Flutter & Android Engineer',
+                    l10n.introRoleLine,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: accent,
                       fontWeight: FontWeight.w700,
@@ -182,14 +184,13 @@ END:VCARD''';
                     onPressed: () {
                       HapticFeedback.lightImpact();
                       Clipboard.setData(const ClipboardData(text: vCardData));
-                      AppToast.show(context,
-                          message: 'vCard copied to clipboard');
+                      AppToast.show(context, message: l10n.vcardCopied);
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
                     icon: const Icon(Icons.copy_rounded, size: 16),
-                    label: const Text('Copy Text'),
+                    label: Text(l10n.vcardCopyText),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -203,7 +204,7 @@ END:VCARD''';
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
                     icon: const Icon(Icons.check_rounded, size: 16),
-                    label: const Text('Done'),
+                    label: Text(l10n.done),
                   ),
                 ),
               ],

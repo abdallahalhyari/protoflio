@@ -56,83 +56,38 @@ class ExperienceDesktopGrid extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Column 1: Experiences 0 and 2
         Expanded(
-          flex: 5,
+          flex: 7,
           child: StaggeredEntrance(
             isVisible: state.isVisible,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (experiences.isNotEmpty)
-                  Expanded(
-                    child: AnimatedExperienceNode(
-                      exp: experiences[0],
-                      isVisible: state.isVisible,
-                      isSelected: state.selectedIndex == 0,
-                      onSelect: () => onSelect(0),
-                      isDesktop: true,
-                    ),
-                  ),
-                const SizedBox(height: AppSpacing.md),
-                if (experiences.length > 2)
-                  Expanded(
-                    child: AnimatedExperienceNode(
-                      exp: experiences[2],
-                      isVisible: state.isVisible,
-                      isSelected: state.selectedIndex == 2,
-                      onSelect: () => onSelect(2),
-                      isDesktop: true,
-                    ),
-                  ),
-              ],
+            child: GridView.builder(
+              key: const Key('experience_chronology'),
+              primary: false,
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: AppSpacing.md,
+                mainAxisSpacing: AppSpacing.md,
+                childAspectRatio: 1.3,
+              ),
+              itemCount: experiences.length,
+              itemBuilder: (context, index) => AnimatedExperienceNode(
+                exp: experiences[index],
+                isVisible: state.isVisible,
+                isSelected: state.selectedIndex == index,
+                onSelect: () => onSelect(index),
+                isDesktop: true,
+              ),
             ),
           ),
         ),
         const SizedBox(width: AppSpacing.md),
-
-        // Column 2: Experiences 1 and 3
-        Expanded(
-          flex: 5,
-          child: StaggeredEntrance(
-            isVisible: state.isVisible,
-            delayMs: 80,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (experiences.length > 1)
-                  Expanded(
-                    child: AnimatedExperienceNode(
-                      exp: experiences[1],
-                      isVisible: state.isVisible,
-                      isSelected: state.selectedIndex == 1,
-                      onSelect: () => onSelect(1),
-                      isDesktop: true,
-                    ),
-                  ),
-                const SizedBox(height: AppSpacing.md),
-                if (experiences.length > 3)
-                  Expanded(
-                    child: AnimatedExperienceNode(
-                      exp: experiences[3],
-                      isVisible: state.isVisible,
-                      isSelected: state.selectedIndex == 3,
-                      onSelect: () => onSelect(3),
-                      isDesktop: true,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.md),
-
-        // Column 3: Credentials Bento
         Expanded(
           flex: 4,
           child: StaggeredEntrance(
             isVisible: state.isVisible,
-            delayMs: 160,
+            delayMs: 120,
             child: CredentialsBentoCard(
               isVisible: state.isVisible,
               isDesktop: true,

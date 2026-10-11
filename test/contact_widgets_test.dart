@@ -5,9 +5,14 @@ import 'package:profile/features/contact/presentation/widgets/contact_header.dar
 import 'package:profile/features/about/presentation/pages/about_contact_page.dart';
 import 'package:profile/core/theme/app_theme.dart';
 
-Widget _wrap(Widget child, [Size size = const Size(1200, 900)]) {
+Widget _wrap(
+  Widget child, [
+  Size size = const Size(1200, 900),
+  Locale? locale,
+]) {
   return MaterialApp(
     theme: AppTheme.dark(),
+    locale: locale,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     home: MediaQuery(
@@ -42,6 +47,26 @@ void main() {
       expect(find.text('WhatsApp'), findsWidgets);
       expect(find.text('LinkedIn'), findsWidgets);
       expect(find.text('GitHub'), findsWidgets);
+    });
+
+    testWidgets('AboutContactPage stays readable on compact Arabic RTL',
+        (tester) async {
+      await tester.pumpWidget(
+        _wrap(
+          const AboutContactPage(),
+          const Size(390, 844),
+          const Locale('ar'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        Directionality.of(tester.element(find.byType(AboutContactPage))),
+        TextDirection.rtl,
+      );
+      expect(find.text('alhyariabdallh@gmail.com'), findsWidgets);
+      expect(find.text('WhatsApp'), findsWidgets);
+      expect(tester.takeException(), isNull);
     });
   });
 }

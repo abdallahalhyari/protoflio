@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/experience/presentation/pages/experience_page.dart';
+import 'package:profile/features/experience/presentation/widgets/experience_card.dart';
 import 'package:profile/core/theme/app_theme.dart';
+import 'helpers/test_data.dart';
 
 Widget _wrap(Widget child,
     {Size size = const Size(1400, 900), bool scrollable = false}) {
@@ -60,6 +62,23 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('NatHealth'), findsOneWidget);
+    });
+
+    testWidgets('desktop career grid reads chronologically across each row',
+        (tester) async {
+      await tester.pumpWidget(_wrap(const ExperiencePage()));
+      await tester.pumpAndSettle();
+
+      final positions = [
+        for (var index = 0; index < testExperience.length; index++)
+          tester.getTopLeft(find.byType(ExperienceCard).at(index)),
+      ];
+      expect(positions, hasLength(4));
+      expect(positions[0].dy, closeTo(positions[1].dy, 1));
+      expect(positions[0].dx, lessThan(positions[1].dx));
+      expect(positions[2].dy, greaterThan(positions[0].dy));
+      expect(positions[2].dy, closeTo(positions[3].dy, 1));
+      expect(positions[2].dx, lessThan(positions[3].dx));
     });
   });
 }

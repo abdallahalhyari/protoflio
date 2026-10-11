@@ -86,6 +86,64 @@ class AppLocalizationsAr extends AppLocalizations {
   String get showHelpShortcut => 'عرض هذه المساعدة';
 
   @override
+  String get changeLanguage => 'تغيير اللغة';
+
+  @override
+  String changeLanguageCurrent(String code) {
+    return 'تغيير اللغة. الحالية: $code';
+  }
+
+  @override
+  String get switchToLightMode => 'التبديل إلى الوضع الفاتح';
+
+  @override
+  String get switchToDarkMode => 'التبديل إلى الوضع الداكن';
+
+  @override
+  String get muteSoundEffects => 'كتم المؤثرات الصوتية';
+
+  @override
+  String get enableSoundEffects => 'تشغيل المؤثرات الصوتية';
+
+  @override
+  String get soundEffectsOnTooltip => 'المؤثرات الصوتية: تعمل (انقر للكتم)';
+
+  @override
+  String get soundEffectsMutedTooltip =>
+      'المؤثرات الصوتية: مكتومة (انقر للتشغيل)';
+
+  @override
+  String get openNavigationMenu => 'فتح قائمة التنقل';
+
+  @override
+  String get menuLabel => 'القائمة';
+
+  @override
+  String get sectionNavigationLabel => 'التنقل بين الأقسام';
+
+  @override
+  String get downloadResumePdf => 'تحميل السيرة الذاتية بصيغة PDF';
+
+  @override
+  String get previousSection => 'القسم السابق';
+
+  @override
+  String get nextSection => 'القسم التالي';
+
+  @override
+  String get scrollToTop => 'التمرير إلى الأعلى';
+
+  @override
+  String goToSection(String section) {
+    return 'الانتقال إلى $section';
+  }
+
+  @override
+  String pageNumber(int number) {
+    return 'الصفحة $number';
+  }
+
+  @override
   String resumeOpenError(Object publicUrl) {
     return 'تعذر فتح السيرة الذاتية — قم بزيارة $publicUrl';
   }
@@ -338,6 +396,31 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get projectSwitchDomain => 'تبديل المجال';
+
+  @override
+  String get projectHallmarkNfc => 'منصة البطاقات الذكية NFC';
+
+  @override
+  String get projectHallmarkNfcDetail => 'ISO-7816 · مفاتيح مدعومة بالعتاد';
+
+  @override
+  String get projectHallmarkOffline => 'مزامنة المطالبات دون اتصال';
+
+  @override
+  String get projectHallmarkOfflineDetail => 'SQLite · WorkManager';
+
+  @override
+  String get projectHallmarkPerformance => 'واجهات مؤسسات عالية الأداء';
+
+  @override
+  String get projectHallmarkPerformanceDetail =>
+      '60 إطاراً/ثانية · أعطال أقل 35٪';
+
+  @override
+  String get projectDossierDecision => 'القرار الهندسي';
+
+  @override
   String readCaseStudyFor(String project) {
     return 'اقرأ دراسة حالة: $project';
   }
@@ -421,6 +504,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get skillsHeaderKicker => 'القسم 04 · الأنظمة والتسليم';
 
   @override
+  String get skillSpecImplementation => 'التفاصيل والأدلة';
+
+  @override
   String get skillsHeaderTitle => 'المهارات';
 
   @override
@@ -452,7 +538,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get continueAction => 'متابعة';
 
   @override
-  String get quickProfile => 'ملف في 30 ثانية';
+  String get quickProfile => 'ملف للتوظيف';
 
   @override
   String get quickProfileTitle => 'ملخص للتوظيف';
@@ -482,6 +568,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quickProfileCopied => 'تم نسخ ملخص الملف';
+
+  @override
+  String get quickProfileVcard => 'رمز QR لبطاقة التواصل';
+
+  @override
+  String get vcardDialogTitle => 'بطاقة التواصل للتوظيف';
+
+  @override
+  String get vcardScanHint => 'امسح الرمز بكاميرا الهاتف';
+
+  @override
+  String get vcardCopyText => 'نسخ بطاقة التواصل';
+
+  @override
+  String get vcardCopied => 'تم نسخ بطاقة التواصل';
+
+  @override
+  String get done => 'تم';
 
   @override
   String get studyCaseStudy => 'دراسة حالة';

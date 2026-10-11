@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
@@ -22,6 +23,7 @@ class PageIndicator extends StatelessWidget {
   Widget _build(BuildContext context, int current, int pageCount) {
     final isDark = context.isDarkMode;
     final labels = TopNav.getLabels(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return ExcludeSemantics(
       child: FittedBox(
@@ -30,14 +32,15 @@ class PageIndicator extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: List.generate(pageCount, (i) {
             final active = i == current;
-            final label = i < labels.length ? labels[i] : 'Page ${i + 1}';
+            final label =
+                i < labels.length ? labels[i] : l10n.pageNumber(i + 1);
             return Tooltip(
               message: label,
               preferBelow: false,
               child: Semantics(
                 button: true,
                 selected: active,
-                label: 'Go to $label',
+                label: l10n.goToSection(label),
                 child: SizedBox(
                   width: 44,
                   height: 44,

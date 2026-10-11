@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:profile/core/services/sound_service.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 
@@ -15,11 +16,12 @@ class ScrollToTopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
+    final label = AppLocalizations.of(context)!.scrollToTop;
     return Semantics(
       button: true,
-      label: 'Scroll to top',
+      label: label,
       child: Tooltip(
-        message: 'Scroll to top',
+        message: label,
         child: Material(
           color: Colors.transparent,
           child: InkWell(

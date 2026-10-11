@@ -63,7 +63,7 @@ class QuickProfileActions extends StatelessWidget {
             VCardQrDialog.show(context);
           },
           icon: const Icon(Icons.qr_code_2_rounded, size: 18),
-          label: const Text('vCard QR'),
+          label: Text(l10n.quickProfileVcard),
           style: OutlinedButton.styleFrom(minimumSize: const Size(0, 44)),
         ),
         TextButton.icon(

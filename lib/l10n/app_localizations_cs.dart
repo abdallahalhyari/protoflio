@@ -87,6 +87,65 @@ class AppLocalizationsCs extends AppLocalizations {
   String get showHelpShortcut => 'Zobrazit tuto nápovědu';
 
   @override
+  String get changeLanguage => 'Změnit jazyk';
+
+  @override
+  String changeLanguageCurrent(String code) {
+    return 'Změnit jazyk. Aktuální: $code';
+  }
+
+  @override
+  String get switchToLightMode => 'Přepnout na světlý režim';
+
+  @override
+  String get switchToDarkMode => 'Přepnout na tmavý režim';
+
+  @override
+  String get muteSoundEffects => 'Ztlumit zvukové efekty';
+
+  @override
+  String get enableSoundEffects => 'Zapnout zvukové efekty';
+
+  @override
+  String get soundEffectsOnTooltip =>
+      'Zvukové efekty: zapnuté (kliknutím ztlumíte)';
+
+  @override
+  String get soundEffectsMutedTooltip =>
+      'Zvukové efekty: ztlumené (kliknutím zapnete)';
+
+  @override
+  String get openNavigationMenu => 'Otevřít navigační nabídku';
+
+  @override
+  String get menuLabel => 'NABÍDKA';
+
+  @override
+  String get sectionNavigationLabel => 'Navigace mezi sekcemi';
+
+  @override
+  String get downloadResumePdf => 'Stáhnout životopis (PDF)';
+
+  @override
+  String get previousSection => 'Předchozí sekce';
+
+  @override
+  String get nextSection => 'Další sekce';
+
+  @override
+  String get scrollToTop => 'Přejít nahoru';
+
+  @override
+  String goToSection(String section) {
+    return 'Přejít na sekci $section';
+  }
+
+  @override
+  String pageNumber(int number) {
+    return 'Stránka $number';
+  }
+
+  @override
   String resumeOpenError(Object publicUrl) {
     return 'Nepodařilo se otevřít životopis — navštivte $publicUrl';
   }
@@ -340,6 +399,30 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
+  String get projectSwitchDomain => 'Přepnout oblast';
+
+  @override
+  String get projectHallmarkNfc => 'Platforma čipových karet NFC';
+
+  @override
+  String get projectHallmarkNfcDetail => 'ISO-7816 · Hardwarově chráněné klíče';
+
+  @override
+  String get projectHallmarkOffline => 'Synchronizace nároků offline';
+
+  @override
+  String get projectHallmarkOfflineDetail => 'SQLite · WorkManager';
+
+  @override
+  String get projectHallmarkPerformance => 'Výkonné podnikové rozhraní';
+
+  @override
+  String get projectHallmarkPerformanceDetail => '60 FPS · o 35 % méně pádů';
+
+  @override
+  String get projectDossierDecision => 'Klíčové rozhodnutí';
+
+  @override
   String readCaseStudyFor(String project) {
     return 'Přečíst případovou studii: $project';
   }
@@ -423,6 +506,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get skillsHeaderKicker => 'Část 04, systémy a dodávka';
 
   @override
+  String get skillSpecImplementation => 'DETAILY A PRAXE';
+
+  @override
   String get skillsHeaderTitle => 'Dovednosti';
 
   @override
@@ -454,7 +540,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get continueAction => 'Pokračovat';
 
   @override
-  String get quickProfile => 'Profil za 30 s';
+  String get quickProfile => 'Profil pro náboráře';
 
   @override
   String get quickProfileTitle => 'Shrnutí pro nábor';
@@ -484,6 +570,24 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get quickProfileCopied => 'Shrnutí profilu zkopírováno';
+
+  @override
+  String get quickProfileVcard => 'QR vizitka';
+
+  @override
+  String get vcardDialogTitle => 'Kontaktní karta pro náboráře';
+
+  @override
+  String get vcardScanHint => 'Naskenujte fotoaparátem telefonu';
+
+  @override
+  String get vcardCopyText => 'Kopírovat kontaktní kartu';
+
+  @override
+  String get vcardCopied => 'Kontaktní karta zkopírována do schránky';
+
+  @override
+  String get done => 'Hotovo';
 
   @override
   String get studyCaseStudy => 'Případová studie';

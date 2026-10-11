@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 class AppBarMenuPill extends StatelessWidget {
   final bool tight;
@@ -17,10 +18,11 @@ class AppBarMenuPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
+    final l10n = AppLocalizations.of(context)!;
 
     return Semantics(
       button: true,
-      label: 'Open navigation menu',
+      label: l10n.openNavigationMenu,
       child: GestureDetector(
         excludeFromSemantics: true,
         behavior: HitTestBehavior.opaque,
@@ -62,7 +64,7 @@ class AppBarMenuPill extends StatelessWidget {
                     Icon(Icons.menu_rounded, size: 14, color: primary),
                     const SizedBox(width: 4),
                     Text(
-                      'MENU',
+                      l10n.menuLabel,
                       style: TextStyle(
                         color: isDark ? Colors.white : primary,
                         fontSize: AppTypography.label,
