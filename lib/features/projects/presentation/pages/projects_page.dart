@@ -61,6 +61,7 @@ class _ProjectsPageView extends StatefulWidget {
 class _ProjectsPageViewState extends State<_ProjectsPageView>
     with AutomaticKeepAliveClientMixin, ActivePageFocusMixin {
   final FocusNode _keyboardFocusNode = FocusNode(debugLabel: 'ProjectsPage');
+  final ScrollController _workScrollController = ScrollController();
 
   static const List<String> _domains = [
     'ALL',
@@ -83,6 +84,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
   @override
   void dispose() {
     _keyboardFocusNode.dispose();
+    _workScrollController.dispose();
     super.dispose();
   }
 
@@ -210,15 +212,24 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                               : itemWidth;
 
                       if (isDesktop) {
-                        return Wrap(
-                          spacing: spacing,
-                          runSpacing: spacing,
-                          alignment: WrapAlignment.center,
-                          children: [
-                            for (int i = 0; i < filteredProjects.length; i++)
-                              SizedBox(
+                        return SizedBox(
+                          height: itemHeight,
+                          child: Scrollbar(
+                            controller: _workScrollController,
+                            thumbVisibility: true,
+                            interactive: true,
+                            child: ListView.separated(
+                              key: const Key('projects_horizontal_list'),
+                              controller: _workScrollController,
+                              scrollDirection: Axis.horizontal,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.md,
+                              ),
+                              itemCount: filteredProjects.length,
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(width: spacing),
+                              itemBuilder: (context, i) => SizedBox(
                                 width: itemWidth,
-                                height: itemHeight,
                                 child: _buildProjectItem(
                                   project: filteredProjects[i],
                                   index: i,
@@ -226,8 +237,9 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                                   isDesktop: isDesktop,
                                   selectedTech: selectedTech,
                                 ),
-                              )
-                          ],
+                              ),
+                            ),
+                          ),
                         );
                       }
 

@@ -182,6 +182,40 @@ void main() {
           findsOneWidget);
     });
 
+    testWidgets('ProjectsPage desktop project cards scroll horizontally',
+        (tester) async {
+      tester.view.physicalSize = const Size(1200, 900);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      await tester.pumpWidget(_wrap(
+        const ProjectsPage(),
+        const Size(1200, 900),
+        false,
+      ));
+      await tester.pumpAndSettle();
+
+      final list = find.byKey(const Key('projects_horizontal_list'));
+      expect(list, findsOneWidget);
+      final scrollable = find
+          .descendant(
+            of: list,
+            matching: find.byType(Scrollable),
+          )
+          .first;
+
+      await tester.drag(list, const Offset(-500, 0));
+      await tester.pumpAndSettle();
+
+      expect(
+        tester.state<ScrollableState>(scrollable).position.pixels,
+        greaterThan(0),
+      );
+    });
+
     testWidgets(
         'InteractiveProjectCard activates focus styling when keyboard focused',
         (tester) async {
