@@ -350,15 +350,8 @@ class _AboutContactPageState extends State<AboutContactPage>
       ('99.9%', 'Offline SLA'),
     ];
 
-    return Container(
+    return _HoverGlassCard(
       padding: EdgeInsets.all(isDesktop ? AppSpacing.xl : AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: context.cardGlass,
-        borderRadius: BorderRadius.circular(AppRadius.container),
-        border: Border.all(
-          color: isDark ? context.glassBorderStrong : AppColors.ink200,
-        ),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -453,15 +446,8 @@ class _AboutContactPageState extends State<AboutContactPage>
     Color accent,
     AppLocalizations l10n,
   ) {
-    return Container(
+    return _HoverGlassCard(
       padding: EdgeInsets.all(isDesktop ? AppSpacing.xl : AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: context.cardGlass,
-        borderRadius: BorderRadius.circular(AppRadius.container),
-        border: Border.all(
-          color: context.glassBorderStrong,
-        ),
-      ),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final isWide = isDesktop && constraints.maxWidth > 650;
@@ -831,3 +817,57 @@ class _AboutContactPageState extends State<AboutContactPage>
     );
   }
 }
+
+class _HoverGlassCard extends StatefulWidget {
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+
+  const _HoverGlassCard({
+    required this.child,
+    required this.padding,
+  });
+
+  @override
+  State<_HoverGlassCard> createState() => _HoverGlassCardState();
+}
+
+class _HoverGlassCardState extends State<_HoverGlassCard> {
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = context.isDarkMode;
+    final scheme = Theme.of(context).colorScheme;
+    final accent = scheme.primary;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedContainer(
+        duration: AppMotion.cardHover,
+        curve: AppMotion.emphasized,
+        padding: widget.padding,
+        decoration: BoxDecoration(
+          color: context.cardGlass,
+          borderRadius: BorderRadius.circular(AppRadius.container),
+          border: Border.all(
+            color: _hovered
+                ? accent.withValues(alpha: isDark ? 0.45 : 0.35)
+                : context.glassBorderStrong,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: _hovered
+                  ? accent.withValues(alpha: isDark ? 0.14 : 0.07)
+                  : (isDark ? Colors.black38 : AppColors.shadowSoft),
+              blurRadius: _hovered ? 28 : 24,
+              offset: Offset(0, _hovered ? 10 : 8),
+            ),
+          ],
+        ),
+        child: widget.child,
+      ),
+    );
+  }
+}
+
