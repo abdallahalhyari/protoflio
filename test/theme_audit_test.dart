@@ -145,8 +145,6 @@ void main() {
         await tester.binding.setSurfaceSize(null);
       });
 
-
-
       testWidgets(
           '$modeName - ContactPage renders availability and communication channels',
           (tester) async {

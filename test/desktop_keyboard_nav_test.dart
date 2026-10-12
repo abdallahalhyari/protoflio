@@ -54,9 +54,9 @@ void main() {
 
     expect(calls, [
       'goTo 1', // W -> Work
-      'goTo 2', // E -> Engineering
-      'goTo 3', // X -> Experience
-      'goTo 4', // S -> Skills
+      'goTo 4', // E -> Engineering
+      'goTo 2', // X -> Experience
+      'goTo 3', // S -> Skills
       'goTo 5', // H -> Hats / About
       'goTo 5', // C -> Contact / About
     ]);

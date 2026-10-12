@@ -8,10 +8,11 @@ void main() {
     test('exact match returns index', () {
       expect(svc.hashToIndex('home'), 0);
       expect(svc.hashToIndex('work'), 1);
-      expect(svc.hashToIndex('engineering'), 2);
-      expect(svc.hashToIndex('experience'), 3);
-      expect(svc.hashToIndex('stack'), 4);
+      expect(svc.hashToIndex('engineering'), 4);
+      expect(svc.hashToIndex('experience'), 2);
+      expect(svc.hashToIndex('stack'), 3);
       expect(svc.hashToIndex('about'), 5);
+      expect(svc.hashToIndex('perspectives'), 5);
       expect(svc.hashToIndex('contact'), 6);
     });
 
@@ -44,6 +45,12 @@ void main() {
     test('out-of-range index clamps to home', () {
       expect(svc.indexToHash(-1), 'home');
       expect(svc.indexToHash(999), 'home');
+    });
+
+    test('combined desktop stop resolves to mobile Perspectives or Contact',
+        () {
+      expect(svc.indexToHash(5), 'perspectives');
+      expect(svc.indexToHash(5, mobileLayout: false), 'contact');
     });
   });
 }

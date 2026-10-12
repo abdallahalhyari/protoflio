@@ -1611,6 +1611,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.';
 
   @override
+  String get projectSwipeHint => 'Swipe horizontally to browse projects';
+
+  @override
   String get engTabArchitectures => 'Architectures';
 
   @override

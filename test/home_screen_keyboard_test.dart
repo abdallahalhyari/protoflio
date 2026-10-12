@@ -79,7 +79,8 @@ void main() {
     // tearDown registered above resets view state
   });
 
-  testWidgets('desktop digit-5 key jumps to Skills (page 5)', (tester) async {
+  testWidgets('desktop digit-5 key jumps to Engineering (page 5)',
+      (tester) async {
     tester.view.devicePixelRatio = 1.0;
     tester.view.physicalSize = const Size(1400, 900);
     addTearDown(tester.view.resetDevicePixelRatio);

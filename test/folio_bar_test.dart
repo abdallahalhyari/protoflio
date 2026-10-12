@@ -54,11 +54,11 @@ void main() {
   testWidgets('FolioBar "Next" goes to the following section', (tester) async {
     int? went;
     await tester
-        .pumpWidget(_host(ValueNotifier<int>(2), onGoTo: (p) => went = p));
+        .pumpWidget(_host(ValueNotifier<int>(1), onGoTo: (p) => went = p));
     await tester.pumpAndSettle();
     expect(find.text('Next · Experience'), findsOneWidget);
     await tester.tap(find.text('Next · Experience'));
-    expect(went, 3);
+    expect(went, 2);
   });
 
   testWidgets('FolioBar offers the way back to the start on the last page',

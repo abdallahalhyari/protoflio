@@ -266,8 +266,6 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-
-
     testWidgets(
         'NavItem uses AppMotion.emphasized curve on selection transition',
         (tester) async {

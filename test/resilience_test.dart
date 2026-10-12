@@ -109,8 +109,6 @@ void main() {
     expect(errors, isEmpty);
   });
 
-
-
   testWidgets('shortcut help dialog scrolls in a short window', (tester) async {
     final errors =
         await _errorsDuring(tester, const Size(320, 568), 2.0, () async {

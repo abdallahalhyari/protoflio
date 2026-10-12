@@ -1615,6 +1615,9 @@ class AppLocalizationsCs extends AppLocalizations {
       'V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.';
 
   @override
+  String get projectSwipeHint => 'Přejetím do strany procházejte projekty';
+
+  @override
   String get engTabArchitectures => 'Architektury';
 
   @override

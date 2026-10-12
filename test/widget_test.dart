@@ -33,8 +33,6 @@ void main() {
     expect(find.text('View my work'), findsOneWidget);
   });
 
-
-
   testWidgets(
       'ProjectsPage renders master-detail and mobile tabs without scroll issues',
       (tester) async {
@@ -52,8 +50,12 @@ void main() {
         .pumpWidget(createTestApp(const ProjectsPage(), const Size(400, 800)));
     await tester.pumpAndSettle();
 
+    // Scroll vertical page down slightly to bring horizontal list fully into viewport
+    await tester.drag(find.byType(CustomScrollView), const Offset(0, -300));
+    await tester.pumpAndSettle();
+
     // Mobile lists every case study; scroll horizontal ListView to reveal the last project card
-    final listView = find.byType(ListView);
+    final listView = find.byKey(const Key('projects_horizontal_list'));
     await tester.drag(listView, const Offset(-800, 0));
     await tester.pumpAndSettle();
 

@@ -65,15 +65,6 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 2,
         number: '03',
-        title: l?.navSectionEngineering ?? 'Engineering',
-        subtitle:
-            l?.navSubEngineering ?? 'Enterprise Blueprints & Offline-First',
-        icon: Icons.hub_rounded,
-        accentColor: AppColors.seed,
-      ),
-      NavSectionItem(
-        index: 3,
-        number: '04',
         title: l?.navSectionExperience ?? 'Experience',
         subtitle:
             l?.navSubExperience ?? '5+ Years Enterprise Engineering & Impact',
@@ -81,11 +72,20 @@ class MobileNavSheet extends StatelessWidget {
         accentColor: AppColors.seed,
       ),
       NavSectionItem(
-        index: 4,
-        number: '05',
+        index: 3,
+        number: '04',
         title: l?.navSectionStack ?? 'Skills & stack',
         subtitle: l?.navSubStack ?? 'Technical Proficiency Matrix',
         icon: Icons.code_rounded,
+        accentColor: AppColors.seed,
+      ),
+      NavSectionItem(
+        index: 4,
+        number: '05',
+        title: l?.navSectionEngineering ?? 'Engineering',
+        subtitle:
+            l?.navSubEngineering ?? 'Enterprise Blueprints & Offline-First',
+        icon: Icons.hub_rounded,
         accentColor: AppColors.seed,
       ),
       NavSectionItem(
@@ -127,25 +127,25 @@ class MobileNavSheet extends StatelessWidget {
     NavSectionItem(
       index: 2,
       number: '03',
-      title: 'System architectures',
-      subtitle: 'Enterprise Blueprints & Offline-First',
-      icon: Icons.hub_rounded,
-      accentColor: AppColors.seed,
-    ),
-    NavSectionItem(
-      index: 3,
-      number: '04',
       title: 'Career & experience',
       subtitle: '5+ Years Enterprise Engineering & Impact',
       icon: Icons.timeline_rounded,
       accentColor: AppColors.seed,
     ),
     NavSectionItem(
-      index: 4,
-      number: '05',
+      index: 3,
+      number: '04',
       title: 'Skills & stack',
       subtitle: 'Technical Proficiency Matrix',
       icon: Icons.code_rounded,
+      accentColor: AppColors.seed,
+    ),
+    NavSectionItem(
+      index: 4,
+      number: '05',
+      title: 'System architectures',
+      subtitle: 'Enterprise Blueprints & Offline-First',
+      icon: Icons.hub_rounded,
       accentColor: AppColors.seed,
     ),
     NavSectionItem(

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/shell/presentation/widgets/portfolio_nav.dart';
+import 'package:profile/features/shell/presentation/widgets/mobile_nav_sheet.dart';
 import 'package:profile/core/theme/app_theme.dart';
 
 HomeController _stub({
@@ -38,6 +39,79 @@ Widget _wrap(Widget child, HomeController controller) {
 }
 
 void main() {
+  testWidgets('mobile section labels and menu rows use the seven-section order',
+      (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+
+    List<String>? labels;
+    List<NavSectionItem>? sections;
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Builder(
+        builder: (context) {
+          labels = TopNav.getLabels(context);
+          sections = MobileNavSheet.getSections(context);
+          return const SizedBox.shrink();
+        },
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final l10n = AppLocalizations.of(tester.element(find.byType(SizedBox)))!;
+    expect(labels, [
+      l10n.navHome,
+      l10n.navWork,
+      l10n.navExperience,
+      l10n.navStack,
+      l10n.navEngineering,
+      l10n.navSectionAbout,
+      l10n.navSectionContact,
+    ]);
+    expect(sections!.map((section) => section.index), [0, 1, 2, 3, 4, 5, 6]);
+    expect(sections!.map((section) => section.title), [
+      l10n.navSectionCover,
+      l10n.navSectionWork,
+      l10n.navSectionExperience,
+      l10n.navSectionStack,
+      l10n.navSectionEngineering,
+      l10n.navSectionAbout,
+      l10n.navSectionContact,
+    ]);
+  });
+
+  testWidgets('desktop labels combine Perspectives and Contact at the end',
+      (tester) async {
+    tester.view.physicalSize = const Size(1200, 900);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+
+    List<String>? labels;
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Builder(
+        builder: (context) {
+          labels = TopNav.getLabels(context);
+          return const SizedBox.shrink();
+        },
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    final l10n = AppLocalizations.of(tester.element(find.byType(SizedBox)))!;
+    expect(labels, [
+      l10n.navHome,
+      l10n.navWork,
+      l10n.navExperience,
+      l10n.navStack,
+      l10n.navEngineering,
+      '${l10n.navAbout} & ${l10n.navContact}',
+    ]);
+  });
+
   testWidgets('TopNav highlights label matching controller.pageIndex',
       (tester) async {
     tester.view.physicalSize = const Size(1200, 900);

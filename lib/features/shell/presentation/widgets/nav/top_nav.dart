@@ -17,14 +17,17 @@ const double kDenseNavBelow = 1200;
 class TopNav extends StatelessWidget {
   static List<String> getLabels(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    return [
+    final labels = [
       l.navHome,
       l.navWork,
-      l.navEngineering,
       l.navExperience,
       l.navStack,
-      '${l.navAbout} & ${l.navContact}',
+      l.navEngineering,
     ];
+    if (AppBreakpoints.isDesktop(context)) {
+      return [...labels, '${l.navAbout} & ${l.navContact}'];
+    }
+    return [...labels, l.navSectionAbout, l.navSectionContact];
   }
 
   const TopNav({super.key});

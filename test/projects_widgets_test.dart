@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/test_data.dart';
@@ -16,9 +17,12 @@ import 'package:profile/features/projects/presentation/widgets/project_dossier_c
 import 'package:profile/core/theme/app_theme.dart';
 
 Widget _wrap(Widget child,
-    [Size size = const Size(1200, 900), bool scrollable = true]) {
+    [Size size = const Size(1200, 900),
+    bool scrollable = true,
+    Locale? locale]) {
   return MaterialApp(
     theme: AppTheme.dark(),
+    locale: locale,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
     home: MediaQuery(
@@ -207,6 +211,17 @@ void main() {
           )
           .first;
 
+      await tester.sendEventToBinding(PointerScrollEvent(
+        position: tester.getCenter(list),
+        scrollDelta: const Offset(0, 300),
+      ));
+      await tester.pump();
+
+      expect(
+        tester.state<ScrollableState>(scrollable).position.pixels,
+        greaterThan(0),
+      );
+
       await tester.drag(list, const Offset(-500, 0));
       await tester.pumpAndSettle();
 
@@ -214,6 +229,84 @@ void main() {
         tester.state<ScrollableState>(scrollable).position.pixels,
         greaterThan(0),
       );
+    });
+
+    testWidgets(
+        'ProjectsPage mobile carousel scrolls horizontally and page vertically',
+        (tester) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      await tester.pumpWidget(_wrap(
+        const ProjectsPage(),
+        const Size(390, 844),
+        false,
+      ));
+      await tester.pumpAndSettle();
+
+      expect(
+          find.text('Swipe horizontally to browse projects'), findsOneWidget);
+      final list = find.byKey(const Key('projects_horizontal_list'));
+      final carouselScrollable =
+          find.descendant(of: list, matching: find.byType(Scrollable)).first;
+      final carouselPosition =
+          tester.state<ScrollableState>(carouselScrollable).position;
+      expect(
+        carouselPosition.axis,
+        Axis.horizontal,
+      );
+      expect(
+        carouselPosition.maxScrollExtent,
+        greaterThan(0),
+      );
+
+      final pageScrollable = find
+          .descendant(
+            of: find.byType(CustomScrollView),
+            matching: find.byType(Scrollable),
+          )
+          .first;
+      final pagePosition =
+          tester.state<ScrollableState>(pageScrollable).position;
+      expect(
+        pagePosition.axis,
+        Axis.vertical,
+      );
+      expect(
+        pagePosition.maxScrollExtent,
+        greaterThan(0),
+      );
+    });
+
+    testWidgets('ProjectsPage swipe cue is localized in Arabic RTL',
+        (tester) async {
+      tester.view.physicalSize = const Size(390, 844);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      await tester.pumpWidget(_wrap(
+        const ProjectsPage(),
+        const Size(390, 844),
+        false,
+        const Locale('ar'),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.text('اسحب أفقيًا لاستعراض المشاريع'), findsOneWidget);
+      expect(
+        Directionality.of(tester.element(find.byKey(
+          const Key('projects_horizontal_list'),
+        ))),
+        TextDirection.rtl,
+      );
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets(

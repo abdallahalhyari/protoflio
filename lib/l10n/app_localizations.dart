@@ -2938,6 +2938,12 @@ abstract class AppLocalizations {
   /// **'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.'**
   String get aboutStoryShort;
 
+  /// No description provided for @projectSwipeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe horizontally to browse projects'**
+  String get projectSwipeHint;
+
   /// No description provided for @engTabArchitectures.
   ///
   /// In en, this message translates to:

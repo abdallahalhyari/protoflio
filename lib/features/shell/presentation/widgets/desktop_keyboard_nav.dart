@@ -58,21 +58,21 @@ class DesktopKeyboardNav extends StatelessWidget {
       return KeyEventResult.handled;
     }
 
-    // Section Mnemonic Hotkeys: W, E, X, S, H, C
+    // Section mnemonic hotkeys follow the desktop navigation order.
     if (k == LogicalKeyboardKey.keyW && pageCount > 1) {
       onGoTo(1); // Selected Work / Projects
       return KeyEventResult.handled;
     }
-    if (k == LogicalKeyboardKey.keyE && pageCount > 2) {
-      onGoTo(2); // Engineering
+    if (k == LogicalKeyboardKey.keyE && pageCount > 4) {
+      onGoTo(4); // Engineering
       return KeyEventResult.handled;
     }
-    if (k == LogicalKeyboardKey.keyX && pageCount > 3) {
-      onGoTo(3); // Experience
+    if (k == LogicalKeyboardKey.keyX && pageCount > 2) {
+      onGoTo(2); // Experience
       return KeyEventResult.handled;
     }
-    if (k == LogicalKeyboardKey.keyS && pageCount > 4) {
-      onGoTo(4); // Skills & Stack
+    if (k == LogicalKeyboardKey.keyS && pageCount > 3) {
+      onGoTo(3); // Skills & Stack
       return KeyEventResult.handled;
     }
     if (k == LogicalKeyboardKey.keyH && pageCount > 5) {

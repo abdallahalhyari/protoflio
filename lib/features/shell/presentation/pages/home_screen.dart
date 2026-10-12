@@ -42,6 +42,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static const int _pageCount = 6;
+  static const int _mobilePageCount = 7;
 
   // Hashes look like `home`, `work`, or `work/nathealth`.
   // Return the section slug (`home`, `work`, ...) or null when malformed.
@@ -63,11 +64,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late final PageController _controller;
   late final ScrollController _mobileScrollController;
-  final List<GlobalKey> _sectionKeys = List.generate(6, (_) => GlobalKey());
+  final List<GlobalKey> _sectionKeys =
+      List.generate(_mobilePageCount, (_) => GlobalKey());
   final ValueNotifier<bool> _showScrollToTop = ValueNotifier<bool>(false);
   final FocusNode _focusNode = FocusNode();
   final ValueNotifier<int> _pageIndex = ValueNotifier<int>(0);
   bool _imagesPrecached = false;
+  bool? _lastDesktopLayout;
   Timer? _settleTimer;
   // ValueNotifiers (not plain fields) so DesktopScrollInterceptor reads the
   // live value from its event handler — HomeScreen itself never calls
@@ -77,16 +80,16 @@ class _HomeScreenState extends State<HomeScreen> {
   int _turnId = 0;
   void Function()? _cancelHashListener;
 
-  late final HomeController _homeController = HomeController(
-    pageIndex: _pageIndex,
-    showScrollToTop: _showScrollToTop,
-    pageCount: _pageCount,
-    goTo: _goTo,
-    next: _next,
-    prev: _prev,
-    scrollToMobileSection: _scrollToMobileSection,
-    downloadResume: _downloadResume,
-  );
+  HomeController get _homeController => HomeController(
+        pageIndex: _pageIndex,
+        showScrollToTop: _showScrollToTop,
+        pageCount: _activePageCount,
+        goTo: _goTo,
+        next: _next,
+        prev: _prev,
+        scrollToMobileSection: _scrollToMobileSection,
+        downloadResume: _downloadResume,
+      );
 
   @override
   void initState() {
@@ -98,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (initialSection != null) {
       _pageIndex.value = UrlSyncService.instance
           .hashToIndex(initialSection)
-          .clamp(0, _pageCount - 1);
+          .clamp(0, _mobilePageCount - 1);
       if (initialSection == 'perspectives' || initialSection == 'about') {
         aboutTabRequest.value = AboutTabs.profile;
       } else if (initialSection == 'contact') {
@@ -140,7 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
         CaseStudyRouter.push(context, initialSlug);
       });
     }
-    _controller = PageController(initialPage: _pageIndex.value);
+    _controller = PageController(
+      initialPage: _pageIndex.value.clamp(0, _pageCount - 1),
+    );
     _controller.addListener(_onScroll);
 
     _mobileScrollController = ScrollController();
@@ -172,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         final target = UrlSyncService.instance
             .hashToIndex(section)
-            .clamp(0, _pageCount - 1);
+            .clamp(0, _activePageCount - 1);
         if (target != _pageIndex.value && mounted) {
           _goTo(target, syncUrl: false);
         }
@@ -181,8 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (_pageIndex.value > 0) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted &&
-            MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
+        if (mounted && !AppBreakpoints.isDesktop(context)) {
           _scrollToMobileSection(_pageIndex.value, syncUrl: false);
         }
       });
@@ -202,8 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!mounted) return;
       final current = _pageIndex.value;
       final loaders = <(int, Future<void> Function())>[
-        (1, experience_lib.loadLibrary),
-        (2, projects_lib.loadLibrary),
+        (1, projects_lib.loadLibrary),
+        (2, experience_lib.loadLibrary),
         (3, skills_lib.loadLibrary),
         (4, engineering_lib.loadLibrary),
         (5, contact_lib.loadLibrary),
@@ -221,6 +225,36 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    final isDesktop = AppBreakpoints.isDesktop(context);
+    if (_lastDesktopLayout != isDesktop) {
+      final previousLayout = _lastDesktopLayout;
+      _lastDesktopLayout = isDesktop;
+      if (isDesktop) {
+        if (_pageIndex.value >= _pageCount) {
+          _pageIndex.value = _pageCount - 1;
+        }
+        if (previousLayout != null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted && _controller.hasClients) {
+              _controller.jumpToPage(_pageIndex.value);
+            }
+          });
+        }
+      } else {
+        if (_pageIndex.value == _pageCount - 1 &&
+            aboutTabRequest.value != AboutTabs.profile) {
+          _pageIndex.value = _mobilePageCount - 1;
+        }
+        if (previousLayout != null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              _scrollToMobileSection(_pageIndex.value, syncUrl: false);
+            }
+          });
+        }
+      }
+    }
 
     if (_imagesPrecached) return;
     _imagesPrecached = true;
@@ -242,11 +276,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   static const String _lastSectionKey = 'lastSection';
+  static const String _lastSectionHashKey = 'lastSectionHash';
 
   Future<void> _rememberSection(int page) async {
     try {
+      final mobileLayout = !AppBreakpoints.isDesktop(context);
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt(_lastSectionKey, page);
+      await prefs.setString(
+        _lastSectionHashKey,
+        UrlSyncService.instance.indexToHash(page, mobileLayout: mobileLayout),
+      );
+      await prefs.remove(_lastSectionKey);
     } catch (_) {}
   }
 
@@ -254,17 +294,38 @@ class _HomeScreenState extends State<HomeScreen> {
     int? saved;
     try {
       final prefs = await SharedPreferences.getInstance();
-      saved = prefs.getInt(_lastSectionKey);
+      if (!mounted) return;
+      final savedHash = prefs.getString(_lastSectionHashKey);
+      if (savedHash != null) {
+        saved = UrlSyncService.instance.hashToIndex(savedHash);
+      } else {
+        saved = prefs.getInt(_lastSectionKey);
+      }
+      if (saved != null && savedHash == null) {
+        final isMobile = !AppBreakpoints.isDesktop(context);
+        saved = switch (saved) {
+          2 => 4,
+          3 => 2,
+          4 => 3,
+          5 => isMobile ? 6 : 5,
+          _ => saved,
+        };
+        await prefs.setString(
+          _lastSectionHashKey,
+          UrlSyncService.instance.indexToHash(saved, mobileLayout: isMobile),
+        );
+        await prefs.remove(_lastSectionKey);
+      }
     } catch (_) {
       return;
     }
-    if (saved == null || saved <= 0 || saved >= _pageCount) return;
+    if (saved == null || saved <= 0) return;
     // Let the cover paint first; the offer shouldn't be the first thing.
     await Future<void>.delayed(AppMotion.ambient);
     if (!mounted || _pageIndex.value != 0 || CaseStudyRouter.hasOpen) return;
     final labels = TopNav.getLabels(context);
     final l10n = AppLocalizations.of(context)!;
-    final target = saved;
+    final target = saved.clamp(1, _activePageCount - 1);
     AppToast.show(
       context,
       message: l10n.welcomeBack(labels[target]),
@@ -289,7 +350,10 @@ class _HomeScreenState extends State<HomeScreen> {
     _settleTimer?.cancel();
     _settleTimer = Timer(AppMotion.sm, () {
       if (!mounted) return;
-      final hash = UrlSyncService.instance.indexToHash(page);
+      final hash = UrlSyncService.instance.indexToHash(
+        page,
+        mobileLayout: !AppBreakpoints.isDesktop(context),
+      );
       // A case study owns the URL while open; replacing it would clobber
       // the `#work/<slug>` entry Back relies on.
       if (!CaseStudyRouter.hasOpen) UrlSyncService.instance.updateHash(hash);
@@ -385,7 +449,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _scrollToMobileSection(int index, {bool syncUrl = true}) {
-    final target = index.clamp(0, _pageCount - 1);
+    final target = index.clamp(0, _mobilePageCount - 1);
     _pageIndex.value = target;
     // Hand keys back to section navigation; a page with its own shortcuts
     // reclaims focus once it becomes active (see ActivePageFocusMixin).
@@ -494,9 +558,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _goTo(int page, {bool syncUrl = true}) {
-    final target = page.clamp(0, _pageCount - 1);
+    final target = page.clamp(0, _activePageCount - 1);
     if (target == _pageIndex.value) return;
-    if (mounted && MediaQuery.sizeOf(context).width < AppBreakpoints.tablet) {
+    if (mounted && !AppBreakpoints.isDesktop(context)) {
       _scrollToMobileSection(target, syncUrl: syncUrl);
       return;
     }
@@ -572,6 +636,9 @@ class _HomeScreenState extends State<HomeScreen> {
     showShortcutHelpDialog(context);
   }
 
+  int get _activePageCount =>
+      AppBreakpoints.isDesktop(context) ? _pageCount : _mobilePageCount;
+
   @override
   Widget build(BuildContext context) {
     final isDesktop = AppBreakpoints.isDesktop(context);
@@ -582,7 +649,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         body: DesktopKeyboardNav(
           focusNode: _focusNode,
-          pageCount: _pageCount,
+          pageCount: isDesktop ? _pageCount : _mobilePageCount,
           onNext: _next,
           onPrev: _prev,
           onGoTo: _goTo,
@@ -628,23 +695,23 @@ class _HomeScreenState extends State<HomeScreen> {
       case 2:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
-          loader: engineering_lib.loadLibrary,
-          builder: () => engineering_lib.EngineeringPage(),
+          loader: experience_lib.loadLibrary,
+          builder: () => experience_lib.ExperiencePage(
+            controller: _controller,
+            pageIndex: 2,
+          ),
         );
       case 3:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
-          loader: experience_lib.loadLibrary,
-          builder: () => experience_lib.ExperiencePage(
-            controller: _controller,
-            pageIndex: 3,
-          ),
+          loader: skills_lib.loadLibrary,
+          builder: () => skills_lib.SkillsPage(),
         );
       case 4:
         return DeferredPage(
           mountPriority: (index - _pageIndex.value).abs(),
-          loader: skills_lib.loadLibrary,
-          builder: () => skills_lib.SkillsPage(),
+          loader: engineering_lib.loadLibrary,
+          builder: () => engineering_lib.EngineeringPage(),
         );
       case 5:
         return DeferredPage(

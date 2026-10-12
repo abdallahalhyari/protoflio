@@ -31,9 +31,9 @@ void main() {
         HomeController.of(tester.element(find.byType(MobilePager)));
 
     final cases = <int, Type>{
-      4: SkillsHeader,
-      5: ContactHeader,
-      3: ExperienceHeader,
+      3: SkillsHeader,
+      6: ContactHeader,
+      2: ExperienceHeader,
     };
     for (final entry in cases.entries) {
       controller.scrollToMobileSection(entry.key);

@@ -58,12 +58,15 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.smd),
-                _shortcutRow(scheme, _keyText(scheme, '1–7'),
+                _shortcutRow(
+                    scheme,
+                    _keyText(
+                        scheme, AppBreakpoints.isDesktop(ctx) ? '1–6' : '1–7'),
                     _withoutKey(l10n.keyboardHintDigits, '1–7')),
-                _shortcutRow(scheme, _keyText(scheme, 'W/E/X'),
-                    'Jump to Work / Engineering / Experience'),
+                _shortcutRow(scheme, _keyText(scheme, 'W/X/E'),
+                    'Jump to Work / Experience / Engineering'),
                 _shortcutRow(scheme, _keyText(scheme, 'S/H/C'),
-                    'Jump to Skills / Hats / Contact'),
+                    'Jump to Skills / Perspectives / Contact'),
                 // Icons, not '↑ ↓': Roboto has no arrow glyphs, so the text pulled
                 // a 68 KB Noto Sans Symbols fallback font at runtime.
                 _shortcutRow(

@@ -494,6 +494,7 @@
   "engSwipeHint": "Přejetím nebo klepnutím přepnete plány ({current} z {total})",
   "engTryDemos": "Vyzkoušejte ukázky NFC, kryptografie a synchronizace",
   "aboutStoryShort": "V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.",
+  "projectSwipeHint": "Přejetím do strany procházejte projekty",
   "engTabArchitectures": "Architektury",
   "engTabCapabilities": "Schopnosti"
 }

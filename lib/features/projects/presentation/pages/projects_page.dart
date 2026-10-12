@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -17,6 +18,7 @@ import 'package:profile/shared/utils/grid_math.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/shared/widgets/section_masthead.dart';
 import 'package:profile/features/projects/presentation/widgets/projects_empty_state.dart';
+import 'package:profile/shared/widgets/swipe_affordance.dart';
 
 class ProjectsPage extends StatelessWidget {
   final bool isContinuousMobile;
@@ -86,6 +88,25 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     _keyboardFocusNode.dispose();
     _workScrollController.dispose();
     super.dispose();
+  }
+
+  void _handleWorkScrollSignal(PointerSignalEvent event) {
+    if (event is! PointerScrollEvent || !_workScrollController.hasClients) {
+      return;
+    }
+
+    final delta = event.scrollDelta.dx.abs() > event.scrollDelta.dy.abs()
+        ? event.scrollDelta.dx
+        : event.scrollDelta.dy;
+    if (delta == 0) return;
+
+    final position = _workScrollController.position;
+    _workScrollController.jumpTo(
+      (position.pixels + delta).clamp(
+        position.minScrollExtent,
+        position.maxScrollExtent,
+      ),
+    );
   }
 
   @override
@@ -211,61 +232,74 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                                   .clamp(290.0, 480.0)
                               : itemWidth;
 
-                      if (isDesktop) {
-                        return SizedBox(
-                          height: itemHeight,
-                          child: Scrollbar(
-                            controller: _workScrollController,
-                            thumbVisibility: true,
-                            interactive: true,
-                            child: ListView.separated(
-                              key: const Key('projects_horizontal_list'),
-                              controller: _workScrollController,
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.md,
-                              ),
-                              itemCount: filteredProjects.length,
-                              separatorBuilder: (_, __) =>
-                                  const SizedBox(width: spacing),
-                              itemBuilder: (context, i) => SizedBox(
-                                width: itemWidth,
-                                child: _buildProjectItem(
-                                  project: filteredProjects[i],
-                                  index: i,
-                                  scheme: scheme,
-                                  isDesktop: isDesktop,
-                                  selectedTech: selectedTech,
+                      final projectsList = SizedBox(
+                        height: itemHeight,
+                        child: isDesktop
+                            ? Scrollbar(
+                                controller: _workScrollController,
+                                thumbVisibility: true,
+                                interactive: true,
+                                child: Listener(
+                                  onPointerSignal: _handleWorkScrollSignal,
+                                  child: ListView.separated(
+                                    key: const Key('projects_horizontal_list'),
+                                    controller: _workScrollController,
+                                    scrollDirection: Axis.horizontal,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: AppSpacing.md,
+                                    ),
+                                    itemCount: filteredProjects.length,
+                                    separatorBuilder: (_, __) =>
+                                        const SizedBox(width: spacing),
+                                    itemBuilder: (context, i) => SizedBox(
+                                      width: itemWidth,
+                                      child: _buildProjectItem(
+                                        project: filteredProjects[i],
+                                        index: i,
+                                        scheme: scheme,
+                                        isDesktop: isDesktop,
+                                        selectedTech: selectedTech,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : ListView.separated(
+                                key: const Key('projects_horizontal_list'),
+                                scrollDirection: Axis.horizontal,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.md,
+                                ),
+                                clipBehavior: Clip.none,
+                                itemCount: filteredProjects.length,
+                                separatorBuilder: (_, __) =>
+                                    const SizedBox(width: spacing),
+                                itemBuilder: (context, i) => SizedBox(
+                                  width: mobileCardWidth,
+                                  child: _buildProjectItem(
+                                    project: filteredProjects[i],
+                                    index: i,
+                                    scheme: scheme,
+                                    isDesktop: isDesktop,
+                                    selectedTech: selectedTech,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      }
+                      );
 
-                      return SizedBox(
-                        height: itemHeight,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.md),
-                          clipBehavior: Clip.none,
-                          itemCount: filteredProjects.length,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: spacing),
-                          itemBuilder: (context, i) {
-                            return SizedBox(
-                              width: mobileCardWidth,
-                              child: _buildProjectItem(
-                                project: filteredProjects[i],
-                                index: i,
-                                scheme: scheme,
-                                isDesktop: isDesktop,
-                                selectedTech: selectedTech,
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (!isDesktop && filteredProjects.length > 1) ...[
+                            SwipeAffordance(
+                              label: loc.projectSwipeHint,
+                              margin: const EdgeInsets.only(
+                                bottom: AppSpacing.sm,
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          ],
+                          projectsList,
+                        ],
                       );
                     },
                   );

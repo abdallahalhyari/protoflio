@@ -8,10 +8,10 @@ abstract class UrlSyncService {
   static const List<String> sectionHashes = [
     'home',
     'work',
-    'engineering',
     'experience',
     'stack',
-    'about',
+    'engineering',
+    'perspectives',
     'contact',
   ];
 
@@ -27,12 +27,12 @@ abstract class UrlSyncService {
       case 'projects':
         return 1;
       case 'engineering':
-        return 2;
+        return 4;
       case 'experience':
-        return 3;
+        return 2;
       case 'stack':
       case 'skills':
-        return 4;
+        return 3;
       case 'about':
       case 'perspectives':
         return 5;
@@ -44,7 +44,8 @@ abstract class UrlSyncService {
     }
   }
 
-  String indexToHash(int index) {
+  String indexToHash(int index, {bool mobileLayout = true}) {
+    if (index == 5 && !mobileLayout) return 'contact';
     if (index >= 0 && index < sectionHashes.length) {
       return sectionHashes[index];
     }

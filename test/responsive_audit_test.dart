@@ -306,8 +306,6 @@ void main() {
       expect(find.text('Engineering'), findsOneWidget);
     });
 
-
-
     testWidgets('ContactPage renders cleanly on compact 320x568',
         (tester) async {
       _setViewport(tester, compactSize);

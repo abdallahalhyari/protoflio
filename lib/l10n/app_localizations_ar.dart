@@ -1600,6 +1600,9 @@ class AppLocalizationsAr extends AppLocalizations {
       'بدأت في تطبيقات الهواتف عام 2021. ومنذ ذلك الحين ينتقل عملي باستمرار إلى أسفل الطبقات، من الشاشات إلى طبقات النظام الأصلي والأمان والمزامنة تحتها. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.';
 
   @override
+  String get projectSwipeHint => 'اسحب أفقيًا لاستعراض المشاريع';
+
+  @override
   String get engTabArchitectures => 'البُنى المعمارية';
 
   @override

@@ -272,7 +272,7 @@ class _AboutContactPageState extends State<AboutContactPage>
         ),
         const SizedBox(height: 10),
         Text(
-          '11+ years architecting production Flutter & native Android systems across healthcare, HIS/LMS, and telematics. Specializing in NFC smart-card APDU protocols, zero-loss offline sync, and zero-trust JWT security.',
+          '${CareerFacts.yearsOfExperience()}+ years architecting production Flutter & native Android systems across healthcare, HIS/LMS, and telematics. Specializing in NFC smart-card APDU protocols, zero-loss offline sync, and zero-trust JWT security.',
           textAlign: isDesktop ? TextAlign.start : TextAlign.center,
           style: TextStyle(
             fontSize: AppTypography.body,

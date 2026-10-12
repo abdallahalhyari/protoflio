@@ -5,6 +5,8 @@ import 'package:profile/core/services/cv_service.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/contact/presentation/pages/contact_page.dart'
     deferred as contact_lib;
+import 'package:profile/features/about/presentation/pages/about_page.dart'
+    deferred as about_lib;
 import 'package:profile/features/engineering/presentation/pages/engineering_page.dart'
     deferred as engineering_lib;
 import 'package:profile/features/experience/presentation/pages/experience_page.dart'
@@ -73,7 +75,7 @@ class MobileHomeLayout extends StatelessWidget {
                   onScrollDown: () => controller.scrollToMobileSection(1),
                   onViewWork: () => controller.scrollToMobileSection(1),
                   onDownloadResume: () => CvService.open(context),
-                  onContactMe: () => controller.scrollToMobileSection(5),
+                  onContactMe: () => controller.scrollToMobileSection(6),
                   isContinuousMobile: true,
                 ),
               ),
@@ -111,34 +113,27 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: DeferredPage(
                     mountPriority: 2,
-                    loader: engineering_lib.loadLibrary,
-                    builder: () => engineering_lib.EngineeringPage(
-                        isContinuousMobile: true),
+                    loader: experience_lib.loadLibrary,
+                    builder: () =>
+                        experience_lib.ExperiencePage(isContinuousMobile: true),
                   ),
                 ),
               ),
             ),
             MobileSectionDivider(number: '04', title: _dividerLabel(labels, 3)),
-            // Key outside DeferredMount: the jump target must exist (and
-            // have a position) even while the section is a placeholder.
             KeyedSubtree(
               key: sectionKeys[3],
               child: DeferredMount(
                 sectionIndex: 3,
                 placeholderHeight: 720,
-                // Build the section ahead of the reader right away and the
-                // rest once the intro has settled, one per frame, instead of
-                // all seven while a phone is still loading the page.
                 distance: 1,
                 mountWhenIdleAfter: AppMotion.idleMount,
                 child: RepaintBoundary(
                   child: DeferredPage(
-                    // Top to bottom, one per frame: the first frame shows the
-                    // cover instead of waiting for every section to build.
                     mountPriority: 3,
-                    loader: experience_lib.loadLibrary,
+                    loader: skills_lib.loadLibrary,
                     builder: () =>
-                        experience_lib.ExperiencePage(isContinuousMobile: true),
+                        skills_lib.SkillsPage(isContinuousMobile: true),
                   ),
                 ),
               ),
@@ -154,9 +149,9 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: DeferredPage(
                     mountPriority: 4,
-                    loader: skills_lib.loadLibrary,
-                    builder: () =>
-                        skills_lib.SkillsPage(isContinuousMobile: true),
+                    loader: engineering_lib.loadLibrary,
+                    builder: () => engineering_lib.EngineeringPage(
+                        isContinuousMobile: true),
                   ),
                 ),
               ),
@@ -172,6 +167,24 @@ class MobileHomeLayout extends StatelessWidget {
                 child: RepaintBoundary(
                   child: DeferredPage(
                     mountPriority: 5,
+                    loader: about_lib.loadLibrary,
+                    builder: () =>
+                        about_lib.AboutPage(isContinuousMobile: true),
+                  ),
+                ),
+              ),
+            ),
+            MobileSectionDivider(number: '07', title: _dividerLabel(labels, 6)),
+            KeyedSubtree(
+              key: sectionKeys[6],
+              child: DeferredMount(
+                sectionIndex: 6,
+                placeholderHeight: 720,
+                distance: 1,
+                mountWhenIdleAfter: AppMotion.idleMount,
+                child: RepaintBoundary(
+                  child: DeferredPage(
+                    mountPriority: 6,
                     loader: contact_lib.loadLibrary,
                     builder: () =>
                         contact_lib.ContactPage(isContinuousMobile: true),
