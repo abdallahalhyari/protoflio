@@ -6,9 +6,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'package:profile/app/bootstrap.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
-import 'package:profile/core/bloc/locale/locale_state.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
-import 'package:profile/core/bloc/theme/theme_state.dart';
 import 'package:profile/features/contact/domain/repositories/contact_repository.dart';
 import 'package:profile/features/engineering/domain/repositories/architecture_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
@@ -132,43 +130,41 @@ class PortfolioApp extends StatelessWidget {
             create: (_) => LocaleBloc(initialLocale: initialLocale),
           ),
         ],
-        child: BlocBuilder<LocaleBloc, LocaleState>(
-          builder: (context, localeState) {
-            return BlocBuilder<ThemeBloc, ThemeState>(
-              buildWhen: (previous, current) => previous.mode != current.mode,
-              builder: (context, themeState) {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  scrollBehavior: const _SmoothScrollBehavior(),
-                  title:
-                      'Abdallah Alhyari — Mobile Engineer: Flutter, Android, NFC',
-                  themeMode: themeState.mode,
-                  theme: AppTheme.light(),
-                  darkTheme: AppTheme.dark(),
-                  themeAnimationDuration: AppMotion.heroEntry,
-                  themeAnimationCurve: AppMotion.standard,
-                  locale: localeState.locale,
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  builder: (context, child) {
-                    final media = MediaQuery.of(context);
-                    return MediaQuery(
-                      data: media.copyWith(
-                        textScaler: AppMedia.clampTextScale(media.textScaler),
-                      ),
-                      // Above the Navigator, so dialogs and case-study
-                      // routes get the keyboard focus ring too.
-                      child: KeyboardFocusRing(child: child!),
-                    );
-                  },
-                  home: const HomeScreen(),
+        child: Builder(
+          builder: (context) {
+            final locale = context.select((LocaleBloc b) => b.state.locale);
+            final themeMode = context.select((ThemeBloc b) => b.state.mode);
+
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              scrollBehavior: const _SmoothScrollBehavior(),
+              title:
+                  'Abdallah Alhyari — Mobile Engineer: Flutter, Android, NFC',
+              themeMode: themeMode,
+              theme: AppTheme.light(),
+              darkTheme: AppTheme.dark(),
+              themeAnimationDuration: AppMotion.heroEntry,
+              themeAnimationCurve: AppMotion.standard,
+              locale: locale,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              builder: (context, child) {
+                final media = MediaQuery.of(context);
+                return MediaQuery(
+                  data: media.copyWith(
+                    textScaler: AppMedia.clampTextScale(media.textScaler),
+                  ),
+                  // Above the Navigator, so dialogs and case-study
+                  // routes get the keyboard focus ring too.
+                  child: KeyboardFocusRing(child: child!),
                 );
               },
+              home: const HomeScreen(),
             );
           },
         ),
