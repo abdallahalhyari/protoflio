@@ -83,6 +83,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get closeTooltip => 'إغلاق';
 
   @override
+  String get shortcutJumpPrimary => 'الانتقال إلى الأعمال / الخبرة / الهندسة';
+
+  @override
+  String get shortcutJumpSecondary =>
+      'الانتقال إلى المهارات / المنظورات / التواصل';
+
+  @override
+  String get shortcutToggleTheme => 'تبديل نمط السمة';
+
+  @override
+  String get shortcutToggleAudio => 'كتم / إلغاء كتم الصوت';
+
+  @override
+  String get shortcutViewCv => 'عرض السيرة الذاتية';
+
+  @override
   String get showHelpShortcut => 'عرض هذه المساعدة';
 
   @override

@@ -84,6 +84,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get closeTooltip => 'Close';
 
   @override
+  String get shortcutJumpPrimary => 'Jump to Work / Experience / Engineering';
+
+  @override
+  String get shortcutJumpSecondary => 'Jump to Skills / Perspectives / Contact';
+
+  @override
+  String get shortcutToggleTheme => 'Toggle theme mode';
+
+  @override
+  String get shortcutToggleAudio => 'Mute / unmute audio';
+
+  @override
+  String get shortcutViewCv => 'View CV';
+
+  @override
   String get showHelpShortcut => 'Show this help';
 
   @override

@@ -244,6 +244,36 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get closeTooltip;
 
+  /// No description provided for @shortcutJumpPrimary.
+  ///
+  /// In en, this message translates to:
+  /// **'Jump to Work / Experience / Engineering'**
+  String get shortcutJumpPrimary;
+
+  /// No description provided for @shortcutJumpSecondary.
+  ///
+  /// In en, this message translates to:
+  /// **'Jump to Skills / Perspectives / Contact'**
+  String get shortcutJumpSecondary;
+
+  /// No description provided for @shortcutToggleTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle theme mode'**
+  String get shortcutToggleTheme;
+
+  /// No description provided for @shortcutToggleAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Mute / unmute audio'**
+  String get shortcutToggleAudio;
+
+  /// No description provided for @shortcutViewCv.
+  ///
+  /// In en, this message translates to:
+  /// **'View CV'**
+  String get shortcutViewCv;
+
   /// No description provided for @showHelpShortcut.
   ///
   /// In en, this message translates to:

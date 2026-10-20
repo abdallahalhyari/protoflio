@@ -84,6 +84,23 @@ class AppLocalizationsCs extends AppLocalizations {
   String get closeTooltip => 'Zavřít';
 
   @override
+  String get shortcutJumpPrimary =>
+      'Přejít na Práci / Zkušenosti / Inženýrství';
+
+  @override
+  String get shortcutJumpSecondary =>
+      'Přejít na Dovednosti / Perspektivy / Kontakt';
+
+  @override
+  String get shortcutToggleTheme => 'Přepnout režim motivu';
+
+  @override
+  String get shortcutToggleAudio => 'Ztlumit / zapnout zvuk';
+
+  @override
+  String get shortcutViewCv => 'Zobrazit životopis';
+
+  @override
   String get showHelpShortcut => 'Zobrazit tuto nápovědu';
 
   @override
