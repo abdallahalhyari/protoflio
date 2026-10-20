@@ -851,7 +851,11 @@ class _HoverGlassCardState extends State<_HoverGlassCard> {
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedContainer(
-        duration: AppMotion.cardHover,
+        // Hover still changes the border and lift; with reduced motion it
+        // just snaps instead of easing.
+        duration: AppMedia.reduceMotion(context)
+            ? Duration.zero
+            : AppMotion.cardHover,
         curve: AppMotion.emphasized,
         padding: widget.padding,
         decoration: BoxDecoration(

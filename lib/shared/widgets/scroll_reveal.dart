@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
 
 /// Animates its child with a fade + upward slide when it first enters the
-/// viewport. One-shot: once revealed, the wrapper is eliminated and the child
-/// renders directly.
+/// viewport. One-shot; the wrapper stays in place afterwards (pinned at full
+/// opacity) so the child's subtree is never remounted.
 ///
 /// Uses the nearest [Scrollable] ancestor to detect scroll position changes.
-/// Falls back to a simple delayed entrance when no scrollable is found (e.g.,
-/// inside a desktop paged layout where each section fills the full viewport).
+/// With no scrollable ancestor it plays on the first frame, so content can
+/// never get stranded invisible.
 ///
-/// Respects [AppMedia.reduceMotion]: shows the child instantly.
+/// Unrevealed content stays in the semantics tree. Respects
+/// [AppMedia.reduceMotion]: shows the child instantly.
 class ScrollReveal extends StatefulWidget {
   final Widget child;
 
@@ -94,6 +95,14 @@ class _ScrollRevealState extends State<ScrollReveal>
 
   void _check() {
     if (_revealed || !mounted) return;
+
+    // No scrollable ancestor: nothing will ever scroll this into view, so
+    // play the entrance now rather than leave it hidden.
+    if (_scroll == null) {
+      _reveal();
+      return;
+    }
+
     final box = context.findRenderObject() as RenderBox?;
     if (box == null || !box.hasSize || !box.attached) return;
 
@@ -102,30 +111,40 @@ class _ScrollRevealState extends State<ScrollReveal>
 
     // Trigger when the widget's top enters the bottom 92% of the viewport.
     if (position.dy < viewHeight * 0.92 && position.dy + box.size.height > 0) {
-      _revealed = true;
-      _scroll?.removeListener(_check);
-      if (widget.delay > Duration.zero) {
-        Future.delayed(widget.delay, () {
-          if (mounted) _anim.forward();
-        });
-      } else {
-        _anim.forward();
-      }
+      _reveal();
+    }
+  }
+
+  void _reveal() {
+    _revealed = true;
+    _scroll?.removeListener(_check);
+    if (widget.delay > Duration.zero) {
+      Future.delayed(widget.delay, () {
+        if (mounted) _anim.forward();
+      });
+    } else {
+      _anim.forward();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (AppMedia.reduceMotion(context)) return widget.child;
-    // Once done, drop the wrapper entirely.
-    if (_anim.isCompleted) return widget.child;
+    final reduce = AppMedia.reduceMotion(context);
 
+    // The tree shape stays identical in every phase (before, during, after,
+    // reduced motion). Returning the bare child once done would change the
+    // element structure above it, so the next parent rebuild would remount
+    // the subtree and drop its state.
     return AnimatedBuilder(
       animation: _anim,
       builder: (context, child) {
-        final t = widget.curve.transform(_anim.value);
+        final t =
+            reduce ? 1.0 : widget.curve.transform(_anim.value).clamp(0.0, 1.0);
         return Opacity(
-          opacity: t.clamp(0.0, 1.0),
+          opacity: t,
+          // Keep unrevealed content in the semantics tree: screen-reader
+          // users move through the page without scrolling it into view.
+          alwaysIncludeSemantics: true,
           child: Transform.translate(
             offset: Offset(0, widget.slideOffset * (1 - t)),
             child: child,

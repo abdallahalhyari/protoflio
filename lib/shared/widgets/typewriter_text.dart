@@ -122,53 +122,76 @@ class _TypewriterTextState extends State<TypewriterText>
       );
     }
 
-    return AnimatedBuilder(
-      animation: Listenable.merge([_typing, _cursor]),
-      builder: (context, _) {
-        final length = widget.text.length;
-        final chars = (_typing.value * length).round().clamp(0, length);
-        final visible = widget.text.substring(0, chars);
-        final showCursor = _started;
-        final cursorAlpha = showCursor ? _cursor.value : 0.0;
-        final accent = widget.cursorColor ??
-            widget.style?.color ??
-            Theme.of(context).colorScheme.primary;
+    final accent = widget.cursorColor ??
+        widget.style?.color ??
+        Theme.of(context).colorScheme.primary;
+    final fontSize = widget.style?.fontSize ??
+        DefaultTextStyle.of(context).style.fontSize ??
+        AppTypography.body;
 
-        // Stack: invisible full text reserves space; visible typed text
-        // overlays it so the layout never jumps as lines wrap.
-        return Stack(
-          children: [
-            Visibility(
-              visible: false,
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              child: Text(
-                widget.text,
-                style: widget.style,
-                textAlign: widget.textAlign,
-              ),
-            ),
-            Text.rich(
-              TextSpan(
-                text: visible,
-                children: [
-                  if (showCursor)
-                    TextSpan(
-                      text: '▎',
-                      style: TextStyle(
-                        color: accent.withValues(alpha: cursorAlpha * 0.85),
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                ],
-              ),
-              style: widget.style,
-              textAlign: widget.textAlign,
-            ),
-          ],
-        );
-      },
+    // Screen readers get the whole sentence once; the frame-by-frame typed
+    // prefix and the cursor stay out of the semantics tree.
+    return Semantics(
+      label: widget.text,
+      child: ExcludeSemantics(
+        child: AnimatedBuilder(
+          animation: Listenable.merge([_typing, _cursor]),
+          builder: (context, _) {
+            final length = widget.text.length;
+            final chars = (_typing.value * length).round().clamp(0, length);
+            final visible = widget.text.substring(0, chars);
+            final cursorAlpha = _started ? _cursor.value : 0.0;
+
+            // Stack: invisible full text reserves space; visible typed text
+            // overlays it so the layout never jumps as lines wrap.
+            return Stack(
+              children: [
+                Visibility(
+                  visible: false,
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  child: Text(
+                    widget.text,
+                    style: widget.style,
+                    textAlign: widget.textAlign,
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    text: visible,
+                    children: [
+                      // The cursor is a painted bar, not a glyph: no bundled
+                      // font has a block character, and on web a missing
+                      // glyph downloads a Noto fallback font at first paint.
+                      if (_started)
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.only(
+                              start: fontSize * 0.08,
+                            ),
+                            child: SizedBox(
+                              width: (fontSize * 0.09).clamp(1.5, 3.0),
+                              height: fontSize * 0.95,
+                              child: ColoredBox(
+                                color: accent.withValues(
+                                  alpha: cursorAlpha * 0.85,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  style: widget.style,
+                  textAlign: widget.textAlign,
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }
