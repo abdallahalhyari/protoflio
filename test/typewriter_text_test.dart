@@ -51,7 +51,8 @@ void main() {
     expect(find.text('Senior Flutter Architect'), findsOneWidget);
   });
 
-  testWidgets('TypewriterText respects reduceMotion and renders full text instantly',
+  testWidgets(
+      'TypewriterText respects reduceMotion and renders full text instantly',
       (tester) async {
     final controller = AnimationController(
       vsync: const TestVSync(),

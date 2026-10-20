@@ -132,8 +132,8 @@ class _AboutContactPageState extends State<AboutContactPage>
 
             // Direct Email & Action Hero Card
             ScrollReveal(
-              child: _buildEmailHeroCard(
-                  context, isDesktop, isDark, accent, l10n),
+              child:
+                  _buildEmailHeroCard(context, isDesktop, isDark, accent, l10n),
             ),
             const SizedBox(height: AppSpacing.xl),
 

@@ -32,16 +32,13 @@ class ExperienceContinuousMobileList extends StatelessWidget {
           ),
           if (i < experiences.length - 1)
             ExperienceTimelineConnector(
-              isAdjacentSelected: state.selectedIndex == i ||
-                  state.selectedIndex == i + 1,
+              isAdjacentSelected:
+                  state.selectedIndex == i || state.selectedIndex == i + 1,
               isCurrent: experiences[i]
                       .period
                       .toLowerCase()
                       .contains('present') ||
-                  experiences[i + 1]
-                      .period
-                      .toLowerCase()
-                      .contains('present'),
+                  experiences[i + 1].period.toLowerCase().contains('present'),
             )
           else
             const SizedBox(height: AppSpacing.md),

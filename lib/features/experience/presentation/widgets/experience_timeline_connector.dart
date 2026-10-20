@@ -62,7 +62,8 @@ class ExperienceTimelineConnector extends StatelessWidget {
                   boxShadow: [
                     if (isAdjacentSelected)
                       BoxShadow(
-                        color: activeColor.withValues(alpha: isDark ? 0.5 : 0.35),
+                        color:
+                            activeColor.withValues(alpha: isDark ? 0.5 : 0.35),
                         blurRadius: 8,
                         spreadRadius: 1,
                       ),
