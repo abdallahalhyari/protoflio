@@ -22,6 +22,10 @@ class EdgeFadeScroller extends StatefulWidget {
 
 class _EdgeFadeScrollerState extends State<EdgeFadeScroller> {
   final ScrollController _controller = ScrollController();
+  // Keeps the scroller's Element + scroll offset alive when the ShaderMask
+  // wrapper is added or removed — moving a GlobalKey'd subtree preserves
+  // its State.
+  final GlobalKey _scrollerKey = GlobalKey();
   bool _fadeLeft = false;
   bool _fadeRight = false;
 
@@ -55,6 +59,18 @@ class _EdgeFadeScrollerState extends State<EdgeFadeScroller> {
 
   @override
   Widget build(BuildContext context) {
+    final scroller = SingleChildScrollView(
+      key: _scrollerKey,
+      controller: _controller,
+      scrollDirection: Axis.horizontal,
+      child: widget.child,
+    );
+
+    // ShaderMask forces a saveLayer every paint. Apply it only when an edge
+    // is actually fading; when the row fits (the common case for chip/tab
+    // rows that don't overflow) render the bare scroller and skip the layer.
+    final faded = _fadeLeft || _fadeRight;
+
     return NotificationListener<ScrollMetricsNotification>(
       // Content/viewport size changes (resize, filter toggles) don't scroll,
       // so re-evaluate the fades on metrics changes too.
@@ -62,28 +78,26 @@ class _EdgeFadeScrollerState extends State<EdgeFadeScroller> {
         WidgetsBinding.instance.addPostFrameCallback((_) => _recompute());
         return false;
       },
-      child: ShaderMask(
-        blendMode: BlendMode.dstIn,
-        shaderCallback: (rect) => LinearGradient(
-          colors: const [
-            Colors.transparent,
-            Colors.black,
-            Colors.black,
-            Colors.transparent,
-          ],
-          stops: [
-            0.0,
-            _fadeLeft ? widget.fraction : 0.0,
-            _fadeRight ? 1 - widget.fraction : 1.0,
-            1.0,
-          ],
-        ).createShader(rect),
-        child: SingleChildScrollView(
-          controller: _controller,
-          scrollDirection: Axis.horizontal,
-          child: widget.child,
-        ),
-      ),
+      child: faded
+          ? ShaderMask(
+              blendMode: BlendMode.dstIn,
+              shaderCallback: (rect) => LinearGradient(
+                colors: const [
+                  Colors.transparent,
+                  Colors.black,
+                  Colors.black,
+                  Colors.transparent,
+                ],
+                stops: [
+                  0.0,
+                  _fadeLeft ? widget.fraction : 0.0,
+                  _fadeRight ? 1 - widget.fraction : 1.0,
+                  1.0,
+                ],
+              ).createShader(rect),
+              child: scroller,
+            )
+          : scroller,
     );
   }
 }
