@@ -82,8 +82,7 @@ class CredentialsBentoCard extends StatelessWidget {
           child: RepaintBoundary(
             child: Builder(
               builder: (context) {
-                final lang =
-                    Localizations.maybeLocaleOf(context)?.languageCode;
+                final lang = Localizations.maybeLocaleOf(context)?.languageCode;
                 final l10n = AppLocalizations.of(context);
                 final eduTitle = lang == 'ar'
                     ? (l10n?.sectionEducation ?? 'التعليم')
@@ -124,8 +123,7 @@ class CredentialsBentoCard extends StatelessWidget {
                               .read<ExperienceRepository>()
                               .getEducation()
                               .map((edu) => Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10),
+                                    padding: const EdgeInsets.only(bottom: 10),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -190,8 +188,7 @@ class CredentialsBentoCard extends StatelessWidget {
                               .read<ExperienceRepository>()
                               .getCertifications()
                               .map((cert) => Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 8),
+                                    padding: const EdgeInsets.only(bottom: 8),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
