@@ -66,42 +66,55 @@ class _ExperienceCardState extends State<ExperienceCard> {
             width: double.infinity,
             decoration: BoxDecoration(
               color: active ? context.cardGlassHover : context.cardGlass,
-              borderRadius: BorderRadius.circular(AppRadius.md),
+              borderRadius: BorderRadius.circular(AppRadius.card),
               border: Border.all(
                 color: active
                     ? scheme.primary
-                        .withValues(alpha: widget.isSelected ? 0.75 : 0.45)
+                        .withValues(alpha: widget.isSelected ? 0.85 : 0.5)
                     : (isDark ? context.glassBorderStrong : AppColors.ink200),
                 width: widget.isSelected ? 1.5 : 1.0,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: active
+                      ? (_isCurrent ? AppColors.teal : scheme.primary)
+                          .withValues(alpha: isDark ? 0.16 : 0.08)
+                      : (isDark ? Colors.black26 : AppColors.shadowSoft),
+                  blurRadius: active ? 20 : 12,
+                  offset: Offset(0, active ? 8 : 4),
+                ),
+              ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              // The accent stripe is the start border, so it spans the card's
-              // natural height and mirrors under RTL. (A childless 3px box in
-              // a Row only had height inside the old fixed-height grid tile;
-              // in the phone list it collapsed to nothing.)
-              child: AnimatedContainer(
-                duration: AppMotion.cardHover,
-                decoration: BoxDecoration(
-                  border: BorderDirectional(
-                    start: BorderSide(
-                      width: 3,
-                      color: _isCurrent
-                          ? AppColors.teal
-                          : scheme.primary
-                              .withValues(alpha: active ? 0.65 : 0.3),
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AnimatedContainer(
+                      duration: AppMotion.cardHover,
+                      width: 4,
+                      decoration: BoxDecoration(
+                        color: _isCurrent
+                            ? AppColors.teal
+                            : scheme.primary
+                                .withValues(alpha: active ? 0.75 : 0.35),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(2),
+                          bottomLeft: Radius.circular(2),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                // Natural height everywhere: the list scrolls, the card
-                // never hides its own text behind an inner scroll.
-                child: CardContent(
-                  exp: widget.exp,
-                  scheme: scheme,
-                  isDesktop: widget.isDesktop,
-                  isCurrent: _isCurrent,
-                  isDark: isDark,
+                    Expanded(
+                      child: CardContent(
+                        exp: widget.exp,
+                        scheme: scheme,
+                        isDesktop: widget.isDesktop,
+                        isCurrent: _isCurrent,
+                        isDark: isDark,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

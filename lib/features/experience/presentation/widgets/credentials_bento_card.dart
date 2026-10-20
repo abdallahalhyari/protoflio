@@ -79,130 +79,158 @@ class CredentialsBentoCard extends StatelessWidget {
         child: Container(
           width: double.infinity,
           margin: EdgeInsets.only(bottom: isDesktop ? 0 : AppSpacing.lg),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.container),
-            border: Border.all(
-              color: isDark ? context.glassBorderStrong : AppColors.ink300,
-            ),
-            color: context.cardGlass,
-          ),
           child: RepaintBoundary(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.container),
-              child: Builder(
-                builder: (context) {
-                  final lang =
-                      Localizations.maybeLocaleOf(context)?.languageCode;
-                  final l10n = AppLocalizations.of(context);
-                  final eduTitle = lang == 'ar'
-                      ? (l10n?.sectionEducation ?? 'التعليم')
-                      : (lang == 'cs'
-                          ? (l10n?.sectionEducation ?? 'Vzdělání')
-                          : 'Academic annex');
-                  final certTitle = lang == 'ar'
-                      ? (l10n?.sectionCertifications ?? 'الشهادات')
-                      : (lang == 'cs'
-                          ? (l10n?.sectionCertifications ?? 'Certifikace')
-                          : 'Certification stamps');
+            child: Builder(
+              builder: (context) {
+                final lang =
+                    Localizations.maybeLocaleOf(context)?.languageCode;
+                final l10n = AppLocalizations.of(context);
+                final eduTitle = lang == 'ar'
+                    ? (l10n?.sectionEducation ?? 'التعليم')
+                    : (lang == 'cs'
+                        ? (l10n?.sectionEducation ?? 'Vzdělání')
+                        : 'Academic annex');
+                final certTitle = lang == 'ar'
+                    ? (l10n?.sectionCertifications ?? 'الشهادات')
+                    : (lang == 'cs'
+                        ? (l10n?.sectionCertifications ?? 'Certifikace')
+                        : 'Certification stamps');
 
-                  final content = Padding(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildSectionHeader(
-                          eduTitle,
-                          scheme,
-                          accentText,
-                          icon: Icons.school_rounded,
+                final content = Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      decoration: BoxDecoration(
+                        color: context.cardGlass,
+                        borderRadius: BorderRadius.circular(AppRadius.card),
+                        border: Border.all(
+                          color: isDark
+                              ? context.glassBorderStrong
+                              : AppColors.ink200,
                         ),
-                        const SizedBox(height: 12),
-                        ...context
-                            .read<ExperienceRepository>()
-                            .getEducation()
-                            .map((edu) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        edu.degree,
-                                        style: TextStyle(
-                                          color: scheme.onSurface,
-                                          fontSize: AppTypography.body,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${edu.institution} · ${edu.period}',
-                                        style: TextStyle(
-                                          color: accentText,
-                                          fontSize: AppTypography.label,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      if (edu.note != null)
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildSectionHeader(
+                            eduTitle,
+                            scheme,
+                            accentText,
+                            icon: Icons.school_rounded,
+                          ),
+                          const SizedBox(height: 12),
+                          ...context
+                              .read<ExperienceRepository>()
+                              .getEducation()
+                              .map((edu) => Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
                                         Text(
-                                          edu.note!,
+                                          edu.degree,
                                           style: TextStyle(
-                                            color: scheme.onSurface
-                                                .withValues(alpha: 0.7),
-                                            fontSize: AppTypography.label,
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                )),
-                        const SizedBox(height: AppSpacing.md),
-                        _buildSectionHeader(
-                          certTitle,
-                          scheme,
-                          accentText,
-                          icon: Icons.verified_user_rounded,
-                        ),
-                        const SizedBox(height: 12),
-                        ...context
-                            .read<ExperienceRepository>()
-                            .getCertifications()
-                            .map((cert) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 3),
-                                        child: Icon(
-                                          Icons.diamond_rounded,
-                                          size: AppTypography.label,
-                                          color: context.amberText,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Expanded(
-                                        child: Text(
-                                          cert,
-                                          style: TextStyle(
-                                            color: scheme.onSurface
-                                                .withValues(alpha: 0.9),
+                                            color: scheme.onSurface,
                                             fontSize: AppTypography.body,
-                                            height: 1.4,
+                                            fontWeight: FontWeight.w900,
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                      ],
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          '${edu.institution} · ${edu.period}',
+                                          style: TextStyle(
+                                            color: accentText,
+                                            fontSize: AppTypography.label,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        if (edu.note != null) ...[
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            edu.note!,
+                                            style: TextStyle(
+                                              color: scheme.onSurface
+                                                  .withValues(alpha: 0.7),
+                                              fontSize: AppTypography.label,
+                                            ),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
+                                  )),
+                        ],
+                      ),
                     ),
-                  );
+                    const SizedBox(height: AppSpacing.md),
+                    Container(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      decoration: BoxDecoration(
+                        color: context.cardGlass,
+                        borderRadius: BorderRadius.circular(AppRadius.card),
+                        border: Border.all(
+                          color: isDark
+                              ? context.glassBorderStrong
+                              : AppColors.ink200,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildSectionHeader(
+                            certTitle,
+                            scheme,
+                            accentText,
+                            icon: Icons.verified_user_rounded,
+                          ),
+                          const SizedBox(height: 12),
+                          ...context
+                              .read<ExperienceRepository>()
+                              .getCertifications()
+                              .map((cert) => Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 8),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 3),
+                                          child: Icon(
+                                            Icons.verified_rounded,
+                                            size: AppTypography.label,
+                                            color: context.amberText,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            cert,
+                                            style: TextStyle(
+                                              color: scheme.onSurface
+                                                  .withValues(alpha: 0.9),
+                                              fontSize: AppTypography.body,
+                                              height: 1.4,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
 
-                  return isDesktop
-                      ? SingleChildScrollView(primary: false, child: content)
-                      : content;
-                },
-              ),
+                return isDesktop
+                    ? SingleChildScrollView(primary: false, child: content)
+                    : content;
+              },
             ),
           ),
         ),
