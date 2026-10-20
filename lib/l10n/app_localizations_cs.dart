@@ -205,6 +205,14 @@ class AppLocalizationsCs extends AppLocalizations {
   String get copyEmail => 'Kopírovat e-mail';
 
   @override
+  String get navCopyLink => 'Kopírovat odkaz';
+
+  @override
+  String navCopyLinkTo(String section) {
+    return 'Kopírovat odkaz na $section';
+  }
+
+  @override
   String get introSeniorEngineer => 'Senior mobilní vývojář';
 
   @override

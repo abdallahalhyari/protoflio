@@ -202,6 +202,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get copyEmail => 'نسخ البريد';
 
   @override
+  String get navCopyLink => 'نسخ الرابط';
+
+  @override
+  String navCopyLinkTo(String section) {
+    return 'نسخ رابط $section';
+  }
+
+  @override
   String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
 
   @override

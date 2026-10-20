@@ -454,6 +454,18 @@ abstract class AppLocalizations {
   /// **'Copy email'**
   String get copyEmail;
 
+  /// No description provided for @navCopyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link'**
+  String get navCopyLink;
+
+  /// No description provided for @navCopyLinkTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link to {section}'**
+  String navCopyLinkTo(String section);
+
   /// No description provided for @introSeniorEngineer.
   ///
   /// In en, this message translates to:

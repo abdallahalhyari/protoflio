@@ -64,9 +64,9 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                         scheme, AppBreakpoints.isDesktop(ctx) ? '1–6' : '1–7'),
                     _withoutKey(l10n.keyboardHintDigits, '1–7')),
                 _shortcutRow(scheme, _keyText(scheme, 'W/X/E'),
-                    'Jump to Work / Experience / Engineering'),
+                    l10n.shortcutJumpPrimary),
                 _shortcutRow(scheme, _keyText(scheme, 'S/H/C'),
-                    'Jump to Skills / Perspectives / Contact'),
+                    l10n.shortcutJumpSecondary),
                 // Icons, not '↑ ↓': Roboto has no arrow glyphs, so the text pulled
                 // a 68 KB Noto Sans Symbols fallback font at runtime.
                 _shortcutRow(
@@ -77,11 +77,11 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                     ]),
                     _withoutKey(l10n.keyboardHintArrows, 'Up / Down arrows')),
                 _shortcutRow(
-                    scheme, _keyText(scheme, 'T'), 'Toggle theme mode'),
+                    scheme, _keyText(scheme, 'T'), l10n.shortcutToggleTheme),
                 _shortcutRow(
-                    scheme, _keyText(scheme, 'M'), 'Mute / Unmute audio'),
-                _shortcutRow(scheme, _keyText(scheme, 'R'),
-                    'Download / View Resume (CV)'),
+                    scheme, _keyText(scheme, 'M'), l10n.shortcutToggleAudio),
+                _shortcutRow(
+                    scheme, _keyText(scheme, 'R'), l10n.shortcutViewCv),
                 _shortcutRow(scheme, _keyText(scheme, 'Home'),
                     _withoutKey(l10n.keyboardHintHome, 'Home')),
                 _shortcutRow(scheme, _keyText(scheme, 'End'),

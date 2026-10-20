@@ -80,6 +80,8 @@
   "introDownloadResume": "تحميل السيرة الذاتية",
   "contactMe": "لنتحدث",
   "copyEmail": "نسخ البريد",
+  "navCopyLink": "نسخ الرابط",
+  "navCopyLinkTo": "نسخ رابط {section}",
   "introSeniorEngineer": "مهندس تطبيقات هواتف أول",
   "introRoleLine": "مهندس تطبيقات هواتف أول",
   "introValueProposition": "أصمم وأطلق منتجات جوال مرنة تحوّل الأنظمة المعقدة إلى تجارب استخدام واضحة وجديرة بالثقة.",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/directional_icon.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_nav_sheet.dart';
 
@@ -20,6 +21,7 @@ class NavSectionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final activeColor = isDark
         ? item.accentColor
         : switch (item.accentColor.toARGB32()) {
@@ -100,9 +102,9 @@ class NavSectionRow extends StatelessWidget {
             ),
             Semantics(
               button: true,
-              label: 'Copy link to ${item.title}',
+              label: l10n.navCopyLinkTo(item.title),
               child: Tooltip(
-                message: 'Copy link',
+                message: l10n.navCopyLink,
                 child: InkResponse(
                   radius: 18,
                   onTap: () => MobileNavSheet.copySectionLink(

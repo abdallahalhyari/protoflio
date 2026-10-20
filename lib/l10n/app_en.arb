@@ -91,6 +91,13 @@
   },
   "contactMe": "Let's talk",
   "copyEmail": "Copy email",
+  "navCopyLink": "Copy link",
+  "navCopyLinkTo": "Copy link to {section}",
+  "@navCopyLinkTo": {
+    "placeholders": {
+      "section": { "type": "String" }
+    }
+  },
   "introSeniorEngineer": "Senior Flutter & Android engineer",
   "introRoleLine": "Senior Flutter & Android engineer",
   "@introRoleLine": {

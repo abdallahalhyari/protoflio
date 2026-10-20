@@ -80,6 +80,8 @@
   "introDownloadResume": "Stáhnout CV",
   "contactMe": "Pojďme si promluvit",
   "copyEmail": "Kopírovat e-mail",
+  "navCopyLink": "Kopírovat odkaz",
+  "navCopyLinkTo": "Kopírovat odkaz na {section}",
   "introSeniorEngineer": "Senior mobilní vývojář",
   "introRoleLine": "Senior mobilní vývojář",
   "introValueProposition": "Navrhuji a dodávám odolné mobilní produkty, které mění složité systémy v přehledné a důvěryhodné uživatelské prostředí.",
