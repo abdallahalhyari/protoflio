@@ -480,10 +480,6 @@ class AppLocalizationsCs extends AppLocalizations {
       'Udržení 60 snímků za sekundu ve složitých datově náročných nemocničních a univerzitních procesech.';
 
   @override
-  String get projectOutcomeSolutions =>
-      'Obě aplikace byly dodány včas a získaly hodnocení přes 4,7 hvězdičky.';
-
-  @override
   String get projectOutcomeFais =>
       'Vyšší dokončenost nákupů a méně nedokončených transakcí.';
 

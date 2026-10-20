@@ -477,10 +477,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sustained 60fps across complex, data-heavy hospital and university workflows.';
 
   @override
-  String get projectOutcomeSolutions =>
-      'Shipped both applications on time with 4.7+ star store ratings.';
-
-  @override
   String get projectOutcomeFais =>
       'Improved checkout completion and reduced abandoned transactions.';
 

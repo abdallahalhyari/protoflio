@@ -946,12 +946,6 @@ abstract class AppLocalizations {
   /// **'Sustained 60fps across complex, data-heavy hospital and university workflows.'**
   String get projectOutcomeEskadenia;
 
-  /// No description provided for @projectOutcomeSolutions.
-  ///
-  /// In en, this message translates to:
-  /// **'Shipped both applications on time with 4.7+ star store ratings.'**
-  String get projectOutcomeSolutions;
-
   /// No description provided for @projectOutcomeFais.
   ///
   /// In en, this message translates to:

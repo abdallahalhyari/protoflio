@@ -138,11 +138,11 @@ void main() {
           isNot(localizedProjectTagline(english, project)),
           reason: project.company,
         );
-        expect(
-          localizedProjectOutcome(localized, project),
-          isNot(localizedProjectOutcome(english, project)),
-          reason: project.company,
-        );
+        final locOutcome = localizedProjectOutcome(localized, project);
+        final engOutcome = localizedProjectOutcome(english, project);
+        if (locOutcome != null && engOutcome != null) {
+          expect(locOutcome, isNot(engOutcome), reason: project.company);
+        }
       }
 
       const domains = [

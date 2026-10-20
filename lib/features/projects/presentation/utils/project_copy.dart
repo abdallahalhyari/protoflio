@@ -17,7 +17,7 @@ String? localizedProjectOutcome(AppLocalizations loc, Project project) {
   return switch (project.company) {
     'NatHealth' => loc.projectOutcomeNatHealth,
     'ESKADENIA Software' => loc.projectOutcomeEskadenia,
-    'Solutions Now IT' => loc.projectOutcomeSolutions,
+    'Solutions Now IT' => null,
     'Future Advanced Internet Solutions' => loc.projectOutcomeFais,
     _ => project.results!.first,
   };

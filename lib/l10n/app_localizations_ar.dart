@@ -477,10 +477,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'الحفاظ على 60 إطارًا في الثانية ضمن سير عمل المستشفيات والجامعات كثيف البيانات.';
 
   @override
-  String get projectOutcomeSolutions =>
-      'إطلاق التطبيقين في الموعد مع تقييمات تجاوزت 4.7 نجوم في المتاجر.';
-
-  @override
   String get projectOutcomeFais =>
       'رفع إتمام عمليات الشراء وتقليل المعاملات المتروكة.';
 
