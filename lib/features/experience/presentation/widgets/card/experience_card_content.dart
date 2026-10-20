@@ -96,8 +96,61 @@ class CardContent extends StatelessWidget {
           SizedBox(height: isDesktop ? 10 : 16),
           ...exp.highlights
               .map((h) => HighlightBullet(text: h, scheme: scheme)),
+          const SizedBox(height: 12),
+          // Stack Zone
+          Wrap(
+            spacing: 6,
+            runSpacing: 4,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              for (final tech in _stackForCompany(exp.company))
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? scheme.primary.withValues(alpha: 0.1)
+                        : AppColors.ink100,
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                    border: Border.all(
+                      color: isDark
+                          ? scheme.primary.withValues(alpha: 0.25)
+                          : AppColors.ink200,
+                    ),
+                  ),
+                  child: Text(
+                    tech,
+                    style: TextStyle(
+                      fontFamily: AppTypography.monoFont,
+                      color: context.adaptiveAccentText(scheme.primary),
+                      fontSize: AppTypography.label - 2,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ],
       ),
     );
+  }
+
+  static List<String> _stackForCompany(String company) {
+    return switch (company) {
+      'NatHealth' => const [
+          'NFC / ISO-7816',
+          'Flutter',
+          'JWT Security',
+          'WorkManager'
+        ],
+      'ESKADENIA Software' => const ['Flutter', 'Dart', 'MVVM', 'DevTools'],
+      'Solutions Now IT' => const ['Flutter', 'REST APIs', 'Design System'],
+      'Future Advanced Internet Solutions' => const [
+          'Flutter',
+          'Android',
+          'REST APIs'
+        ],
+      _ => const ['Flutter'],
+    };
   }
 }
