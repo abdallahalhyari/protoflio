@@ -961,6 +961,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiDownloadResumePdf => 'Download CV (PDF)';
 
   @override
+  String get uiRetry => 'Retry';
+
+  @override
   String get uiDragCardsHint =>
       'Drag the cards, click one to flip it, or shuffle';
 
@@ -1227,6 +1230,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aboutSubtitle =>
       'How I work as an engineer, the problems I solve, and a few things you can run yourself.';
+
+  @override
+  String get aboutHeaderKicker => 'About & contact';
+
+  @override
+  String get aboutHeaderSubtitle =>
+      'Senior mobile systems engineer and solutions architect.';
 
   @override
   String get aboutTabProfile => 'Profile';

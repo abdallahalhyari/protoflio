@@ -1798,6 +1798,12 @@ abstract class AppLocalizations {
   /// **'Download CV (PDF)'**
   String get uiDownloadResumePdf;
 
+  /// No description provided for @uiRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get uiRetry;
+
   /// No description provided for @uiDragCardsHint.
   ///
   /// In en, this message translates to:
@@ -2265,6 +2271,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How I work as an engineer, the problems I solve, and a few things you can run yourself.'**
   String get aboutSubtitle;
+
+  /// No description provided for @aboutHeaderKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'About & contact'**
+  String get aboutHeaderKicker;
+
+  /// No description provided for @aboutHeaderSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Senior mobile systems engineer and solutions architect.'**
+  String get aboutHeaderSubtitle;
 
   /// No description provided for @aboutTabProfile.
   ///

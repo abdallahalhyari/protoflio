@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 /// Wraps a page whose Dart code is behind a `deferred as` import.
 /// Invokes [loader] (which should call `libname.loadLibrary()`), then
@@ -114,7 +115,7 @@ class _DeferredPageState extends State<DeferredPage>
               setState(() => _loadError = null);
               _startLoad();
             },
-            child: const Text('Retry'),
+            child: Text(AppLocalizations.of(context)?.uiRetry ?? 'Retry'),
           ),
         ),
       );

@@ -120,10 +120,9 @@ class _AboutContactPageState extends State<AboutContactPage>
           children: [
             // Section Masthead
             SectionMasthead(
-              kicker: '06 · EXECUTIVE ABOUT & DIRECT OUTREACH',
+              kicker: l10n.aboutHeaderKicker,
               title: l10n.aboutTitle,
-              subtitle:
-                  'Senior Mobile Systems Engineer & Mobile Solutions Architect.',
+              subtitle: l10n.aboutHeaderSubtitle,
               isDesktop: isDesktop,
             ),
             const SizedBox(height: AppSpacing.md),
@@ -509,74 +508,77 @@ class _AboutContactPageState extends State<AboutContactPage>
                   ),
                 ),
                 const SizedBox(width: AppSpacing.xl),
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 8,
-                  children: [
-                    FilledButton.icon(
-                      onPressed: () => _openMail(
-                        subject:
-                            '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
-                      ),
-                      icon: const Icon(Icons.send_rounded, size: 16),
-                      label: Text(l10n.contactSendEmailBtn),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: accent,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onPrimary,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
+                Flexible(
+                  child: Wrap(
+                    spacing: 10,
+                    runSpacing: 8,
+                    children: [
+                      FilledButton.icon(
+                        onPressed: () => _openMail(
+                          subject:
+                              '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
                         ),
-                        textStyle: const TextStyle(
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: () => _copy(context, _email),
-                      icon: const Icon(Icons.content_copy_rounded, size: 14),
-                      label: Text(l10n.contactCopyAddressBtn),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: context.onSurface,
-                        side: BorderSide(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: AppAlpha.border)
-                              : AppColors.ink300,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
-                        ),
-                        textStyle: const TextStyle(
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w800,
+                        icon: const Icon(Icons.send_rounded, size: 16),
+                        label: Text(l10n.contactSendEmailBtn),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: accent,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: AppTypography.label,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ),
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () => CvService.open(context),
-                      icon: const Icon(Icons.download_rounded, size: 16),
-                      label: const Text('Resume (PDF)'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            isDark ? AppColors.darkSurface : AppColors.ink100,
-                        foregroundColor: context.onSurface,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppRadius.pill),
-                        ),
-                        textStyle: const TextStyle(
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
+                      OutlinedButton.icon(
+                        onPressed: () => _copy(context, _email),
+                        icon: const Icon(Icons.content_copy_rounded, size: 14),
+                        label: Text(l10n.contactCopyAddressBtn),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: context.onSurface,
+                          side: BorderSide(
+                            color: isDark
+                                ? Colors.white
+                                    .withValues(alpha: AppAlpha.border)
+                                : AppColors.ink300,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: AppTypography.label,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      ElevatedButton.icon(
+                        onPressed: () => CvService.open(context),
+                        icon: const Icon(Icons.download_rounded, size: 16),
+                        label: Text(l10n.uiDownloadResumePdf),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              isDark ? AppColors.darkSurface : AppColors.ink100,
+                          foregroundColor: context.onSurface,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
+                          ),
+                          textStyle: const TextStyle(
+                            fontSize: AppTypography.label,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             );
@@ -674,7 +676,7 @@ class _AboutContactPageState extends State<AboutContactPage>
                   ElevatedButton.icon(
                     onPressed: () => CvService.open(context),
                     icon: const Icon(Icons.download_rounded, size: 16),
-                    label: const Text('Resume (PDF)'),
+                    label: Text(l10n.uiDownloadResumePdf),
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           isDark ? AppColors.darkSurface : AppColors.ink100,

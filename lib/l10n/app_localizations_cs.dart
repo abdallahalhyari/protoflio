@@ -962,6 +962,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiDownloadResumePdf => 'Stáhnout životopis (PDF)';
 
   @override
+  String get uiRetry => 'Zkusit znovu';
+
+  @override
   String get uiDragCardsHint =>
       'Přetáhněte karty, kliknutím otočíte, zamícháním přeskupíte';
 
@@ -1229,6 +1232,13 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get aboutSubtitle =>
       'Jak pracuji jako inženýr, jaké problémy řeším a pár věcí, které si můžete sami vyzkoušet.';
+
+  @override
+  String get aboutHeaderKicker => 'O mně a kontakt';
+
+  @override
+  String get aboutHeaderSubtitle =>
+      'Senior inženýr mobilních systémů a architekt řešení.';
 
   @override
   String get aboutTabProfile => 'Profil';

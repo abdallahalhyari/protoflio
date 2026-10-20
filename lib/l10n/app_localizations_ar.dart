@@ -955,6 +955,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiDownloadResumePdf => 'تنزيل السيرة الذاتية · PDF';
 
   @override
+  String get uiRetry => 'إعادة المحاولة';
+
+  @override
   String get uiDragCardsHint =>
       'اسحب البطاقات · انقر للقلب · اخلط لإعادة الترتيب';
 
@@ -1220,6 +1223,12 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get aboutSubtitle =>
       'كيف أعمل كمهندس، والمشكلات التي أحلّها، وبعض الأمور التي يمكنك تشغيلها بنفسك.';
+
+  @override
+  String get aboutHeaderKicker => 'نبذة وتواصل';
+
+  @override
+  String get aboutHeaderSubtitle => 'مهندس أنظمة محمولة أول ومهندس حلول.';
 
   @override
   String get aboutTabProfile => 'الملف';
