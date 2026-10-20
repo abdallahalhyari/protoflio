@@ -12,7 +12,8 @@ bool _isCurrent(Experience e) => e.period.toLowerCase().contains('present');
 ExperienceTimelineConnector _connector(ExperienceTimelineState state, int i) {
   final xs = state.experiences;
   return ExperienceTimelineConnector(
-    isAdjacentSelected: state.selectedIndex == i || state.selectedIndex == i + 1,
+    isAdjacentSelected:
+        state.selectedIndex == i || state.selectedIndex == i + 1,
     isCurrent: _isCurrent(xs[i]) || _isCurrent(xs[i + 1]),
   );
 }

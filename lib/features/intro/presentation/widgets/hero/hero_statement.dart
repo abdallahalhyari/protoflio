@@ -159,6 +159,10 @@ class HeroStatement extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 560),
                 child: _buildTechPills(context, scheme, isDark),
               ),
+              if (!isWide) ...[
+                const SizedBox(height: AppSpacing.smd),
+                _MobileAvailabilityCue(scheme: scheme, isDark: isDark),
+              ],
             ],
           ),
         ),
@@ -224,6 +228,92 @@ class HeroStatement extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// Brings the most important hiring fact into the mobile hero without
+/// duplicating the full interactive trace card that follows it.
+class _MobileAvailabilityCue extends StatelessWidget {
+  const _MobileAvailabilityCue({required this.scheme, required this.isDark});
+
+  final ColorScheme scheme;
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final availableColor = isDark ? AppColors.tealLight : AppColors.tealDeep;
+
+    return Semantics(
+      label: '${l10n.heroFactAvailableLabel}: ${l10n.heroFactAvailableValue}. '
+          '${l10n.heroFactBasedLabel}: ${l10n.heroFactBasedValue}.',
+      child: ExcludeSemantics(
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.smd,
+            vertical: AppSpacing.sm,
+          ),
+          decoration: BoxDecoration(
+            color: isDark
+                ? scheme.primary.withValues(alpha: 0.08)
+                : AppColors.ink100.withValues(alpha: 0.75),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            border: Border.all(
+              color: availableColor.withValues(alpha: isDark ? 0.45 : 0.32),
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: PulsingDot(color: availableColor),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.heroFactAvailableLabel.toUpperCase(),
+                      style: TextStyle(
+                        color: context.onSurface.withValues(alpha: 0.82),
+                        fontFamily: AppTypography.monoFont,
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      l10n.heroFactAvailableValue,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: availableColor,
+                        fontSize: AppTypography.label + 1,
+                        fontWeight: FontWeight.w700,
+                        height: 1.35,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      l10n.heroFactBasedValue,
+                      style: TextStyle(
+                        color: context.mutedText,
+                        fontSize: AppTypography.label,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

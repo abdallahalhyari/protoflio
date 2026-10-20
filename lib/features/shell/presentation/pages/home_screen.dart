@@ -326,23 +326,18 @@ class _HomeScreenState extends State<HomeScreen> {
     final labels = TopNav.getLabels(context);
     final l10n = AppLocalizations.of(context)!;
     final target = saved.clamp(1, _activePageCount - 1);
-    AppToast.show(
+    AppToast.showCornerAction(
       context,
       message: l10n.welcomeBack(labels[target]),
-      icon: Icons.history_rounded,
-      duration: const Duration(seconds: 7),
-      width: AppBreakpoints.isDesktop(context) ? 460 : null,
-      action: SnackBarAction(
-        label: l10n.continueAction,
-        onPressed: () {
-          if (!mounted) return;
-          if (AppBreakpoints.isDesktop(context)) {
-            _goTo(target);
-          } else {
-            _scrollToMobileSection(target);
-          }
-        },
-      ),
+      actionLabel: l10n.continueAction,
+      onAction: () {
+        if (!mounted) return;
+        if (AppBreakpoints.isDesktop(context)) {
+          _goTo(target);
+        } else {
+          _scrollToMobileSection(target);
+        }
+      },
     );
   }
 

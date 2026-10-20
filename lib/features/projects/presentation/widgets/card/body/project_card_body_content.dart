@@ -52,6 +52,29 @@ class CardBodyContent extends StatelessWidget {
     final clampLines = maxCopyLines;
     const clampOverflow = TextOverflow.ellipsis;
 
+    Widget dossier(bool expanded) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            LabeledLine(
+              label: loc.projectLblProblem,
+              text: caseCopy!.problem,
+              maxLines: clampLines,
+            ),
+            if (expanded) ...[
+              LabeledLine(
+                label: loc.projectLblSystem,
+                text: caseCopy.system,
+                maxLines: clampLines,
+              ),
+              LabeledLine(
+                label: loc.projectLblRole,
+                text: caseCopy.role,
+                maxLines: clampLines,
+              ),
+            ],
+          ],
+        );
+
     final titleBlock = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,7 +84,7 @@ class CardBodyContent extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontFamily: AppTypography.monoFont,
-            fontSize: AppTypography.label - 1,
+            fontSize: AppTypography.label,
             fontWeight: FontWeight.w900,
             color: isHovered
                 ? (isDark
@@ -152,23 +175,19 @@ class CardBodyContent extends StatelessWidget {
                     : AppColors.ink200,
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LabeledLine(
-                    label: loc.projectLblProblem,
-                    text: caseCopy.problem,
-                    maxLines: clampLines),
-                LabeledLine(
-                    label: loc.projectLblSystem,
-                    text: caseCopy.system,
-                    maxLines: clampLines),
-                LabeledLine(
-                    label: loc.projectLblRole,
-                    text: caseCopy.role,
-                    maxLines: clampLines),
-              ],
-            ),
+            child: isDesktop
+                ? AnimatedSwitcher(
+                    duration: MediaQuery.disableAnimationsOf(context)
+                        ? Duration.zero
+                        : AppMotion.snap,
+                    switchInCurve: Curves.easeOutCubic,
+                    switchOutCurve: Curves.easeOutCubic,
+                    child: KeyedSubtree(
+                      key: ValueKey<bool>(isHovered),
+                      child: dossier(isHovered),
+                    ),
+                  )
+                : dossier(true),
           ),
         ] else
           Text(

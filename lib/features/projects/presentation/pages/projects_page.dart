@@ -218,7 +218,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                       final double textScale =
                           MediaQuery.textScalerOf(context).scale(1);
                       final double itemHeight = isDesktop
-                          ? 570 + 170 * (textScale - 1).clamp(0.0, 1.2)
+                          ? 540 + 170 * (textScale - 1).clamp(0.0, 1.2)
                           : 500 + 160 * (textScale - 1).clamp(0.0, 1.0);
 
                       const double spacing = AppSpacing.lg;

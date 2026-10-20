@@ -33,11 +33,11 @@ class LabeledLine extends StatelessWidget {
               child: Text(
                 label.toUpperCase(),
                 style: TextStyle(
-                  fontSize: AppTypography.label,
+                  fontSize: AppTypography.label + 1,
                   height: 1.5,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 1.2,
-                  color: context.mutedText,
+                  color: context.onSurface.withValues(alpha: 0.82),
                 ),
               ),
             ),
@@ -48,7 +48,7 @@ class LabeledLine extends StatelessWidget {
               maxLines: maxLines,
               overflow: maxLines == null ? null : TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: AppTypography.label,
+                fontSize: AppTypography.label + 1,
                 height: 1.5,
                 color: context.onSurface.withValues(alpha: 0.9),
               ),

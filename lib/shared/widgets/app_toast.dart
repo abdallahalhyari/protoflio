@@ -94,6 +94,52 @@ class AppToast {
     );
   }
 
+  /// A small, actionable toast that stays clear of persistent navigation.
+  ///
+  /// Used for optional return-to-progress prompts: it sits above the bottom
+  /// chrome instead of spanning the page and competing with the folio bar.
+  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
+      showCornerAction(
+    BuildContext context, {
+    required String message,
+    required String actionLabel,
+    required VoidCallback onAction,
+    IconData icon = Icons.history_rounded,
+    Duration duration = const Duration(seconds: 5),
+  }) {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    final bottomInset = AppBreakpoints.isDesktop(context) ? 68.0 : 84.0;
+
+    return messenger.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        padding: EdgeInsets.zero,
+        margin: EdgeInsetsDirectional.fromSTEB(
+          AppSpacing.md,
+          0,
+          AppSpacing.md,
+          bottomInset,
+        ),
+        duration: duration,
+        content: Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 380),
+            child: _CornerActionToast(
+              message: message,
+              actionLabel: actionLabel,
+              icon: icon,
+              onAction: onAction,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   static IconData? _defaultIcon(ToastStatus status) => switch (status) {
         ToastStatus.ok => Icons.check_circle_rounded,
         ToastStatus.critical => Icons.error_rounded,
@@ -185,6 +231,90 @@ class _GlassToastContent extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CornerActionToast extends StatelessWidget {
+  const _CornerActionToast({
+    required this.message,
+    required this.actionLabel,
+    required this.icon,
+    required this.onAction,
+  });
+
+  final String message;
+  final String actionLabel;
+  final IconData icon;
+  final VoidCallback onAction;
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = Theme.of(context).colorScheme.primary;
+    return Semantics(
+      container: true,
+      liveRegion: true,
+      child: ConditionalBlur(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        child: Container(
+          padding: const EdgeInsetsDirectional.only(start: 12, end: 6),
+          decoration: BoxDecoration(
+            color: context.glassSurface,
+            borderRadius: BorderRadius.circular(AppRadius.pill),
+            border: Border.all(color: accent.withValues(alpha: 0.55)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black
+                    .withValues(alpha: context.isDarkMode ? 0.34 : 0.12),
+                blurRadius: 18,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 16, color: accent),
+              const SizedBox(width: AppSpacing.sm),
+              Flexible(
+                child: Text(
+                  message,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: context.onSurface,
+                    fontSize: AppTypography.label + 1,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  onAction();
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: accent,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.smd,
+                    vertical: AppSpacing.sm,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.pill),
+                  ),
+                ),
+                child: Text(
+                  actionLabel,
+                  style: const TextStyle(
+                    fontSize: AppTypography.label,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
