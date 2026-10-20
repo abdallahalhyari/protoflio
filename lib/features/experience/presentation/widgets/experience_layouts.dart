@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/presentation/bloc/experience_timeline_bloc.dart';
 import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
 import 'package:profile/features/experience/presentation/widgets/credentials_bento_card.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_timeline_connector.dart';
 import 'package:profile/shared/widgets/staggered_entrance.dart';
 
-class ExperienceContinuousMobileList extends StatelessWidget {
-  final ExperienceTimelineState state;
-  final Function(int) onSelect;
+bool _isCurrent(Experience e) => e.period.toLowerCase().contains('present');
 
-  const ExperienceContinuousMobileList({
+ExperienceTimelineConnector _connector(ExperienceTimelineState state, int i) {
+  final xs = state.experiences;
+  return ExperienceTimelineConnector(
+    isAdjacentSelected: state.selectedIndex == i || state.selectedIndex == i + 1,
+    isCurrent: _isCurrent(xs[i]) || _isCurrent(xs[i + 1]),
+  );
+}
+
+/// The roles in order, newest first, joined by connectors. A career is a
+/// sequence, so it reads as one column at natural height rather than a grid
+/// of fixed-size tiles that clip their own text.
+class _Timeline extends StatelessWidget {
+  const _Timeline({
     super.key,
     required this.state,
     required this.onSelect,
+    required this.isDesktop,
   });
+
+  final ExperienceTimelineState state;
+  final Function(int) onSelect;
+  final bool isDesktop;
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +44,34 @@ class ExperienceContinuousMobileList extends StatelessWidget {
             isVisible: state.isVisible,
             isSelected: state.selectedIndex == i,
             onSelect: () => onSelect(i),
-            isDesktop: false,
+            isDesktop: isDesktop,
           ),
           if (i < experiences.length - 1)
-            ExperienceTimelineConnector(
-              isAdjacentSelected:
-                  state.selectedIndex == i || state.selectedIndex == i + 1,
-              isCurrent: experiences[i]
-                      .period
-                      .toLowerCase()
-                      .contains('present') ||
-                  experiences[i + 1].period.toLowerCase().contains('present'),
-            )
+            _connector(state, i)
           else
             const SizedBox(height: AppSpacing.md),
         ],
+      ],
+    );
+  }
+}
+
+class ExperienceContinuousMobileList extends StatelessWidget {
+  final ExperienceTimelineState state;
+  final Function(int) onSelect;
+
+  const ExperienceContinuousMobileList({
+    super.key,
+    required this.state,
+    required this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _Timeline(state: state, onSelect: onSelect, isDesktop: false),
         CredentialsBentoCard(
           isVisible: state.isVisible,
           isDesktop: false,
@@ -52,6 +81,8 @@ class ExperienceContinuousMobileList extends StatelessWidget {
   }
 }
 
+/// Desktop: the timeline beside the academic and certification card. The
+/// page scrolls (like About), so every role shows its full text.
 class ExperienceDesktopGrid extends StatelessWidget {
   final ExperienceTimelineState state;
   final Function(int) onSelect;
@@ -64,49 +95,38 @@ class ExperienceDesktopGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final experiences = state.experiences;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          flex: 7,
-          child: StaggeredEntrance(
-            isVisible: state.isVisible,
-            child: GridView.builder(
-              key: const Key('experience_chronology'),
-              primary: false,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: AppSpacing.md,
-                mainAxisSpacing: AppSpacing.md,
-                childAspectRatio: 1.3,
-              ),
-              itemCount: experiences.length,
-              itemBuilder: (context, index) => AnimatedExperienceNode(
-                exp: experiences[index],
-                isVisible: state.isVisible,
-                isSelected: state.selectedIndex == index,
-                onSelect: () => onSelect(index),
+    return SingleChildScrollView(
+      primary: false,
+      physics: const ClampingScrollPhysics(),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 7,
+            child: StaggeredEntrance(
+              isVisible: state.isVisible,
+              child: _Timeline(
+                key: const Key('experience_chronology'),
+                state: state,
+                onSelect: onSelect,
                 isDesktop: true,
               ),
             ),
           ),
-        ),
-        const SizedBox(width: AppSpacing.md),
-        Expanded(
-          flex: 4,
-          child: StaggeredEntrance(
-            isVisible: state.isVisible,
-            delayMs: 120,
-            child: CredentialsBentoCard(
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            flex: 4,
+            child: StaggeredEntrance(
               isVisible: state.isVisible,
-              isDesktop: true,
+              delayMs: 120,
+              child: CredentialsBentoCard(
+                isVisible: state.isVisible,
+                isDesktop: true,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -147,18 +167,7 @@ class ExperienceMobileList extends StatelessWidget {
               isDesktop: false,
             ),
             if (index < experiences.length - 1)
-              ExperienceTimelineConnector(
-                isAdjacentSelected: state.selectedIndex == index ||
-                    state.selectedIndex == index + 1,
-                isCurrent: experiences[index]
-                        .period
-                        .toLowerCase()
-                        .contains('present') ||
-                    experiences[index + 1]
-                        .period
-                        .toLowerCase()
-                        .contains('present'),
-              )
+              _connector(state, index)
             else
               const SizedBox(height: AppSpacing.md),
           ],

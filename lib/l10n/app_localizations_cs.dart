@@ -993,6 +993,14 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiRetry => 'Zkusit znovu';
 
   @override
+  String get uiWebsite => 'Web';
+
+  @override
+  String expRoleAtCompany(String role, String company, String period) {
+    return '$role ve firmě $company, $period';
+  }
+
+  @override
   String get uiDragCardsHint =>
       'Přetáhněte karty, kliknutím otočíte, zamícháním přeskupíte';
 

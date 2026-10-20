@@ -1852,6 +1852,18 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get uiRetry;
 
+  /// No description provided for @uiWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get uiWebsite;
+
+  /// No description provided for @expRoleAtCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'{role} at {company}, {period}'**
+  String expRoleAtCompany(String role, String company, String period);
+
   /// No description provided for @uiDragCardsHint.
   ///
   /// In en, this message translates to:

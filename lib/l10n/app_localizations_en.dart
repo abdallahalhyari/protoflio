@@ -990,6 +990,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiRetry => 'Retry';
 
   @override
+  String get uiWebsite => 'Website';
+
+  @override
+  String expRoleAtCompany(String role, String company, String period) {
+    return '$role at $company, $period';
+  }
+
+  @override
   String get uiDragCardsHint =>
       'Drag the cards, click one to flip it, or shuffle';
 

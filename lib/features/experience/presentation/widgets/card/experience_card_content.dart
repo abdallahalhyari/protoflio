@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/features/experience/presentation/widgets/card/experience_card_period_badge.dart';
 import 'package:profile/features/experience/presentation/widgets/card/experience_card_company_action_pill.dart';
@@ -25,6 +26,7 @@ class CardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -50,12 +52,13 @@ class CardContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 3),
+          // Ink, not gold: gold marks what can be tapped.
           Text(
             exp.role,
             style: TextStyle(
-              color: context.adaptiveAccentText(scheme.primary),
-              fontSize: isDesktop ? 13 : 12.5,
-              fontWeight: FontWeight.w900,
+              color: context.mutedText,
+              fontSize: AppTypography.body,
+              fontWeight: FontWeight.w600,
             ),
           ),
           if (exp.websiteUrl != null || exp.linkedinUrl != null) ...[
@@ -67,8 +70,8 @@ class CardContent extends StatelessWidget {
               children: [
                 if (exp.websiteUrl != null)
                   CompanyActionPill(
-                    label: 'Website',
-                    tooltip: 'Visit ${exp.company} official website',
+                    label: l10n.uiWebsite,
+                    tooltip: l10n.studyVisitWebsite(exp.company),
                     icon: Icons.language_rounded,
                     url: exp.websiteUrl!,
                     company: exp.company,
@@ -79,7 +82,7 @@ class CardContent extends StatelessWidget {
                 if (exp.linkedinUrl != null)
                   CompanyActionPill(
                     label: 'LinkedIn',
-                    tooltip: 'View ${exp.company} on LinkedIn',
+                    tooltip: l10n.studyViewOnLinkedIn(exp.company),
                     isLinkedIn: true,
                     url: exp.linkedinUrl!,
                     company: exp.company,

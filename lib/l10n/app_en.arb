@@ -485,6 +485,15 @@
   "uiPortfolioSections": "Sections",
   "uiDownloadResumePdf": "Download CV (PDF)",
   "uiRetry": "Retry",
+  "uiWebsite": "Website",
+  "expRoleAtCompany": "{role} at {company}, {period}",
+  "@expRoleAtCompany": {
+    "placeholders": {
+      "role": { "type": "String" },
+      "company": { "type": "String" },
+      "period": { "type": "String" }
+    }
+  },
   "uiDragCardsHint": "Drag the cards, click one to flip it, or shuffle",
   "uiTapSwipeHint": "Tap a card to flip it, swipe to change role",
   "uiTapToReturn": "Tap to return",

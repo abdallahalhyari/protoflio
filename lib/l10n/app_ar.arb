@@ -313,6 +313,8 @@
   "uiPortfolioSections": "أقسام الملف",
   "uiDownloadResumePdf": "تنزيل السيرة الذاتية · PDF",
   "uiRetry": "إعادة المحاولة",
+  "uiWebsite": "الموقع",
+  "expRoleAtCompany": "{role} في {company}، {period}",
   "uiDragCardsHint": "اسحب البطاقات · انقر للقلب · اخلط لإعادة الترتيب",
   "uiTapSwipeHint": "اضغط للقلب · اسحب لتغيير الدور",
   "uiTapToReturn": "اضغط للعودة",

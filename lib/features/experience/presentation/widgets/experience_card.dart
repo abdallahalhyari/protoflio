@@ -4,6 +4,7 @@ import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 import 'package:profile/features/experience/presentation/widgets/card/experience_card_content.dart';
 
@@ -41,8 +42,11 @@ class _ExperienceCardState extends State<ExperienceCard> {
 
     return Semantics(
       container: true,
-      label:
-          '${widget.exp.role} at ${widget.exp.company}, ${widget.exp.period}',
+      label: AppLocalizations.of(context)!.expRoleAtCompany(
+        widget.exp.role,
+        widget.exp.company,
+        widget.exp.period,
+      ),
       explicitChildNodes: true,
       child: GestureDetector(
         excludeFromSemantics: true,
@@ -70,50 +74,35 @@ class _ExperienceCardState extends State<ExperienceCard> {
                     : (isDark ? context.glassBorderStrong : AppColors.ink200),
                 width: widget.isSelected ? 1.5 : 1.0,
               ),
-              boxShadow: [
-                if (active)
-                  BoxShadow(
-                    color: scheme.primary.withValues(
-                      alpha: widget.isSelected
-                          ? (isDark ? 0.28 : 0.18)
-                          : (isDark ? 0.12 : 0.06),
-                    ),
-                    blurRadius: widget.isSelected ? 20 : 12,
-                    spreadRadius: widget.isSelected ? 1.5 : 0,
-                    offset: const Offset(0, 3),
-                  ),
-              ],
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppRadius.md),
-              child: Row(
-                children: [
-                  AnimatedContainer(
-                    duration: AppMotion.cardHover,
-                    width: 3,
-                    color: _isCurrent
-                        ? AppColors.teal
-                        : scheme.primary.withValues(alpha: active ? 0.65 : 0.3),
-                  ),
-                  Expanded(
-                    child: Builder(
-                      builder: (context) {
-                        final content = CardContent(
-                          exp: widget.exp,
-                          scheme: scheme,
-                          isDesktop: widget.isDesktop,
-                          isCurrent: _isCurrent,
-                          isDark: isDark,
-                        );
-
-                        return widget.isDesktop
-                            ? SingleChildScrollView(
-                                primary: false, child: content)
-                            : content;
-                      },
+              // The accent stripe is the start border, so it spans the card's
+              // natural height and mirrors under RTL. (A childless 3px box in
+              // a Row only had height inside the old fixed-height grid tile;
+              // in the phone list it collapsed to nothing.)
+              child: AnimatedContainer(
+                duration: AppMotion.cardHover,
+                decoration: BoxDecoration(
+                  border: BorderDirectional(
+                    start: BorderSide(
+                      width: 3,
+                      color: _isCurrent
+                          ? AppColors.teal
+                          : scheme.primary
+                              .withValues(alpha: active ? 0.65 : 0.3),
                     ),
                   ),
-                ],
+                ),
+                // Natural height everywhere: the list scrolls, the card
+                // never hides its own text behind an inner scroll.
+                child: CardContent(
+                  exp: widget.exp,
+                  scheme: scheme,
+                  isDesktop: widget.isDesktop,
+                  isCurrent: _isCurrent,
+                  isDark: isDark,
+                ),
               ),
             ),
           ),

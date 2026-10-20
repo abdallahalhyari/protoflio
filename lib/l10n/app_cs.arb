@@ -313,6 +313,8 @@
   "uiPortfolioSections": "Sekce portfolia",
   "uiDownloadResumePdf": "Stáhnout životopis (PDF)",
   "uiRetry": "Zkusit znovu",
+  "uiWebsite": "Web",
+  "expRoleAtCompany": "{role} ve firmě {company}, {period}",
   "uiDragCardsHint": "Přetáhněte karty, kliknutím otočíte, zamícháním přeskupíte",
   "uiTapSwipeHint": "Klepnutím otočíte, přejetím změníte roli",
   "uiTapToReturn": "Klepnutím zpět",

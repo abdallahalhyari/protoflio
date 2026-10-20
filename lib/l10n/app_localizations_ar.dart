@@ -985,6 +985,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiRetry => 'إعادة المحاولة';
 
   @override
+  String get uiWebsite => 'الموقع';
+
+  @override
+  String expRoleAtCompany(String role, String company, String period) {
+    return '$role في $company، $period';
+  }
+
+  @override
   String get uiDragCardsHint =>
       'اسحب البطاقات · انقر للقلب · اخلط لإعادة الترتيب';
 

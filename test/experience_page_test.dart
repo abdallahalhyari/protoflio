@@ -64,7 +64,7 @@ void main() {
       expect(find.text('NatHealth'), findsOneWidget);
     });
 
-    testWidgets('desktop career grid reads chronologically across each row',
+    testWidgets('desktop career timeline reads chronologically top to bottom',
         (tester) async {
       await tester.pumpWidget(_wrap(const ExperiencePage()));
       await tester.pumpAndSettle();
@@ -74,11 +74,9 @@ void main() {
           tester.getTopLeft(find.byType(ExperienceCard).at(index)),
       ];
       expect(positions, hasLength(4));
-      expect(positions[0].dy, closeTo(positions[1].dy, 1));
-      expect(positions[0].dx, lessThan(positions[1].dx));
-      expect(positions[2].dy, greaterThan(positions[0].dy));
-      expect(positions[2].dy, closeTo(positions[3].dy, 1));
-      expect(positions[2].dx, lessThan(positions[3].dx));
+      expect(positions[0].dy, lessThan(positions[1].dy));
+      expect(positions[1].dy, lessThan(positions[2].dy));
+      expect(positions[2].dy, lessThan(positions[3].dy));
     });
   });
 }
