@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/features/contact/presentation/widgets/contact_header.dart';
-import 'package:profile/features/about/presentation/pages/about_contact_page.dart';
+import 'package:profile/core/config/profile_links.dart';
 import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/features/about/presentation/pages/about_contact_page.dart';
+import 'package:profile/features/about/presentation/widgets/credential_sheet.dart';
+import 'package:profile/l10n/app_localizations.dart';
 
 Widget _wrap(
   Widget child, [
@@ -24,30 +25,47 @@ Widget _wrap(
 
 void main() {
   group('Contact Widgets Test Suite', () {
-    testWidgets('ContactHeader renders feature strip, headline, and lede',
-        (tester) async {
-      await tester.pumpWidget(_wrap(const ContactHeader()));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Contact'), findsOneWidget);
-      expect(find.text("Have a difficult mobile problem?"), findsOneWidget);
-      expect(
-        find.textContaining('I am looking for a senior mobile role'),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('AboutContactPage renders direct contact details and channels',
+    testWidgets('AboutContactPage lists every way to reach the holder',
         (tester) async {
       await tester.pumpWidget(_wrap(const AboutContactPage()));
       await tester.pumpAndSettle();
 
-      expect(find.text('alhyariabdallh@gmail.com'), findsWidgets);
-      expect(find.text('+962-787032264'), findsWidgets);
-      expect(find.text('WhatsApp'), findsWidgets);
-      expect(find.text('LinkedIn'), findsWidgets);
-      expect(find.text('Direct Call'), findsWidgets);
+      expect(find.textContaining(ProfileLinks.email), findsWidgets);
+      expect(find.textContaining(ProfileLinks.phoneDisplay), findsWidgets);
+      expect(find.text('LinkedIn'), findsOneWidget);
+      expect(find.text('WhatsApp'), findsOneWidget);
+      expect(find.text('Phone'), findsOneWidget);
+      expect(find.text('CV'), findsOneWidget);
+      expect(find.text('Call'), findsOneWidget);
+      expect(find.text('Download'), findsOneWidget);
       expect(find.text('GitHub'), findsNothing);
+    });
+
+    testWidgets('each channel row is one tap target that opens its link',
+        (tester) async {
+      final opened = <String>[];
+      var cv = 0;
+      await tester.pumpWidget(_wrap(
+        CredentialSheet(
+          part: CredentialSheetPart.reach,
+          isDesktop: true,
+          onSendEmail: () {},
+          onCopyEmail: () {},
+          onOpenUrl: opened.add,
+          onOpenCv: () => cv++,
+        ),
+      ));
+      await tester.pumpAndSettle();
+
+      // Tapping the label, not the action word, still fires the row.
+      for (final label in ['LinkedIn', 'Phone', 'CV']) {
+        await tester.ensureVisible(find.text(label));
+        await tester.tap(find.text(label));
+        await tester.pump();
+      }
+
+      expect(opened, [ProfileLinks.linkedIn, 'tel:${ProfileLinks.phoneRaw}']);
+      expect(cv, 1);
     });
 
     testWidgets('AboutContactPage stays readable on compact Arabic RTL',
@@ -65,8 +83,10 @@ void main() {
         Directionality.of(tester.element(find.byType(AboutContactPage))),
         TextDirection.rtl,
       );
-      expect(find.text('alhyariabdallh@gmail.com'), findsWidgets);
-      expect(find.text('WhatsApp'), findsWidgets);
+      expect(find.textContaining(ProfileLinks.email), findsWidgets);
+      // Labels are localized; the holder's name comes from the Arabic ARB.
+      expect(find.text('واتساب'), findsOneWidget);
+      expect(find.text('الحياري'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
   });

@@ -7,26 +7,21 @@ import 'package:profile/core/config/profile_links.dart';
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/services/cv_service.dart';
 import 'package:profile/core/services/sound_service.dart';
-import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/features/contact/presentation/widgets/contact_header.dart';
+import 'package:profile/features/about/presentation/about_navigation.dart';
+import 'package:profile/features/about/presentation/widgets/credential_sheet.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/utils/career_facts.dart';
 import 'package:profile/shared/utils/mailto.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
-import 'package:profile/shared/widgets/editorial_chip.dart';
 import 'package:profile/shared/widgets/page_activity.dart';
-import 'package:profile/shared/widgets/pulsing_dot.dart';
-import 'package:profile/shared/widgets/retrying_asset_image.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
-import 'package:profile/shared/widgets/scroll_reveal.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 import 'package:profile/shared/widgets/section_masthead.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// Minimalist, high-impact Executive About & Direct Contact Page.
-/// Rebuilt to provide maximum clarity and scannability: direct contact,
-/// executive bio, core impact metrics, and resume download in one clean view.
+/// About & contact: the reverse of the site's credential. One sheet with the
+/// ways to reach the holder first, then who they are, then the card's
+/// machine-readable zone.
 class AboutContactPage extends StatefulWidget {
   final bool isContinuousMobile;
   final int? initialTab;
@@ -51,13 +46,6 @@ class _AboutContactPageState extends State<AboutContactPage>
   @override
   bool get wantKeepAlive => true;
 
-  static const _email = ProfileLinks.email;
-  static const _phone = ProfileLinks.phone;
-  static const _phoneRaw = ProfileLinks.phoneRaw;
-  static const _whatsAppUrl = ProfileLinks.whatsApp;
-  static const _linkedInUrl = ProfileLinks.linkedIn;
-  static const _linkedInHandle = ProfileLinks.linkedInHandle;
-
   @override
   void dispose() {
     _focusNode.dispose();
@@ -66,37 +54,36 @@ class _AboutContactPageState extends State<AboutContactPage>
 
   Future<void> _open(String url) async {
     SoundService.instance.playClick();
-    final uri = Uri.parse(url);
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 
-  Future<void> _openMail({required String subject, String? body}) async {
+  Future<void> _openMail() async {
     SoundService.instance.playClick();
     Analytics.ctaEmail();
-    final mailUri = mailtoUri(_email, subject: subject, body: body);
+    final mailUri = mailtoUri(
+      ProfileLinks.email,
+      subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
+    );
     await launchUrl(mailUri, mode: LaunchMode.externalApplication);
   }
 
-  Future<void> _copy(BuildContext context, String value) async {
+  Future<void> _copyEmail(BuildContext context) async {
+    const value = ProfileLinks.email;
     SoundService.instance.playClick();
-    await Clipboard.setData(ClipboardData(text: value));
+    await Clipboard.setData(const ClipboardData(text: value));
     if (!context.mounted) return;
 
-    final announcement =
-        AppLocalizations.of(context)?.copiedToClipboard(value) ??
-            'Copied $value to clipboard';
+    final l10n = AppLocalizations.of(context);
     unawaited(
       SemanticsService.sendAnnouncement(
         View.of(context),
-        announcement,
+        l10n?.copiedToClipboard(value) ?? 'Copied $value to clipboard',
         Directionality.of(context),
       ),
     );
-
     AppToast.showGlass(
       context,
-      message:
-          AppLocalizations.of(context)?.emailCopied(value) ?? 'Copied: $value',
+      message: l10n?.emailCopied(value) ?? 'Copied: $value',
     );
   }
 
@@ -105,9 +92,17 @@ class _AboutContactPageState extends State<AboutContactPage>
     super.build(context);
     final l10n = AppLocalizations.of(context)!;
     final isDesktop = AppBreakpoints.isDesktop(context);
-    final isDark = context.isDarkMode;
-    final scheme = Theme.of(context).colorScheme;
-    final accent = scheme.primary;
+
+    // The phone column lists About and Contact as separate sections, both
+    // backed by this page; give each its half of the sheet instead of the
+    // whole sheet twice. The desktop pager shows it once, in full.
+    final part = !widget.isContinuousMobile
+        ? CredentialSheetPart.full
+        : switch (widget.initialTab) {
+            AboutTabs.contact => CredentialSheetPart.reach,
+            AboutTabs.profile => CredentialSheetPart.holder,
+            _ => CredentialSheetPart.full,
+          };
 
     return Focus(
       focusNode: _focusNode,
@@ -117,766 +112,28 @@ class _AboutContactPageState extends State<AboutContactPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Section Masthead
-            SectionMasthead(
-              kicker: l10n.aboutHeaderKicker,
-              title: l10n.aboutTitle,
-              subtitle: l10n.aboutHeaderSubtitle,
+            // The reach half opens on its own question, under the
+            // section divider that already names it.
+            if (part != CredentialSheetPart.reach) ...[
+              SectionMasthead(
+                kicker: l10n.aboutHeaderKicker,
+                title: l10n.aboutTitle,
+                subtitle: l10n.aboutHeaderSubtitle,
+                isDesktop: isDesktop,
+              ),
+              const SizedBox(height: AppSpacing.sectionContent),
+            ],
+            CredentialSheet(
+              part: part,
               isDesktop: isDesktop,
-            ),
-            const SizedBox(height: AppSpacing.md),
-
-            // Contact Headline Header
-            const ContactHeader(),
-            const SizedBox(height: AppSpacing.lg),
-
-            // Direct Email & Action Hero Card
-            ScrollReveal(
-              child:
-                  _buildEmailHeroCard(context, isDesktop, isDark, accent, l10n),
-            ),
-            const SizedBox(height: AppSpacing.xl),
-
-            // Executive Bio Card
-            ScrollReveal.stagger(
-              index: 1,
-              child: _buildExecutiveBioCard(
-                  context, isDesktop, isDark, accent, l10n),
-            ),
-            const SizedBox(height: AppSpacing.xl),
-
-            // Direct Channels Grid (Phone, WhatsApp, LinkedIn, Direct Call)
-            ScrollReveal.stagger(
-              index: 2,
-              child:
-                  _buildChannelsGrid(context, isDesktop, isDark, accent, l10n),
+              onSendEmail: () => unawaited(_openMail()),
+              onCopyEmail: () => unawaited(_copyEmail(context)),
+              onOpenUrl: (url) => unawaited(_open(url)),
+              onOpenCv: () => unawaited(CvService.open(context)),
             ),
             const SizedBox(height: AppSpacing.xxl),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildExecutiveBioCard(
-    BuildContext context,
-    bool isDesktop,
-    bool isDark,
-    Color accent,
-    AppLocalizations l10n,
-  ) {
-    final avatar = Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          width: isDesktop ? 96 : 80,
-          height: isDesktop ? 96 : 80,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: isDark ? AppColors.darkCard : Colors.white,
-            border: Border.all(
-              color: context.glassBorderStrong,
-              width: 1.5,
-            ),
-          ),
-          padding: const EdgeInsets.all(3),
-          child: ClipOval(
-            child: ColoredBox(
-              color: isDark ? AppColors.darkCard : Colors.white,
-              child: RetryingAssetImage(
-                'assets/my_image.webp',
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-                filterQuality: FilterQuality.high,
-                cacheWidth: 320,
-                semanticLabel: l10n.semanticPortrait,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: Container(
-            width: 24,
-            height: 24,
-            decoration: BoxDecoration(
-              color: isDark ? AppColors.darkCard : Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: isDark ? AppColors.tealLight : AppColors.tealDeep,
-                width: 2,
-              ),
-            ),
-            child: Icon(
-              Icons.verified_rounded,
-              size: 14,
-              color: isDark ? AppColors.tealLight : AppColors.tealDeep,
-            ),
-          ),
-        ),
-      ],
-    );
-
-    final details = Column(
-      crossAxisAlignment:
-          isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-      children: [
-        ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: (MediaQuery.sizeOf(context).width - 48)
-                .clamp(0.0, double.infinity),
-          ),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: isDesktop
-                ? AlignmentDirectional.centerStart
-                : AlignmentDirectional.center,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Abdallah Alhyari',
-                  style: TextStyle(
-                    fontFamily: AppTypography.displayFont,
-                    fontSize: isDesktop ? 26 : 22,
-                    fontWeight: FontWeight.w900,
-                    color: context.onSurface,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: accent.withValues(alpha: isDark ? 0.18 : 0.12),
-                    borderRadius: BorderRadius.circular(AppRadius.xs),
-                    border: Border.all(
-                      color: accent.withValues(alpha: isDark ? 0.4 : 0.3),
-                    ),
-                  ),
-                  child: Text(
-                    'STAFF / LEAD',
-                    style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
-                      fontSize: AppTypography.label,
-                      fontWeight: FontWeight.w800,
-                      color: context.adaptiveAccentText(accent),
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          'Senior Mobile Systems Engineer · Mobile Solutions Architect',
-          textAlign: isDesktop ? TextAlign.start : TextAlign.center,
-          style: TextStyle(
-            fontSize: isDesktop ? AppTypography.body : AppTypography.label,
-            fontWeight: FontWeight.w700,
-            color: context.adaptiveAccentText(accent),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          '${CareerFacts.yearsOfExperience()}+ years architecting production Flutter & native Android systems across healthcare, HIS/LMS, and telematics. Specializing in NFC smart-card APDU protocols, zero-loss offline sync, and zero-trust JWT security.',
-          textAlign: isDesktop ? TextAlign.start : TextAlign.center,
-          style: TextStyle(
-            fontSize: AppTypography.body,
-            height: 1.5,
-            color: context.onSurface,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Wrap(
-          alignment: isDesktop ? WrapAlignment.start : WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
-          runSpacing: 6,
-          children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: AlignmentDirectional.centerStart,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.05)
-                      : Colors.white.withValues(alpha: 0.8),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: AppColors.tealLight.withValues(alpha: 0.4),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    PulsingDot(color: AppColors.tealLight),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Available for Senior Roles',
-                      style: TextStyle(
-                        color: context.greenText,
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: AlignmentDirectional.centerStart,
-              child: EditorialChip(
-                label: 'Amman, JO ➔ Brno, CZ',
-                icon: Icons.flight_takeoff_rounded,
-                variant: ChipVariant.glass,
-              ),
-            ),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: AlignmentDirectional.centerStart,
-              child: EditorialChip(
-                label: 'Work Permit Exempt in CZ',
-                icon: Icons.verified_user_rounded,
-                variant: ChipVariant.glass,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-
-    final stats = [
-      ('${CareerFacts.yearsOfExperience()}+', 'Years Experience'),
-      ('10+', 'Production Apps'),
-      ('100k+', 'Active Users'),
-      ('99.9%', 'Offline SLA'),
-    ];
-
-    return _HoverGlassCard(
-      padding: EdgeInsets.all(isDesktop ? AppSpacing.xl : AppSpacing.lg),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          isDesktop
-              ? Row(
-                  children: [
-                    avatar,
-                    const SizedBox(width: AppSpacing.lg),
-                    Expanded(child: details),
-                  ],
-                )
-              : Column(
-                  children: [
-                    avatar,
-                    const SizedBox(height: AppSpacing.md),
-                    details,
-                  ],
-                ),
-          const SizedBox(height: AppSpacing.lg),
-          Container(height: 1, color: context.divider),
-          const SizedBox(height: AppSpacing.md),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final columns = constraints.maxWidth >= 760
-                  ? 4
-                  : (constraints.maxWidth >= 360 ? 2 : 1);
-              final spacing = AppSpacing.sm;
-              final itemWidth =
-                  (constraints.maxWidth - (spacing * (columns - 1))) / columns;
-
-              return Wrap(
-                spacing: spacing,
-                runSpacing: spacing,
-                children: [
-                  for (final stat in stats)
-                    SizedBox(
-                      width: itemWidth,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.md,
-                          vertical: AppSpacing.sm,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: 0.025)
-                              : AppColors.ink50,
-                          borderRadius: BorderRadius.circular(AppRadius.sm),
-                          border: Border.all(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.08)
-                                : AppColors.ink200,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              stat.$1,
-                              style: TextStyle(
-                                fontFamily: AppTypography.displayFont,
-                                fontSize: AppTypography.heading,
-                                fontWeight: FontWeight.w800,
-                                color: context.adaptiveAccentText(accent),
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              stat.$2,
-                              style: TextStyle(
-                                fontSize: AppTypography.label,
-                                fontWeight: FontWeight.w600,
-                                color: context.mutedText,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                ],
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEmailHeroCard(
-    BuildContext context,
-    bool isDesktop,
-    bool isDark,
-    Color accent,
-    AppLocalizations l10n,
-  ) {
-    return _HoverGlassCard(
-      padding: EdgeInsets.all(isDesktop ? AppSpacing.xl : AppSpacing.lg),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final isWide = isDesktop && constraints.maxWidth > 650;
-          if (isWide) {
-            return Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 8,
-                            height: 8,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: accent,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'DIRECT EXECUTIVE EMAIL',
-                            style: TextStyle(
-                              fontFamily: AppTypography.monoFont,
-                              fontSize: AppTypography.label,
-                              fontWeight: FontWeight.w900,
-                              color: context.adaptiveAccentText(accent),
-                              letterSpacing: 0.8,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: AlignmentDirectional.centerStart,
-                        child: SelectableText(
-                          _email,
-                          style: TextStyle(
-                            fontSize: AppTypography.heading,
-                            fontWeight: FontWeight.w900,
-                            color: context.onSurface,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Direct response within 24 hours.',
-                        style: TextStyle(
-                          fontSize: AppTypography.label,
-                          color: context.mutedText,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.xl),
-                Flexible(
-                  child: Wrap(
-                    spacing: 10,
-                    runSpacing: 8,
-                    children: [
-                      FilledButton.icon(
-                        onPressed: () => _openMail(
-                          subject:
-                              '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
-                        ),
-                        icon: const Icon(Icons.send_rounded, size: 16),
-                        label: Text(l10n.contactSendEmailBtn),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: accent,
-                          foregroundColor:
-                              Theme.of(context).colorScheme.onPrimary,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppRadius.pill),
-                          ),
-                          textStyle: const TextStyle(
-                            fontSize: AppTypography.label,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: () => _copy(context, _email),
-                        icon: const Icon(Icons.content_copy_rounded, size: 14),
-                        label: Text(l10n.contactCopyAddressBtn),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: context.onSurface,
-                          side: BorderSide(
-                            color: isDark
-                                ? Colors.white
-                                    .withValues(alpha: AppAlpha.border)
-                                : AppColors.ink300,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppRadius.pill),
-                          ),
-                          textStyle: const TextStyle(
-                            fontSize: AppTypography.label,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () => CvService.open(context),
-                        icon: const Icon(Icons.download_rounded, size: 16),
-                        label: Text(l10n.uiDownloadResumePdf),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              isDark ? AppColors.darkSurface : AppColors.ink100,
-                          foregroundColor: context.onSurface,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppRadius.pill),
-                          ),
-                          textStyle: const TextStyle(
-                            fontSize: AppTypography.label,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          }
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: accent,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(
-                      'DIRECT EXECUTIVE EMAIL',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w900,
-                        color: context.adaptiveAccentText(accent),
-                        letterSpacing: 0.8,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: SelectableText(
-                  _email,
-                  style: TextStyle(
-                    fontSize: AppTypography.title,
-                    fontWeight: FontWeight.w900,
-                    color: context.onSurface,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  FilledButton.icon(
-                    onPressed: () => _openMail(
-                      subject:
-                          '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
-                    ),
-                    icon: const Icon(Icons.send_rounded, size: 16),
-                    label: Text(l10n.contactSendEmailBtn),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: accent,
-                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                      ),
-                      textStyle: const TextStyle(
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
-                  OutlinedButton.icon(
-                    onPressed: () => _copy(context, _email),
-                    icon: const Icon(Icons.content_copy_rounded, size: 14),
-                    label: Text(l10n.contactCopyAddressBtn),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: context.onSurface,
-                      side: BorderSide(
-                        color: isDark
-                            ? Colors.white.withValues(alpha: AppAlpha.border)
-                            : AppColors.ink300,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                      ),
-                      textStyle: const TextStyle(
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () => CvService.open(context),
-                    icon: const Icon(Icons.download_rounded, size: 16),
-                    label: Text(l10n.uiDownloadResumePdf),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          isDark ? AppColors.darkSurface : AppColors.ink100,
-                      foregroundColor: context.onSurface,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.pill),
-                      ),
-                      textStyle: const TextStyle(
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildChannelsGrid(
-    BuildContext context,
-    bool isDesktop,
-    bool isDark,
-    Color accent,
-    AppLocalizations l10n,
-  ) {
-    final channels = [
-      (
-        title: 'LinkedIn',
-        handle: _linkedInHandle,
-        icon: Icons.business_rounded,
-        url: _linkedInUrl,
-        isExternal: true,
-      ),
-      (
-        title: 'WhatsApp',
-        handle: _phone,
-        icon: Icons.chat_rounded,
-        url: _whatsAppUrl,
-        isExternal: true,
-      ),
-      (
-        title: 'Direct Call',
-        handle: _phone,
-        icon: Icons.phone_rounded,
-        url: 'tel:$_phoneRaw',
-        isExternal: false,
-      ),
-    ];
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final cols = isDesktop ? 3 : (constraints.maxWidth > 550 ? 2 : 1);
-        final itemWidth =
-            ((constraints.maxWidth - ((cols - 1) * AppSpacing.md)) / cols)
-                .clamp(0.0, double.infinity);
-
-        return Wrap(
-          spacing: AppSpacing.md,
-          runSpacing: AppSpacing.md,
-          children: [
-            for (final ch in channels)
-              SizedBox(
-                width: itemWidth,
-                child: Container(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  decoration: BoxDecoration(
-                    color: context.cardGlass,
-                    borderRadius: BorderRadius.circular(AppRadius.card),
-                    border: Border.all(color: context.glassBorder),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: accent.withValues(alpha: isDark ? 0.15 : 0.08),
-                          borderRadius: BorderRadius.circular(AppRadius.xs),
-                        ),
-                        child: Icon(ch.icon,
-                            size: 18,
-                            color: context.adaptiveAccentText(accent)),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                ch.title,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: AppTypography.label,
-                                  fontWeight: FontWeight.w800,
-                                  color: context.mutedText,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: AlignmentDirectional.centerStart,
-                              child: Text(
-                                ch.handle,
-                                style: TextStyle(
-                                  fontSize: AppTypography.label,
-                                  fontWeight: FontWeight.w900,
-                                  color: context.onSurface,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.arrow_outward_rounded, size: 16),
-                        color: context.adaptiveAccentText(accent),
-                        onPressed: () => unawaited(_open(ch.url)),
-                        tooltip: 'Open ${ch.title}',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class _HoverGlassCard extends StatefulWidget {
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-
-  const _HoverGlassCard({
-    required this.child,
-    required this.padding,
-  });
-
-  @override
-  State<_HoverGlassCard> createState() => _HoverGlassCardState();
-}
-
-class _HoverGlassCardState extends State<_HoverGlassCard> {
-  bool _hovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = context.isDarkMode;
-    final scheme = Theme.of(context).colorScheme;
-    final accent = scheme.primary;
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        // Hover still changes the border and lift; with reduced motion it
-        // just snaps instead of easing.
-        duration: AppMedia.reduceMotion(context)
-            ? Duration.zero
-            : AppMotion.cardHover,
-        curve: AppMotion.emphasized,
-        padding: widget.padding,
-        decoration: BoxDecoration(
-          color: context.cardGlass,
-          borderRadius: BorderRadius.circular(AppRadius.container),
-          border: Border.all(
-            color: _hovered
-                ? accent.withValues(alpha: isDark ? 0.45 : 0.35)
-                : context.glassBorderStrong,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: _hovered
-                  ? accent.withValues(alpha: isDark ? 0.14 : 0.07)
-                  : (isDark ? Colors.black38 : AppColors.shadowSoft),
-              blurRadius: _hovered ? 28 : 24,
-              offset: Offset(0, _hovered ? 10 : 8),
-            ),
-          ],
-        ),
-        child: widget.child,
       ),
     );
   }

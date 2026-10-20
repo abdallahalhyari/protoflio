@@ -264,6 +264,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactCall => 'Call';
 
   @override
+  String get contactDownload => 'Download';
+
+  @override
   String get contactWhatsapp => 'WhatsApp';
 
   @override
@@ -1259,7 +1262,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutHeaderSubtitle =>
-      'Senior mobile systems engineer and solutions architect.';
+      'Who I am, where I\'m headed, and how to reach me.';
 
   @override
   String get aboutTabProfile => 'Profile';

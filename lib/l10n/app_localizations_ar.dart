@@ -263,6 +263,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactCall => 'اتصال';
 
   @override
+  String get contactDownload => 'تنزيل';
+
+  @override
   String get contactWhatsapp => 'واتساب';
 
   @override
@@ -1252,7 +1255,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutHeaderKicker => 'نبذة وتواصل';
 
   @override
-  String get aboutHeaderSubtitle => 'مهندس أنظمة محمولة أول ومهندس حلول.';
+  String get aboutHeaderSubtitle => 'من أنا، وإلى أين أتجه، وكيف تتواصل معي.';
 
   @override
   String get aboutTabProfile => 'الملف';

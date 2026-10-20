@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/contact/presentation/widgets/contact_header.dart';
+import 'package:profile/features/about/presentation/widgets/credential_sheet.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_pager.dart';
@@ -32,7 +32,7 @@ void main() {
 
     final cases = <int, Type>{
       3: SkillsHeader,
-      6: ContactHeader,
+      6: CredentialSheet,
       2: ExperienceHeader,
     };
     for (final entry in cases.entries) {
@@ -40,7 +40,7 @@ void main() {
       for (int i = 0; i < 25; i++) {
         await tester.pump(const Duration(milliseconds: 100));
       }
-      final top = tester.getTopLeft(find.byType(entry.value).first).dy;
+      final top = tester.getTopLeft(find.byType(entry.value).last).dy;
       expect(top, inInclusiveRange(40.0, 260.0),
           reason: 'section ${entry.key} header should sit under the bar');
       expect(controller.pageIndex.value, entry.key);

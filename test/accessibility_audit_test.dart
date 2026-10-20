@@ -10,7 +10,7 @@ import 'package:profile/features/engineering/data/datasources/architecture_data.
 
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
-import 'package:profile/features/contact/presentation/widgets/contact_header.dart';
+import 'package:profile/features/about/presentation/widgets/credential_sheet.dart';
 import 'package:profile/features/shell/presentation/widgets/desktop_toolbar.dart';
 import 'package:profile/features/engineering/presentation/widgets/architecture_diagram_card.dart';
 import 'package:profile/features/engineering/presentation/widgets/engineering_header.dart';
@@ -298,9 +298,20 @@ void main() {
       expect(headerFinder, findsOneWidget);
     });
 
-    testWidgets('ContactHeader declares header landmark', (tester) async {
+    testWidgets('Contact sheet declares its question as a header landmark',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(
-        child: const ContactHeader(),
+        // In the app the sheet always sits inside the page's scroll shell.
+        child: SingleChildScrollView(
+          child: CredentialSheet(
+            part: CredentialSheetPart.reach,
+            isDesktop: true,
+            onSendEmail: () {},
+            onCopyEmail: () {},
+            onOpenUrl: (_) {},
+            onOpenCv: () {},
+          ),
+        ),
       ));
       await tester.pumpAndSettle();
 

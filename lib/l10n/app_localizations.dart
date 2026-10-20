@@ -568,6 +568,12 @@ abstract class AppLocalizations {
   /// **'Call'**
   String get contactCall;
 
+  /// No description provided for @contactDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get contactDownload;
+
   /// No description provided for @contactWhatsapp.
   ///
   /// In en, this message translates to:
@@ -2323,7 +2329,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutHeaderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Senior mobile systems engineer and solutions architect.'**
+  /// **'Who I am, where I\'m headed, and how to reach me.'**
   String get aboutHeaderSubtitle;
 
   /// No description provided for @aboutTabProfile.

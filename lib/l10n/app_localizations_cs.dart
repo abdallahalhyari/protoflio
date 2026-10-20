@@ -266,6 +266,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get contactCall => 'Volat';
 
   @override
+  String get contactDownload => 'Stáhnout';
+
+  @override
   String get contactWhatsapp => 'WhatsApp';
 
   @override
@@ -1263,7 +1266,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get aboutHeaderSubtitle =>
-      'Senior inženýr mobilních systémů a architekt řešení.';
+      'Kdo jsem, kam směřuji a jak mě zastihnout.';
 
   @override
   String get aboutTabProfile => 'Profil';
