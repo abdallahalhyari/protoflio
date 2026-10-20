@@ -174,11 +174,13 @@ class _AboutContactPageState extends State<AboutContactPage>
           child: ClipOval(
             child: ColoredBox(
               color: isDark ? AppColors.darkCard : Colors.white,
-              child: const RetryingAssetImage(
+              child: RetryingAssetImage(
                 'assets/my_image.webp',
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
                 filterQuality: FilterQuality.high,
+                cacheWidth: 320,
+                semanticLabel: l10n.semanticPortrait,
               ),
             ),
           ),
@@ -870,4 +872,3 @@ class _HoverGlassCardState extends State<_HoverGlassCard> {
     );
   }
 }
-

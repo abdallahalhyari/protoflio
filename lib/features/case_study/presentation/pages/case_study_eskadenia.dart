@@ -290,6 +290,7 @@ class _Masthead extends StatelessWidget {
               child: RetryingAssetImage(
                 'assets/images/projects/eskadenia.webp',
                 fit: BoxFit.cover,
+                excludeFromSemantics: true,
               ),
             ),
           ),

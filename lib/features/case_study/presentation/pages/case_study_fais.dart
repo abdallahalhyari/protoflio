@@ -288,6 +288,7 @@ class _Masthead extends StatelessWidget {
               child: RetryingAssetImage(
                 'assets/images/projects/fais.webp',
                 fit: BoxFit.cover,
+                excludeFromSemantics: true,
               ),
             ),
           ),

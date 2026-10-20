@@ -19,6 +19,7 @@ class RetryingAssetImage extends StatefulWidget {
     this.cacheHeight,
     this.filterQuality = FilterQuality.medium,
     this.semanticLabel,
+    this.excludeFromSemantics = false,
     this.gaplessPlayback = false,
     this.maxRetries = 2,
   });
@@ -30,6 +31,11 @@ class RetryingAssetImage extends StatefulWidget {
   final int? cacheHeight;
   final FilterQuality filterQuality;
   final String? semanticLabel;
+
+  /// Marks the image purely decorative — no semantics node at all. Use when
+  /// a labelled container already names the thing the image depicts, so a
+  /// screen reader doesn't also stop on an unlabelled "image".
+  final bool excludeFromSemantics;
   final bool gaplessPlayback;
   final int maxRetries;
 
@@ -75,6 +81,7 @@ class _RetryingAssetImageState extends State<RetryingAssetImage> {
         cacheHeight: widget.cacheHeight,
         filterQuality: widget.filterQuality,
         semanticLabel: widget.semanticLabel,
+        excludeFromSemantics: widget.excludeFromSemantics,
         gaplessPlayback: widget.gaplessPlayback,
         errorBuilder: (context, error, stackTrace) {
           _scheduleRetry();

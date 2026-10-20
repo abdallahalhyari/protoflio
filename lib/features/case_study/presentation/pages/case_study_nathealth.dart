@@ -284,6 +284,7 @@ class _Masthead extends StatelessWidget {
               child: RetryingAssetImage(
                 'assets/images/projects/nathealth.webp',
                 fit: BoxFit.cover,
+                excludeFromSemantics: true,
               ),
             ),
           ),

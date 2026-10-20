@@ -67,6 +67,9 @@ class CardHeroImage extends StatelessWidget {
                     fit: BoxFit.cover,
                     cacheWidth: 800,
                     gaplessPlayback: true,
+                    // The card names the project in text below; the hero art
+                    // is decorative branding, so keep it off the a11y tree.
+                    excludeFromSemantics: true,
                   ),
                 ),
               ),
