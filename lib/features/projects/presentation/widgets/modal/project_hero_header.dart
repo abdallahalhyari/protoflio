@@ -36,7 +36,13 @@ class ProjectHeroHeader extends StatelessWidget {
             height: isDesktop ? 300 : 200,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(project.heroImagePath!),
+                // Decode to the banner's render width, not the webp's full
+                // resolution — the modal hero is at most 800px wide.
+                image: ResizeImage(
+                  AssetImage(project.heroImagePath!),
+                  width: 800,
+                  policy: ResizeImagePolicy.fit,
+                ),
                 fit: BoxFit.cover,
               ),
             ),

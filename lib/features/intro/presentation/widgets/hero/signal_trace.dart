@@ -67,8 +67,18 @@ class _SignalTraceState extends State<SignalTrace>
     });
   }
 
+  // The packet's y only moves the cursor, which repaints inside its own
+  // AnimatedBuilder — no rebuild needed for that. The rows and the message
+  // box change only when the active layer index crosses a boundary (~5
+  // times over the run), so rebuild just then instead of every frame.
+  int _lastActive = -2;
   void _onTick() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    final active = _position().active;
+    if (active != _lastActive) {
+      _lastActive = active;
+      setState(() {});
+    }
   }
 
   void _onReveal(AnimationStatus status) {
@@ -397,17 +407,25 @@ class _SignalTraceState extends State<SignalTrace>
         child: Stack(
           children: [
             Positioned.fill(
-              child: CustomPaint(
-                painter: _TracePainter(
-                  steps: _steps,
-                  heights: _heights,
-                  active: pos.active,
-                  packetY: _run.value > 0 ? pos.y : null,
-                  rule: rule,
-                  gold: gold,
-                  live: live,
-                  rtl: Directionality.of(context) == TextDirection.rtl,
-                ),
+              child: AnimatedBuilder(
+                animation: _run,
+                builder: (context, _) {
+                  // Recompute the live position per frame here so only the
+                  // painter repaints — the surrounding rows stay put.
+                  final p = _position();
+                  return CustomPaint(
+                    painter: _TracePainter(
+                      steps: _steps,
+                      heights: _heights,
+                      active: p.active,
+                      packetY: _run.value > 0 ? p.y : null,
+                      rule: rule,
+                      gold: gold,
+                      live: live,
+                      rtl: Directionality.of(context) == TextDirection.rtl,
+                    ),
+                  );
+                },
               ),
             ),
             Column(children: [for (var i = 0; i < _steps; i++) stepRow(i)]),

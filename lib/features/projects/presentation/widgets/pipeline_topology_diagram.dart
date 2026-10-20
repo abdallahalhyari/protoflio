@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
+import 'package:profile/shared/widgets/viewport_ticker_gate.dart';
 
 /// Renders a horizontal architectural pipeline diagram for a given project,
 /// showing key pipeline stages and animated technology packet flow.
@@ -57,91 +58,93 @@ class PipelineTopologyDiagram extends StatelessWidget {
       pipeline = project.stack.take(5).toList();
     }
 
-    return Semantics(
-      container: true,
-      label:
-          'Pipeline architecture for ${project.name}: stages: ${pipeline.join(" to ")}',
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        padding:
-            EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
-        decoration: BoxDecoration(
-          color: isDark
-              ? Colors.black.withValues(alpha: AppAlpha.border)
-              : AppColors.ink50,
-          borderRadius: BorderRadius.circular(AppRadius.chip),
-          border: Border.all(
-              color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 6,
-                  height: 6,
-                  decoration: const BoxDecoration(
-                    color: AppColors.tealLight,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    'Production pipeline topology',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: scheme.primary,
-                      fontSize: isDesktop ? 9.0 : 8.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+    return ViewportTickerGate(
+      child: Semantics(
+        container: true,
+        label:
+            'Pipeline architecture for ${project.name}: stages: ${pipeline.join(" to ")}',
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          padding:
+              EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
+          decoration: BoxDecoration(
+            color: isDark
+                ? Colors.black.withValues(alpha: AppAlpha.border)
+                : AppColors.ink50,
+            borderRadius: BorderRadius.circular(AppRadius.chip),
+            border: Border.all(
+                color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  for (int i = 0; i < pipeline.length; i++) ...[
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 2.5),
-                      decoration: BoxDecoration(
-                        color: scheme.primary
-                            .withValues(alpha: isDark ? 0.08 : 0.06),
-                        borderRadius:
-                            BorderRadius.circular(AppRadius.hairlineWide),
-                        border: Border.all(
-                            color: scheme.primary
-                                .withValues(alpha: isDark ? 0.3 : 0.25)),
-                      ),
-                      child: Text(
-                        pipeline[i],
-                        style: TextStyle(
-                          color: isDark
-                              ? Colors.white.withValues(alpha: 0.95)
-                              : AppColors.ink900,
-                          fontSize: isDesktop
-                              ? AppTypography.label
-                              : AppTypography.label,
-                          fontWeight: FontWeight.w700,
-                        ),
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: const BoxDecoration(
+                      color: AppColors.tealLight,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      'Production pipeline topology',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: scheme.primary,
+                        fontSize: isDesktop ? 9.0 : 8.0,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
-                    if (i < pipeline.length - 1)
-                      _AnimatedPipelineArrow(
-                        color: scheme.primary,
-                        size: isDesktop ? 12.0 : 10.0,
-                        index: i,
-                      ),
-                  ],
+                  ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 5),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    for (int i = 0; i < pipeline.length; i++) ...[
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 2.5),
+                        decoration: BoxDecoration(
+                          color: scheme.primary
+                              .withValues(alpha: isDark ? 0.08 : 0.06),
+                          borderRadius:
+                              BorderRadius.circular(AppRadius.hairlineWide),
+                          border: Border.all(
+                              color: scheme.primary
+                                  .withValues(alpha: isDark ? 0.3 : 0.25)),
+                        ),
+                        child: Text(
+                          pipeline[i],
+                          style: TextStyle(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.95)
+                                : AppColors.ink900,
+                            fontSize: isDesktop
+                                ? AppTypography.label
+                                : AppTypography.label,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      if (i < pipeline.length - 1)
+                        _AnimatedPipelineArrow(
+                          color: scheme.primary,
+                          size: isDesktop ? 12.0 : 10.0,
+                          index: i,
+                        ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

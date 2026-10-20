@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/shared/widgets/viewport_ticker_gate.dart';
 
 /// Renders the end-to-end NatHealth system architecture topology diagram,
 /// highlighting NFC Hardware, Native Kotlin APDU Channel, Flutter UI,
@@ -19,67 +20,70 @@ class NfcArchitectureDiagram extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: EdgeInsets.all(isDesktop ? 16 : 12),
-      decoration: BoxDecoration(
-        color: scheme.primary.withValues(alpha: isDark ? 0.05 : 0.02),
-        borderRadius: BorderRadius.circular(AppRadius.smd),
-        border: Border.all(
-            color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.2)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.account_tree_rounded, size: 12, color: scheme.primary),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  'System architecture topology',
-                  style: TextStyle(
-                    color: scheme.primary,
-                    fontSize:
-                        isDesktop ? AppTypography.label : AppTypography.label,
-                    fontWeight: FontWeight.w900,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return ViewportTickerGate(
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.all(isDesktop ? 16 : 12),
+        decoration: BoxDecoration(
+          color: scheme.primary.withValues(alpha: isDark ? 0.05 : 0.02),
+          borderRadius: BorderRadius.circular(AppRadius.smd),
+          border: Border.all(
+              color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.2)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
               children: [
-                _buildArchNode(
-                    'NFC Hardware\n(ISO-7816)', Icons.nfc_rounded, scheme),
-                _buildArchArrow(scheme, 0),
-                _buildArchNode('Native Kotlin\nAPDU Channel',
-                    Icons.android_rounded, scheme),
-                _buildArchArrow(scheme, 1),
-                _buildArchNode(
-                    'Flutter UI\n(Clean Arch)', Icons.layers_rounded, scheme),
-                _buildArchArrow(scheme, 2),
-                Column(
-                  children: [
-                    _buildArchNode('WorkManager\n(Offline Queue)',
-                        Icons.sync_rounded, scheme),
-                    const SizedBox(height: 6),
-                    _buildArchNode('SQLite DB\n(Encrypted Cache)',
-                        Icons.storage_rounded, scheme),
-                  ],
+                Icon(Icons.account_tree_rounded,
+                    size: 12, color: scheme.primary),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'System architecture topology',
+                    style: TextStyle(
+                      color: scheme.primary,
+                      fontSize:
+                          isDesktop ? AppTypography.label : AppTypography.label,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                _buildArchArrow(scheme, 3),
-                _buildArchNode('TPA Backend\n(REST API)',
-                    Icons.cloud_done_rounded, scheme),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildArchNode(
+                      'NFC Hardware\n(ISO-7816)', Icons.nfc_rounded, scheme),
+                  _buildArchArrow(scheme, 0),
+                  _buildArchNode('Native Kotlin\nAPDU Channel',
+                      Icons.android_rounded, scheme),
+                  _buildArchArrow(scheme, 1),
+                  _buildArchNode(
+                      'Flutter UI\n(Clean Arch)', Icons.layers_rounded, scheme),
+                  _buildArchArrow(scheme, 2),
+                  Column(
+                    children: [
+                      _buildArchNode('WorkManager\n(Offline Queue)',
+                          Icons.sync_rounded, scheme),
+                      const SizedBox(height: 6),
+                      _buildArchNode('SQLite DB\n(Encrypted Cache)',
+                          Icons.storage_rounded, scheme),
+                    ],
+                  ),
+                  _buildArchArrow(scheme, 3),
+                  _buildArchNode('TPA Backend\n(REST API)',
+                      Icons.cloud_done_rounded, scheme),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
