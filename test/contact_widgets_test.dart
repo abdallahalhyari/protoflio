@@ -46,7 +46,8 @@ void main() {
       expect(find.text('+962-787032264'), findsWidgets);
       expect(find.text('WhatsApp'), findsWidgets);
       expect(find.text('LinkedIn'), findsWidgets);
-      expect(find.text('GitHub'), findsWidgets);
+      expect(find.text('Direct Call'), findsWidgets);
+      expect(find.text('GitHub'), findsNothing);
     });
 
     testWidgets('AboutContactPage stays readable on compact Arabic RTL',

@@ -56,8 +56,6 @@ class _AboutContactPageState extends State<AboutContactPage>
   static const _linkedInUrl =
       'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/';
   static const _linkedInHandle = 'abdallah-alhyari';
-  static const _githubUrl = 'https://github.com/abdallahalhyari';
-  static const _githubHandle = 'abdallahalhyari';
 
   @override
   void dispose() {
@@ -139,7 +137,7 @@ class _AboutContactPageState extends State<AboutContactPage>
             _buildExecutiveBioCard(context, isDesktop, isDark, accent, l10n),
             const SizedBox(height: AppSpacing.xl),
 
-            // Direct Channels Grid (Phone, WhatsApp, LinkedIn, GitHub)
+            // Direct Channels Grid (Phone, WhatsApp, LinkedIn, Direct Call)
             _buildChannelsGrid(context, isDesktop, isDark, accent, l10n),
             const SizedBox(height: AppSpacing.xxl),
           ],
@@ -717,13 +715,6 @@ class _AboutContactPageState extends State<AboutContactPage>
         isExternal: true,
       ),
       (
-        title: 'GitHub',
-        handle: _githubHandle,
-        icon: Icons.code_rounded,
-        url: _githubUrl,
-        isExternal: true,
-      ),
-      (
         title: 'WhatsApp',
         handle: _phone,
         icon: Icons.chat_rounded,
@@ -741,7 +732,7 @@ class _AboutContactPageState extends State<AboutContactPage>
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final cols = isDesktop ? 4 : (constraints.maxWidth > 550 ? 2 : 1);
+        final cols = isDesktop ? 3 : (constraints.maxWidth > 550 ? 2 : 1);
         final itemWidth =
             ((constraints.maxWidth - ((cols - 1) * AppSpacing.md)) / cols)
                 .clamp(0.0, double.infinity);
