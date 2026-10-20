@@ -70,6 +70,19 @@ class _ExperienceCardState extends State<ExperienceCard> {
                     : (isDark ? context.glassBorderStrong : AppColors.ink200),
                 width: widget.isSelected ? 1.5 : 1.0,
               ),
+              boxShadow: [
+                if (active)
+                  BoxShadow(
+                    color: scheme.primary.withValues(
+                      alpha: widget.isSelected
+                          ? (isDark ? 0.28 : 0.18)
+                          : (isDark ? 0.12 : 0.06),
+                    ),
+                    blurRadius: widget.isSelected ? 20 : 12,
+                    spreadRadius: widget.isSelected ? 1.5 : 0,
+                    offset: const Offset(0, 3),
+                  ),
+              ],
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppRadius.md),

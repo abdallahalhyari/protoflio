@@ -63,6 +63,15 @@ class AppMotion {
   static const Duration idleMount =
       Duration(milliseconds: 4000); // off-screen sections build after intro
 
+  // Typewriter text animation tokens
+  static const Duration typewriterChar = Duration(milliseconds: 28);
+  static const Duration typewriterBlink = Duration(milliseconds: 530);
+  static const Duration typewriterCursorHold = Duration(milliseconds: 800);
+
+  // Scroll reveal animation tokens
+  static const Duration scrollReveal = Duration(milliseconds: 600);
+  static const Duration scrollRevealStagger = Duration(milliseconds: 80);
+
   // Material 3 emphasized easing — snappier at the top, decelerates
   // gently. Use for state changes the user drove (tap, hover), so the
   // motion feels responsive without whip-crack.

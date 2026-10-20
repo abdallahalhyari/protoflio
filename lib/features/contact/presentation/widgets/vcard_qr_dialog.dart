@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:profile/core/config/profile_links.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/shared/widgets/app_toast.dart';
@@ -17,10 +18,10 @@ N:Alhyari;Abdallah;;;
 FN:Abdallah Alhyari
 TITLE:Senior Mobile Engineer (Flutter & Android)
 ORG:NatHealth
-EMAIL;TYPE=INTERNET,PREF:alhyariabdallh@gmail.com
-TEL;TYPE=CELL:+962787032264
+EMAIL;TYPE=INTERNET,PREF:${ProfileLinks.email}
+TEL;TYPE=CELL:${ProfileLinks.phoneRaw}
 URL:https://alhyari.web.app/
-URL;TYPE=LinkedIn:https://www.linkedin.com/in/abdallah-alhyari-0294791a0/
+URL;TYPE=LinkedIn:${ProfileLinks.linkedIn}
 END:VCARD''';
 
   static Future<void> show(BuildContext context) {
@@ -165,7 +166,7 @@ END:VCARD''';
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'alhyariabdallh@gmail.com · +962-78-703-2264',
+                    '${ProfileLinks.email} · ${ProfileLinks.phoneDisplay}',
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: context.onSurface.withValues(alpha: 0.7),
                     ),

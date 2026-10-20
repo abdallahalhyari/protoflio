@@ -29,7 +29,7 @@ class IntroCtaRow extends StatelessWidget {
     this.alignStart = false,
   });
 
-  static const String _kEmail = 'alhyariabdallh@gmail.com';
+  static const String _kEmail = ProfileLinks.email;
 
   Future<void> _copyEmail(BuildContext context) async {
     SoundService.instance.playClick();

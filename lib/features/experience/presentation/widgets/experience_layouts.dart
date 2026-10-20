@@ -3,6 +3,7 @@ import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/presentation/bloc/experience_timeline_bloc.dart';
 import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
 import 'package:profile/features/experience/presentation/widgets/credentials_bento_card.dart';
+import 'package:profile/features/experience/presentation/widgets/experience_timeline_connector.dart';
 import 'package:profile/shared/widgets/staggered_entrance.dart';
 
 class ExperienceContinuousMobileList extends StatelessWidget {
@@ -29,7 +30,21 @@ class ExperienceContinuousMobileList extends StatelessWidget {
             onSelect: () => onSelect(i),
             isDesktop: false,
           ),
-          const SizedBox(height: AppSpacing.md),
+          if (i < experiences.length - 1)
+            ExperienceTimelineConnector(
+              isAdjacentSelected: state.selectedIndex == i ||
+                  state.selectedIndex == i + 1,
+              isCurrent: experiences[i]
+                      .period
+                      .toLowerCase()
+                      .contains('present') ||
+                  experiences[i + 1]
+                      .period
+                      .toLowerCase()
+                      .contains('present'),
+            )
+          else
+            const SizedBox(height: AppSpacing.md),
         ],
         CredentialsBentoCard(
           isVisible: state.isVisible,
@@ -124,12 +139,32 @@ class ExperienceMobileList extends StatelessWidget {
             isDesktop: false,
           );
         }
-        return AnimatedExperienceNode(
-          exp: experiences[index],
-          isVisible: state.isVisible,
-          isSelected: state.selectedIndex == index,
-          onSelect: () => onSelect(index),
-          isDesktop: false,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AnimatedExperienceNode(
+              exp: experiences[index],
+              isVisible: state.isVisible,
+              isSelected: state.selectedIndex == index,
+              onSelect: () => onSelect(index),
+              isDesktop: false,
+            ),
+            if (index < experiences.length - 1)
+              ExperienceTimelineConnector(
+                isAdjacentSelected: state.selectedIndex == index ||
+                    state.selectedIndex == index + 1,
+                isCurrent: experiences[index]
+                        .period
+                        .toLowerCase()
+                        .contains('present') ||
+                    experiences[index + 1]
+                        .period
+                        .toLowerCase()
+                        .contains('present'),
+              )
+            else
+              const SizedBox(height: AppSpacing.md),
+          ],
         );
       },
     );

@@ -4,6 +4,7 @@ import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/widgets/pulsing_dot.dart';
+import 'package:profile/shared/widgets/typewriter_text.dart';
 
 /// Left column of the cover: availability, the name, the role and one
 /// plain sentence about the work. Everything a recruiter screens for sits
@@ -122,8 +123,11 @@ class HeroStatement extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                l10n.introTagline,
+              TypewriterText(
+                text: l10n.introTagline,
+                trigger: reveal,
+                triggerAt: 0.65,
+                cursorColor: scheme.primary,
                 style: TextStyle(
                   fontSize: isWide
                       ? (compactHeight

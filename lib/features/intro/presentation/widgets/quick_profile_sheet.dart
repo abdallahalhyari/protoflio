@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:profile/core/config/profile_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -10,10 +11,9 @@ import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/intro/presentation/widgets/quick_profile_actions.dart';
 
-const String _kEmail = 'alhyariabdallh@gmail.com';
-const String _kLinkedIn =
-    'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/';
-const String _kSite = 'https://alhyari.web.app';
+const String _kEmail = ProfileLinks.email;
+const String _kLinkedIn = ProfileLinks.linkedIn;
+const String _kSite = ProfileLinks.site;
 
 /// The hiring facts a recruiter screens for, on one card: role, years,
 /// stack, location, status and the latest roles, with the CV, email,

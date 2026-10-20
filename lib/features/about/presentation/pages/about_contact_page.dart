@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
+import 'package:profile/core/config/profile_links.dart';
 import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/services/cv_service.dart';
 import 'package:profile/core/services/sound_service.dart';
@@ -18,6 +19,7 @@ import 'package:profile/shared/widgets/page_activity.dart';
 import 'package:profile/shared/widgets/pulsing_dot.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
+import 'package:profile/shared/widgets/scroll_reveal.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 import 'package:profile/shared/widgets/section_masthead.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -49,13 +51,12 @@ class _AboutContactPageState extends State<AboutContactPage>
   @override
   bool get wantKeepAlive => true;
 
-  static const _email = 'alhyariabdallh@gmail.com';
-  static const _phone = '+962-787032264';
-  static const _phoneRaw = '+962787032264';
-  static const _whatsAppUrl = 'https://wa.me/962787032264';
-  static const _linkedInUrl =
-      'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/';
-  static const _linkedInHandle = 'abdallah-alhyari';
+  static const _email = ProfileLinks.email;
+  static const _phone = ProfileLinks.phone;
+  static const _phoneRaw = ProfileLinks.phoneRaw;
+  static const _whatsAppUrl = ProfileLinks.whatsApp;
+  static const _linkedInUrl = ProfileLinks.linkedIn;
+  static const _linkedInHandle = ProfileLinks.linkedInHandle;
 
   @override
   void dispose() {
@@ -130,15 +131,26 @@ class _AboutContactPageState extends State<AboutContactPage>
             const SizedBox(height: AppSpacing.lg),
 
             // Direct Email & Action Hero Card
-            _buildEmailHeroCard(context, isDesktop, isDark, accent, l10n),
+            ScrollReveal(
+              child: _buildEmailHeroCard(
+                  context, isDesktop, isDark, accent, l10n),
+            ),
             const SizedBox(height: AppSpacing.xl),
 
             // Executive Bio Card
-            _buildExecutiveBioCard(context, isDesktop, isDark, accent, l10n),
+            ScrollReveal.stagger(
+              index: 1,
+              child: _buildExecutiveBioCard(
+                  context, isDesktop, isDark, accent, l10n),
+            ),
             const SizedBox(height: AppSpacing.xl),
 
             // Direct Channels Grid (Phone, WhatsApp, LinkedIn, Direct Call)
-            _buildChannelsGrid(context, isDesktop, isDark, accent, l10n),
+            ScrollReveal.stagger(
+              index: 2,
+              child:
+                  _buildChannelsGrid(context, isDesktop, isDark, accent, l10n),
+            ),
             const SizedBox(height: AppSpacing.xxl),
           ],
         ),
