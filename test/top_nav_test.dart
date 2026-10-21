@@ -82,7 +82,7 @@ void main() {
     ]);
   });
 
-  testWidgets('desktop labels combine Perspectives and Contact at the end',
+  testWidgets('desktop labels combine About and Contact at the end',
       (tester) async {
     tester.view.physicalSize = const Size(1200, 900);
     tester.view.devicePixelRatio = 1.0;

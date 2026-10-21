@@ -11,13 +11,15 @@ abstract class UrlSyncService {
     'experience',
     'stack',
     'engineering',
-    'perspectives',
+    'about',
     'contact',
   ];
 
   /// Section index for [hash]; a sub-route (`work/nathealth`) maps to its
   /// section, anything unknown to home. Supports canonical and alias slugs
-  /// (#home, #experience, #projects, #skills, #engineering, #perspectives, #contact).
+  /// (#home, #experience, #projects, #skills, #engineering, #about, #contact).
+  /// `#perspectives` is the old name for About (the Hats section it
+  /// replaced) and still resolves there, so shared links keep working.
   int hashToIndex(String hash) {
     final clean = hash.replaceAll('#', '').split('/').first.toLowerCase();
     switch (clean) {
@@ -76,9 +78,8 @@ abstract class UrlSyncService {
       case 'stack':
       case 'skills':
         return 'Skills & Stack · Abdallah Alhyari';
-      case 'perspectives':
-        return 'Engineering Perspectives · Abdallah Alhyari';
       case 'about':
+      case 'perspectives':
         return 'About · Abdallah Alhyari';
       case 'contact':
         return 'Contact & Recruiter Inquiries · Abdallah Alhyari';

@@ -27,7 +27,7 @@ const double kMobileTopReserve = 64;
 const double kSideRailReserve = 48;
 
 /// Max content width shared by the left-aligned desktop sections (Work,
-/// Experience, Skills, Engineering, Perspectives). Each used to pick its
+/// Experience, Skills, Engineering, About). Each used to pick its
 /// own (1200-1600), so the section header's left edge jumped between
 /// 48px and 168px at 1440px as you paged. The centred Intro and Contact
 /// compositions keep their narrower widths.

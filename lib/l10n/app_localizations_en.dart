@@ -372,10 +372,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSubEngineering => 'How the apps are built';
 
   @override
-  String get navSectionAbout => 'Perspectives';
+  String get navSectionAbout => 'About';
 
   @override
-  String get navSubAbout => 'How I work with teams';
+  String get navSubAbout => 'Background and availability';
 
   @override
   String get navSectionContact => 'Contact';
@@ -462,10 +462,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get projectOutcomeFais =>
       'Improved checkout completion and reduced abandoned transactions.';
-
-  @override
-  String get hatsHeaderSubtitle =>
-      'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.';
 
   @override
   String get contactHeaderTitle => 'Have a difficult mobile problem?';
@@ -839,24 +835,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillCatLanguages => 'Languages & Comm';
-
-  @override
-  String get hatThinking => 'Thinking';
-
-  @override
-  String get hatCommunicating => 'Communicating';
-
-  @override
-  String get hatSorting => 'Sorting';
-
-  @override
-  String get hatBuilding => 'Building';
-
-  @override
-  String get hatFixing => 'Fixing';
-
-  @override
-  String get hatCompassion => 'Compassion';
 
   @override
   String get archTopicClean => 'Clean Mobile Architecture';

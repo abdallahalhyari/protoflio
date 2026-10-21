@@ -769,13 +769,13 @@ abstract class AppLocalizations {
   /// No description provided for @navSectionAbout.
   ///
   /// In en, this message translates to:
-  /// **'Perspectives'**
+  /// **'About'**
   String get navSectionAbout;
 
   /// No description provided for @navSubAbout.
   ///
   /// In en, this message translates to:
-  /// **'How I work with teams'**
+  /// **'Background and availability'**
   String get navSubAbout;
 
   /// No description provided for @navSectionContact.
@@ -909,12 +909,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Improved checkout completion and reduced abandoned transactions.'**
   String get projectOutcomeFais;
-
-  /// No description provided for @hatsHeaderSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.'**
-  String get hatsHeaderSubtitle;
 
   /// No description provided for @contactHeaderTitle.
   ///
@@ -1551,42 +1545,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Languages & Comm'**
   String get skillCatLanguages;
-
-  /// No description provided for @hatThinking.
-  ///
-  /// In en, this message translates to:
-  /// **'Thinking'**
-  String get hatThinking;
-
-  /// No description provided for @hatCommunicating.
-  ///
-  /// In en, this message translates to:
-  /// **'Communicating'**
-  String get hatCommunicating;
-
-  /// No description provided for @hatSorting.
-  ///
-  /// In en, this message translates to:
-  /// **'Sorting'**
-  String get hatSorting;
-
-  /// No description provided for @hatBuilding.
-  ///
-  /// In en, this message translates to:
-  /// **'Building'**
-  String get hatBuilding;
-
-  /// No description provided for @hatFixing.
-  ///
-  /// In en, this message translates to:
-  /// **'Fixing'**
-  String get hatFixing;
-
-  /// No description provided for @hatCompassion.
-  ///
-  /// In en, this message translates to:
-  /// **'Compassion'**
-  String get hatCompassion;
 
   /// No description provided for @archTopicClean.
   ///

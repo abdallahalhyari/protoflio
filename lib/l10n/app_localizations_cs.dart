@@ -375,10 +375,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navSubEngineering => 'Jak jsou aplikace postavené';
 
   @override
-  String get navSectionAbout => 'Perspektivy';
+  String get navSectionAbout => 'O mně';
 
   @override
-  String get navSubAbout => 'Jak pracuji s týmy';
+  String get navSubAbout => 'Zázemí a dostupnost';
 
   @override
   String get navSectionContact => 'Kontakt';
@@ -466,10 +466,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get projectOutcomeFais =>
       'Vyšší dokončenost nákupů a méně nedokončených transakcí.';
-
-  @override
-  String get hatsHeaderSubtitle =>
-      'Inženýrství zaměřené na produkt, srozumitelná komunikace a praktické vedení napříč týmy, omezeními a klíčovými dodávkami.';
 
   @override
   String get contactHeaderTitle => 'Máte těžký mobilní problém?';
@@ -842,24 +838,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get skillCatLanguages => 'Jazyky a komunikace';
-
-  @override
-  String get hatThinking => 'Myšlení';
-
-  @override
-  String get hatCommunicating => 'Komunikace';
-
-  @override
-  String get hatSorting => 'Třídění';
-
-  @override
-  String get hatBuilding => 'Stavění';
-
-  @override
-  String get hatFixing => 'Opravování';
-
-  @override
-  String get hatCompassion => 'Soucit';
 
   @override
   String get archTopicClean => 'Čistá mobilní architektura';

@@ -91,9 +91,9 @@ class MobileNavSheet extends StatelessWidget {
       NavSectionItem(
         index: 5,
         number: '06',
-        title: l?.navSectionAbout ?? 'Perspectives',
-        subtitle: l?.navSubAbout ?? 'Architectural Perspectives & Hats',
-        icon: Icons.style_rounded,
+        title: l?.navSectionAbout ?? 'About',
+        subtitle: l?.navSubAbout ?? 'Background and availability',
+        icon: Icons.person_rounded,
         accentColor: AppColors.seed,
       ),
       NavSectionItem(
@@ -106,65 +106,6 @@ class MobileNavSheet extends StatelessWidget {
       ),
     ];
   }
-
-  static const List<NavSectionItem> sections = [
-    NavSectionItem(
-      index: 0,
-      number: '01',
-      title: 'Cover & profile',
-      subtitle: 'Senior Flutter & Android Engineer',
-      icon: Icons.home_rounded,
-      accentColor: AppColors.seed,
-    ),
-    NavSectionItem(
-      index: 1,
-      number: '02',
-      title: 'Featured work',
-      subtitle: 'Production Systems & Case Studies',
-      icon: Icons.rocket_launch_rounded,
-      accentColor: AppColors.seed,
-    ),
-    NavSectionItem(
-      index: 2,
-      number: '03',
-      title: 'Career & experience',
-      subtitle: '5+ Years Enterprise Engineering & Impact',
-      icon: Icons.timeline_rounded,
-      accentColor: AppColors.seed,
-    ),
-    NavSectionItem(
-      index: 3,
-      number: '04',
-      title: 'Skills & stack',
-      subtitle: 'Technical Proficiency Matrix',
-      icon: Icons.code_rounded,
-      accentColor: AppColors.seed,
-    ),
-    NavSectionItem(
-      index: 4,
-      number: '05',
-      title: 'System architectures',
-      subtitle: 'Enterprise Blueprints & Offline-First',
-      icon: Icons.hub_rounded,
-      accentColor: AppColors.seed,
-    ),
-    NavSectionItem(
-      index: 5,
-      number: '06',
-      title: 'Leadership perspectives',
-      subtitle: 'Architectural Perspectives & Hats',
-      icon: Icons.style_rounded,
-      accentColor: AppColors.seed,
-    ),
-    NavSectionItem(
-      index: 6,
-      number: '07',
-      title: 'Contact & inquiries',
-      subtitle: 'Direct Channels & Availability',
-      icon: Icons.mail_rounded,
-      accentColor: AppColors.seed,
-    ),
-  ];
 
   static void show(
     BuildContext context, {

@@ -371,10 +371,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navSubEngineering => 'كيف بُنيت التطبيقات';
 
   @override
-  String get navSectionAbout => 'رؤى';
+  String get navSectionAbout => 'نبذة';
 
   @override
-  String get navSubAbout => 'كيف أعمل مع الفرق';
+  String get navSubAbout => 'الخلفية والتوفر';
 
   @override
   String get navSectionContact => 'تواصل';
@@ -461,10 +461,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get projectOutcomeFais =>
       'رفع إتمام عمليات الشراء وتقليل المعاملات المتروكة.';
-
-  @override
-  String get hatsHeaderSubtitle =>
-      'هندسة تضع المنتج في المقدمة، وتواصل واضح، وقيادة عملية عبر الفرق والقيود ومراحل التسليم الحساسة.';
 
   @override
   String get contactHeaderTitle => 'هل لديك مشكلة صعبة في تطبيقات الهاتف؟';
@@ -832,24 +828,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get skillCatLanguages => 'اللغات والتواصل';
-
-  @override
-  String get hatThinking => 'التفكير';
-
-  @override
-  String get hatCommunicating => 'التواصل';
-
-  @override
-  String get hatSorting => 'الفرز';
-
-  @override
-  String get hatBuilding => 'البناء';
-
-  @override
-  String get hatFixing => 'الإصلاح';
-
-  @override
-  String get hatCompassion => 'التعاطف';
 
   @override
   String get archTopicClean => 'البنية النظيفة لتطبيقات الهاتف';
