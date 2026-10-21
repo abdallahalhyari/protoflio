@@ -91,7 +91,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shortcutJumpPrimary => 'Jump to Work / Experience / Engineering';
 
   @override
-  String get shortcutJumpSecondary => 'Jump to Skills / Perspectives / Contact';
+  String get shortcutJumpSecondary => 'Jump to Skills / About / Contact';
 
   @override
   String get shortcutToggleTheme => 'Toggle theme mode';
@@ -323,11 +323,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get semanticTitle => 'Abdallah Alhyari, Senior Mobile Engineer';
-
-  @override
-  String folioIndicator(Object current, Object total) {
-    return '$current of $total';
-  }
 
   @override
   String get introTechStack =>
@@ -1389,9 +1384,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playSyncNote => 'Simulation. No network is used.';
-
-  @override
-  String get navPerspectives => 'Perspectives';
 
   @override
   String get projectLblProblem => 'Problem';

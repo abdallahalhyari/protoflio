@@ -39,12 +39,11 @@ Widget _wrapHome() {
   );
 }
 
+/// The current 1-based page, as the folio counter used to show it.
 int? _folioIndex(WidgetTester tester) {
-  for (final w in tester.widgetList<Text>(find.byType(Text))) {
-    final m = RegExp(r'^(\d+) of \d+$').firstMatch(w.data ?? '');
-    if (m != null) return int.parse(m.group(1)!);
-  }
-  return null;
+  final bar = find.byType(FolioBar);
+  if (bar.evaluate().isEmpty) return null;
+  return HomeController.of(tester.element(bar)).pageIndex.value + 1;
 }
 
 Future<void> _pumpDesktopHome(WidgetTester tester) async {

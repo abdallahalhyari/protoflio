@@ -4,8 +4,8 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
 
-/// Modal listing keyboard shortcuts (digits, arrows, Home/End, W/E/X/S/H/C, T, M, R, ?).
-/// Called from `KeyboardHintChip` and the `?` key handler.
+/// Modal listing keyboard shortcuts (digits, arrows, Home/End, W/E/X/S/A/C, T, M, R, ?).
+/// Called from the toolbar's shortcuts button and the `?` key handler.
 Future<void> showShortcutHelpDialog(BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
   final scheme = Theme.of(context).colorScheme;
@@ -65,7 +65,7 @@ Future<void> showShortcutHelpDialog(BuildContext context) {
                     _withoutKey(l10n.keyboardHintDigits, '1–7')),
                 _shortcutRow(scheme, _keyText(scheme, 'W/X/E'),
                     l10n.shortcutJumpPrimary),
-                _shortcutRow(scheme, _keyText(scheme, 'S/H/C'),
+                _shortcutRow(scheme, _keyText(scheme, 'S/A/C'),
                     l10n.shortcutJumpSecondary),
                 // Icons, not '↑ ↓': Roboto has no arrow glyphs, so the text pulled
                 // a 68 KB Noto Sans Symbols fallback font at runtime.

@@ -75,7 +75,7 @@ class DesktopKeyboardNav extends StatelessWidget {
       onGoTo(3); // Skills & Stack
       return KeyEventResult.handled;
     }
-    if (k == LogicalKeyboardKey.keyH && pageCount > 5) {
+    if (k == LogicalKeyboardKey.keyA && pageCount > 5) {
       onGoTo(5); // About & Contact
       return KeyEventResult.handled;
     }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:profile/features/shell/presentation/widgets/folio_bar.dart';
+import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/core/bloc/locale/locale_bloc.dart';
 import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -21,15 +23,11 @@ Widget _wrap() {
   );
 }
 
-/// Extracts the current 1-based page index from the FOLIO folio bar,
-/// e.g. "FOLIO 03 / 07" → 3. Returns null if not visible yet.
+/// The current 1-based page, as the folio counter used to show it.
 int? _folioIndex(WidgetTester tester) {
-  for (final w in tester.widgetList<Text>(find.byType(Text))) {
-    final s = w.data ?? '';
-    final m = RegExp(r'^(\d+) of \d+$').firstMatch(s);
-    if (m != null) return int.parse(m.group(1)!);
-  }
-  return null;
+  final bar = find.byType(FolioBar);
+  if (bar.evaluate().isEmpty) return null;
+  return HomeController.of(tester.element(bar)).pageIndex.value + 1;
 }
 
 void main() {

@@ -49,7 +49,7 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.keyE);
     await tester.sendKeyEvent(LogicalKeyboardKey.keyX);
     await tester.sendKeyEvent(LogicalKeyboardKey.keyS);
-    await tester.sendKeyEvent(LogicalKeyboardKey.keyH);
+    await tester.sendKeyEvent(LogicalKeyboardKey.keyA);
     await tester.sendKeyEvent(LogicalKeyboardKey.keyC);
 
     expect(calls, [
@@ -57,7 +57,7 @@ void main() {
       'goTo 4', // E -> Engineering
       'goTo 2', // X -> Experience
       'goTo 3', // S -> Skills
-      'goTo 5', // H -> Hats / About
+      'goTo 5', // A -> About & Contact
       'goTo 5', // C -> Contact / About
     ]);
   });

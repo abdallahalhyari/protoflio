@@ -18,7 +18,6 @@ import 'package:profile/features/experience/presentation/widgets/experience_card
 import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
 import 'package:profile/features/shell/presentation/widgets/folio_bar.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
-import 'package:profile/features/shell/presentation/widgets/keyboard_hint_chip.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_app_bar.dart';
 import 'package:profile/features/projects/presentation/widgets/pipeline_topology_diagram.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
@@ -196,9 +195,10 @@ void main() {
       }
     });
 
-    testWidgets('KeyboardHintChip declares button semantics', (tester) async {
+    testWidgets('toolbar shortcuts button declares button semantics',
+        (tester) async {
       await tester.pumpWidget(_wrapWithHarness(
-        child: KeyboardHintChip(onShowHelp: () {}),
+        child: const DesktopToolbar(),
       ));
       await tester.pumpAndSettle();
 
@@ -389,8 +389,7 @@ void main() {
       expect(outcomeFinder, findsOneWidget);
     });
 
-    testWidgets(
-        'FolioBar declares container semantics with current section and page position',
+    testWidgets('FolioBar is its own node with a button to the next section',
         (tester) async {
       final controller = _mockController(initialPage: 2);
       await tester.pumpWidget(_wrapWithHarness(
@@ -399,14 +398,23 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      final folioFinder = find.byWidgetPredicate(
-        (w) =>
-            w is Semantics &&
-            w.container &&
-            (w.properties.label?.contains('Current section:') ?? false) &&
-            (w.properties.label?.contains('page 3 of 7') ?? false),
+      // The top nav marks the current section (selected); the folio bar
+      // only offers the next one, inside its own semantics boundary.
+      expect(
+        find.descendant(
+          of: find.byType(FolioBar),
+          matching:
+              find.byWidgetPredicate((w) => w is Semantics && w.container),
+        ),
+        findsWidgets,
       );
-      expect(folioFinder, findsOneWidget);
+      expect(
+        find.byWidgetPredicate((w) =>
+            w is Semantics &&
+            w.properties.button == true &&
+            (w.properties.label?.startsWith('Next: ') ?? false)),
+        findsOneWidget,
+      );
     });
 
     testWidgets('AppScreenShell wraps page content in Semantics container',

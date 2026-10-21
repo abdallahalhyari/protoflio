@@ -34,7 +34,7 @@
   "keyboardHintEnd": "End   last page",
   "closeTooltip": "Close",
   "shortcutJumpPrimary": "Jump to Work / Experience / Engineering",
-  "shortcutJumpSecondary": "Jump to Skills / Perspectives / Contact",
+  "shortcutJumpSecondary": "Jump to Skills / About / Contact",
   "shortcutToggleTheme": "Toggle theme mode",
   "shortcutToggleAudio": "Mute / unmute audio",
   "shortcutViewCv": "View CV",
@@ -150,13 +150,6 @@
   "contactVisit": "Visit",
   "semanticPortrait": "Portrait of Abdallah Alhyari",
   "semanticTitle": "Abdallah Alhyari, Senior Mobile Engineer",
-  "folioIndicator": "{current} of {total}",
-  "@folioIndicator": {
-    "placeholders": {
-      "current": {},
-      "total": {}
-    }
-  },
   "introTechStack": "Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems",
   "introBasedIn": "Location",
   "introStatus": "Availability",
@@ -660,7 +653,6 @@
     }
   },
   "playSyncNote": "Simulation. No network is used.",
-  "navPerspectives": "Perspectives",
   "projectLblProblem": "Problem",
   "projectLblSystem": "System",
   "projectLblRole": "My role",

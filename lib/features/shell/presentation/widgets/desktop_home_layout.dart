@@ -6,8 +6,6 @@ import 'package:profile/shared/widgets/page_activity.dart';
 import 'package:profile/features/shell/presentation/widgets/portfolio_nav.dart';
 import 'package:profile/features/shell/presentation/widgets/desktop_toolbar.dart';
 import 'package:profile/features/shell/presentation/widgets/folio_bar.dart';
-import 'package:profile/features/shell/presentation/widgets/keyboard_hint_chip.dart';
-import 'package:profile/features/shell/presentation/widgets/progress_bar.dart';
 
 class DesktopHomeLayout extends StatelessWidget {
   const DesktopHomeLayout({
@@ -19,7 +17,6 @@ class DesktopHomeLayout extends StatelessWidget {
     required this.lastPageTurnCompletedAt,
     required this.onNext,
     required this.onPrev,
-    required this.onShowHelp,
     required this.buildDesktopPage,
   });
 
@@ -30,7 +27,6 @@ class DesktopHomeLayout extends StatelessWidget {
   final ValueNotifier<DateTime> lastPageTurnCompletedAt;
   final VoidCallback onNext;
   final VoidCallback onPrev;
-  final VoidCallback onShowHelp;
   final Widget Function(int index) buildDesktopPage;
 
   @override
@@ -81,15 +77,6 @@ class DesktopHomeLayout extends StatelessWidget {
               );
             },
           ),
-          if (MediaQuery.sizeOf(context).height >= 340)
-            const Positioned(
-              right: 12,
-              top: 0,
-              bottom: 0,
-              child: RepaintBoundary(
-                child: Center(child: PageIndicator()),
-              ),
-            ),
           const Positioned(
             top: 0,
             left: 0,
@@ -108,24 +95,6 @@ class DesktopHomeLayout extends StatelessWidget {
             left: 16,
             child: SafeArea(
               child: RepaintBoundary(child: FolioBar()),
-            ),
-          ),
-          Positioned(
-            bottom: 12,
-            right: 12,
-            child: SafeArea(
-              child: KeyboardHintChip(onShowHelp: onShowHelp),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: RepaintBoundary(
-              child: PortfolioProgressBar(
-                controller: controller,
-                pageCount: pageCount,
-              ),
             ),
           ),
         ],

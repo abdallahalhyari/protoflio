@@ -29,26 +29,19 @@ Widget _host(ValueNotifier<int> pageIndex, {void Function(int)? onGoTo}) {
 }
 
 void main() {
-  testWidgets('FolioBar renders "0N / 06" counter for current page',
-      (tester) async {
-    await tester.pumpWidget(_host(ValueNotifier<int>(2)));
-    await tester.pumpAndSettle();
-    // folioIndicator locale template renders "03 / 07" for pageIndex 2.
-    expect(find.textContaining('03'), findsWidgets);
-    expect(find.textContaining('06'), findsWidgets);
-  });
-
-  testWidgets('FolioBar updates label when pageIndex ticks', (tester) async {
+  testWidgets('FolioBar says only where you go next', (tester) async {
     final pageIndex = ValueNotifier<int>(0);
     await tester.pumpWidget(_host(pageIndex));
     await tester.pumpAndSettle();
 
-    // Grab the initial folio number.
-    expect(find.textContaining('01'), findsWidgets);
+    expect(find.text('Next: Work'), findsOneWidget);
+    // The top nav says where you are; no counter or label here.
+    expect(find.textContaining(' of '), findsNothing);
+    expect(find.text('Home'), findsNothing);
 
-    pageIndex.value = 5;
+    pageIndex.value = 2;
     await tester.pumpAndSettle();
-    expect(find.textContaining('06'), findsWidgets);
+    expect(find.text('Next: Skills'), findsOneWidget);
   });
 
   testWidgets('FolioBar "Next" goes to the following section', (tester) async {
@@ -56,8 +49,8 @@ void main() {
     await tester
         .pumpWidget(_host(ValueNotifier<int>(1), onGoTo: (p) => went = p));
     await tester.pumpAndSettle();
-    expect(find.text('Next · Experience'), findsOneWidget);
-    await tester.tap(find.text('Next · Experience'));
+    expect(find.text('Next: Experience'), findsOneWidget);
+    await tester.tap(find.text('Next: Experience'));
     expect(went, 2);
   });
 

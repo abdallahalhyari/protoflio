@@ -90,8 +90,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shortcutJumpPrimary => 'الانتقال إلى الأعمال / الخبرة / الهندسة';
 
   @override
-  String get shortcutJumpSecondary =>
-      'الانتقال إلى المهارات / المنظورات / التواصل';
+  String get shortcutJumpSecondary => 'الانتقال إلى المهارات / نبذة / التواصل';
 
   @override
   String get shortcutToggleTheme => 'تبديل نمط السمة';
@@ -322,11 +321,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get semanticTitle => 'عبدالله الحياري، مهندس تطبيقات هواتف أول';
-
-  @override
-  String folioIndicator(Object current, Object total) {
-    return 'الصحيفة $current / $total';
-  }
 
   @override
   String get introTechStack =>
@@ -1378,9 +1372,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get playSyncNote => 'محاكاة. لا تُستخدم أي شبكة.';
-
-  @override
-  String get navPerspectives => 'رؤى';
 
   @override
   String get projectLblProblem => 'المشكلة';

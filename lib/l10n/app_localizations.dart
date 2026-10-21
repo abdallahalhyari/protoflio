@@ -259,7 +259,7 @@ abstract class AppLocalizations {
   /// No description provided for @shortcutJumpSecondary.
   ///
   /// In en, this message translates to:
-  /// **'Jump to Skills / Perspectives / Contact'**
+  /// **'Jump to Skills / About / Contact'**
   String get shortcutJumpSecondary;
 
   /// No description provided for @shortcutToggleTheme.
@@ -675,12 +675,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Abdallah Alhyari, Senior Mobile Engineer'**
   String get semanticTitle;
-
-  /// No description provided for @folioIndicator.
-  ///
-  /// In en, this message translates to:
-  /// **'{current} of {total}'**
-  String folioIndicator(Object current, Object total);
 
   /// No description provided for @introTechStack.
   ///
@@ -2541,12 +2535,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Simulation. No network is used.'**
   String get playSyncNote;
-
-  /// No description provided for @navPerspectives.
-  ///
-  /// In en, this message translates to:
-  /// **'Perspectives'**
-  String get navPerspectives;
 
   /// No description provided for @projectLblProblem.
   ///

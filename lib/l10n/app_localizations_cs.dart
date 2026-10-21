@@ -92,8 +92,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Přejít na Práci / Zkušenosti / Inženýrství';
 
   @override
-  String get shortcutJumpSecondary =>
-      'Přejít na Dovednosti / Perspektivy / Kontakt';
+  String get shortcutJumpSecondary => 'Přejít na Dovednosti / O mně / Kontakt';
 
   @override
   String get shortcutToggleTheme => 'Přepnout režim motivu';
@@ -326,11 +325,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get semanticTitle => 'Abdallah Alhyari, Senior mobilní vývojář';
-
-  @override
-  String folioIndicator(Object current, Object total) {
-    return '$current z $total';
-  }
 
   @override
   String get introTechStack =>
@@ -1396,9 +1390,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get playSyncNote => 'Simulace. Nepoužívá se žádná síť.';
-
-  @override
-  String get navPerspectives => 'Perspektivy';
 
   @override
   String get projectLblProblem => 'Problém';

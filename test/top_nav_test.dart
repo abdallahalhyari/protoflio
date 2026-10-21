@@ -178,18 +178,4 @@ void main() {
     await tester.pumpAndSettle();
     expect(goToArg, isNull);
   });
-
-  testWidgets('PageIndicator dot count matches controller.pageCount',
-      (tester) async {
-    tester.view.physicalSize = const Size(800, 900);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.resetPhysicalSize);
-
-    await tester.pumpWidget(_wrap(const PageIndicator(), _stub()));
-    await tester.pumpAndSettle();
-
-    // 7 InkResponses (one per section dot).
-    final dots = find.byType(InkResponse);
-    expect(dots, findsNWidgets(7));
-  });
 }

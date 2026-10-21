@@ -10,10 +10,11 @@ import 'package:profile/core/bloc/theme/theme_state.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/tokens.dart';
+import 'package:profile/features/shell/presentation/widgets/shortcut_help_dialog.dart';
 
-/// Top-right desktop toolbar — language picker, theme toggle, audio
-/// mute. Self-contained: reads its own state from
-/// mute. Self-contained: reads its own state from ThemeBloc,
+/// Top-right desktop toolbar: language picker, theme toggle, audio mute
+/// and keyboard shortcuts. Self-contained: reads its own state from
+/// ThemeBloc,
 /// LocaleBloc, and
 /// [SoundService.instance.isEnabled].
 class DesktopToolbar extends StatelessWidget {
@@ -33,6 +34,8 @@ class DesktopToolbar extends StatelessWidget {
             _ThemeTogglePuck(dark: dark),
             const SizedBox(width: AppSpacing.sm),
             _AudioTogglePuck(dark: dark),
+            const SizedBox(width: AppSpacing.sm),
+            _ShortcutsPuck(dark: dark),
           ],
         );
       },
@@ -186,6 +189,43 @@ class _ThemeTogglePuck extends StatelessWidget {
                 HapticFeedback.lightImpact();
                 SoundService.instance.playClick();
                 context.read<ThemeBloc>().add(const ThemeModeToggled());
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Opens the keyboard-shortcuts help, the same dialog the `?` key opens.
+class _ShortcutsPuck extends StatelessWidget {
+  const _ShortcutsPuck({required this.dark});
+  final bool dark;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return MergeSemantics(
+      child: Semantics(
+        button: true,
+        label: l10n.keyboardHintTitle,
+        child: _Puck(
+          dark: dark,
+          child: Tooltip(
+            message: l10n.keyboardHintTitle,
+            excludeFromSemantics: true,
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+              icon: Icon(
+                Icons.keyboard_rounded,
+                color: dark ? Colors.white : AppColors.ink900,
+                size: 18,
+              ),
+              onPressed: () {
+                SoundService.instance.playClick();
+                showShortcutHelpDialog(context);
               },
             ),
           ),

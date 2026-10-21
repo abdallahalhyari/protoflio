@@ -678,7 +678,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     lastPageTurnCompletedAt: _lastPageTurnCompletedAt,
                     onNext: _next,
                     onPrev: _prev,
-                    onShowHelp: _showShortcutHelp,
                     buildDesktopPage: _buildDesktopPage,
                   )
                 : MobileHomeLayout(
