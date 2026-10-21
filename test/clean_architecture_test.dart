@@ -10,8 +10,6 @@ import 'package:profile/features/experience/domain/repositories/experience_repos
 import 'package:profile/features/experience/domain/usecases/get_career_facts_usecase.dart';
 import 'package:profile/features/experience/domain/usecases/get_education_usecase.dart';
 import 'package:profile/features/experience/domain/usecases/get_experiences_usecase.dart';
-import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
-import 'package:profile/features/hats/domain/usecases/get_hats_usecase.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/projects/domain/usecases/get_projects_usecase.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
@@ -32,7 +30,6 @@ void main() {
       expect(
           ServiceLocator.instance.isRegistered<ExperienceRepository>(), isTrue);
       expect(ServiceLocator.instance.isRegistered<SkillRepository>(), isTrue);
-      expect(ServiceLocator.instance.isRegistered<HatRepository>(), isTrue);
       expect(ServiceLocator.instance.isRegistered<ArchitectureRepository>(),
           isTrue);
       expect(ServiceLocator.instance.isRegistered<ContactRepository>(), isTrue);
@@ -48,7 +45,6 @@ void main() {
           ServiceLocator.instance.isRegistered<GetEducationUseCase>(), isTrue);
       expect(ServiceLocator.instance.isRegistered<GetCareerFactsUseCase>(),
           isTrue);
-      expect(ServiceLocator.instance.isRegistered<GetHatsUseCase>(), isTrue);
       expect(
           ServiceLocator.instance.isRegistered<GetArchitectureTopicsUseCase>(),
           isTrue);
@@ -111,7 +107,7 @@ void main() {
     });
   });
 
-  group('Clean Architecture - Experience & Hats UseCases', () {
+  group('Clean Architecture - Experience UseCases', () {
     test(
         'GetExperiencesUseCase, GetEducationUseCase, GetCareerFactsUseCase execute cleanly',
         () {
@@ -123,13 +119,6 @@ void main() {
       expect(expUseCase(const NoParams()).length, repo.getExperiences().length);
       expect(eduUseCase(const NoParams()).length, repo.getEducation().length);
       expect(factsUseCase(const NoParams()), repo.getYearsOfExperience());
-    });
-
-    test('GetHatsUseCase retrieves perspectives', () {
-      final repo = RealHatRepository();
-      final useCase = GetHatsUseCase(repo);
-      expect(useCase(const NoParams()).length, repo.getHats().length);
-      expect(useCase.getHatCount(), repo.getHatCount());
     });
   });
 

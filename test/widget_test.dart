@@ -24,7 +24,6 @@ void main() {
     await tester.pumpWidget(PortfolioApp(
       projectRepo: TestProjectRepository(),
       experienceRepo: TestExperienceRepository(),
-      hatRepo: TestHatRepository(),
       skillRepo: TestSkillRepository(),
     ));
     await tester.pump(const Duration(milliseconds: 200));
@@ -102,7 +101,6 @@ void main() {
     await tester.pumpWidget(PortfolioApp(
       projectRepo: TestProjectRepository(),
       experienceRepo: TestExperienceRepository(),
-      hatRepo: TestHatRepository(),
       skillRepo: TestSkillRepository(),
     ));
     await tester.pump(const Duration(milliseconds: 300));

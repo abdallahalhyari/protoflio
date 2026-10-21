@@ -28,7 +28,6 @@ Future<List<String>> _layoutErrors(
   await tester.pumpWidget(PortfolioApp(
     projectRepo: TestProjectRepository(),
     experienceRepo: TestExperienceRepository(),
-    hatRepo: TestHatRepository(),
     skillRepo: TestSkillRepository(),
   ));
   for (int i = 0; i < 6; i++) {

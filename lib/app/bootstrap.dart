@@ -9,11 +9,9 @@ import 'package:profile/core/di/injection.dart';
 import 'package:profile/features/contact/domain/repositories/contact_repository.dart';
 import 'package:profile/features/engineering/domain/repositories/architecture_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
-import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
-import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
 import 'package:profile/core/services/boot_handoff.dart';
@@ -40,13 +38,8 @@ Locale readInitialLocale(SharedPreferences prefs, {Uri? uri}) {
 Future<void> loadInitialData({
   required LocalProjectRepository projectRepo,
   required LocalExperienceRepository experienceRepo,
-  required LocalHatRepository hatRepo,
   required LocalSkillRepository skillRepo,
 }) async {
-  // Sound is optional: the site works muted. Content is not: swallowing a
-  // failed content load started the app with empty sections and never
-  // showed the retry screen, so those errors propagate to it (after the
-  // loader's own retries).
   final sound =
       SoundService.instance.load().catchError((Object error, StackTrace st) {
     FlutterError.reportError(FlutterErrorDetails(
@@ -60,7 +53,6 @@ Future<void> loadInitialData({
     sound,
     projectRepo.load(),
     experienceRepo.load(),
-    hatRepo.load(),
     skillRepo.load(),
   ]);
 }
@@ -71,7 +63,6 @@ class AppBootstrapData {
     required this.initialLocale,
     required this.projectRepo,
     required this.experienceRepo,
-    required this.hatRepo,
     required this.skillRepo,
     required this.architectureRepo,
     required this.contactRepo,
@@ -81,7 +72,6 @@ class AppBootstrapData {
   final Locale initialLocale;
   final LocalProjectRepository projectRepo;
   final LocalExperienceRepository experienceRepo;
-  final LocalHatRepository hatRepo;
   final LocalSkillRepository skillRepo;
   final ArchitectureRepository architectureRepo;
   final ContactRepository contactRepo;
@@ -187,8 +177,6 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
         as LocalProjectRepository;
     final experienceRepo = ServiceLocator.instance.get<ExperienceRepository>()
         as LocalExperienceRepository;
-    final hatRepo =
-        ServiceLocator.instance.get<HatRepository>() as LocalHatRepository;
     final skillRepo =
         ServiceLocator.instance.get<SkillRepository>() as LocalSkillRepository;
     final architectureRepo =
@@ -198,7 +186,6 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
     await loadInitialData(
       projectRepo: projectRepo,
       experienceRepo: experienceRepo,
-      hatRepo: hatRepo,
       skillRepo: skillRepo,
     );
 
@@ -207,7 +194,6 @@ class _AppBootstrapperState extends State<AppBootstrapper> {
       initialLocale: initLocale,
       projectRepo: projectRepo,
       experienceRepo: experienceRepo,
-      hatRepo: hatRepo,
       skillRepo: skillRepo,
       architectureRepo: architectureRepo,
       contactRepo: contactRepo,

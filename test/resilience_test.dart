@@ -141,7 +141,6 @@ void main() {
       await tester.pumpWidget(PortfolioApp(
         projectRepo: TestProjectRepository(),
         experienceRepo: TestExperienceRepository(),
-        hatRepo: TestHatRepository(),
         skillRepo: TestSkillRepository(),
       ));
       await _settle(tester);
@@ -181,7 +180,6 @@ void main() {
           initialLocale: locale,
           projectRepo: TestProjectRepository(),
           experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
           skillRepo: TestSkillRepository(),
         ));
         await _tourApp(tester, size);

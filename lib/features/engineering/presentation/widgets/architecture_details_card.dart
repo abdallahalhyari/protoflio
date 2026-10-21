@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/features/about/presentation/about_navigation.dart';
 import 'package:profile/features/engineering/domain/entities/architecture_topic.dart';
 import 'package:profile/features/engineering/presentation/utils/architecture_labels.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
@@ -62,7 +61,6 @@ class ArchitectureDetailsCard extends StatelessWidget {
         child: OutlinedButton.icon(
           onPressed: () {
             SoundService.instance.playClick();
-            aboutTabRequest.value = AboutTabs.playground;
             HomeController.maybeOf(context)?.goTo(5);
           },
           icon: const Icon(Icons.play_circle_fill_rounded, size: 16),

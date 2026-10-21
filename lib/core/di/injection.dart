@@ -12,10 +12,6 @@ import 'package:profile/features/experience/domain/repositories/experience_repos
 import 'package:profile/features/experience/domain/usecases/get_career_facts_usecase.dart';
 import 'package:profile/features/experience/domain/usecases/get_education_usecase.dart';
 import 'package:profile/features/experience/domain/usecases/get_experiences_usecase.dart';
-import 'package:profile/features/hats/data/datasources/hat_local_data_source.dart';
-import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
-import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
-import 'package:profile/features/hats/domain/usecases/get_hats_usecase.dart';
 import 'package:profile/features/projects/data/datasources/project_local_data_source.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
@@ -56,7 +52,6 @@ class ServiceLocator {
     register<ProjectLocalDataSource>(const ProjectLocalDataSourceImpl());
     register<ExperienceLocalDataSource>(const ExperienceLocalDataSourceImpl());
     register<SkillLocalDataSource>(const SkillLocalDataSourceImpl());
-    register<HatLocalDataSource>(const HatLocalDataSourceImpl());
     register<ContactLocalDataSource>(const ContactLocalDataSourceImpl());
 
     // 2. Repositories
@@ -68,9 +63,6 @@ class ServiceLocator {
     );
     register<SkillRepository>(
       LocalSkillRepository(get<SkillLocalDataSource>()),
-    );
-    register<HatRepository>(
-      LocalHatRepository(get<HatLocalDataSource>()),
     );
     register<ArchitectureRepository>(
       const ArchitectureRepositoryImpl(),
@@ -97,9 +89,6 @@ class ServiceLocator {
     );
     register<GetCareerFactsUseCase>(
       GetCareerFactsUseCase(get<ExperienceRepository>()),
-    );
-    register<GetHatsUseCase>(
-      GetHatsUseCase(get<HatRepository>()),
     );
     register<GetArchitectureTopicsUseCase>(
       GetArchitectureTopicsUseCase(get<ArchitectureRepository>()),

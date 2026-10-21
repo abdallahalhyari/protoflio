@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
-import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
 import 'package:profile/shared/utils/bundled_json.dart';
@@ -47,12 +46,6 @@ void main() {
       await repo.load();
       expect(repo.getSkillCount(), RealSkillRepository().getSkillCount());
       expect(repo.getSkillCount(), greaterThan(0));
-    });
-
-    test('hats', () async {
-      final repo = LocalHatRepository();
-      await repo.load();
-      expect(repo.getHatCount(), RealHatRepository().getHatCount());
     });
 
     test('experience, education and certifications', () async {

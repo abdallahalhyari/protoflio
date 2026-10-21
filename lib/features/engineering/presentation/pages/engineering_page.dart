@@ -19,7 +19,6 @@ import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/shared/widgets/swipe_affordance.dart';
 import 'package:profile/shared/widgets/text_tabs.dart';
 import 'package:profile/core/theme/surface_tone.dart';
-import 'package:profile/features/about/presentation/about_navigation.dart';
 import 'package:profile/features/engineering/presentation/widgets/capabilities_view.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 
@@ -350,7 +349,6 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
 
   void _openPlayground() {
     SoundService.instance.playClick();
-    aboutTabRequest.value = AboutTabs.playground;
     HomeController.maybeOf(context)?.goTo(5);
   }
 }

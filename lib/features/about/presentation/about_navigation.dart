@@ -9,8 +9,7 @@ final ValueNotifier<int?> aboutTabRequest = ValueNotifier<int?>(null);
 /// Tab indexes on the About & Contact page.
 abstract final class AboutTabs {
   static const int profile = 0;
-  static const int playground = 1;
-  static const int contact = 2;
+  static const int contact = 1;
 }
 
 /// The desktop section's one name, "About & Contact": the top nav item

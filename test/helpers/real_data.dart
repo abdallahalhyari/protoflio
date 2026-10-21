@@ -5,9 +5,6 @@ import 'package:profile/features/experience/data/models/education_model.dart';
 import 'package:profile/features/experience/data/models/experience_model.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
-import 'package:profile/features/hats/data/models/hat_info_model.dart';
-import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
-import 'package:profile/features/hats/domain/entities/hat_info.dart';
 import 'package:profile/features/projects/data/models/project_model.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
@@ -63,16 +60,4 @@ class RealSkillRepository implements SkillRepository {
   List<Skill> getSkills() => _items;
   @override
   int getSkillCount() => _items.length;
-}
-
-class RealHatRepository implements HatRepository {
-  final List<HatInfo> _items = File('assets/data/hats.json').existsSync()
-      ? (_json('hats')
-          .map((e) => HatInfoModel.fromJson(e as Map<String, dynamic>))
-          .toList())
-      : const [];
-  @override
-  List<HatInfo> getHats() => _items;
-  @override
-  int getHatCount() => _items.length;
 }

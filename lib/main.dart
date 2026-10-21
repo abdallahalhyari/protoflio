@@ -10,7 +10,6 @@ import 'package:profile/core/bloc/theme/theme_bloc.dart';
 import 'package:profile/features/contact/domain/repositories/contact_repository.dart';
 import 'package:profile/features/engineering/domain/repositories/architecture_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
-import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/shell/presentation/pages/home_screen.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
@@ -34,7 +33,6 @@ Future<void> main() async {
         initialLocale: data.initialLocale,
         projectRepo: data.projectRepo,
         experienceRepo: data.experienceRepo,
-        hatRepo: data.hatRepo,
         skillRepo: data.skillRepo,
         architectureRepo: data.architectureRepo,
         contactRepo: data.contactRepo,
@@ -81,7 +79,6 @@ class PortfolioApp extends StatelessWidget {
     this.initialLocale = const Locale('en'),
     required this.projectRepo,
     required this.experienceRepo,
-    required this.hatRepo,
     required this.skillRepo,
     this.architectureRepo,
     this.contactRepo,
@@ -91,7 +88,6 @@ class PortfolioApp extends StatelessWidget {
   final Locale initialLocale;
   final ProjectRepository projectRepo;
   final ExperienceRepository experienceRepo;
-  final HatRepository hatRepo;
   final SkillRepository skillRepo;
   final ArchitectureRepository? architectureRepo;
   final ContactRepository? contactRepo;
@@ -105,9 +101,6 @@ class PortfolioApp extends StatelessWidget {
         ),
         RepositoryProvider<ExperienceRepository>.value(
           value: experienceRepo,
-        ),
-        RepositoryProvider<HatRepository>.value(
-          value: hatRepo,
         ),
         RepositoryProvider<SkillRepository>.value(
           value: skillRepo,

@@ -12,7 +12,6 @@ import 'package:profile/features/shell/presentation/widgets/folio_bar.dart';
 import 'package:profile/features/shell/presentation/widgets/magazine_page_transformer.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
-import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'helpers/test_data.dart';
@@ -24,7 +23,6 @@ Widget _wrapHome() {
           create: (_) => TestProjectRepository()),
       RepositoryProvider<ExperienceRepository>(
           create: (_) => TestExperienceRepository()),
-      RepositoryProvider<HatRepository>(create: (_) => TestHatRepository()),
       RepositoryProvider<SkillRepository>(create: (_) => TestSkillRepository()),
     ],
     child: MultiBlocProvider(

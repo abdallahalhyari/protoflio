@@ -213,7 +213,6 @@ void main() {
           key: ValueKey(size),
           projectRepo: TestProjectRepository(),
           experienceRepo: TestExperienceRepository(),
-          hatRepo: TestHatRepository(),
           skillRepo: TestSkillRepository(),
         ));
         await tester.pump(const Duration(milliseconds: 300));
@@ -248,7 +247,6 @@ void main() {
       await tester.pumpWidget(PortfolioApp(
         projectRepo: TestProjectRepository(),
         experienceRepo: TestExperienceRepository(),
-        hatRepo: TestHatRepository(),
         skillRepo: TestSkillRepository(),
       ));
       await tester.pump(const Duration(milliseconds: 300));

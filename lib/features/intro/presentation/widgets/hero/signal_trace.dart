@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/features/about/presentation/about_navigation.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -508,7 +507,6 @@ class _SignalTraceState extends State<SignalTrace>
               TextButton(
                 onPressed: () {
                   SoundService.instance.playClick();
-                  aboutTabRequest.value = AboutTabs.playground;
                   HomeController.maybeOf(context)?.goTo(5);
                 },
                 child: Text(

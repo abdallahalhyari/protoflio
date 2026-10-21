@@ -9,7 +9,6 @@ import 'package:profile/features/contact/data/datasources/contact_local_data_sou
 import 'package:profile/features/contact/data/repositories/contact_repository_impl.dart';
 import 'package:profile/features/engineering/data/repositories/architecture_repository_impl.dart';
 import 'package:profile/features/experience/data/repositories/local_experience_repository.dart';
-import 'package:profile/features/hats/data/repositories/local_hat_repository.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
 
@@ -106,7 +105,6 @@ void main() {
       loadInitialData(
         projectRepo: _FailingProjectRepository(),
         experienceRepo: LocalExperienceRepository(),
-        hatRepo: LocalHatRepository(),
         skillRepo: LocalSkillRepository(),
       ),
       throwsA(isA<StateError>()),
@@ -118,7 +116,6 @@ void main() {
     await loadInitialData(
       projectRepo: projects,
       experienceRepo: LocalExperienceRepository(),
-      hatRepo: LocalHatRepository(),
       skillRepo: LocalSkillRepository(),
     );
     expect(projects.getProjects(), isNotEmpty);
@@ -154,7 +151,6 @@ void main() {
       initialLocale: const Locale('en'),
       projectRepo: LocalProjectRepository(),
       experienceRepo: LocalExperienceRepository(),
-      hatRepo: LocalHatRepository(),
       skillRepo: LocalSkillRepository(),
       architectureRepo: const ArchitectureRepositoryImpl(),
       contactRepo: const ContactRepositoryImpl(ContactLocalDataSourceImpl()),

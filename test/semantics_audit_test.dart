@@ -114,7 +114,6 @@ void main() {
       await tester.pumpWidget(PortfolioApp(
         projectRepo: TestProjectRepository(),
         experienceRepo: TestExperienceRepository(),
-        hatRepo: TestHatRepository(),
         skillRepo: TestSkillRepository(),
       ));
       for (var i = 0; i < 20; i++) {

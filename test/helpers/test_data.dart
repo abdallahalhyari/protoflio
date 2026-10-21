@@ -1,12 +1,10 @@
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/skills/domain/entities/skill.dart';
-import 'package:profile/features/hats/domain/entities/hat_info.dart';
 
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
-import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/shared/utils/career_facts.dart';
 
 import 'real_data.dart';
@@ -18,7 +16,6 @@ final List<Project> testProjects = RealProjectRepository().getProjects();
 final List<Experience> testExperience =
     RealExperienceRepository().getExperiences();
 final List<Skill> testSkills = RealSkillRepository().getSkills();
-final List<HatInfo> testHats = RealHatRepository().getHats();
 
 class TestProjectRepository implements ProjectRepository {
   @override
@@ -53,12 +50,4 @@ class TestSkillRepository implements SkillRepository {
 
   @override
   int getSkillCount() => testSkills.length;
-}
-
-class TestHatRepository implements HatRepository {
-  @override
-  List<HatInfo> getHats() => testHats;
-
-  @override
-  int getHatCount() => testHats.length;
 }
