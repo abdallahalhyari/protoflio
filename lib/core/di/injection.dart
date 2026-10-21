@@ -19,7 +19,6 @@ import 'package:profile/features/hats/domain/usecases/get_hats_usecase.dart';
 import 'package:profile/features/projects/data/datasources/project_local_data_source.dart';
 import 'package:profile/features/projects/data/repositories/local_project_repository.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
-import 'package:profile/features/projects/domain/usecases/filter_projects_usecase.dart';
 import 'package:profile/features/projects/domain/usecases/get_projects_usecase.dart';
 import 'package:profile/features/skills/data/datasources/skill_local_data_source.dart';
 import 'package:profile/features/skills/data/repositories/local_skill_repository.dart';
@@ -83,9 +82,6 @@ class ServiceLocator {
     // 3. Domain Use Cases
     register<GetProjectsUseCase>(
       GetProjectsUseCase(get<ProjectRepository>()),
-    );
-    register<FilterProjectsUseCase>(
-      const FilterProjectsUseCase(),
     );
     register<GetSkillsUseCase>(
       GetSkillsUseCase(get<SkillRepository>()),

@@ -21,12 +21,6 @@ void main() {
         localized.introSkillArchitecture,
         localized.introSkillProductDelivery,
         localized.projectsHeaderKicker,
-        localized.projectSwitchDomain,
-        localized.projectHallmarkNfc,
-        localized.projectHallmarkNfcDetail,
-        localized.projectHallmarkOffline,
-        localized.projectHallmarkPerformance,
-        localized.projectHallmarkPerformanceDetail,
         localized.studyProblem,
         localized.studyArchitecture,
         localized.studyBuilt,
@@ -75,12 +69,6 @@ void main() {
         english.introSkillArchitecture,
         english.introSkillProductDelivery,
         english.projectsHeaderKicker,
-        english.projectSwitchDomain,
-        english.projectHallmarkNfc,
-        english.projectHallmarkNfcDetail,
-        english.projectHallmarkOffline,
-        english.projectHallmarkPerformance,
-        english.projectHallmarkPerformanceDetail,
         english.studyProblem,
         english.studyArchitecture,
         english.studyBuilt,
@@ -130,7 +118,7 @@ void main() {
       }
     });
 
-    test('$code: project card summaries and domain filters are localized', () {
+    test('$code: project card copy, titles and badges are localized', () {
       final english = lookupAppLocalizations(const Locale('en'));
       for (final project in testProjects) {
         expect(
@@ -145,15 +133,17 @@ void main() {
         }
       }
 
-      const domains = [
-        'ALL',
-        'Healthcare & Smart Cards',
-        'Enterprise HIS & LMS',
-        'Consumer & Social',
-        'M-Commerce & Streaming',
-      ];
-      for (final domain in domains) {
-        expect(localizedProjectDomain(localized, domain), isNot(domain));
+      for (final project in testProjects) {
+        expect(
+          localizedProjectName(localized, project),
+          isNot(localizedProjectName(english, project)),
+          reason: project.company,
+        );
+        expect(
+          localizedProjectMetricBadge(localized, project),
+          isNot(localizedProjectMetricBadge(english, project)),
+          reason: project.company,
+        );
       }
     });
   }

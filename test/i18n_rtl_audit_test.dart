@@ -201,9 +201,9 @@ void main() {
       expect(tester.takeException(), isNull);
       final l10n = lookupAppLocalizations(const Locale('ar'));
       expect(find.text(l10n.sectionSubtitleWork), findsOneWidget);
-      expect(find.text(l10n.projectHallmarkNfc), findsOneWidget);
-      expect(find.text(l10n.projectHallmarkOffline), findsOneWidget);
-      expect(find.text(l10n.projectHallmarkPerformance), findsOneWidget);
+      expect(find.text(l10n.projectNameNatHealth), findsOneWidget);
+      expect(find.text(l10n.projectNameEskadenia), findsOneWidget);
+      expect(find.text(l10n.projectBadgeNatHealth), findsOneWidget);
     });
 
     testWidgets(

@@ -404,47 +404,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get projectsHeaderKicker => 'Selected work';
 
   @override
-  String get projectDomainAll => 'All';
-
-  @override
-  String get projectDomainHealthcare => 'Healthcare & Smart Cards';
-
-  @override
-  String get projectDomainEnterprise => 'Enterprise HIS & LMS';
-
-  @override
-  String get projectDomainConsumer => 'Consumer & Social';
-
-  @override
-  String get projectDomainCommerce => 'M-Commerce & Streaming';
-
-  @override
-  String projectTechFilter(String technology) {
-    return 'Filtered by $technology';
-  }
-
-  @override
-  String get projectSwitchDomain => 'Switch domain';
-
-  @override
-  String get projectHallmarkNfc => 'NFC smart-card platform';
-
-  @override
-  String get projectHallmarkNfcDetail => 'ISO-7816 · Hardware-backed keys';
-
-  @override
-  String get projectHallmarkOffline => 'Offline-first claims sync';
-
-  @override
-  String get projectHallmarkOfflineDetail => 'SQLite · WorkManager';
-
-  @override
-  String get projectHallmarkPerformance => 'Performance-focused enterprise UI';
-
-  @override
-  String get projectHallmarkPerformanceDetail => '60 FPS · 35% fewer crashes';
-
-  @override
   String get projectDossierDecision => 'Key decision';
 
   @override
@@ -968,13 +927,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiReadCaseStudy => 'Read case study';
 
   @override
-  String get projectsEmptyHint =>
-      'The domain and technology you picked don\'t share a case study.';
-
-  @override
-  String get projectsEmptyShowAll => 'Show all case studies';
-
-  @override
   String get projectTagHealth => 'NFC / Health';
 
   @override
@@ -1010,9 +962,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get projectBadgeFais => 'High-Throughput';
-
-  @override
-  String get uiNoCaseStudies => 'No case studies match these filters';
 
   @override
   String get uiScrollToExplore => 'Scroll to explore';
@@ -1690,9 +1639,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aboutStoryShort =>
       'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.';
-
-  @override
-  String get projectSwipeHint => 'Swipe horizontally to browse projects';
 
   @override
   String get engTabArchitectures => 'Architectures';

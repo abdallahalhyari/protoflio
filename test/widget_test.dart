@@ -50,15 +50,12 @@ void main() {
         .pumpWidget(createTestApp(const ProjectsPage(), const Size(400, 800)));
     await tester.pumpAndSettle();
 
-    // Scroll vertical page down slightly to bring horizontal list fully into viewport
-    await tester.drag(find.byType(CustomScrollView), const Offset(0, -300));
-    await tester.pumpAndSettle();
-
-    // Mobile lists every case study; scroll horizontal ListView to reveal the last project card
-    final listView = find.byKey(const Key('projects_horizontal_list'));
-    await tester.drag(listView, const Offset(-800, 0));
-    await tester.pumpAndSettle();
-
+    // Mobile stacks every case study in one column; scroll down to the last.
+    await tester.scrollUntilVisible(
+      find.text('M-Commerce & Media-Streaming Clients'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('M-Commerce & Media-Streaming Clients'), findsOneWidget);
 
     await tester.binding.setSurfaceSize(null);

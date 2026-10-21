@@ -47,17 +47,6 @@ String? localizedProjectOutcome(AppLocalizations loc, Project project) {
   };
 }
 
-String localizedProjectDomain(AppLocalizations loc, String domain) {
-  return switch (domain) {
-    'ALL' => loc.projectDomainAll,
-    'Healthcare & Smart Cards' => loc.projectDomainHealthcare,
-    'Enterprise HIS & LMS' => loc.projectDomainEnterprise,
-    'Consumer & Social' => loc.projectDomainConsumer,
-    'M-Commerce & Streaming' => loc.projectDomainCommerce,
-    _ => domain,
-  };
-}
-
 /// The one number a card leads with, taken from the case study. Null when
 /// a project has no measured result to quote.
 ({String value, String label})? localizedProjectFigure(

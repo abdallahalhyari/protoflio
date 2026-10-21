@@ -13,6 +13,7 @@ class CardFigureLine extends StatelessWidget {
     required this.isDark,
     this.value,
     this.maxLines,
+    this.stacked = false,
   });
 
   final String? value;
@@ -20,6 +21,10 @@ class CardFigureLine extends StatelessWidget {
   final ColorScheme scheme;
   final bool isDark;
   final int? maxLines;
+
+  /// Number above the sentence instead of beside it, for narrow cards
+  /// where the sentence would shrink to a word a line.
+  final bool stacked;
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +57,8 @@ class CardFigureLine extends StatelessWidget {
                 : figureColor.withValues(alpha: 0.35),
           ),
         ),
-        // Side by side where the sentence keeps a readable measure;
-        // stacked on a narrow card, where it would shrink to a word a line.
-        child: LayoutBuilder(
-          builder: (context, constraints) {
+        child: Builder(
+          builder: (context) {
             Widget figureText(double maxWidth) => ConstrainedBox(
                   constraints: BoxConstraints(
                     minWidth: maxWidth < 44 ? maxWidth : 44,
@@ -77,11 +80,11 @@ class CardFigureLine extends StatelessWidget {
                     ),
                   ),
                 );
-            if (constraints.maxWidth < 300) {
+            if (stacked) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  figureText(constraints.maxWidth),
+                  figureText(double.infinity),
                   const SizedBox(height: 4),
                   text,
                 ],

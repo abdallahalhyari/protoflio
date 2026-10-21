@@ -403,48 +403,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get projectsHeaderKicker => 'القسم 03 · أعمال مختارة';
 
   @override
-  String get projectDomainAll => 'الكل';
-
-  @override
-  String get projectDomainHealthcare => 'الرعاية الصحية والبطاقات الذكية';
-
-  @override
-  String get projectDomainEnterprise => 'أنظمة المستشفيات والتعليم';
-
-  @override
-  String get projectDomainConsumer => 'تطبيقات المستهلكين والتواصل الاجتماعي';
-
-  @override
-  String get projectDomainCommerce => 'التجارة الإلكترونية والبث';
-
-  @override
-  String projectTechFilter(String technology) {
-    return 'تصفية بالتقنية: $technology';
-  }
-
-  @override
-  String get projectSwitchDomain => 'تبديل المجال';
-
-  @override
-  String get projectHallmarkNfc => 'منصة البطاقات الذكية NFC';
-
-  @override
-  String get projectHallmarkNfcDetail => 'ISO-7816 · مفاتيح مدعومة بالعتاد';
-
-  @override
-  String get projectHallmarkOffline => 'مزامنة المطالبات دون اتصال';
-
-  @override
-  String get projectHallmarkOfflineDetail => 'SQLite · WorkManager';
-
-  @override
-  String get projectHallmarkPerformance => 'واجهات مؤسسات عالية الأداء';
-
-  @override
-  String get projectHallmarkPerformanceDetail =>
-      '60 إطاراً/ثانية · أعطال أقل 35٪';
-
-  @override
   String get projectDossierDecision => 'القرار الهندسي';
 
   @override
@@ -963,13 +921,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiReadCaseStudy => 'قراءة دراسة الحالة';
 
   @override
-  String get projectsEmptyHint =>
-      'لا توجد دراسة حالة تجمع المجال والتقنية المختارين.';
-
-  @override
-  String get projectsEmptyShowAll => 'عرض كل دراسات الحالة';
-
-  @override
   String get projectTagHealth => 'NFC / الصحة';
 
   @override
@@ -1005,9 +956,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get projectBadgeFais => 'إنتاجية عالية';
-
-  @override
-  String get uiNoCaseStudies => 'لا توجد دراسات حالة مطابقة';
 
   @override
   String get uiScrollToExplore => 'مرّر للاستكشاف';
@@ -1679,9 +1627,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get aboutStoryShort =>
       'بدأت في تطبيقات الهواتف عام 2021. ومنذ ذلك الحين ينتقل عملي باستمرار إلى أسفل الطبقات، من الشاشات إلى طبقات النظام الأصلي والأمان والمزامنة تحتها. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.';
-
-  @override
-  String get projectSwipeHint => 'اسحب أفقيًا لاستعراض المشاريع';
 
   @override
   String get engTabArchitectures => 'البُنى المعمارية';

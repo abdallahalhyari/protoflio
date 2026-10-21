@@ -13,7 +13,6 @@ import 'package:profile/features/experience/domain/usecases/get_experiences_usec
 import 'package:profile/features/hats/domain/repositories/hat_repository.dart';
 import 'package:profile/features/hats/domain/usecases/get_hats_usecase.dart';
 import 'package:profile/features/projects/domain/repositories/project_repository.dart';
-import 'package:profile/features/projects/domain/usecases/filter_projects_usecase.dart';
 import 'package:profile/features/projects/domain/usecases/get_projects_usecase.dart';
 import 'package:profile/features/skills/domain/repositories/skill_repository.dart';
 import 'package:profile/features/skills/domain/usecases/filter_skills_usecase.dart';
@@ -40,8 +39,6 @@ void main() {
 
       expect(
           ServiceLocator.instance.isRegistered<GetProjectsUseCase>(), isTrue);
-      expect(ServiceLocator.instance.isRegistered<FilterProjectsUseCase>(),
-          isTrue);
       expect(ServiceLocator.instance.isRegistered<GetSkillsUseCase>(), isTrue);
       expect(
           ServiceLocator.instance.isRegistered<FilterSkillsUseCase>(), isTrue);
@@ -64,36 +61,6 @@ void main() {
   });
 
   group('Clean Architecture - Projects Domain UseCases', () {
-    final realProjects = RealProjectRepository().getProjects();
-
-    test('FilterProjectsUseCase filters by domain', () {
-      const useCase = FilterProjectsUseCase();
-      final filtered = useCase(FilterProjectsParams(
-        allProjects: realProjects,
-        domain: realProjects.first.domain,
-      ));
-      expect(
-          filtered.every((p) => p.domain == realProjects.first.domain), isTrue);
-    });
-
-    test('FilterProjectsUseCase filters by tech stack', () {
-      const useCase = FilterProjectsUseCase();
-      const tech = 'Flutter';
-      final filtered = useCase(FilterProjectsParams(
-        allProjects: realProjects,
-        domain: 'ALL',
-        tech: tech,
-      ));
-      expect(filtered.every((p) => p.stack.contains(tech)), isTrue);
-    });
-
-    test('FilterProjectsUseCase computes domain counts accurately', () {
-      const useCase = FilterProjectsUseCase();
-      final counts = useCase.computeDomainCounts(realProjects);
-      expect(counts['ALL'], realProjects.length);
-      expect(counts.values.reduce((a, b) => a + b), realProjects.length * 2);
-    });
-
     test('GetProjectsUseCase retrieves projects from repository', () {
       final repo = RealProjectRepository();
       final useCase = GetProjectsUseCase(repo);

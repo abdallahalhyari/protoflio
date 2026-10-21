@@ -110,14 +110,16 @@ void main() {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
-            body: SizedBox(
-              width: 400,
-              height: 500,
-              child: InteractiveProjectCard(
-                project: testProject,
-                index: 0,
-                scheme: scheme,
-                isDesktop: true,
+            // Cards take their natural height; give it room to scroll.
+            body: SingleChildScrollView(
+              child: SizedBox(
+                width: 400,
+                child: InteractiveProjectCard(
+                  project: testProject,
+                  index: 0,
+                  scheme: scheme,
+                  isDesktop: true,
+                ),
               ),
             ),
           ),

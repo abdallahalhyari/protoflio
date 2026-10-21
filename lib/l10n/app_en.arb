@@ -199,27 +199,7 @@
   "sectionSubtitleWork": "Four employers, four systems. Each case shows the problem, how it was built, and what changed.",
   "sectionSubtitleExperience": "Four roles since 2021, from shipping features to owning the native and security layer.",
   "projectsHeaderKicker": "Selected work",
-  "projectDomainAll": "All",
-  "projectDomainHealthcare": "Healthcare & Smart Cards",
-  "projectDomainEnterprise": "Enterprise HIS & LMS",
-  "projectDomainConsumer": "Consumer & Social",
-  "projectDomainCommerce": "M-Commerce & Streaming",
-  "projectTechFilter": "Filtered by {technology}",
-  "projectSwitchDomain": "Switch domain",
-  "projectHallmarkNfc": "NFC smart-card platform",
-  "projectHallmarkNfcDetail": "ISO-7816 · Hardware-backed keys",
-  "projectHallmarkOffline": "Offline-first claims sync",
-  "projectHallmarkOfflineDetail": "SQLite · WorkManager",
-  "projectHallmarkPerformance": "Performance-focused enterprise UI",
-  "projectHallmarkPerformanceDetail": "60 FPS · 35% fewer crashes",
   "projectDossierDecision": "Key decision",
-  "@projectTechFilter": {
-    "placeholders": {
-      "technology": {
-        "type": "String"
-      }
-    }
-  },
   "readCaseStudyFor": "Read case study for {project}",
   "@readCaseStudyFor": {
     "placeholders": {
@@ -478,8 +458,6 @@
   "uiSendMessage": "Send message",
   "uiOpenEmailClient": "Open in email app",
   "uiReadCaseStudy": "Read case study",
-  "projectsEmptyHint": "The domain and technology you picked don't share a case study.",
-  "projectsEmptyShowAll": "Show all case studies",
   "projectTagHealth": "NFC / Health",
   "projectTagEnterprise": "HIS / LMS",
   "projectTagConsumer": "Loyalty / Social",
@@ -492,7 +470,6 @@
   "projectBadgeEskadenia": "Sustained 60 FPS",
   "projectBadgeSolutions": "Real-Time Queues",
   "projectBadgeFais": "High-Throughput",
-  "uiNoCaseStudies": "No case studies match these filters",
   "uiScrollToExplore": "Scroll to explore",
   "uiPortfolioSections": "Sections",
   "uiDownloadResumePdf": "Download CV (PDF)",
@@ -778,7 +755,6 @@
   },
   "engTryDemos": "Try the NFC, crypto and sync demos",
   "aboutStoryShort": "I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
-  "projectSwipeHint": "Swipe horizontally to browse projects",
   "engTabArchitectures": "Architectures",
   "engTabCapabilities": "Capabilities"
 }

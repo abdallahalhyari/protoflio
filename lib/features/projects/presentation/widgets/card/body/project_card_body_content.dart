@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
@@ -23,8 +22,6 @@ class CardBodyContent extends StatelessWidget {
     required this.isHovered,
     required this.isDark,
     required this.pinFoot,
-    required this.selectedTech,
-    required this.onSelectTech,
     required this.onOpenStudy,
     required this.onFocusChange,
   });
@@ -34,9 +31,10 @@ class CardBodyContent extends StatelessWidget {
   final bool isDesktop;
   final bool isHovered;
   final bool isDark;
+
+  /// Push the "Read case study" row to the bottom of a card that has been
+  /// stretched to a grid row's height.
   final bool pinFoot;
-  final String? selectedTech;
-  final ValueChanged<String>? onSelectTech;
   final VoidCallback onOpenStudy;
   final ValueChanged<bool> onFocusChange;
 
@@ -48,28 +46,14 @@ class CardBodyContent extends StatelessWidget {
     final caseCopy = localizedProjectCase(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
 
-    // Nothing on the card is clamped with an ellipsis: a cut sentence
-    // reads as broken. A fixed-height card (desktop carousel) has room
-    // for the problem alone; System and My role need the full card
-    // height, so they show only where the card can grow (and in the
-    // case study, one click away).
-    Widget dossier(bool expanded) => Column(
+    // The case in three lines, in full: nothing on the card is clamped
+    // with an ellipsis, because a cut sentence reads as broken.
+    Widget dossier() => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LabeledLine(
-              label: loc.projectLblProblem,
-              text: caseCopy!.problem,
-            ),
-            if (expanded) ...[
-              LabeledLine(
-                label: loc.projectLblSystem,
-                text: caseCopy.system,
-              ),
-              LabeledLine(
-                label: loc.projectLblRole,
-                text: caseCopy.role,
-              ),
-            ],
+            LabeledLine(label: loc.projectLblProblem, text: caseCopy!.problem),
+            LabeledLine(label: loc.projectLblSystem, text: caseCopy.system),
+            LabeledLine(label: loc.projectLblRole, text: caseCopy.role),
           ],
         );
 
@@ -117,43 +101,7 @@ class CardBodyContent extends StatelessWidget {
           runSpacing: 4,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            for (final tag in project.stack.take(isDesktop ? 4 : 3))
-              CardTechTagChip(
-                tag: tag,
-                isSelected: selectedTech == tag,
-                scheme: scheme,
-                isDark: isDark,
-                onTap: onSelectTech != null
-                    ? () {
-                        SoundService.instance.playSelection();
-                        onSelectTech!(tag);
-                      }
-                    : null,
-              ),
-            if (project.stack.length > (isDesktop ? 4 : 3))
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 6, vertical: 3.5),
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.05)
-                      : AppColors.ink100,
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.08)
-                        : AppColors.ink200,
-                  ),
-                ),
-                child: Text(
-                  '+${project.stack.length - (isDesktop ? 4 : 3)}',
-                  style: TextStyle(
-                    color: context.mutedText,
-                    fontSize: AppTypography.label - 2,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
+            for (final tag in project.stack) CardTechTagChip(tag: tag),
           ],
         ),
         const SizedBox(height: 10),
@@ -171,7 +119,7 @@ class CardBodyContent extends StatelessWidget {
                     : AppColors.ink200,
               ),
             ),
-            child: dossier(!pinFoot),
+            child: dossier(),
           ),
         ] else
           Text(
@@ -196,6 +144,7 @@ class CardBodyContent extends StatelessWidget {
             label: figure?.label ?? outcome,
             scheme: scheme,
             isDark: isDark,
+            stacked: !isDesktop,
           ),
         ],
       ],
@@ -205,22 +154,8 @@ class CardBodyContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: pinFoot ? MainAxisSize.max : MainAxisSize.min,
       children: [
-        if (pinFoot)
-          Expanded(
-            child: ClipRect(
-              child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: middle,
-              ),
-            ),
-          )
-        else
-          ClipRect(
-            child: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              child: middle,
-            ),
-          ),
+        middle,
+        if (pinFoot) const Spacer(),
         const SizedBox(height: AppSpacing.sm),
         Row(
           children: [
@@ -250,14 +185,14 @@ class CardBodyContent extends StatelessWidget {
       ],
     );
 
-    return ClipRect(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm,
-        ),
-        child: content,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        AppSpacing.sm,
+        AppSpacing.md,
+        AppSpacing.md,
       ),
+      child: content,
     );
   }
 }

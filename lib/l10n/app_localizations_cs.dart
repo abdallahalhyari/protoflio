@@ -407,47 +407,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get projectsHeaderKicker => 'Část 03, vybrané projekty';
 
   @override
-  String get projectDomainAll => 'Vše';
-
-  @override
-  String get projectDomainHealthcare => 'Zdravotnictví a čipové karty';
-
-  @override
-  String get projectDomainEnterprise => 'Nemocniční a vzdělávací systémy';
-
-  @override
-  String get projectDomainConsumer => 'Spotřebitelské a sociální aplikace';
-
-  @override
-  String get projectDomainCommerce => 'Mobilní obchod a streamování';
-
-  @override
-  String projectTechFilter(String technology) {
-    return 'Filtr technologie: $technology';
-  }
-
-  @override
-  String get projectSwitchDomain => 'Přepnout oblast';
-
-  @override
-  String get projectHallmarkNfc => 'Platforma čipových karet NFC';
-
-  @override
-  String get projectHallmarkNfcDetail => 'ISO-7816 · Hardwarově chráněné klíče';
-
-  @override
-  String get projectHallmarkOffline => 'Synchronizace nároků offline';
-
-  @override
-  String get projectHallmarkOfflineDetail => 'SQLite · WorkManager';
-
-  @override
-  String get projectHallmarkPerformance => 'Výkonné podnikové rozhraní';
-
-  @override
-  String get projectHallmarkPerformanceDetail => '60 FPS · o 35 % méně pádů';
-
-  @override
   String get projectDossierDecision => 'Klíčové rozhodnutí';
 
   @override
@@ -971,13 +930,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiReadCaseStudy => 'Číst případovou studii';
 
   @override
-  String get projectsEmptyHint =>
-      'Vybraná oblast a technologie nemají společnou případovou studii.';
-
-  @override
-  String get projectsEmptyShowAll => 'Zobrazit všechny studie';
-
-  @override
   String get projectTagHealth => 'NFC / Zdravotnictví';
 
   @override
@@ -1014,9 +966,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get projectBadgeFais => 'Vysoká propustnost';
-
-  @override
-  String get uiNoCaseStudies => 'Žádné odpovídající studie';
 
   @override
   String get uiScrollToExplore => 'Posuňte a prozkoumejte';
@@ -1697,9 +1646,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get aboutStoryShort =>
       'V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.';
-
-  @override
-  String get projectSwipeHint => 'Přejetím do strany procházejte projekty';
 
   @override
   String get engTabArchitectures => 'Architektury';

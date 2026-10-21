@@ -820,84 +820,6 @@ abstract class AppLocalizations {
   /// **'Selected work'**
   String get projectsHeaderKicker;
 
-  /// No description provided for @projectDomainAll.
-  ///
-  /// In en, this message translates to:
-  /// **'All'**
-  String get projectDomainAll;
-
-  /// No description provided for @projectDomainHealthcare.
-  ///
-  /// In en, this message translates to:
-  /// **'Healthcare & Smart Cards'**
-  String get projectDomainHealthcare;
-
-  /// No description provided for @projectDomainEnterprise.
-  ///
-  /// In en, this message translates to:
-  /// **'Enterprise HIS & LMS'**
-  String get projectDomainEnterprise;
-
-  /// No description provided for @projectDomainConsumer.
-  ///
-  /// In en, this message translates to:
-  /// **'Consumer & Social'**
-  String get projectDomainConsumer;
-
-  /// No description provided for @projectDomainCommerce.
-  ///
-  /// In en, this message translates to:
-  /// **'M-Commerce & Streaming'**
-  String get projectDomainCommerce;
-
-  /// No description provided for @projectTechFilter.
-  ///
-  /// In en, this message translates to:
-  /// **'Filtered by {technology}'**
-  String projectTechFilter(String technology);
-
-  /// No description provided for @projectSwitchDomain.
-  ///
-  /// In en, this message translates to:
-  /// **'Switch domain'**
-  String get projectSwitchDomain;
-
-  /// No description provided for @projectHallmarkNfc.
-  ///
-  /// In en, this message translates to:
-  /// **'NFC smart-card platform'**
-  String get projectHallmarkNfc;
-
-  /// No description provided for @projectHallmarkNfcDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'ISO-7816 · Hardware-backed keys'**
-  String get projectHallmarkNfcDetail;
-
-  /// No description provided for @projectHallmarkOffline.
-  ///
-  /// In en, this message translates to:
-  /// **'Offline-first claims sync'**
-  String get projectHallmarkOffline;
-
-  /// No description provided for @projectHallmarkOfflineDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'SQLite · WorkManager'**
-  String get projectHallmarkOfflineDetail;
-
-  /// No description provided for @projectHallmarkPerformance.
-  ///
-  /// In en, this message translates to:
-  /// **'Performance-focused enterprise UI'**
-  String get projectHallmarkPerformance;
-
-  /// No description provided for @projectHallmarkPerformanceDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'60 FPS · 35% fewer crashes'**
-  String get projectHallmarkPerformanceDetail;
-
   /// No description provided for @projectDossierDecision.
   ///
   /// In en, this message translates to:
@@ -1810,18 +1732,6 @@ abstract class AppLocalizations {
   /// **'Read case study'**
   String get uiReadCaseStudy;
 
-  /// No description provided for @projectsEmptyHint.
-  ///
-  /// In en, this message translates to:
-  /// **'The domain and technology you picked don\'t share a case study.'**
-  String get projectsEmptyHint;
-
-  /// No description provided for @projectsEmptyShowAll.
-  ///
-  /// In en, this message translates to:
-  /// **'Show all case studies'**
-  String get projectsEmptyShowAll;
-
   /// No description provided for @projectTagHealth.
   ///
   /// In en, this message translates to:
@@ -1893,12 +1803,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'High-Throughput'**
   String get projectBadgeFais;
-
-  /// No description provided for @uiNoCaseStudies.
-  ///
-  /// In en, this message translates to:
-  /// **'No case studies match these filters'**
-  String get uiNoCaseStudies;
 
   /// No description provided for @uiScrollToExplore.
   ///
@@ -3087,12 +2991,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.'**
   String get aboutStoryShort;
-
-  /// No description provided for @projectSwipeHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Swipe horizontally to browse projects'**
-  String get projectSwipeHint;
 
   /// No description provided for @engTabArchitectures.
   ///

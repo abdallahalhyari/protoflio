@@ -176,12 +176,15 @@ void main() {
       await tester.pumpWidget(
         _wrapWithMedia(
           disableAnimations: true,
-          child: InteractiveProjectCard(
-            project: project,
-            index: 0,
-            isDesktop: true,
-            scheme: ColorScheme.fromSeed(
-                seedColor: AppColors.seed, brightness: Brightness.dark),
+          // Cards take their natural height; give it room to scroll.
+          child: SingleChildScrollView(
+            child: InteractiveProjectCard(
+              project: project,
+              index: 0,
+              isDesktop: true,
+              scheme: ColorScheme.fromSeed(
+                  seedColor: AppColors.seed, brightness: Brightness.dark),
+            ),
           ),
         ),
       );

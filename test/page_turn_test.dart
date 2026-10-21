@@ -172,8 +172,9 @@ void main() {
     await goTo(LogicalKeyboardKey.digit3);
     expect(focusInside<ProjectsPage>(), isFalse);
 
+    // Work has no shortcuts of its own, so it never claims focus.
     await goTo(LogicalKeyboardKey.digit2);
-    expect(focusInside<ProjectsPage>(), isTrue);
+    expect(focusInside<ProjectsPage>(), isFalse);
 
     // Skills — Contact is pre-built next door.
     await goTo(LogicalKeyboardKey.digit5);

@@ -23,50 +23,13 @@ Widget _wrap(Widget child,
 
 void main() {
   group('Project Card Body Extractions Test Suite', () {
-    testWidgets('CardTechTagChip renders tag and handles hover/tap',
+    testWidgets('CardTechTagChip renders its tag as a plain label',
         (tester) async {
-      bool tapped = false;
-
-      await tester.pumpWidget(_wrap(
-        CardTechTagChip(
-          tag: 'Flutter',
-          isSelected: false,
-          scheme: AppTheme.dark().colorScheme,
-          isDark: true,
-          onTap: () => tapped = true,
-        ),
-      ));
+      await tester.pumpWidget(_wrap(const CardTechTagChip(tag: 'Flutter')));
       await tester.pumpAndSettle();
 
-      final text = find.text('Flutter');
-      expect(text, findsOneWidget);
-
-      await tester.tap(text);
-      await tester.pumpAndSettle();
-      expect(tapped, isTrue);
-    });
-
-    testWidgets('CardTechTagChip applies selected styling', (tester) async {
-      await tester.pumpWidget(_wrap(
-        CardTechTagChip(
-          tag: 'Dart',
-          isSelected: true,
-          scheme: AppTheme.dark().colorScheme,
-          isDark: true,
-        ),
-      ));
-      await tester.pumpAndSettle();
-
-      final container = tester.widget<Container>(
-        find.descendant(
-          of: find.byType(InkWell),
-          matching: find.byType(Container),
-        ),
-      );
-      final decoration = container.decoration as BoxDecoration;
-      expect(decoration.border, isNotNull);
-      // The selected border is 1.2
-      expect(decoration.border!.top.width, equals(1.2));
+      expect(find.text('Flutter'), findsOneWidget);
+      expect(find.byType(InkWell), findsNothing);
     });
 
     testWidgets('CardOutcomeLine renders text and icon', (tester) async {

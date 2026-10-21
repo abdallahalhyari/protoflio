@@ -158,55 +158,6 @@ class CardHeroImage extends StatelessWidget {
               ),
             ),
             Positioned(
-              left: AppSpacing.md,
-              bottom: AppSpacing.md,
-              right: AppSpacing.md,
-              child: Align(
-                alignment: AlignmentDirectional.bottomStart,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 4.5),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.72),
-                      borderRadius: BorderRadius.circular(AppRadius.xs),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.25),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.40),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.business_center_rounded,
-                          size: 13,
-                          color: isDark ? AppColors.goldSoft : AppColors.gold,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          project.company,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: AppTypography.label,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 0.3,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
               left: 0,
               right: 0,
               bottom: 0,
@@ -238,8 +189,7 @@ class CardHeroImage extends StatelessWidget {
     }
   }
 
-  /// A short domain tag that fits on the image; the filter row above the
-  /// cards carries the full domain names.
+  /// A short domain tag that fits on the image.
   String _domainShortTag(AppLocalizations l10n, String domain) {
     return switch (domain) {
       'Healthcare & Smart Cards' => l10n.projectTagHealth,

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/test_data.dart';
 import 'package:profile/l10n/app_localizations.dart';
@@ -131,62 +129,30 @@ void main() {
       expect(find.text('100% Offline SLA'), findsOneWidget);
     });
 
-    testWidgets('InteractiveProjectCard renders interactive tech stack chips',
+    testWidgets('InteractiveProjectCard shows the full case and every tag',
         (tester) async {
       final project = testProjects.first;
-      String? tappedTech;
       await tester.pumpWidget(_wrap(
         InteractiveProjectCard(
           project: project,
           index: 0,
           scheme: AppTheme.dark().colorScheme,
           isDesktop: true,
-          onSelectTech: (t) => tappedTech = t,
         ),
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('Flutter'), findsOneWidget);
-      await tester.tap(find.text('Flutter'));
-      await tester.pumpAndSettle();
-      expect(tappedTech, equals('Flutter'));
+      expect(find.text('Problem'), findsOneWidget);
+      expect(find.text('System'), findsOneWidget);
+      expect(find.text('My role'), findsOneWidget);
+      for (final tag in project.stack) {
+        expect(find.text(tag), findsOneWidget);
+      }
+      // No hidden-tags counter like '+3'.
+      expect(find.textContaining(RegExp(r'^\+\d+$')), findsNothing);
     });
 
-    testWidgets('ProjectsPage domain filtering narrows cards and can be reset',
-        (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ProjectsPage(),
-        const Size(1200, 900),
-        false,
-      ));
-      await tester.pumpAndSettle();
-
-      // Initially all 4 projects
-      expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(find.text('E-Learning & Healthcare Enterprise Suite'),
-          findsOneWidget);
-
-      // Tap domain filter for Healthcare & Smart Cards
-      final healthcareChip = find.text('Healthcare & Smart Cards');
-      expect(healthcareChip, findsOneWidget);
-      await tester.tap(healthcareChip);
-      await tester.pumpAndSettle();
-
-      // Only NatHealth should be visible
-      expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(
-          find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
-
-      // Tap ALL to reset
-      await tester.tap(find.text('All'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(find.text('E-Learning & Healthcare Enterprise Suite'),
-          findsOneWidget);
-    });
-
-    testWidgets('ProjectsPage desktop project cards scroll horizontally',
+    testWidgets('ProjectsPage desktop shows all four projects two per row',
         (tester) async {
       tester.view.physicalSize = const Size(1200, 900);
       tester.view.devicePixelRatio = 1;
@@ -202,37 +168,22 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      final list = find.byKey(const Key('projects_horizontal_list'));
-      expect(list, findsOneWidget);
-      final scrollable = find
-          .descendant(
-            of: list,
-            matching: find.byType(Scrollable),
-          )
-          .first;
+      expect(find.byKey(const Key('projects_grid')), findsOneWidget);
+      final cards = find.byType(InteractiveProjectCard);
+      expect(cards, findsNWidgets(4));
 
-      await tester.sendEventToBinding(PointerScrollEvent(
-        position: tester.getCenter(list),
-        scrollDelta: const Offset(0, 300),
-      ));
-      await tester.pump();
-
-      expect(
-        tester.state<ScrollableState>(scrollable).position.pixels,
-        greaterThan(0),
-      );
-
-      await tester.drag(list, const Offset(-500, 0));
-      await tester.pumpAndSettle();
-
-      expect(
-        tester.state<ScrollableState>(scrollable).position.pixels,
-        greaterThan(0),
-      );
+      final r0 = tester.getRect(cards.at(0));
+      final r1 = tester.getRect(cards.at(1));
+      final r2 = tester.getRect(cards.at(2));
+      // Same row, equal height; next row below.
+      expect(r0.top, r1.top);
+      expect(r0.height, r1.height);
+      expect(r1.left, greaterThan(r0.right));
+      expect(r2.top, greaterThan(r0.bottom));
+      expect(tester.takeException(), isNull);
     });
 
-    testWidgets(
-        'ProjectsPage mobile carousel scrolls horizontally and page vertically',
+    testWidgets('ProjectsPage mobile stacks the projects in one column',
         (tester) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1;
@@ -248,64 +199,12 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(
-          find.text('Swipe horizontally to browse projects'), findsOneWidget);
-      final list = find.byKey(const Key('projects_horizontal_list'));
-      final carouselScrollable =
-          find.descendant(of: list, matching: find.byType(Scrollable)).first;
-      final carouselPosition =
-          tester.state<ScrollableState>(carouselScrollable).position;
-      expect(
-        carouselPosition.axis,
-        Axis.horizontal,
-      );
-      expect(
-        carouselPosition.maxScrollExtent,
-        greaterThan(0),
-      );
-
-      final pageScrollable = find
-          .descendant(
-            of: find.byType(CustomScrollView),
-            matching: find.byType(Scrollable),
-          )
-          .first;
-      final pagePosition =
-          tester.state<ScrollableState>(pageScrollable).position;
-      expect(
-        pagePosition.axis,
-        Axis.vertical,
-      );
-      expect(
-        pagePosition.maxScrollExtent,
-        greaterThan(0),
-      );
-    });
-
-    testWidgets('ProjectsPage swipe cue is localized in Arabic RTL',
-        (tester) async {
-      tester.view.physicalSize = const Size(390, 844);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(() {
-        tester.view.resetPhysicalSize();
-        tester.view.resetDevicePixelRatio();
-      });
-
-      await tester.pumpWidget(_wrap(
-        const ProjectsPage(),
-        const Size(390, 844),
-        false,
-        const Locale('ar'),
-      ));
-      await tester.pumpAndSettle();
-
-      expect(find.text('اسحب أفقيًا لاستعراض المشاريع'), findsOneWidget);
-      expect(
-        Directionality.of(tester.element(find.byKey(
-          const Key('projects_horizontal_list'),
-        ))),
-        TextDirection.rtl,
-      );
+      expect(find.byKey(const Key('projects_list')), findsOneWidget);
+      final cards = find.byType(InteractiveProjectCard);
+      final first = tester.getRect(cards.at(0));
+      final second = tester.getRect(cards.at(1));
+      expect(second.left, first.left);
+      expect(second.top, greaterThan(first.bottom));
       expect(tester.takeException(), isNull);
     });
 
@@ -345,25 +244,6 @@ void main() {
       final decoration = container.decoration as BoxDecoration;
       final border = decoration.border as Border;
       expect(border.top.width, equals(1.5));
-    });
-
-    testWidgets('ProjectsPage arrow key navigation changes domain filter',
-        (tester) async {
-      await tester.pumpWidget(_wrap(
-        const ProjectsPage(),
-        const Size(1200, 900),
-        false,
-      ));
-      await tester.pumpAndSettle();
-
-      // Send arrow right event
-      await tester.sendKeyEvent(LogicalKeyboardKey.arrowRight);
-      await tester.pumpAndSettle();
-
-      // Should have switched to the next domain (Healthcare & Smart Cards)
-      expect(find.text('NatHealth Mobile Suite'), findsOneWidget);
-      expect(
-          find.text('E-Learning & Healthcare Enterprise Suite'), findsNothing);
     });
   });
 }
