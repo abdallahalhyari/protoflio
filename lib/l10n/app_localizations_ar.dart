@@ -400,9 +400,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'أربعة أدوار منذ 2021، من إنجاز الميزات إلى تولّي الطبقة الأصلية وطبقة الأمان.';
 
   @override
-  String get projectsHeaderKicker => 'القسم 03 · أعمال مختارة';
-
-  @override
   String get projectDossierDecision => 'القرار الهندسي';
 
   @override
@@ -456,23 +453,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get experienceHeaderKicker => 'القسم 02 · المسيرة المهنية';
-
-  @override
-  String get engineeringHeaderKicker => 'القسم 05 · هندسة الأنظمة';
-
-  @override
-  String get hatsHeaderKickerMobile => 'القسم 06 · 6 أدوار';
-
-  @override
-  String get hatsHeaderKickerDesktop => 'القسم 06 · قيادة متعددة التخصصات';
-
-  @override
   String get hatsHeaderSubtitle =>
       'هندسة تضع المنتج في المقدمة، وتواصل واضح، وقيادة عملية عبر الفرق والقيود ومراحل التسليم الحساسة.';
-
-  @override
-  String get contactHeaderKicker => 'القسم 07 · تواصل مباشر';
 
   @override
   String get contactHeaderTitle => 'هل لديك مشكلة صعبة في تطبيقات الهاتف؟';
@@ -480,9 +462,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get contactHeaderSubtitle =>
       'أرسلها لي. أقبل مراجعات معمارية الهواتف والعمل التعاقدي الآن، وأبحث عن دور أول في تطبيقات الهاتف في برنو من فبراير 2027. البريد الإلكتروني أسرع طريقة للرد.';
-
-  @override
-  String get skillsHeaderKicker => 'القسم 04 · الأنظمة والتسليم';
 
   @override
   String get skillSpecImplementation => 'التفاصيل والأدلة';
@@ -1240,9 +1219,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get aboutSubtitle =>
       'كيف أعمل كمهندس، والمشكلات التي أحلّها، وبعض الأمور التي يمكنك تشغيلها بنفسك.';
-
-  @override
-  String get aboutHeaderKicker => 'نبذة وتواصل';
 
   @override
   String get aboutHeaderSubtitle => 'من أنا، وإلى أين أتجه، وكيف تتواصل معي.';

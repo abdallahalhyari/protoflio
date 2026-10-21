@@ -401,9 +401,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Four roles since 2021, from shipping features to owning the native and security layer.';
 
   @override
-  String get projectsHeaderKicker => 'Selected work';
-
-  @override
   String get projectDossierDecision => 'Key decision';
 
   @override
@@ -457,23 +454,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get experienceHeaderKicker => 'Career';
-
-  @override
-  String get engineeringHeaderKicker => 'Systems architecture';
-
-  @override
-  String get hatsHeaderKickerMobile => 'Six roles';
-
-  @override
-  String get hatsHeaderKickerDesktop => 'Six roles';
-
-  @override
   String get hatsHeaderSubtitle =>
       'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.';
-
-  @override
-  String get contactHeaderKicker => 'Contact';
 
   @override
   String get contactHeaderTitle => 'Have a difficult mobile problem?';
@@ -481,9 +463,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get contactHeaderSubtitle =>
       'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.';
-
-  @override
-  String get skillsHeaderKicker => 'Technical disciplines';
 
   @override
   String get skillSpecImplementation => 'DETAILS & EVIDENCE';
@@ -1247,9 +1226,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aboutSubtitle =>
       'How I work as an engineer, the problems I solve, and a few things you can run yourself.';
-
-  @override
-  String get aboutHeaderKicker => 'About & contact';
 
   @override
   String get aboutHeaderSubtitle =>

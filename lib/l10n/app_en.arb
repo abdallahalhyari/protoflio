@@ -198,7 +198,6 @@
   "perspectiveShortcutsHint": "Arrow keys or A and D to cycle, S to shuffle, R to align",
   "sectionSubtitleWork": "Four employers, four systems. Each case shows the problem, how it was built, and what changed.",
   "sectionSubtitleExperience": "Four roles since 2021, from shipping features to owning the native and security layer.",
-  "projectsHeaderKicker": "Selected work",
   "projectDossierDecision": "Key decision",
   "readCaseStudyFor": "Read case study for {project}",
   "@readCaseStudyFor": {
@@ -230,15 +229,9 @@
       }
     }
   },
-  "experienceHeaderKicker": "Career",
-  "engineeringHeaderKicker": "Systems architecture",
-  "hatsHeaderKickerMobile": "Six roles",
-  "hatsHeaderKickerDesktop": "Six roles",
   "hatsHeaderSubtitle": "Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.",
-  "contactHeaderKicker": "Contact",
   "contactHeaderTitle": "Have a difficult mobile problem?",
   "contactHeaderSubtitle": "Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.",
-  "skillsHeaderKicker": "Technical disciplines",
   "skillSpecImplementation": "DETAILS & EVIDENCE",
   "skillsHeaderTitle": "Skills",
   "skillsHeaderSubtitle": "What I work with and where I used it. Search a tool or filter by area.",
@@ -588,7 +581,6 @@
   "downloadCv": "Download CV",
   "aboutTitle": "About",
   "aboutSubtitle": "How I work as an engineer, the problems I solve, and a few things you can run yourself.",
-  "aboutHeaderKicker": "About & contact",
   "aboutHeaderSubtitle": "Who I am, where I'm headed, and how to reach me.",
   "aboutTabProfile": "Profile",
   "aboutTabPlayground": "Playground",

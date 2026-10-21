@@ -404,9 +404,6 @@ class AppLocalizationsCs extends AppLocalizations {
       'Čtyři role od roku 2021, od dodávání funkcí po vlastnictví nativní a bezpečnostní vrstvy.';
 
   @override
-  String get projectsHeaderKicker => 'Část 03, vybrané projekty';
-
-  @override
   String get projectDossierDecision => 'Klíčové rozhodnutí';
 
   @override
@@ -460,23 +457,8 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get experienceHeaderKicker => 'Část 02, profesní dráha';
-
-  @override
-  String get engineeringHeaderKicker => 'Část 05, systémová architektura';
-
-  @override
-  String get hatsHeaderKickerMobile => 'Část 06, 6 rolí';
-
-  @override
-  String get hatsHeaderKickerDesktop => 'Část 06, mezioborové vedení';
-
-  @override
   String get hatsHeaderSubtitle =>
       'Inženýrství zaměřené na produkt, srozumitelná komunikace a praktické vedení napříč týmy, omezeními a klíčovými dodávkami.';
-
-  @override
-  String get contactHeaderKicker => 'Část 07, přímý kontakt';
 
   @override
   String get contactHeaderTitle => 'Máte těžký mobilní problém?';
@@ -484,9 +466,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get contactHeaderSubtitle =>
       'Pošlete mi ho. Přijímám revize mobilní architektury a zakázky a od února 2027 hledám seniorní mobilní roli v Brně. Nejrychleji odpovídám na e-mail.';
-
-  @override
-  String get skillsHeaderKicker => 'Část 04, systémy a dodávka';
 
   @override
   String get skillSpecImplementation => 'DETAILY A PRAXE';
@@ -1252,9 +1231,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get aboutSubtitle =>
       'Jak pracuji jako inženýr, jaké problémy řeším a pár věcí, které si můžete sami vyzkoušet.';
-
-  @override
-  String get aboutHeaderKicker => 'O mně a kontakt';
 
   @override
   String get aboutHeaderSubtitle =>

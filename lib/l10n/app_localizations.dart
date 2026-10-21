@@ -814,12 +814,6 @@ abstract class AppLocalizations {
   /// **'Four roles since 2021, from shipping features to owning the native and security layer.'**
   String get sectionSubtitleExperience;
 
-  /// No description provided for @projectsHeaderKicker.
-  ///
-  /// In en, this message translates to:
-  /// **'Selected work'**
-  String get projectsHeaderKicker;
-
   /// No description provided for @projectDossierDecision.
   ///
   /// In en, this message translates to:
@@ -904,41 +898,11 @@ abstract class AppLocalizations {
   /// **'{skill}, {level} proficiency. Activate to flip and view details.'**
   String skillCardSemantics(String skill, String level);
 
-  /// No description provided for @experienceHeaderKicker.
-  ///
-  /// In en, this message translates to:
-  /// **'Career'**
-  String get experienceHeaderKicker;
-
-  /// No description provided for @engineeringHeaderKicker.
-  ///
-  /// In en, this message translates to:
-  /// **'Systems architecture'**
-  String get engineeringHeaderKicker;
-
-  /// No description provided for @hatsHeaderKickerMobile.
-  ///
-  /// In en, this message translates to:
-  /// **'Six roles'**
-  String get hatsHeaderKickerMobile;
-
-  /// No description provided for @hatsHeaderKickerDesktop.
-  ///
-  /// In en, this message translates to:
-  /// **'Six roles'**
-  String get hatsHeaderKickerDesktop;
-
   /// No description provided for @hatsHeaderSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.'**
   String get hatsHeaderSubtitle;
-
-  /// No description provided for @contactHeaderKicker.
-  ///
-  /// In en, this message translates to:
-  /// **'Contact'**
-  String get contactHeaderKicker;
 
   /// No description provided for @contactHeaderTitle.
   ///
@@ -951,12 +915,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.'**
   String get contactHeaderSubtitle;
-
-  /// No description provided for @skillsHeaderKicker.
-  ///
-  /// In en, this message translates to:
-  /// **'Technical disciplines'**
-  String get skillsHeaderKicker;
 
   /// No description provided for @skillSpecImplementation.
   ///
@@ -2301,12 +2259,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How I work as an engineer, the problems I solve, and a few things you can run yourself.'**
   String get aboutSubtitle;
-
-  /// No description provided for @aboutHeaderKicker.
-  ///
-  /// In en, this message translates to:
-  /// **'About & contact'**
-  String get aboutHeaderKicker;
 
   /// No description provided for @aboutHeaderSubtitle.
   ///
