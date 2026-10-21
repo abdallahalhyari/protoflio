@@ -215,7 +215,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introAvailability =>
-      'متاح الآن عن بُعد أو بدوام جزئي، وحضورياً في برنو من فبراير 2027.';
+      'متاح للعمل عن بُعد أو العقود حالياً؛ وحضورياً في برنو وما حولها.';
 
   @override
   String get introEmailMe => 'راسلني';
@@ -279,7 +279,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cardFactAvailableValue => 'عن بُعد أو بدوام جزئي الآن';
 
   @override
-  String get cardFactBasedValue => 'عمّان، الأردن؛ برنو من فبراير 2027';
+  String get cardFactBasedValue => 'عمّان، الأردن • حضورياً في برنو وما حولها';
 
   @override
   String get cardFactStudyValue => 'ماجستير المعلوماتية المفتوحة، جامعة مندل';
@@ -852,7 +852,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiStandbyAsync => 'أرد خلال يوم';
 
   @override
-  String get uiRelocating => 'الانتقال إلى برنو 2027';
+  String get uiRelocating => 'حضورياً في برنو وما حولها';
 
   @override
   String get uiInquireTrack => 'استفسر عن هذا المسار';

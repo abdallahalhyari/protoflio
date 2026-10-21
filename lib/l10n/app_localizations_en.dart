@@ -216,7 +216,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introAvailability =>
-      'Available remote or part-time now; on-site in Brno from February 2027.';
+      'Available for remote/contract now; on-site in Brno and surrounding region.';
 
   @override
   String get introEmailMe => 'Email me';
@@ -281,7 +281,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cardFactAvailableValue => 'Remote or part-time now';
 
   @override
-  String get cardFactBasedValue => 'Amman, Jordan; Brno from Feb 2027';
+  String get cardFactBasedValue =>
+      'Amman, Jordan • On-site in Brno & surrounding region';
 
   @override
   String get cardFactStudyValue => 'M.Sc. Open Informatics, Mendel University';
@@ -859,7 +860,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiStandbyAsync => 'Replies within a day';
 
   @override
-  String get uiRelocating => 'Moving to Brno, 2027';
+  String get uiRelocating => 'On-site in Brno & around it';
 
   @override
   String get uiInquireTrack => 'Ask about this';

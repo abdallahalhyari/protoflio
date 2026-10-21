@@ -218,7 +218,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introAvailability =>
-      'K dispozici nyní na dálku nebo na částečný úvazek; v Brně na místě od února 2027.';
+      'Dostupný pro remote / kontrakt nyní; on-site v Brně a okolí.';
 
   @override
   String get introEmailMe => 'Napište mi';
@@ -282,7 +282,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get cardFactAvailableValue => 'Nyní na dálku nebo na částečný úvazek';
 
   @override
-  String get cardFactBasedValue => 'Ammán, Jordánsko; od února 2027 Brno';
+  String get cardFactBasedValue => 'Ammán, Jordánsko • On-site v Brně a okolí';
 
   @override
   String get cardFactStudyValue =>
@@ -862,7 +862,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiStandbyAsync => 'Odpovídám do jednoho dne';
 
   @override
-  String get uiRelocating => 'Stěhování do Brna 2027';
+  String get uiRelocating => 'On-site v Brně a okolí';
 
   @override
   String get uiInquireTrack => 'Zeptat se';

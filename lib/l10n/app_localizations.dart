@@ -475,7 +475,7 @@ abstract class AppLocalizations {
   /// No description provided for @introAvailability.
   ///
   /// In en, this message translates to:
-  /// **'Available remote or part-time now; on-site in Brno from February 2027.'**
+  /// **'Available for remote/contract now; on-site in Brno and surrounding region.'**
   String get introAvailability;
 
   /// No description provided for @introEmailMe.
@@ -601,7 +601,7 @@ abstract class AppLocalizations {
   /// No description provided for @cardFactBasedValue.
   ///
   /// In en, this message translates to:
-  /// **'Amman, Jordan; Brno from Feb 2027'**
+  /// **'Amman, Jordan • On-site in Brno & surrounding region'**
   String get cardFactBasedValue;
 
   /// No description provided for @cardFactStudyValue.
@@ -1603,7 +1603,7 @@ abstract class AppLocalizations {
   /// No description provided for @uiRelocating.
   ///
   /// In en, this message translates to:
-  /// **'Moving to Brno, 2027'**
+  /// **'On-site in Brno & around it'**
   String get uiRelocating;
 
   /// No description provided for @uiInquireTrack.
