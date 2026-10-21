@@ -43,7 +43,7 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,
-            child: SectionKicker(number: '01', label: l10n.studyProblem),
+            child: ChapterHeading(l10n.studyProblem),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -64,7 +64,7 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.roleKey,
-            child: SectionKicker(number: '02', label: l10n.studyRole),
+            child: ChapterHeading(l10n.studyRole),
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
@@ -76,13 +76,14 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.archKey,
-            child: SectionKicker(number: '03', label: l10n.studyArchitecture),
+            child: ChapterHeading(l10n.studyArchitecture),
           ),
           const SizedBox(height: AppSpacing.md),
           EnglishContent(
             child: NfcArchitectureDiagram(
               isDesktop: isDesktop,
               isDark: isDark,
+              showTitle: false,
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -95,7 +96,6 @@ class NatHealthCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            number: '04',
             title: 'ISO-7816 APDU protocol engineering',
             steps: [
               TechStep(
@@ -120,7 +120,6 @@ class NatHealthCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            number: '05',
             title: 'Offline-first queue & background sync',
             steps: [
               TechStep(
@@ -145,7 +144,6 @@ class NatHealthCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            number: '06',
             title: 'UI performance & governance',
             steps: [
               TechStep(
@@ -171,7 +169,7 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.outcomesKey,
-            child: SectionKicker(number: '07', label: l10n.studyOutcomes),
+            child: ChapterHeading(l10n.studyOutcomes),
           ),
           const SizedBox(height: AppSpacing.md),
           OutcomeGrid(
@@ -186,7 +184,7 @@ class NatHealthCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.lessonsKey,
-            child: SectionKicker(number: '08', label: l10n.studyLessons),
+            child: ChapterHeading(l10n.studyLessons),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(

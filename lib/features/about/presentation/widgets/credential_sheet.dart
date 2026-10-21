@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile/features/intro/presentation/widgets/quick_profile_sheet.dart';
+import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
 
 import 'package:profile/core/config/profile_links.dart';
 import 'package:profile/core/theme/surface_tone.dart';
@@ -289,6 +291,13 @@ class _Reach extends StatelessWidget {
           icon: Icons.open_in_new_rounded,
           onTap: () => onOpenUrl(ProfileLinks.linkedIn),
         ),
+        _ChannelRow(
+          label: l10n.contactGithub,
+          value: ProfileLinks.githubHandle,
+          action: l10n.contactViewProfile,
+          icon: Icons.open_in_new_rounded,
+          onTap: () => onOpenUrl(ProfileLinks.github),
+        ),
         // One number, two ways to use it: one row, two actions.
         _ChannelRow(
           label: l10n.contactPhone,
@@ -310,6 +319,24 @@ class _Reach extends StatelessWidget {
           action: l10n.contactDownload,
           icon: Icons.download_rounded,
           onTap: onOpenCv,
+        ),
+        // The CV's short forms: the facts a recruiter screens for, and a
+        // contact card to scan into a phone.
+        _ChannelRow(
+          label: l10n.quickProfileTitle,
+          value: l10n.contactHiringValue,
+          valueIsProse: true,
+          action: l10n.contactView,
+          icon: Icons.open_in_full_rounded,
+          onTap: () => showQuickProfile(context, onDownloadResume: onOpenCv),
+        ),
+        _ChannelRow(
+          label: l10n.contactVcard,
+          value: l10n.contactVcardValue,
+          valueIsProse: true,
+          action: l10n.contactShowQr,
+          icon: Icons.qr_code_2_rounded,
+          onTap: () => VCardQrDialog.show(context),
           isLast: true,
         ),
       ],
@@ -333,6 +360,7 @@ class _ChannelRow extends StatelessWidget {
     this.secondIcon,
     this.onSecondTap,
     this.isLast = false,
+    this.valueIsProse = false,
   });
 
   final String label;
@@ -346,6 +374,10 @@ class _ChannelRow extends StatelessWidget {
   final IconData? secondIcon;
   final VoidCallback? onSecondTap;
   final bool isLast;
+
+  /// A sentence rather than a handle or number: it wraps instead of
+  /// scaling down to fit one line.
+  final bool valueIsProse;
 
   bool get _hasTwoActions => secondAction != null && onSecondTap != null;
 
@@ -406,19 +438,22 @@ class _ChannelRow extends StatelessWidget {
         builder: (context, c) {
           // A phone number cut to "+962-78-…" is useless, so the value
           // scales down rather than truncating.
-          final valueText = FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              ltrAlways(context, value),
-              maxLines: 1,
-              style: TextStyle(
-                fontSize: AppTypography.body,
-                fontWeight: FontWeight.w500,
-                color: context.onSurface,
-              ),
-            ),
+          final valueStyle = TextStyle(
+            fontSize: AppTypography.body,
+            fontWeight: FontWeight.w500,
+            color: context.onSurface,
           );
+          final Widget valueText = valueIsProse
+              ? Text(value, style: valueStyle.copyWith(height: 1.4))
+              : FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text(
+                    ltrAlways(context, value),
+                    maxLines: 1,
+                    style: valueStyle,
+                  ),
+                );
           // Narrow rows stack the label over the value, like the
           // holder's fields, so the action words keep their room.
           final stacked =

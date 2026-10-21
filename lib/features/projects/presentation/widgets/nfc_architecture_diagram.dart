@@ -1,234 +1,188 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/shared/widgets/viewport_ticker_gate.dart';
 
-/// Renders the end-to-end NatHealth system architecture topology diagram,
-/// highlighting NFC Hardware, Native Kotlin APDU Channel, Flutter UI,
-/// background WorkManager offline queue & SQLite cache, and TPA Backend.
+/// The NatHealth system as a flow: NFC hardware, the native Kotlin APDU
+/// channel, the Flutter UI, the offline queue and encrypted cache side by
+/// side, then the TPA backend. A row where the nodes stay legible; a
+/// column on narrow screens, where a scaled-down row became unreadable.
 class NfcArchitectureDiagram extends StatelessWidget {
   final bool isDesktop;
   final bool isDark;
+
+  /// Off where a heading above already names the diagram (case studies).
+  final bool showTitle;
 
   const NfcArchitectureDiagram({
     super.key,
     required this.isDesktop,
     required this.isDark,
+    this.showTitle = true,
   });
+
+  /// Below this width the row would have to shrink its text; stack instead.
+  static const double _rowMinWidth = 640;
+
+  static const _source = (
+    'NFC Hardware\n(ISO-7816)',
+    Icons.nfc_rounded,
+  );
+  static const _channel = (
+    'Native Kotlin\nAPDU Channel',
+    Icons.android_rounded,
+  );
+  static const _ui = ('Flutter UI\n(Clean Arch)', Icons.layers_rounded);
+  static const _queue = ('WorkManager\n(Offline Queue)', Icons.sync_rounded);
+  static const _cache = ('SQLite DB\n(Encrypted Cache)', Icons.storage_rounded);
+  static const _backend = ('TPA Backend\n(REST API)', Icons.cloud_done_rounded);
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final line = isDark ? AppColors.tealLight : AppColors.tealDeep;
 
-    return ViewportTickerGate(
+    return Semantics(
+      container: true,
+      label: 'NatHealth architecture: NFC hardware to native Kotlin APDU '
+          'channel to Flutter UI, then WorkManager offline queue and '
+          'encrypted SQLite cache, to the TPA backend',
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
-        padding: EdgeInsets.all(isDesktop ? 16 : 12),
+        padding: EdgeInsets.all(isDesktop ? AppSpacing.md : AppSpacing.smd),
         decoration: BoxDecoration(
-          color: scheme.primary.withValues(alpha: isDark ? 0.05 : 0.02),
+          color: context.onSurface.withValues(alpha: isDark ? 0.03 : 0.02),
           borderRadius: BorderRadius.circular(AppRadius.smd),
-          border: Border.all(
-              color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.2)),
+          border: Border.all(color: context.divider),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.account_tree_rounded,
-                    size: 12, color: scheme.primary),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    'System architecture topology',
-                    style: TextStyle(
-                      color: scheme.primary,
-                      fontSize:
-                          isDesktop ? AppTypography.label : AppTypography.label,
-                      fontWeight: FontWeight.w900,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+        child: ExcludeSemantics(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (showTitle) ...[
+                Text(
+                  'System architecture topology',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: context.mutedText,
+                    fontSize: AppTypography.label,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
+                const SizedBox(height: AppSpacing.md),
               ],
-            ),
-            const SizedBox(height: 16),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildArchNode(
-                      'NFC Hardware\n(ISO-7816)', Icons.nfc_rounded, scheme),
-                  _buildArchArrow(scheme, 0),
-                  _buildArchNode('Native Kotlin\nAPDU Channel',
-                      Icons.android_rounded, scheme),
-                  _buildArchArrow(scheme, 1),
-                  _buildArchNode(
-                      'Flutter UI\n(Clean Arch)', Icons.layers_rounded, scheme),
-                  _buildArchArrow(scheme, 2),
-                  Column(
-                    children: [
-                      _buildArchNode('WorkManager\n(Offline Queue)',
-                          Icons.sync_rounded, scheme),
-                      const SizedBox(height: 6),
-                      _buildArchNode('SQLite DB\n(Encrypted Cache)',
-                          Icons.storage_rounded, scheme),
-                    ],
-                  ),
-                  _buildArchArrow(scheme, 3),
-                  _buildArchNode('TPA Backend\n(REST API)',
-                      Icons.cloud_done_rounded, scheme),
-                ],
+              LayoutBuilder(
+                builder: (context, c) => c.maxWidth >= _rowMinWidth
+                    ? _row(context, line)
+                    : _column(context, line),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildArchNode(String label, IconData icon, ColorScheme scheme) {
+  Widget _row(BuildContext context, Color line) {
+    Widget arrow() => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6),
+          child: Icon(Icons.arrow_forward_rounded, size: 16, color: line),
+        );
+    return Row(
+      children: [
+        Expanded(child: _node(context, _source, line)),
+        arrow(),
+        Expanded(child: _node(context, _channel, line)),
+        arrow(),
+        Expanded(child: _node(context, _ui, line)),
+        arrow(),
+        Expanded(
+          child: Column(
+            children: [
+              _node(context, _queue, line),
+              const SizedBox(height: 6),
+              _node(context, _cache, line),
+            ],
+          ),
+        ),
+        arrow(),
+        Expanded(child: _node(context, _backend, line)),
+      ],
+    );
+  }
+
+  Widget _column(BuildContext context, Color line) {
+    Widget arrow() => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Icon(Icons.arrow_downward_rounded, size: 16, color: line),
+        );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _node(context, _source, line, inline: true),
+        arrow(),
+        _node(context, _channel, line, inline: true),
+        arrow(),
+        _node(context, _ui, line, inline: true),
+        arrow(),
+        // The queue and the cache work side by side.
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: _node(context, _queue, line, inline: true)),
+              const SizedBox(width: 6),
+              Expanded(child: _node(context, _cache, line, inline: true)),
+            ],
+          ),
+        ),
+        arrow(),
+        _node(context, _backend, line, inline: true),
+      ],
+    );
+  }
+
+  /// One box. [inline] puts the icon beside the label (stacked layout);
+  /// otherwise above it (row layout).
+  Widget _node(
+    BuildContext context,
+    (String, IconData) node,
+    Color line, {
+    bool inline = false,
+  }) {
+    final (label, icon) = node;
+    final text = Text(
+      label,
+      textAlign: inline ? TextAlign.start : TextAlign.center,
+      style: TextStyle(
+        fontSize: AppTypography.label,
+        fontWeight: FontWeight.w600,
+        color: context.onSurface.withValues(alpha: 0.85),
+        height: 1.3,
+      ),
+    );
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: isDark ? Colors.black45 : Colors.white,
+        color: context.cardGlass,
         borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(color: scheme.primary.withValues(alpha: 0.3)),
-        boxShadow: [
-          BoxShadow(
-            color: scheme.primary.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        border: Border.all(color: context.divider),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: scheme.primary),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: AppTypography.label,
-              fontWeight: FontWeight.w700,
-              color: isDark ? Colors.white70 : AppColors.ink700,
-              height: 1.2,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildArchArrow(ColorScheme scheme, int stepIndex) {
-    return _AnimatedNfcArrow(
-      color: scheme.primary,
-      stepIndex: stepIndex,
-    );
-  }
-}
-
-class _AnimatedNfcArrow extends StatefulWidget {
-  final Color color;
-  final int stepIndex;
-
-  const _AnimatedNfcArrow({
-    required this.color,
-    required this.stepIndex,
-  });
-
-  @override
-  State<_AnimatedNfcArrow> createState() => _AnimatedNfcArrowState();
-}
-
-class _AnimatedNfcArrowState extends State<_AnimatedNfcArrow>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: AppMotion.ambient,
-  );
-  bool _started = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_started && !MediaQuery.disableAnimationsOf(context)) {
-      _started = true;
-      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
-        _controller.value = 1.0;
-      } else {
-        _controller.repeat();
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final reduceMotion = AppMedia.reduceMotion(context);
-
-    if (reduceMotion) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6),
-        child: Icon(
-          Icons.arrow_right_alt_rounded,
-          size: 16,
-          color: widget.color.withValues(alpha: 0.5),
-        ),
-      );
-    }
-
-    return RepaintBoundary(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, _) {
-          final offset = (widget.stepIndex * 0.25) % 1.0;
-          final progress = (_controller.value + offset) % 1.0;
-          final pulseAlpha =
-              (1.0 - (progress - 0.5).abs() * 2.0).clamp(0.3, 1.0);
-
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6),
-            child: Stack(
-              alignment: Alignment.center,
+      child: inline
+          ? Row(
               children: [
-                Icon(
-                  Icons.arrow_right_alt_rounded,
-                  size: 16,
-                  color: widget.color.withValues(alpha: 0.4),
-                ),
-                Positioned(
-                  left: progress * 12.0,
-                  child: Container(
-                    width: 3.5,
-                    height: 3.5,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: widget.color.withValues(alpha: pulseAlpha),
-                      boxShadow: [
-                        BoxShadow(
-                          color:
-                              widget.color.withValues(alpha: pulseAlpha * 0.9),
-                          blurRadius: 4,
-                          spreadRadius: 1,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                Icon(icon, size: 16, color: line),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(child: text),
+              ],
+            )
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, size: 16, color: line),
+                const SizedBox(height: 4),
+                text,
               ],
             ),
-          );
-        },
-      ),
     );
   }
 }

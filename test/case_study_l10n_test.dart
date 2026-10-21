@@ -47,7 +47,7 @@ void main() {
         scrollable: find.byType(Scrollable).first);
     // Found by widget: the chapter dock carries the same label.
     final problem = find
-        .byWidgetPredicate((w) => w is SectionKicker && w.label == 'Problém');
+        .byWidgetPredicate((w) => w is ChapterHeading && w.title == 'Problém');
     // Scrolled through the article's own position: a drag at its centre
     // lands on the floating chapter dock.
     final article = tester.state<ScrollableState>(find.descendant(

@@ -107,6 +107,11 @@
   "cardFactBasedValue": "عمّان، الأردن؛ برنو من فبراير 2027",
   "cardFactStudyValue": "ماجستير المعلوماتية المفتوحة، جامعة مندل",
   "cardFactPermitValue": "غير مطلوب في التشيك أثناء الدراسة بدوام كامل",
+  "contactHiringValue": "الدور والخبرة والتقنيات في صفحة واحدة",
+  "contactView": "عرض",
+  "contactVcard": "بطاقة الاتصال",
+  "contactVcardValue": "امسحه لحفظ بياناتي",
+  "contactShowQr": "عرض الرمز",
   "contactViewProfile": "عرض الملف",
   "contactMessageWhatsapp": "مراسلة {number} عبر واتساب",
   "contactCallNumber": "اتصال بـ {number}",
@@ -198,7 +203,6 @@
   "studyDockOutcomesShort": "النتائج",
   "studyDockLessons": "الدروس",
   "studyBackToPortfolio": "العودة إلى الملف",
-  "studyReadPercent": "قُرئ {pct}٪",
   "studyTop": "للأعلى",
   "studyBackToTop": "العودة إلى الأعلى",
   "studyJumpTo": "الانتقال إلى {chapter}",
@@ -207,12 +211,8 @@
   "studyVisitWebsite": "زيارة الموقع الرسمي لـ {company}",
   "studyCompanyLinkedIn": "LinkedIn الشركة",
   "studyViewOnLinkedIn": "عرض {company} على LinkedIn",
-  "studyShare": "مشاركة الدراسة",
-  "studyShareTooltip": "نسخ رابط مباشر لهذه الدراسة",
-  "studyShareSemantics": "مشاركة رابط مباشر لدراسة {title}",
   "studyShareButton": "مشاركة رابط الدراسة",
   "studyLinkCopied": "تم نسخ رابط الدراسة: {url}",
-  "studyGlanceKicker": "لمحة سريعة · قراءة في 30 ثانية",
   "studyGlance": "لمحة سريعة",
   "studyChallenge": "التحدي",
   "studyBuilt": "ما بنيته",
@@ -484,5 +484,23 @@
   "engTryDemos": "جرّب عروض NFC والتشفير والمزامنة",
   "aboutStoryShort": "بدأت في تطبيقات الهواتف عام 2021. ومنذ ذلك الحين ينتقل عملي باستمرار إلى أسفل الطبقات، من الشاشات إلى طبقات النظام الأصلي والأمان والمزامنة تحتها. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.",
   "engTabArchitectures": "البُنى المعمارية",
-  "engTabCapabilities": "القدرات"
+  "engTabCapabilities": "القدرات",
+  "studyReadPercent": "تمت قراءة {percent}%",
+  "@studyReadPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "studyShare": "مشاركة",
+  "studyShareTooltip": "مشاركة دراسة الحالة",
+  "studyShareSemantics": "مشاركة {title}",
+  "@studyShareSemantics": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -291,6 +291,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'Not needed in Czechia while studying full-time';
 
   @override
+  String get contactHiringValue => 'Role, experience and stack on one page';
+
+  @override
+  String get contactView => 'View';
+
+  @override
+  String get contactVcard => 'Contact card';
+
+  @override
+  String get contactVcardValue => 'Scan to save my details';
+
+  @override
+  String get contactShowQr => 'Show QR';
+
+  @override
   String get contactViewProfile => 'View profile';
 
   @override
@@ -596,11 +611,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get studyBackToPortfolio => 'Back to portfolio';
 
   @override
-  String studyReadPercent(int pct) {
-    return '$pct% read';
-  }
-
-  @override
   String get studyTop => 'Top';
 
   @override
@@ -633,26 +643,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get studyShare => 'Share';
-
-  @override
-  String get studyShareTooltip => 'Copy direct link to this case study';
-
-  @override
-  String studyShareSemantics(String title) {
-    return 'Share direct link to $title case study';
-  }
-
-  @override
   String get studyShareButton => 'Share case study link';
 
   @override
   String studyLinkCopied(String url) {
     return 'Case study link copied: $url';
   }
-
-  @override
-  String get studyGlanceKicker => 'At a glance';
 
   @override
   String get studyGlance => 'At a glance';
@@ -1583,4 +1579,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'Capabilities';
+
+  @override
+  String studyReadPercent(int percent) {
+    return '$percent% read';
+  }
+
+  @override
+  String get studyShare => 'Share';
+
+  @override
+  String get studyShareTooltip => 'Share case study';
+
+  @override
+  String studyShareSemantics(String title) {
+    return 'Share $title';
+  }
 }

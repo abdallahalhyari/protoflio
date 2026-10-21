@@ -126,6 +126,11 @@
   "cardFactBasedValue": "Amman, Jordan; Brno from Feb 2027",
   "cardFactStudyValue": "M.Sc. Open Informatics, Mendel University",
   "cardFactPermitValue": "Not needed in Czechia while studying full-time",
+  "contactHiringValue": "Role, experience and stack on one page",
+  "contactView": "View",
+  "contactVcard": "Contact card",
+  "contactVcardValue": "Scan to save my details",
+  "contactShowQr": "Show QR",
   "contactViewProfile": "View profile",
   "contactMessageWhatsapp": "Message {number} on WhatsApp",
   "contactCallNumber": "Call {number}",
@@ -299,14 +304,6 @@
   "studyDockOutcomesShort": "Results",
   "studyDockLessons": "Lessons",
   "studyBackToPortfolio": "Back to portfolio",
-  "studyReadPercent": "{pct}% read",
-  "@studyReadPercent": {
-    "placeholders": {
-      "pct": {
-        "type": "int"
-      }
-    }
-  },
   "studyTop": "Top",
   "studyBackToTop": "Back to top",
   "studyJumpTo": "Jump to {chapter}",
@@ -343,16 +340,6 @@
       }
     }
   },
-  "studyShare": "Share",
-  "studyShareTooltip": "Copy direct link to this case study",
-  "studyShareSemantics": "Share direct link to {title} case study",
-  "@studyShareSemantics": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  },
   "studyShareButton": "Share case study link",
   "studyLinkCopied": "Case study link copied: {url}",
   "@studyLinkCopied": {
@@ -362,7 +349,6 @@
       }
     }
   },
-  "studyGlanceKicker": "At a glance",
   "studyGlance": "At a glance",
   "studyChallenge": "Challenge",
   "studyBuilt": "What I built",
@@ -734,5 +720,23 @@
   "engTryDemos": "Try the NFC, crypto and sync demos",
   "aboutStoryShort": "I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
   "engTabArchitectures": "Architectures",
-  "engTabCapabilities": "Capabilities"
+  "engTabCapabilities": "Capabilities",
+  "studyReadPercent": "{percent}% read",
+  "@studyReadPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "studyShare": "Share",
+  "studyShareTooltip": "Share case study",
+  "studyShareSemantics": "Share {title}",
+  "@studyShareSemantics": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }

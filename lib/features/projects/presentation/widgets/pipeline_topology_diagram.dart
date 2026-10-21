@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
-import 'package:profile/shared/widgets/viewport_ticker_gate.dart';
 
-/// Renders a horizontal architectural pipeline diagram for a given project,
-/// showing key pipeline stages and animated technology packet flow.
+/// A project's pipeline as its stages in order, joined by arrows: a row
+/// where they fit, a column on narrow screens.
 class PipelineTopologyDiagram extends StatelessWidget {
   final Project project;
   final bool isDesktop;
@@ -16,11 +16,17 @@ class PipelineTopologyDiagram extends StatelessWidget {
     required this.project,
     required this.isDesktop,
     required this.isDark,
+    this.showTitle = true,
   });
+
+  /// Off where a heading above already names the diagram (case studies).
+  final bool showTitle;
+
+  /// Below this width the stages stack.
+  static const double _rowMinWidth = 480;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     // Keyed on the company, which is stable; project names get rewritten.
     // Only projects with a hand-drawn pipeline are listed — the rest show
     // their own stack, which comes from the project data and so can't drift.
@@ -42,199 +48,93 @@ class PipelineTopologyDiagram extends StatelessWidget {
       _ => project.stack.take(5).toList(),
     };
 
-    return ViewportTickerGate(
-      child: Semantics(
-        container: true,
-        label:
-            'Pipeline architecture for ${project.name}: stages: ${pipeline.join(" to ")}',
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 8),
-          padding:
-              EdgeInsets.symmetric(horizontal: isDesktop ? 10 : 8, vertical: 6),
+    final line = isDark ? AppColors.tealLight : AppColors.tealDeep;
+
+    Widget stage(String label) => Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: isDark
-                ? Colors.black.withValues(alpha: AppAlpha.border)
-                : AppColors.ink50,
-            borderRadius: BorderRadius.circular(AppRadius.chip),
-            border: Border.all(
-                color: scheme.primary.withValues(alpha: isDark ? 0.25 : 0.4)),
+            color: context.cardGlass,
+            borderRadius: BorderRadius.circular(AppRadius.hairlineWide),
+            border: Border.all(color: context.divider),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration: const BoxDecoration(
-                      color: AppColors.tealLight,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: Text(
-                      'Production pipeline topology',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: scheme.primary,
-                        fontSize: isDesktop ? 9.0 : 8.0,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                ],
+          child: Text(
+            label,
+            style: TextStyle(
+              color: context.onSurface.withValues(alpha: 0.9),
+              fontSize: AppTypography.label,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
+
+    return Semantics(
+      container: true,
+      label:
+          'Pipeline architecture for ${project.name}: stages: ${pipeline.join(" to ")}',
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        padding: EdgeInsets.symmetric(
+          horizontal: isDesktop ? 10 : 8,
+          vertical: showTitle ? 6 : 10,
+        ),
+        decoration: BoxDecoration(
+          color: context.onSurface.withValues(alpha: isDark ? 0.03 : 0.02),
+          borderRadius: BorderRadius.circular(AppRadius.chip),
+          border: Border.all(color: context.divider),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (showTitle) ...[
+              Text(
+                'Production pipeline topology',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: context.mutedText,
+                  fontSize: AppTypography.label,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               const SizedBox(height: 5),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+            ],
+            LayoutBuilder(builder: (context, c) {
+              // A row while every stage fits; a column on narrow screens
+              // rather than a row that hides stages off the edge.
+              if (c.maxWidth < _rowMinWidth) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     for (int i = 0; i < pipeline.length; i++) ...[
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 2.5),
-                        decoration: BoxDecoration(
-                          color: scheme.primary
-                              .withValues(alpha: isDark ? 0.08 : 0.06),
-                          borderRadius:
-                              BorderRadius.circular(AppRadius.hairlineWide),
-                          border: Border.all(
-                              color: scheme.primary
-                                  .withValues(alpha: isDark ? 0.3 : 0.25)),
-                        ),
-                        child: Text(
-                          pipeline[i],
-                          style: TextStyle(
-                            color: isDark
-                                ? Colors.white.withValues(alpha: 0.95)
-                                : AppColors.ink900,
-                            fontSize: isDesktop
-                                ? AppTypography.label
-                                : AppTypography.label,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
+                      stage(pipeline[i]),
                       if (i < pipeline.length - 1)
-                        _AnimatedPipelineArrow(
-                          color: scheme.primary,
-                          size: isDesktop ? 12.0 : 10.0,
-                          index: i,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2),
+                          child: Icon(Icons.arrow_downward_rounded,
+                              size: 14, color: line),
                         ),
                     ],
                   ],
-                ),
-              ),
-            ],
-          ),
+                );
+              }
+              return Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                runSpacing: 6,
+                children: [
+                  for (int i = 0; i < pipeline.length; i++) ...[
+                    stage(pipeline[i]),
+                    if (i < pipeline.length - 1)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Icon(Icons.arrow_forward_rounded,
+                            size: 14, color: line),
+                      ),
+                  ],
+                ],
+              );
+            }),
+          ],
         ),
-      ),
-    );
-  }
-}
-
-class _AnimatedPipelineArrow extends StatefulWidget {
-  final Color color;
-  final double size;
-  final int index;
-
-  const _AnimatedPipelineArrow({
-    required this.color,
-    required this.size,
-    required this.index,
-  });
-
-  @override
-  State<_AnimatedPipelineArrow> createState() => _AnimatedPipelineArrowState();
-}
-
-class _AnimatedPipelineArrowState extends State<_AnimatedPipelineArrow>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: AppMotion.ambient,
-  );
-  bool _started = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_started && !MediaQuery.disableAnimationsOf(context)) {
-      _started = true;
-      if (WidgetsBinding.instance.runtimeType.toString().contains('Test')) {
-        _controller.value = 1.0;
-      } else {
-        _controller.repeat();
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final reduceMotion = AppMedia.reduceMotion(context);
-
-    if (reduceMotion) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: Icon(
-          Icons.arrow_forward_rounded,
-          size: widget.size,
-          color: widget.color.withValues(alpha: 0.7),
-        ),
-      );
-    }
-
-    return RepaintBoundary(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, _) {
-          // Stagger pulse per arrow step in the pipeline
-          final offset = (widget.index * 0.2) % 1.0;
-          final progress = (_controller.value + offset) % 1.0;
-          final pulseAlpha =
-              (1.0 - (progress - 0.5).abs() * 2.0).clamp(0.2, 1.0);
-
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Icon(
-                  Icons.arrow_forward_rounded,
-                  size: widget.size,
-                  color: widget.color.withValues(alpha: 0.4),
-                ),
-                Positioned(
-                  left: progress * widget.size * 0.6,
-                  child: Container(
-                    width: 3,
-                    height: 3,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: widget.color.withValues(alpha: pulseAlpha),
-                      boxShadow: [
-                        BoxShadow(
-                          color:
-                              widget.color.withValues(alpha: pulseAlpha * 0.8),
-                          blurRadius: 3,
-                          spreadRadius: 1,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
       ),
     );
   }

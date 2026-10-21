@@ -59,158 +59,163 @@ END:VCARD''';
             ),
           ],
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Header Bar
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: accent.withValues(alpha: AppAlpha.hover),
-                    borderRadius: BorderRadius.circular(AppRadius.xs),
-                  ),
-                  child: Icon(Icons.qr_code_scanner_rounded,
-                      color: accent, size: 20),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.vcardDialogTitle,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: context.onSurface,
-                        ),
-                      ),
-                      Text(
-                        l10n.vcardScanHint,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: context.onSurface.withValues(alpha: 0.65),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close_rounded, size: 20),
-                  tooltip: l10n.closeTooltip,
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-
-            // Crisp White QR Card
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(AppRadius.sm),
-                border: Border.all(color: AppColors.ink200),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: AppAlpha.whisper),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: QrImageView(
-                data: vCardData,
-                size: 200,
-                padding: const EdgeInsets.all(4),
-                eyeStyle: const QrEyeStyle(
-                  eyeShape: QrEyeShape.square,
-                  color: AppColors.ink950,
-                ),
-                dataModuleStyle: const QrDataModuleStyle(
-                  dataModuleShape: QrDataModuleShape.square,
-                  color: AppColors.ink950,
-                ),
-                errorCorrectionLevel: QrErrorCorrectLevel.M,
-              ),
-            ),
-            const SizedBox(height: 18),
-
-            // Profile Summary Pill
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              decoration: BoxDecoration(
-                color: isDark
-                    ? Colors.white.withValues(alpha: 0.04)
-                    : AppColors.ink50,
-                borderRadius: BorderRadius.circular(AppRadius.xs),
-                border: Border.all(color: context.glassBorder),
-              ),
-              child: Column(
+        // Scrolls on short windows (a 600px-tall laptop) instead of
+        // clipping the QR code and the buttons under it.
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Header Bar
+              Row(
                 children: [
-                  Text(
-                    'Abdallah Alhyari',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      color: context.onSurface,
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: accent.withValues(alpha: AppAlpha.hover),
+                      borderRadius: BorderRadius.circular(AppRadius.xs),
+                    ),
+                    child: Icon(Icons.qr_code_scanner_rounded,
+                        color: accent, size: 20),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.vcardDialogTitle,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: context.onSurface,
+                          ),
+                        ),
+                        Text(
+                          l10n.vcardScanHint,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: context.onSurface.withValues(alpha: 0.65),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                    l10n.introRoleLine,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: accent,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${ProfileLinks.email} · ${ProfileLinks.phoneDisplay}',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: context.onSurface.withValues(alpha: 0.7),
-                    ),
-                    textAlign: TextAlign.center,
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.close_rounded, size: 20),
+                    tooltip: l10n.closeTooltip,
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 18),
+              const SizedBox(height: 20),
 
-            // Action Buttons
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      Clipboard.setData(const ClipboardData(text: vCardData));
-                      AppToast.show(context, message: l10n.vcardCopied);
-                    },
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+              // Crisp White QR Card
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  border: Border.all(color: AppColors.ink200),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: AppAlpha.whisper),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
                     ),
-                    icon: const Icon(Icons.copy_rounded, size: 16),
-                    label: Text(l10n.vcardCopyText),
-                  ),
+                  ],
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      Navigator.of(context).pop();
-                    },
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                child: QrImageView(
+                  data: vCardData,
+                  size: 200,
+                  padding: const EdgeInsets.all(4),
+                  eyeStyle: const QrEyeStyle(
+                    eyeShape: QrEyeShape.square,
+                    color: AppColors.ink950,
+                  ),
+                  dataModuleStyle: const QrDataModuleStyle(
+                    dataModuleShape: QrDataModuleShape.square,
+                    color: AppColors.ink950,
+                  ),
+                  errorCorrectionLevel: QrErrorCorrectLevel.M,
+                ),
+              ),
+              const SizedBox(height: 18),
+
+              // Profile Summary Pill
+              Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.04)
+                      : AppColors.ink50,
+                  borderRadius: BorderRadius.circular(AppRadius.xs),
+                  border: Border.all(color: context.glassBorder),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Abdallah Alhyari',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: context.onSurface,
+                      ),
                     ),
-                    icon: const Icon(Icons.check_rounded, size: 16),
-                    label: Text(l10n.done),
-                  ),
+                    const SizedBox(height: 2),
+                    Text(
+                      l10n.introRoleLine,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: accent,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${ProfileLinks.email} · ${ProfileLinks.phoneDisplay}',
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: context.onSurface.withValues(alpha: 0.7),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(height: 18),
+
+              // Action Buttons
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        HapticFeedback.lightImpact();
+                        Clipboard.setData(const ClipboardData(text: vCardData));
+                        AppToast.show(context, message: l10n.vcardCopied);
+                      },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      icon: const Icon(Icons.copy_rounded, size: 16),
+                      label: Text(l10n.vcardCopyText),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: FilledButton.icon(
+                      onPressed: () {
+                        HapticFeedback.lightImpact();
+                        Navigator.of(context).pop();
+                      },
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      icon: const Icon(Icons.check_rounded, size: 16),
+                      label: Text(l10n.done),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

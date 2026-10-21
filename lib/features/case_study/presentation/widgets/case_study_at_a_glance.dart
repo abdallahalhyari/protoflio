@@ -44,12 +44,9 @@ class CaseStudyAtAGlance extends StatelessWidget {
     final isDark = context.isDarkMode;
     final l10n = AppLocalizations.of(context)!;
     final steps = [
-      _Step(
-          label: l10n.studyChallenge,
-          text: challenge,
-          color: context.amberText),
-      _Step(label: l10n.studyBuilt, text: built, color: context.indigoText),
-      _Step(label: l10n.studyResult, text: result, color: context.greenText),
+      _Step(label: l10n.studyChallenge, text: challenge),
+      _Step(label: l10n.studyBuilt, text: built),
+      _Step(label: l10n.studyResult, text: result),
     ];
 
     return Semantics(
@@ -63,32 +60,11 @@ class CaseStudyAtAGlance extends StatelessWidget {
               ? Colors.white.withValues(alpha: 0.035)
               : Colors.white.withValues(alpha: 0.8),
           borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(
-            color: scheme.primary.withValues(alpha: isDark ? 0.22 : 0.25),
-          ),
+          border: Border.all(color: context.divider),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Icon(Icons.bolt_rounded,
-                    size: 16,
-                    color: context.adaptiveAccentText(scheme.primary)),
-                const SizedBox(width: 6),
-                Flexible(
-                  child: Text(
-                    l10n.studyGlanceKicker,
-                    style: TextStyle(
-                      fontSize: AppTypography.label,
-                      fontWeight: FontWeight.w900,
-                      color: context.mutedText,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
             if (isDesktop)
               IntrinsicHeight(
                 child: Row(
@@ -142,11 +118,10 @@ class CaseStudyAtAGlance extends StatelessWidget {
 }
 
 class _Step extends StatelessWidget {
-  const _Step({required this.label, required this.text, required this.color});
+  const _Step({required this.label, required this.text});
 
   final String label;
   final String text;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -156,12 +131,12 @@ class _Step extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontSize: AppTypography.label,
-            fontWeight: FontWeight.w900,
-            color: color,
+            fontSize: AppTypography.label + 1,
+            fontWeight: FontWeight.w600,
+            color: context.mutedText,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.xs),
         Text(
           text,
           style: TextStyle(

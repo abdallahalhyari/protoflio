@@ -44,8 +44,7 @@ class RelatedCaseStudies extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionKicker(
-            number: '09', label: AppLocalizations.of(context)!.studyMore),
+        ChapterHeading(AppLocalizations.of(context)!.studyMore),
         const SizedBox(height: AppSpacing.md),
         if (isDesktop)
           // Equal-height cards: titles wrap to one or two lines, which

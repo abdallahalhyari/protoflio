@@ -44,7 +44,7 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.problemKey,
-            child: SectionKicker(number: '01', label: l10n.studyProblem),
+            child: ChapterHeading(l10n.studyProblem),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
@@ -65,7 +65,7 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.roleKey,
-            child: SectionKicker(number: '02', label: l10n.studyRole),
+            child: ChapterHeading(l10n.studyRole),
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
@@ -77,7 +77,7 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.archKey,
-            child: SectionKicker(number: '03', label: l10n.studyArchitecture),
+            child: ChapterHeading(l10n.studyArchitecture),
           ),
           const SizedBox(height: AppSpacing.md),
           EnglishContent(
@@ -85,6 +85,7 @@ class SolutionsCaseStudy extends StatelessWidget {
               project: context.read<ProjectRepository>().getProjectByIndex(2)!,
               isDesktop: isDesktop,
               isDark: isDark,
+              showTitle: false,
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -99,7 +100,6 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            number: '04',
             title: 'Background isolate compression & camera pipeline',
             steps: [
               TechStep(
@@ -124,7 +124,6 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            number: '05',
             title: 'Multi-tenant design system & loyalty engine',
             steps: [
               TechStep(
@@ -149,7 +148,6 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            number: '06',
             title: 'Performance profiling & UI polish',
             steps: [
               TechStep(
@@ -175,7 +173,7 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.outcomesKey,
-            child: SectionKicker(number: '07', label: l10n.studyOutcomes),
+            child: ChapterHeading(l10n.studyOutcomes),
           ),
           const SizedBox(height: AppSpacing.md),
           OutcomeGrid(
@@ -190,7 +188,7 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
             key: keys.lessonsKey,
-            child: SectionKicker(number: '08', label: l10n.studyLessons),
+            child: ChapterHeading(l10n.studyLessons),
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(

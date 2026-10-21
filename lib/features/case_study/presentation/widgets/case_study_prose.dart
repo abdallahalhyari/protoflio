@@ -3,43 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 
-/// Section kicker: numeric label + uppercase title + rule.
-class SectionKicker extends StatelessWidget {
-  const SectionKicker({super.key, required this.number, required this.label});
+/// A chapter's heading: a rule across the column, the title under it.
+/// Chapters are unnumbered; they're topics, not steps.
+class ChapterHeading extends StatelessWidget {
+  const ChapterHeading(this.title, {super.key});
 
-  final String number;
-  final String label;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Row(children: [
-      Text(
-        number,
-        style: TextStyle(
-          fontFamily: AppTypography.displayFont,
-          fontSize: AppTypography.heading,
-          fontWeight: FontWeight.w900,
-          color: context.adaptiveAccentText(scheme.primary),
-        ),
+    return Container(
+      padding: const EdgeInsets.only(top: AppSpacing.md),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: context.divider)),
       ),
-      const SizedBox(width: AppSpacing.md),
-      Expanded(
+      child: Semantics(
+        header: true,
         child: Text(
-          label,
+          title,
           style: TextStyle(
-            fontSize: AppTypography.label,
-            fontWeight: FontWeight.w800,
-            color: scheme.onSurface.withValues(alpha: 0.9),
+            fontSize: AppTypography.title,
+            fontWeight: FontWeight.w700,
+            height: 1.3,
+            color: context.onSurface,
           ),
         ),
       ),
-      Container(
-        height: 1,
-        width: 80,
-        color: scheme.onSurface.withValues(alpha: 0.15),
-      ),
-    ]);
+    );
   }
 }
 

@@ -38,7 +38,11 @@ void main() {
       expect(find.text('CV'), findsOneWidget);
       expect(find.text('Call'), findsOneWidget);
       expect(find.text('Download'), findsOneWidget);
-      expect(find.text('GitHub'), findsNothing);
+      // Re-added on request after an earlier removal (3c00809), along with
+      // the hiring summary and contact card that left the cover.
+      expect(find.text('GitHub'), findsOneWidget);
+      expect(find.text('Hiring summary'), findsOneWidget);
+      expect(find.text('Contact card'), findsOneWidget);
     });
 
     testWidgets('channel rows open their links; the phone row has two',
@@ -71,6 +75,40 @@ void main() {
         'tel:${ProfileLinks.phoneRaw}',
       ]);
       expect(cv, 1);
+    });
+
+    testWidgets('GitHub, hiring summary and contact card rows work',
+        (tester) async {
+      final opened = <String>[];
+      await tester.pumpWidget(_wrap(
+        CredentialSheet(
+          part: CredentialSheetPart.reach,
+          isDesktop: true,
+          onSendEmail: () {},
+          onCopyEmail: () {},
+          onOpenUrl: opened.add,
+          onOpenCv: () {},
+        ),
+      ));
+      await tester.pumpAndSettle();
+      final l10n = lookupAppLocalizations(const Locale('en'));
+
+      await tester.ensureVisible(find.text('GitHub'));
+      await tester.tap(find.text('GitHub'));
+      expect(opened, [ProfileLinks.github]);
+
+      await tester.ensureVisible(find.text(l10n.quickProfileTitle));
+      await tester.tap(find.text(l10n.quickProfileTitle));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('quick_profile')), findsOneWidget);
+      Navigator.of(tester.element(find.byKey(const Key('quick_profile'))))
+          .pop();
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.text(l10n.contactVcard));
+      await tester.tap(find.text(l10n.contactVcard));
+      await tester.pumpAndSettle();
+      expect(find.text(l10n.vcardDialogTitle), findsOneWidget);
     });
 
     testWidgets('AboutContactPage stays readable on compact Arabic RTL',

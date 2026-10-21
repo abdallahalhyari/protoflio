@@ -289,6 +289,21 @@ class AppLocalizationsAr extends AppLocalizations {
       'غير مطلوب في التشيك أثناء الدراسة بدوام كامل';
 
   @override
+  String get contactHiringValue => 'الدور والخبرة والتقنيات في صفحة واحدة';
+
+  @override
+  String get contactView => 'عرض';
+
+  @override
+  String get contactVcard => 'بطاقة الاتصال';
+
+  @override
+  String get contactVcardValue => 'امسحه لحفظ بياناتي';
+
+  @override
+  String get contactShowQr => 'عرض الرمز';
+
+  @override
   String get contactViewProfile => 'عرض الملف';
 
   @override
@@ -594,11 +609,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get studyBackToPortfolio => 'العودة إلى الملف';
 
   @override
-  String studyReadPercent(int pct) {
-    return 'قُرئ $pct٪';
-  }
-
-  @override
   String get studyTop => 'للأعلى';
 
   @override
@@ -631,26 +641,12 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get studyShare => 'مشاركة الدراسة';
-
-  @override
-  String get studyShareTooltip => 'نسخ رابط مباشر لهذه الدراسة';
-
-  @override
-  String studyShareSemantics(String title) {
-    return 'مشاركة رابط مباشر لدراسة $title';
-  }
-
-  @override
   String get studyShareButton => 'مشاركة رابط الدراسة';
 
   @override
   String studyLinkCopied(String url) {
     return 'تم نسخ رابط الدراسة: $url';
   }
-
-  @override
-  String get studyGlanceKicker => 'لمحة سريعة · قراءة في 30 ثانية';
 
   @override
   String get studyGlance => 'لمحة سريعة';
@@ -1570,4 +1566,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'القدرات';
+
+  @override
+  String studyReadPercent(int percent) {
+    return 'تمت قراءة $percent%';
+  }
+
+  @override
+  String get studyShare => 'مشاركة';
+
+  @override
+  String get studyShareTooltip => 'مشاركة دراسة الحالة';
+
+  @override
+  String studyShareSemantics(String title) {
+    return 'مشاركة $title';
+  }
 }

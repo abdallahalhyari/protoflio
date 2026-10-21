@@ -616,6 +616,36 @@ abstract class AppLocalizations {
   /// **'Not needed in Czechia while studying full-time'**
   String get cardFactPermitValue;
 
+  /// No description provided for @contactHiringValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Role, experience and stack on one page'**
+  String get contactHiringValue;
+
+  /// No description provided for @contactView.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get contactView;
+
+  /// No description provided for @contactVcard.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact card'**
+  String get contactVcard;
+
+  /// No description provided for @contactVcardValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan to save my details'**
+  String get contactVcardValue;
+
+  /// No description provided for @contactShowQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Show QR'**
+  String get contactShowQr;
+
   /// No description provided for @contactViewProfile.
   ///
   /// In en, this message translates to:
@@ -1162,12 +1192,6 @@ abstract class AppLocalizations {
   /// **'Back to portfolio'**
   String get studyBackToPortfolio;
 
-  /// No description provided for @studyReadPercent.
-  ///
-  /// In en, this message translates to:
-  /// **'{pct}% read'**
-  String studyReadPercent(int pct);
-
   /// No description provided for @studyTop.
   ///
   /// In en, this message translates to:
@@ -1216,24 +1240,6 @@ abstract class AppLocalizations {
   /// **'View {company} on LinkedIn'**
   String studyViewOnLinkedIn(String company);
 
-  /// No description provided for @studyShare.
-  ///
-  /// In en, this message translates to:
-  /// **'Share'**
-  String get studyShare;
-
-  /// No description provided for @studyShareTooltip.
-  ///
-  /// In en, this message translates to:
-  /// **'Copy direct link to this case study'**
-  String get studyShareTooltip;
-
-  /// No description provided for @studyShareSemantics.
-  ///
-  /// In en, this message translates to:
-  /// **'Share direct link to {title} case study'**
-  String studyShareSemantics(String title);
-
   /// No description provided for @studyShareButton.
   ///
   /// In en, this message translates to:
@@ -1245,12 +1251,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Case study link copied: {url}'**
   String studyLinkCopied(String url);
-
-  /// No description provided for @studyGlanceKicker.
-  ///
-  /// In en, this message translates to:
-  /// **'At a glance'**
-  String get studyGlanceKicker;
 
   /// No description provided for @studyGlance.
   ///
@@ -2883,6 +2883,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Capabilities'**
   String get engTabCapabilities;
+
+  /// No description provided for @studyReadPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% read'**
+  String studyReadPercent(int percent);
+
+  /// No description provided for @studyShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get studyShare;
+
+  /// No description provided for @studyShareTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Share case study'**
+  String get studyShareTooltip;
+
+  /// No description provided for @studyShareSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Share {title}'**
+  String studyShareSemantics(String title);
 }
 
 class _AppLocalizationsDelegate

@@ -10,5 +10,6 @@ abstract final class ProfileLinks {
       'https://www.linkedin.com/in/abdallah-alhyari-0294791a0/';
   static const String linkedInHandle = 'abdallah-alhyari';
   static const String github = 'https://github.com/abdallahalhyari';
+  static const String githubHandle = 'abdallahalhyari';
   static const String site = 'https://alhyari.web.app';
 }

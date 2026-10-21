@@ -185,8 +185,11 @@ void main() {
           .pumpWidget(_wrap(const NatHealthCaseStudy(), const Size(1200, 800)));
       await tester.pumpAndSettle();
 
-      await tester.scrollUntilVisible(find.text('04'), 500,
-          scrollable: find.byType(Scrollable).first);
+      await tester.scrollUntilVisible(
+        find.text('ISO-7816 APDU protocol engineering'),
+        500,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.byType(TechnicalChapter), findsWidgets);
       await tester.binding.setSurfaceSize(null);
     });

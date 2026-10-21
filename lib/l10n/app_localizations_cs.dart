@@ -293,6 +293,21 @@ class AppLocalizationsCs extends AppLocalizations {
       'V Česku při studiu na plný úvazek není potřeba';
 
   @override
+  String get contactHiringValue => 'Role, praxe a technologie na jedné straně';
+
+  @override
+  String get contactView => 'Zobrazit';
+
+  @override
+  String get contactVcard => 'Vizitka';
+
+  @override
+  String get contactVcardValue => 'Naskenujte a uložte si kontakt';
+
+  @override
+  String get contactShowQr => 'Zobrazit QR';
+
+  @override
   String get contactViewProfile => 'Zobrazit';
 
   @override
@@ -599,11 +614,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get studyBackToPortfolio => 'Zpět na portfolio';
 
   @override
-  String studyReadPercent(int pct) {
-    return 'Přečteno $pct %';
-  }
-
-  @override
   String get studyTop => 'Nahoru';
 
   @override
@@ -636,26 +646,12 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get studyShare => 'Sdílet';
-
-  @override
-  String get studyShareTooltip => 'Zkopírovat přímý odkaz na tuto studii';
-
-  @override
-  String studyShareSemantics(String title) {
-    return 'Sdílet přímý odkaz na studii $title';
-  }
-
-  @override
   String get studyShareButton => 'Sdílet odkaz na studii';
 
   @override
   String studyLinkCopied(String url) {
     return 'Odkaz na studii zkopírován: $url';
   }
-
-  @override
-  String get studyGlanceKicker => 'V kostce';
 
   @override
   String get studyGlance => 'V kostce';
@@ -1590,4 +1586,20 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'Schopnosti';
+
+  @override
+  String studyReadPercent(int percent) {
+    return 'Přečteno $percent %';
+  }
+
+  @override
+  String get studyShare => 'Sdílet';
+
+  @override
+  String get studyShareTooltip => 'Sdílet případovou studii';
+
+  @override
+  String studyShareSemantics(String title) {
+    return 'Sdílet $title';
+  }
 }

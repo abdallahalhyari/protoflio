@@ -4,7 +4,8 @@ import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/case_study/presentation/widgets/case_study_prose.dart';
 
-/// Data for a single ordered step inside a `TechnicalChapter`.
+/// One facet of a `TechnicalChapter`: the layer it sits in, what was done
+/// there and how.
 class TechStep {
   const TechStep({
     required this.layer,
@@ -16,16 +17,16 @@ class TechStep {
   final String body;
 }
 
-/// A numbered technical chapter — kicker + ordered `TechStep` cards.
+/// A technical chapter as a spec list: heading, then one entry per facet.
+/// The facets (hardware, security, resilience…) aren't an order, so they
+/// aren't numbered.
 class TechnicalChapter extends StatelessWidget {
   const TechnicalChapter({
     super.key,
-    required this.number,
     required this.title,
     required this.steps,
   });
 
-  final String number;
   final String title;
   final List<TechStep> steps;
 
@@ -34,100 +35,90 @@ class TechnicalChapter extends StatelessWidget {
     // An English chapter, heading included.
     return EnglishContent(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SectionKicker(number: number, label: title),
-          const SizedBox(height: AppSpacing.md),
-          ...List.generate(steps.length, (i) {
-            final s = steps[i];
-            return Padding(
-              padding: EdgeInsets.only(
-                  bottom: i == steps.length - 1 ? 0 : AppSpacing.md),
-              child: TechStepCard(index: i + 1, step: s),
-            );
-          }),
+          ChapterHeading(title),
+          const SizedBox(height: AppSpacing.sm),
+          for (int i = 0; i < steps.length; i++)
+            TechStepEntry(step: steps[i], isFirst: i == 0),
         ],
       ),
     );
   }
 }
 
-class TechStepCard extends StatelessWidget {
-  const TechStepCard({super.key, required this.index, required this.step});
+class TechStepEntry extends StatelessWidget {
+  const TechStepEntry({super.key, required this.step, this.isFirst = false});
 
-  final int index;
   final TechStep step;
+
+  /// The chapter heading's rule already sits above the first entry.
+  final bool isFirst;
+
+  /// Room for the layer as a column of its own.
+  static const double _sideLabelMinWidth = 560;
+  static const double _labelColumn = 120;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final isDark = context.isDarkMode;
-    final accentText = context.adaptiveAccentText(scheme.primary);
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: context.cardGlass,
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(
-          color: scheme.primary.withValues(alpha: isDark ? 0.15 : 0.18),
-        ),
+    final layer = Text(
+      step.layer,
+      style: TextStyle(
+        fontSize: AppTypography.label + 1,
+        fontWeight: FontWeight.w600,
+        height: 1.6,
+        color: context.mutedText,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 36,
-            height: 36,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: scheme.primary.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+    );
+    final detail = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          step.title,
+          style: TextStyle(
+            fontSize: AppTypography.lead,
+            fontWeight: FontWeight.w700,
+            height: 1.35,
+            color: context.onSurface,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          step.body,
+          style: TextStyle(
+            fontSize: AppTypography.body,
+            height: 1.6,
+            color: context.onSurface.withValues(alpha: 0.85),
+          ),
+        ),
+      ],
+    );
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+      decoration: isFirst
+          ? null
+          : BoxDecoration(
+              border: Border(top: BorderSide(color: context.divider)),
             ),
-            child: Text(
-              index.toString().padLeft(2, '0'),
-              style: TextStyle(
-                fontFamily: AppTypography.displayFont,
-                fontSize: AppTypography.lead,
-                fontWeight: FontWeight.w900,
-                color: accentText,
+      child: LayoutBuilder(
+        builder: (context, c) => c.maxWidth >= _sideLabelMinWidth
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: _labelColumn, child: layer),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(child: detail),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  layer,
+                  const SizedBox(height: 2),
+                  detail,
+                ],
               ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  step.layer,
-                  style: TextStyle(
-                    fontSize: AppTypography.label,
-                    fontWeight: FontWeight.w800,
-                    color: accentText,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  step.title,
-                  style: TextStyle(
-                    fontSize: AppTypography.lead,
-                    fontWeight: FontWeight.w800,
-                    color: scheme.onSurface,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  step.body,
-                  style: TextStyle(
-                    fontSize: AppTypography.body,
-                    height: 1.55,
-                    color: scheme.onSurface.withValues(alpha: 0.82),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

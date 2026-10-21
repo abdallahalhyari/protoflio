@@ -26,7 +26,7 @@ Future<void> _open(WidgetTester tester, Widget study, Size size) async {
 /// widget, not text: the chapter dock carries the same "Outcomes" label.
 bool _outcomesOnScreen(WidgetTester tester) {
   final kicker = find
-      .byWidgetPredicate((w) => w is SectionKicker && w.label == 'Outcomes');
+      .byWidgetPredicate((w) => w is ChapterHeading && w.title == 'Outcomes');
   if (kicker.evaluate().isEmpty) return false;
   final rect = tester.getRect(kicker.first);
   final screen = Offset.zero & tester.view.physicalSize;

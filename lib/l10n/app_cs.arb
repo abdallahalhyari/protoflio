@@ -107,6 +107,11 @@
   "cardFactBasedValue": "Ammán, Jordánsko; od února 2027 Brno",
   "cardFactStudyValue": "M.Sc. Open Informatics, Mendelova univerzita",
   "cardFactPermitValue": "V Česku při studiu na plný úvazek není potřeba",
+  "contactHiringValue": "Role, praxe a technologie na jedné straně",
+  "contactView": "Zobrazit",
+  "contactVcard": "Vizitka",
+  "contactVcardValue": "Naskenujte a uložte si kontakt",
+  "contactShowQr": "Zobrazit QR",
   "contactViewProfile": "Zobrazit",
   "contactMessageWhatsapp": "Napsat na WhatsApp {number}",
   "contactCallNumber": "Volat {number}",
@@ -198,7 +203,6 @@
   "studyDockOutcomesShort": "Výsl.",
   "studyDockLessons": "Ponaučení",
   "studyBackToPortfolio": "Zpět na portfolio",
-  "studyReadPercent": "Přečteno {pct} %",
   "studyTop": "Nahoru",
   "studyBackToTop": "Zpět nahoru",
   "studyJumpTo": "Přejít na {chapter}",
@@ -207,12 +211,8 @@
   "studyVisitWebsite": "Navštívit oficiální web {company}",
   "studyCompanyLinkedIn": "LinkedIn firmy",
   "studyViewOnLinkedIn": "Zobrazit {company} na LinkedIn",
-  "studyShare": "Sdílet",
-  "studyShareTooltip": "Zkopírovat přímý odkaz na tuto studii",
-  "studyShareSemantics": "Sdílet přímý odkaz na studii {title}",
   "studyShareButton": "Sdílet odkaz na studii",
   "studyLinkCopied": "Odkaz na studii zkopírován: {url}",
-  "studyGlanceKicker": "V kostce",
   "studyGlance": "V kostce",
   "studyChallenge": "Výzva",
   "studyBuilt": "Co jsem vytvořil",
@@ -484,5 +484,23 @@
   "engTryDemos": "Vyzkoušejte ukázky NFC, kryptografie a synchronizace",
   "aboutStoryShort": "V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.",
   "engTabArchitectures": "Architektury",
-  "engTabCapabilities": "Schopnosti"
+  "engTabCapabilities": "Schopnosti",
+  "studyReadPercent": "Přečteno {percent} %",
+  "@studyReadPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "studyShare": "Sdílet",
+  "studyShareTooltip": "Sdílet případovou studii",
+  "studyShareSemantics": "Sdílet {title}",
+  "@studyShareSemantics": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }
