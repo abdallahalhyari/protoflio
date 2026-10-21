@@ -40,7 +40,7 @@ void main() {
       expect(find.text('Given name'), findsOneWidget);
       expect(find.text('Abdallah'), findsOneWidget);
       // The real work-permit fact, with its condition.
-      expect(find.text('Not needed in Czechia while I study full-time.'),
+      expect(find.text('Not needed in Czechia while studying full-time'),
           findsOneWidget);
     });
 

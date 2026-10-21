@@ -269,7 +269,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactWhatsapp => 'واتساب';
 
   @override
-  String get contactOpen => 'فتح';
+  String get cardFactAvailableValue => 'عن بُعد أو بدوام جزئي الآن';
+
+  @override
+  String get cardFactBasedValue => 'عمّان، الأردن؛ برنو من فبراير 2027';
+
+  @override
+  String get cardFactStudyValue => 'ماجستير المعلوماتية المفتوحة، جامعة مندل';
+
+  @override
+  String get cardFactPermitValue =>
+      'غير مطلوب في التشيك أثناء الدراسة بدوام كامل';
+
+  @override
+  String get contactViewProfile => 'عرض الملف';
+
+  @override
+  String contactMessageWhatsapp(String number) {
+    return 'مراسلة $number عبر واتساب';
+  }
+
+  @override
+  String contactCallNumber(String number) {
+    return 'اتصال بـ $number';
+  }
 
   @override
   String get contactCopy => 'نسخ';
@@ -1139,10 +1162,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get heroFactStudyLabel => 'الدراسة';
-
-  @override
-  String get heroFactStudyValue =>
-      'ماجستير المعلوماتية المفتوحة، جامعة مندل، من فبراير 2027';
 
   @override
   String get traceCta => 'تتبّع نقرة';

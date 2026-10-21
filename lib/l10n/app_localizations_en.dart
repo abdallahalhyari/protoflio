@@ -270,7 +270,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactWhatsapp => 'WhatsApp';
 
   @override
-  String get contactOpen => 'Open';
+  String get cardFactAvailableValue => 'Remote or part-time now';
+
+  @override
+  String get cardFactBasedValue => 'Amman, Jordan; Brno from Feb 2027';
+
+  @override
+  String get cardFactStudyValue => 'M.Sc. Open Informatics, Mendel University';
+
+  @override
+  String get cardFactPermitValue =>
+      'Not needed in Czechia while studying full-time';
+
+  @override
+  String get contactViewProfile => 'View profile';
+
+  @override
+  String contactMessageWhatsapp(String number) {
+    return 'Message $number on WhatsApp';
+  }
+
+  @override
+  String contactCallNumber(String number) {
+    return 'Call $number';
+  }
 
   @override
   String get contactCopy => 'Copy';
@@ -1146,10 +1169,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get heroFactStudyLabel => 'Studying';
-
-  @override
-  String get heroFactStudyValue =>
-      'M.Sc. Open Informatics, Mendel University, from February 2027';
 
   @override
   String get traceCta => 'Trace a tap';

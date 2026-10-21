@@ -38,7 +38,7 @@ void main() {
           findsOneWidget);
     });
 
-    testWidgets('CredentialsBentoCard renders Academic Annex & Certifications',
+    testWidgets('CredentialsBentoCard renders Education & Certifications',
         (tester) async {
       await tester.pumpWidget(_wrap(
         const CredentialsBentoCard(

@@ -115,8 +115,12 @@ class _AboutContactPageState extends State<AboutContactPage>
             // The reach half opens on its own question, under the
             // section divider that already names it.
             if (part != CredentialSheetPart.reach) ...[
+              // Desktop shows both halves under the nav's own name; the
+              // phone column's About section is the holder half alone.
               SectionMasthead(
-                title: l10n.aboutTitle,
+                title: part == CredentialSheetPart.full
+                    ? aboutAndContactLabel(l10n)
+                    : l10n.aboutTitle,
                 subtitle: l10n.aboutHeaderSubtitle,
                 isDesktop: isDesktop,
               ),

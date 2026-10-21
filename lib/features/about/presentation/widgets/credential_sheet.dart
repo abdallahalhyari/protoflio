@@ -285,23 +285,24 @@ class _Reach extends StatelessWidget {
         _ChannelRow(
           label: l10n.contactLinkedin,
           value: ProfileLinks.linkedInHandle,
-          action: l10n.contactOpen,
+          action: l10n.contactViewProfile,
           icon: Icons.open_in_new_rounded,
           onTap: () => onOpenUrl(ProfileLinks.linkedIn),
         ),
-        _ChannelRow(
-          label: l10n.contactWhatsapp,
-          value: ProfileLinks.phoneDisplay,
-          action: l10n.contactOpen,
-          icon: Icons.open_in_new_rounded,
-          onTap: () => onOpenUrl(ProfileLinks.whatsApp),
-        ),
+        // One number, two ways to use it: one row, two actions.
         _ChannelRow(
           label: l10n.contactPhone,
           value: ProfileLinks.phoneDisplay,
-          action: l10n.contactCall,
-          icon: Icons.call_rounded,
-          onTap: () => onOpenUrl('tel:${ProfileLinks.phoneRaw}'),
+          action: l10n.contactWhatsapp,
+          actionSemantics:
+              l10n.contactMessageWhatsapp(ProfileLinks.phoneDisplay),
+          icon: Icons.open_in_new_rounded,
+          onTap: () => onOpenUrl(ProfileLinks.whatsApp),
+          secondAction: l10n.contactCall,
+          secondActionSemantics:
+              l10n.contactCallNumber(ProfileLinks.phoneDisplay),
+          secondIcon: Icons.call_rounded,
+          onSecondTap: () => onOpenUrl('tel:${ProfileLinks.phoneRaw}'),
         ),
         _ChannelRow(
           label: l10n.navResume,
@@ -316,8 +317,9 @@ class _Reach extends StatelessWidget {
   }
 }
 
-/// One way to reach the holder: the whole row is the tap target, the
-/// trailing gold word says what happens.
+/// One way to reach the holder: the trailing gold word says what happens.
+/// With one action the whole row is the tap target; with a second action
+/// (the phone number: WhatsApp or call) each word is its own button.
 class _ChannelRow extends StatelessWidget {
   const _ChannelRow({
     required this.label,
@@ -325,88 +327,179 @@ class _ChannelRow extends StatelessWidget {
     required this.action,
     required this.icon,
     required this.onTap,
+    this.actionSemantics,
+    this.secondAction,
+    this.secondActionSemantics,
+    this.secondIcon,
+    this.onSecondTap,
     this.isLast = false,
   });
 
   final String label;
   final String value;
   final String action;
+  final String? actionSemantics;
   final IconData icon;
   final VoidCallback onTap;
+  final String? secondAction;
+  final String? secondActionSemantics;
+  final IconData? secondIcon;
+  final VoidCallback? onSecondTap;
   final bool isLast;
+
+  bool get _hasTwoActions => secondAction != null && onSecondTap != null;
 
   @override
   Widget build(BuildContext context) {
     final gold = _tapGold(context);
+
+    Widget actionWord(String text, IconData glyph) => Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: AppTypography.label,
+                fontWeight: FontWeight.w600,
+                color: gold,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            Icon(glyph, size: 14, color: gold),
+          ],
+        );
+
+    // Each action its own button, padded to a usable target.
+    Widget actionButton(
+      String text,
+      String? semantics,
+      IconData glyph,
+      VoidCallback tap,
+    ) =>
+        Semantics(
+          button: true,
+          label: semantics ?? text,
+          excludeSemantics: true,
+          child: InkWell(
+            onTap: tap,
+            borderRadius: BorderRadius.circular(AppRadius.sm),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.xs,
+                vertical: AppSpacing.sm,
+              ),
+              child: actionWord(text, glyph),
+            ),
+          ),
+        );
+
+    final row = Container(
+      constraints: const BoxConstraints(minHeight: 52),
+      decoration: isLast
+          ? null
+          : BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: context.divider),
+              ),
+            ),
+      child: LayoutBuilder(
+        builder: (context, c) {
+          // A phone number cut to "+962-78-…" is useless, so the value
+          // scales down rather than truncating.
+          final valueText = FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              ltrAlways(context, value),
+              maxLines: 1,
+              style: TextStyle(
+                fontSize: AppTypography.body,
+                fontWeight: FontWeight.w500,
+                color: context.onSurface,
+              ),
+            ),
+          );
+          // Narrow rows stack the label over the value, like the
+          // holder's fields, so the action words keep their room.
+          final stacked =
+              c.maxWidth < 340 || (_hasTwoActions && c.maxWidth < 420);
+          // Two actions on a narrow row stack at the row's end, one over
+          // the other, where every other row keeps its action word.
+          if (_hasTwoActions && stacked) {
+            return Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.sm,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [_FieldLabel(label), valueText],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    actionButton(action, actionSemantics, icon, onTap),
+                    actionButton(
+                      secondAction!,
+                      secondActionSemantics,
+                      secondIcon ?? icon,
+                      onSecondTap!,
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
+          return Row(
+            children: [
+              if (stacked)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.sm,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [_FieldLabel(label), valueText],
+                    ),
+                  ),
+                )
+              else ...[
+                SizedBox(width: 92, child: _FieldLabel(label)),
+                Expanded(child: valueText),
+              ],
+              const SizedBox(width: AppSpacing.sm),
+              if (_hasTwoActions) ...[
+                actionButton(action, actionSemantics, icon, onTap),
+                const SizedBox(width: AppSpacing.sm),
+                actionButton(
+                  secondAction!,
+                  secondActionSemantics,
+                  secondIcon ?? icon,
+                  onSecondTap!,
+                ),
+              ] else
+                actionWord(action, icon),
+            ],
+          );
+        },
+      ),
+    );
+
+    if (_hasTwoActions) return row;
+
     return MergeSemantics(
       child: Semantics(
         button: true,
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(AppRadius.sm),
-          child: Container(
-            constraints: const BoxConstraints(minHeight: 52),
-            decoration: isLast
-                ? null
-                : BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: context.divider),
-                    ),
-                  ),
-            child: LayoutBuilder(
-              builder: (context, c) {
-                // A phone number cut to "+962-78-…" is useless, so the value
-                // scales down rather than truncating.
-                final valueText = FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text(
-                    ltrAlways(context, value),
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: AppTypography.body,
-                      fontWeight: FontWeight.w500,
-                      color: context.onSurface,
-                    ),
-                  ),
-                );
-                // Narrow rows stack the label over the value, like the
-                // holder's fields, so the action word keeps its room.
-                final stacked = c.maxWidth < 340;
-                return Row(
-                  children: [
-                    if (stacked)
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: AppSpacing.sm,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [_FieldLabel(label), valueText],
-                          ),
-                        ),
-                      )
-                    else ...[
-                      SizedBox(width: 92, child: _FieldLabel(label)),
-                      Expanded(child: valueText),
-                    ],
-                    const SizedBox(width: AppSpacing.sm),
-                    Text(
-                      action,
-                      style: TextStyle(
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w600,
-                        color: gold,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.xs),
-                    Icon(icon, size: 14, color: gold),
-                  ],
-                );
-              },
-            ),
-          ),
+          child: row,
         ),
       ),
     );
@@ -423,10 +516,12 @@ class _Holder extends StatelessWidget {
     final portraitWidth = isDesktop ? 96.0 : 84.0;
 
     final facts = [
-      (l10n.heroFactAvailableLabel, l10n.heroFactAvailableValue),
-      (l10n.heroFactBasedLabel, l10n.heroFactBasedValue),
-      (l10n.heroFactStudyLabel, l10n.heroFactStudyValue),
-      (l10n.heroFactPermitLabel, l10n.heroFactPermitValue),
+      // Field-length values: a document field is a phrase, not a
+      // sentence. Each date appears once.
+      (l10n.heroFactAvailableLabel, l10n.cardFactAvailableValue),
+      (l10n.heroFactBasedLabel, l10n.cardFactBasedValue),
+      (l10n.heroFactStudyLabel, l10n.cardFactStudyValue),
+      (l10n.heroFactPermitLabel, l10n.cardFactPermitValue),
       (l10n.heroFactLanguagesLabel, l10n.heroFactLanguagesValue),
       (
         l10n.aboutExperienceLabel,

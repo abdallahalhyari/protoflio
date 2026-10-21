@@ -120,7 +120,27 @@
   "contactCall": "Call",
   "contactDownload": "Download",
   "contactWhatsapp": "WhatsApp",
-  "contactOpen": "Open",
+  "cardFactAvailableValue": "Remote or part-time now",
+  "cardFactBasedValue": "Amman, Jordan; Brno from Feb 2027",
+  "cardFactStudyValue": "M.Sc. Open Informatics, Mendel University",
+  "cardFactPermitValue": "Not needed in Czechia while studying full-time",
+  "contactViewProfile": "View profile",
+  "contactMessageWhatsapp": "Message {number} on WhatsApp",
+  "contactCallNumber": "Call {number}",
+  "@contactMessageWhatsapp": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@contactCallNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "contactCopy": "Copy",
   "contactLinkedin": "LinkedIn",
   "contactProfile": "Profile",
@@ -558,7 +578,6 @@
   "heroFactLanguagesLabel": "Languages",
   "heroFactLanguagesValue": "English (professional), Arabic (native)",
   "heroFactStudyLabel": "Studying",
-  "heroFactStudyValue": "M.Sc. Open Informatics, Mendel University, from February 2027",
   "traceCta": "Trace a tap",
   "traceAgain": "Trace again",
   "traceDone": "Claim queued, synced and confirmed.",

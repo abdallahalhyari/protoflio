@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:profile/features/about/presentation/about_navigation.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
@@ -25,7 +26,7 @@ class TopNav extends StatelessWidget {
       l.navEngineering,
     ];
     if (AppBreakpoints.isDesktop(context)) {
-      return [...labels, '${l.navAbout} & ${l.navContact}'];
+      return [...labels, aboutAndContactLabel(l)];
     }
     return [...labels, l.navSectionAbout, l.navSectionContact];
   }

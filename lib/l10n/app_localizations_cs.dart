@@ -272,7 +272,31 @@ class AppLocalizationsCs extends AppLocalizations {
   String get contactWhatsapp => 'WhatsApp';
 
   @override
-  String get contactOpen => 'Otevřít';
+  String get cardFactAvailableValue => 'Nyní na dálku nebo na částečný úvazek';
+
+  @override
+  String get cardFactBasedValue => 'Ammán, Jordánsko; od února 2027 Brno';
+
+  @override
+  String get cardFactStudyValue =>
+      'M.Sc. Open Informatics, Mendelova univerzita';
+
+  @override
+  String get cardFactPermitValue =>
+      'V Česku při studiu na plný úvazek není potřeba';
+
+  @override
+  String get contactViewProfile => 'Zobrazit';
+
+  @override
+  String contactMessageWhatsapp(String number) {
+    return 'Napsat na WhatsApp $number';
+  }
+
+  @override
+  String contactCallNumber(String number) {
+    return 'Volat $number';
+  }
 
   @override
   String get contactCopy => 'Kopírovat';
@@ -1151,10 +1175,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get heroFactStudyLabel => 'Studium';
-
-  @override
-  String get heroFactStudyValue =>
-      'M.Sc. Open Informatics, Mendelova univerzita, od února 2027';
 
   @override
   String get traceCta => 'Sledovat klepnutí';

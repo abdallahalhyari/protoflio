@@ -41,7 +41,7 @@ void main() {
       expect(find.text('GitHub'), findsNothing);
     });
 
-    testWidgets('each channel row is one tap target that opens its link',
+    testWidgets('channel rows open their links; the phone row has two',
         (tester) async {
       final opened = <String>[];
       var cv = 0;
@@ -57,14 +57,19 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      // Tapping the label, not the action word, still fires the row.
-      for (final label in ['LinkedIn', 'Phone', 'CV']) {
-        await tester.ensureVisible(find.text(label));
-        await tester.tap(find.text(label));
+      // Single-action rows: tapping the label, not the action word, still
+      // fires the row. The phone row's two words are separate buttons.
+      for (final text in ['LinkedIn', 'WhatsApp', 'Call', 'CV']) {
+        await tester.ensureVisible(find.text(text));
+        await tester.tap(find.text(text));
         await tester.pump();
       }
 
-      expect(opened, [ProfileLinks.linkedIn, 'tel:${ProfileLinks.phoneRaw}']);
+      expect(opened, [
+        ProfileLinks.linkedIn,
+        ProfileLinks.whatsApp,
+        'tel:${ProfileLinks.phoneRaw}',
+      ]);
       expect(cv, 1);
     });
 

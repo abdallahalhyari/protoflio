@@ -580,11 +580,47 @@ abstract class AppLocalizations {
   /// **'WhatsApp'**
   String get contactWhatsapp;
 
-  /// No description provided for @contactOpen.
+  /// No description provided for @cardFactAvailableValue.
   ///
   /// In en, this message translates to:
-  /// **'Open'**
-  String get contactOpen;
+  /// **'Remote or part-time now'**
+  String get cardFactAvailableValue;
+
+  /// No description provided for @cardFactBasedValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Amman, Jordan; Brno from Feb 2027'**
+  String get cardFactBasedValue;
+
+  /// No description provided for @cardFactStudyValue.
+  ///
+  /// In en, this message translates to:
+  /// **'M.Sc. Open Informatics, Mendel University'**
+  String get cardFactStudyValue;
+
+  /// No description provided for @cardFactPermitValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Not needed in Czechia while studying full-time'**
+  String get cardFactPermitValue;
+
+  /// No description provided for @contactViewProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'View profile'**
+  String get contactViewProfile;
+
+  /// No description provided for @contactMessageWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'Message {number} on WhatsApp'**
+  String contactMessageWhatsapp(String number);
+
+  /// No description provided for @contactCallNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Call {number}'**
+  String contactCallNumber(String number);
 
   /// No description provided for @contactCopy.
   ///
@@ -2121,12 +2157,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Studying'**
   String get heroFactStudyLabel;
-
-  /// No description provided for @heroFactStudyValue.
-  ///
-  /// In en, this message translates to:
-  /// **'M.Sc. Open Informatics, Mendel University, from February 2027'**
-  String get heroFactStudyValue;
 
   /// No description provided for @traceCta.
   ///
