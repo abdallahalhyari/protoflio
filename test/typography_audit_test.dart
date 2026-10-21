@@ -176,7 +176,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Academic annex'), findsOneWidget);
+      expect(find.text('Education'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.binding.setSurfaceSize(null);
     });

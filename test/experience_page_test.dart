@@ -44,7 +44,7 @@ void main() {
       expect(find.text('ESKADENIA Software'), findsOneWidget);
       expect(find.text('Solutions Now IT'), findsOneWidget);
       expect(find.text('Future Advanced Internet Solutions'), findsOneWidget);
-      expect(find.text('Academic annex'), findsOneWidget);
+      expect(find.text('Education'), findsOneWidget);
     });
 
     testWidgets('keyboard navigation updates selected experience node',

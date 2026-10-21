@@ -1014,9 +1014,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiActiveTrace => 'المسار النشط';
 
   @override
-  String get uiLatestDispatch => 'الأحدث';
-
-  @override
   String badgeSkills(int count) {
     return '$count تخصصًا أساسيًا';
   }

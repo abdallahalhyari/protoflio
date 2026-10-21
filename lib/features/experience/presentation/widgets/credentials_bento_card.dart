@@ -5,9 +5,11 @@ import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile/features/experience/domain/repositories/experience_repository.dart';
+import 'package:profile/shared/utils/bidi.dart';
 
-/// Bento card housing academic credentials (degrees, institutions)
-/// and certification stamps.
+/// Education and certifications beside the career timeline: one card,
+/// two plain subheads. A certification's provider sits on its own muted
+/// line under the course name.
 class CredentialsBentoCard extends StatelessWidget {
   final bool isVisible;
   final bool isDesktop;
@@ -18,53 +20,10 @@ class CredentialsBentoCard extends StatelessWidget {
     required this.isDesktop,
   });
 
-  Widget _buildSectionHeader(
-      String title, ColorScheme scheme, Color accentColor,
-      {IconData icon = Icons.workspace_premium_rounded}) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 8),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: accentColor.withValues(alpha: 0.4),
-            width: 1.2,
-          ),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(AppRadius.xs),
-              border: Border.all(color: accentColor.withValues(alpha: 0.3)),
-            ),
-            child: Icon(icon, size: 14, color: accentColor),
-          ),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontFamily: AppTypography.displayFont,
-                color: scheme.onSurface,
-                fontSize: AppTypography.lead,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
-    final accentText = context.adaptiveAccentText(scheme.primary);
 
     return AnimatedOpacity(
       duration: AppMotion.entry,
@@ -82,146 +41,74 @@ class CredentialsBentoCard extends StatelessWidget {
           child: RepaintBoundary(
             child: Builder(
               builder: (context) {
-                final lang = Localizations.maybeLocaleOf(context)?.languageCode;
-                final l10n = AppLocalizations.of(context);
-                final eduTitle = lang == 'ar'
-                    ? (l10n?.sectionEducation ?? 'التعليم')
-                    : (lang == 'cs'
-                        ? (l10n?.sectionEducation ?? 'Vzdělání')
-                        : 'Academic annex');
-                final certTitle = lang == 'ar'
-                    ? (l10n?.sectionCertifications ?? 'الشهادات')
-                    : (lang == 'cs'
-                        ? (l10n?.sectionCertifications ?? 'Certifikace')
-                        : 'Certification stamps');
+                final l10n = AppLocalizations.of(context)!;
+                final repo = context.read<ExperienceRepository>();
+                final muted = TextStyle(
+                  color: context.mutedText,
+                  fontSize: AppTypography.label + 1,
+                  height: 1.45,
+                );
 
-                final content = Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      decoration: BoxDecoration(
-                        color: context.cardGlass,
-                        borderRadius: BorderRadius.circular(AppRadius.card),
-                        border: Border.all(
-                          color: isDark
-                              ? context.glassBorderStrong
-                              : AppColors.ink200,
+                Widget subhead(String text) => Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Semantics(
+                        header: true,
+                        child: Text(
+                          text,
+                          style: TextStyle(
+                            color: context.onSurface,
+                            fontSize: AppTypography.lead,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
+                    );
+
+                Widget entry(String title, List<String> lines) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildSectionHeader(
-                            eduTitle,
-                            scheme,
-                            accentText,
-                            icon: Icons.school_rounded,
+                          Text(
+                            title,
+                            style: TextStyle(
+                              color: context.onSurface,
+                              fontSize: AppTypography.body,
+                              fontWeight: FontWeight.w600,
+                              height: 1.4,
+                            ),
                           ),
-                          const SizedBox(height: 12),
-                          ...context
-                              .read<ExperienceRepository>()
-                              .getEducation()
-                              .map((edu) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          edu.degree,
-                                          style: TextStyle(
-                                            color: scheme.onSurface,
-                                            fontSize: AppTypography.body,
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 2),
-                                        Text(
-                                          '${edu.institution} · ${edu.period}',
-                                          style: TextStyle(
-                                            color: accentText,
-                                            fontSize: AppTypography.label,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        if (edu.note != null) ...[
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            edu.note!,
-                                            style: TextStyle(
-                                              color: scheme.onSurface
-                                                  .withValues(alpha: 0.7),
-                                              fontSize: AppTypography.label,
-                                            ),
-                                          ),
-                                        ],
-                                      ],
-                                    ),
-                                  )),
+                          for (final line in lines)
+                            Text(ltrContent(context, line), style: muted),
                         ],
                       ),
+                    );
+
+                final content = Container(
+                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  decoration: BoxDecoration(
+                    color: context.cardGlass,
+                    borderRadius: BorderRadius.circular(AppRadius.card),
+                    border: Border.all(
+                      color:
+                          isDark ? context.glassBorderStrong : AppColors.ink200,
                     ),
-                    const SizedBox(height: AppSpacing.md),
-                    Container(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      decoration: BoxDecoration(
-                        color: context.cardGlass,
-                        borderRadius: BorderRadius.circular(AppRadius.card),
-                        border: Border.all(
-                          color: isDark
-                              ? context.glassBorderStrong
-                              : AppColors.ink200,
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildSectionHeader(
-                            certTitle,
-                            scheme,
-                            accentText,
-                            icon: Icons.verified_user_rounded,
-                          ),
-                          const SizedBox(height: 12),
-                          ...context
-                              .read<ExperienceRepository>()
-                              .getCertifications()
-                              .map((cert) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 3),
-                                          child: Icon(
-                                            Icons.verified_rounded,
-                                            size: AppTypography.label,
-                                            color: context.amberText,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Expanded(
-                                          child: Text(
-                                            cert,
-                                            style: TextStyle(
-                                              color: scheme.onSurface
-                                                  .withValues(alpha: 0.9),
-                                              fontSize: AppTypography.body,
-                                              height: 1.4,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      subhead(l10n.sectionEducation),
+                      for (final edu in repo.getEducation())
+                        entry(edu.degree, [
+                          '${edu.institution}, ${edu.period}',
+                          if (edu.note != null) edu.note!,
+                        ]),
+                      const SizedBox(height: AppSpacing.sm),
+                      subhead(l10n.sectionCertifications),
+                      for (final cert in repo.getCertifications())
+                        _certEntry(cert, entry),
+                    ],
+                  ),
                 );
 
                 return isDesktop
@@ -233,5 +120,14 @@ class CredentialsBentoCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _certEntry(
+    String cert,
+    Widget Function(String, List<String>) entry,
+  ) {
+    final i = cert.lastIndexOf(' — ');
+    if (i < 0) return entry(cert, const []);
+    return entry(cert.substring(0, i), [cert.substring(i + 3)]);
   }
 }

@@ -1906,12 +1906,6 @@ abstract class AppLocalizations {
   /// **'Tracing'**
   String get uiActiveTrace;
 
-  /// No description provided for @uiLatestDispatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Current role'**
-  String get uiLatestDispatch;
-
   /// No description provided for @badgeSkills.
   ///
   /// In en, this message translates to:

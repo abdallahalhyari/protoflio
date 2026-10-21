@@ -1019,9 +1019,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiActiveTrace => 'Tracing';
 
   @override
-  String get uiLatestDispatch => 'Current role';
-
-  @override
   String badgeSkills(int count) {
     return '$count disciplines';
   }

@@ -48,8 +48,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('Academic annex'), findsOneWidget);
-      expect(find.text('Certification stamps'), findsOneWidget);
+      expect(find.text('Education'), findsOneWidget);
+      expect(find.text('Certifications'), findsOneWidget);
       expect(find.textContaining('Al-Hussein Bin Talal University'),
           findsOneWidget);
       expect(find.textContaining('Udemy'), findsWidgets);

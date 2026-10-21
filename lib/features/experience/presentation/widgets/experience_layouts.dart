@@ -1,26 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/presentation/bloc/experience_timeline_bloc.dart';
 import 'package:profile/features/experience/presentation/widgets/animated_experience_node.dart';
 import 'package:profile/features/experience/presentation/widgets/credentials_bento_card.dart';
-import 'package:profile/features/experience/presentation/widgets/experience_timeline_connector.dart';
 import 'package:profile/shared/widgets/staggered_entrance.dart';
 
-bool _isCurrent(Experience e) => e.period.toLowerCase().contains('present');
-
-ExperienceTimelineConnector _connector(ExperienceTimelineState state, int i) {
-  final xs = state.experiences;
-  return ExperienceTimelineConnector(
-    isAdjacentSelected:
-        state.selectedIndex == i || state.selectedIndex == i + 1,
-    isCurrent: _isCurrent(xs[i]) || _isCurrent(xs[i + 1]),
-  );
-}
-
-/// The roles in order, newest first, joined by connectors. A career is a
-/// sequence, so it reads as one column at natural height rather than a grid
-/// of fixed-size tiles that clip their own text.
+/// The roles in order, newest first, on one continuous spine. A career is
+/// a sequence, so it reads as one column at natural height rather than a
+/// grid of fixed-size tiles that clip their own text.
 class _Timeline extends StatelessWidget {
   const _Timeline({
     super.key,
@@ -46,10 +33,10 @@ class _Timeline extends StatelessWidget {
             isSelected: state.selectedIndex == i,
             onSelect: () => onSelect(i),
             isDesktop: isDesktop,
+            isFirst: i == 0,
+            isLast: i == experiences.length - 1,
           ),
-          if (i < experiences.length - 1)
-            _connector(state, i)
-          else
+          if (i == experiences.length - 1)
             const SizedBox(height: AppSpacing.md),
         ],
       ],
@@ -166,10 +153,10 @@ class ExperienceMobileList extends StatelessWidget {
               isSelected: state.selectedIndex == index,
               onSelect: () => onSelect(index),
               isDesktop: false,
+              isFirst: index == 0,
+              isLast: index == experiences.length - 1,
             ),
-            if (index < experiences.length - 1)
-              _connector(state, index)
-            else
+            if (index == experiences.length - 1)
               const SizedBox(height: AppSpacing.md),
           ],
         );

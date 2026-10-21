@@ -3,81 +3,36 @@ import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/shared/utils/bidi.dart';
 
+/// One achievement under a role, marked with a short teal rule (the
+/// timeline spine's colour). Every highlight carries the same weight:
+/// none is singled out in a gold lead-in.
 class HighlightBullet extends StatelessWidget {
-  const HighlightBullet({
-    super.key,
-    required this.text,
-    required this.scheme,
-  });
+  const HighlightBullet({super.key, required this.text});
 
   final String text;
-  final ColorScheme scheme;
 
   @override
   Widget build(BuildContext context) {
-    final int colonIndex = text.indexOf(':');
-    final bool hasColon = colonIndex != -1;
-    final isolate = needsLtrIsolate(context, text);
-    final String open = isolate ? kLri : '';
-    final String close = isolate ? kPdi : '';
-    final String prefix =
-        hasColon ? '$open${text.substring(0, colonIndex + 1)}' : '';
-    final String rest = hasColon
-        ? '${text.substring(colonIndex + 1)}$close'
-        : '$open$text$close';
+    final rule = context.isDarkMode ? AppColors.tealLight : AppColors.teal;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Container(
-              width: 6,
-              height: 6,
-              decoration: BoxDecoration(
-                color: context.adaptiveAccentText(scheme.primary),
-                shape: BoxShape.circle,
+            padding: const EdgeInsetsDirectional.only(top: 10, end: 10),
+            child: Container(width: 8, height: 1.5, color: rule),
+          ),
+          Expanded(
+            child: Text(
+              ltrContent(context, text),
+              style: TextStyle(
+                color: context.onSurface,
+                fontSize: AppTypography.body,
+                height: 1.55,
               ),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: hasColon
-                ? Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: prefix,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            color: context.adaptiveAccentText(scheme.primary),
-                            fontSize: AppTypography.label,
-                            height: 1.5,
-                          ),
-                        ),
-                        TextSpan(
-                          text: rest,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: context.onSurface,
-                            fontSize: AppTypography.label,
-                            height: 1.5,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : Text(
-                    rest,
-                    style: TextStyle(
-                      color: context.onSurface,
-                      fontSize: AppTypography.label,
-                      fontWeight: FontWeight.w500,
-                      height: 1.5,
-                    ),
-                  ),
           ),
         ],
       ),

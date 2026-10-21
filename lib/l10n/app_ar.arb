@@ -322,7 +322,6 @@
   "uiKeySafeguards": "ضمانات التنفيذ الأساسية",
   "uiLatencyBudget": "زمن الاستجابة المستهدف",
   "uiActiveTrace": "المسار النشط",
-  "uiLatestDispatch": "الأحدث",
   "badgeSkills": "{count} تخصصًا أساسيًا",
   "badgeCaseStudies": "{count} دراسات حالة",
   "badgeArchitectures": "{count} هياكل معمارية",

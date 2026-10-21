@@ -141,14 +141,16 @@ class _CompanyActionPillState extends State<CompanyActionPill> {
                         ),
                       ],
                       const SizedBox(width: 5),
-                      Text(
-                        widget.label,
-                        style: TextStyle(
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
-                          color: _hovered
-                              ? (isDark ? Colors.white : primary)
-                              : (context.onSurface),
+                      Flexible(
+                        child: Text(
+                          widget.label,
+                          style: TextStyle(
+                            fontSize: AppTypography.label,
+                            fontWeight: FontWeight.w900,
+                            color: _hovered
+                                ? (isDark ? Colors.white : primary)
+                                : (context.onSurface),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 3),

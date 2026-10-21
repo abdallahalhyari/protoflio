@@ -501,7 +501,6 @@
   "uiKeySafeguards": "Safeguards",
   "uiLatencyBudget": "Latency target",
   "uiActiveTrace": "Tracing",
-  "uiLatestDispatch": "Current role",
   "badgeSkills": "{count} disciplines",
   "@badgeSkills": {
     "placeholders": {

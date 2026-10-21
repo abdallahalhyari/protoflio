@@ -4,7 +4,9 @@ import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_card.dart';
 
-/// Wraps an [ExperienceCard] with staggered entry fade and slide animations.
+/// Wraps an [ExperienceCard] in the timeline's entry fade. Fade only: a
+/// slide would pull a role's spine segment out of line with its
+/// neighbours while it arrives.
 class AnimatedExperienceNode extends StatelessWidget {
   final Experience exp;
   final bool isVisible;
@@ -12,6 +14,8 @@ class AnimatedExperienceNode extends StatelessWidget {
 
   final bool isSelected;
   final VoidCallback? onSelect;
+  final bool isFirst;
+  final bool isLast;
 
   const AnimatedExperienceNode({
     super.key,
@@ -20,23 +24,22 @@ class AnimatedExperienceNode extends StatelessWidget {
     required this.isDesktop,
     this.isSelected = false,
     this.onSelect,
+    this.isFirst = true,
+    this.isLast = true,
   });
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final card = RepaintBoundary(
-      child: Padding(
-        padding: EdgeInsets.only(
-          bottom: isDesktop ? 0 : AppSpacing.lg,
-        ),
-        child: ExperienceCard(
-          exp: exp,
-          scheme: scheme,
-          isDesktop: isDesktop,
-          isSelected: isSelected,
-          onSelect: onSelect,
-        ),
+      child: ExperienceCard(
+        exp: exp,
+        scheme: scheme,
+        isDesktop: isDesktop,
+        isSelected: isSelected,
+        onSelect: onSelect,
+        isFirst: isFirst,
+        isLast: isLast,
       ),
     );
 
@@ -48,14 +51,7 @@ class AnimatedExperienceNode extends StatelessWidget {
       duration: AppMotion.sectionScroll,
       curve: AppMotion.emphasized,
       opacity: isVisible ? 1.0 : 0.0,
-      child: AnimatedSlide(
-        duration: AppMotion.sectionScroll,
-        curve: AppMotion.emphasized,
-        offset: isVisible
-            ? Offset.zero
-            : (isDesktop ? const Offset(0.2, 0) : const Offset(0, 0.2)),
-        child: card,
-      ),
+      child: card,
     );
   }
 }

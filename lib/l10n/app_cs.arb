@@ -322,7 +322,6 @@
   "uiKeySafeguards": "Pojistky",
   "uiLatencyBudget": "Cílová latence",
   "uiActiveTrace": "Sledování",
-  "uiLatestDispatch": "Současná role",
   "badgeSkills": "{count} disciplín",
   "badgeCaseStudies": "{count} případové studie",
   "badgeArchitectures": "{count} architektur",

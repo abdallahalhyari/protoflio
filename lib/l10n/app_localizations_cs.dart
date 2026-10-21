@@ -1022,9 +1022,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiActiveTrace => 'Sledování';
 
   @override
-  String get uiLatestDispatch => 'Současná role';
-
-  @override
   String badgeSkills(int count) {
     return '$count disciplín';
   }

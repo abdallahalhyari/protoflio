@@ -4,7 +4,6 @@ import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/experience/domain/entities/experience.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import 'package:profile/features/experience/presentation/widgets/card/experience_card_period_badge.dart';
 import 'package:profile/features/experience/presentation/widgets/card/experience_card_company_action_pill.dart';
 import 'package:profile/features/experience/presentation/widgets/card/experience_card_highlight_bullet.dart';
 
@@ -16,6 +15,7 @@ class CardContent extends StatelessWidget {
     required this.isDesktop,
     required this.isCurrent,
     required this.isDark,
+    this.period,
   });
 
   final Experience exp;
@@ -24,45 +24,51 @@ class CardContent extends StatelessWidget {
   final bool isCurrent;
   final bool isDark;
 
+  /// The formatted period, shown above the company where there is no
+  /// date gutter (mobile). Null on desktop, where the gutter carries it.
+  final String? period;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: isDesktop ? 12 : AppSpacing.md,
-      ),
+    return ConstrainedBox(
+      // Keeps highlight lines near 80 characters at body size.
+      constraints: const BoxConstraints(maxWidth: 620),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PeriodBadgeRow(
-            period: exp.period,
-            isCurrent: isCurrent,
-            scheme: scheme,
-            isDark: isDark,
-          ),
-          SizedBox(height: isDesktop ? 10 : 14),
+          if (period != null) ...[
+            Text(
+              period!,
+              style: TextStyle(
+                color: isCurrent ? context.onSurface : context.mutedText,
+                fontSize: AppTypography.label,
+                fontWeight: isCurrent ? FontWeight.w600 : FontWeight.w500,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
           Text(
             exp.company,
             style: TextStyle(
-              fontFamily: AppTypography.displayFont,
-              color: scheme.onSurface,
+              color: context.onSurface,
               fontSize: isDesktop ? 22 : 20,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
+              height: 1.2,
             ),
           ),
-          const SizedBox(height: 3),
-          // Ink, not gold: gold marks what can be tapped.
+          const SizedBox(height: 2),
           Text(
             exp.role,
             style: TextStyle(
               color: context.mutedText,
               fontSize: AppTypography.body,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
           ),
           if (exp.websiteUrl != null || exp.linkedinUrl != null) ...[
-            SizedBox(height: isDesktop ? 8 : 12),
+            const SizedBox(height: 10),
             Wrap(
               spacing: 8,
               runSpacing: 6,
@@ -93,38 +99,27 @@ class CardContent extends StatelessWidget {
               ],
             ),
           ],
-          SizedBox(height: isDesktop ? 10 : 16),
-          ...exp.highlights
-              .map((h) => HighlightBullet(text: h, scheme: scheme)),
-          const SizedBox(height: 12),
-          // Stack Zone
+          const SizedBox(height: 14),
+          ...exp.highlights.map((h) => HighlightBullet(text: h)),
+          const SizedBox(height: 4),
           Wrap(
             spacing: 6,
-            runSpacing: 4,
-            crossAxisAlignment: WrapCrossAlignment.center,
+            runSpacing: 6,
             children: [
               for (final tech in _stackForCompany(exp.company))
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: isDark
-                        ? scheme.primary.withValues(alpha: 0.1)
-                        : AppColors.ink100,
                     borderRadius: BorderRadius.circular(AppRadius.pill),
-                    border: Border.all(
-                      color: isDark
-                          ? scheme.primary.withValues(alpha: 0.25)
-                          : AppColors.ink200,
-                    ),
+                    border: Border.all(color: context.divider),
                   ),
                   child: Text(
                     tech,
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
-                      color: context.adaptiveAccentText(scheme.primary),
-                      fontSize: AppTypography.label - 2,
-                      fontWeight: FontWeight.w800,
+                      color: context.mutedText,
+                      fontSize: AppTypography.label,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
