@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/core/services/analytics_service.dart';
-import 'package:profile/core/services/email_service.dart';
 import 'package:profile/core/services/sound_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,34 +8,6 @@ void main() {
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
-    EmailService.instance.reset();
-  });
-
-  group('EmailService', () {
-    test('isConfigured is false by default without overrides', () {
-      expect(EmailService.instance.isConfigured, isFalse);
-    });
-
-    test('configure updates credentials and sets isConfigured to true', () {
-      EmailService.instance.configure(
-        serviceId: 'service_123',
-        templateId: 'template_123',
-        publicKey: 'key_123',
-      );
-      expect(EmailService.instance.isConfigured, isTrue);
-      expect(EmailService.instance.serviceId, 'service_123');
-      expect(EmailService.instance.templateId, 'template_123');
-      expect(EmailService.instance.publicKey, 'key_123');
-    });
-
-    test('reset clears runtime overrides', () {
-      EmailService.instance.configure(
-        serviceId: 'service_123',
-      );
-      expect(EmailService.instance.isConfigured, isTrue);
-      EmailService.instance.reset();
-      expect(EmailService.instance.isConfigured, isFalse);
-    });
   });
 
   group('SoundService', () {

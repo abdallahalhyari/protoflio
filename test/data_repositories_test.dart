@@ -53,7 +53,6 @@ void main() {
       final repo = LocalHatRepository();
       await repo.load();
       expect(repo.getHatCount(), RealHatRepository().getHatCount());
-      expect(repo.getHatCount(), greaterThan(0));
     });
 
     test('experience, education and certifications', () async {

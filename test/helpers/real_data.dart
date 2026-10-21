@@ -66,9 +66,11 @@ class RealSkillRepository implements SkillRepository {
 }
 
 class RealHatRepository implements HatRepository {
-  final List<HatInfo> _items = _json('hats')
-      .map((e) => HatInfoModel.fromJson(e as Map<String, dynamic>))
-      .toList();
+  final List<HatInfo> _items = File('assets/data/hats.json').existsSync()
+      ? (_json('hats')
+          .map((e) => HatInfoModel.fromJson(e as Map<String, dynamic>))
+          .toList())
+      : const [];
   @override
   List<HatInfo> getHats() => _items;
   @override

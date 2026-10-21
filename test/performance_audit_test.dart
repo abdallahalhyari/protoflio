@@ -21,7 +21,6 @@ void main() {
         () {
       final assets = <String, int>{
         'assets/my_image.webp': 64 * 1024,
-        'assets/hat.webp': 32 * 1024,
         'assets/images/projects/nathealth.webp': 180 * 1024,
         'assets/images/projects/eskadenia.webp': 180 * 1024,
         'assets/images/projects/solutions.webp': 180 * 1024,
@@ -227,10 +226,6 @@ void main() {
       expect(
           indexHtml.contains(
               'rel="preload" href="assets/assets/my_image.webp" as="image"'),
-          isTrue);
-      expect(
-          indexHtml.contains(
-              'rel="prefetch" href="assets/assets/hat.webp" as="image"'),
           isTrue);
     });
 
