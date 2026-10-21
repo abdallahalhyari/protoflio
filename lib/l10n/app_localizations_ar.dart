@@ -982,6 +982,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get projectTagCommerce => 'البث';
 
   @override
+  String get projectNameNatHealth => 'منظومة NatHealth للهواتف';
+
+  @override
+  String get projectNameEskadenia =>
+      'منظومة مؤسسية للتعليم الإلكتروني والرعاية الصحية';
+
+  @override
+  String get projectNameSolutions => 'تطبيقات مكافآت الولاء والقصص المؤقتة';
+
+  @override
+  String get projectNameFais => 'تطبيقات التجارة عبر الجوال وبث الوسائط';
+
+  @override
+  String get projectBadgeNatHealth => 'يعمل دون اتصال 100%';
+
+  @override
+  String get projectBadgeEskadenia => '60 إطارًا/ثانية بثبات';
+
+  @override
+  String get projectBadgeSolutions => 'طوابير فورية';
+
+  @override
+  String get projectBadgeFais => 'إنتاجية عالية';
+
+  @override
   String get uiNoCaseStudies => 'لا توجد دراسات حالة مطابقة';
 
   @override

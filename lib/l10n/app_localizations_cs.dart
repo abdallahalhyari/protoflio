@@ -990,6 +990,32 @@ class AppLocalizationsCs extends AppLocalizations {
   String get projectTagCommerce => 'Streamování';
 
   @override
+  String get projectNameNatHealth => 'Mobilní sada NatHealth';
+
+  @override
+  String get projectNameEskadenia =>
+      'Podnikové systémy pro e-learning a zdravotnictví';
+
+  @override
+  String get projectNameSolutions =>
+      'Věrnostní program a aplikace s dočasnými příběhy';
+
+  @override
+  String get projectNameFais => 'Klienti pro m-commerce a streamování médií';
+
+  @override
+  String get projectBadgeNatHealth => '100% offline provoz';
+
+  @override
+  String get projectBadgeEskadenia => 'Stabilních 60 FPS';
+
+  @override
+  String get projectBadgeSolutions => 'Fronty v reálném čase';
+
+  @override
+  String get projectBadgeFais => 'Vysoká propustnost';
+
+  @override
   String get uiNoCaseStudies => 'Žádné odpovídající studie';
 
   @override

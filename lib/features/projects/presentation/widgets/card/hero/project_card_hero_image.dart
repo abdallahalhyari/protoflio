@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/features/projects/presentation/utils/project_copy.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
@@ -111,7 +112,10 @@ class CardHeroImage extends StatelessWidget {
                 children: [
                   if (project.metricBadge != null)
                     CardMetricBadge(
-                      text: project.metricBadge!,
+                      text: localizedProjectMetricBadge(
+                        AppLocalizations.of(context)!,
+                        project,
+                      )!,
                       primary: scheme.primary,
                     ),
                   Container(

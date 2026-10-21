@@ -1,6 +1,30 @@
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
+/// The project's title. Descriptive, so it is translated; the company
+/// name inside it is not.
+String localizedProjectName(AppLocalizations loc, Project project) {
+  return switch (project.company) {
+    'NatHealth' => loc.projectNameNatHealth,
+    'ESKADENIA Software' => loc.projectNameEskadenia,
+    'Solutions Now IT' => loc.projectNameSolutions,
+    'Future Advanced Internet Solutions' => loc.projectNameFais,
+    _ => project.name,
+  };
+}
+
+/// The short claim badge on the card image, or null when there is none.
+String? localizedProjectMetricBadge(AppLocalizations loc, Project project) {
+  if (project.metricBadge == null) return null;
+  return switch (project.company) {
+    'NatHealth' => loc.projectBadgeNatHealth,
+    'ESKADENIA Software' => loc.projectBadgeEskadenia,
+    'Solutions Now IT' => loc.projectBadgeSolutions,
+    'Future Advanced Internet Solutions' => loc.projectBadgeFais,
+    _ => project.metricBadge,
+  };
+}
+
 String localizedProjectTagline(AppLocalizations loc, Project project) {
   return switch (project.company) {
     'NatHealth' => loc.projectTaglineNatHealth,

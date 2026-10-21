@@ -1846,6 +1846,54 @@ abstract class AppLocalizations {
   /// **'Streaming'**
   String get projectTagCommerce;
 
+  /// No description provided for @projectNameNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth Mobile Suite'**
+  String get projectNameNatHealth;
+
+  /// No description provided for @projectNameEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'E-Learning & Healthcare Enterprise Suite'**
+  String get projectNameEskadenia;
+
+  /// No description provided for @projectNameSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty Rewards & Ephemeral Social Media Apps'**
+  String get projectNameSolutions;
+
+  /// No description provided for @projectNameFais.
+  ///
+  /// In en, this message translates to:
+  /// **'M-Commerce & Media-Streaming Clients'**
+  String get projectNameFais;
+
+  /// No description provided for @projectBadgeNatHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'100% Offline SLA'**
+  String get projectBadgeNatHealth;
+
+  /// No description provided for @projectBadgeEskadenia.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustained 60 FPS'**
+  String get projectBadgeEskadenia;
+
+  /// No description provided for @projectBadgeSolutions.
+  ///
+  /// In en, this message translates to:
+  /// **'Real-Time Queues'**
+  String get projectBadgeSolutions;
+
+  /// No description provided for @projectBadgeFais.
+  ///
+  /// In en, this message translates to:
+  /// **'High-Throughput'**
+  String get projectBadgeFais;
+
   /// No description provided for @uiNoCaseStudies.
   ///
   /// In en, this message translates to:

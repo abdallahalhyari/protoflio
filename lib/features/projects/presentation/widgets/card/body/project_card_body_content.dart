@@ -106,7 +106,7 @@ class CardBodyContent extends StatelessWidget {
             height: 1.1,
           ),
           child: Text(
-            project.name,
+            localizedProjectName(loc, project),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
@@ -226,7 +226,7 @@ class CardBodyContent extends StatelessWidget {
           children: [
             Expanded(
               child: ReadCaseStudyCta(
-                projectName: project.name,
+                projectName: localizedProjectName(loc, project),
                 scheme: scheme,
                 isHovered: isHovered,
                 isDesktop: isDesktop,

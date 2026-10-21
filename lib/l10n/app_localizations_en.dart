@@ -987,6 +987,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get projectTagCommerce => 'Streaming';
 
   @override
+  String get projectNameNatHealth => 'NatHealth Mobile Suite';
+
+  @override
+  String get projectNameEskadenia => 'E-Learning & Healthcare Enterprise Suite';
+
+  @override
+  String get projectNameSolutions =>
+      'Loyalty Rewards & Ephemeral Social Media Apps';
+
+  @override
+  String get projectNameFais => 'M-Commerce & Media-Streaming Clients';
+
+  @override
+  String get projectBadgeNatHealth => '100% Offline SLA';
+
+  @override
+  String get projectBadgeEskadenia => 'Sustained 60 FPS';
+
+  @override
+  String get projectBadgeSolutions => 'Real-Time Queues';
+
+  @override
+  String get projectBadgeFais => 'High-Throughput';
+
+  @override
   String get uiNoCaseStudies => 'No case studies match these filters';
 
   @override
