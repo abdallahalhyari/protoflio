@@ -62,6 +62,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get skillsNoMatchHint =>
+      'ابحث باسم أداة أو موضوع، مثل Kotlin أو المزامنة دون اتصال.';
+
+  @override
   String get skillsEmptyShowAll => 'عرض الكل';
 
   @override
@@ -459,23 +463,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'رفع إتمام عمليات الشراء وتقليل المعاملات المتروكة.';
 
   @override
-  String get skillMasteryLead => 'قيادة';
-
-  @override
-  String get skillMasteryCore => 'أساسي';
-
-  @override
-  String get skillMasterySolid => 'متقدم';
-
-  @override
-  String get skillMasteryGrowing => 'قيد التطوير';
-
-  @override
-  String skillCardSemantics(String skill, String level) {
-    return '$skill، مستوى $level. فعّل لقلب البطاقة وعرض التفاصيل.';
-  }
-
-  @override
   String get hatsHeaderSubtitle =>
       'هندسة تضع المنتج في المقدمة، وتواصل واضح، وقيادة عملية عبر الفرق والقيود ومراحل التسليم الحساسة.';
 
@@ -485,9 +472,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get contactHeaderSubtitle =>
       'أرسلها لي. أقبل مراجعات معمارية الهواتف والعمل التعاقدي الآن، وأبحث عن دور أول في تطبيقات الهاتف في برنو من فبراير 2027. البريد الإلكتروني أسرع طريقة للرد.';
-
-  @override
-  String get skillSpecImplementation => 'التفاصيل والأدلة';
 
   @override
   String get skillsHeaderTitle => 'المهارات';

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
-import 'package:profile/features/skills/presentation/widgets/skill_category_filters.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_search_bar.dart';
 import 'package:profile/features/skills/presentation/widgets/skill_list.dart';
 import 'package:profile/features/skills/presentation/widgets/skills_empty_state.dart';
@@ -44,7 +42,7 @@ void main() {
           findsOneWidget);
     });
 
-    testWidgets('skill detail uses localized editorial evidence label',
+    testWidgets('SkillList shows each skill\'s evidence without a tap',
         (tester) async {
       final skill = testSkills.first;
       await tester.pumpWidget(_wrap(
@@ -53,15 +51,17 @@ void main() {
           isDesktop: false,
         ),
       ));
-      await tester.tap(find.text(skill.name));
       await tester.pumpAndSettle();
 
-      expect(
-        find.text(
-            lookupAppLocalizations(const Locale('en')).skillSpecImplementation),
-        findsOneWidget,
-      );
+      expect(find.text(skill.name), findsOneWidget);
+      expect(find.text(skill.provenIn), findsOneWidget);
       expect(find.text(skill.description), findsOneWidget);
+      for (final tag in skill.tags) {
+        expect(find.text(tag), findsOneWidget);
+      }
+      // No self-rated level.
+      expect(find.text('Lead'), findsNothing);
+      expect(find.text('Core'), findsNothing);
     });
 
     test('Skills header copy is translated in every supported locale',
@@ -78,38 +78,6 @@ void main() {
       expect(czech.skillsHeaderSubtitle, contains('Vyhledejte'));
     });
 
-    testWidgets(
-        'SkillCategoryFilters renders categories and triggers selection',
-        (tester) async {
-      String selected = 'ALL';
-      const categories = ['ALL', 'Mobile Systems', 'Security & Protocols'];
-
-      await tester.pumpWidget(_wrap(
-        StatefulBuilder(
-          builder: (context, setState) {
-            return SkillCategoryFilters(
-              categories: categories,
-              selectedCategory: selected,
-              onSelectCategory: (cat) => setState(() => selected = cat),
-              isDesktop: true,
-              counts: const {
-                'ALL': 7,
-                'Mobile Systems': 5,
-                'Security & Protocols': 2,
-              },
-            );
-          },
-        ),
-      ));
-      await tester.pumpAndSettle();
-
-      expect(find.textContaining('Mobile Systems'), findsOneWidget);
-      await tester.tap(find.textContaining('Mobile Systems'));
-      await tester.pumpAndSettle();
-
-      expect(selected, 'Mobile Systems');
-    });
-
     testWidgets('SkillsEmptyState renders and triggers onShowAll',
         (tester) async {
       bool resetTriggered = false;
@@ -118,7 +86,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.byIcon(Icons.filter_alt_off_rounded), findsOneWidget);
+      expect(find.text('Show all skills'), findsOneWidget);
       await tester.tap(find.byType(TextButton));
       await tester.pumpAndSettle();
 
@@ -156,18 +124,6 @@ void main() {
 
       expect(controller.text, '');
       expect(cleared, isTrue);
-    });
-
-    test('SkillCategoryStyle returns color and gradient for known categories',
-        () {
-      const scheme = ColorScheme.dark();
-      final color = SkillCategoryStyle.getColor('Mobile Systems', scheme);
-      expect(color, AppColors.teal);
-
-      final gradient =
-          SkillCategoryStyle.getGradient('Security & Protocols', scheme);
-      expect(gradient.length, 2);
-      expect(gradient.first, AppColors.gold);
     });
   });
 }

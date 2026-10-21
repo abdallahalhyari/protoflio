@@ -102,19 +102,10 @@ class SkillStackIndex extends StatelessWidget {
                   : context.glassBorder.withValues(alpha: 0.3),
               width: 0.8,
             ),
-            boxShadow: on
-                ? [
-                    BoxShadow(
-                      color: gold.withValues(alpha: isDark ? 0.3 : 0.15),
-                      blurRadius: 6,
-                    ),
-                  ]
-                : null,
           ),
           child: Text(
             '${counts[g] ?? 0}',
             style: TextStyle(
-              fontFamily: AppTypography.monoFont,
               fontSize: AppTypography.label - 1,
               fontWeight: FontWeight.w800,
               color: on ? context.onSurface : context.mutedText,
@@ -163,16 +154,6 @@ class SkillStackIndex extends StatelessWidget {
                               : context.glassBorder.withValues(alpha: 0.4),
                           width: g == active ? 1.2 : 1.0,
                         ),
-                        boxShadow: g == active
-                            ? [
-                                BoxShadow(
-                                  color: gold.withValues(
-                                      alpha: isDark ? 0.25 : 0.12),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ]
-                            : null,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

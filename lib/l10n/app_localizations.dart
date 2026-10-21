@@ -202,6 +202,12 @@ abstract class AppLocalizations {
   /// **'No skills match “{query}”'**
   String skillsNoMatch(String query);
 
+  /// No description provided for @skillsNoMatchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by tool or topic, for example Kotlin or offline sync.'**
+  String get skillsNoMatchHint;
+
   /// No description provided for @skillsEmptyShowAll.
   ///
   /// In en, this message translates to:
@@ -904,36 +910,6 @@ abstract class AppLocalizations {
   /// **'Improved checkout completion and reduced abandoned transactions.'**
   String get projectOutcomeFais;
 
-  /// No description provided for @skillMasteryLead.
-  ///
-  /// In en, this message translates to:
-  /// **'Lead'**
-  String get skillMasteryLead;
-
-  /// No description provided for @skillMasteryCore.
-  ///
-  /// In en, this message translates to:
-  /// **'Core'**
-  String get skillMasteryCore;
-
-  /// No description provided for @skillMasterySolid.
-  ///
-  /// In en, this message translates to:
-  /// **'Solid'**
-  String get skillMasterySolid;
-
-  /// No description provided for @skillMasteryGrowing.
-  ///
-  /// In en, this message translates to:
-  /// **'Growing'**
-  String get skillMasteryGrowing;
-
-  /// No description provided for @skillCardSemantics.
-  ///
-  /// In en, this message translates to:
-  /// **'{skill}, {level} proficiency. Activate to flip and view details.'**
-  String skillCardSemantics(String skill, String level);
-
   /// No description provided for @hatsHeaderSubtitle.
   ///
   /// In en, this message translates to:
@@ -951,12 +927,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.'**
   String get contactHeaderSubtitle;
-
-  /// No description provided for @skillSpecImplementation.
-  ///
-  /// In en, this message translates to:
-  /// **'DETAILS & EVIDENCE'**
-  String get skillSpecImplementation;
 
   /// No description provided for @skillsHeaderTitle.
   ///

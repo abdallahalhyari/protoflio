@@ -63,6 +63,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
+  String get skillsNoMatchHint =>
+      'Hledejte podle nástroje nebo tématu, například Kotlin nebo offline synchronizace.';
+
+  @override
   String get skillsEmptyShowAll => 'Zobrazit vše';
 
   @override
@@ -464,23 +468,6 @@ class AppLocalizationsCs extends AppLocalizations {
       'Vyšší dokončenost nákupů a méně nedokončených transakcí.';
 
   @override
-  String get skillMasteryLead => 'Vedení';
-
-  @override
-  String get skillMasteryCore => 'Hlavní';
-
-  @override
-  String get skillMasterySolid => 'Pokročilá';
-
-  @override
-  String get skillMasteryGrowing => 'Rozvoj';
-
-  @override
-  String skillCardSemantics(String skill, String level) {
-    return '$skill, úroveň znalostí $level. Aktivujte otočení karty a zobrazení podrobností.';
-  }
-
-  @override
   String get hatsHeaderSubtitle =>
       'Inženýrství zaměřené na produkt, srozumitelná komunikace a praktické vedení napříč týmy, omezeními a klíčovými dodávkami.';
 
@@ -490,9 +477,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get contactHeaderSubtitle =>
       'Pošlete mi ho. Přijímám revize mobilní architektury a zakázky a od února 2027 hledám seniorní mobilní roli v Brně. Nejrychleji odpovídám na e-mail.';
-
-  @override
-  String get skillSpecImplementation => 'DETAILY A PRAXE';
 
   @override
   String get skillsHeaderTitle => 'Dovednosti';

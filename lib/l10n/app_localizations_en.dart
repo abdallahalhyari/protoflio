@@ -63,6 +63,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get skillsNoMatchHint =>
+      'Search by tool or topic, for example Kotlin or offline sync.';
+
+  @override
   String get skillsEmptyShowAll => 'Show all skills';
 
   @override
@@ -460,23 +464,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Improved checkout completion and reduced abandoned transactions.';
 
   @override
-  String get skillMasteryLead => 'Lead';
-
-  @override
-  String get skillMasteryCore => 'Core';
-
-  @override
-  String get skillMasterySolid => 'Solid';
-
-  @override
-  String get skillMasteryGrowing => 'Growing';
-
-  @override
-  String skillCardSemantics(String skill, String level) {
-    return '$skill, $level proficiency. Activate to flip and view details.';
-  }
-
-  @override
   String get hatsHeaderSubtitle =>
       'Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.';
 
@@ -486,9 +473,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get contactHeaderSubtitle =>
       'Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.';
-
-  @override
-  String get skillSpecImplementation => 'DETAILS & EVIDENCE';
 
   @override
   String get skillsHeaderTitle => 'Skills';

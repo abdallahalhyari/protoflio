@@ -59,16 +59,6 @@ class SkillSearchBar extends StatelessWidget {
                       : AppColors.ink200),
               width: isFiltered ? 1.2 : 1.0,
             ),
-            boxShadow: isFiltered
-                ? [
-                    BoxShadow(
-                      color: scheme.primary
-                          .withValues(alpha: isDark ? 0.22 : 0.10),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]
-                : null,
           ),
           child: Row(
             children: [
@@ -168,12 +158,6 @@ class SkillSearchBar extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: scheme.primary,
                             shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: scheme.primary.withValues(alpha: 0.6),
-                                blurRadius: 4,
-                              ),
-                            ],
                           ),
                         ),
                         const SizedBox(width: 6),
@@ -193,7 +177,6 @@ class SkillSearchBar extends StatelessWidget {
                             softWrap: false,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontFamily: AppTypography.monoFont,
                               fontSize: AppTypography.label,
                               fontWeight: FontWeight.w700,
                               fontFeatures: const [

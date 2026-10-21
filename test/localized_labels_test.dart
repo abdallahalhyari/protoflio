@@ -49,14 +49,8 @@ void main() {
         localized.scrollToTop,
         localized.goToSection(localized.navHome),
         localized.pageNumber(1),
-        localized.skillSpecImplementation,
         localized.contactHeaderTitle,
         localized.contactHeaderSubtitle,
-        localized.skillMasteryLead,
-        localized.skillMasteryCore,
-        localized.skillMasterySolid,
-        localized.skillMasteryGrowing,
-        localized.skillCardSemantics('Flutter', localized.skillMasteryLead),
       ];
       final englishCopy = [
         english.introSeniorEngineer,
@@ -92,14 +86,8 @@ void main() {
         english.scrollToTop,
         english.goToSection(english.navHome),
         english.pageNumber(1),
-        english.skillSpecImplementation,
         english.contactHeaderTitle,
         english.contactHeaderSubtitle,
-        english.skillMasteryLead,
-        english.skillMasteryCore,
-        english.skillMasterySolid,
-        english.skillMasteryGrowing,
-        english.skillCardSemantics('Flutter', english.skillMasteryLead),
       ];
 
       for (var index = 0; index < localizedCopy.length; index++) {

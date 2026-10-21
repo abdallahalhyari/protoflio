@@ -25,6 +25,7 @@
       }
     }
   },
+  "skillsNoMatchHint": "Search by tool or topic, for example Kotlin or offline sync.",
   "skillsEmptyShowAll": "Show all skills",
   "keyboardHintTitle": "Keyboard shortcuts",
   "keyboardHintDigits": "1–7   jump to section",
@@ -234,25 +235,9 @@
   "projectOutcomeNatHealth": "Replaced paper claim submissions with instant contactless smart-card validation.",
   "projectOutcomeEskadenia": "Sustained 60fps across complex, data-heavy hospital and university workflows.",
   "projectOutcomeFais": "Improved checkout completion and reduced abandoned transactions.",
-  "skillMasteryLead": "Lead",
-  "skillMasteryCore": "Core",
-  "skillMasterySolid": "Solid",
-  "skillMasteryGrowing": "Growing",
-  "skillCardSemantics": "{skill}, {level} proficiency. Activate to flip and view details.",
-  "@skillCardSemantics": {
-    "placeholders": {
-      "skill": {
-        "type": "String"
-      },
-      "level": {
-        "type": "String"
-      }
-    }
-  },
   "hatsHeaderSubtitle": "Product-minded engineering, clear communication, and practical leadership across teams, constraints, and high-stakes delivery.",
   "contactHeaderTitle": "Have a difficult mobile problem?",
   "contactHeaderSubtitle": "Send it over. I take on mobile architecture reviews and contract work now, and I am looking for a senior mobile role in Brno from February 2027. Email gets the fastest reply.",
-  "skillSpecImplementation": "DETAILS & EVIDENCE",
   "skillsHeaderTitle": "Skills",
   "skillsHeaderSubtitle": "What I work with and where I used it. Search a tool or filter by area.",
   "sectionSubtitleEngineering": "The architectures behind my mobile suites: layers, offline sync, NFC and token security.",
