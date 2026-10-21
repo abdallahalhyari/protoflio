@@ -84,7 +84,7 @@ class _DiagramTierState extends State<_DiagramTier> {
     final isDark = context.isDarkMode;
 
     final spine = (isDark ? AppColors.tealLight : AppColors.teal)
-        .withValues(alpha: isDark ? 0.45 : 0.55);
+        .withValues(alpha: isDark ? 0.45 : 0.85);
     final plate = isDark ? AppColors.goldSoft : AppColors.gold;
 
     final bandColor = context.onSurface.withValues(

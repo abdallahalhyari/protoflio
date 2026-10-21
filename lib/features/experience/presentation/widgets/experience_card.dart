@@ -59,7 +59,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
     final period = formatExperiencePeriod(context, exp.period);
 
     final spine = (isDark ? AppColors.tealLight : AppColors.teal)
-        .withValues(alpha: isDark ? 0.45 : 0.55);
+        .withValues(alpha: isDark ? 0.45 : 0.85);
     final plate = isDark ? AppColors.tealLight : AppColors.teal;
     final band = context.onSurface.withValues(
       alpha: widget.isSelected
