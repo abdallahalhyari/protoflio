@@ -238,6 +238,9 @@ class _HomeScreenState extends State<HomeScreen> {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted && _controller.hasClients) {
               _controller.jumpToPage(_pageIndex.value);
+              // The two layouts number and name sections differently;
+              // publish the URL for the page this layout now shows.
+              _scheduleSettle(_pageIndex.value);
             }
           });
         }
@@ -249,7 +252,9 @@ class _HomeScreenState extends State<HomeScreen> {
         if (previousLayout != null) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
-              _scrollToMobileSection(_pageIndex.value, syncUrl: false);
+              // Re-publish the URL: desktop's combined About & Contact page
+              // can land on mobile About while the URL still says contact.
+              _scrollToMobileSection(_pageIndex.value);
             }
           });
         }
@@ -404,6 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
   /// scroll sweep doesn't publish the sections it flies past.
   int _mobileJumpId = 0;
   bool _mobileJumpInFlight = false;
+  bool _mobileSweepScheduled = false;
 
   void _onMobileScroll() {
     if (!_mobileScrollController.hasClients) return;
@@ -420,6 +426,19 @@ class _HomeScreenState extends State<HomeScreen> {
     if ((offset - _lastMobileScrollSample).abs() < 10) return;
     _lastMobileScrollSample = offset;
 
+    // The scroll notification fires before this frame lays out the new
+    // offset, so section boxes still report last frame's positions. Read
+    // them after layout instead, once per frame however many events land.
+    if (_mobileSweepScheduled) return;
+    _mobileSweepScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _mobileSweepScheduled = false;
+      if (mounted && !_mobileJumpInFlight) _sweepMobileSections();
+    });
+  }
+
+  /// Publishes the section under the focal line, from laid-out geometry.
+  void _sweepMobileSections() {
     const focalPoint = 180.0;
     int? visibleIndex;
     for (int i = 0; i < _sectionKeys.length; i++) {
