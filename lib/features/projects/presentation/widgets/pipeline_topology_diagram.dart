@@ -21,42 +21,26 @@ class PipelineTopologyDiagram extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    List<String> pipeline;
-    if (project.name.contains('NatHealth')) {
-      pipeline = const [
-        'NFC APDU',
-        'Keystore JWT',
-        'Offline SQLite',
-        'WorkManager',
-        'HTTPS TPA'
-      ];
-    } else if (project.name.contains('Eskadenia')) {
-      pipeline = const [
-        'Feature PKG',
-        'MVVM Models',
-        'Service Locator',
-        'Cache Store',
-        'Hospital REST'
-      ];
-    } else if (project.name.contains('FAIS')) {
-      pipeline = const [
-        'Onboarding UI',
-        'Inspection Form',
-        'Blob Storage',
-        'WorkManager Sync',
-        'Core ERP'
-      ];
-    } else if (project.name.contains('Solutions Now')) {
-      pipeline = const [
-        'GPS Stream',
-        'Native Service',
-        'Local DB',
-        'Batch Sync',
-        'Fleet Command'
-      ];
-    } else {
-      pipeline = project.stack.take(5).toList();
-    }
+    // Keyed on the company, which is stable; project names get rewritten.
+    // Only projects with a hand-drawn pipeline are listed — the rest show
+    // their own stack, which comes from the project data and so can't drift.
+    final pipeline = switch (project.company) {
+      'NatHealth' => const [
+          'NFC APDU',
+          'Keystore JWT',
+          'Offline SQLite',
+          'WorkManager',
+          'HTTPS TPA',
+        ],
+      'ESKADENIA Software' => const [
+          'Feature PKG',
+          'MVVM Models',
+          'Service Locator',
+          'Cache Store',
+          'Hospital REST',
+        ],
+      _ => project.stack.take(5).toList(),
+    };
 
     return ViewportTickerGate(
       child: Semantics(

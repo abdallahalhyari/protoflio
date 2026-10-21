@@ -412,7 +412,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get projectDomainEnterprise => 'أنظمة المستشفيات والتعليم';
 
   @override
-  String get projectDomainFleet => 'الأساطيل والاتصالات عن بُعد';
+  String get projectDomainConsumer => 'تطبيقات المستهلكين والتواصل الاجتماعي';
 
   @override
   String get projectDomainCommerce => 'التجارة الإلكترونية والبث';

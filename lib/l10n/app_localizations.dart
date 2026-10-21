@@ -838,11 +838,11 @@ abstract class AppLocalizations {
   /// **'Enterprise HIS & LMS'**
   String get projectDomainEnterprise;
 
-  /// No description provided for @projectDomainFleet.
+  /// No description provided for @projectDomainConsumer.
   ///
   /// In en, this message translates to:
-  /// **'Fleet & Telematics'**
-  String get projectDomainFleet;
+  /// **'Consumer & Social'**
+  String get projectDomainConsumer;
 
   /// No description provided for @projectDomainCommerce.
   ///

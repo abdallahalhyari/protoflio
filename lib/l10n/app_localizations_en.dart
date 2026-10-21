@@ -413,7 +413,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get projectDomainEnterprise => 'Enterprise HIS & LMS';
 
   @override
-  String get projectDomainFleet => 'Fleet & Telematics';
+  String get projectDomainConsumer => 'Consumer & Social';
 
   @override
   String get projectDomainCommerce => 'M-Commerce & Streaming';

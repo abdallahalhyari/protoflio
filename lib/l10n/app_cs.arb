@@ -144,7 +144,7 @@
   "projectDomainAll": "Vše",
   "projectDomainHealthcare": "Zdravotnictví a čipové karty",
   "projectDomainEnterprise": "Nemocniční a vzdělávací systémy",
-  "projectDomainFleet": "Vozové parky a telematika",
+  "projectDomainConsumer": "Spotřebitelské a sociální aplikace",
   "projectDomainCommerce": "Mobilní obchod a streamování",
   "projectTechFilter": "Filtr technologie: {technology}",
   "projectSwitchDomain": "Přepnout oblast",

@@ -28,7 +28,7 @@ String localizedProjectDomain(AppLocalizations loc, String domain) {
     'ALL' => loc.projectDomainAll,
     'Healthcare & Smart Cards' => loc.projectDomainHealthcare,
     'Enterprise HIS & LMS' => loc.projectDomainEnterprise,
-    'Fleet & Telematics' => loc.projectDomainFleet,
+    'Consumer & Social' => loc.projectDomainConsumer,
     'M-Commerce & Streaming' => loc.projectDomainCommerce,
     _ => domain,
   };

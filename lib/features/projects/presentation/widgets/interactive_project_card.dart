@@ -70,7 +70,7 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
     final domainAccent = switch (widget.project.domain) {
       'Healthcare & Smart Cards' => AppColors.tealLight,
       'Enterprise HIS & LMS' => widget.scheme.primary,
-      'Fleet & Telematics' => AppColors.teal,
+      'Consumer & Social' => AppColors.teal,
       'M-Commerce & Streaming' => AppColors.goldSoft,
       _ => widget.scheme.primary,
     };

@@ -212,7 +212,7 @@ class CardHeroImage extends StatelessWidget {
         return AppColors.teal;
       case 'Enterprise HIS & LMS':
         return scheme.primary;
-      case 'Fleet & Telematics':
+      case 'Consumer & Social':
         return AppColors.tealLight;
       case 'M-Commerce & Streaming':
         return AppColors.gold;
@@ -227,8 +227,8 @@ class CardHeroImage extends StatelessWidget {
         return 'NFC / HEALTH';
       case 'Enterprise HIS & LMS':
         return 'HIS / LMS';
-      case 'Fleet & Telematics':
-        return 'TELEMATICS';
+      case 'Consumer & Social':
+        return 'LOYALTY / SOCIAL';
       case 'M-Commerce & Streaming':
         return 'STREAMING';
       default:

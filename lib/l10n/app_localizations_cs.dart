@@ -416,7 +416,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get projectDomainEnterprise => 'Nemocniční a vzdělávací systémy';
 
   @override
-  String get projectDomainFleet => 'Vozové parky a telematika';
+  String get projectDomainConsumer => 'Spotřebitelské a sociální aplikace';
 
   @override
   String get projectDomainCommerce => 'Mobilní obchod a streamování';

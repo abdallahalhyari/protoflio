@@ -225,7 +225,7 @@ class _DomainChipState extends State<_DomainChip> {
         return AppColors.tealLight;
       case 'Enterprise HIS & LMS':
         return scheme.primary;
-      case 'Fleet & Telematics':
+      case 'Consumer & Social':
         return AppColors.teal;
       case 'M-Commerce & Streaming':
         return AppColors.goldSoft;
@@ -242,8 +242,8 @@ class _DomainChipState extends State<_DomainChip> {
         return Icons.contactless_rounded;
       case 'Enterprise HIS & LMS':
         return Icons.apartment_rounded;
-      case 'Fleet & Telematics':
-        return Icons.navigation_rounded;
+      case 'Consumer & Social':
+        return Icons.photo_camera_rounded;
       case 'M-Commerce & Streaming':
         return Icons.play_circle_fill_rounded;
       default:

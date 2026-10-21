@@ -65,11 +65,11 @@ void main() {
         () async {
       final bloc = ProjectsFilterBloc(repository: TestProjectRepository());
 
-      bloc.add(const DomainFilterSelected('Fleet & Telematics'));
+      bloc.add(const DomainFilterSelected('Consumer & Social'));
       await expectLater(
         bloc.stream,
         emits(predicate<ProjectsFilterState>(
-            (state) => state.selectedDomain == 'Fleet & Telematics')),
+            (state) => state.selectedDomain == 'Consumer & Social')),
       );
 
       bloc.add(const ProjectsFilterReset());

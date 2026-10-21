@@ -69,7 +69,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
     'ALL',
     'Healthcare & Smart Cards',
     'Enterprise HIS & LMS',
-    'Fleet & Telematics',
+    'Consumer & Social',
     'M-Commerce & Streaming',
   ];
 

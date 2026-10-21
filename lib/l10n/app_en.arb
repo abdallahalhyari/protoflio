@@ -202,7 +202,7 @@
   "projectDomainAll": "All",
   "projectDomainHealthcare": "Healthcare & Smart Cards",
   "projectDomainEnterprise": "Enterprise HIS & LMS",
-  "projectDomainFleet": "Fleet & Telematics",
+  "projectDomainConsumer": "Consumer & Social",
   "projectDomainCommerce": "M-Commerce & Streaming",
   "projectTechFilter": "Filtered by {technology}",
   "projectSwitchDomain": "Switch domain",

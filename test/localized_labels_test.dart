@@ -149,7 +149,7 @@ void main() {
         'ALL',
         'Healthcare & Smart Cards',
         'Enterprise HIS & LMS',
-        'Fleet & Telematics',
+        'Consumer & Social',
         'M-Commerce & Streaming',
       ];
       for (final domain in domains) {
