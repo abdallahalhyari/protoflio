@@ -219,7 +219,7 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
                           MediaQuery.textScalerOf(context).scale(1);
                       final double itemHeight = isDesktop
                           ? 540 + 170 * (textScale - 1).clamp(0.0, 1.2)
-                          : 500 + 160 * (textScale - 1).clamp(0.0, 1.0);
+                          : 650 + 180 * (textScale - 1).clamp(0.0, 1.0);
 
                       const double spacing = AppSpacing.lg;
                       final double itemWidth = isDesktop
@@ -479,9 +479,8 @@ class _HallmarkPillState extends State<_HallmarkPill> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
                       color: context.mutedText,
-                      fontSize: AppTypography.label - 2,
+                      fontSize: AppTypography.label,
                       fontWeight: FontWeight.w600,
                       height: 1.1,
                     ),

@@ -91,15 +91,13 @@ class _CardTechTagChipState extends State<CardTechTagChip> {
                 widget.tag,
                 semanticsLabel: '',
                 style: TextStyle(
-                  fontFamily: AppTypography.monoFont,
                   color: _isHovered && widget.onTap != null && !widget.isDark
                       ? AppColors.toAccessibleLightText(widget.scheme.primary)
                       : text,
                   fontSize: AppTypography.label,
                   fontWeight: widget.isSelected || _isHovered
-                      ? FontWeight.w900
-                      : FontWeight.w700,
-                  letterSpacing: 0.3,
+                      ? FontWeight.w700
+                      : FontWeight.w500,
                 ),
               ),
             ),

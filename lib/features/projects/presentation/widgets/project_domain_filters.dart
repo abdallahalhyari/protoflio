@@ -359,10 +359,10 @@ class _DomainChipState extends State<_DomainChip> {
                     child: Text(
                       '${widget.count}',
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
                         color: isSelected ? scheme.onPrimary : textColor,
                         fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
+                        fontFeatures: const [FontFeature.tabularFigures()],
                       ),
                     ),
                   ),

@@ -92,8 +92,6 @@ class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
                     Flexible(
                       child: Text(
                         AppLocalizations.of(context)!.uiReadCaseStudy,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: ctaColor,
                           fontSize: AppTypography.label,

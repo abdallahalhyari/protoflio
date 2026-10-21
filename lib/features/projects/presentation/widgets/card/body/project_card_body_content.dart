@@ -47,29 +47,27 @@ class CardBodyContent extends StatelessWidget {
     final figure = localizedProjectFigure(loc, project);
     final caseCopy = localizedProjectCase(loc, project);
     final caseStudySlug = CaseStudyRouter.slugForCompany(project.company);
-    final textScale = MediaQuery.textScalerOf(context).scale(1);
-    final maxCopyLines = textScale > 1.15 ? 1 : 2;
-    final clampLines = maxCopyLines;
-    const clampOverflow = TextOverflow.ellipsis;
 
+    // Nothing on the card is clamped with an ellipsis: a cut sentence
+    // reads as broken. A fixed-height card (desktop carousel) has room
+    // for the problem alone; System and My role need the full card
+    // height, so they show only where the card can grow (and in the
+    // case study, one click away).
     Widget dossier(bool expanded) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             LabeledLine(
               label: loc.projectLblProblem,
               text: caseCopy!.problem,
-              maxLines: clampLines,
             ),
             if (expanded) ...[
               LabeledLine(
                 label: loc.projectLblSystem,
                 text: caseCopy.system,
-                maxLines: clampLines,
               ),
               LabeledLine(
                 label: loc.projectLblRole,
                 text: caseCopy.role,
-                maxLines: clampLines,
               ),
             ],
           ],
@@ -79,19 +77,17 @@ class CardBodyContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          project.company.toUpperCase(),
+          project.company,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontFamily: AppTypography.monoFont,
-            fontSize: AppTypography.label,
-            fontWeight: FontWeight.w900,
+            fontSize: AppTypography.label + 1,
+            fontWeight: FontWeight.w500,
             color: isHovered
                 ? (isDark
                     ? scheme.primary
                     : AppColors.toAccessibleLightText(scheme.primary))
                 : context.mutedText,
-            letterSpacing: 0.8,
           ),
         ),
         const SizedBox(height: 5),
@@ -111,7 +107,7 @@ class CardBodyContent extends StatelessWidget {
           ),
           child: Text(
             project.name,
-            maxLines: 2,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -175,19 +171,7 @@ class CardBodyContent extends StatelessWidget {
                     : AppColors.ink200,
               ),
             ),
-            child: isDesktop
-                ? AnimatedSwitcher(
-                    duration: MediaQuery.disableAnimationsOf(context)
-                        ? Duration.zero
-                        : AppMotion.snap,
-                    switchInCurve: Curves.easeOutCubic,
-                    switchOutCurve: Curves.easeOutCubic,
-                    child: KeyedSubtree(
-                      key: ValueKey<bool>(isHovered),
-                      child: dossier(isHovered),
-                    ),
-                  )
-                : dossier(true),
+            child: dossier(!pinFoot),
           ),
         ] else
           Text(
@@ -197,8 +181,6 @@ class CardBodyContent extends StatelessWidget {
               fontSize: AppTypography.body,
               height: 1.4,
             ),
-            maxLines: clampLines,
-            overflow: clampOverflow,
           ),
       ],
     );
@@ -214,7 +196,6 @@ class CardBodyContent extends StatelessWidget {
             label: figure?.label ?? outcome,
             scheme: scheme,
             isDark: isDark,
-            maxLines: pinFoot ? 2 : null,
           ),
         ],
       ],

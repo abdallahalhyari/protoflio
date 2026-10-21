@@ -78,11 +78,9 @@ class HeroStatement extends StatelessWidget {
                     l10n.introRoleLine,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
                       fontSize: AppTypography.label,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w600,
                       color: context.adaptiveAccentText(scheme.primary),
-                      letterSpacing: 0.8,
                     ),
                   ),
                 ),
@@ -215,10 +213,8 @@ class HeroStatement extends StatelessWidget {
                     Text(
                       item.$1,
                       style: TextStyle(
-                        fontFamily: AppTypography.monoFont,
                         fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.2,
+                        fontWeight: FontWeight.w500,
                         color: isDark ? Colors.white : AppColors.ink900,
                       ),
                     ),
@@ -277,13 +273,11 @@ class _MobileAvailabilityCue extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      l10n.heroFactAvailableLabel.toUpperCase(),
+                      l10n.heroFactAvailableLabel,
                       style: TextStyle(
-                        color: context.onSurface.withValues(alpha: 0.82),
-                        fontFamily: AppTypography.monoFont,
+                        color: context.mutedText,
                         fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 0.8,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 2),

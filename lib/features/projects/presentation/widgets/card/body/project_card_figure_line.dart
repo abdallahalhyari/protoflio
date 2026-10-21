@@ -52,37 +52,57 @@ class CardFigureLine extends StatelessWidget {
                 : figureColor.withValues(alpha: 0.35),
           ),
         ),
-        child: Row(
-          children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(minWidth: 44, maxWidth: 88),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: AlignmentDirectional.centerStart,
-                child: Text(
-                  ltrContent(context, value!),
-                  style: TextStyle(
-                    fontFamily: AppTypography.monoFont,
-                    fontSize: AppTypography.heading,
-                    fontWeight: FontWeight.w900,
-                    height: 1.1,
-                    color: figureColor,
-                    letterSpacing: -0.5,
+        // Side by side where the sentence keeps a readable measure;
+        // stacked on a narrow card, where it would shrink to a word a line.
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            Widget figureText(double maxWidth) => ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: maxWidth < 44 ? maxWidth : 44,
+                    maxWidth: maxWidth,
                   ),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      ltrContent(context, value!),
+                      style: TextStyle(
+                        fontSize: AppTypography.heading,
+                        fontWeight: FontWeight.w600,
+                        height: 1.1,
+                        color: figureColor,
+                        letterSpacing: -0.5,
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                  ),
+                );
+            if (constraints.maxWidth < 300) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  figureText(constraints.maxWidth),
+                  const SizedBox(height: 4),
+                  text,
+                ],
+              );
+            }
+            return Row(
+              children: [
+                figureText(88),
+                const SizedBox(width: 10),
+                Container(
+                  width: 1,
+                  height: 24,
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.12)
+                      : AppColors.ink200,
                 ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Container(
-              width: 1,
-              height: 24,
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.12)
-                  : AppColors.ink200,
-            ),
-            const SizedBox(width: 10),
-            Expanded(child: text),
-          ],
+                const SizedBox(width: 10),
+                Expanded(child: text),
+              ],
+            );
+          },
         ),
       ),
     );

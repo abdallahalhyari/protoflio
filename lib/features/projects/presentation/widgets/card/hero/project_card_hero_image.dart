@@ -97,47 +97,58 @@ class CardHeroImage extends StatelessWidget {
                 primary: scheme.primary,
                 isDark: isDark,
               ),
-            if (project.metricBadge != null)
-              CardMetricBadge(
-                text: project.metricBadge!,
-                primary: scheme.primary,
-              ),
+            // Metric start, domain end; on a card too narrow for both
+            // the domain tag wraps under the metric instead of overlapping.
             Positioned(
               top: AppSpacing.sm,
+              left: AppSpacing.sm,
               right: AppSpacing.sm,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.72),
-                  borderRadius: BorderRadius.circular(AppRadius.xs),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.20),
+              child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                spacing: AppSpacing.sm,
+                runSpacing: 6,
+                children: [
+                  if (project.metricBadge != null)
+                    CardMetricBadge(
+                      text: project.metricBadge!,
+                      primary: scheme.primary,
+                    ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 3.5),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.72),
+                      borderRadius: BorderRadius.circular(AppRadius.xs),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.20),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 5,
+                          height: 5,
+                          decoration: BoxDecoration(
+                            color: _domainAccent(project.domain, scheme),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        Flexible(
+                          child: Text(
+                            _domainShortTag(project.domain),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: AppTypography.label,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 5,
-                      height: 5,
-                      decoration: BoxDecoration(
-                        color: _domainAccent(project.domain, scheme),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      _domainShortTag(project.domain),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: AppTypography.label - 2,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.4,
-                      ),
-                    ),
-                  ],
-                ),
+                ],
               ),
             ),
             Positioned(
@@ -224,15 +235,15 @@ class CardHeroImage extends StatelessWidget {
   String _domainShortTag(String domain) {
     switch (domain) {
       case 'Healthcare & Smart Cards':
-        return 'NFC / HEALTH';
+        return 'NFC / Health';
       case 'Enterprise HIS & LMS':
         return 'HIS / LMS';
       case 'Consumer & Social':
-        return 'LOYALTY / SOCIAL';
+        return 'Loyalty / Social';
       case 'M-Commerce & Streaming':
-        return 'STREAMING';
+        return 'Streaming';
       default:
-        return domain.toUpperCase();
+        return domain;
     }
   }
 }
