@@ -16,7 +16,6 @@ class EngineeringHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return SectionMasthead(
-      kicker: loc.engineeringHeaderKicker,
       title: loc.navEngineering,
       subtitle: loc.sectionSubtitleEngineering,
       isDesktop: isDesktop,

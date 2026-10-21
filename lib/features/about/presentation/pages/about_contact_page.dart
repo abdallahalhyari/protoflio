@@ -116,7 +116,6 @@ class _AboutContactPageState extends State<AboutContactPage>
             // section divider that already names it.
             if (part != CredentialSheetPart.reach) ...[
               SectionMasthead(
-                kicker: l10n.aboutHeaderKicker,
                 title: l10n.aboutTitle,
                 subtitle: l10n.aboutHeaderSubtitle,
                 isDesktop: isDesktop,

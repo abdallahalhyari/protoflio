@@ -1013,7 +1013,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiKeySafeguards => 'Safeguards';
 
   @override
-  String get uiLatencyBudget => 'Latency target per layer';
+  String get uiLatencyBudget => 'Latency target';
 
   @override
   String get uiActiveTrace => 'Tracing';
@@ -1637,6 +1637,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String engTiers(int count) {
     return '$count tiers';
   }
+
+  @override
+  String get engInspectDiagram => 'Zoom diagram';
 
   @override
   String engSwipeHint(int current, int total) {

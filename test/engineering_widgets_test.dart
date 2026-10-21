@@ -73,9 +73,12 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text('Flowchart'), findsOneWidget);
       expect(find.text('${topic.diagramSteps.length} tiers'), findsOneWidget);
-      expect(find.text(topic.diagramSteps.first.title), findsWidgets);
+      expect(find.text('Latency target'), findsOneWidget);
+      for (final step in topic.diagramSteps) {
+        expect(find.text(step.title), findsOneWidget);
+        expect(find.text(step.latencyBudget!), findsOneWidget);
+      }
     });
 
     testWidgets('ArchitectureDetailsCard renders summary and safeguards',

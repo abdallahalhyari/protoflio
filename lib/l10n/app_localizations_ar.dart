@@ -1008,7 +1008,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiKeySafeguards => 'ضمانات التنفيذ الأساسية';
 
   @override
-  String get uiLatencyBudget => 'هدف زمن الاستجابة لكل طبقة';
+  String get uiLatencyBudget => 'زمن الاستجابة المستهدف';
 
   @override
   String get uiActiveTrace => 'المسار النشط';
@@ -1626,6 +1626,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String engTiers(int count) {
     return '$count طبقات';
   }
+
+  @override
+  String get engInspectDiagram => 'تكبير المخطط';
 
   @override
   String engSwipeHint(int current, int total) {

@@ -347,7 +347,6 @@ class _ProjectsPageViewState extends State<_ProjectsPageView>
   Widget _buildHeader(
       ColorScheme scheme, AppLocalizations loc, Size size, bool isDesktop) {
     return SectionMasthead(
-      kicker: loc.projectsHeaderKicker,
       title: loc.navWork,
       subtitle: loc.sectionSubtitleWork,
       isDesktop: isDesktop,

@@ -160,11 +160,9 @@ class _ArchitectureInspectDialogState
                       constraints: const BoxConstraints(maxWidth: 600),
                       child: DiagramList(
                         topic: widget.topic,
-                        scheme: scheme,
                         isDesktop: true,
                         activeStepIndex: _step,
                         onSelectStep: _updateStep,
-                        shrinkWrap: true,
                       ),
                     ),
                   ),

@@ -79,32 +79,15 @@ class ArchitectureTopicTabs extends StatelessWidget {
               width: isSelected ? 1.25 : 1.0,
             ),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isSelected
-                      ? scheme.primary
-                      : (isDark ? Colors.white38 : AppColors.ink400),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                architectureTopicLabel(
-                    AppLocalizations.of(context)!, topic.title),
-                style: TextStyle(
-                  color: isSelected
-                      ? (isDark ? Colors.white : scheme.primary)
-                      : (context.mutedText),
-                  fontSize: AppTypography.label,
-                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                ),
-              ),
-            ],
+          child: Text(
+            architectureTopicLabel(AppLocalizations.of(context)!, topic.title),
+            style: TextStyle(
+              color: isSelected
+                  ? (isDark ? Colors.white : scheme.primary)
+                  : (context.mutedText),
+              fontSize: AppTypography.label,
+              fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+            ),
           ),
         )),
       ),

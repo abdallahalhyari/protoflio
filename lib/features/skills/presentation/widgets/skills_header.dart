@@ -16,7 +16,6 @@ class SkillsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return SectionMasthead(
-      kicker: loc.skillsHeaderKicker,
       title: loc.skillsHeaderTitle,
       subtitle: loc.skillsHeaderSubtitle,
       isDesktop: isDesktop,

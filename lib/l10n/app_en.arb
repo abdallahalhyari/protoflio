@@ -499,7 +499,7 @@
   "uiArchFlowchart": "Flowchart",
   "uiArchRationale": "Why this choice",
   "uiKeySafeguards": "Safeguards",
-  "uiLatencyBudget": "Latency target per layer",
+  "uiLatencyBudget": "Latency target",
   "uiActiveTrace": "Tracing",
   "uiLatestDispatch": "Current role",
   "badgeSkills": "{count} disciplines",
@@ -752,6 +752,7 @@
       }
     }
   },
+  "engInspectDiagram": "Zoom diagram",
   "engSwipeHint": "Swipe or tap to switch blueprints ({current} of {total})",
   "@engSwipeHint": {
     "placeholders": {

@@ -1016,7 +1016,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiKeySafeguards => 'Pojistky';
 
   @override
-  String get uiLatencyBudget => 'Cílová latence jednotlivých vrstev';
+  String get uiLatencyBudget => 'Cílová latence';
 
   @override
   String get uiActiveTrace => 'Sledování';
@@ -1642,6 +1642,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String engTiers(int count) {
     return 'Vrstev: $count';
   }
+
+  @override
+  String get engInspectDiagram => 'Zvětšit diagram';
 
   @override
   String engSwipeHint(int current, int total) {

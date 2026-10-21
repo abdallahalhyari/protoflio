@@ -30,86 +30,68 @@ class ArchitectureDiagramCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final isDark = scheme.brightness == Brightness.dark;
     final clampedStep = activeStepIndex.clamp(0, topic.diagramSteps.length - 1);
-    final accentText = context.adaptiveAccentText(scheme.primary);
+    final l10n = AppLocalizations.of(context)!;
+    final columnHead = TextStyle(
+      color: context.mutedText,
+      fontSize: AppTypography.label,
+      fontWeight: FontWeight.w500,
+    );
 
     final Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.account_tree_rounded, size: 15, color: accentText),
-                  const SizedBox(width: 6),
-                  Flexible(
-                    child: Text(
-                      AppLocalizations.of(context)!.uiArchFlowchart,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: accentText,
-                        fontSize: isDesktop
-                            ? AppTypography.label
-                            : AppTypography.label,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
-                ],
+        // Column heads for the stack below: what the rows are, and what
+        // the figure in the end margin of each row means. Insets and the
+        // 3:1 split mirror a tier's band in [DiagramList].
+        Padding(
+          padding: const EdgeInsetsDirectional.only(start: 38, end: 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Text(
+                  ltrAlways(context, l10n.engTiers(topic.diagramSteps.length)),
+                  style: columnHead,
+                ),
               ),
-            ),
-            if (onInspect != null) ...[
-              IconButton(
-                tooltip: 'Inspect & Zoom Blueprint',
-                iconSize: 18,
-                visualDensity: VisualDensity.compact,
-                onPressed: () {
-                  SoundService.instance.playClick();
-                  onInspect?.call();
-                },
-                icon: Icon(Icons.zoom_in_rounded, color: accentText),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  l10n.uiLatencyBudget,
+                  textAlign: TextAlign.end,
+                  style: columnHead,
+                ),
               ),
-              const SizedBox(width: 4),
             ],
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-              decoration: BoxDecoration(
-                color: isDark
-                    ? scheme.primary.withValues(alpha: AppAlpha.hover)
-                    : AppColors.ink100,
-                borderRadius: BorderRadius.circular(AppRadius.xs),
-                border: Border.all(
-                  color: isDark
-                      ? scheme.primary.withValues(alpha: 0.3)
-                      : AppColors.ink300,
-                ),
-              ),
-              child: Text(
-                ltrAlways(
-                    context,
-                    AppLocalizations.of(context)!
-                        .engTiers(topic.diagramSteps.length)),
-                style: TextStyle(
-                  color: accentText,
-                  fontSize: AppTypography.label,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 4),
         DiagramList(
           topic: topic,
-          scheme: scheme,
           isDesktop: isDesktop,
           activeStepIndex: clampedStep,
           onSelectStep: onSelectStep,
-          shrinkWrap: true,
         ),
+        if (onInspect != null) ...[
+          const SizedBox(height: AppSpacing.sm),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: TextButton.icon(
+              onPressed: () {
+                SoundService.instance.playClick();
+                onInspect?.call();
+              },
+              icon: const Icon(Icons.zoom_in_rounded, size: 18),
+              label: Text(l10n.engInspectDiagram),
+              style: TextButton.styleFrom(
+                foregroundColor: context.adaptiveAccentText(scheme.primary),
+                visualDensity: VisualDensity.compact,
+              ),
+            ),
+          ),
+        ],
       ],
     );
 

@@ -4,379 +4,237 @@ import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/engineering/domain/entities/architecture_topic.dart';
 import 'package:profile/shared/utils/bidi.dart';
-import 'package:profile/l10n/app_localizations.dart';
 
+/// The tiers of one architecture as a single printed stack: a guilloche
+/// teal spine runs through every tier, and each tier carries its latency
+/// budget in the end margin. The active tier is marked by a gold contact
+/// plate on the spine and a flat ink band, nothing else.
 class DiagramList extends StatelessWidget {
   final ArchitectureTopic topic;
-  final ColorScheme scheme;
   final bool isDesktop;
   final int? activeStepIndex;
   final ValueChanged<int>? onSelectStep;
-  final bool shrinkWrap;
 
   const DiagramList({
     super.key,
     required this.topic,
-    required this.scheme,
     required this.isDesktop,
     this.activeStepIndex,
     this.onSelectStep,
-    this.shrinkWrap = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.isDarkMode;
+    final steps = topic.diagramSteps;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (int i = 0; i < topic.diagramSteps.length; i++) ...[
-          RepaintBoundary(
-            child: _DiagramTierItem(
-              key: ValueKey('tier_${topic.id}_$i'),
-              step: topic.diagramSteps[i],
-              index: i,
-              isActive: activeStepIndex != null && activeStepIndex == i,
-              isDesktop: isDesktop,
-              isDark: isDark,
-              onTap: onSelectStep != null ? () => onSelectStep!(i) : null,
-            ),
+        for (int i = 0; i < steps.length; i++)
+          _DiagramTier(
+            key: ValueKey('tier_${topic.id}_$i'),
+            step: steps[i],
+            isFirst: i == 0,
+            isLast: i == steps.length - 1,
+            isActive: activeStepIndex == i,
+            isDesktop: isDesktop,
+            onTap: onSelectStep != null ? () => onSelectStep!(i) : null,
           ),
-          if (i < topic.diagramSteps.length - 1)
-            _TierConnector(
-              key: ValueKey('connector_${topic.id}_$i'),
-              isActive: activeStepIndex != null && activeStepIndex == i,
-              primaryColor: scheme.primary,
-              isDark: isDark,
-            ),
-        ],
       ],
     );
   }
 }
 
-/// An interactive, crisp architectural tier box with hover elevation and active aura.
-class _DiagramTierItem extends StatefulWidget {
+class _DiagramTier extends StatefulWidget {
   final DiagramStep step;
-  final int index;
+  final bool isFirst;
+  final bool isLast;
   final bool isActive;
   final bool isDesktop;
-  final bool isDark;
   final VoidCallback? onTap;
 
-  const _DiagramTierItem({
+  const _DiagramTier({
     super.key,
     required this.step,
-    required this.index,
+    required this.isFirst,
+    required this.isLast,
     required this.isActive,
     required this.isDesktop,
-    required this.isDark,
     this.onTap,
   });
 
   @override
-  State<_DiagramTierItem> createState() => _DiagramTierItemState();
+  State<_DiagramTier> createState() => _DiagramTierState();
 }
 
-class _DiagramTierItemState extends State<_DiagramTierItem> {
+class _DiagramTierState extends State<_DiagramTier> {
   bool _isHovered = false;
+
+  // Band padding above the layer label; the spine node sits level with it.
+  static const double _bandTop = 12;
+  static const double _spineWidth = 20;
+  static const double _nodeSize = 10;
 
   @override
   Widget build(BuildContext context) {
     final step = widget.step;
-    final isDark = widget.isDark;
-    final isDesktop = widget.isDesktop;
     final isActive = widget.isActive;
-    final accent = context.adaptiveAccentText(step.color);
+    final isDesktop = widget.isDesktop;
+    final isDark = context.isDarkMode;
 
-    final cardBg = isActive
-        ? (isDark
-            ? step.color.withValues(alpha: 0.18)
-            : step.color.withValues(alpha: 0.10))
-        : (_isHovered
-            ? (isDark
-                ? step.color.withValues(alpha: 0.10)
-                : step.color.withValues(alpha: 0.05))
-            : (isDark
-                ? Colors.black.withValues(alpha: AppAlpha.border)
-                : AppColors.ink50));
+    final spine = (isDark ? AppColors.tealLight : AppColors.teal)
+        .withValues(alpha: isDark ? 0.45 : 0.55);
+    final plate = isDark ? AppColors.goldSoft : AppColors.gold;
 
-    final borderColor = isActive
-        ? (isDark ? step.color : accent)
-        : (_isHovered
-            ? (isDark
-                ? step.color.withValues(alpha: 0.7)
-                : accent.withValues(alpha: 0.75))
-            : (isDark ? step.color.withValues(alpha: 0.30) : AppColors.ink200));
+    final bandColor = context.onSurface.withValues(
+      alpha: isActive ? (isDark ? 0.06 : 0.045) : (_isHovered ? 0.03 : 0.0),
+    );
 
-    return RepaintBoundary(
-      child: MouseRegion(
-        onEnter: (_) => setState(() => _isHovered = true),
-        onExit: (_) => setState(() => _isHovered = false),
-        child: AnimatedSlide(
-          duration: AppMotion.cardHover,
-          curve: AppMotion.emphasized,
-          offset: Offset(0, _isHovered && !isActive ? -0.03 : 0.0),
-          child: InkWell(
-            onTap: widget.onTap,
-            borderRadius: BorderRadius.circular(AppRadius.smd),
-            child: AnimatedContainer(
-              duration: AppMotion.snap,
-              padding: EdgeInsets.symmetric(
-                horizontal: isDesktop ? 14 : 10,
-                vertical: isDesktop ? 8 : 7,
-              ),
-              decoration: BoxDecoration(
-                color: cardBg,
-                borderRadius: BorderRadius.circular(AppRadius.smd),
-                border: Border.all(
-                  color: borderColor,
-                  width: isActive ? 2.0 : (_isHovered ? 1.5 : 1.0),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: (isDark ? step.color : accent).withValues(
-                      alpha: isActive
-                          ? (isDark ? 0.30 : 0.18)
-                          : (_isHovered
-                              ? (isDark ? 0.18 : 0.10)
-                              : (isDark ? 0.06 : 0.03)),
-                    ),
-                    blurRadius: isActive ? 18 : (_isHovered ? 14 : 8),
-                    spreadRadius: isActive ? 1 : 0,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  AnimatedContainer(
-                    duration: AppMotion.snap,
-                    padding: EdgeInsets.all(
-                      isDesktop ? (isActive ? 7 : 6) : (isActive ? 6 : 5),
-                    ),
-                    decoration: BoxDecoration(
-                      color: step.color.withValues(
-                        alpha: isActive ? 0.32 : (isDark ? 0.15 : 0.12),
-                      ),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: isActive
-                            ? accent
-                            : step.color
-                                .withValues(alpha: isDark ? 0.35 : 0.25),
-                        width: isActive ? 1.5 : 1.0,
-                      ),
-                      boxShadow: isActive
-                          ? [
-                              BoxShadow(
-                                color: accent.withValues(alpha: 0.5),
-                                blurRadius: 10,
-                                spreadRadius: 1,
-                              ),
-                            ]
-                          : null,
-                    ),
-                    child: Icon(
-                      step.icon,
-                      color: accent,
-                      size: isDesktop ? 16 : 14,
-                    ),
-                  ),
-                  SizedBox(width: isDesktop ? 12 : 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                step.layer,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: accent,
-                                  fontSize: isDesktop
-                                      ? AppTypography.label
-                                      : AppTypography.label,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                            ),
-                            if (isActive) ...[
-                              const SizedBox(width: 8),
-                              Flexible(
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 2,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: accent,
-                                      borderRadius:
-                                          BorderRadius.circular(AppRadius.chip),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: accent.withValues(alpha: 0.45),
-                                          blurRadius: 6,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          width: 5,
-                                          height: 5,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: AppColors.onAccent(accent),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .uiActiveTrace,
-                                          style: TextStyle(
-                                            fontSize: AppTypography.label,
-                                            fontWeight: FontWeight.w900,
-                                            color: AppColors.onAccent(accent),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                        const SizedBox(height: 3),
-                        Text(
-                          step.title,
-                          style: TextStyle(
-                            color: context.onSurface,
-                            fontSize: isDesktop
-                                ? AppTypography.body
-                                : AppTypography.label,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        Text(
-                          ltrContent(context, step.details),
-                          style: TextStyle(
-                            color: context.onSurface,
-                            fontSize: isDesktop
-                                ? AppTypography.label
-                                : AppTypography.label,
-                            height: 1.4,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+    Widget segment(bool visible) => Container(
+          width: 1.5,
+          color: visible ? spine : Colors.transparent,
+        );
+
+    final node = AnimatedContainer(
+      duration: AppMotion.snap,
+      width: _nodeSize,
+      height: _nodeSize,
+      decoration: BoxDecoration(
+        color: isActive ? plate : context.cardGlass,
+        borderRadius: BorderRadius.circular(
+          isActive ? AppRadius.xxs : _nodeSize / 2,
+        ),
+        border: Border.all(
+          color: isActive ? plate : spine,
+          width: 1.5,
         ),
       ),
     );
-  }
-}
 
-/// An illuminated directional conduit between architecture tiers.
-class _TierConnector extends StatelessWidget {
-  final bool isActive;
-  final Color primaryColor;
-  final bool isDark;
+    final budget = step.latencyBudget;
 
-  const _TierConnector({
-    super.key,
-    required this.isActive,
-    required this.primaryColor,
-    required this.isDark,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final accentText = context.adaptiveAccentText(primaryColor);
-    final connColor = isActive ? primaryColor : accentText;
-
-    return RepaintBoundary(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 1),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: isActive ? 2.0 : 1.0,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: connColor,
-                  boxShadow: isActive
-                      ? [
-                          BoxShadow(
-                            color: primaryColor.withValues(alpha: 0.6),
-                            blurRadius: 6,
-                            spreadRadius: 1,
-                          ),
-                        ]
-                      : null,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                decoration: BoxDecoration(
-                  color: isActive
-                      ? primaryColor.withValues(alpha: isDark ? 0.20 : 0.12)
-                      : (isDark
-                          ? Colors.white.withValues(alpha: 0.04)
-                          : AppColors.ink100),
-                  borderRadius: BorderRadius.circular(AppRadius.pill),
-                  border: Border.all(
-                    color: connColor.withValues(alpha: isActive ? 0.7 : 0.4),
+    return Semantics(
+      button: widget.onTap != null,
+      selected: isActive,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              width: _spineWidth,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: _bandTop + 3,
+                    child: segment(!widget.isFirst),
                   ),
-                  boxShadow: isActive
-                      ? [
-                          BoxShadow(
-                            color: primaryColor.withValues(alpha: 0.4),
-                            blurRadius: 8,
+                  node,
+                  Expanded(child: segment(!widget.isLast)),
+                ],
+              ),
+            ),
+            const SizedBox(width: 6),
+            Expanded(
+              child: MouseRegion(
+                onEnter: (_) => setState(() => _isHovered = true),
+                onExit: (_) => setState(() => _isHovered = false),
+                child: InkWell(
+                  onTap: widget.onTap,
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  child: AnimatedContainer(
+                    duration: AppMotion.snap,
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      12,
+                      _bandTop,
+                      12,
+                      isDesktop ? 14 : 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: bandColor,
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                step.layer,
+                                style: TextStyle(
+                                  color: context.mutedText,
+                                  fontSize: AppTypography.label,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.3,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                step.title,
+                                style: TextStyle(
+                                  color: context.onSurface,
+                                  fontSize: isDesktop
+                                      ? AppTypography.lead
+                                      : AppTypography.body,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.3,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                ltrContent(context, step.details),
+                                style: TextStyle(
+                                  color: context.mutedText,
+                                  fontSize: isDesktop
+                                      ? AppTypography.body
+                                      : AppTypography.label,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ],
                           ),
-                        ]
-                      : null,
-                ),
-                child: Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: connColor,
-                  size: isActive ? 13 : 11,
+                        ),
+                        if (budget != null) ...[
+                          const SizedBox(width: 16),
+                          // A fixed quarter of the row, so figures line up
+                          // under the column head and a narrow phone at
+                          // large text size wraps instead of overflowing.
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 14),
+                              child: Text(
+                                ltrAlways(context, budget),
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  color: isActive
+                                      ? context.onSurface
+                                      : context.mutedText,
+                                  fontSize: isDesktop
+                                      ? AppTypography.title
+                                      : AppTypography.lead,
+                                  fontWeight: isActive
+                                      ? FontWeight.w600
+                                      : FontWeight.w400,
+                                  height: 1.1,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              Container(
-                width: isActive ? 2.0 : 1.0,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: connColor,
-                  boxShadow: isActive
-                      ? [
-                          BoxShadow(
-                            color: primaryColor.withValues(alpha: 0.6),
-                            blurRadius: 6,
-                            spreadRadius: 1,
-                          ),
-                        ]
-                      : null,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

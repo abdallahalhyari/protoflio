@@ -1897,7 +1897,7 @@ abstract class AppLocalizations {
   /// No description provided for @uiLatencyBudget.
   ///
   /// In en, this message translates to:
-  /// **'Latency target per layer'**
+  /// **'Latency target'**
   String get uiLatencyBudget;
 
   /// No description provided for @uiActiveTrace.
@@ -2991,6 +2991,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} tiers'**
   String engTiers(int count);
+
+  /// No description provided for @engInspectDiagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom diagram'**
+  String get engInspectDiagram;
 
   /// No description provided for @engSwipeHint.
   ///
