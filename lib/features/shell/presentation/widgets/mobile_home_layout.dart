@@ -75,7 +75,6 @@ class MobileHomeLayout extends StatelessWidget {
                   onScrollDown: () => controller.scrollToMobileSection(1),
                   onViewWork: () => controller.scrollToMobileSection(1),
                   onDownloadResume: () => CvService.open(context),
-                  onContactMe: () => controller.scrollToMobileSection(6),
                   isContinuousMobile: true,
                 ),
               ),

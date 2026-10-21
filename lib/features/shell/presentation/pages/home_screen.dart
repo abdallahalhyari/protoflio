@@ -698,7 +698,6 @@ class _HomeScreenState extends State<HomeScreen> {
           onScrollDown: _next,
           onViewWork: () => _goTo(1),
           onDownloadResume: _downloadResume,
-          onContactMe: () => _goTo(5),
         );
       case 1:
         return DeferredPage(

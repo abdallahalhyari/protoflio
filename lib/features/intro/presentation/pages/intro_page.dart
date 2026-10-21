@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
-import 'package:profile/features/intro/presentation/widgets/intro_constellation.dart';
 
 import 'package:profile/features/intro/presentation/widgets/hero/hero_statement.dart';
 import 'package:profile/features/intro/presentation/widgets/hero/signal_trace.dart';
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 
 /// Cover: what a recruiter screens for, in one view.
-///   statement   availability, name, role, one sentence, two actions
-///   credential  portrait on card stock with three shipped results
-/// Side by side on desktop, stacked on narrower screens.
+///   statement   name, one sentence about the work, availability, actions
+///   trace       one NFC claim traced through every layer, as a live demo
+/// Side by side on desktop, stacked on narrower screens. The name's reveal
+/// is the cover's one motion; nothing drifts behind it.
 class IntroPage extends StatefulWidget {
   final VoidCallback onScrollDown;
   final VoidCallback? onViewWork;
   final VoidCallback? onDownloadResume;
-  final VoidCallback? onContactMe;
   final bool isContinuousMobile;
 
   const IntroPage({
@@ -24,7 +23,6 @@ class IntroPage extends StatefulWidget {
     required this.onScrollDown,
     this.onViewWork,
     this.onDownloadResume,
-    this.onContactMe,
     this.isContinuousMobile = false,
   });
 
@@ -86,7 +84,6 @@ class _IntroPageState extends State<IntroPage>
             alignStart: true,
             onViewWork: widget.onViewWork ?? widget.onScrollDown,
             onDownloadResume: widget.onDownloadResume ?? widget.onScrollDown,
-            onContactMe: widget.onContactMe ?? widget.onScrollDown,
           ),
         ),
       ],
@@ -95,7 +92,6 @@ class _IntroPageState extends State<IntroPage>
       isDark: isDark,
       isWide: isWide,
       reveal: _reveal,
-      onContactMe: widget.onContactMe,
     );
 
     final body = isWide
@@ -124,13 +120,10 @@ class _IntroPageState extends State<IntroPage>
             ],
           );
 
-    return IntroConstellation(
-      isDark: isDark,
-      child: ScrollableAppScreenShell(
-        maxWidth: 1200,
-        isContinuousMobile: widget.isContinuousMobile,
-        child: body,
-      ),
+    return ScrollableAppScreenShell(
+      maxWidth: 1200,
+      isContinuousMobile: widget.isContinuousMobile,
+      child: body,
     );
   }
 }

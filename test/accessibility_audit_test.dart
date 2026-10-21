@@ -219,7 +219,6 @@ void main() {
           isDark: true,
           onViewWork: () {},
           onDownloadResume: () {},
-          onContactMe: () {},
         ),
       ));
       await tester.pumpAndSettle();
@@ -235,7 +234,7 @@ void main() {
         find.byWidgetPredicate((w) =>
             w is Semantics &&
             w.properties.button == true &&
-            (w.properties.label?.contains('Let\'s talk') ?? false)),
+            (w.properties.label?.contains('Email me') ?? false)),
         findsOneWidget,
       );
       expect(
@@ -243,7 +242,8 @@ void main() {
             w is Semantics &&
             w.properties.button == true &&
             (w.properties.label?.contains('Copy email') ?? false)),
-        findsOneWidget,
+        findsNothing,
+        reason: 'copy-email moved off the cover to About & Contact',
       );
     });
   });

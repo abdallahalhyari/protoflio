@@ -203,12 +203,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introDownloadResume => 'Stáhnout CV';
 
   @override
-  String get contactMe => 'Pojďme si promluvit';
-
-  @override
-  String get copyEmail => 'Kopírovat e-mail';
-
-  @override
   String get navCopyLink => 'Kopírovat odkaz';
 
   @override
@@ -220,11 +214,21 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introSeniorEngineer => 'Senior mobilní vývojář';
 
   @override
-  String get introRoleLine => 'Senior mobilní vývojář';
+  String get introSummary =>
+      'Senior mobilní inženýr. Stavím aplikace ve Flutteru a nativním Androidu, které fungují i offline, čtou čipové karty přes NFC a bezpečně uchovávají tokeny.';
 
   @override
-  String get introValueProposition =>
-      'Navrhuji a dodávám odolné mobilní produkty, které mění složité systémy v přehledné a důvěryhodné uživatelské prostředí.';
+  String get introAvailability =>
+      'K dispozici nyní na dálku nebo na částečný úvazek; v Brně na místě od února 2027.';
+
+  @override
+  String get introEmailMe => 'Napište mi';
+
+  @override
+  String get traceTitle => 'Co se stane po přiložení karty';
+
+  @override
+  String get introRoleLine => 'Senior mobilní vývojář';
 
   @override
   String get introSkillArchitecture => 'Architektura';
@@ -1105,21 +1109,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get heroFactAvailableLabel => 'Dostupnost';
 
   @override
-  String get heroFactAvailableValue =>
-      'Nyní na dálku nebo na částečný úvazek. V Brně na místě od února 2027.';
-
-  @override
   String get heroFactPermitLabel => 'Pracovní povolení';
 
   @override
-  String get heroFactPermitValue =>
-      'Není potřeba v Česku, dokud studuji na plný úvazek.';
-
-  @override
   String get heroFactBasedLabel => 'Působiště';
-
-  @override
-  String get heroFactBasedValue => 'Ammán, Jordánsko';
 
   @override
   String get heroFactFocusLabel => 'Zaměření';
@@ -1192,10 +1185,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get traceStepBackend => 'Backend';
-
-  @override
-  String get introTagline =>
-      'Mobilní inženýr, který staví software fungující za obrazovkou.';
 
   @override
   String get introPitch2 =>

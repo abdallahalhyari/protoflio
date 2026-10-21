@@ -200,12 +200,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introDownloadResume => 'Download CV';
 
   @override
-  String get contactMe => 'Let\'s talk';
-
-  @override
-  String get copyEmail => 'Copy email';
-
-  @override
   String get navCopyLink => 'Copy link';
 
   @override
@@ -217,11 +211,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSeniorEngineer => 'Senior Flutter & Android engineer';
 
   @override
-  String get introRoleLine => 'Senior Flutter & Android engineer';
+  String get introSummary =>
+      'Senior mobile engineer. I build Flutter and native Android apps that keep working offline, read NFC smart cards and keep tokens secure.';
 
   @override
-  String get introValueProposition =>
-      'I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.';
+  String get introAvailability =>
+      'Available remote or part-time now; on-site in Brno from February 2027.';
+
+  @override
+  String get introEmailMe => 'Email me';
+
+  @override
+  String get traceTitle => 'What happens when a card is tapped';
+
+  @override
+  String get introRoleLine => 'Senior Flutter & Android engineer';
 
   @override
   String get introSkillArchitecture => 'Architecture';
@@ -1099,21 +1103,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get heroFactAvailableLabel => 'Available';
 
   @override
-  String get heroFactAvailableValue =>
-      'Remote or part-time now. On-site in Brno from February 2027.';
-
-  @override
   String get heroFactPermitLabel => 'Work permit';
 
   @override
-  String get heroFactPermitValue =>
-      'Not needed in Czechia while I study full-time.';
-
-  @override
   String get heroFactBasedLabel => 'Based in';
-
-  @override
-  String get heroFactBasedValue => 'Amman, Jordan';
 
   @override
   String get heroFactFocusLabel => 'Focus';
@@ -1186,10 +1179,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get traceStepBackend => 'Backend';
-
-  @override
-  String get introTagline =>
-      'Mobile engineer building software that works beyond the screen.';
 
   @override
   String get introPitch2 =>

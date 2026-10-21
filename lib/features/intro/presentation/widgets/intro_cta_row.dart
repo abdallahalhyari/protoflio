@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:profile/core/config/profile_links.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:profile/l10n/app_localizations.dart';
-
+import 'package:profile/core/services/analytics_service.dart';
 import 'package:profile/core/services/sound_service.dart';
-import 'package:profile/shared/widgets/app_toast.dart';
-import 'package:profile/shared/widgets/primary_button.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
-import 'package:profile/features/intro/presentation/widgets/quick_profile_sheet.dart';
+import 'package:profile/l10n/app_localizations.dart';
+import 'package:profile/shared/utils/mailto.dart';
+import 'package:profile/shared/widgets/primary_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+/// The cover's three actions, in order of intent: see the work, write to
+/// me, take the CV. Everything else (profiles, copy, vCard) lives on
+/// About & Contact, so the cover asks for one decision.
 class IntroCtaRow extends StatelessWidget {
   final bool isDark;
   final VoidCallback onViewWork;
   final VoidCallback onDownloadResume;
-  final VoidCallback onContactMe;
 
   /// Left-align the rows (cover layout) instead of centring them.
   final bool alignStart;
@@ -25,20 +24,18 @@ class IntroCtaRow extends StatelessWidget {
     required this.isDark,
     required this.onViewWork,
     required this.onDownloadResume,
-    required this.onContactMe,
     this.alignStart = false,
   });
 
-  static const String _kEmail = ProfileLinks.email;
-
-  Future<void> _copyEmail(BuildContext context) async {
+  Future<void> _emailMe() async {
     SoundService.instance.playClick();
-    await Clipboard.setData(const ClipboardData(text: _kEmail));
-    if (!context.mounted) return;
-    final loc = AppLocalizations.of(context)!;
-    AppToast.showGlass(
-      context,
-      message: loc.emailCopied(_kEmail),
+    Analytics.ctaEmail();
+    await launchUrl(
+      mailtoUri(
+        ProfileLinks.email,
+        subject: '[Inquiry] Senior Mobile Engineering - Abdallah Alhyari',
+      ),
+      mode: LaunchMode.externalApplication,
     );
   }
 
@@ -121,65 +118,6 @@ class IntroCtaRow extends StatelessWidget {
     );
   }
 
-  /// Tinted pill for the two quiet actions under the main buttons.
-  Widget _pill(
-    BuildContext context, {
-    required IconData icon,
-    required String label,
-    required String semanticsLabel,
-    required Color accent,
-    required VoidCallback onTap,
-  }) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-          maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
-      child: Semantics(
-        button: true,
-        excludeSemantics: true,
-        label: semanticsLabel,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {
-              SoundService.instance.playClick();
-              onTap();
-            },
-            borderRadius: BorderRadius.circular(AppRadius.pill),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-              decoration: BoxDecoration(
-                color: accent.withValues(alpha: isDark ? 0.12 : 0.08),
-                borderRadius: BorderRadius.circular(AppRadius.pill),
-                border: Border.all(
-                  color: accent.withValues(alpha: isDark ? 0.40 : 0.30),
-                ),
-              ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(icon, size: 15, color: accent),
-                    const SizedBox(width: 6),
-                    Text(
-                      label,
-                      style: TextStyle(
-                        fontSize: AppTypography.label,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0.3,
-                        color: isDark ? Colors.white : AppColors.ink900,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final accent = Theme.of(context).colorScheme.primary;
@@ -188,7 +126,6 @@ class IntroCtaRow extends StatelessWidget {
     final ctas = <Widget>[
       PrimaryButton(
         label: loc.viewMyWork,
-        trailingIcon: Icons.arrow_forward_rounded,
         isPill: true,
         letterSpacing: 0.3,
         onPressed: () {
@@ -200,19 +137,16 @@ class IntroCtaRow extends StatelessWidget {
         constraints: BoxConstraints(
             maxWidth: MediaQuery.sizeOf(context).width * 0.9, minHeight: 40),
         child: _ghostButton(
-          label: loc.contactMe,
-          icon: Icons.send_rounded,
+          label: loc.introEmailMe,
+          icon: Icons.mail_outline_rounded,
           color: accent,
           isDark: isDark,
-          onPressed: () {
-            SoundService.instance.playClick();
-            onContactMe();
-          },
+          onPressed: _emailMe,
         ),
       ),
     ];
     // Narrow phones: one column at a shared width. Centred in a Wrap the
-    // three buttons each took their label's width and stacked unevenly.
+    // buttons each took their label's width and stacked unevenly.
     final wrapAlign = alignStart ? WrapAlignment.start : WrapAlignment.center;
     final stackCtas = MediaQuery.sizeOf(context).width < AppBreakpoints.compact;
 
@@ -241,74 +175,17 @@ class IntroCtaRow extends StatelessWidget {
             alignment: wrapAlign,
             children: ctas,
           ),
-        const SizedBox(height: AppSpacing.smd),
-        Wrap(
-          spacing: 12,
-          runSpacing: 8,
-          alignment: wrapAlign,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                  minHeight: 40),
-              child: _linkButton(
-                label: loc.introDownloadResume,
-                icon: Icons.download_rounded,
-                onPressed: () {
-                  SoundService.instance.playClick();
-                  onDownloadResume();
-                },
-              ),
-            ),
-            for (final link in const [
-              ('LinkedIn', Icons.open_in_new_rounded, ProfileLinks.linkedIn),
-              ('GitHub', Icons.open_in_new_rounded, ProfileLinks.github),
-            ])
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                    maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                    minHeight: 40),
-                child: _linkButton(
-                  label: link.$1,
-                  icon: link.$2,
-                  onPressed: () {
-                    SoundService.instance.playClick();
-                    launchUrl(Uri.parse(link.$3),
-                        mode: LaunchMode.externalApplication);
-                  },
-                ),
-              ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-                  minHeight: 40),
-              child: _linkButton(
-                label: loc.copyEmail,
-                icon: Icons.content_copy_rounded,
-                onPressed: () => _copyEmail(context),
-              ),
-            ),
-            _pill(
-              context,
-              icon: Icons.badge_rounded,
-              label: loc.quickProfile,
-              semanticsLabel: loc.quickProfileTitle,
-              accent: accent,
-              onTap: () => showQuickProfile(
-                context,
-                onDownloadResume: onDownloadResume,
-              ),
-            ),
-            _pill(
-              context,
-              icon: Icons.qr_code_2_rounded,
-              label: loc.quickProfileVcard,
-              semanticsLabel: loc.vcardDialogTitle,
-              accent: accent,
-              onTap: () => VCardQrDialog.show(context),
-            ),
-          ],
+        const SizedBox(height: AppSpacing.sm),
+        ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 40),
+          child: _linkButton(
+            label: loc.introDownloadResume,
+            icon: Icons.download_rounded,
+            onPressed: () {
+              SoundService.instance.playClick();
+              onDownloadResume();
+            },
+          ),
         ),
       ],
     );

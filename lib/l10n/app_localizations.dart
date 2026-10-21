@@ -448,18 +448,6 @@ abstract class AppLocalizations {
   /// **'Download CV'**
   String get introDownloadResume;
 
-  /// No description provided for @contactMe.
-  ///
-  /// In en, this message translates to:
-  /// **'Let\'s talk'**
-  String get contactMe;
-
-  /// No description provided for @copyEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Copy email'**
-  String get copyEmail;
-
   /// No description provided for @navCopyLink.
   ///
   /// In en, this message translates to:
@@ -478,17 +466,35 @@ abstract class AppLocalizations {
   /// **'Senior Flutter & Android engineer'**
   String get introSeniorEngineer;
 
+  /// No description provided for @introSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Senior mobile engineer. I build Flutter and native Android apps that keep working offline, read NFC smart cards and keep tokens secure.'**
+  String get introSummary;
+
+  /// No description provided for @introAvailability.
+  ///
+  /// In en, this message translates to:
+  /// **'Available remote or part-time now; on-site in Brno from February 2027.'**
+  String get introAvailability;
+
+  /// No description provided for @introEmailMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Email me'**
+  String get introEmailMe;
+
+  /// No description provided for @traceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What happens when a card is tapped'**
+  String get traceTitle;
+
   /// Intro cover copy (the original design); introSeniorEngineer carries the site-wide wording.
   ///
   /// In en, this message translates to:
   /// **'Senior Flutter & Android engineer'**
   String get introRoleLine;
-
-  /// No description provided for @introValueProposition.
-  ///
-  /// In en, this message translates to:
-  /// **'I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.'**
-  String get introValueProposition;
 
   /// No description provided for @introSkillArchitecture.
   ///
@@ -2026,35 +2032,17 @@ abstract class AppLocalizations {
   /// **'Available'**
   String get heroFactAvailableLabel;
 
-  /// No description provided for @heroFactAvailableValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Remote or part-time now. On-site in Brno from February 2027.'**
-  String get heroFactAvailableValue;
-
   /// No description provided for @heroFactPermitLabel.
   ///
   /// In en, this message translates to:
   /// **'Work permit'**
   String get heroFactPermitLabel;
 
-  /// No description provided for @heroFactPermitValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Not needed in Czechia while I study full-time.'**
-  String get heroFactPermitValue;
-
   /// No description provided for @heroFactBasedLabel.
   ///
   /// In en, this message translates to:
   /// **'Based in'**
   String get heroFactBasedLabel;
-
-  /// No description provided for @heroFactBasedValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Amman, Jordan'**
-  String get heroFactBasedValue;
 
   /// No description provided for @heroFactFocusLabel.
   ///
@@ -2181,12 +2169,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Backend'**
   String get traceStepBackend;
-
-  /// No description provided for @introTagline.
-  ///
-  /// In en, this message translates to:
-  /// **'Mobile engineer building software that works beyond the screen.'**
-  String get introTagline;
 
   /// No description provided for @introPitch2.
   ///

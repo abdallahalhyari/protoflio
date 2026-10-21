@@ -17,7 +17,9 @@ void main() {
     test('$code: refreshed page copy is fully localized', () {
       final localizedCopy = [
         localized.introSeniorEngineer,
-        localized.introValueProposition,
+        localized.introSummary,
+        localized.introAvailability,
+        localized.traceTitle,
         localized.introSkillArchitecture,
         localized.introSkillProductDelivery,
         localized.studyProblem,
@@ -54,7 +56,9 @@ void main() {
       ];
       final englishCopy = [
         english.introSeniorEngineer,
-        english.introValueProposition,
+        english.introSummary,
+        english.introAvailability,
+        english.traceTitle,
         english.introSkillArchitecture,
         english.introSkillProductDelivery,
         english.studyProblem,

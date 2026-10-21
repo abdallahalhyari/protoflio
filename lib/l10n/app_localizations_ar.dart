@@ -200,12 +200,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introDownloadResume => 'تحميل السيرة الذاتية';
 
   @override
-  String get contactMe => 'لنتحدث';
-
-  @override
-  String get copyEmail => 'نسخ البريد';
-
-  @override
   String get navCopyLink => 'نسخ الرابط';
 
   @override
@@ -217,11 +211,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
 
   @override
-  String get introRoleLine => 'مهندس تطبيقات هواتف أول';
+  String get introSummary =>
+      'مهندس تطبيقات جوّال أول. أبني تطبيقات Flutter وAndroid أصلية تعمل دون اتصال، وتقرأ البطاقات الذكية عبر NFC، وتحفظ الرموز بأمان.';
 
   @override
-  String get introValueProposition =>
-      'أصمم وأطلق منتجات جوال مرنة تحوّل الأنظمة المعقدة إلى تجارب استخدام واضحة وجديرة بالثقة.';
+  String get introAvailability =>
+      'متاح الآن عن بُعد أو بدوام جزئي، وحضورياً في برنو من فبراير 2027.';
+
+  @override
+  String get introEmailMe => 'راسلني';
+
+  @override
+  String get traceTitle => 'ماذا يحدث عند تمرير البطاقة';
+
+  @override
+  String get introRoleLine => 'مهندس تطبيقات هواتف أول';
 
   @override
   String get introSkillArchitecture => 'هندسة الأنظمة';
@@ -1093,21 +1097,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get heroFactAvailableLabel => 'التوفر';
 
   @override
-  String get heroFactAvailableValue =>
-      'عن بُعد أو بدوام جزئي الآن. حضورياً في برنو من فبراير 2027.';
-
-  @override
   String get heroFactPermitLabel => 'تصريح العمل';
 
   @override
-  String get heroFactPermitValue =>
-      'غير مطلوب في التشيك أثناء دراستي بدوام كامل.';
-
-  @override
   String get heroFactBasedLabel => 'مقيم في';
-
-  @override
-  String get heroFactBasedValue => 'عمّان، الأردن';
 
   @override
   String get heroFactFocusLabel => 'التخصص';
@@ -1179,10 +1172,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get traceStepBackend => 'Backend';
-
-  @override
-  String get introTagline =>
-      'مهندس تطبيقات هواتف أبني برمجيات تعمل خلف الشاشة.';
 
   @override
   String get introPitch2 =>

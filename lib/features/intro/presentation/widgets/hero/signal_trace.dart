@@ -5,29 +5,24 @@ import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/shared/widgets/retrying_asset_image.dart';
-import 'package:profile/shared/widgets/pulsing_dot.dart';
 
 /// The cover's signature: one NFC claim traced through every layer of a
 /// mobile system, Flutter UI to backend. A packet travels the path and each
 /// layer lights as it arrives; hovering or focusing a layer pauses the
 /// packet and says what happens there.
 ///
-/// The header carries the recruiter facts (who, where, availability), so the
-/// first screen answers "who is this and can I hire them" before the trace
-/// is even touched.
+/// The header names what the trace shows; who and when sit beside it in
+/// the cover's statement column.
 class SignalTrace extends StatefulWidget {
   final bool isDark;
   final bool isWide;
   final Animation<double> reveal;
-  final VoidCallback? onContactMe;
 
   const SignalTrace({
     super.key,
     required this.isDark,
     required this.isWide,
     required this.reveal,
-    this.onContactMe,
   });
 
   @override
@@ -272,129 +267,19 @@ class _SignalTraceState extends State<SignalTrace>
       );
     }
 
+    // Says what the demo is, so it reads on its own: the name and the
+    // availability already sit beside it in the statement column.
     final header = Padding(
-      padding: const EdgeInsets.fromLTRB(20, 14, 20, 12),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: rule),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: isDark
-                    ? [
-                        AppColors.teal.withValues(alpha: 0.5),
-                        AppColors.gold.withValues(alpha: AppAlpha.border),
-                      ]
-                    : [
-                        AppColors.tealLight.withValues(alpha: 0.55),
-                        AppColors.goldSoft.withValues(alpha: 0.65),
-                      ],
-              ),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: Semantics(
-              image: true,
-              label: l10n.semanticPortrait,
-              excludeSemantics: true,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Hero(
-                  tag: 'abdallah_avatar_headshot',
-                  child: RetryingAssetImage(
-                    'assets/my_image.webp',
-                    fit: BoxFit.contain,
-                    alignment: Alignment.bottomCenter,
-                    cacheWidth: 192,
-                    filterQuality: FilterQuality.high,
-                    semanticLabel: l10n.semanticPortrait,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Abdallah Alhyari',
-                  style: TextStyle(
-                    fontSize: AppTypography.lead,
-                    fontWeight: FontWeight.w700,
-                    color: context.onSurface,
-                  ),
-                ),
-                Text(
-                  l10n.heroFactBasedValue,
-                  style: TextStyle(
-                    fontSize: AppTypography.label,
-                    color: muted,
-                    height: 1.4,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-
-    final availability = DecoratedBox(
-      decoration: BoxDecoration(border: Border(top: BorderSide(color: rule))),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
       child: Semantics(
-        button: widget.onContactMe != null,
-        child: InkWell(
-          onTap: widget.onContactMe == null
-              ? null
-              : () {
-                  SoundService.instance.playClick();
-                  widget.onContactMe!();
-                },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6, right: 10),
-                      child: PulsingDot(color: live),
-                    ),
-                    Expanded(
-                      child: Text(
-                        l10n.heroFactAvailableValue,
-                        style: TextStyle(
-                          fontSize: AppTypography.body,
-                          fontWeight: FontWeight.w700,
-                          height: 1.4,
-                          color: live,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 2),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 18),
-                  child: Text(
-                    l10n.heroFactPermitValue,
-                    style: TextStyle(
-                      fontSize: AppTypography.label,
-                      height: 1.4,
-                      color: muted,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+        header: true,
+        child: Text(
+          l10n.traceTitle,
+          style: TextStyle(
+            fontSize: AppTypography.lead,
+            fontWeight: FontWeight.w700,
+            height: 1.3,
+            color: context.onSurface,
           ),
         ),
       ),
@@ -587,7 +472,7 @@ class _SignalTraceState extends State<SignalTrace>
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: [header, availability, trace, footer],
+                children: [header, trace, footer],
               ),
             ],
           ),

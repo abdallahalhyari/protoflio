@@ -1,26 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
+import 'package:profile/features/contact/presentation/widgets/vcard_qr_dialog.dart';
 import 'package:profile/features/intro/presentation/widgets/quick_profile_sheet.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/utils/career_facts.dart';
 import 'package:profile/core/theme/app_theme.dart';
 
+/// Opens the hiring summary and the vCard dialog directly: the cover no
+/// longer carries buttons for them, but both still exist.
 Widget _hero(Locale locale, {VoidCallback? onCv}) => MaterialApp(
       theme: AppTheme.dark(),
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: Scaffold(
-        body: Center(
-          child: IntroCtaRow(
-            isDark: true,
-            onViewWork: () {},
-            onDownloadResume: onCv ?? () {},
-            onContactMe: () {},
-          ),
-        ),
+      home: Builder(
+        builder: (context) {
+          final l10n = AppLocalizations.of(context)!;
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () => showQuickProfile(context,
+                        onDownloadResume: onCv ?? () {}),
+                    child: Text(l10n.quickProfile),
+                  ),
+                  TextButton(
+                    onPressed: () => VCardQrDialog.show(context),
+                    child: Text(l10n.quickProfileVcard),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
 
@@ -34,8 +49,7 @@ void _size(WidgetTester tester, Size size, [double textScale = 1]) {
 }
 
 void main() {
-  testWidgets('hero link opens the profile with the hiring facts',
-      (tester) async {
+  testWidgets('hiring summary shows the hiring facts', (tester) async {
     _size(tester, const Size(1440, 900));
     var cvOpened = false;
     await tester.pumpWidget(_hero(const Locale('en'), onCv: () {
@@ -58,8 +72,7 @@ void main() {
     expect(cvOpened, isTrue);
   });
 
-  testWidgets('vCARD QR button on hero row opens VCardQrDialog',
-      (tester) async {
+  testWidgets('vCard dialog opens with its scan hint', (tester) async {
     _size(tester, const Size(1440, 900));
     await tester.pumpWidget(_hero(const Locale('en')));
     await tester.tap(find

@@ -90,8 +90,6 @@
   "@introDownloadResume": {
     "description": "Intro cover copy (the original design); downloadResume carries the site-wide wording."
   },
-  "contactMe": "Let's talk",
-  "copyEmail": "Copy email",
   "navCopyLink": "Copy link",
   "navCopyLinkTo": "Copy link to {section}",
   "@navCopyLinkTo": {
@@ -100,11 +98,14 @@
     }
   },
   "introSeniorEngineer": "Senior Flutter & Android engineer",
+  "introSummary": "Senior mobile engineer. I build Flutter and native Android apps that keep working offline, read NFC smart cards and keep tokens secure.",
+  "introAvailability": "Available remote or part-time now; on-site in Brno from February 2027.",
+  "introEmailMe": "Email me",
+  "traceTitle": "What happens when a card is tapped",
   "introRoleLine": "Senior Flutter & Android engineer",
   "@introRoleLine": {
     "description": "Intro cover copy (the original design); introSeniorEngineer carries the site-wide wording."
   },
-  "introValueProposition": "I build production-grade mobile applications, from architecture and native integrations to release and long-term maintenance.",
   "introSkillArchitecture": "Architecture",
   "introSkillProductDelivery": "Product delivery",
   "introWorkEligibility": "Relocating to Brno in 2027",
@@ -546,11 +547,8 @@
   "projectFigureValueSolutions": "4.7+",
   "projectFigureLabelSolutions": "star store rating. Both apps shipped on time.",
   "heroFactAvailableLabel": "Available",
-  "heroFactAvailableValue": "Remote or part-time now. On-site in Brno from February 2027.",
   "heroFactPermitLabel": "Work permit",
-  "heroFactPermitValue": "Not needed in Czechia while I study full-time.",
   "heroFactBasedLabel": "Based in",
-  "heroFactBasedValue": "Amman, Jordan",
   "heroFactFocusLabel": "Focus",
   "heroFactFocusValue": "NFC smart cards, offline-first sync, secure authentication",
   "heroFactLanguagesLabel": "Languages",
@@ -572,7 +570,6 @@
   "traceStepNative": "Native Android",
   "traceStepSecurity": "Security and sync",
   "traceStepBackend": "Backend",
-  "introTagline": "Mobile engineer building software that works beyond the screen.",
   "introPitch2": "Production Flutter and native Android: NFC smart cards, cryptography, offline-first sync and enterprise integrations.",
   "letsTalk": "Let's talk",
   "downloadCv": "Download CV",
