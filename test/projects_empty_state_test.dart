@@ -37,7 +37,7 @@ void main() {
 
       expect(find.text('No case studies match these filters'), findsOneWidget);
       expect(find.byType(FilledButton), findsOneWidget);
-      expect(find.text('Reset filters'), findsOneWidget);
+      expect(find.text('Show all case studies'), findsOneWidget);
     });
 
     testWidgets('Tapping Reset button resets filters in BLoC', (tester) async {
@@ -56,7 +56,7 @@ void main() {
 
       // We assume it's initially with no filters if no event was fired.
       // So tapping reset should fire ProjectsFilterReset.
-      await tester.tap(find.text('Reset filters'));
+      await tester.tap(find.text('Show all case studies'));
       await tester.pumpAndSettle();
 
       // Since it resets, selectedDomain should be 'ALL' and activeTechFilters should be empty.

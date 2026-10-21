@@ -1810,17 +1810,47 @@ abstract class AppLocalizations {
   /// **'Read case study'**
   String get uiReadCaseStudy;
 
+  /// No description provided for @projectsEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The domain and technology you picked don\'t share a case study.'**
+  String get projectsEmptyHint;
+
+  /// No description provided for @projectsEmptyShowAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all case studies'**
+  String get projectsEmptyShowAll;
+
+  /// No description provided for @projectTagHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC / Health'**
+  String get projectTagHealth;
+
+  /// No description provided for @projectTagEnterprise.
+  ///
+  /// In en, this message translates to:
+  /// **'HIS / LMS'**
+  String get projectTagEnterprise;
+
+  /// No description provided for @projectTagConsumer.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty / Social'**
+  String get projectTagConsumer;
+
+  /// No description provided for @projectTagCommerce.
+  ///
+  /// In en, this message translates to:
+  /// **'Streaming'**
+  String get projectTagCommerce;
+
   /// No description provided for @uiNoCaseStudies.
   ///
   /// In en, this message translates to:
   /// **'No case studies match these filters'**
   String get uiNoCaseStudies;
-
-  /// No description provided for @uiResetFilters.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset filters'**
-  String get uiResetFilters;
 
   /// No description provided for @uiScrollToExplore.
   ///

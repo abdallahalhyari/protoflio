@@ -963,10 +963,26 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiReadCaseStudy => 'قراءة دراسة الحالة';
 
   @override
-  String get uiNoCaseStudies => 'لا توجد دراسات حالة مطابقة';
+  String get projectsEmptyHint =>
+      'لا توجد دراسة حالة تجمع المجال والتقنية المختارين.';
 
   @override
-  String get uiResetFilters => 'إعادة ضبط الفلاتر';
+  String get projectsEmptyShowAll => 'عرض كل دراسات الحالة';
+
+  @override
+  String get projectTagHealth => 'NFC / الصحة';
+
+  @override
+  String get projectTagEnterprise => 'HIS / LMS';
+
+  @override
+  String get projectTagConsumer => 'الولاء / التواصل';
+
+  @override
+  String get projectTagCommerce => 'البث';
+
+  @override
+  String get uiNoCaseStudies => 'لا توجد دراسات حالة مطابقة';
 
   @override
   String get uiScrollToExplore => 'مرّر للاستكشاف';

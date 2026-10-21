@@ -971,10 +971,26 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiReadCaseStudy => 'Číst případovou studii';
 
   @override
-  String get uiNoCaseStudies => 'Žádné odpovídající studie';
+  String get projectsEmptyHint =>
+      'Vybraná oblast a technologie nemají společnou případovou studii.';
 
   @override
-  String get uiResetFilters => 'Zrušit filtry';
+  String get projectsEmptyShowAll => 'Zobrazit všechny studie';
+
+  @override
+  String get projectTagHealth => 'NFC / Zdravotnictví';
+
+  @override
+  String get projectTagEnterprise => 'HIS / LMS';
+
+  @override
+  String get projectTagConsumer => 'Věrnost / Sociální sítě';
+
+  @override
+  String get projectTagCommerce => 'Streamování';
+
+  @override
+  String get uiNoCaseStudies => 'Žádné odpovídající studie';
 
   @override
   String get uiScrollToExplore => 'Posuňte a prozkoumejte';

@@ -968,10 +968,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiReadCaseStudy => 'Read case study';
 
   @override
-  String get uiNoCaseStudies => 'No case studies match these filters';
+  String get projectsEmptyHint =>
+      'The domain and technology you picked don\'t share a case study.';
 
   @override
-  String get uiResetFilters => 'Reset filters';
+  String get projectsEmptyShowAll => 'Show all case studies';
+
+  @override
+  String get projectTagHealth => 'NFC / Health';
+
+  @override
+  String get projectTagEnterprise => 'HIS / LMS';
+
+  @override
+  String get projectTagConsumer => 'Loyalty / Social';
+
+  @override
+  String get projectTagCommerce => 'Streaming';
+
+  @override
+  String get uiNoCaseStudies => 'No case studies match these filters';
 
   @override
   String get uiScrollToExplore => 'Scroll to explore';

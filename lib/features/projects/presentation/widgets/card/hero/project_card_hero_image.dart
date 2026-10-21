@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
@@ -137,7 +138,8 @@ class CardHeroImage extends StatelessWidget {
                         const SizedBox(width: 5),
                         Flexible(
                           child: Text(
-                            _domainShortTag(project.domain),
+                            _domainShortTag(
+                                AppLocalizations.of(context)!, project.domain),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: AppTypography.label,
@@ -232,18 +234,15 @@ class CardHeroImage extends StatelessWidget {
     }
   }
 
-  String _domainShortTag(String domain) {
-    switch (domain) {
-      case 'Healthcare & Smart Cards':
-        return 'NFC / Health';
-      case 'Enterprise HIS & LMS':
-        return 'HIS / LMS';
-      case 'Consumer & Social':
-        return 'Loyalty / Social';
-      case 'M-Commerce & Streaming':
-        return 'Streaming';
-      default:
-        return domain;
-    }
+  /// A short domain tag that fits on the image; the filter row above the
+  /// cards carries the full domain names.
+  String _domainShortTag(AppLocalizations l10n, String domain) {
+    return switch (domain) {
+      'Healthcare & Smart Cards' => l10n.projectTagHealth,
+      'Enterprise HIS & LMS' => l10n.projectTagEnterprise,
+      'Consumer & Social' => l10n.projectTagConsumer,
+      'M-Commerce & Streaming' => l10n.projectTagCommerce,
+      _ => domain,
+    };
   }
 }
