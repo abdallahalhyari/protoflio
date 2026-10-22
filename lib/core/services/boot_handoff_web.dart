@@ -9,3 +9,12 @@ void announceAppReady() {
   final hook = globalContext['portfolioReady'];
   if (hook.isA<JSFunction>()) (hook as JSFunction).callAsFunction();
 }
+
+/// Whether `web/index.html`'s boot screen is still over the app.
+bool isBootScreenUp() {
+  final doc = globalContext['document'];
+  if (doc.isUndefinedOrNull) return false;
+  final el = (doc as JSObject)
+      .callMethod<JSAny?>('getElementById'.toJS, 'boot-loader'.toJS);
+  return !el.isUndefinedOrNull;
+}

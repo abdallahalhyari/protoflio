@@ -235,67 +235,152 @@
       font-size: 14px; text-decoration: none; z-index: 10000;
     }
     .skip-link:focus { left: 8px; outline: 2px solid #fff; outline-offset: 2px; }
+    /* The boot screen is a still of the app's cover: same name, sentence,
+       availability and actions in the same places, so the app arriving
+       reads as the page waking up rather than a second page. Geometry
+       follows IntroPage / HeroStatement / AppScreenShell; colours follow
+       the theme the app will open in (dark unless light was chosen). */
     #boot-loader {
+      --boot-bg: linear-gradient(180deg, #0D131B 0%, #0B1018 50%, #090E14 100%);
+      --boot-ink: #FFFFFF;
+      --boot-muted: rgba(255, 255, 255, 0.72);
+      --boot-accent: #BF9942;
+      --boot-on-accent: #000000;
+      --boot-line: #7FBDB5;
+      --boot-ghost: rgba(255, 255, 255, 0.24);
       position: fixed; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      background: radial-gradient(ellipse at 50% 42%, #131B26 0%, #0E141C 52%, #0B1018 100%);
-      color: #ffffff;
+      display: flex; flex-direction: column; justify-content: center;
+      background: var(--boot-bg);
+      color: var(--boot-ink);
       z-index: 9999;
       opacity: 1;
-      transform: scale(1);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       overflow: hidden;
-      padding: 0 24px;
-      text-align: center;
-      user-select: none;
-      -webkit-user-select: none;
+      font-family: 'ReadexPro', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      /* Desktop: AppScreenShell's top nav reserve plus its padding. */
+      padding: 88px 0 24px;
+      box-sizing: border-box;
     }
-    .boot-slow {
-      display: none;
-      margin-top: 22px;
-      max-width: 340px;
-      font: 500 13px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      color: rgba(255, 255, 255, 0.72);
+    #boot-loader.light {
+      --boot-bg: linear-gradient(180deg, #FAFBFD 0%, #F0F3F6 45%, #E8ECEF 100%);
+      --boot-ink: #1B2A41;
+      --boot-muted: #4A5763;
+      --boot-accent: #6F5926;
+      --boot-on-accent: #FFFFFF;
+      --boot-line: #1F5552;
+      --boot-ghost: #959E9B;
     }
-    #boot-loader.slow .boot-slow { display: block; }
-    /* Flutter is up and building the page: freeze the loader's loops (the
-       glow and shimmer repaint on the main thread every frame) so they
-       don't compete with that work while the screen waits to hand off. */
-    #boot-loader.settled * { animation-play-state: paused; }
-    .boot-pitch {
-      max-width: 440px;
-      margin: 0 0 24px;
-      font: 400 14px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      color: #CBD5E1;
-      user-select: text; -webkit-user-select: text;
+    .boot-cover {
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      padding: 0 48px; box-sizing: border-box;
+    }
+    /* The statement column takes six of ten parts beside the trace card. */
+    .boot-statement { max-width: 60%; }
+    .boot-name {
+      margin: 0;
+      font: 900 clamp(64px, 7.5vw, 96px)/0.98 'Tenada', system-ui, sans-serif;
+      color: var(--boot-ink);
+      white-space: nowrap;
+      user-select: none; -webkit-user-select: none;
+    }
+    .boot-name span { display: block; }
+    .boot-name .boot-surname { color: var(--boot-accent); }
+    .boot-summary {
+      max-width: 540px;
+      margin: 24px 0 0;
+      font-size: 20px; font-weight: 500; line-height: 1.45;
+    }
+    .boot-availability {
+      max-width: 540px;
+      margin: 8px 0 0;
+      font-size: 14px; line-height: 1.5;
+      color: var(--boot-muted);
     }
     .boot-actions {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      align-items: center; justify-content: center;
-      margin-bottom: 28px;
+      display: flex; flex-wrap: wrap; gap: 10px 12px;
+      margin-top: 32px;
     }
     .boot-actions a {
-      display: inline-flex; align-items: center; min-height: 44px;
-      padding: 0 20px; border-radius: 999px;
-      font: 700 13px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
-      color: #E3CB8E; border: 1px solid rgba(227, 203, 142, 0.35);
-      transition: background-color 0.15s ease, border-color 0.15s ease;
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 46px; padding: 0 28px; box-sizing: border-box;
+      border-radius: 999px; text-decoration: none;
+      font-size: 14px; font-weight: 800; letter-spacing: 0.3px;
+      color: var(--boot-accent); border: 1.5px solid var(--boot-accent);
     }
-    .boot-actions a:hover { background: rgba(176, 141, 60, 0.14); border-color: #E3CB8E; }
-    .boot-actions a.primary { background: #B08D3C; border-color: #B08D3C; color: #0B1018; }
-    .boot-actions a.primary:hover { background: #96782E; }
-    .boot-actions a:focus-visible { outline: 2px solid #E3CB8E; outline-offset: 3px; }
-    @media (max-width: 420px) {
-      .boot-role { letter-spacing: 0.1em; }
+    .boot-actions a.ghost { min-height: 40px; padding: 0 20px; gap: 8px; }
+    .boot-actions a.primary {
+      background: var(--boot-accent); color: var(--boot-on-accent);
+      font-size: 16px;
     }
-    .boot-loading {
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      font: 500 11px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: #94A3B8;
+    .boot-actions a:focus-visible,
+    .boot-cv:focus-visible { outline: 2px solid var(--boot-accent); outline-offset: 3px; }
+    .boot-cv {
+      display: inline-flex; align-items: center; gap: 8px; min-height: 40px;
+      margin-top: 8px; padding: 0 12px;
+      font-size: 12px; font-weight: 800; letter-spacing: 0.3px;
+      color: var(--boot-muted); text-decoration: none;
     }
+    .boot-cv:hover, .boot-actions a:hover { text-decoration: underline; }
+    /* Short laptop screens: the app tightens the cover below 940px. */
+    @media (max-height: 939px) {
+      .boot-name { font-size: clamp(64px, 7.5vw, 76px); }
+      .boot-summary { margin-top: 8px; font-size: 16px; }
+      .boot-actions { margin-top: 16px; }
+    }
+    @media (max-width: 1439px) { .boot-cover { padding: 0 32px; } }
+    @media (max-width: 1023px) { .boot-cover { padding: 0 24px; } }
+    /* Phones and portrait tablets: the app's continuous layout, the
+       statement at the top under the 60px app bar. */
+    @media (max-width: 899px), (max-aspect-ratio: 1/1) {
+      #boot-loader {
+        justify-content: flex-start;
+        padding: calc(76px + env(safe-area-inset-top)) 0 24px;
+      }
+      .boot-cover { padding: 0 32px 0 24px; }
+      [dir="rtl"] .boot-cover { padding: 0 24px 0 32px; }
+      .boot-statement { max-width: none; }
+      .boot-name { font-size: clamp(52px, 17vw, 84px); }
+      .boot-summary { margin-top: 16px; font-size: 16px; }
+      .boot-actions { margin-top: 24px; }
+    }
+    @media (max-width: 599px) {
+      .boot-cover { padding: 0 24px 0 16px; }
+      [dir="rtl"] .boot-cover { padding: 0 16px 0 24px; }
+    }
+    @media (max-width: 459px) {
+      .boot-actions { flex-direction: column; max-width: 320px; }
+    }
+    /* One quiet line along the top edge while the app loads. */
+    .boot-progress {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      overflow: hidden;
+    }
+    .boot-progress::after {
+      content: ""; position: absolute; top: 0; bottom: 0; width: 30%;
+      background: var(--boot-line);
+      animation: boot-sweep 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    @keyframes boot-sweep {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(340%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .boot-progress::after { animation: none; width: 100%; opacity: 0.5; }
+    }
+    /* Flutter is up and building the page: stop the line so it doesn't
+       compete with that work while the screen waits to hand off. */
+    #boot-loader.settled * { animation-play-state: paused; }
+    .boot-slow {
+      display: none;
+      position: absolute; bottom: 24px; left: 0; right: 0; margin: 0;
+      font-size: 14px; line-height: 1.5;
+      color: var(--boot-muted);
+    }
+    .boot-slow span {
+      display: block; max-width: 1200px; margin: 0 auto;
+      padding: 0 24px; box-sizing: border-box;
+    }
+    #boot-loader.slow .boot-slow { display: block; }
     #consent-banner {
       position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
       z-index: 10000; display: flex; align-items: center; gap: 10px;
@@ -324,98 +409,7 @@
     }
     #boot-loader.hidden {
       opacity: 0;
-      transform: scale(1.025);
       pointer-events: none;
-    }
-    .boot-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .boot-emblem-wrap {
-      position: relative;
-      width: 76px;
-      height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-    }
-    .boot-orbital-ring {
-      position: absolute;
-      inset: -8px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      border-top-color: #B08D3C;
-      border-right-color: #2F6F6A;
-      border-bottom-color: rgba(176, 141, 60, 0.2);
-      animation: boot-orbit 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      filter: drop-shadow(0 0 10px rgba(176, 141, 60, 0.5));
-    }
-    .boot-emblem {
-      width: 58px;
-      height: 58px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #B08D3C 0%, #8F6B22 50%, #2F6F6A 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Tenada', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 28px;
-      font-weight: 900;
-      color: #FFFFFF;
-      box-shadow: 0 0 32px rgba(176, 141, 60, 0.45), 0 0 64px rgba(47, 111, 106, 0.25);
-      animation: boot-pulse-glow 2s ease-in-out infinite alternate;
-    }
-    .boot-title {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: clamp(20px, 4.2vw, 34px);
-      font-weight: 800;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: #F8FAFC;
-      margin-bottom: 8px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    .boot-role {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #E3CB8E;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-    .boot-progress-track {
-      width: 140px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      overflow: hidden;
-      position: relative;
-    }
-    .boot-progress-bar {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 50%;
-      background: linear-gradient(90deg, transparent, #B08D3C, #2F6F6A, #E3CB8E, transparent);
-      border-radius: 999px;
-      animation: boot-shimmer 1.4s ease-in-out infinite;
-    }
-    @keyframes boot-orbit {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes boot-pulse-glow {
-      0% { transform: scale(0.98); box-shadow: 0 0 24px rgba(176, 141, 60, 0.35); }
-      100% { transform: scale(1.02); box-shadow: 0 0 42px rgba(176, 141, 60, 0.55), 0 0 70px rgba(47, 111, 106, 0.3); }
-    }
-    @keyframes boot-shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(250%); }
     }
     /* Screen reader & crawler accessible semantic layout (never blocks visual Canvas) */
     .sr-only {
@@ -483,33 +477,73 @@
        of walking through the boot loader / decorative overlays. -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- First screen, painted by the browser before Flutter loads: who,
-       what, and the three actions a recruiter wants, usable from the first
-       frame. Crossfades into the app's own hero once it renders. -->
-  <div id="boot-loader">
-    <div class="boot-container">
-      <div class="boot-emblem-wrap" aria-hidden="true">
-        <div class="boot-orbital-ring"></div>
-        <div class="boot-emblem">A</div>
+  <!-- First screen, painted by the browser before Flutter loads: a still
+       of the app's cover (name, what I build, availability, the same
+       actions), usable from the first frame. The links work before the app
+       does; "View my work" opens Work once it loads. The app keeps the
+       statement still on arrival (BootHandoff.coverShown), so only the
+       trace card enters. Copy matches the app's strings; boot_copy_test
+       keeps the two in step. -->
+  <div id="boot-loader" dir="ltr">
+    <div class="boot-progress" role="status" aria-label="Loading the interactive portfolio"></div>
+    <div class="boot-cover">
+      <div class="boot-statement">
+        <p class="boot-name" aria-label="Abdallah Alhyari"><span aria-hidden="true">ABDALLAH</span><span class="boot-surname" aria-hidden="true">ALHYARI</span></p>
+        <p class="boot-summary" data-boot="summary">Senior mobile engineer. I build Flutter and native Android apps that keep working offline, read NFC smart cards and keep tokens secure.</p>
+        <p class="boot-availability" data-boot="availability">Available for remote/contract now; on-site in Brno and surrounding region.</p>
+        <nav class="boot-actions" aria-label="Quick links">
+          <a class="primary" href="#work" data-boot="work">View my work</a>
+          <a class="ghost" href="mailto:alhyariabdallh@gmail.com"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-1 14H5c-.55 0-1-.45-1-1V8l6.94 4.34c.65.41 1.47.41 2.12 0L20 8v9c0 .55-.45 1-1 1zm-7-7L4 6h16l-8 5z"/></svg><span data-boot="email">Email me</span></a>
+        </nav>
+        <a class="boot-cv" href="cv.pdf"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24"><path fill="currentColor" d="M16.59 9H15V4c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v5H7.41c-.89 0-1.34 1.08-.71 1.71l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.63-.63.19-1.71-.7-1.71zM5 19c0 .55.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1H6c-.55 0-1 .45-1 1z"/></svg><span data-boot="cv">Download CV</span></a>
       </div>
-      <div class="boot-title">Abdallah Alhyari</div>
-      <div class="boot-role">Mobile Engineer &middot; Flutter, Android, NFC</div>
-      <p class="boot-pitch">Builds complex, reliable, scalable mobile systems &mdash;
-        offline-first sync, NFC smart-cards, security and real-time apps.</p>
-      <nav class="boot-actions" aria-label="Quick links">
-        <a class="primary" href="cv.pdf">Download CV</a>
-        <a href="mailto:alhyariabdallh@gmail.com">Email me</a>
-        <a href="https://www.linkedin.com/in/abdallah-alhyari-0294791a0/" rel="noopener" target="_blank">LinkedIn</a>
-      </nav>
-      <div class="boot-loading" role="status">
-        <div class="boot-progress-track" aria-hidden="true">
-          <div class="boot-progress-bar"></div>
-        </div>
-        <span>Loading the interactive portfolio&hellip;</span>
-      </div>
-      <p class="boot-slow">Still loading &mdash; this can take a moment on a slow connection.</p>
     </div>
+    <p class="boot-slow"><span data-boot="slow">Still loading. On a slow connection this can take a moment; the links above already work.</span></p>
   </div>
+  <script>
+    // Before the first paint: the boot screen in the language and theme
+    // the app will open in, with the app's own precedence
+    // (?lang= > saved locale > browser; ?theme= > saved theme > dark).
+    (function () {
+      var COPY = {
+        cs: {
+          summary: 'Senior mobilní inženýr. Stavím aplikace ve Flutteru a nativním Androidu, které fungují i offline, čtou čipové karty přes NFC a bezpečně uchovávají tokeny.',
+          availability: 'Dostupný pro remote / kontrakt nyní; on-site v Brně a okolí.',
+          work: 'Zobrazit práci', email: 'Napište mi', cv: 'Stáhnout CV',
+          slow: 'Stále se načítá. Na pomalém připojení to chvíli trvá; odkazy výše už fungují.',
+          loading: 'Načítání interaktivního portfolia'
+        },
+        ar: {
+          summary: 'مهندس تطبيقات جوّال أول. أبني تطبيقات Flutter وAndroid أصلية تعمل دون اتصال، وتقرأ البطاقات الذكية عبر NFC، وتحفظ الرموز بأمان.',
+          availability: 'متاح للعمل عن بُعد أو العقود حالياً؛ وحضورياً في برنو وما حولها.',
+          work: 'عرض أعمالي', email: 'راسلني', cv: 'تحميل السيرة الذاتية',
+          slow: 'ما زال التحميل جارياً. قد يستغرق ذلك لحظة على اتصال بطيء؛ الروابط أعلاه تعمل الآن.',
+          loading: 'جارٍ تحميل الملف التفاعلي'
+        }
+      };
+      function stored(key) {
+        try { return JSON.parse(localStorage.getItem('flutter.' + key)); } catch (_) { return null; }
+      }
+      var q = null;
+      try { q = new URLSearchParams(location.search); } catch (_) {}
+      var l = q && q.get('lang');
+      if (!l || (l !== 'en' && !COPY[l])) l = stored('localeCode');
+      if (!l || (l !== 'en' && !COPY[l])) l = (navigator.language || 'en').slice(0, 2).toLowerCase();
+      var boot = document.getElementById('boot-loader');
+      var theme = (q && q.get('theme')) || stored('themeMode');
+      if (String(theme).toLowerCase() === 'light') boot.classList.add('light');
+      var t = COPY[l];
+      if (!t) return;
+      boot.setAttribute('lang', l);
+      boot.setAttribute('dir', l === 'ar' ? 'rtl' : 'ltr');
+      var nodes = boot.querySelectorAll('[data-boot]');
+      for (var i = 0; i < nodes.length; i++) {
+        var k = nodes[i].getAttribute('data-boot');
+        if (t[k]) nodes[i].textContent = t[k];
+      }
+      boot.querySelector('.boot-progress').setAttribute('aria-label', t.loading);
+    })();
+  </script>
 
   <!-- Accessible semantic DOM representation for search engines & web crawlers -->
   <main class="sr-only" id="main-content">

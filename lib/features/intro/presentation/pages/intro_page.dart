@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/core/services/boot_handoff.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
@@ -11,7 +12,9 @@ import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 ///   statement   name, one sentence about the work, availability, actions
 ///   trace       one NFC claim traced through every layer, as a live demo
 /// Side by side on desktop, stacked on narrower screens. The name's reveal
-/// is the cover's one motion; nothing drifts behind it.
+/// is the cover's one motion; nothing drifts behind it. On a first visit
+/// to the web build the boot screen has already shown the statement, so
+/// only the trace card enters.
 class IntroPage extends StatefulWidget {
   final VoidCallback onScrollDown;
   final VoidCallback? onViewWork;
@@ -37,6 +40,11 @@ class _IntroPageState extends State<IntroPage>
     vsync: this,
     duration: AppMotion.coverEntrance,
   );
+
+  /// The statement and actions were already on screen (the web boot
+  /// screen's still of this cover): show them as they are.
+  late final Animation<double> _statementReveal =
+      bootScreenShowsCover() ? kAlwaysCompleteAnimation : _reveal;
 
   @override
   bool get wantKeepAlive => true;
@@ -68,7 +76,7 @@ class _IntroPageState extends State<IntroPage>
           size: size,
           isDark: isDark,
           isWide: isWide,
-          reveal: _reveal,
+          reveal: _statementReveal,
         ),
         SizedBox(
           height: isWide
@@ -76,7 +84,7 @@ class _IntroPageState extends State<IntroPage>
               : AppSpacing.lg,
         ),
         HeroStep(
-          animation: _reveal,
+          animation: _statementReveal,
           begin: 0.55,
           end: 0.95,
           child: IntroCtaRow(
