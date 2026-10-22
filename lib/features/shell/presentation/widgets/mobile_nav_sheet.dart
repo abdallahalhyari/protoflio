@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:profile/l10n/app_localizations.dart';
-import 'package:profile/core/services/cv_service.dart';
 import 'package:profile/core/services/sound_service.dart';
-import 'package:profile/core/services/url_sync_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
-import 'package:profile/shared/widgets/app_toast.dart';
 import 'package:profile/shared/widgets/conditional_blur.dart';
 
 import 'package:profile/features/shell/presentation/widgets/nav_sheet/nav_sheet_header.dart';
 import 'package:profile/features/shell/presentation/widgets/nav_sheet/nav_sheet_section_row.dart';
 import 'package:profile/features/shell/presentation/widgets/nav_sheet/nav_sheet_bottom_actions.dart';
 
+/// One row of the menu: a section of the page, in page order.
 class NavSectionItem {
   final int index;
-  final String number;
   final String title;
   final String subtitle;
-  final IconData icon;
-  final Color accentColor;
 
   const NavSectionItem({
     required this.index,
-    required this.number,
     required this.title,
     required this.subtitle,
-    required this.icon,
-    required this.accentColor,
   });
+
+  /// Matches the pager's "02 / 07".
+  String get number => (index + 1).toString().padLeft(2, '0');
 }
 
+/// The phone menu: the page's sections as a numbered list (the same
+/// numbers the pager shows), then the CV and profiles.
 class MobileNavSheet extends StatelessWidget {
   final int activeIndex;
   final ValueChanged<int> onSelectSection;
@@ -44,66 +41,19 @@ class MobileNavSheet extends StatelessWidget {
   });
 
   static List<NavSectionItem> getSections(BuildContext context) {
-    final l = AppLocalizations.of(context);
+    final l = AppLocalizations.of(context)!;
+    final rows = [
+      (l.navSectionCover, l.navSubCover),
+      (l.navSectionWork, l.navSubWork),
+      (l.navSectionExperience, l.navSubExperience),
+      (l.navSectionStack, l.navSubStack),
+      (l.navSectionEngineering, l.navSubEngineering),
+      (l.navSectionAbout, l.navSubAbout),
+      (l.navSectionContact, l.navSubContact),
+    ];
     return [
-      NavSectionItem(
-        index: 0,
-        number: '01',
-        title: l?.navSectionCover ?? 'Cover & profile',
-        subtitle: l?.navSubCover ?? 'Senior Flutter & Android Engineer',
-        icon: Icons.home_rounded,
-        accentColor: AppColors.seed,
-      ),
-      NavSectionItem(
-        index: 1,
-        number: '02',
-        title: l?.navSectionWork ?? 'Selected work',
-        subtitle: l?.navSubWork ?? 'Production Systems & Case Studies',
-        icon: Icons.rocket_launch_rounded,
-        accentColor: AppColors.seed,
-      ),
-      NavSectionItem(
-        index: 2,
-        number: '03',
-        title: l?.navSectionExperience ?? 'Experience',
-        subtitle:
-            l?.navSubExperience ?? '5+ Years Enterprise Engineering & Impact',
-        icon: Icons.timeline_rounded,
-        accentColor: AppColors.seed,
-      ),
-      NavSectionItem(
-        index: 3,
-        number: '04',
-        title: l?.navSectionStack ?? 'Skills & stack',
-        subtitle: l?.navSubStack ?? 'Technical Proficiency Matrix',
-        icon: Icons.code_rounded,
-        accentColor: AppColors.seed,
-      ),
-      NavSectionItem(
-        index: 4,
-        number: '05',
-        title: l?.navSectionEngineering ?? 'Engineering',
-        subtitle:
-            l?.navSubEngineering ?? 'Enterprise Blueprints & Offline-First',
-        icon: Icons.hub_rounded,
-        accentColor: AppColors.seed,
-      ),
-      NavSectionItem(
-        index: 5,
-        number: '06',
-        title: l?.navSectionAbout ?? 'About',
-        subtitle: l?.navSubAbout ?? 'Background and availability',
-        icon: Icons.person_rounded,
-        accentColor: AppColors.seed,
-      ),
-      NavSectionItem(
-        index: 6,
-        number: '07',
-        title: l?.navSectionContact ?? 'Contact',
-        subtitle: l?.navSubContact ?? 'Direct Channels & Availability',
-        icon: Icons.mail_rounded,
-        accentColor: AppColors.seed,
-      ),
+      for (var i = 0; i < rows.length; i++)
+        NavSectionItem(index: i, title: rows[i].$1, subtitle: rows[i].$2),
     ];
   }
 
@@ -188,17 +138,17 @@ class MobileNavSheet extends StatelessWidget {
                   child: ListView.separated(
                     padding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.md,
-                      vertical: AppSpacing.md,
+                      vertical: AppSpacing.sm,
                     ),
                     shrinkWrap: true,
                     itemCount: navItems.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, __) =>
+                        Divider(height: 1, color: context.divider),
                     itemBuilder: (context, index) {
                       final item = navItems[index];
                       return NavSectionRow(
                         item: item,
                         isActive: activeIndex == item.index,
-                        isDark: isDark,
                         onSelect: () {
                           HapticFeedback.selectionClick();
                           SoundService.instance.playClick();
@@ -217,22 +167,6 @@ class MobileNavSheet extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  static Future<void> copySectionLink(
-    BuildContext context,
-    NavSectionItem item, {
-    required bool isDark,
-  }) async {
-    SoundService.instance.playClick();
-    final hash = UrlSyncService.instance.indexToHash(item.index);
-    final link = '${CvService.siteRoot}/#$hash';
-    await Clipboard.setData(ClipboardData(text: link));
-    if (!context.mounted) return;
-    AppToast.showGlass(
-      context,
-      message: 'Link copied · $link',
     );
   }
 }

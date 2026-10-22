@@ -200,14 +200,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introDownloadResume => 'Download CV';
 
   @override
-  String get navCopyLink => 'Copy link';
-
-  @override
-  String navCopyLinkTo(String section) {
-    return 'Copy link to $section';
-  }
-
-  @override
   String get introSeniorEngineer => 'Senior Flutter & Android engineer';
 
   @override

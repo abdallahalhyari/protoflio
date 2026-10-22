@@ -199,14 +199,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introDownloadResume => 'تحميل السيرة الذاتية';
 
   @override
-  String get navCopyLink => 'نسخ الرابط';
-
-  @override
-  String navCopyLinkTo(String section) {
-    return 'نسخ رابط $section';
-  }
-
-  @override
   String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
 
   @override

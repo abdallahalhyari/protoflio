@@ -16,28 +16,16 @@ class SheetHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Directory',
-                style: TextStyle(
-                  color: AppColors.teal,
-                  fontSize: AppTypography.label,
-                  fontWeight: FontWeight.w900,
-                ),
+          Semantics(
+            header: true,
+            child: Text(
+              AppLocalizations.of(context)!.uiPortfolioSections,
+              style: TextStyle(
+                color: context.onSurface,
+                fontSize: AppTypography.lead,
+                fontWeight: FontWeight.w700,
               ),
-              const SizedBox(height: 2),
-              Text(
-                AppLocalizations.of(context)!.uiPortfolioSections,
-                style: TextStyle(
-                  fontFamily: AppTypography.displayFont,
-                  color: context.onSurface,
-                  fontSize: AppTypography.lead,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            ],
+            ),
           ),
           InkWell(
             onTap: () {

@@ -4,6 +4,7 @@ import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/features/shell/presentation/widgets/portfolio_nav.dart';
 import 'package:profile/features/shell/presentation/widgets/mobile_nav_sheet.dart';
+import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/theme/app_theme.dart';
 
 HomeController _stub({
@@ -177,5 +178,39 @@ void main() {
     await tester.tap(find.byType(NavItem).first);
     await tester.pumpAndSettle();
     expect(goToArg, isNull);
+  });
+
+  testWidgets('phone menu lists sections by number and opens the one tapped',
+      (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    int? selected;
+    await tester.pumpWidget(MaterialApp(
+      theme: AppTheme.dark(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(
+        body: MobileNavSheet(
+          activeIndex: 1,
+          onSelectSection: (i) => selected = i,
+          onDownloadResume: () {},
+        ),
+      ),
+    ));
+    await tester.pumpAndSettle();
+
+    // The pager's numbers, no per-row icons or copy-link buttons.
+    for (final n in ['01', '02', '03', '04', '05']) {
+      expect(find.text(n), findsOneWidget);
+    }
+    expect(find.byIcon(Icons.link_rounded), findsNothing);
+    expect(find.text('Directory'), findsNothing);
+    // The section on screen is marked in teal.
+    final work = tester.widget<Text>(find.text('Work'));
+    expect(work.style!.color, AppColors.tealLight);
+
+    await tester.tap(find.text('Skills'));
+    expect(selected, 3);
   });
 }

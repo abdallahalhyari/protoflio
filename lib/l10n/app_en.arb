@@ -90,13 +90,6 @@
   "@introDownloadResume": {
     "description": "Intro cover copy (the original design); downloadResume carries the site-wide wording."
   },
-  "navCopyLink": "Copy link",
-  "navCopyLinkTo": "Copy link to {section}",
-  "@navCopyLinkTo": {
-    "placeholders": {
-      "section": { "type": "String" }
-    }
-  },
   "introSeniorEngineer": "Senior Flutter & Android engineer",
   "introSummary": "Senior mobile engineer. I build Flutter and native Android apps that keep working offline, read NFC smart cards and keep tokens secure.",
   "introAvailability": "Available for remote/contract now; on-site in Brno and surrounding region.",

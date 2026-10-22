@@ -79,8 +79,6 @@
   "viewMyWork": "Zobrazit práci",
   "downloadResume": "Stáhnout životopis",
   "introDownloadResume": "Stáhnout CV",
-  "navCopyLink": "Kopírovat odkaz",
-  "navCopyLinkTo": "Kopírovat odkaz na {section}",
   "introSeniorEngineer": "Senior mobilní vývojář",
   "introSummary": "Senior mobilní inženýr. Stavím aplikace ve Flutteru a nativním Androidu, které fungují i offline, čtou čipové karty přes NFC a bezpečně uchovávají tokeny.",
   "introAvailability": "Dostupný pro remote / kontrakt nyní; on-site v Brně a okolí.",

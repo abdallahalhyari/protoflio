@@ -79,8 +79,6 @@
   "viewMyWork": "عرض أعمالي",
   "downloadResume": "تحميل السيرة الذاتية",
   "introDownloadResume": "تحميل السيرة الذاتية",
-  "navCopyLink": "نسخ الرابط",
-  "navCopyLinkTo": "نسخ رابط {section}",
   "introSeniorEngineer": "مهندس تطبيقات هواتف أول",
   "introSummary": "مهندس تطبيقات جوّال أول. أبني تطبيقات Flutter وAndroid أصلية تعمل دون اتصال، وتقرأ البطاقات الذكية عبر NFC، وتحفظ الرموز بأمان.",
   "introAvailability": "متاح للعمل عن بُعد أو العقود حالياً؛ وحضورياً في برنو وما حولها.",
