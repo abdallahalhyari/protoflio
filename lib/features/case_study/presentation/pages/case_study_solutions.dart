@@ -70,9 +70,9 @@ class SolutionsCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
             'Flutter developer responsible for client app engineering, camera pipeline optimization, and multi-tenant UI design system implementation.',
-            'Offloaded high-resolution image compression and EXIF metadata stripping to background Dart Isolates, restoring fluid 60 FPS UI responsiveness.',
+            'Offloaded high-resolution image compression and EXIF metadata stripping to background Dart Isolates, restoring smooth UI responsiveness.',
             'Architected a modular multi-merchant design system with dynamic brand tokens, dark/light theme switching, and reusable widget libraries.',
-            'Engineered camera capture workflows with hardware-accelerated preview controllers, flash toggles, and direct S3 multipart upload pipelines.',
+            'Built the camera capture flow: hardware-accelerated preview, flash control and direct S3 multipart uploads.',
           ]),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
@@ -95,8 +95,8 @@ class SolutionsCaseStudy extends StatelessWidget {
             'via platform channels, passing raw byte buffers to dedicated background '
             'Dart Isolates for non-blocking JPEG encoding, resizing, and watermark '
             'compositing. The Loyalty Engine utilizes a token-driven Design System '
-            'backed by reactive state managers, enabling instantaneous tenant theme '
-            'swaps without rebuilding root widget trees.',
+            'backed by reactive state, so switching a tenant\'s theme does not '
+            'rebuild the root widget tree.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
@@ -104,21 +104,21 @@ class SolutionsCaseStudy extends StatelessWidget {
             steps: [
               TechStep(
                 layer: 'Camera',
-                title: 'Hardware-Accelerated Camera Controller',
+                title: 'Hardware-accelerated camera',
                 body:
                     'Wired low-level camera preview controllers with custom exposure locks, tap-to-focus indicators, and flash triggers optimized for low-light social story captures.',
               ),
               TechStep(
                 layer: 'Isolates',
-                title: 'Background Dart Isolate Encoding',
+                title: 'Encoding in a background isolate',
                 body:
                     'Offloaded heavy JPEG byte manipulation, image downsampling, and EXIF orientation normalization to isolated worker threads, keeping the main UI thread completely jank-free.',
               ),
               TechStep(
                 layer: 'Upload',
-                title: 'Direct S3 Multipart Uploads',
+                title: 'Direct S3 multipart uploads',
                 body:
-                    'Engineered chunked background file uploads directly to AWS S3 buckets using presigned URLs, featuring automatic upload resumption on network drops.',
+                    'Chunked background uploads straight to AWS S3 with presigned URLs, resuming automatically after a dropped connection.',
               ),
             ],
           ),
@@ -128,19 +128,19 @@ class SolutionsCaseStudy extends StatelessWidget {
             steps: [
               TechStep(
                 layer: 'Tokens',
-                title: 'Dynamic Theme Token Engine',
+                title: 'Per-tenant theme tokens',
                 body:
                     'Constructed a flexible design system with runtime brand token injection (primary accents, typography scales, card radii), allowing merchant brands to skin the white-label app instantly.',
               ),
               TechStep(
                 layer: 'Barcode',
-                title: 'High-Speed Barcode & QR Scanner',
+                title: 'Barcode & QR scanning',
                 body:
                     'Integrated real-time optical camera scanning with client-side checksum validation, enabling merchant cashiers to scan and redeem loyalty vouchers in under 300 milliseconds.',
               ),
               TechStep(
                 layer: 'Cache',
-                title: 'Offline Coupon Storage',
+                title: 'Offline coupon storage',
                 body:
                     'Cached earned loyalty rewards and barcode tokens in encrypted local storage, permitting offline redemptions when store cellular coverage was degraded.',
               ),
@@ -152,19 +152,19 @@ class SolutionsCaseStudy extends StatelessWidget {
             steps: [
               TechStep(
                 layer: 'Raster',
-                title: '60 FPS Social Feed Virtualization',
+                title: 'Social feed virtualization',
                 body:
                     'Implemented custom sliver list views with image memory caching horizons, preventing high-resolution story feeds from exceeding device RAM thresholds.',
               ),
               TechStep(
                 layer: 'Animation',
-                title: 'Micro-Interactions & Gesture Feedback',
+                title: 'Gesture feedback',
                 body:
                     'Designed subtle spring animations and haptic feedback triggers for voucher redemptions, story likes, and reward card flips.',
               ),
               TechStep(
                 layer: 'Governance',
-                title: 'Modular Component Library',
+                title: 'Shared component library',
                 body:
                     'Package-ified core UI components (buttons, input fields, modal sheets, toast alerts), accelerating feature delivery across both project teams.',
               ),
@@ -193,12 +193,10 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'Media-intensive mobile apps live or die by their UI responsiveness. '
-            'Executing computationally expensive operations—such as image re-encoding, '
-            'filtering, or serialization—on Flutter\'s main UI thread inevitably leads '
-            'to dropped frames and user frustration. Leveraging background Dart Isolates '
-            'and modular token-driven design systems ensures that performance and '
-            'visual elegance go hand in hand.',
+            'Media apps are judged by how responsive they feel. Image re-encoding, '
+            'filtering or serialization on Flutter\'s main thread drops frames, so that '
+            'work belongs in background isolates. A shared, token-driven design system '
+            'kept the two apps consistent without slowing either one down.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           RelatedCaseStudies(

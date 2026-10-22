@@ -1213,7 +1213,7 @@ abstract class AppLocalizations {
   /// No description provided for @studyEskResult.
   ///
   /// In en, this message translates to:
-  /// **'60 FPS on dense data tables, 35% fewer crashes, 1,000+ records rendered smoothly, and four enterprise platforms deployed.'**
+  /// **'60 FPS on dense data tables, 35% fewer crashes, and four enterprise platforms deployed.'**
   String get studyEskResult;
 
   /// No description provided for @studyEskOutcome1.
@@ -1227,12 +1227,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'reduction in client-side crash rate across multi-hour clinical shifts'**
   String get studyEskOutcome2;
-
-  /// No description provided for @studyEskOutcome3.
-  ///
-  /// In en, this message translates to:
-  /// **'patient and student records rendered with zero viewport latency'**
-  String get studyEskOutcome3;
 
   /// No description provided for @studyEskOutcome4.
   ///
@@ -1291,7 +1285,7 @@ abstract class AppLocalizations {
   /// No description provided for @studyFaisIntro.
   ///
   /// In en, this message translates to:
-  /// **'High-throughput commercial m-commerce checkout funnels and continuous media-streaming fitness applications. Engineered with atomic checkout transactions, defensive network interceptors, and resilient audio/video streaming.'**
+  /// **'An m-commerce checkout and a fitness and media-streaming app, built around checkout requests that are safe to retry, defensive network handling and playback that survives interruptions.'**
   String get studyFaisIntro;
 
   /// No description provided for @studyFaisChallenge.
@@ -1309,32 +1303,26 @@ abstract class AppLocalizations {
   /// No description provided for @studyFaisResult.
   ///
   /// In en, this message translates to:
-  /// **'99.8% checkout completion with zero duplicate charges, 45% fewer support escalations, and cart reconciliation under 200ms.'**
+  /// **'Higher checkout completion, fewer support tickets for failed orders, and live issues fixed from production data.'**
   String get studyFaisResult;
 
   /// No description provided for @studyFaisOutcome1.
   ///
   /// In en, this message translates to:
-  /// **'successful checkout transaction completion rate with zero duplicate charges'**
+  /// **'Higher checkout completion and fewer abandoned carts.'**
   String get studyFaisOutcome1;
 
   /// No description provided for @studyFaisOutcome2.
   ///
   /// In en, this message translates to:
-  /// **'reduction in customer support escalation tickets for failed checkout orders'**
+  /// **'Fewer support tickets for failed orders.'**
   String get studyFaisOutcome2;
 
   /// No description provided for @studyFaisOutcome3.
   ///
   /// In en, this message translates to:
-  /// **'instantaneous cart calculation and state reconciliation latency'**
+  /// **'Live issues traced and fixed from production data.'**
   String get studyFaisOutcome3;
-
-  /// No description provided for @studyFaisOutcome4.
-  ///
-  /// In en, this message translates to:
-  /// **'daily active sessions supported across commercial commerce funnels'**
-  String get studyFaisOutcome4;
 
   /// No description provided for @skillCatAll.
   ///

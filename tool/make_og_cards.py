@@ -23,8 +23,9 @@ STUDIES = {
                   'on dense hospital data tables'),
     'solutions': ('Loyalty Rewards & Ephemeral Social Media Apps', '4.7+',
                   'average App Store & Play rating'),
-    'fais': ('M-Commerce & Media-Streaming Clients', '99.8%',
-             'checkout completion, zero duplicate charges'),
+    # No measured figure for this role: the card states what was built.
+    'fais': ('M-Commerce & Media-Streaming Clients', None,
+             'Checkout that is safe to retry, and streaming that keeps playing'),
 }
 DISPLAY = 'fonts/Tenada.ttf'  # the name only, as on the site's cover
 SANS = 'fonts/ReadexPro.ttf'     # everything else (variable weight)
@@ -99,12 +100,13 @@ def card(slug, title, metric, caption):
         y += 64
 
     y += 28
-    d.text((x, y), metric, font=sans(88, 'Bold'), fill=GOLD_SOFT)
-    y += 112
-    caption_font = sans(28)
+    if metric:
+        d.text((x, y), metric, font=sans(88, 'Bold'), fill=GOLD_SOFT)
+        y += 112
+    caption_font = sans(28 if metric else 36)
     for line in wrap(d, caption, caption_font, max_w):
         d.text((x, y), line, font=caption_font, fill=TEXT)
-        y += 38
+        y += 38 if metric else 48
 
     d.text((x, H - 72), f'alhyari.web.app/work/{slug}',
            font=sans(24, 'Medium'), fill=MUTED)
@@ -163,8 +165,8 @@ SUMMARIES = {
                  'accelerated camera pipeline, a shared design system, a 4.7+ '
                  'store rating and 40% faster feature turnaround.',
     'fais': 'Idempotent m-commerce checkout and resilient media streaming: '
-            '99.8% checkout completion with zero duplicate charges and 45% '
-            'fewer support escalations.',
+            'higher checkout completion and fewer support tickets for failed '
+            'orders.',
 }
 
 PAGE = """<!DOCTYPE html>
@@ -186,7 +188,7 @@ PAGE = """<!DOCTYPE html>
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{title}: {metric} {caption}">
+  <meta property="og:image:alt" content="{alt}">
   <meta name="theme-color" content="#0B1018">
   <style>
     html, body {{ margin: 0; height: 100%; background: #0B1018; color: #E2E8F0;
@@ -215,8 +217,7 @@ def share_page(slug, title, metric, caption):
         slug=slug,
         title=esc(title),
         summary=esc(SUMMARIES[slug]),
-        metric=esc(metric),
-        caption=esc(caption),
+        alt=esc(f'{title}: {metric} {caption}' if metric else f'{title}: {caption}'),
         url=f'https://alhyari.web.app/work/{slug}/',
         image=f'https://alhyari.web.app/og/{slug}.jpg',
     )

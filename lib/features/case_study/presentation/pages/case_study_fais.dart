@@ -70,7 +70,7 @@ class FaisCaseStudy extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
             'Mobile developer across Flutter and native Android (Kotlin/Java), coordinating end-to-end frontend-to-backend API integrations and checkout reliability.',
-            'Engineered transactional checkout flows with client-side idempotency keys and state reconciliation to eliminate duplicate customer billing.',
+            'Built the checkout flow around client-side idempotency keys and state reconciliation, so a retried payment cannot charge a customer twice.',
             'Architected the media streaming buffer manager and native Android foreground service lifecycle for uninterrupted playback.',
             'Analyzed production telemetry, error crash logs, and network latency metrics to diagnose and resolve critical live runtime bottlenecks.',
           ]),
@@ -104,43 +104,43 @@ class FaisCaseStudy extends StatelessWidget {
             steps: [
               TechStep(
                 layer: 'Integrity',
-                title: 'Client-Generated Idempotency Keys',
+                title: 'Client-generated idempotency keys',
                 body:
                     'Assigned unique cryptographically secure UUID transaction tokens to every payment submission. Retried requests following network timeouts carried identical tokens, allowing backend gateways to recognize replays and prevent double-charging.',
               ),
               TechStep(
                 layer: 'State machine',
-                title: 'Deterministic Funnel Navigation',
+                title: 'Predictable checkout navigation',
                 body:
                     'Structured checkout steps (Cart › Delivery › Payment Gateway › Order Confirmation) as a strict finite state machine. Impossible state transitions and accidental back-navigation during payment processing were blocked defensively.',
               ),
               TechStep(
                 layer: 'Persistence',
-                title: 'Atomic Local Order Staging',
+                title: 'Orders staged locally first',
                 body:
-                    'Staged cart and order payloads in local SQLite storage before initiating network requests. If the app process was interrupted mid-funnel, the checkout session recovered seamlessly without data loss.',
+                    'Staged cart and order payloads in local SQLite storage before initiating network requests. If the app process was interrupted mid-funnel, the checkout session recovered without losing the order.',
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            title: 'Uninterrupted media streaming pipeline',
+            title: 'Media streaming that keeps playing',
             steps: [
               TechStep(
                 layer: 'Lifecycle',
-                title: 'Foreground Service & Audio Focus',
+                title: 'Foreground service & audio focus',
                 body:
                     'Implemented native Android foreground services with persistent playback notifications and system audio-focus listeners. Media streaming continued uninterrupted when users locked their screens or switched apps.',
               ),
               TechStep(
                 layer: 'Buffering',
-                title: 'Adaptive Buffer Management',
+                title: 'Adaptive buffering',
                 body:
                     'Constructed a predictive buffer controller that adjusted audio and video cache horizons dynamically based on moving-average network throughput, eliminating stutter on intermittent connections.',
               ),
               TechStep(
                 layer: 'Telemetry',
-                title: 'Quality of Service (QoS) Telemetry',
+                title: 'Playback quality telemetry',
                 body:
                     'Monitored buffer underrun occurrences, playback start latencies, and stream bitrates to identify ISP peering bottlenecks and optimize CDN distribution rules.',
               ),
@@ -152,19 +152,19 @@ class FaisCaseStudy extends StatelessWidget {
             steps: [
               TechStep(
                 layer: 'Monitoring',
-                title: 'Automated Network Interception',
+                title: 'Network interceptors',
                 body:
                     'Wired network interceptors logging response latencies, payload sizes, and HTTP status codes, flagging degrading endpoints before user reports arrived.',
               ),
               TechStep(
                 layer: 'Triage',
-                title: 'Rapid Root-Cause Diagnosis',
+                title: 'Root-cause diagnosis',
                 body:
                     'Correlated client crash reports with server access logs to pinpoint edge-case serialization anomalies in legacy backend microservices.',
               ),
               TechStep(
                 layer: 'Efficiency',
-                title: 'Optimized JSON Serialization',
+                title: 'Faster JSON parsing',
                 body:
                     'Refactored catalog models to use lazy JSON decoding and selective deserialization, slashing memory footprint during large search result page loads.',
               ),
@@ -176,13 +176,13 @@ class FaisCaseStudy extends StatelessWidget {
             child: ChapterHeading(l10n.studyOutcomes),
           ),
           const SizedBox(height: AppSpacing.md),
-          OutcomeGrid(
-            isDesktop: isDesktop,
+          // No measured figures for this role, so the outcomes are stated
+          // plainly rather than led by numbers.
+          OutcomeNotes(
             items: [
-              ('99.8%', l10n.studyFaisOutcome1),
-              ('-45%', l10n.studyFaisOutcome2),
-              ('< 200ms', l10n.studyFaisOutcome3),
-              ('10k+', l10n.studyFaisOutcome4),
+              l10n.studyFaisOutcome1,
+              l10n.studyFaisOutcome2,
+              l10n.studyFaisOutcome3,
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),
@@ -192,12 +192,10 @@ class FaisCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'In mobile commerce and streaming platforms, network unreliability is the '
-            'rule rather than the exception. Building resilient systems demands that '
-            'engineers treat the network interface as inherently untrusted and prone to '
-            'interruption. Implementing client-side idempotency, explicit state machine '
-            'transitions, and persistent local staging transforms flaky user experiences '
-            'into robust, trustworthy products.',
+            'In commerce and streaming apps an unreliable network is the normal case, '
+            'not the exception. Treat every request as one that may fail or arrive '
+            'twice: idempotency keys, explicit checkout states and orders saved on the '
+            'phone first turn a flaky connection into a retry instead of a lost sale.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           RelatedCaseStudies(

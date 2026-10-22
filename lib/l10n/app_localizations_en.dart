@@ -636,7 +636,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get studyEskResult =>
-      '60 FPS on dense data tables, 35% fewer crashes, 1,000+ records rendered smoothly, and four enterprise platforms deployed.';
+      '60 FPS on dense data tables, 35% fewer crashes, and four enterprise platforms deployed.';
 
   @override
   String get studyEskOutcome1 =>
@@ -645,10 +645,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get studyEskOutcome2 =>
       'reduction in client-side crash rate across multi-hour clinical shifts';
-
-  @override
-  String get studyEskOutcome3 =>
-      'patient and student records rendered with zero viewport latency';
 
   @override
   String get studyEskOutcome4 =>
@@ -688,7 +684,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get studyFaisIntro =>
-      'High-throughput commercial m-commerce checkout funnels and continuous media-streaming fitness applications. Engineered with atomic checkout transactions, defensive network interceptors, and resilient audio/video streaming.';
+      'An m-commerce checkout and a fitness and media-streaming app, built around checkout requests that are safe to retry, defensive network handling and playback that survives interruptions.';
 
   @override
   String get studyFaisChallenge =>
@@ -700,23 +696,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get studyFaisResult =>
-      '99.8% checkout completion with zero duplicate charges, 45% fewer support escalations, and cart reconciliation under 200ms.';
+      'Higher checkout completion, fewer support tickets for failed orders, and live issues fixed from production data.';
 
   @override
   String get studyFaisOutcome1 =>
-      'successful checkout transaction completion rate with zero duplicate charges';
+      'Higher checkout completion and fewer abandoned carts.';
 
   @override
-  String get studyFaisOutcome2 =>
-      'reduction in customer support escalation tickets for failed checkout orders';
+  String get studyFaisOutcome2 => 'Fewer support tickets for failed orders.';
 
   @override
   String get studyFaisOutcome3 =>
-      'instantaneous cart calculation and state reconciliation latency';
-
-  @override
-  String get studyFaisOutcome4 =>
-      'daily active sessions supported across commercial commerce funnels';
+      'Live issues traced and fixed from production data.';
 
   @override
   String get skillCatAll => 'All';

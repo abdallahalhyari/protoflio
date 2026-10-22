@@ -57,10 +57,9 @@ class NatHealthCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'The core engineering challenge was twofold: communicate reliably with '
-            'legacy ISO-7816 NFC health smart cards on a wide spectrum of Android and iOS '
-            'smartphones, and build a zero-trust offline engine that encrypts claim '
-            'transactions on-device until network connectivity resumes.',
+            'The engineering problem had two parts: talk reliably to legacy ISO-7816 '
+            'health smart cards on a wide range of Android and iOS phones, and keep '
+            'claims encrypted on the device until the connection comes back.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
@@ -97,25 +96,25 @@ class NatHealthCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            title: 'ISO-7816 APDU protocol engineering',
+            title: 'ISO-7816 APDU protocol',
             steps: [
               TechStep(
                 layer: 'Hardware',
-                title: 'Low-Level Transceive Pipeline',
+                title: 'Raw APDU commands over platform channels',
                 body:
-                    'Built thread-safe platform channels to execute raw ISO-7816 APDU command chains (SELECT AID, READ BINARY, VERIFY PIN) across 40+ smartphone NFC controller variants.',
+                    'Built thread-safe platform channels to execute raw ISO-7816 APDU command chains (SELECT AID, READ BINARY, VERIFY PIN) across the NFC controllers of many different Android phones.',
               ),
               TechStep(
                 layer: 'Security',
-                title: 'Hardware-Backed Session Signing',
+                title: 'Hardware-backed signing',
                 body:
                     'Stored private keys inside Android Keystore / iOS Secure Enclave. Every card read generates a cryptographically signed JWT payload, preventing replay attacks.',
               ),
               TechStep(
                 layer: 'Resilience',
-                title: 'Automated Recovery for Card Swipes',
+                title: 'Recovering from a card pulled away early',
                 body:
-                    'Engineered automatic retry envelopes and state reconciliation for premature card removals during 3-step APDU handshakes.',
+                    'Retries and state reconciliation for cards pulled away during the three-step APDU exchange.',
               ),
             ],
           ),
@@ -125,7 +124,7 @@ class NatHealthCaseStudy extends StatelessWidget {
             steps: [
               TechStep(
                 layer: 'Storage',
-                title: 'Encrypted SQLite Cache',
+                title: 'Encrypted SQLite cache',
                 body:
                     'Designed an offline-first repository using SQLCipher. Clinical claims store locally when offline, encrypted with AES-256 keys derived from session tokens.',
               ),
@@ -137,7 +136,7 @@ class NatHealthCaseStudy extends StatelessWidget {
               ),
               TechStep(
                 layer: 'Conflicts',
-                title: 'Deterministic Conflict Resolution',
+                title: 'Conflict resolution without duplicates',
                 body:
                     'Implemented server-side vector clocks and client-side transaction idempotency keys, eliminating duplicate claim filings during flaky connectivity.',
               ),
@@ -145,23 +144,23 @@ class NatHealthCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            title: 'UI performance & governance',
+            title: 'UI performance & code structure',
             steps: [
               TechStep(
                 layer: 'Raster',
-                title: '120 FPS Claims Feed Rendering',
+                title: 'Smooth claims list',
                 body:
                     'Isolated complex claim cards with RepaintBoundary, memoized expensive text painters, and eliminated unnecessary rebuilds across long scroll lists.',
               ),
               TechStep(
                 layer: 'Testing',
-                title: 'End-to-End APDU Mock Harness',
+                title: 'A fake card reader for tests',
                 body:
                     'Constructed a mock NFC channel provider for Flutter widget tests, allowing automated tests of card verification flows without physical hardware.',
               ),
               TechStep(
                 layer: 'Deps',
-                title: 'Modular Multi-Package Decoupling',
+                title: 'Splitting into internal packages',
                 body:
                     'Extracted core security, network, and design system components into isolated internal packages with strict dependency isolation.',
               ),
@@ -190,12 +189,11 @@ class NatHealthCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'Building mission-critical healthcare software requires designing for the '
-            'worst-case physical environment. Internet access will drop, users will swipe '
-            'NFC cards too quickly, and low-end devices will constrain memory. By treating '
-            'offline storage as the primary source of truth and isolating hardware IO '
-            'behind strict platform channels, we delivered a bulletproof application '
-            'that doctors and patients rely on daily.',
+            'Design healthcare apps for the worst conditions at the counter: the '
+            'connection will drop, people will pull the card away too early, and '
+            'cheap phones will run short of memory. Treating local storage as the '
+            'source of truth and keeping card access behind platform channels is '
+            'what let the apps keep working through all three.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           RelatedCaseStudies(

@@ -107,7 +107,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     summary:
         'The app reads health smart cards over NFC by sending ISO 7816 APDU commands from native Kotlin, then passes the result to Flutter.',
     whyChosen:
-        "NatHealth replaced paper claims with contactless card checks. Flutter can't talk to the card at this level, so the card work runs in Kotlin and Flutter only sees typed results. The hard part was the range of phones: the same commands had to work across more than 40 NFC controllers.",
+        "NatHealth replaced paper claims with contactless card checks. Flutter can't talk to the card at this level, so the card work runs in Kotlin and Flutter only sees typed results. The hard part was the range of phones: the same commands had to work on many different NFC controllers.",
     diagramSteps: [
       DiagramStep(
         layer: 'Discovery',

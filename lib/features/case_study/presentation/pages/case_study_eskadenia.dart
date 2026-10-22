@@ -74,7 +74,7 @@ class EskadeniaCaseStudy extends StatelessWidget {
             'Flutter developer heading architectural refactoring, modular package extraction, and performance profiling across the Healthcare and Education software divisions.',
             'Profiled memory allocations, widget rebuild trees, and GPU raster bottlenecks using Flutter DevTools and Android Profiler.',
             'Rebuilt monolithic state into decoupled MVVM presentation pipelines backed by cached repositories and typed data contracts.',
-            'Engineered an incremental refactoring strategy allowing continuous production updates to hospital and campus systems with zero operational downtime.',
+            'Planned the refactor in small steps, so hospital and campus systems kept receiving production updates throughout.',
           ]),
           const SizedBox(height: AppSpacing.xxl),
           KeyedSubtree(
@@ -97,8 +97,8 @@ class EskadeniaCaseStudy extends StatelessWidget {
             'with ViewModels through reactive ValueNotifiers and streams, entirely '
             'unaware of backend transport details. ViewModels consume domain '
             'Repositories backed by local SQLite/SQL Server cache layers and typed '
-            'REST services, wired through lightweight service locators for seamless '
-            'mocking and isolated tests.',
+            'REST services, wired through a service locator so each piece can be '
+            'replaced with a fake in tests.',
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
@@ -106,19 +106,19 @@ class EskadeniaCaseStudy extends StatelessWidget {
             steps: [
               TechStep(
                 layer: 'Audit',
-                title: 'Dependency Graph Analysis',
+                title: 'Mapping the dependencies',
                 body:
                     'Profiled the legacy monolithic codebase to map circular dependencies, shared static singletons, and leaky UI state. Identified core domain boundaries between clinical operations (HIS, Pharmacy, Radiology) and administrative flows.',
               ),
               TechStep(
                 layer: 'Decoupling',
-                title: 'Feature Package Partitioning',
+                title: 'One package per feature',
                 body:
                     'Extracted monolithic modules into standalone Dart/Flutter packages with explicitly defined public API boundaries. Common logic (networking, auth, theme tokens, storage) was abstracted into a shared enterprise foundation package.',
               ),
               TechStep(
                 layer: 'Injection',
-                title: 'Service Locator & Repository Pattern',
+                title: 'Service locator & repositories',
                 body:
                     'Implemented lightweight dependency injection isolating concrete REST consumers from business logic. Feature squads could develop, mock, and unit-test modules independently without running full application builds.',
               ),
@@ -126,23 +126,23 @@ class EskadeniaCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            title: 'High-density rendering optimization',
+            title: 'Rendering dense screens',
             steps: [
               TechStep(
                 layer: 'Viewport',
-                title: 'Custom Slivers & Lazy Loading',
+                title: 'Custom slivers & lazy loading',
                 body:
                     'Replaced naive nested list builders with customized CustomScrollView and SliverList implementations. Roster items, laboratory test cards, and course catalogs allocate only visible elements, maintaining a fixed memory envelope regardless of roster size.',
               ),
               TechStep(
                 layer: 'Cache',
-                title: 'Two-Tier Caching & Query Deduplication',
+                title: 'Two-level cache & duplicate queries',
                 body:
-                    'Engineered an in-memory LRU cache backed by indexed local SQLite storage. Repeated lookups for doctor rosters, medication formularies, and student grades resolve instantaneously without redundant network roundtrips.',
+                    'An in-memory LRU cache backed by indexed local SQLite storage. Repeated lookups for doctor rosters, medication formularies, and student grades come from the cache without redundant network roundtrips.',
               ),
               TechStep(
                 layer: 'Raster',
-                title: 'GPU Paint & Clip Optimization',
+                title: 'Cheaper painting & clipping',
                 body:
                     'Eliminated expensive saveLayer triggers caused by unnecessary Opacity and ClipRRect wrappers on data tables. Cached static table headers with RepaintBoundary, locking continuous 60 FPS scrolling on data-dense hospital screens.',
               ),
@@ -150,23 +150,23 @@ class EskadeniaCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xxl),
           const TechnicalChapter(
-            title: 'Enterprise resilience & error handling',
+            title: 'Error handling',
             steps: [
               TechStep(
                 layer: 'Network',
-                title: 'Defensive Network Interceptors',
+                title: 'Network interceptors',
                 body:
                     'Standardized HTTP client pipelines with automated token refresh, transparent timeout envelopes, and exponential backoff retry policies for intermittent hospital Wi-Fi zones.',
               ),
               TechStep(
                 layer: 'Validation',
-                title: 'Strict Schema Contracts & Type Safety',
+                title: 'Typed API contracts',
                 body:
                     'Eliminated dynamic type casting by generating immutable Dart models with runtime validation. Invalid API responses fail fast at the network boundary rather than causing unhandled null pointer exceptions in UI trees.',
               ),
               TechStep(
                 layer: 'Diagnostics',
-                title: 'Proactive Crash Telemetry & Logging',
+                title: 'Crash reporting & logging',
                 body:
                     'Integrated structured error reporting with breadcrumb logging across clinical shifts, enabling the engineering squad to diagnose and resolve production anomalies before users encounter disruptions.',
               ),
@@ -183,7 +183,6 @@ class EskadeniaCaseStudy extends StatelessWidget {
             items: [
               ('60 FPS', l10n.studyEskOutcome1),
               ('-35%', l10n.studyEskOutcome2),
-              ('1,000+', l10n.studyEskOutcome3),
               ('4', l10n.studyEskOutcome4),
             ],
           ),

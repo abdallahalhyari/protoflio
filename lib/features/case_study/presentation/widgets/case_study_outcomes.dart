@@ -71,7 +71,8 @@ class OutcomeGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cols = isDesktop ? 4 : 2;
+    // As many columns as figures on desktop, up to four.
+    final cols = isDesktop ? items.length.clamp(1, 4) : 2;
     final rows = <Widget>[];
     for (var i = 0; i < items.length; i += cols) {
       final row = items.skip(i).take(cols).toList();
@@ -93,6 +94,38 @@ class OutcomeGrid extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: rows,
+    );
+  }
+}
+
+/// Outcomes for a study with no measured figure to lead with: one plain
+/// statement per row, a rule above each, in the reader's language.
+class OutcomeNotes extends StatelessWidget {
+  const OutcomeNotes({super.key, required this.items});
+
+  final List<String> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final item in items)
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.smd),
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: context.divider)),
+            ),
+            child: Text(
+              item,
+              style: TextStyle(
+                fontSize: AppTypography.lead,
+                height: 1.5,
+                color: context.onSurface,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

@@ -136,7 +136,9 @@ void main() {
       expect(find.text('System architecture'), findsOneWidget);
       expect(find.widgetWithText(ChapterHeading, 'Outcomes'), findsOneWidget);
       expect(find.widgetWithText(ChapterHeading, 'Lessons'), findsOneWidget);
-      expect(find.text('99.8%'), findsOneWidget);
+      // No measured figures for this role: outcomes are plain statements.
+      expect(find.text('99.8%'), findsNothing);
+      expect(find.byType(OutcomeNotes), findsOneWidget);
       await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
           scrollable: find.byType(Scrollable).first);
       expect(find.text('Back to portfolio'), findsOneWidget);
@@ -186,7 +188,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.scrollUntilVisible(
-        find.text('ISO-7816 APDU protocol engineering'),
+        find.text('ISO-7816 APDU protocol'),
         500,
         scrollable: find.byType(Scrollable).first,
       );

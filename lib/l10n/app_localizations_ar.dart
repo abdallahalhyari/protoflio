@@ -635,7 +635,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get studyEskResult =>
-      '‏60 FPS على جداول البيانات الكثيفة، وأعطال أقل بنسبة 35%، وعرض أكثر من 1,000 سجل بسلاسة، ونشر أربع منصات مؤسسية.';
+      '‏60 FPS على جداول البيانات الكثيفة، وأعطال أقل بنسبة 35%، ونشر أربع منصات مؤسسية.';
 
   @override
   String get studyEskOutcome1 =>
@@ -644,9 +644,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get studyEskOutcome2 =>
       'انخفاض في معدل الأعطال لدى المستخدم خلال المناوبات السريرية الطويلة';
-
-  @override
-  String get studyEskOutcome3 => 'سجل للمرضى والطلاب يُعرض دون أي تأخير';
 
   @override
   String get studyEskOutcome4 =>
@@ -684,7 +681,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get studyFaisIntro =>
-      'مسارات دفع تجارية عالية الأداء للتجارة عبر الجوال وتطبيقات لياقة ببث وسائط متواصل. مبنية على معاملات دفع ذرّية، ومعترضات شبكة دفاعية، وبث صوت وفيديو مرن.';
+      'مسار دفع للتجارة عبر الجوال وتطبيق لياقة لبث الوسائط، مبنيان على طلبات دفع آمنة عند إعادة المحاولة، ومعالجة دفاعية للشبكة، وتشغيل يصمد أمام الانقطاعات.';
 
   @override
   String get studyFaisChallenge =>
@@ -696,21 +693,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get studyFaisResult =>
-      'إتمام 99.8% من عمليات الدفع دون أي خصم مكرر، وتصعيدات أقل للدعم بنسبة 45%، ومواءمة السلة في أقل من 200 ms.';
+      'نسبة أعلى لإتمام الدفع، وطلبات دعم أقل بسبب الطلبات الفاشلة، وإصلاح مشكلات الإنتاج اعتماداً على بياناته.';
 
   @override
   String get studyFaisOutcome1 =>
-      'نسبة إتمام ناجح لمعاملات الدفع دون أي خصم مكرر';
+      'نسبة أعلى لإتمام الدفع وعربات تسوّق متروكة أقل.';
 
   @override
-  String get studyFaisOutcome2 =>
-      'انخفاض في تذاكر تصعيد الدعم لطلبات الدفع الفاشلة';
+  String get studyFaisOutcome2 => 'طلبات دعم أقل بسبب الطلبات الفاشلة.';
 
   @override
-  String get studyFaisOutcome3 => 'زمن فوري لحساب السلة ومواءمة الحالة';
-
-  @override
-  String get studyFaisOutcome4 => 'جلسة نشطة يوميًا عبر مسارات التجارة';
+  String get studyFaisOutcome3 =>
+      'تتبّع مشكلات الإنتاج وإصلاحها اعتماداً على بياناته.';
 
   @override
   String get skillCatAll => 'الكل';

@@ -640,7 +640,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get studyEskResult =>
-      '60 FPS na rozsáhlých tabulkách, o 35 % méně pádů, plynulé vykreslení 1 000+ záznamů a čtyři nasazené podnikové platformy.';
+      '60 FPS na rozsáhlých tabulkách, o 35 % méně pádů a čtyři nasazené podnikové platformy.';
 
   @override
   String get studyEskOutcome1 =>
@@ -649,10 +649,6 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get studyEskOutcome2 =>
       'snížení míry pádů aplikace během mnohahodinových klinických směn';
-
-  @override
-  String get studyEskOutcome3 =>
-      'záznamů pacientů a studentů vykreslených bez prodlevy';
 
   @override
   String get studyEskOutcome4 =>
@@ -691,7 +687,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get studyFaisIntro =>
-      'Výkonné nákupní procesy pro m-commerce a fitness aplikace s nepřetržitým streamováním médií. Postavené na atomických platebních transakcích, defenzivních síťových interceptorech a odolném audio/video streamování.';
+      'Nákupní proces pro m-commerce a fitness aplikace se streamováním médií, postavené na platebních požadavcích bezpečných pro opakování, obranném zpracování sítě a přehrávání, které přežije přerušení.';
 
   @override
   String get studyFaisChallenge =>
@@ -703,22 +699,19 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get studyFaisResult =>
-      '99,8 % dokončených plateb bez dvojích plateb, o 45 % méně eskalací na podporu a sladění košíku pod 200 ms.';
+      'Vyšší míra dokončených objednávek, méně požadavků na podporu kvůli neúspěšným objednávkám a problémy v provozu opravené podle produkčních dat.';
 
   @override
   String get studyFaisOutcome1 =>
-      'úspěšně dokončených plateb bez jediné dvojí platby';
+      'Vyšší míra dokončených objednávek a méně opuštěných košíků.';
 
   @override
   String get studyFaisOutcome2 =>
-      'snížení eskalací na zákaznickou podporu kvůli neúspěšným objednávkám';
+      'Méně požadavků na podporu kvůli neúspěšným objednávkám.';
 
   @override
-  String get studyFaisOutcome3 => 'okamžitý výpočet košíku a sladění stavu';
-
-  @override
-  String get studyFaisOutcome4 =>
-      'denních aktivních relací v nákupních procesech';
+  String get studyFaisOutcome3 =>
+      'Problémy v provozu dohledané a opravené podle produkčních dat.';
 
   @override
   String get skillCatAll => 'Vše';
