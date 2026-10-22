@@ -36,7 +36,7 @@ void main() {
       (tester) async {
     await _open(tester, const NatHealthCaseStudy(), const Locale('cs'),
         const Size(1280, 900));
-    expect(find.text('NATHEALTH · Případová studie'), findsOneWidget);
+    expect(find.text('Případová studie NatHealth'), findsOneWidget);
     expect(find.text('Výzva'), findsOneWidget);
     expect(find.text('Co jsem vytvořil'), findsOneWidget);
     expect(find.textContaining('Ověření karty za méně než sekundu'),

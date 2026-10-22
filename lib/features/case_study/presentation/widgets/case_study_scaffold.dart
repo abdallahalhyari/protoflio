@@ -19,31 +19,31 @@ class CaseStudyChapterKeys {
   List<CaseStudyChapter> buildStandardChapters(AppLocalizations l10n) => [
         CaseStudyChapter(
           id: 'problem',
-          label: '01 ${l10n.studyDockProblem}',
+          label: l10n.studyDockProblem,
           shortLabel: l10n.studyDockProblemShort,
           key: problemKey,
         ),
         CaseStudyChapter(
           id: 'role',
-          label: '02 ${l10n.studyDockRole}',
+          label: l10n.studyDockRole,
           shortLabel: l10n.studyDockRole,
           key: roleKey,
         ),
         CaseStudyChapter(
           id: 'architecture',
-          label: '03 ${l10n.studyDockArch}',
+          label: l10n.studyDockArch,
           shortLabel: l10n.studyDockArch,
           key: archKey,
         ),
         CaseStudyChapter(
           id: 'outcomes',
-          label: '07 ${l10n.studyDockOutcomes}',
+          label: l10n.studyDockOutcomes,
           shortLabel: l10n.studyDockOutcomesShort,
           key: outcomesKey,
         ),
         CaseStudyChapter(
           id: 'lessons',
-          label: '08 ${l10n.studyDockLessons}',
+          label: l10n.studyDockLessons,
           shortLabel: l10n.studyDockLessons,
           key: lessonsKey,
         ),

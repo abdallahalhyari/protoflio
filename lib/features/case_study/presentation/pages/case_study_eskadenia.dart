@@ -25,7 +25,7 @@ class EskadeniaCaseStudy extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return CaseStudyScaffold(
       slug: 'eskadenia',
-      appBarTitle: 'ESKADENIA · ${l10n.studyCaseStudy}',
+      appBarTitle: l10n.studyCaseStudy('ESKADENIA'),
       shareTitle: 'E-Learning & Healthcare Enterprise Suite',
       sliversBuilder: (context, keys, isDesktop) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -303,18 +303,25 @@ class _Masthead extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        const Wrap(
+        Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
           children: [
-            EditorialChip(label: 'Flutter', tone: ChipTone.indigo),
-            EditorialChip(label: 'Dart', tone: ChipTone.sky),
-            EditorialChip(label: 'MVVM Architecture'),
-            EditorialChip(label: 'REST APIs', tone: ChipTone.neutral),
-            EditorialChip(label: 'SQL Server', tone: ChipTone.amber),
-            EditorialChip(label: 'DevTools Profiling', tone: ChipTone.green),
-            EditorialChip(label: 'Modular Packages', tone: ChipTone.indigo),
-            EditorialChip(label: 'Clean Repository', tone: ChipTone.neutral),
+            for (final tech in const [
+              'Flutter',
+              'Dart',
+              'MVVM Architecture',
+              'REST APIs',
+              'SQL Server',
+              'DevTools Profiling',
+              'Modular Packages',
+              'Clean Repository',
+            ])
+              EditorialChip(
+                label: tech,
+                tone: ChipTone.neutral,
+                variant: ChipVariant.outline,
+              ),
           ],
         ),
         const CaseStudyCorporateHeader(

@@ -13,6 +13,8 @@ class ChapterHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // The rule spans the column even inside a start-aligned Column.
+      width: double.infinity,
       padding: const EdgeInsets.only(top: AppSpacing.md),
       decoration: BoxDecoration(
         border: Border(top: BorderSide(color: context.divider)),

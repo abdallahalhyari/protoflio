@@ -25,7 +25,7 @@ class SolutionsCaseStudy extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return CaseStudyScaffold(
       slug: 'solutions',
-      appBarTitle: 'SOLUTIONS NOW · ${l10n.studyCaseStudy}',
+      appBarTitle: l10n.studyCaseStudy('Solutions Now'),
       shareTitle: 'Loyalty Rewards & Ephemeral Social Media Apps',
       sliversBuilder: (context, keys, isDesktop) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -301,17 +301,24 @@ class _Masthead extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        const Wrap(
+        Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
           children: [
-            EditorialChip(label: 'Flutter', tone: ChipTone.indigo),
-            EditorialChip(label: 'Camera Engine', tone: ChipTone.amber),
-            EditorialChip(label: 'AWS s3', tone: ChipTone.sky),
-            EditorialChip(label: 'REST APIs', tone: ChipTone.neutral),
-            EditorialChip(label: 'Design System'),
-            EditorialChip(label: 'Isolate Compression', tone: ChipTone.green),
-            EditorialChip(label: 'Real-Time Feeds', tone: ChipTone.indigo),
+            for (final tech in const [
+              'Flutter',
+              'Camera Engine',
+              'AWS s3',
+              'REST APIs',
+              'Design System',
+              'Isolate Compression',
+              'Real-Time Feeds',
+            ])
+              EditorialChip(
+                label: tech,
+                tone: ChipTone.neutral,
+                variant: ChipVariant.outline,
+              ),
           ],
         ),
         const CaseStudyCorporateHeader(

@@ -188,7 +188,7 @@
   "vcardCopyText": "نسخ بطاقة التواصل",
   "vcardCopied": "تم نسخ بطاقة التواصل",
   "done": "تم",
-  "studyCaseStudy": "دراسة حالة",
+  "studyCaseStudy": "دراسة حالة {company}",
   "studyProblem": "المشكلة",
   "studyRole": "دوري",
   "studyArchitecture": "بنية النظام",
@@ -484,23 +484,5 @@
   "engTryDemos": "جرّب عروض NFC والتشفير والمزامنة",
   "aboutStoryShort": "بدأت في تطبيقات الهواتف عام 2021. ومنذ ذلك الحين ينتقل عملي باستمرار إلى أسفل الطبقات، من الشاشات إلى طبقات النظام الأصلي والأمان والمزامنة تحتها. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.",
   "engTabArchitectures": "البُنى المعمارية",
-  "engTabCapabilities": "القدرات",
-  "studyReadPercent": "تمت قراءة {percent}%",
-  "@studyReadPercent": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      }
-    }
-  },
-  "studyShare": "مشاركة",
-  "studyShareTooltip": "مشاركة دراسة الحالة",
-  "studyShareSemantics": "مشاركة {title}",
-  "@studyShareSemantics": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  }
+  "engTabCapabilities": "القدرات"
 }

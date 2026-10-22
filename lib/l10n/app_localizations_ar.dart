@@ -564,7 +564,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get done => 'تم';
 
   @override
-  String get studyCaseStudy => 'دراسة حالة';
+  String studyCaseStudy(String company) {
+    return 'دراسة حالة $company';
+  }
 
   @override
   String get studyProblem => 'المشكلة';
@@ -1566,20 +1568,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'القدرات';
-
-  @override
-  String studyReadPercent(int percent) {
-    return 'تمت قراءة $percent%';
-  }
-
-  @override
-  String get studyShare => 'مشاركة';
-
-  @override
-  String get studyShareTooltip => 'مشاركة دراسة الحالة';
-
-  @override
-  String studyShareSemantics(String title) {
-    return 'مشاركة $title';
-  }
 }

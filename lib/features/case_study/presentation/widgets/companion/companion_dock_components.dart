@@ -18,61 +18,6 @@ class CompanionDockDivider extends StatelessWidget {
   }
 }
 
-class CompanionReadingPercentPill extends StatelessWidget {
-  const CompanionReadingPercentPill({
-    super.key,
-    required this.progress,
-    required this.isDark,
-    required this.isCompact,
-  });
-
-  final double progress;
-  final bool isDark;
-  final bool isCompact;
-
-  @override
-  Widget build(BuildContext context) {
-    final pct = (progress * 100).toInt();
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-      decoration: BoxDecoration(
-        color: isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.ink100,
-        borderRadius: BorderRadius.circular(AppRadius.pill),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: AppAlpha.hover)
-              : AppColors.ink300,
-          width: 0.8,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CustomPaint(
-            size: const Size(13, 13),
-            painter: CompanionMiniCircularProgressPainter(
-              progress: progress,
-              isDark: isDark,
-            ),
-          ),
-          const SizedBox(width: 5),
-          Text(
-            isCompact
-                ? '$pct%'
-                : '${AppLocalizations.of(context)!.studyReadPercent(pct)} · 3 MIN READ',
-            style: TextStyle(
-              fontSize: AppTypography.label,
-              fontWeight: FontWeight.w900,
-              color: isDark ? AppColors.tealLight : AppColors.tealDeep,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class CompanionChapterPill extends StatefulWidget {
   const CompanionChapterPill({
     super.key,
@@ -313,49 +258,4 @@ class _CompanionBackToTopPillState extends State<CompanionBackToTopPill> {
       ),
     );
   }
-}
-
-class CompanionMiniCircularProgressPainter extends CustomPainter {
-  CompanionMiniCircularProgressPainter(
-      {required this.progress, required this.isDark});
-
-  final double progress;
-  final bool isDark;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2 - 1.5;
-
-    final trackPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0
-      ..color =
-          isDark ? Colors.white.withValues(alpha: 0.15) : AppColors.ink300;
-    canvas.drawCircle(center, radius, trackPaint);
-
-    if (progress > 0) {
-      final progressPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeCap = StrokeCap.round
-        ..strokeWidth = 2.2
-        ..shader = const LinearGradient(
-          colors: [AppColors.teal, AppColors.teal],
-        ).createShader(Rect.fromCircle(center: center, radius: radius));
-
-      const startAngle = -3.141592653589793 / 2;
-      final sweepAngle = 2 * 3.141592653589793 * progress.clamp(0.0, 1.0);
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
-        startAngle,
-        sweepAngle,
-        false,
-        progressPaint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(CompanionMiniCircularProgressPainter oldDelegate) =>
-      oldDelegate.progress != progress || oldDelegate.isDark != isDark;
 }

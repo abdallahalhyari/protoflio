@@ -22,19 +22,19 @@ class RelatedCaseStudies extends StatelessWidget {
   static const Map<String, ({String title, String subtitle})> _summary = {
     'nathealth': (
       title: 'NatHealth NFC Platform',
-      subtitle: 'ISO-7816 APDU · WorkManager · JWT Keystore',
+      subtitle: 'ISO-7816 APDU, WorkManager, JWT Keystore',
     ),
     'eskadenia': (
       title: 'ESKADENIA Enterprise Suite',
-      subtitle: 'MVVM refactor · 60fps · -35% crashes',
+      subtitle: 'MVVM refactor, 60fps, -35% crashes',
     ),
     'solutions': (
       title: 'Loyalty + Ephemeral Social',
-      subtitle: 'Design system · Camera pipeline · AWS S3',
+      subtitle: 'Design system, Camera pipeline, AWS S3',
     ),
     'fais': (
       title: 'M-Commerce & Streaming',
-      subtitle: 'Checkout funnel · Idempotent APIs · Media',
+      subtitle: 'Checkout funnel, Idempotent APIs, Media',
     ),
   };
 

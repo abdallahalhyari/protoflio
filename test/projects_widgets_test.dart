@@ -13,6 +13,7 @@ import 'package:profile/features/projects/presentation/widgets/pipeline_topology
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/projects/presentation/widgets/project_dossier_card.dart';
 import 'package:profile/core/theme/app_theme.dart';
+import 'package:profile/core/theme/tokens.dart';
 
 Widget _wrap(Widget child,
     [Size size = const Size(1200, 900),
@@ -70,6 +71,46 @@ void main() {
       expect(find.textContaining('Clean Arch'), findsOneWidget);
       expect(find.textContaining('Offline Queue'), findsOneWidget);
       expect(find.textContaining('TPA Backend'), findsOneWidget);
+    });
+
+    testWidgets(
+        'architecture diagrams stack on a phone instead of shrinking the row',
+        (tester) async {
+      tester.view.devicePixelRatio = 1.0;
+      tester.view.physicalSize = const Size(360, 1600);
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(_wrap(
+        Column(children: [
+          const NfcArchitectureDiagram(
+            isDesktop: false,
+            isDark: true,
+            showTitle: false,
+          ),
+          PipelineTopologyDiagram(
+            project: testProjects.first,
+            isDesktop: false,
+            isDark: true,
+            showTitle: false,
+          ),
+        ]),
+        const Size(360, 1600),
+      ));
+      await tester.pumpAndSettle();
+
+      expect(find.byIcon(Icons.arrow_downward_rounded), findsWidgets);
+      expect(find.byIcon(Icons.arrow_forward_rounded), findsNothing);
+      expect(find.text('System architecture topology'), findsNothing);
+      expect(find.text('Production pipeline topology'), findsNothing);
+      // Node labels keep their full size: nothing scales them down.
+      final label = tester.widget<Text>(find.textContaining('NFC Hardware'));
+      expect(label.style!.fontSize, AppTypography.label);
+      expect(
+        find.ancestor(
+          of: find.textContaining('NFC Hardware'),
+          matching: find.byType(FittedBox),
+        ),
+        findsNothing,
+      );
     });
 
     testWidgets('ProjectDossierCard renders label and content', (tester) async {

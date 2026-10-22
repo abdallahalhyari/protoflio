@@ -289,7 +289,14 @@
       }
     }
   },
-  "studyCaseStudy": "Case study",
+  "studyCaseStudy": "{company} case study",
+  "@studyCaseStudy": {
+    "placeholders": {
+      "company": {
+        "type": "String"
+      }
+    }
+  },
   "studyProblem": "The problem",
   "studyRole": "My role",
   "studyArchitecture": "System architecture",
@@ -720,23 +727,5 @@
   "engTryDemos": "Try the NFC, crypto and sync demos",
   "aboutStoryShort": "I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
   "engTabArchitectures": "Architectures",
-  "engTabCapabilities": "Capabilities",
-  "studyReadPercent": "{percent}% read",
-  "@studyReadPercent": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      }
-    }
-  },
-  "studyShare": "Share",
-  "studyShareTooltip": "Share case study",
-  "studyShareSemantics": "Share {title}",
-  "@studyShareSemantics": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  }
+  "engTabCapabilities": "Capabilities"
 }

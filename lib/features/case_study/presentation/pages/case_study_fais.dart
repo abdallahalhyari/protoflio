@@ -24,7 +24,7 @@ class FaisCaseStudy extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return CaseStudyScaffold(
       slug: 'fais',
-      appBarTitle: 'FAIS · ${l10n.studyCaseStudy}',
+      appBarTitle: l10n.studyCaseStudy('FAIS'),
       shareTitle: 'M-Commerce & Media-Streaming Clients',
       sliversBuilder: (context, keys, isDesktop) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -301,17 +301,24 @@ class _Masthead extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        const Wrap(
+        Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
           children: [
-            EditorialChip(label: 'Flutter', tone: ChipTone.indigo),
-            EditorialChip(label: 'Android (Kotlin/Java)', tone: ChipTone.amber),
-            EditorialChip(label: 'REST APIs', tone: ChipTone.neutral),
-            EditorialChip(label: 'SQL Database', tone: ChipTone.sky),
-            EditorialChip(label: 'Media Streaming'),
-            EditorialChip(label: 'Payment Gateways', tone: ChipTone.green),
-            EditorialChip(label: 'Idempotency', tone: ChipTone.indigo),
+            for (final tech in const [
+              'Flutter',
+              'Android (Kotlin/Java)',
+              'REST APIs',
+              'SQL Database',
+              'Media Streaming',
+              'Payment Gateways',
+              'Idempotency',
+            ])
+              EditorialChip(
+                label: tech,
+                tone: ChipTone.neutral,
+                variant: ChipVariant.outline,
+              ),
           ],
         ),
         const CaseStudyCorporateHeader(

@@ -24,7 +24,7 @@ class NatHealthCaseStudy extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return CaseStudyScaffold(
       slug: 'nathealth',
-      appBarTitle: 'NATHEALTH · ${l10n.studyCaseStudy}',
+      appBarTitle: l10n.studyCaseStudy('NatHealth'),
       shareTitle: 'NatHealth Mobile Suite',
       sliversBuilder: (context, keys, isDesktop) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -297,17 +297,24 @@ class _Masthead extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        const Wrap(
+        Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
           children: [
-            EditorialChip(label: 'Flutter', tone: ChipTone.indigo),
-            EditorialChip(label: 'Kotlin', tone: ChipTone.amber),
-            EditorialChip(label: 'ISO-7816 APDU NFC'),
-            EditorialChip(label: 'WorkManager', tone: ChipTone.green),
-            EditorialChip(label: 'JWT + Keystore', tone: ChipTone.sky),
-            EditorialChip(label: 'Clean Architecture', tone: ChipTone.neutral),
-            EditorialChip(label: 'SQLite', tone: ChipTone.neutral),
+            for (final tech in const [
+              'Flutter',
+              'Kotlin',
+              'ISO-7816 APDU NFC',
+              'WorkManager',
+              'JWT + Keystore',
+              'Clean Architecture',
+              'SQLite',
+            ])
+              EditorialChip(
+                label: tech,
+                tone: ChipTone.neutral,
+                variant: ChipVariant.outline,
+              ),
           ],
         ),
         const CaseStudyCorporateHeader(

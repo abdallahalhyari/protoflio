@@ -5,7 +5,6 @@ import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 
 import 'package:profile/features/case_study/presentation/widgets/header/case_study_action_pill.dart';
-import 'package:profile/features/case_study/presentation/widgets/header/case_study_share_pill.dart';
 
 export 'package:profile/features/case_study/presentation/widgets/header/case_study_share_util.dart';
 
@@ -55,12 +54,6 @@ class CaseStudyCorporateHeader extends StatelessWidget {
             url: linkedinUrl,
             company: company,
             type: 'linkedin',
-            scheme: scheme,
-            isDark: isDark,
-          ),
-          CaseStudySharePill(
-            slug: slug,
-            title: title,
             scheme: scheme,
             isDark: isDark,
           ),

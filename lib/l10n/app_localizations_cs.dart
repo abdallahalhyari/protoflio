@@ -569,7 +569,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get done => 'Hotovo';
 
   @override
-  String get studyCaseStudy => 'Případová studie';
+  String studyCaseStudy(String company) {
+    return 'Případová studie $company';
+  }
 
   @override
   String get studyProblem => 'Problém';
@@ -1586,20 +1588,4 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'Schopnosti';
-
-  @override
-  String studyReadPercent(int percent) {
-    return 'Přečteno $percent %';
-  }
-
-  @override
-  String get studyShare => 'Sdílet';
-
-  @override
-  String get studyShareTooltip => 'Sdílet případovou studii';
-
-  @override
-  String studyShareSemantics(String title) {
-    return 'Sdílet $title';
-  }
 }

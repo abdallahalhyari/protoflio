@@ -188,7 +188,7 @@
   "vcardCopyText": "Kopírovat kontaktní kartu",
   "vcardCopied": "Kontaktní karta zkopírována do schránky",
   "done": "Hotovo",
-  "studyCaseStudy": "Případová studie",
+  "studyCaseStudy": "Případová studie {company}",
   "studyProblem": "Problém",
   "studyRole": "Moje role",
   "studyArchitecture": "Architektura systému",
@@ -484,23 +484,5 @@
   "engTryDemos": "Vyzkoušejte ukázky NFC, kryptografie a synchronizace",
   "aboutStoryShort": "V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.",
   "engTabArchitectures": "Architektury",
-  "engTabCapabilities": "Schopnosti",
-  "studyReadPercent": "Přečteno {percent} %",
-  "@studyReadPercent": {
-    "placeholders": {
-      "percent": {
-        "type": "int"
-      }
-    }
-  },
-  "studyShare": "Sdílet",
-  "studyShareTooltip": "Sdílet případovou studii",
-  "studyShareSemantics": "Sdílet {title}",
-  "@studyShareSemantics": {
-    "placeholders": {
-      "title": {
-        "type": "String"
-      }
-    }
-  }
+  "engTabCapabilities": "Schopnosti"
 }

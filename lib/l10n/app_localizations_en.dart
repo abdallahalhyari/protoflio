@@ -567,7 +567,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get done => 'Done';
 
   @override
-  String get studyCaseStudy => 'Case study';
+  String studyCaseStudy(String company) {
+    return '$company case study';
+  }
 
   @override
   String get studyProblem => 'The problem';
@@ -1580,20 +1582,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'Capabilities';
-
-  @override
-  String studyReadPercent(int percent) {
-    return '$percent% read';
-  }
-
-  @override
-  String get studyShare => 'Share';
-
-  @override
-  String get studyShareTooltip => 'Share case study';
-
-  @override
-  String studyShareSemantics(String title) {
-    return 'Share $title';
-  }
 }

@@ -1,7 +1,5 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:profile/features/case_study/presentation/bloc/case_study_reader_bloc.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/shared/widgets/conditional_blur.dart';
@@ -75,21 +73,6 @@ class CompanionFloatingChapterDock extends StatelessWidget {
                         mainAxisSize:
                             isCompact ? MainAxisSize.max : MainAxisSize.min,
                         children: [
-                          // Only the percent follows every scroll frame; the dock around it
-                          // rebuilds when it shows, hides or the chapter changes.
-                          BlocSelector<CaseStudyReaderBloc,
-                              CaseStudyReaderState, double>(
-                            selector: (state) => state.progress,
-                            builder: (context, progress) =>
-                                CompanionReadingPercentPill(
-                              progress: progress,
-                              isDark: isDark,
-                              isCompact: isCompact,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          CompanionDockDivider(isDark: isDark),
-                          const SizedBox(width: 8),
                           if (isCompact)
                             Expanded(
                               child: SingleChildScrollView(

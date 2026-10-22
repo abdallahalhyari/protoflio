@@ -1105,8 +1105,8 @@ abstract class AppLocalizations {
   /// No description provided for @studyCaseStudy.
   ///
   /// In en, this message translates to:
-  /// **'Case study'**
-  String get studyCaseStudy;
+  /// **'{company} case study'**
+  String studyCaseStudy(String company);
 
   /// No description provided for @studyProblem.
   ///
@@ -2883,30 +2883,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Capabilities'**
   String get engTabCapabilities;
-
-  /// No description provided for @studyReadPercent.
-  ///
-  /// In en, this message translates to:
-  /// **'{percent}% read'**
-  String studyReadPercent(int percent);
-
-  /// No description provided for @studyShare.
-  ///
-  /// In en, this message translates to:
-  /// **'Share'**
-  String get studyShare;
-
-  /// No description provided for @studyShareTooltip.
-  ///
-  /// In en, this message translates to:
-  /// **'Share case study'**
-  String get studyShareTooltip;
-
-  /// No description provided for @studyShareSemantics.
-  ///
-  /// In en, this message translates to:
-  /// **'Share {title}'**
-  String studyShareSemantics(String title);
 }
 
 class _AppLocalizationsDelegate
