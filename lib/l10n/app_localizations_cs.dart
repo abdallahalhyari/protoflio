@@ -873,94 +873,6 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get aboutHoodHint => 'Vyberte schopnost a uvidíte, jak ji používám.';
-
-  @override
-  String get aboutWhereLabel => 'Kde jsem ji použil';
-
-  @override
-  String get hoodNfcTitle => 'NFC';
-
-  @override
-  String get hoodNfcTag => 'Bezpečná komunikace a ověření s kartou.';
-
-  @override
-  String get hoodNfcDetail =>
-      'Nativní vrstva v Kotlinu komunikuje s čipovými kartami přes ISO 7816 APDU. Navrhl jsem rozhraní čtečky tak, aby více typů karet stálo za jedním kontraktem.';
-
-  @override
-  String get hoodNfcWhere => 'NatHealth';
-
-  @override
-  String get hoodCryptoTitle => 'Kryptografie';
-
-  @override
-  String get hoodCryptoTag => 'RSA, AES a PBKDF2 s pečlivou prací s klíči.';
-
-  @override
-  String get hoodCryptoDetail =>
-      'Dvoukrokové vydávání JWT, bezpečné ukládání tokenů a vazba zařízení přes GUID chrání citlivá data pacientů.';
-
-  @override
-  String get hoodCryptoWhere => 'NatHealth';
-
-  @override
-  String get hoodBackgroundTitle => 'Zpracování na pozadí';
-
-  @override
-  String get hoodBackgroundTag =>
-      'Spolehlivá synchronizace a zpracování zpráv.';
-
-  @override
-  String get hoodBackgroundDetail =>
-      'WorkManager spouští synchronizaci na pozadí, dotazování na stav a obnovu tokenů, takže práce doběhne, i když ji uživatel nesleduje.';
-
-  @override
-  String get hoodBackgroundWhere => 'NatHealth';
-
-  @override
-  String get hoodOfflineTitle => 'Offline-first';
-
-  @override
-  String get hoodOfflineTag =>
-      'Aplikace, které fungují, i když zmizí připojení.';
-
-  @override
-  String get hoodOfflineDetail =>
-      'Podání se ukládají v zařízení a odesílají po návratu sítě, s opakováním s exponenciálním odstupem a jednotným zacházením s chybami.';
-
-  @override
-  String get hoodOfflineWhere => 'NatHealth';
-
-  @override
-  String get hoodNativeTitle => 'Nativní integrace';
-
-  @override
-  String get hoodNativeTag =>
-      'Flutter propojený se složitým nativním Androidem.';
-
-  @override
-  String get hoodNativeDetail =>
-      'Platformní kanály spojují Dart s kódem v Kotlinu a Javě pro přístup k hardwaru, na který Flutter sám nedosáhne.';
-
-  @override
-  String get hoodNativeWhere => 'NatHealth';
-
-  @override
-  String get hoodEnterpriseTitle => 'Podnikové systémy';
-
-  @override
-  String get hoodEnterpriseTag =>
-      'Zdravotnictví, ERP a rozsáhlé podnikové procesy.';
-
-  @override
-  String get hoodEnterpriseDetail =>
-      'Modulární architektura a znovupoužitelné komponenty napříč klienty ze zdravotnictví, e-learningu a ERP, přestavěné bez odstavení aplikací.';
-
-  @override
-  String get hoodEnterpriseWhere => 'ESKADENIA Software';
-
-  @override
   String get projectLblProblem => 'Problém';
 
   @override
@@ -1023,17 +935,8 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get engInspectDiagram => 'Zvětšit diagram';
-
-  @override
   String get aboutStoryShort =>
       'V mobilním vývoji jsem začal v roce 2021. Od té doby se moje práce stále posouvá níž v zásobníku, od obrazovek k nativní, bezpečnostní a synchronizační vrstvě pod nimi. Nevadí mi převzít složitý starší systém a nechat ho modulární a testovatelný.';
-
-  @override
-  String get engTabArchitectures => 'Architektury';
-
-  @override
-  String get engTabCapabilities => 'Schopnosti';
 
   @override
   String projectCopyCaseStudyLink(String project) {
@@ -1041,8 +944,11 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get engResetZoom => 'Obnovit přiblížení';
+  String get brandBackToTop => 'Abdallah Alhyari, zpět nahoru';
 
   @override
-  String get brandBackToTop => 'Abdallah Alhyari, zpět nahoru';
+  String get archCostLabel => 'Co to stojí';
+
+  @override
+  String get archUsedAtLabel => 'Použito v';
 }

@@ -4,26 +4,21 @@ import 'package:profile/features/engineering/domain/entities/architecture_topic.
 class ArchitectureSimulatorState extends Equatable {
   final List<ArchitectureTopic> topics;
   final int selectedTopicIndex;
-  final int currentStepIndex;
 
   const ArchitectureSimulatorState({
     required this.topics,
     this.selectedTopicIndex = 0,
-    this.currentStepIndex = 0,
   });
 
   ArchitectureTopic get currentTopic => topics[selectedTopicIndex];
-  int get totalSteps => currentTopic.diagramSteps.length;
 
   ArchitectureSimulatorState copyWith({
     List<ArchitectureTopic>? topics,
     int? selectedTopicIndex,
-    int? currentStepIndex,
   }) {
     return ArchitectureSimulatorState(
       topics: topics ?? this.topics,
       selectedTopicIndex: selectedTopicIndex ?? this.selectedTopicIndex,
-      currentStepIndex: currentStepIndex ?? this.currentStepIndex,
     );
   }
 
@@ -31,6 +26,5 @@ class ArchitectureSimulatorState extends Equatable {
   List<Object?> get props => [
         topics,
         selectedTopicIndex,
-        currentStepIndex,
       ];
 }

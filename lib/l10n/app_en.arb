@@ -408,32 +408,6 @@
       }
     }
   },
-  "aboutHoodHint": "Select a capability to see how I use it.",
-  "aboutWhereLabel": "Where I used it",
-  "hoodNfcTitle": "NFC",
-  "hoodNfcTag": "Secure card communication and authentication.",
-  "hoodNfcDetail": "A native Kotlin layer talks to smart cards over ISO 7816 APDUs. I designed the card-reader interface so several card technologies sit behind one contract.",
-  "hoodNfcWhere": "NatHealth",
-  "hoodCryptoTitle": "Cryptography",
-  "hoodCryptoTag": "RSA, AES and PBKDF2, with careful key handling.",
-  "hoodCryptoDetail": "Two-step JWT issuance, secure token storage and GUID-based device binding keep sensitive patient data protected.",
-  "hoodCryptoWhere": "NatHealth",
-  "hoodBackgroundTitle": "Background processing",
-  "hoodBackgroundTag": "Reliable sync and message processing.",
-  "hoodBackgroundDetail": "WorkManager runs background sync, status polling and token refresh, so work finishes without the user watching.",
-  "hoodBackgroundWhere": "NatHealth",
-  "hoodOfflineTitle": "Offline-first",
-  "hoodOfflineTag": "Apps that keep working when connectivity disappears.",
-  "hoodOfflineDetail": "Submissions are stored on the device and sent when the network returns, with exponential-backoff retries and standard failure handling.",
-  "hoodOfflineWhere": "NatHealth",
-  "hoodNativeTitle": "Native integration",
-  "hoodNativeTag": "Flutter bridged to complex native Android.",
-  "hoodNativeDetail": "Platform channels connect Dart to Kotlin and Java code for hardware access that Flutter cannot reach on its own.",
-  "hoodNativeWhere": "NatHealth",
-  "hoodEnterpriseTitle": "Enterprise systems",
-  "hoodEnterpriseTag": "Healthcare, ERP and large business workflows.",
-  "hoodEnterpriseDetail": "Modular architecture and reusable components across healthcare, e-learning and ERP clients, rebuilt without taking the apps offline.",
-  "hoodEnterpriseWhere": "ESKADENIA Software",
   "projectLblProblem": "Problem",
   "projectLblSystem": "System",
   "projectLblRole": "My role",
@@ -457,10 +431,7 @@
       }
     }
   },
-  "engInspectDiagram": "Zoom diagram",
   "aboutStoryShort": "I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
-  "engTabArchitectures": "Architectures",
-  "engTabCapabilities": "Capabilities",
   "projectCopyCaseStudyLink": "Copy link to the {project} case study",
   "@projectCopyCaseStudyLink": {
     "placeholders": {
@@ -469,6 +440,7 @@
       }
     }
   },
-  "engResetZoom": "Reset zoom",
-  "brandBackToTop": "Abdallah Alhyari, back to top"
+  "brandBackToTop": "Abdallah Alhyari, back to top",
+  "archCostLabel": "What it costs",
+  "archUsedAtLabel": "Used at"
 }

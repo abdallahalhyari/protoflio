@@ -867,92 +867,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get aboutHoodHint => 'Select a capability to see how I use it.';
-
-  @override
-  String get aboutWhereLabel => 'Where I used it';
-
-  @override
-  String get hoodNfcTitle => 'NFC';
-
-  @override
-  String get hoodNfcTag => 'Secure card communication and authentication.';
-
-  @override
-  String get hoodNfcDetail =>
-      'A native Kotlin layer talks to smart cards over ISO 7816 APDUs. I designed the card-reader interface so several card technologies sit behind one contract.';
-
-  @override
-  String get hoodNfcWhere => 'NatHealth';
-
-  @override
-  String get hoodCryptoTitle => 'Cryptography';
-
-  @override
-  String get hoodCryptoTag => 'RSA, AES and PBKDF2, with careful key handling.';
-
-  @override
-  String get hoodCryptoDetail =>
-      'Two-step JWT issuance, secure token storage and GUID-based device binding keep sensitive patient data protected.';
-
-  @override
-  String get hoodCryptoWhere => 'NatHealth';
-
-  @override
-  String get hoodBackgroundTitle => 'Background processing';
-
-  @override
-  String get hoodBackgroundTag => 'Reliable sync and message processing.';
-
-  @override
-  String get hoodBackgroundDetail =>
-      'WorkManager runs background sync, status polling and token refresh, so work finishes without the user watching.';
-
-  @override
-  String get hoodBackgroundWhere => 'NatHealth';
-
-  @override
-  String get hoodOfflineTitle => 'Offline-first';
-
-  @override
-  String get hoodOfflineTag =>
-      'Apps that keep working when connectivity disappears.';
-
-  @override
-  String get hoodOfflineDetail =>
-      'Submissions are stored on the device and sent when the network returns, with exponential-backoff retries and standard failure handling.';
-
-  @override
-  String get hoodOfflineWhere => 'NatHealth';
-
-  @override
-  String get hoodNativeTitle => 'Native integration';
-
-  @override
-  String get hoodNativeTag => 'Flutter bridged to complex native Android.';
-
-  @override
-  String get hoodNativeDetail =>
-      'Platform channels connect Dart to Kotlin and Java code for hardware access that Flutter cannot reach on its own.';
-
-  @override
-  String get hoodNativeWhere => 'NatHealth';
-
-  @override
-  String get hoodEnterpriseTitle => 'Enterprise systems';
-
-  @override
-  String get hoodEnterpriseTag =>
-      'Healthcare, ERP and large business workflows.';
-
-  @override
-  String get hoodEnterpriseDetail =>
-      'Modular architecture and reusable components across healthcare, e-learning and ERP clients, rebuilt without taking the apps offline.';
-
-  @override
-  String get hoodEnterpriseWhere => 'ESKADENIA Software';
-
-  @override
   String get projectLblProblem => 'Problem';
 
   @override
@@ -1015,17 +929,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get engInspectDiagram => 'Zoom diagram';
-
-  @override
   String get aboutStoryShort =>
       'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.';
-
-  @override
-  String get engTabArchitectures => 'Architectures';
-
-  @override
-  String get engTabCapabilities => 'Capabilities';
 
   @override
   String projectCopyCaseStudyLink(String project) {
@@ -1033,8 +938,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get engResetZoom => 'Reset zoom';
+  String get brandBackToTop => 'Abdallah Alhyari, back to top';
 
   @override
-  String get brandBackToTop => 'Abdallah Alhyari, back to top';
+  String get archCostLabel => 'What it costs';
+
+  @override
+  String get archUsedAtLabel => 'Used at';
 }

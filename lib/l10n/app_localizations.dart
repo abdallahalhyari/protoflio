@@ -1618,162 +1618,6 @@ abstract class AppLocalizations {
   /// **'{years}+ years in mobile'**
   String aboutExperienceValue(int years);
 
-  /// No description provided for @aboutHoodHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Select a capability to see how I use it.'**
-  String get aboutHoodHint;
-
-  /// No description provided for @aboutWhereLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Where I used it'**
-  String get aboutWhereLabel;
-
-  /// No description provided for @hoodNfcTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'NFC'**
-  String get hoodNfcTitle;
-
-  /// No description provided for @hoodNfcTag.
-  ///
-  /// In en, this message translates to:
-  /// **'Secure card communication and authentication.'**
-  String get hoodNfcTag;
-
-  /// No description provided for @hoodNfcDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'A native Kotlin layer talks to smart cards over ISO 7816 APDUs. I designed the card-reader interface so several card technologies sit behind one contract.'**
-  String get hoodNfcDetail;
-
-  /// No description provided for @hoodNfcWhere.
-  ///
-  /// In en, this message translates to:
-  /// **'NatHealth'**
-  String get hoodNfcWhere;
-
-  /// No description provided for @hoodCryptoTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Cryptography'**
-  String get hoodCryptoTitle;
-
-  /// No description provided for @hoodCryptoTag.
-  ///
-  /// In en, this message translates to:
-  /// **'RSA, AES and PBKDF2, with careful key handling.'**
-  String get hoodCryptoTag;
-
-  /// No description provided for @hoodCryptoDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'Two-step JWT issuance, secure token storage and GUID-based device binding keep sensitive patient data protected.'**
-  String get hoodCryptoDetail;
-
-  /// No description provided for @hoodCryptoWhere.
-  ///
-  /// In en, this message translates to:
-  /// **'NatHealth'**
-  String get hoodCryptoWhere;
-
-  /// No description provided for @hoodBackgroundTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Background processing'**
-  String get hoodBackgroundTitle;
-
-  /// No description provided for @hoodBackgroundTag.
-  ///
-  /// In en, this message translates to:
-  /// **'Reliable sync and message processing.'**
-  String get hoodBackgroundTag;
-
-  /// No description provided for @hoodBackgroundDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'WorkManager runs background sync, status polling and token refresh, so work finishes without the user watching.'**
-  String get hoodBackgroundDetail;
-
-  /// No description provided for @hoodBackgroundWhere.
-  ///
-  /// In en, this message translates to:
-  /// **'NatHealth'**
-  String get hoodBackgroundWhere;
-
-  /// No description provided for @hoodOfflineTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Offline-first'**
-  String get hoodOfflineTitle;
-
-  /// No description provided for @hoodOfflineTag.
-  ///
-  /// In en, this message translates to:
-  /// **'Apps that keep working when connectivity disappears.'**
-  String get hoodOfflineTag;
-
-  /// No description provided for @hoodOfflineDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'Submissions are stored on the device and sent when the network returns, with exponential-backoff retries and standard failure handling.'**
-  String get hoodOfflineDetail;
-
-  /// No description provided for @hoodOfflineWhere.
-  ///
-  /// In en, this message translates to:
-  /// **'NatHealth'**
-  String get hoodOfflineWhere;
-
-  /// No description provided for @hoodNativeTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Native integration'**
-  String get hoodNativeTitle;
-
-  /// No description provided for @hoodNativeTag.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter bridged to complex native Android.'**
-  String get hoodNativeTag;
-
-  /// No description provided for @hoodNativeDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'Platform channels connect Dart to Kotlin and Java code for hardware access that Flutter cannot reach on its own.'**
-  String get hoodNativeDetail;
-
-  /// No description provided for @hoodNativeWhere.
-  ///
-  /// In en, this message translates to:
-  /// **'NatHealth'**
-  String get hoodNativeWhere;
-
-  /// No description provided for @hoodEnterpriseTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enterprise systems'**
-  String get hoodEnterpriseTitle;
-
-  /// No description provided for @hoodEnterpriseTag.
-  ///
-  /// In en, this message translates to:
-  /// **'Healthcare, ERP and large business workflows.'**
-  String get hoodEnterpriseTag;
-
-  /// No description provided for @hoodEnterpriseDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'Modular architecture and reusable components across healthcare, e-learning and ERP clients, rebuilt without taking the apps offline.'**
-  String get hoodEnterpriseDetail;
-
-  /// No description provided for @hoodEnterpriseWhere.
-  ///
-  /// In en, this message translates to:
-  /// **'ESKADENIA Software'**
-  String get hoodEnterpriseWhere;
-
   /// No description provided for @projectLblProblem.
   ///
   /// In en, this message translates to:
@@ -1870,29 +1714,11 @@ abstract class AppLocalizations {
   /// **'{count} tiers'**
   String engTiers(int count);
 
-  /// No description provided for @engInspectDiagram.
-  ///
-  /// In en, this message translates to:
-  /// **'Zoom diagram'**
-  String get engInspectDiagram;
-
   /// No description provided for @aboutStoryShort.
   ///
   /// In en, this message translates to:
   /// **'I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.'**
   String get aboutStoryShort;
-
-  /// No description provided for @engTabArchitectures.
-  ///
-  /// In en, this message translates to:
-  /// **'Architectures'**
-  String get engTabArchitectures;
-
-  /// No description provided for @engTabCapabilities.
-  ///
-  /// In en, this message translates to:
-  /// **'Capabilities'**
-  String get engTabCapabilities;
 
   /// No description provided for @projectCopyCaseStudyLink.
   ///
@@ -1900,17 +1726,23 @@ abstract class AppLocalizations {
   /// **'Copy link to the {project} case study'**
   String projectCopyCaseStudyLink(String project);
 
-  /// No description provided for @engResetZoom.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset zoom'**
-  String get engResetZoom;
-
   /// No description provided for @brandBackToTop.
   ///
   /// In en, this message translates to:
   /// **'Abdallah Alhyari, back to top'**
   String get brandBackToTop;
+
+  /// No description provided for @archCostLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What it costs'**
+  String get archCostLabel;
+
+  /// No description provided for @archUsedAtLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Used at'**
+  String get archUsedAtLabel;
 }
 
 class _AppLocalizationsDelegate

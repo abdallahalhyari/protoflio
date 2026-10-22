@@ -30,7 +30,6 @@ class ArchitectureSimulatorBloc
 
   void _registerHandlers() {
     on<SimulatorTopicSelected>(_onTopicSelected);
-    on<SimulatorStepSelected>(_onStepSelected);
   }
 
   void _onTopicSelected(
@@ -39,19 +38,6 @@ class ArchitectureSimulatorBloc
   ) {
     if (event.topicIndex == state.selectedTopicIndex) return;
     final clamped = event.topicIndex.clamp(0, state.topics.length - 1);
-    emit(state.copyWith(
-      selectedTopicIndex: clamped,
-      currentStepIndex: 0,
-    ));
-  }
-
-  void _onStepSelected(
-    SimulatorStepSelected event,
-    Emitter<ArchitectureSimulatorState> emit,
-  ) {
-    final clamped = event.stepIndex.clamp(0, state.totalSteps - 1);
-    emit(state.copyWith(
-      currentStepIndex: clamped,
-    ));
+    emit(state.copyWith(selectedTopicIndex: clamped));
   }
 }

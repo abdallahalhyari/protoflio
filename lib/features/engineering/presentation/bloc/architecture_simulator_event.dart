@@ -15,12 +15,3 @@ class SimulatorTopicSelected extends ArchitectureSimulatorEvent {
   @override
   List<Object?> get props => [topicIndex];
 }
-
-class SimulatorStepSelected extends ArchitectureSimulatorEvent {
-  final int stepIndex;
-
-  const SimulatorStepSelected(this.stepIndex);
-
-  @override
-  List<Object?> get props => [stepIndex];
-}

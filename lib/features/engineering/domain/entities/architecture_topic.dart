@@ -6,6 +6,12 @@ class ArchitectureTopic {
   final String category;
   final String summary;
   final String whyChosen;
+
+  /// What the approach costs: the trade-off, stated on its own.
+  final String cost;
+
+  /// Where it was used in production.
+  final String usedAt;
   final List<DiagramStep> diagramSteps;
   final List<String> technicalHighlights;
 
@@ -15,6 +21,8 @@ class ArchitectureTopic {
     required this.category,
     required this.summary,
     required this.whyChosen,
+    required this.cost,
+    required this.usedAt,
     required this.diagramSteps,
     required this.technicalHighlights,
   });

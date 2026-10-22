@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/engineering/data/datasources/architecture_data.dart';
-import 'package:profile/features/engineering/presentation/widgets/architecture_details_card.dart';
-import 'package:profile/features/engineering/presentation/widgets/architecture_diagram_card.dart';
-import 'package:profile/features/engineering/presentation/widgets/architecture_inspect_modal.dart';
+import 'package:profile/features/engineering/presentation/widgets/architecture_details.dart';
+import 'package:profile/features/engineering/presentation/widgets/layer_stack.dart';
 import 'package:profile/features/engineering/presentation/widgets/architecture_topic_tabs.dart';
 import 'package:profile/features/engineering/presentation/widgets/engineering_header.dart';
 import 'package:profile/core/theme/app_theme.dart';
@@ -61,82 +60,58 @@ void main() {
       expect(selected, 1);
     });
 
-    testWidgets('ArchitectureDiagramCard renders flowchart tiers',
+    testWidgets('LayerStack lists every layer, in order, and is not a control',
         (tester) async {
       final topic = kArchitectureTopics.first;
-      await tester.pumpWidget(_wrap(
-        SizedBox(
-          height: 600,
-          child: ArchitectureDiagramCard(topic: topic, isDesktop: true),
-        ),
-      ));
+      await tester.pumpWidget(_wrap(LayerStack(topic: topic)));
       await tester.pumpAndSettle();
 
-      expect(find.text('${topic.diagramSteps.length} tiers'), findsOneWidget);
+      final tops = [
+        for (final step in topic.diagramSteps)
+          tester.getTopLeft(find.text(step.title)).dy,
+      ];
+      expect(tops, orderedEquals([...tops]..sort()));
       // No per-layer timing figures: they weren't measurements.
       expect(find.text('Latency target'), findsNothing);
-      for (final step in topic.diagramSteps) {
-        expect(find.text(step.title), findsOneWidget);
-      }
+      // Layers are read, not picked: nothing in the stack takes taps.
+      expect(
+        find.descendant(
+            of: find.byType(LayerStack), matching: find.byType(InkWell)),
+        findsNothing,
+      );
+      expect(
+        find.descendant(
+            of: find.byType(LayerStack),
+            matching: find.byType(GestureDetector)),
+        findsNothing,
+      );
     });
 
-    testWidgets('ArchitectureDetailsCard renders summary and safeguards',
+    testWidgets('ArchitectureDetails states why, the cost and where it ran',
         (tester) async {
       final topic = kArchitectureTopics[1]; // Offline-first sync
-      await tester.pumpWidget(_wrap(
-        SizedBox(
-          height: 600,
-          child: ArchitectureDetailsCard(topic: topic, isDesktop: true),
-        ),
-      ));
+      await tester.pumpWidget(_wrap(ArchitectureDetails(topic: topic)));
       await tester.pumpAndSettle();
 
       // The heading is the topic's display name.
       expect(find.text('Offline-first sync'), findsOneWidget);
+      expect(find.text(topic.summary), findsOneWidget);
+      expect(find.text('Why this choice'), findsOneWidget);
+      expect(find.text('What it costs'), findsOneWidget);
+      expect(find.text(topic.cost), findsOneWidget);
+      expect(find.text('Safeguards'), findsOneWidget);
+      expect(find.text('Used at'), findsOneWidget);
+      expect(find.text(topic.usedAt), findsOneWidget);
       // There is no playground to send anyone to, so no demo button.
       expect(find.textContaining('demos'), findsNothing);
       expect(find.byType(OutlinedButton), findsNothing);
-      expect(find.text('Why this choice'), findsOneWidget);
-      expect(find.text('Safeguards'), findsOneWidget);
-      expect(find.text(topic.summary), findsOneWidget);
     });
 
-    testWidgets(
-        'showArchitectureInspectModal opens dialog and renders InteractiveViewer',
-        (tester) async {
-      tester.view.physicalSize = const Size(1200, 1000);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(() {
-        tester.view.resetPhysicalSize();
-        tester.view.resetDevicePixelRatio();
-      });
-
-      final topic = kArchitectureTopics.first;
-
-      await tester.pumpWidget(_wrap(
-        Builder(
-          builder: (context) {
-            return ElevatedButton(
-              onPressed: () {
-                showArchitectureInspectModal(
-                  context,
-                  topic: topic,
-                  currentStep: 0,
-                  onStepChanged: (_) {},
-                );
-              },
-              child: const Text('OPEN MODAL'),
-            );
-          },
-        ),
-      ));
-      await tester.pump(const Duration(milliseconds: 100));
-
-      await tester.tap(find.text('OPEN MODAL'));
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(find.text('Inspect blueprint // zoom & simulate'), findsOneWidget);
-      expect(find.byType(InteractiveViewer), findsOneWidget);
+    test('every topic separates its cost from why it was chosen', () {
+      for (final topic in kArchitectureTopics) {
+        expect(topic.cost, isNotEmpty, reason: topic.id);
+        expect(topic.whyChosen, isNot(contains('The cost')), reason: topic.id);
+      }
     });
   });
 }

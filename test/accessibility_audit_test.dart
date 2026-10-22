@@ -12,7 +12,7 @@ import 'package:profile/features/shell/presentation/controllers/home_controller.
 import 'package:profile/features/projects/presentation/pages/projects_page.dart';
 import 'package:profile/features/about/presentation/widgets/credential_sheet.dart';
 import 'package:profile/features/shell/presentation/widgets/desktop_toolbar.dart';
-import 'package:profile/features/engineering/presentation/widgets/architecture_diagram_card.dart';
+import 'package:profile/features/engineering/presentation/widgets/layer_stack.dart';
 import 'package:profile/features/engineering/presentation/widgets/engineering_header.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_card.dart';
 import 'package:profile/features/experience/presentation/widgets/experience_header.dart';
@@ -325,12 +325,11 @@ void main() {
   group(
       'Accessibility & Screen Reader Audit — Diagrams, Metric Cards, Folio & Shell',
       () {
-    testWidgets(
-        'ArchitectureDiagramCard declares container semantics with tier count',
+    testWidgets('LayerStack declares container semantics with the layer count',
         (tester) async {
       final topic = kArchitectureTopics.first;
       await tester.pumpWidget(_wrapWithHarness(
-        child: ArchitectureDiagramCard(topic: topic, isDesktop: true),
+        child: LayerStack(topic: topic),
       ));
       await tester.pumpAndSettle();
 
@@ -338,7 +337,7 @@ void main() {
         (w) =>
             w is Semantics &&
             w.container &&
-            (w.properties.label?.contains('Architecture diagram for') ?? false),
+            (w.properties.label?.contains('Layers of') ?? false),
       );
       expect(diagramFinder, findsOneWidget);
     });

@@ -11,7 +11,9 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     summary:
         'Four layers and one rule: code depends inward only. The screens know the business rules; the business rules know nothing about Flutter, NFC or the network.',
     whyChosen:
-        'At NatHealth the card reader, the Keystore and the sync queue are hardware and OS code that a Flutter test cannot run. Behind repository interfaces, the claim rules test in plain Dart and widget tests use a fake card reader. The cost is more files and mapping code per feature.',
+        'At NatHealth the card reader, the Keystore and the sync queue are hardware and OS code that a Flutter test cannot run. Behind repository interfaces, the claim rules test in plain Dart and widget tests use a fake card reader.',
+    cost: 'More files and mapping code for every feature.',
+    usedAt: 'NatHealth',
     diagramSteps: [
       DiagramStep(
         layer: 'Presentation layer',
@@ -59,7 +61,9 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     summary:
         'A claim is saved on the phone first and sent when the network allows. The screen never waits for the server, and nothing is lost if the app is closed.',
     whyChosen:
-        'NatHealth clinics include remote care centres with unreliable connections, and a claim cannot be lost or block a patient check-in. Saving locally and syncing in the background made the network optional at the counter. The cost is handling conflicts and duplicates on the way back.',
+        'NatHealth clinics include remote care centres with unreliable connections, and a claim cannot be lost or block a patient check-in. Saving locally and syncing in the background made the network optional at the counter.',
+    cost: 'Conflicts and duplicates to resolve when the queue syncs.',
+    usedAt: 'NatHealth',
     diagramSteps: [
       DiagramStep(
         layer: 'Step 1: user action',
@@ -107,7 +111,10 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     summary:
         'The app reads health smart cards over NFC by sending ISO 7816 APDU commands from native Kotlin, then passes the result to Flutter.',
     whyChosen:
-        "NatHealth replaced paper claims with contactless card checks. Flutter can't talk to the card at this level, so the card work runs in Kotlin and Flutter only sees typed results. The hard part was the range of phones: the same commands had to work on many different NFC controllers.",
+        "NatHealth replaced paper claims with contactless card checks. Flutter can't talk to the card at this level, so the card work runs in Kotlin and Flutter only sees typed results.",
+    cost:
+        'Phone-by-phone testing: the same commands had to work on many different NFC controllers.',
+    usedAt: 'NatHealth',
     diagramSteps: [
       DiagramStep(
         layer: 'Discovery',
@@ -155,7 +162,9 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     summary:
         'Sign-in tokens are issued in two steps, bound to the device and stored with keys the phone keeps in secure hardware.',
     whyChosen:
-        'The apps handle health claims, so a copied token must be useless on another phone. Keeping keys in the Keystore and binding tokens to the device does that. The cost is a re-login when the device binding changes.',
+        'The apps handle health claims, so a copied token must be useless on another phone. Keeping keys in the Keystore and binding tokens to the device does that.',
+    cost: 'A re-login whenever the device binding changes.',
+    usedAt: 'NatHealth',
     diagramSteps: [
       DiagramStep(
         layer: 'Authentication',
@@ -203,7 +212,9 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     summary:
         'Screens send events to a BLoC and redraw from the states it emits. State only changes in one place, in one direction.',
     whyChosen:
-        'With NFC reads, offline queues and token refreshes all changing the same screens, state needed one owner. A BLoC per feature makes every change traceable and testable without widgets. The cost is boilerplate: events, states and handlers for small features too.',
+        'With NFC reads, offline queues and token refreshes all changing the same screens, state needed one owner. A BLoC per feature makes every change traceable and testable without widgets.',
+    cost: 'Boilerplate: events, states and handlers even for small features.',
+    usedAt: 'NatHealth',
     diagramSteps: [
       DiagramStep(
         layer: 'UI / presentation',

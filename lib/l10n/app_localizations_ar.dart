@@ -863,90 +863,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get aboutHoodHint => 'اختر قدرة لترى كيف أستخدمها.';
-
-  @override
-  String get aboutWhereLabel => 'أين استخدمتها';
-
-  @override
-  String get hoodNfcTitle => 'NFC';
-
-  @override
-  String get hoodNfcTag => 'اتصال ومصادقة آمنان مع البطاقات.';
-
-  @override
-  String get hoodNfcDetail =>
-      'طبقة Kotlin أصلية تتحدث مع البطاقات الذكية عبر ISO 7816 APDU. صممت واجهة قارئ البطاقات لتقف عدة تقنيات بطاقات خلف عقد واحد.';
-
-  @override
-  String get hoodNfcWhere => 'NatHealth';
-
-  @override
-  String get hoodCryptoTitle => 'التشفير';
-
-  @override
-  String get hoodCryptoTag => 'RSA وAES وPBKDF2 مع تعامل دقيق مع المفاتيح.';
-
-  @override
-  String get hoodCryptoDetail =>
-      'إصدار JWT على خطوتين، وتخزين آمن للرموز، وربط الجهاز بمعرّف GUID تحمي بيانات المرضى الحساسة.';
-
-  @override
-  String get hoodCryptoWhere => 'NatHealth';
-
-  @override
-  String get hoodBackgroundTitle => 'المعالجة في الخلفية';
-
-  @override
-  String get hoodBackgroundTag => 'مزامنة ومعالجة رسائل موثوقة.';
-
-  @override
-  String get hoodBackgroundDetail =>
-      'يشغّل WorkManager المزامنة في الخلفية واستعلام الحالة وتجديد الرموز، فيكتمل العمل دون أن يراقبه المستخدم.';
-
-  @override
-  String get hoodBackgroundWhere => 'NatHealth';
-
-  @override
-  String get hoodOfflineTitle => 'دون اتصال أولاً';
-
-  @override
-  String get hoodOfflineTag => 'تطبيقات تواصل العمل حين ينقطع الاتصال.';
-
-  @override
-  String get hoodOfflineDetail =>
-      'تُخزَّن الطلبات على الجهاز وتُرسل عند عودة الشبكة، مع إعادة محاولة بتراجع أسّي ومعالجة موحّدة للأخطاء.';
-
-  @override
-  String get hoodOfflineWhere => 'NatHealth';
-
-  @override
-  String get hoodNativeTitle => 'التكامل مع النظام الأصلي';
-
-  @override
-  String get hoodNativeTag => 'ربط Flutter بنظام Android الأصلي المعقّد.';
-
-  @override
-  String get hoodNativeDetail =>
-      'تربط قنوات المنصة بين Dart وشيفرة Kotlin وJava للوصول إلى العتاد الذي لا تبلغه Flutter وحدها.';
-
-  @override
-  String get hoodNativeWhere => 'NatHealth';
-
-  @override
-  String get hoodEnterpriseTitle => 'أنظمة المؤسسات';
-
-  @override
-  String get hoodEnterpriseTag => 'الرعاية الصحية وERP وسير العمل الكبيرة.';
-
-  @override
-  String get hoodEnterpriseDetail =>
-      'بنية معيارية ومكوّنات قابلة لإعادة الاستخدام عبر عملاء الرعاية الصحية والتعليم الإلكتروني وERP، أُعيد بناؤها دون إيقاف التطبيقات.';
-
-  @override
-  String get hoodEnterpriseWhere => 'ESKADENIA Software';
-
-  @override
   String get projectLblProblem => 'المشكلة';
 
   @override
@@ -1009,17 +925,8 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get engInspectDiagram => 'تكبير المخطط';
-
-  @override
   String get aboutStoryShort =>
       'بدأت في تطبيقات الهواتف عام 2021. ومنذ ذلك الحين ينتقل عملي باستمرار إلى أسفل الطبقات، من الشاشات إلى طبقات النظام الأصلي والأمان والمزامنة تحتها. وأرتاح لوراثة نظام قديم معقّد وتركه معيارياً وقابلاً للاختبار.';
-
-  @override
-  String get engTabArchitectures => 'البُنى المعمارية';
-
-  @override
-  String get engTabCapabilities => 'القدرات';
 
   @override
   String projectCopyCaseStudyLink(String project) {
@@ -1027,8 +934,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get engResetZoom => 'إعادة ضبط التكبير';
+  String get brandBackToTop => 'عبدالله الحياري، العودة إلى الأعلى';
 
   @override
-  String get brandBackToTop => 'عبدالله الحياري، العودة إلى الأعلى';
+  String get archCostLabel => 'ما الذي يكلّفه';
+
+  @override
+  String get archUsedAtLabel => 'استُخدم في';
 }
