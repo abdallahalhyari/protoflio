@@ -9,6 +9,8 @@ class _Capability {
   const _Capability(this.mono, this.title, this.tag, this.detail, this.where,
       {this.hasDemo = false});
   final bool hasDemo;
+
+  /// The tools or standards involved, in plain text.
   final String mono;
   final String title;
   final String tag;
@@ -39,11 +41,11 @@ class _CapabilitiesViewState extends State<CapabilitiesView> {
     final gold = context.isDarkMode ? AppColors.goldSoft : AppColors.goldDeep;
 
     final items = [
-      _Capability('ISO 7816 · APDU', l10n.hoodNfcTitle, l10n.hoodNfcTag,
+      _Capability('ISO 7816, APDU', l10n.hoodNfcTitle, l10n.hoodNfcTag,
           l10n.hoodNfcDetail, l10n.hoodNfcWhere,
           hasDemo: true),
-      _Capability('RSA · AES · PBKDF2', l10n.hoodCryptoTitle,
-          l10n.hoodCryptoTag, l10n.hoodCryptoDetail, l10n.hoodCryptoWhere,
+      _Capability('RSA, AES, PBKDF2', l10n.hoodCryptoTitle, l10n.hoodCryptoTag,
+          l10n.hoodCryptoDetail, l10n.hoodCryptoWhere,
           hasDemo: true),
       _Capability(
           'WorkManager',
@@ -51,14 +53,14 @@ class _CapabilitiesViewState extends State<CapabilitiesView> {
           l10n.hoodBackgroundTag,
           l10n.hoodBackgroundDetail,
           l10n.hoodBackgroundWhere),
-      _Capability('queue · retry · sync', l10n.hoodOfflineTitle,
+      _Capability('Queue, retry, sync', l10n.hoodOfflineTitle,
           l10n.hoodOfflineTag, l10n.hoodOfflineDetail, l10n.hoodOfflineWhere,
           hasDemo: true),
       _Capability('MethodChannel', l10n.hoodNativeTitle, l10n.hoodNativeTag,
           l10n.hoodNativeDetail, l10n.hoodNativeWhere,
           hasDemo: true),
       _Capability(
-          'HIS · ERP · LMS',
+          'HIS, ERP, LMS',
           l10n.hoodEnterpriseTitle,
           l10n.hoodEnterpriseTag,
           l10n.hoodEnterpriseDetail,
@@ -111,9 +113,8 @@ class _CapabilitiesViewState extends State<CapabilitiesView> {
                     c.mono,
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
-                      fontFamily: AppTypography.monoFont,
-                      fontSize: AppTypography.label,
-                      color: on ? gold : context.mutedText,
+                      fontSize: AppTypography.label + 1,
+                      color: context.mutedText,
                     ),
                   ),
                 ],

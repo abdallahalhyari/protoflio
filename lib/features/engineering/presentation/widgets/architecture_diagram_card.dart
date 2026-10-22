@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/features/engineering/presentation/utils/architecture_labels.dart';
 
 import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
@@ -80,7 +81,7 @@ class ArchitectureDiagramCard extends StatelessWidget {
     return Semantics(
       container: true,
       label:
-          'Architecture flowchart diagram for ${topic.title}: showing ${topic.diagramSteps.length} architectural tiers',
+          'Architecture diagram for ${architectureTopicLabel(l10n, topic.title)}: ${topic.diagramSteps.length} layers',
       child: RepaintBoundary(
         child: Container(
           padding: const EdgeInsets.all(AppSpacing.md),

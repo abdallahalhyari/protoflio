@@ -338,8 +338,7 @@ void main() {
         (w) =>
             w is Semantics &&
             w.container &&
-            (w.properties.label?.contains('Architecture flowchart diagram') ??
-                false),
+            (w.properties.label?.contains('Architecture diagram for') ?? false),
       );
       expect(diagramFinder, findsOneWidget);
     });

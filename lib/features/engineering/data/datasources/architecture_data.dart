@@ -15,7 +15,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     diagramSteps: [
       DiagramStep(
         layer: 'Presentation layer',
-        title: 'Flutter UI & State Controllers',
+        title: 'Flutter UI & state controllers',
         details:
             'Declarative widgets, BLoC / ValueNotifiers, input validation & 60fps view rendering.',
         icon: Icons.layers_rounded,
@@ -23,7 +23,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Domain layer (core)',
-        title: 'Use Cases & Business Entities',
+        title: 'Use cases & business entities',
         details:
             'Pure Dart entities, business rules, repository contracts. Zero external framework dependencies.',
         icon: Icons.account_tree_rounded,
@@ -31,7 +31,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Data layer',
-        title: 'Repository Implementations & DTOs',
+        title: 'Repository implementations & DTOs',
         details:
             'Coordination between local cache and remote sources, serialization, and error translation.',
         icon: Icons.storage_rounded,
@@ -39,7 +39,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Data sources / hardware',
-        title: 'SQLite Cache & REST / NFC APIs',
+        title: 'SQLite cache & REST / NFC APIs',
         details:
             'Native Android NFC Adapter, SQLite persistent storage, and secure HTTPS REST endpoints.',
         icon: Icons.settings_ethernet_rounded,
@@ -63,7 +63,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     diagramSteps: [
       DiagramStep(
         layer: 'Step 1: user action',
-        title: 'Optimistic UI Dispatch',
+        title: 'Optimistic UI dispatch',
         details:
             'Immediate user feedback with transactional state marked as PENDING_SYNC.',
         icon: Icons.touch_app_rounded,
@@ -71,7 +71,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Step 2: local atomic commit',
-        title: 'SQLite / Encrypted Database',
+        title: 'SQLite / encrypted database',
         details:
             'Record stored locally within an ACID database transaction. Never held in volatile memory.',
         icon: Icons.save_rounded,
@@ -79,7 +79,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Step 3: job scheduler',
-        title: 'Android WorkManager Pipeline',
+        title: 'Android WorkManager pipeline',
         details:
             'OS-managed background worker triggered with NETWORK_CONNECTED constraints & exponential backoff.',
         icon: Icons.schedule_rounded,
@@ -87,7 +87,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Step 4: remote reconciliation',
-        title: 'Server ACK & Conflict Resolution',
+        title: 'Server ACK & conflict resolution',
         details:
             'Idempotency keys prevent duplicate transactions; server timestamp updates local state to SYNCED.',
         icon: Icons.cloud_done_rounded,
@@ -111,7 +111,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     diagramSteps: [
       DiagramStep(
         layer: 'Discovery',
-        title: 'NFC Adapter & Tag Dispatch',
+        title: 'NFC adapter & tag dispatch',
         details:
             'Foreground dispatch filter captures IsoDep / Mifare smart-cards within milliseconds.',
         icon: Icons.nfc_rounded,
@@ -119,7 +119,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Native channel',
-        title: 'Kotlin MethodChannel Bridge',
+        title: 'Kotlin MethodChannel bridge',
         details:
             'High-speed binary transport bridging Flutter runtime to native Android IsoDep transceive buffer.',
         icon: Icons.cable_rounded,
@@ -127,7 +127,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Command chain',
-        title: 'ISO-7816 APDU Handshake',
+        title: 'ISO-7816 APDU handshake',
         details:
             'Select Application (AID), Mutual Authentication, and encrypted binary block read.',
         icon: Icons.security_rounded,
@@ -135,7 +135,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Verification',
-        title: 'Cryptographic Claim Verification',
+        title: 'Cryptographic claim verification',
         details:
             'Card payload parsed and cryptographically validated against digital certificate authorities.',
         icon: Icons.verified_user_rounded,
@@ -159,7 +159,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     diagramSteps: [
       DiagramStep(
         layer: 'Authentication',
-        title: 'Biometric + Hardware Challenge',
+        title: 'Biometric + hardware challenge',
         details:
             'Fingerprint / Face Unlock verified via Android BiometricPrompt with StrongBox / TEE backing.',
         icon: Icons.fingerprint_rounded,
@@ -175,7 +175,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Exchange',
-        title: 'Two-Tier JWT Token Protocol',
+        title: 'Two-tier JWT token protocol',
         details:
             'Short-lived access token (15 min) + hardware GUID-bound refresh token stored securely.',
         icon: Icons.vpn_key_rounded,
@@ -183,7 +183,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Rotation',
-        title: 'Atomic Silent Refresh & Revocation',
+        title: 'Atomic silent refresh & revocation',
         details:
             'Automatic token refresh on HTTP 401 with immediate local cache purge upon revocation.',
         icon: Icons.sync_lock_rounded,
@@ -215,7 +215,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Event dispatch',
-        title: 'Unidirectional Data Flow',
+        title: 'Unidirectional data flow',
         details:
             'User actions are transformed into strictly typed Events pushed into the BLoC sink.',
         icon: Icons.alt_route_rounded,
@@ -223,7 +223,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'Business logic component',
-        title: 'Event-to-State Mapping',
+        title: 'Event-to-state mapping',
         details:
             'Asynchronous generators process events, interact with Domain use-cases, and yield immutable State objects.',
         icon: Icons.memory_rounded,
@@ -231,7 +231,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
       ),
       DiagramStep(
         layer: 'State / emission',
-        title: 'Immutable State Classes',
+        title: 'Immutable state classes',
         details:
             'Data classes with strictly defined properties and value equality (Equatable) preventing unnecessary widget rebuilds.',
         icon: Icons.stream_rounded,

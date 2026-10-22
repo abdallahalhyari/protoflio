@@ -19,31 +19,31 @@ void main() {
       );
       expect(
         service.titleForHash('work'),
-        'Selected Work & Case Studies · Abdallah Alhyari',
+        'Work — Abdallah Alhyari',
       );
       expect(
         service.titleForHash('#work'),
-        'Selected Work & Case Studies · Abdallah Alhyari',
+        'Work — Abdallah Alhyari',
       );
       expect(
         service.titleForHash('engineering'),
-        'Engineering & Systems Architecture · Abdallah Alhyari',
+        'Engineering — Abdallah Alhyari',
       );
       expect(
         service.titleForHash('experience'),
-        'Experience & Career · Abdallah Alhyari',
+        'Experience — Abdallah Alhyari',
       );
       expect(
         service.titleForHash('stack'),
-        'Skills & Stack · Abdallah Alhyari',
+        'Skills — Abdallah Alhyari',
       );
       expect(
         service.titleForHash('about'),
-        'About · Abdallah Alhyari',
+        'About — Abdallah Alhyari',
       );
       expect(
         service.titleForHash('contact'),
-        'Contact & Recruiter Inquiries · Abdallah Alhyari',
+        'Contact — Abdallah Alhyari',
       );
     });
 

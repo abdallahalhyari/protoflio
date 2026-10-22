@@ -86,32 +86,13 @@ class _ReadCaseStudyCtaState extends State<ReadCaseStudyCta> {
                 scale: _isPressed ? 0.96 : 1.0,
                 duration: reduceMotion ? Duration.zero : AppMotion.micro,
                 curve: Curves.easeOutCubic,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        AppLocalizations.of(context)!.uiReadCaseStudy,
-                        style: TextStyle(
-                          color: ctaColor,
-                          fontSize: AppTypography.label,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 0.3,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    AnimatedSlide(
-                      offset: widget.isHovered && widget.isDesktop
-                          ? const Offset(0.35, 0)
-                          : Offset.zero,
-                      duration:
-                          reduceMotion ? Duration.zero : AppMotion.cardHover,
-                      curve: AppMotion.emphasized,
-                      child: Icon(Icons.arrow_forward_rounded,
-                          size: 14, color: ctaColor),
-                    ),
-                  ],
+                child: Text(
+                  AppLocalizations.of(context)!.uiReadCaseStudy,
+                  style: TextStyle(
+                    color: ctaColor,
+                    fontSize: AppTypography.body,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),

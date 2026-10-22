@@ -29,7 +29,7 @@
   "skillsEmptyShowAll": "Show all skills",
   "keyboardHintTitle": "Keyboard shortcuts",
   "keyboardHintDigits": "1–7   jump to section",
-  "keyboardHintArrows": "Up and down arrows move between pages",
+  "keyboardHintArrows": "Previous or next page",
   "keyboardHintHome": "Home  first page",
   "keyboardHintEnd": "End   last page",
   "closeTooltip": "Close",
@@ -147,10 +147,10 @@
   "contactVisit": "Visit",
   "semanticPortrait": "Portrait of Abdallah Alhyari",
   "semanticTitle": "Abdallah Alhyari, Senior Mobile Engineer",
-  "introTechStack": "Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems",
+  "introTechStack": "Flutter, Android, iOS, architecture, offline-first, NFC, security, real-time systems",
   "introBasedIn": "Location",
   "introStatus": "Availability",
-  "introOpenForRoles": "Open to Senior Mobile Roles",
+  "introOpenForRoles": "Open to senior mobile roles",
   "introMasthead": "Masthead",
   "navSectionCover": "Cover",
   "navSubCover": "Senior Flutter & Android engineer",
@@ -404,17 +404,17 @@
     "description": "Shown above the English technical chapters in other locales; empty in English."
   },
   "skillCatAll": "All",
-  "skillCatDomain": "Domain Expertise",
-  "skillCatMobile": "Mobile Systems",
-  "skillCatSecurity": "Security & Protocols",
-  "skillCatArchitecture": "Architecture & State",
-  "skillCatCloud": "Cloud & Infrastructure",
-  "skillCatLanguages": "Languages & Comm",
-  "archTopicClean": "Clean Mobile Architecture",
-  "archTopicOffline": "Offline-First Synchronization",
-  "archTopicNfc": "ISO-7816 Smart-Card & NFC Pipeline",
-  "archTopicKeystore": "Hardware-Backed Keystore & JWT Lifecycle",
-  "archTopicState": "Reactive State Management (BLoC)",
+  "skillCatDomain": "Domain expertise",
+  "skillCatMobile": "Mobile systems",
+  "skillCatSecurity": "Security & protocols",
+  "skillCatArchitecture": "Architecture & state",
+  "skillCatCloud": "Cloud & infrastructure",
+  "skillCatLanguages": "Languages & communication",
+  "archTopicClean": "Clean architecture",
+  "archTopicOffline": "Offline-first sync",
+  "archTopicNfc": "NFC smart cards (ISO 7816)",
+  "archTopicKeystore": "Keystore and token lifecycle",
+  "archTopicState": "State management (BLoC)",
   "uiComposeInquiry": "Write a message",
   "uiPresetsTitle": "Start from a template",
   "uiActiveHours": "Working hours",
@@ -681,17 +681,6 @@
     }
   },
   "engInspectDiagram": "Zoom diagram",
-  "engSwipeHint": "Swipe or tap to switch blueprints ({current} of {total})",
-  "@engSwipeHint": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
   "engTryDemos": "Try the NFC, crypto and sync demos",
   "aboutStoryShort": "I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
   "engTabArchitectures": "Architectures",

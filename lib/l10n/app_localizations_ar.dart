@@ -45,7 +45,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactHeroEyebrow => 'البريد الإلكتروني';
 
   @override
-  String get contactReplyWindow => 'الرد خلال 24 ساعة · إنجليزي / عربي';
+  String get contactReplyWindow => 'الرد خلال 24 ساعة، بالإنجليزية أو العربية';
 
   @override
   String get contactSendEmailBtn => 'أرسل بريدًا';
@@ -75,7 +75,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get keyboardHintDigits => '1–7   الانتقال إلى قسم';
 
   @override
-  String get keyboardHintArrows => 'سهما الأعلى / الأسفل · السابق / التالي';
+  String get keyboardHintArrows => 'الصفحة السابقة أو التالية';
 
   @override
   String get keyboardHintHome => 'الصفحة الأولى';
@@ -186,7 +186,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String emailCopied(Object email) {
-    return 'تم نسخ البريد الإلكتروني · $email';
+    return 'تم النسخ: $email';
   }
 
   @override
@@ -234,7 +234,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactAtsVerified => 'معتمد لنظام ATS · إصدار 2026';
 
   @override
-  String get contactPdfSize => 'بي دي إف · 22 ك.ب';
+  String get contactPdfSize => 'PDF، ‏22 ك.ب';
 
   @override
   String get contactCvDossierTitle => 'السيرة الذاتية التنفيذية وملف الأعمال';
@@ -330,7 +330,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introTechStack =>
-      'فلاتر · أندرويد · آي أو إس · معمارية برمجيات · أنظمة دون اتصال · NFC · أمان · أنظمة الوقت الفعلي';
+      'فلاتر، أندرويد، آي أو إس، معمارية البرمجيات، العمل دون اتصال، NFC، الأمان، أنظمة الوقت الفعلي';
 
   @override
   String get introBasedIn => 'الموقع';
@@ -891,7 +891,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiPortfolioSections => 'أقسام الملف';
 
   @override
-  String get uiDownloadResumePdf => 'تنزيل السيرة الذاتية · PDF';
+  String get uiDownloadResumePdf => 'تنزيل السيرة الذاتية (PDF)';
 
   @override
   String get uiRetry => 'إعادة المحاولة';
@@ -1462,11 +1462,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get engInspectDiagram => 'تكبير المخطط';
-
-  @override
-  String engSwipeHint(int current, int total) {
-    return 'مرّر أو انقر لتبديل المخططات ($current من $total)';
-  }
 
   @override
   String get engTryDemos => 'جرّب عروض NFC والتشفير والمزامنة';

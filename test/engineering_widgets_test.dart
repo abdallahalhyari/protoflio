@@ -52,11 +52,10 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('Clean Mobile Architecture'), findsOneWidget);
-      expect(
-          find.textContaining('Offline-First Synchronization'), findsOneWidget);
+      expect(find.textContaining('Clean architecture'), findsOneWidget);
+      expect(find.textContaining('Offline-first sync'), findsOneWidget);
 
-      await tester.tap(find.textContaining('Offline-First Synchronization'));
+      await tester.tap(find.textContaining('Offline-first sync'));
       await tester.pumpAndSettle();
 
       expect(selected, 1);
@@ -83,7 +82,7 @@ void main() {
 
     testWidgets('ArchitectureDetailsCard renders summary and safeguards',
         (tester) async {
-      final topic = kArchitectureTopics[1]; // Offline-First
+      final topic = kArchitectureTopics[1]; // Offline-first sync
       await tester.pumpWidget(_wrap(
         SizedBox(
           height: 600,
@@ -92,7 +91,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      expect(find.text(topic.title), findsOneWidget);
+      // The heading is the topic's display name.
+      expect(find.text('Offline-first sync'), findsOneWidget);
       expect(find.text('Why this choice'), findsOneWidget);
       expect(find.text('Safeguards'), findsOneWidget);
       expect(find.text(topic.summary), findsOneWidget);

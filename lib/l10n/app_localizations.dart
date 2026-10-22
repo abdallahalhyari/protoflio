@@ -229,7 +229,7 @@ abstract class AppLocalizations {
   /// No description provided for @keyboardHintArrows.
   ///
   /// In en, this message translates to:
-  /// **'Up and down arrows move between pages'**
+  /// **'Previous or next page'**
   String get keyboardHintArrows;
 
   /// No description provided for @keyboardHintHome.
@@ -691,7 +691,7 @@ abstract class AppLocalizations {
   /// No description provided for @introTechStack.
   ///
   /// In en, this message translates to:
-  /// **'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems'**
+  /// **'Flutter, Android, iOS, architecture, offline-first, NFC, security, real-time systems'**
   String get introTechStack;
 
   /// No description provided for @introBasedIn.
@@ -709,7 +709,7 @@ abstract class AppLocalizations {
   /// No description provided for @introOpenForRoles.
   ///
   /// In en, this message translates to:
-  /// **'Open to Senior Mobile Roles'**
+  /// **'Open to senior mobile roles'**
   String get introOpenForRoles;
 
   /// No description provided for @introMasthead.
@@ -1495,67 +1495,67 @@ abstract class AppLocalizations {
   /// No description provided for @skillCatDomain.
   ///
   /// In en, this message translates to:
-  /// **'Domain Expertise'**
+  /// **'Domain expertise'**
   String get skillCatDomain;
 
   /// No description provided for @skillCatMobile.
   ///
   /// In en, this message translates to:
-  /// **'Mobile Systems'**
+  /// **'Mobile systems'**
   String get skillCatMobile;
 
   /// No description provided for @skillCatSecurity.
   ///
   /// In en, this message translates to:
-  /// **'Security & Protocols'**
+  /// **'Security & protocols'**
   String get skillCatSecurity;
 
   /// No description provided for @skillCatArchitecture.
   ///
   /// In en, this message translates to:
-  /// **'Architecture & State'**
+  /// **'Architecture & state'**
   String get skillCatArchitecture;
 
   /// No description provided for @skillCatCloud.
   ///
   /// In en, this message translates to:
-  /// **'Cloud & Infrastructure'**
+  /// **'Cloud & infrastructure'**
   String get skillCatCloud;
 
   /// No description provided for @skillCatLanguages.
   ///
   /// In en, this message translates to:
-  /// **'Languages & Comm'**
+  /// **'Languages & communication'**
   String get skillCatLanguages;
 
   /// No description provided for @archTopicClean.
   ///
   /// In en, this message translates to:
-  /// **'Clean Mobile Architecture'**
+  /// **'Clean architecture'**
   String get archTopicClean;
 
   /// No description provided for @archTopicOffline.
   ///
   /// In en, this message translates to:
-  /// **'Offline-First Synchronization'**
+  /// **'Offline-first sync'**
   String get archTopicOffline;
 
   /// No description provided for @archTopicNfc.
   ///
   /// In en, this message translates to:
-  /// **'ISO-7816 Smart-Card & NFC Pipeline'**
+  /// **'NFC smart cards (ISO 7816)'**
   String get archTopicNfc;
 
   /// No description provided for @archTopicKeystore.
   ///
   /// In en, this message translates to:
-  /// **'Hardware-Backed Keystore & JWT Lifecycle'**
+  /// **'Keystore and token lifecycle'**
   String get archTopicKeystore;
 
   /// No description provided for @archTopicState.
   ///
   /// In en, this message translates to:
-  /// **'Reactive State Management (BLoC)'**
+  /// **'State management (BLoC)'**
   String get archTopicState;
 
   /// No description provided for @uiComposeInquiry.
@@ -2691,12 +2691,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zoom diagram'**
   String get engInspectDiagram;
-
-  /// No description provided for @engSwipeHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Swipe or tap to switch blueprints ({current} of {total})'**
-  String engSwipeHint(int current, int total);
 
   /// No description provided for @engTryDemos.
   ///

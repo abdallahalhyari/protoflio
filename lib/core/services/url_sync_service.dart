@@ -62,7 +62,7 @@ abstract class UrlSyncService {
     switch (clean) {
       case 'work':
       case 'projects':
-        return 'Selected Work & Case Studies · Abdallah Alhyari';
+        return 'Work — Abdallah Alhyari';
       case 'work/nathealth':
         return 'NatHealth Mobile Suite — case study by Abdallah Alhyari';
       case 'work/eskadenia':
@@ -72,17 +72,17 @@ abstract class UrlSyncService {
       case 'work/fais':
         return 'M-Commerce & Media-Streaming Clients — case study by Abdallah Alhyari';
       case 'engineering':
-        return 'Engineering & Systems Architecture · Abdallah Alhyari';
+        return 'Engineering — Abdallah Alhyari';
       case 'experience':
-        return 'Experience & Career · Abdallah Alhyari';
+        return 'Experience — Abdallah Alhyari';
       case 'stack':
       case 'skills':
-        return 'Skills & Stack · Abdallah Alhyari';
+        return 'Skills — Abdallah Alhyari';
       case 'about':
       case 'perspectives':
-        return 'About · Abdallah Alhyari';
+        return 'About — Abdallah Alhyari';
       case 'contact':
-        return 'Contact & Recruiter Inquiries · Abdallah Alhyari';
+        return 'Contact — Abdallah Alhyari';
       case 'home':
       default:
         return baseTitle;

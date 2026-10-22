@@ -107,7 +107,7 @@ void main() {
 
         expect(
             find.textContaining(
-                RegExp('clean mobile architecture', caseSensitive: false)),
+                RegExp('clean architecture', caseSensitive: false)),
             findsWidgets);
         expect(tester.takeException(), isNull);
         await tester.binding.setSurfaceSize(null);

@@ -16,7 +16,6 @@ import 'package:profile/features/engineering/presentation/widgets/architecture_i
 import 'package:profile/features/engineering/presentation/widgets/architecture_topic_tabs.dart';
 import 'package:profile/features/engineering/presentation/widgets/engineering_header.dart';
 import 'package:profile/shared/widgets/screen_shell.dart';
-import 'package:profile/shared/widgets/swipe_affordance.dart';
 import 'package:profile/shared/widgets/text_tabs.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/features/engineering/presentation/widgets/capabilities_view.dart';
@@ -73,14 +72,6 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
 
   /// 0: the four architectures; 1: the capabilities behind them.
   int _view = 0;
-
-  Widget _buildSwipeAffordance(int selectedIndex) {
-    return SwipeAffordance(
-      margin: const EdgeInsets.only(top: 6),
-      label: AppLocalizations.of(context)!
-          .engSwipeHint(selectedIndex + 1, kArchitectureTopics.length),
-    );
-  }
 
   Widget _buildDiagramCard(
     BuildContext context,
@@ -180,7 +171,6 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
                               .add(SimulatorTopicSelected(index));
                         },
                       ),
-                      if (!isDesktop) _buildSwipeAffordance(selectedTopicIndex),
                     ],
                   );
                 },

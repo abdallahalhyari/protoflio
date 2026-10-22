@@ -36,7 +36,7 @@ void main() {
 
   test('old #perspectives links get the About title', () {
     expect(svc.titleForHash('perspectives'), svc.titleForHash('about'));
-    expect(svc.titleForHash('about'), 'About · Abdallah Alhyari');
+    expect(svc.titleForHash('about'), 'About — Abdallah Alhyari');
   });
 
   group('UrlSyncService.indexToHash', () {

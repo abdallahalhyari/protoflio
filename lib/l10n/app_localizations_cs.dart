@@ -45,7 +45,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get contactHeroEyebrow => 'E-mail';
 
   @override
-  String get contactReplyWindow => 'Odpověď do 24 hodin · anglicky / arabsky';
+  String get contactReplyWindow => 'Odpověď do 24 hodin, anglicky nebo arabsky';
 
   @override
   String get contactSendEmailBtn => 'Odeslat e-mail';
@@ -76,7 +76,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get keyboardHintDigits => '1–7   přejít na sekci';
 
   @override
-  String get keyboardHintArrows => 'Šipky nahoru / dolů · předchozí / další';
+  String get keyboardHintArrows => 'Předchozí nebo další stránka';
 
   @override
   String get keyboardHintHome => 'První stránka';
@@ -189,7 +189,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String emailCopied(Object email) {
-    return 'E-mail zkopírován · $email';
+    return 'Zkopírováno: $email';
   }
 
   @override
@@ -332,7 +332,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introTechStack =>
-      'Flutter · Android · iOS · Architektura · Offline-first · NFC · Bezpečnost · Real-time systémy';
+      'Flutter, Android, iOS, architektura, offline-first, NFC, bezpečnost, real-time systémy';
 
   @override
   String get introBasedIn => 'Lokace';
@@ -1479,11 +1479,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get engInspectDiagram => 'Zvětšit diagram';
-
-  @override
-  String engSwipeHint(int current, int total) {
-    return 'Přejetím nebo klepnutím přepnete plány ($current z $total)';
-  }
 
   @override
   String get engTryDemos =>

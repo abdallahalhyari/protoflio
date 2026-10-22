@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:profile/shared/widgets/edge_fade_scroller.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 
 import 'package:profile/core/theme/tokens.dart';
@@ -7,7 +6,8 @@ import 'package:profile/features/engineering/domain/entities/architecture_topic.
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/engineering/presentation/utils/architecture_labels.dart';
 
-/// Horizontal pill tab bar to switch between production architecture blueprints.
+/// The architectures to choose from. They wrap onto a second line rather
+/// than scroll, so every name stays readable and none is cut off.
 class ArchitectureTopicTabs extends StatelessWidget {
   final List<ArchitectureTopic> topics;
   final int selectedIndex;
@@ -24,21 +24,19 @@ class ArchitectureTopicTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return EdgeFadeScroller(
-      child: Row(
-        children: [
-          for (int i = 0; i < topics.length; i++) ...[
-            _buildTabItem(
-              context: context,
-              topic: topics[i],
-              isSelected: selectedIndex == i,
-              onTap: () => onSelectTopic(i),
-              scheme: scheme,
-            ),
-            if (i < topics.length - 1) const SizedBox(width: 8),
-          ],
-        ],
-      ),
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        for (int i = 0; i < topics.length; i++)
+          _buildTabItem(
+            context: context,
+            topic: topics[i],
+            isSelected: selectedIndex == i,
+            onTap: () => onSelectTopic(i),
+            scheme: scheme,
+          ),
+      ],
     );
   }
 

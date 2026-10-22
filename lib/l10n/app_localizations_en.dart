@@ -76,7 +76,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get keyboardHintDigits => '1–7   jump to section';
 
   @override
-  String get keyboardHintArrows => 'Up and down arrows move between pages';
+  String get keyboardHintArrows => 'Previous or next page';
 
   @override
   String get keyboardHintHome => 'Home  first page';
@@ -331,7 +331,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introTechStack =>
-      'Flutter · Android · iOS · Architecture · Offline-first · NFC · Security · Real-time systems';
+      'Flutter, Android, iOS, architecture, offline-first, NFC, security, real-time systems';
 
   @override
   String get introBasedIn => 'Location';
@@ -340,7 +340,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introStatus => 'Availability';
 
   @override
-  String get introOpenForRoles => 'Open to Senior Mobile Roles';
+  String get introOpenForRoles => 'Open to senior mobile roles';
 
   @override
   String get introMasthead => 'Masthead';
@@ -806,37 +806,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillCatAll => 'All';
 
   @override
-  String get skillCatDomain => 'Domain Expertise';
+  String get skillCatDomain => 'Domain expertise';
 
   @override
-  String get skillCatMobile => 'Mobile Systems';
+  String get skillCatMobile => 'Mobile systems';
 
   @override
-  String get skillCatSecurity => 'Security & Protocols';
+  String get skillCatSecurity => 'Security & protocols';
 
   @override
-  String get skillCatArchitecture => 'Architecture & State';
+  String get skillCatArchitecture => 'Architecture & state';
 
   @override
-  String get skillCatCloud => 'Cloud & Infrastructure';
+  String get skillCatCloud => 'Cloud & infrastructure';
 
   @override
-  String get skillCatLanguages => 'Languages & Comm';
+  String get skillCatLanguages => 'Languages & communication';
 
   @override
-  String get archTopicClean => 'Clean Mobile Architecture';
+  String get archTopicClean => 'Clean architecture';
 
   @override
-  String get archTopicOffline => 'Offline-First Synchronization';
+  String get archTopicOffline => 'Offline-first sync';
 
   @override
-  String get archTopicNfc => 'ISO-7816 Smart-Card & NFC Pipeline';
+  String get archTopicNfc => 'NFC smart cards (ISO 7816)';
 
   @override
-  String get archTopicKeystore => 'Hardware-Backed Keystore & JWT Lifecycle';
+  String get archTopicKeystore => 'Keystore and token lifecycle';
 
   @override
-  String get archTopicState => 'Reactive State Management (BLoC)';
+  String get archTopicState => 'State management (BLoC)';
 
   @override
   String get uiComposeInquiry => 'Write a message';
@@ -1474,11 +1474,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get engInspectDiagram => 'Zoom diagram';
-
-  @override
-  String engSwipeHint(int current, int total) {
-    return 'Swipe or tap to switch blueprints ($current of $total)';
-  }
 
   @override
   String get engTryDemos => 'Try the NFC, crypto and sync demos';

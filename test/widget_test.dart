@@ -78,14 +78,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.text('Engineering'), findsOneWidget);
-    expect(find.textContaining('Clean Mobile Architecture'), findsWidgets);
-    expect(find.textContaining('Offline-First Synchronization'), findsWidgets);
+    expect(find.textContaining('Clean architecture'), findsWidgets);
+    expect(find.textContaining('Offline-first sync'), findsWidgets);
 
     // Tap second tab (Offline-First)
-    await tester.tap(find.textContaining('Offline-First Synchronization'));
+    await tester.tap(find.textContaining('Offline-first sync'));
     await tester.pump(const Duration(milliseconds: 200));
 
-    expect(find.textContaining('WorkManager Pipeline'), findsOneWidget);
+    expect(find.textContaining('WorkManager pipeline'), findsOneWidget);
 
     await tester.binding.setSurfaceSize(null);
   });
