@@ -28,7 +28,7 @@ void main() {
     expect(find.text(l10n.introEmailMe), findsOneWidget);
     expect(find.text(l10n.introDownloadResume), findsOneWidget);
     for (final gone in [
-      l10n.quickProfile,
+      l10n.quickProfileTitle,
       l10n.quickProfileVcard,
       'Copy email',
       'LinkedIn',

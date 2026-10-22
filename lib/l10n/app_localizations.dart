@@ -376,18 +376,6 @@ abstract class AppLocalizations {
   /// **'Scroll to top'**
   String get scrollToTop;
 
-  /// No description provided for @goToSection.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to {section}'**
-  String goToSection(String section);
-
-  /// No description provided for @pageNumber.
-  ///
-  /// In en, this message translates to:
-  /// **'Page {number}'**
-  String pageNumber(int number);
-
   /// No description provided for @resumeOpenError.
   ///
   /// In en, this message translates to:
@@ -399,30 +387,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not open {url}'**
   String projectOpenError(Object url);
-
-  /// No description provided for @spreadAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Spread'**
-  String get spreadAction;
-
-  /// No description provided for @alignAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Align'**
-  String get alignAction;
-
-  /// No description provided for @previousAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Previous'**
-  String get previousAction;
-
-  /// No description provided for @nextAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Next'**
-  String get nextAction;
 
   /// No description provided for @emailCopied.
   ///
@@ -478,18 +442,6 @@ abstract class AppLocalizations {
   /// **'Senior Flutter & Android engineer'**
   String get introRoleLine;
 
-  /// No description provided for @introSkillArchitecture.
-  ///
-  /// In en, this message translates to:
-  /// **'Architecture'**
-  String get introSkillArchitecture;
-
-  /// No description provided for @introSkillProductDelivery.
-  ///
-  /// In en, this message translates to:
-  /// **'Product delivery'**
-  String get introSkillProductDelivery;
-
   /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
@@ -502,47 +454,11 @@ abstract class AppLocalizations {
   /// **'Available for contracts'**
   String get introAvailableContracts;
 
-  /// No description provided for @contactEngagementScopes.
-  ///
-  /// In en, this message translates to:
-  /// **'Ways to work together'**
-  String get contactEngagementScopes;
-
-  /// No description provided for @contactAtsVerified.
-  ///
-  /// In en, this message translates to:
-  /// **'ATS-friendly, 2026 edition'**
-  String get contactAtsVerified;
-
   /// No description provided for @contactPdfSize.
   ///
   /// In en, this message translates to:
   /// **'PDF, 22 KB'**
   String get contactPdfSize;
-
-  /// No description provided for @contactCvDossierTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Executive Curriculum Vitae & Portfolio Dossier'**
-  String get contactCvDossierTitle;
-
-  /// No description provided for @contactCvDossierDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Complete chronological track record, enterprise architecture case studies, and engineering competencies.'**
-  String get contactCvDossierDesc;
-
-  /// No description provided for @contactDownloadCvPdf.
-  ///
-  /// In en, this message translates to:
-  /// **'Download CV (PDF)'**
-  String get contactDownloadCvPdf;
-
-  /// No description provided for @contactPreview.
-  ///
-  /// In en, this message translates to:
-  /// **'Preview'**
-  String get contactPreview;
 
   /// No description provided for @footerRightsReserved.
   ///
@@ -646,35 +562,17 @@ abstract class AppLocalizations {
   /// **'Call {number}'**
   String contactCallNumber(String number);
 
-  /// No description provided for @contactCopy.
-  ///
-  /// In en, this message translates to:
-  /// **'Copy'**
-  String get contactCopy;
-
   /// No description provided for @contactLinkedin.
   ///
   /// In en, this message translates to:
   /// **'LinkedIn'**
   String get contactLinkedin;
 
-  /// No description provided for @contactProfile.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile'**
-  String get contactProfile;
-
   /// No description provided for @contactGithub.
   ///
   /// In en, this message translates to:
   /// **'GitHub'**
   String get contactGithub;
-
-  /// No description provided for @contactVisit.
-  ///
-  /// In en, this message translates to:
-  /// **'Visit'**
-  String get contactVisit;
 
   /// No description provided for @semanticPortrait.
   ///
@@ -711,12 +609,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open to senior mobile roles'**
   String get introOpenForRoles;
-
-  /// No description provided for @introMasthead.
-  ///
-  /// In en, this message translates to:
-  /// **'Masthead'**
-  String get introMasthead;
 
   /// No description provided for @navSectionCover.
   ///
@@ -802,12 +694,6 @@ abstract class AppLocalizations {
   /// **'Email, phone and profiles'**
   String get navSubContact;
 
-  /// Screen reader announcement when selecting a role card in the engineering perspectives section
-  ///
-  /// In en, this message translates to:
-  /// **'Selected role: {role}'**
-  String selectedRoleAnnouncement(String role);
-
   /// Screen reader announcement when copying text to clipboard
   ///
   /// In en, this message translates to:
@@ -837,24 +723,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear search'**
   String get skillsClearSearch;
-
-  /// No description provided for @perspectivePrev.
-  ///
-  /// In en, this message translates to:
-  /// **'Previous role'**
-  String get perspectivePrev;
-
-  /// No description provided for @perspectiveNext.
-  ///
-  /// In en, this message translates to:
-  /// **'Next role'**
-  String get perspectiveNext;
-
-  /// No description provided for @perspectiveShortcutsHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Arrow keys or A and D to cycle, S to shuffle, R to align'**
-  String get perspectiveShortcutsHint;
 
   /// No description provided for @sectionSubtitleWork.
   ///
@@ -952,18 +820,6 @@ abstract class AppLocalizations {
   /// **'The architectures behind my mobile suites: layers, offline sync, NFC and token security.'**
   String get sectionSubtitleEngineering;
 
-  /// Hint on flippable skill / role cards for touch viewports.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap to flip'**
-  String get flipHintTap;
-
-  /// Hint on flippable skill / role cards for desktop (pointer) viewports.
-  ///
-  /// In en, this message translates to:
-  /// **'Click to flip'**
-  String get flipHintClick;
-
   /// Desktop footer link to the next section.
   ///
   /// In en, this message translates to:
@@ -987,12 +843,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue'**
   String get continueAction;
-
-  /// Hero link that opens the recruiter summary sheet.
-  ///
-  /// In en, this message translates to:
-  /// **'Hiring profile'**
-  String get quickProfile;
 
   /// No description provided for @quickProfileTitle.
   ///
@@ -1558,78 +1408,6 @@ abstract class AppLocalizations {
   /// **'State management (BLoC)'**
   String get archTopicState;
 
-  /// No description provided for @uiComposeInquiry.
-  ///
-  /// In en, this message translates to:
-  /// **'Write a message'**
-  String get uiComposeInquiry;
-
-  /// No description provided for @uiPresetsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Start from a template'**
-  String get uiPresetsTitle;
-
-  /// No description provided for @uiActiveHours.
-  ///
-  /// In en, this message translates to:
-  /// **'Working hours'**
-  String get uiActiveHours;
-
-  /// No description provided for @uiStandbyAsync.
-  ///
-  /// In en, this message translates to:
-  /// **'Replies within a day'**
-  String get uiStandbyAsync;
-
-  /// No description provided for @uiRelocating.
-  ///
-  /// In en, this message translates to:
-  /// **'On-site in Brno & around it'**
-  String get uiRelocating;
-
-  /// No description provided for @uiInquireTrack.
-  ///
-  /// In en, this message translates to:
-  /// **'Ask about this'**
-  String get uiInquireTrack;
-
-  /// No description provided for @uiComposerTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Write a message'**
-  String get uiComposerTitle;
-
-  /// No description provided for @uiSelectTrack.
-  ///
-  /// In en, this message translates to:
-  /// **'What is this about?'**
-  String get uiSelectTrack;
-
-  /// No description provided for @uiCopyDraft.
-  ///
-  /// In en, this message translates to:
-  /// **'Copy draft'**
-  String get uiCopyDraft;
-
-  /// No description provided for @uiSending.
-  ///
-  /// In en, this message translates to:
-  /// **'Sending…'**
-  String get uiSending;
-
-  /// No description provided for @uiSendMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'Send message'**
-  String get uiSendMessage;
-
-  /// No description provided for @uiOpenEmailClient.
-  ///
-  /// In en, this message translates to:
-  /// **'Open in email app'**
-  String get uiOpenEmailClient;
-
   /// No description provided for @uiReadCaseStudy.
   ///
   /// In en, this message translates to:
@@ -1659,12 +1437,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'M-Commerce & Media-Streaming Clients'**
   String get projectNameFais;
-
-  /// No description provided for @uiScrollToExplore.
-  ///
-  /// In en, this message translates to:
-  /// **'Scroll to explore'**
-  String get uiScrollToExplore;
 
   /// No description provided for @uiPortfolioSections.
   ///
@@ -1696,30 +1468,6 @@ abstract class AppLocalizations {
   /// **'{role} at {company}, {period}'**
   String expRoleAtCompany(String role, String company, String period);
 
-  /// No description provided for @uiDragCardsHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Drag the cards, click one to flip it, or shuffle'**
-  String get uiDragCardsHint;
-
-  /// No description provided for @uiTapSwipeHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap a card to flip it, swipe to change role'**
-  String get uiTapSwipeHint;
-
-  /// No description provided for @uiTapToReturn.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap to return'**
-  String get uiTapToReturn;
-
-  /// No description provided for @uiArchFlowchart.
-  ///
-  /// In en, this message translates to:
-  /// **'Flowchart'**
-  String get uiArchFlowchart;
-
   /// No description provided for @uiArchRationale.
   ///
   /// In en, this message translates to:
@@ -1731,84 +1479,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Safeguards'**
   String get uiKeySafeguards;
-
-  /// No description provided for @uiActiveTrace.
-  ///
-  /// In en, this message translates to:
-  /// **'Tracing'**
-  String get uiActiveTrace;
-
-  /// No description provided for @badgeSkills.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} disciplines'**
-  String badgeSkills(int count);
-
-  /// No description provided for @badgeCaseStudies.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} case studies'**
-  String badgeCaseStudies(int count);
-
-  /// No description provided for @badgeArchitectures.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} architectures'**
-  String badgeArchitectures(int count);
-
-  /// No description provided for @badgeRoles.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} roles'**
-  String badgeRoles(int count);
-
-  /// No description provided for @coverName.
-  ///
-  /// In en, this message translates to:
-  /// **'Abdallah Alhyari'**
-  String get coverName;
-
-  /// No description provided for @coverStatement.
-  ///
-  /// In en, this message translates to:
-  /// **'Mobile apps that work offline, read smart cards and keep patient data safe.'**
-  String get coverStatement;
-
-  /// No description provided for @coverLead.
-  ///
-  /// In en, this message translates to:
-  /// **'I\'m a senior Flutter and Android engineer with five years on enterprise healthcare, education and commerce apps. Based in Amman, moving to Brno in 2027.'**
-  String get coverLead;
-
-  /// No description provided for @coverEmailPrefix.
-  ///
-  /// In en, this message translates to:
-  /// **'Or email'**
-  String get coverEmailPrefix;
-
-  /// No description provided for @cardHintTap.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap the card to read its chip'**
-  String get cardHintTap;
-
-  /// No description provided for @cardHintClick.
-  ///
-  /// In en, this message translates to:
-  /// **'Click the card to read its chip'**
-  String get cardHintClick;
-
-  /// No description provided for @cardHintTurnBackTap.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap the card again to turn it over'**
-  String get cardHintTurnBackTap;
-
-  /// No description provided for @cardHintTurnBackClick.
-  ///
-  /// In en, this message translates to:
-  /// **'Click the card again to turn it over'**
-  String get cardHintTurnBackClick;
 
   /// No description provided for @cardSurname.
   ///
@@ -1840,12 +1510,6 @@ abstract class AppLocalizations {
   /// **'Role'**
   String get cardFieldRole;
 
-  /// No description provided for @cardFieldBase.
-  ///
-  /// In en, this message translates to:
-  /// **'Based in'**
-  String get cardFieldBase;
-
   /// No description provided for @cardRole.
   ///
   /// In en, this message translates to:
@@ -1869,60 +1533,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'NatHealth, ESKADENIA, Solutions Now, FAIS'**
   String get coverWorkedAtValue;
-
-  /// No description provided for @cardBackTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Read from the chip'**
-  String get cardBackTitle;
-
-  /// No description provided for @cardOutcome1.
-  ///
-  /// In en, this message translates to:
-  /// **'Paper claims replaced by contactless smart-card checks'**
-  String get cardOutcome1;
-
-  /// No description provided for @cardOutcome2.
-  ///
-  /// In en, this message translates to:
-  /// **'Sub-second NFC reads across a wide range of Android phones'**
-  String get cardOutcome2;
-
-  /// No description provided for @cardOutcome3.
-  ///
-  /// In en, this message translates to:
-  /// **'35% fewer crashes and a steady 60 fps in data-heavy hospital apps'**
-  String get cardOutcome3;
-
-  /// No description provided for @cardSemantics.
-  ///
-  /// In en, this message translates to:
-  /// **'Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over.'**
-  String get cardSemantics;
-
-  /// No description provided for @coverHintDrag.
-  ///
-  /// In en, this message translates to:
-  /// **'Drag the card onto the reader, or click it.'**
-  String get coverHintDrag;
-
-  /// No description provided for @coverHintTap.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap the card to read it.'**
-  String get coverHintTap;
-
-  /// No description provided for @coverGranted.
-  ///
-  /// In en, this message translates to:
-  /// **'Access granted'**
-  String get coverGranted;
-
-  /// No description provided for @introPitch.
-  ///
-  /// In en, this message translates to:
-  /// **'I build production Flutter and Android apps: offline-first sync, NFC smart cards, secure auth. I stay through release and after.'**
-  String get introPitch;
 
   /// No description provided for @projectFigureValueNatHealth.
   ///
@@ -1978,18 +1588,6 @@ abstract class AppLocalizations {
   /// **'Based in'**
   String get heroFactBasedLabel;
 
-  /// No description provided for @heroFactFocusLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Focus'**
-  String get heroFactFocusLabel;
-
-  /// No description provided for @heroFactFocusValue.
-  ///
-  /// In en, this message translates to:
-  /// **'NFC smart cards, offline-first sync, secure authentication'**
-  String get heroFactFocusValue;
-
   /// No description provided for @heroFactLanguagesLabel.
   ///
   /// In en, this message translates to:
@@ -2008,65 +1606,17 @@ abstract class AppLocalizations {
   /// **'Studying'**
   String get heroFactStudyLabel;
 
-  /// No description provided for @introPitch2.
-  ///
-  /// In en, this message translates to:
-  /// **'Production Flutter and native Android: NFC smart cards, cryptography, offline-first sync and enterprise integrations.'**
-  String get introPitch2;
-
-  /// No description provided for @letsTalk.
-  ///
-  /// In en, this message translates to:
-  /// **'Let\'s talk'**
-  String get letsTalk;
-
-  /// No description provided for @downloadCv.
-  ///
-  /// In en, this message translates to:
-  /// **'Download CV'**
-  String get downloadCv;
-
   /// No description provided for @aboutTitle.
   ///
   /// In en, this message translates to:
   /// **'About'**
   String get aboutTitle;
 
-  /// No description provided for @aboutSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'How I work as an engineer, the problems I solve, and a few things you can run yourself.'**
-  String get aboutSubtitle;
-
   /// No description provided for @aboutHeaderSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Who I am, where I\'m headed, and how to reach me.'**
   String get aboutHeaderSubtitle;
-
-  /// No description provided for @aboutTabProfile.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile'**
-  String get aboutTabProfile;
-
-  /// No description provided for @aboutTabPlayground.
-  ///
-  /// In en, this message translates to:
-  /// **'Playground'**
-  String get aboutTabPlayground;
-
-  /// No description provided for @aboutEngineerLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Engineer'**
-  String get aboutEngineerLabel;
-
-  /// No description provided for @aboutEngineerValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter, Android and the systems around them'**
-  String get aboutEngineerValue;
 
   /// No description provided for @aboutExperienceLabel.
   ///
@@ -2079,18 +1629,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{years}+ years in mobile'**
   String aboutExperienceValue(int years);
-
-  /// No description provided for @aboutFocusLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Focus'**
-  String get aboutFocusLabel;
-
-  /// No description provided for @aboutFocusValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Mobile systems, native integration, security, enterprise apps'**
-  String get aboutFocusValue;
 
   /// No description provided for @aboutHoodHint.
   ///
@@ -2248,138 +1786,6 @@ abstract class AppLocalizations {
   /// **'ESKADENIA Software'**
   String get hoodEnterpriseWhere;
 
-  /// No description provided for @playKdfTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Key derivation'**
-  String get playKdfTitle;
-
-  /// No description provided for @playKdfIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'PBKDF2-HMAC-SHA256 running in your browser. More iterations make every password guess slower, for an attacker and for you.'**
-  String get playKdfIntro;
-
-  /// No description provided for @playKdfPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get playKdfPassword;
-
-  /// No description provided for @playKdfIterations.
-  ///
-  /// In en, this message translates to:
-  /// **'Iterations'**
-  String get playKdfIterations;
-
-  /// No description provided for @playKdfRun.
-  ///
-  /// In en, this message translates to:
-  /// **'Derive key'**
-  String get playKdfRun;
-
-  /// No description provided for @playKdfRunning.
-  ///
-  /// In en, this message translates to:
-  /// **'Deriving…'**
-  String get playKdfRunning;
-
-  /// No description provided for @playKdfResult.
-  ///
-  /// In en, this message translates to:
-  /// **'Derived key (256 bit)'**
-  String get playKdfResult;
-
-  /// No description provided for @playKdfTime.
-  ///
-  /// In en, this message translates to:
-  /// **'Took {ms} ms on this device.'**
-  String playKdfTime(int ms);
-
-  /// No description provided for @playKdfNote.
-  ///
-  /// In en, this message translates to:
-  /// **'The salt is fixed for this demo. Real systems use a random salt per user.'**
-  String get playKdfNote;
-
-  /// No description provided for @playSyncTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Offline to online'**
-  String get playSyncTitle;
-
-  /// No description provided for @playSyncIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'Submit claims while offline. They queue on the device and sync when you go back online, retrying with exponential backoff.'**
-  String get playSyncIntro;
-
-  /// No description provided for @playSyncOnline.
-  ///
-  /// In en, this message translates to:
-  /// **'Online'**
-  String get playSyncOnline;
-
-  /// No description provided for @playSyncOffline.
-  ///
-  /// In en, this message translates to:
-  /// **'Offline'**
-  String get playSyncOffline;
-
-  /// No description provided for @playSyncFlaky.
-  ///
-  /// In en, this message translates to:
-  /// **'Flaky network'**
-  String get playSyncFlaky;
-
-  /// No description provided for @playSyncSubmit.
-  ///
-  /// In en, this message translates to:
-  /// **'Submit claim'**
-  String get playSyncSubmit;
-
-  /// No description provided for @playSyncEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'No claims yet. Submit one.'**
-  String get playSyncEmpty;
-
-  /// No description provided for @playSyncQueued.
-  ///
-  /// In en, this message translates to:
-  /// **'Queued'**
-  String get playSyncQueued;
-
-  /// No description provided for @playSyncSending.
-  ///
-  /// In en, this message translates to:
-  /// **'Sending'**
-  String get playSyncSending;
-
-  /// No description provided for @playSyncSynced.
-  ///
-  /// In en, this message translates to:
-  /// **'Synced'**
-  String get playSyncSynced;
-
-  /// No description provided for @playSyncRetry.
-  ///
-  /// In en, this message translates to:
-  /// **'Retry in {seconds}s'**
-  String playSyncRetry(int seconds);
-
-  /// No description provided for @playSyncClaim.
-  ///
-  /// In en, this message translates to:
-  /// **'Claim {number}'**
-  String playSyncClaim(int number);
-
-  /// No description provided for @playSyncNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Simulation. No network is used.'**
-  String get playSyncNote;
-
   /// No description provided for @projectLblProblem.
   ///
   /// In en, this message translates to:
@@ -2470,215 +1876,11 @@ abstract class AppLocalizations {
   /// **'Coordinated backend and frontend integration and resolved production issues.'**
   String get projectRoleFais;
 
-  /// No description provided for @playAesTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Encrypt and decrypt'**
-  String get playAesTitle;
-
-  /// No description provided for @playAesIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'AES-256-CBC with a key derived from your password by PBKDF2. Everything runs in your browser.'**
-  String get playAesIntro;
-
-  /// No description provided for @playAesMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'Message'**
-  String get playAesMessage;
-
-  /// No description provided for @playAesPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get playAesPassword;
-
-  /// No description provided for @playAesEncrypt.
-  ///
-  /// In en, this message translates to:
-  /// **'Encrypt'**
-  String get playAesEncrypt;
-
-  /// No description provided for @playAesDecryptWith.
-  ///
-  /// In en, this message translates to:
-  /// **'Decrypt with password'**
-  String get playAesDecryptWith;
-
-  /// No description provided for @playAesDecrypt.
-  ///
-  /// In en, this message translates to:
-  /// **'Decrypt'**
-  String get playAesDecrypt;
-
-  /// No description provided for @playAesIv.
-  ///
-  /// In en, this message translates to:
-  /// **'IV'**
-  String get playAesIv;
-
-  /// No description provided for @playAesCipher.
-  ///
-  /// In en, this message translates to:
-  /// **'Ciphertext'**
-  String get playAesCipher;
-
-  /// No description provided for @playAesPlain.
-  ///
-  /// In en, this message translates to:
-  /// **'Decrypted text'**
-  String get playAesPlain;
-
-  /// No description provided for @playAesWrongKey.
-  ///
-  /// In en, this message translates to:
-  /// **'Wrong key: the padding is invalid, so decryption stops.'**
-  String get playAesWrongKey;
-
-  /// No description provided for @playAesNote.
-  ///
-  /// In en, this message translates to:
-  /// **'CBC hides the message but does not detect tampering. Real systems add a MAC or use an AEAD mode such as GCM.'**
-  String get playAesNote;
-
-  /// No description provided for @playApduTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Smart-card exchange'**
-  String get playApduTitle;
-
-  /// No description provided for @playApduIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'An ISO 7816 command APDU and the card\'s reply, byte by byte. The card here is simulated.'**
-  String get playApduIntro;
-
-  /// No description provided for @playApduSelect.
-  ///
-  /// In en, this message translates to:
-  /// **'Select application'**
-  String get playApduSelect;
-
-  /// No description provided for @playApduRead.
-  ///
-  /// In en, this message translates to:
-  /// **'Read 16 bytes'**
-  String get playApduRead;
-
-  /// No description provided for @playApduUnknown.
-  ///
-  /// In en, this message translates to:
-  /// **'Select unknown application'**
-  String get playApduUnknown;
-
-  /// No description provided for @playApduBadClass.
-  ///
-  /// In en, this message translates to:
-  /// **'Unsupported class'**
-  String get playApduBadClass;
-
-  /// No description provided for @playApduCommand.
-  ///
-  /// In en, this message translates to:
-  /// **'Command'**
-  String get playApduCommand;
-
-  /// No description provided for @playApduResponse.
-  ///
-  /// In en, this message translates to:
-  /// **'Response'**
-  String get playApduResponse;
-
-  /// No description provided for @playApduData.
-  ///
-  /// In en, this message translates to:
-  /// **'Data'**
-  String get playApduData;
-
-  /// No description provided for @playApduStatus.
-  ///
-  /// In en, this message translates to:
-  /// **'Status'**
-  String get playApduStatus;
-
-  /// No description provided for @playApduNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Simulation. The status words are real ISO 7816-4 codes.'**
-  String get playApduNote;
-
-  /// No description provided for @apduSw9000.
-  ///
-  /// In en, this message translates to:
-  /// **'Success'**
-  String get apduSw9000;
-
-  /// No description provided for @apduSw6A82.
-  ///
-  /// In en, this message translates to:
-  /// **'File or application not found'**
-  String get apduSw6A82;
-
-  /// No description provided for @apduSw6E00.
-  ///
-  /// In en, this message translates to:
-  /// **'Class not supported'**
-  String get apduSw6E00;
-
-  /// No description provided for @playChanTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Platform channel message'**
-  String get playChanTitle;
-
-  /// No description provided for @playChanIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'A Flutter to Kotlin call is serialised into bytes before it crosses the boundary. These are the real bytes Flutter\'s standard codec produces.'**
-  String get playChanIntro;
-
-  /// No description provided for @playChanMethod.
-  ///
-  /// In en, this message translates to:
-  /// **'Method'**
-  String get playChanMethod;
-
-  /// No description provided for @playChanTimeout.
-  ///
-  /// In en, this message translates to:
-  /// **'Timeout (ms)'**
-  String get playChanTimeout;
-
-  /// No description provided for @playChanBytes.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} bytes on the wire'**
-  String playChanBytes(int count);
-
-  /// No description provided for @playChanDecoded.
-  ///
-  /// In en, this message translates to:
-  /// **'Decoded on the native side'**
-  String get playChanDecoded;
-
-  /// No description provided for @playChanNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Encoded with StandardMethodCodec.'**
-  String get playChanNote;
-
   /// No description provided for @aboutTryIt.
   ///
   /// In en, this message translates to:
   /// **'Try it in the Playground'**
   String get aboutTryIt;
-
-  /// No description provided for @engBlueprint.
-  ///
-  /// In en, this message translates to:
-  /// **'Architecture blueprint'**
-  String get engBlueprint;
 
   /// No description provided for @engTiers.
   ///
@@ -2715,6 +1917,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Capabilities'**
   String get engTabCapabilities;
+
+  /// No description provided for @projectCopyCaseStudyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link to the {project} case study'**
+  String projectCopyCaseStudyLink(String project);
+
+  /// No description provided for @engResetZoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset zoom'**
+  String get engResetZoom;
+
+  /// No description provided for @brandBackToTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdallah Alhyari, back to top'**
+  String get brandBackToTop;
 }
 
 class _AppLocalizationsDelegate

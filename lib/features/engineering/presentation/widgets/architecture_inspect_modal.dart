@@ -128,7 +128,7 @@ class _ArchitectureInspectDialogState
                     ),
                   ),
                   IconButton(
-                    tooltip: 'Reset Zoom',
+                    tooltip: AppLocalizations.of(context)!.engResetZoom,
                     onPressed: () {
                       SoundService.instance.playClick();
                       _transformController.value = Matrix4.identity();

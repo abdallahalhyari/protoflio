@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:profile/features/projects/presentation/utils/project_copy.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/features/case_study/presentation/widgets/case_study_widgets.dart';
 
@@ -18,12 +20,14 @@ class CompanyQuickLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final name = localizedProjectName(l10n, project);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (project.url != null)
           ProjectCardLinkIcon(
-            tooltip: 'Visit ${project.company} official website',
+            tooltip: l10n.studyVisitWebsite(project.company),
             url: project.url,
             icon: Icons.language_rounded,
             company: project.company,
@@ -33,7 +37,7 @@ class CompanyQuickLinks extends StatelessWidget {
         if (project.linkedinUrl != null) ...[
           const SizedBox(width: 6),
           ProjectCardLinkIcon(
-            tooltip: 'View ${project.company} on LinkedIn',
+            tooltip: l10n.studyViewOnLinkedIn(project.company),
             url: project.linkedinUrl,
             isLinkedIn: true,
             company: project.company,
@@ -44,7 +48,7 @@ class CompanyQuickLinks extends StatelessWidget {
         if (caseStudySlug != null) ...[
           const SizedBox(width: 6),
           ProjectCardLinkIcon(
-            tooltip: 'Copy link to ${project.name} case study',
+            tooltip: l10n.projectCopyCaseStudyLink(name),
             icon: Icons.share_rounded,
             onTap: () => shareCaseStudy(
               context,

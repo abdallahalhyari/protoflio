@@ -153,16 +153,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get scrollToTop => 'التمرير إلى الأعلى';
 
   @override
-  String goToSection(String section) {
-    return 'الانتقال إلى $section';
-  }
-
-  @override
-  String pageNumber(int number) {
-    return 'الصفحة $number';
-  }
-
-  @override
   String resumeOpenError(Object publicUrl) {
     return 'تعذر فتح السيرة الذاتية — قم بزيارة $publicUrl';
   }
@@ -171,18 +161,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String projectOpenError(Object url) {
     return 'تعذر فتح $url';
   }
-
-  @override
-  String get spreadAction => 'توزيع';
-
-  @override
-  String get alignAction => 'محاذاة';
-
-  @override
-  String get previousAction => 'السابق';
-
-  @override
-  String get nextAction => 'التالي';
 
   @override
   String emailCopied(Object email) {
@@ -216,38 +194,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introRoleLine => 'مهندس تطبيقات هواتف أول';
 
   @override
-  String get introSkillArchitecture => 'هندسة الأنظمة';
-
-  @override
-  String get introSkillProductDelivery => 'تسليم المنتجات';
-
-  @override
   String get introWorkEligibility => 'الانتقال إلى برنو في فبراير 2027';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
 
   @override
-  String get contactEngagementScopes => '// مجالات المشاركة وأساليب التعاون';
-
-  @override
-  String get contactAtsVerified => 'معتمد لنظام ATS · إصدار 2026';
-
-  @override
   String get contactPdfSize => 'PDF، ‏22 ك.ب';
-
-  @override
-  String get contactCvDossierTitle => 'السيرة الذاتية التنفيذية وملف الأعمال';
-
-  @override
-  String get contactCvDossierDesc =>
-      'سجل زمني متكامل، دراسات حالة لبنية المؤسسات، وكفاءات هندسية.';
-
-  @override
-  String get contactDownloadCvPdf => 'تحميل السيرة · PDF';
-
-  @override
-  String get contactPreview => 'معاينة';
 
   @override
   String get footerRightsReserved => '© 2026 عبدالله الحياري';
@@ -308,19 +261,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get contactCopy => 'نسخ';
-
-  @override
   String get contactLinkedin => 'لينكد إن';
 
   @override
-  String get contactProfile => 'حساب شخصي';
-
-  @override
   String get contactGithub => 'جيت هاب';
-
-  @override
-  String get contactVisit => 'زيارة';
 
   @override
   String get semanticPortrait => 'صورة شخصية لعبدالله الحياري';
@@ -340,9 +284,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introOpenForRoles => 'متاح لأدوار هندسية قيادية';
-
-  @override
-  String get introMasthead => '// الترويسة';
 
   @override
   String get navSectionCover => 'الغلاف';
@@ -387,11 +328,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navSubContact => 'البريد والهاتف والحسابات';
 
   @override
-  String selectedRoleAnnouncement(String role) {
-    return 'تم تحديد الدور: $role';
-  }
-
-  @override
   String copiedToClipboard(String value) {
     return 'تم نسخ $value إلى الحافظة';
   }
@@ -411,16 +347,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get skillsClearSearch => 'مسح البحث';
-
-  @override
-  String get perspectivePrev => 'الدور السابق';
-
-  @override
-  String get perspectiveNext => 'الدور التالي';
-
-  @override
-  String get perspectiveShortcutsHint =>
-      'الأسهم أو A / D للتنقل · S خلط · R محاذاة';
 
   @override
   String get sectionSubtitleWork =>
@@ -485,12 +411,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'البُنى المعمارية خلف تطبيقاتي: الطبقات، والمزامنة دون اتصال، وNFC، وأمان الرموز.';
 
   @override
-  String get flipHintTap => 'اضغط للقلب';
-
-  @override
-  String get flipHintClick => 'انقر للقلب';
-
-  @override
   String get folioNext => 'التالي';
 
   @override
@@ -503,9 +423,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get continueAction => 'متابعة';
-
-  @override
-  String get quickProfile => 'ملف للتوظيف';
 
   @override
   String get quickProfileTitle => 'ملخص للتوظيف';
@@ -833,42 +750,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get archTopicState => 'إدارة الحالة التفاعلية (BLoC)';
 
   @override
-  String get uiComposeInquiry => 'كتابة استفسار';
-
-  @override
-  String get uiPresetsTitle => 'قوالب تواصل سريعة بلمسة واحدة';
-
-  @override
-  String get uiActiveHours => 'ضمن ساعات العمل';
-
-  @override
-  String get uiStandbyAsync => 'أرد خلال يوم';
-
-  @override
-  String get uiRelocating => 'حضورياً في برنو وما حولها';
-
-  @override
-  String get uiInquireTrack => 'استفسر عن هذا المسار';
-
-  @override
-  String get uiComposerTitle => 'نموذج الاستفسار المباشر';
-
-  @override
-  String get uiSelectTrack => 'اختر نوع التعاون';
-
-  @override
-  String get uiCopyDraft => 'نسخ المسودة';
-
-  @override
-  String get uiSending => 'جارٍ الإرسال...';
-
-  @override
-  String get uiSendMessage => 'إرسال الرسالة';
-
-  @override
-  String get uiOpenEmailClient => 'فتح في تطبيق البريد';
-
-  @override
   String get uiReadCaseStudy => 'قراءة دراسة الحالة';
 
   @override
@@ -883,9 +764,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get projectNameFais => 'تطبيقات التجارة عبر الجوال وبث الوسائط';
-
-  @override
-  String get uiScrollToExplore => 'مرّر للاستكشاف';
 
   @override
   String get uiPortfolioSections => 'أقسام الملف';
@@ -905,72 +783,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get uiDragCardsHint =>
-      'اسحب البطاقات · انقر للقلب · اخلط لإعادة الترتيب';
-
-  @override
-  String get uiTapSwipeHint => 'اضغط للقلب · اسحب لتغيير الدور';
-
-  @override
-  String get uiTapToReturn => 'اضغط للعودة';
-
-  @override
-  String get uiArchFlowchart => 'مخطط البنية';
-
-  @override
   String get uiArchRationale => 'مبررات البنية (لماذا هذا الخيار)';
 
   @override
   String get uiKeySafeguards => 'ضمانات التنفيذ الأساسية';
-
-  @override
-  String get uiActiveTrace => 'المسار النشط';
-
-  @override
-  String badgeSkills(int count) {
-    return '$count تخصصًا أساسيًا';
-  }
-
-  @override
-  String badgeCaseStudies(int count) {
-    return '$count دراسات حالة';
-  }
-
-  @override
-  String badgeArchitectures(int count) {
-    return '$count هياكل معمارية';
-  }
-
-  @override
-  String badgeRoles(int count) {
-    return '$count أدوار · أثر مؤسسي';
-  }
-
-  @override
-  String get coverName => 'عبدالله الحياري';
-
-  @override
-  String get coverStatement =>
-      'تطبيقات جوال تعمل دون اتصال، وتقرأ البطاقات الذكية، وتحمي بيانات المرضى.';
-
-  @override
-  String get coverLead =>
-      'أنا مهندس فلاتر وأندرويد أول بخبرة خمس سنوات في تطبيقات المؤسسات للرعاية الصحية والتعليم والتجارة. أقيم في عمّان وأنتقل إلى برنو في 2027.';
-
-  @override
-  String get coverEmailPrefix => 'أو راسلني على';
-
-  @override
-  String get cardHintTap => 'انقر على البطاقة لقراءة شريحتها';
-
-  @override
-  String get cardHintClick => 'انقر على البطاقة لقراءة شريحتها';
-
-  @override
-  String get cardHintTurnBackTap => 'انقر على البطاقة مرة أخرى لقلبها';
-
-  @override
-  String get cardHintTurnBackClick => 'انقر على البطاقة مرة أخرى لقلبها';
 
   @override
   String get cardSurname => 'الحياري';
@@ -988,9 +804,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cardFieldRole => 'الدور';
 
   @override
-  String get cardFieldBase => 'مكان الإقامة';
-
-  @override
   String get cardRole => 'مهندس تطبيقات جوال أول';
 
   @override
@@ -1001,38 +814,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get coverWorkedAtValue => 'NatHealth، ESKADENIA، Solutions Now، FAIS';
-
-  @override
-  String get cardBackTitle => 'مقروء من الشريحة';
-
-  @override
-  String get cardOutcome1 =>
-      'استبدال المطالبات الورقية بتحقق لاسلكي عبر البطاقة الذكية';
-
-  @override
-  String get cardOutcome2 =>
-      'قراءة NFC في أقل من ثانية على مجموعة واسعة من هواتف أندرويد';
-
-  @override
-  String get cardOutcome3 =>
-      'أعطال أقل بنسبة 35% وأداء ثابت بمعدل 60 إطارًا في الثانية في تطبيقات المستشفيات كثيفة البيانات';
-
-  @override
-  String get cardSemantics =>
-      'بطاقة تعريف عبدالله الحياري. فعّلها لقراءة الشريحة وقلب البطاقة.';
-
-  @override
-  String get coverHintDrag => 'اسحب البطاقة إلى القارئ أو انقر عليها.';
-
-  @override
-  String get coverHintTap => 'انقر على البطاقة لقراءتها.';
-
-  @override
-  String get coverGranted => 'تم السماح بالدخول';
-
-  @override
-  String get introPitch =>
-      'أبني تطبيقات Flutter وAndroid جاهزة للإنتاج: مزامنة تعمل دون اتصال، وبطاقات NFC ذكية، ومصادقة آمنة. وأبقى معها بعد الإطلاق.';
 
   @override
   String get projectFigureValueNatHealth => '+400,000';
@@ -1065,13 +846,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get heroFactBasedLabel => 'مقيم في';
 
   @override
-  String get heroFactFocusLabel => 'التخصص';
-
-  @override
-  String get heroFactFocusValue =>
-      'بطاقات NFC الذكية، والمزامنة دون اتصال، والمصادقة الآمنة';
-
-  @override
   String get heroFactLanguagesLabel => 'اللغات';
 
   @override
@@ -1081,36 +855,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get heroFactStudyLabel => 'الدراسة';
 
   @override
-  String get introPitch2 =>
-      'تطبيقات Flutter وAndroid الأصلية جاهزة للإنتاج: بطاقات NFC الذكية، والتشفير، والمزامنة دون اتصال، وتكاملات المؤسسات.';
-
-  @override
-  String get letsTalk => 'لنتحدث';
-
-  @override
-  String get downloadCv => 'تحميل السيرة الذاتية';
-
-  @override
   String get aboutTitle => 'نبذة';
 
   @override
-  String get aboutSubtitle =>
-      'كيف أعمل كمهندس، والمشكلات التي أحلّها، وبعض الأمور التي يمكنك تشغيلها بنفسك.';
-
-  @override
   String get aboutHeaderSubtitle => 'من أنا، وإلى أين أتجه، وكيف تتواصل معي.';
-
-  @override
-  String get aboutTabProfile => 'الملف';
-
-  @override
-  String get aboutTabPlayground => 'ساحة التجارب';
-
-  @override
-  String get aboutEngineerLabel => 'المهندس';
-
-  @override
-  String get aboutEngineerValue => 'Flutter وAndroid والأنظمة المحيطة بهما';
 
   @override
   String get aboutExperienceLabel => 'الخبرة';
@@ -1119,13 +867,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String aboutExperienceValue(int years) {
     return 'أكثر من $years سنوات في تطبيقات الهواتف';
   }
-
-  @override
-  String get aboutFocusLabel => 'التركيز';
-
-  @override
-  String get aboutFocusValue =>
-      'أنظمة الهواتف، والتكامل مع النظام الأصلي، والأمان، وتطبيقات المؤسسات';
 
   @override
   String get aboutHoodHint => 'اختر قدرة لترى كيف أستخدمها.';
@@ -1212,81 +953,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hoodEnterpriseWhere => 'ESKADENIA Software';
 
   @override
-  String get playKdfTitle => 'اشتقاق المفتاح';
-
-  @override
-  String get playKdfIntro =>
-      'PBKDF2-HMAC-SHA256 يعمل في متصفحك. كلما زادت التكرارات أصبح كل تخمين لكلمة المرور أبطأ، على المهاجم وعليك.';
-
-  @override
-  String get playKdfPassword => 'كلمة المرور';
-
-  @override
-  String get playKdfIterations => 'التكرارات';
-
-  @override
-  String get playKdfRun => 'اشتقاق المفتاح';
-
-  @override
-  String get playKdfRunning => 'جارٍ الاشتقاق…';
-
-  @override
-  String get playKdfResult => 'المفتاح المشتق (256 بت)';
-
-  @override
-  String playKdfTime(int ms) {
-    return 'استغرق $ms مللي ثانية على هذا الجهاز.';
-  }
-
-  @override
-  String get playKdfNote =>
-      'الملح ثابت في هذا العرض. الأنظمة الحقيقية تستخدم ملحاً عشوائياً لكل مستخدم.';
-
-  @override
-  String get playSyncTitle => 'من دون اتصال إلى متصل';
-
-  @override
-  String get playSyncIntro =>
-      'قدّم مطالبات وأنت دون اتصال. تنتظر في الطابور على الجهاز وتُزامَن عند عودة الاتصال، مع إعادة المحاولة بتراجع أسّي.';
-
-  @override
-  String get playSyncOnline => 'متصل';
-
-  @override
-  String get playSyncOffline => 'دون اتصال';
-
-  @override
-  String get playSyncFlaky => 'شبكة غير مستقرة';
-
-  @override
-  String get playSyncSubmit => 'إرسال مطالبة';
-
-  @override
-  String get playSyncEmpty => 'لا مطالبات بعد. أرسل واحدة.';
-
-  @override
-  String get playSyncQueued => 'في الطابور';
-
-  @override
-  String get playSyncSending => 'قيد الإرسال';
-
-  @override
-  String get playSyncSynced => 'تمت المزامنة';
-
-  @override
-  String playSyncRetry(int seconds) {
-    return 'إعادة المحاولة بعد $seconds ث';
-  }
-
-  @override
-  String playSyncClaim(int number) {
-    return 'المطالبة $number';
-  }
-
-  @override
-  String get playSyncNote => 'محاكاة. لا تُستخدم أي شبكة.';
-
-  @override
   String get projectLblProblem => 'المشكلة';
 
   @override
@@ -1344,116 +1010,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'نسّقت التكامل بين الخلفية والواجهة وحللت مشكلات الإنتاج.';
 
   @override
-  String get playAesTitle => 'التشفير وفك التشفير';
-
-  @override
-  String get playAesIntro =>
-      'AES-256-CBC بمفتاح مشتق من كلمة المرور عبر PBKDF2. كل شيء يعمل في متصفحك.';
-
-  @override
-  String get playAesMessage => 'الرسالة';
-
-  @override
-  String get playAesPassword => 'كلمة المرور';
-
-  @override
-  String get playAesEncrypt => 'تشفير';
-
-  @override
-  String get playAesDecryptWith => 'فك التشفير بكلمة المرور';
-
-  @override
-  String get playAesDecrypt => 'فك التشفير';
-
-  @override
-  String get playAesIv => 'IV';
-
-  @override
-  String get playAesCipher => 'النص المشفّر';
-
-  @override
-  String get playAesPlain => 'النص بعد فك التشفير';
-
-  @override
-  String get playAesWrongKey =>
-      'مفتاح خاطئ: الحشو غير صالح لذا يتوقف فك التشفير.';
-
-  @override
-  String get playAesNote =>
-      'CBC يخفي الرسالة لكنه لا يكشف العبث. الأنظمة الحقيقية تضيف MAC أو تستخدم وضع AEAD مثل GCM.';
-
-  @override
-  String get playApduTitle => 'تبادل مع البطاقة الذكية';
-
-  @override
-  String get playApduIntro =>
-      'أمر APDU وفق ISO 7816 ورد البطاقة، بايتاً بايتاً. البطاقة هنا محاكاة.';
-
-  @override
-  String get playApduSelect => 'تحديد التطبيق';
-
-  @override
-  String get playApduRead => 'قراءة 16 بايت';
-
-  @override
-  String get playApduUnknown => 'تحديد تطبيق غير معروف';
-
-  @override
-  String get playApduBadClass => 'صنف غير مدعوم';
-
-  @override
-  String get playApduCommand => 'الأمر';
-
-  @override
-  String get playApduResponse => 'الرد';
-
-  @override
-  String get playApduData => 'البيانات';
-
-  @override
-  String get playApduStatus => 'الحالة';
-
-  @override
-  String get playApduNote => 'محاكاة. كلمات الحالة رموز ISO 7816-4 حقيقية.';
-
-  @override
-  String get apduSw9000 => 'نجاح';
-
-  @override
-  String get apduSw6A82 => 'الملف أو التطبيق غير موجود';
-
-  @override
-  String get apduSw6E00 => 'الصنف غير مدعوم';
-
-  @override
-  String get playChanTitle => 'رسالة قناة المنصة';
-
-  @override
-  String get playChanIntro =>
-      'يُسلسَل استدعاء من Flutter إلى Kotlin إلى بايتات قبل عبور الحدّ. هذه هي البايتات الحقيقية التي ينتجها المرمّز القياسي في Flutter.';
-
-  @override
-  String get playChanMethod => 'الدالة';
-
-  @override
-  String get playChanTimeout => 'المهلة (مللي ثانية)';
-
-  @override
-  String playChanBytes(int count) {
-    return '$count بايت على السلك';
-  }
-
-  @override
-  String get playChanDecoded => 'بعد فك الترميز في الجانب الأصلي';
-
-  @override
-  String get playChanNote => 'مرمَّز بـ StandardMethodCodec.';
-
-  @override
   String get aboutTryIt => 'جرّبه في ساحة التجارب';
-
-  @override
-  String get engBlueprint => 'مخطط معماري';
 
   @override
   String engTiers(int count) {
@@ -1475,4 +1032,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'القدرات';
+
+  @override
+  String projectCopyCaseStudyLink(String project) {
+    return 'نسخ رابط دراسة الحالة $project';
+  }
+
+  @override
+  String get engResetZoom => 'إعادة ضبط التكبير';
+
+  @override
+  String get brandBackToTop => 'عبدالله الحياري، العودة إلى الأعلى';
 }

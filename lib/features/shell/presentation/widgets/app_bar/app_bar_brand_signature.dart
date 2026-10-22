@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/core/services/sound_service.dart';
@@ -27,7 +28,7 @@ class AppBarBrandSignature extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       child: Semantics(
         button: true,
-        label: 'Abdallah Alhyari — return to top',
+        label: AppLocalizations.of(context)!.brandBackToTop,
         child: InkWell(
           onTap: () {
             SoundService.instance.playClick();

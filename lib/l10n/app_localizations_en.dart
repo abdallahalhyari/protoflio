@@ -154,16 +154,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scrollToTop => 'Scroll to top';
 
   @override
-  String goToSection(String section) {
-    return 'Go to $section';
-  }
-
-  @override
-  String pageNumber(int number) {
-    return 'Page $number';
-  }
-
-  @override
   String resumeOpenError(Object publicUrl) {
     return 'Could not open resume — visit $publicUrl';
   }
@@ -172,18 +162,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String projectOpenError(Object url) {
     return 'Could not open $url';
   }
-
-  @override
-  String get spreadAction => 'Spread';
-
-  @override
-  String get alignAction => 'Align';
-
-  @override
-  String get previousAction => 'Previous';
-
-  @override
-  String get nextAction => 'Next';
 
   @override
   String emailCopied(Object email) {
@@ -217,39 +195,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introRoleLine => 'Senior Flutter & Android engineer';
 
   @override
-  String get introSkillArchitecture => 'Architecture';
-
-  @override
-  String get introSkillProductDelivery => 'Product delivery';
-
-  @override
   String get introWorkEligibility => 'Moving to Brno in February 2027';
 
   @override
   String get introAvailableContracts => 'Available for contracts';
 
   @override
-  String get contactEngagementScopes => 'Ways to work together';
-
-  @override
-  String get contactAtsVerified => 'ATS-friendly, 2026 edition';
-
-  @override
   String get contactPdfSize => 'PDF, 22 KB';
-
-  @override
-  String get contactCvDossierTitle =>
-      'Executive Curriculum Vitae & Portfolio Dossier';
-
-  @override
-  String get contactCvDossierDesc =>
-      'Complete chronological track record, enterprise architecture case studies, and engineering competencies.';
-
-  @override
-  String get contactDownloadCvPdf => 'Download CV (PDF)';
-
-  @override
-  String get contactPreview => 'Preview';
 
   @override
   String get footerRightsReserved => '© 2026 Abdallah Alhyari';
@@ -309,19 +261,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get contactCopy => 'Copy';
-
-  @override
   String get contactLinkedin => 'LinkedIn';
 
   @override
-  String get contactProfile => 'Profile';
-
-  @override
   String get contactGithub => 'GitHub';
-
-  @override
-  String get contactVisit => 'Visit';
 
   @override
   String get semanticPortrait => 'Portrait of Abdallah Alhyari';
@@ -341,9 +284,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introOpenForRoles => 'Open to senior mobile roles';
-
-  @override
-  String get introMasthead => 'Masthead';
 
   @override
   String get navSectionCover => 'Cover';
@@ -388,11 +328,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSubContact => 'Email, phone and profiles';
 
   @override
-  String selectedRoleAnnouncement(String role) {
-    return 'Selected role: $role';
-  }
-
-  @override
   String copiedToClipboard(String value) {
     return 'Copied $value to clipboard';
   }
@@ -412,16 +347,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skillsClearSearch => 'Clear search';
-
-  @override
-  String get perspectivePrev => 'Previous role';
-
-  @override
-  String get perspectiveNext => 'Next role';
-
-  @override
-  String get perspectiveShortcutsHint =>
-      'Arrow keys or A and D to cycle, S to shuffle, R to align';
 
   @override
   String get sectionSubtitleWork =>
@@ -486,12 +411,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The architectures behind my mobile suites: layers, offline sync, NFC and token security.';
 
   @override
-  String get flipHintTap => 'Tap to flip';
-
-  @override
-  String get flipHintClick => 'Click to flip';
-
-  @override
   String get folioNext => 'Next';
 
   @override
@@ -504,9 +423,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continueAction => 'Continue';
-
-  @override
-  String get quickProfile => 'Hiring profile';
 
   @override
   String get quickProfileTitle => 'Hiring summary';
@@ -839,42 +755,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get archTopicState => 'State management (BLoC)';
 
   @override
-  String get uiComposeInquiry => 'Write a message';
-
-  @override
-  String get uiPresetsTitle => 'Start from a template';
-
-  @override
-  String get uiActiveHours => 'Working hours';
-
-  @override
-  String get uiStandbyAsync => 'Replies within a day';
-
-  @override
-  String get uiRelocating => 'On-site in Brno & around it';
-
-  @override
-  String get uiInquireTrack => 'Ask about this';
-
-  @override
-  String get uiComposerTitle => 'Write a message';
-
-  @override
-  String get uiSelectTrack => 'What is this about?';
-
-  @override
-  String get uiCopyDraft => 'Copy draft';
-
-  @override
-  String get uiSending => 'Sending…';
-
-  @override
-  String get uiSendMessage => 'Send message';
-
-  @override
-  String get uiOpenEmailClient => 'Open in email app';
-
-  @override
   String get uiReadCaseStudy => 'Read case study';
 
   @override
@@ -889,9 +769,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get projectNameFais => 'M-Commerce & Media-Streaming Clients';
-
-  @override
-  String get uiScrollToExplore => 'Scroll to explore';
 
   @override
   String get uiPortfolioSections => 'Sections';
@@ -911,72 +788,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get uiDragCardsHint =>
-      'Drag the cards, click one to flip it, or shuffle';
-
-  @override
-  String get uiTapSwipeHint => 'Tap a card to flip it, swipe to change role';
-
-  @override
-  String get uiTapToReturn => 'Tap to return';
-
-  @override
-  String get uiArchFlowchart => 'Flowchart';
-
-  @override
   String get uiArchRationale => 'Why this choice';
 
   @override
   String get uiKeySafeguards => 'Safeguards';
-
-  @override
-  String get uiActiveTrace => 'Tracing';
-
-  @override
-  String badgeSkills(int count) {
-    return '$count disciplines';
-  }
-
-  @override
-  String badgeCaseStudies(int count) {
-    return '$count case studies';
-  }
-
-  @override
-  String badgeArchitectures(int count) {
-    return '$count architectures';
-  }
-
-  @override
-  String badgeRoles(int count) {
-    return '$count roles';
-  }
-
-  @override
-  String get coverName => 'Abdallah Alhyari';
-
-  @override
-  String get coverStatement =>
-      'Mobile apps that work offline, read smart cards and keep patient data safe.';
-
-  @override
-  String get coverLead =>
-      'I\'m a senior Flutter and Android engineer with five years on enterprise healthcare, education and commerce apps. Based in Amman, moving to Brno in 2027.';
-
-  @override
-  String get coverEmailPrefix => 'Or email';
-
-  @override
-  String get cardHintTap => 'Tap the card to read its chip';
-
-  @override
-  String get cardHintClick => 'Click the card to read its chip';
-
-  @override
-  String get cardHintTurnBackTap => 'Tap the card again to turn it over';
-
-  @override
-  String get cardHintTurnBackClick => 'Click the card again to turn it over';
 
   @override
   String get cardSurname => 'Alhyari';
@@ -994,9 +809,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cardFieldRole => 'Role';
 
   @override
-  String get cardFieldBase => 'Based in';
-
-  @override
   String get cardRole => 'Senior mobile engineer';
 
   @override
@@ -1007,38 +819,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coverWorkedAtValue => 'NatHealth, ESKADENIA, Solutions Now, FAIS';
-
-  @override
-  String get cardBackTitle => 'Read from the chip';
-
-  @override
-  String get cardOutcome1 =>
-      'Paper claims replaced by contactless smart-card checks';
-
-  @override
-  String get cardOutcome2 =>
-      'Sub-second NFC reads across a wide range of Android phones';
-
-  @override
-  String get cardOutcome3 =>
-      '35% fewer crashes and a steady 60 fps in data-heavy hospital apps';
-
-  @override
-  String get cardSemantics =>
-      'Credential card for Abdallah Alhyari. Activate to read the chip and turn the card over.';
-
-  @override
-  String get coverHintDrag => 'Drag the card onto the reader, or click it.';
-
-  @override
-  String get coverHintTap => 'Tap the card to read it.';
-
-  @override
-  String get coverGranted => 'Access granted';
-
-  @override
-  String get introPitch =>
-      'I build production Flutter and Android apps: offline-first sync, NFC smart cards, secure auth. I stay through release and after.';
 
   @override
   String get projectFigureValueNatHealth => '400,000+';
@@ -1071,13 +851,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get heroFactBasedLabel => 'Based in';
 
   @override
-  String get heroFactFocusLabel => 'Focus';
-
-  @override
-  String get heroFactFocusValue =>
-      'NFC smart cards, offline-first sync, secure authentication';
-
-  @override
   String get heroFactLanguagesLabel => 'Languages';
 
   @override
@@ -1088,38 +861,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get heroFactStudyLabel => 'Studying';
 
   @override
-  String get introPitch2 =>
-      'Production Flutter and native Android: NFC smart cards, cryptography, offline-first sync and enterprise integrations.';
-
-  @override
-  String get letsTalk => 'Let\'s talk';
-
-  @override
-  String get downloadCv => 'Download CV';
-
-  @override
   String get aboutTitle => 'About';
-
-  @override
-  String get aboutSubtitle =>
-      'How I work as an engineer, the problems I solve, and a few things you can run yourself.';
 
   @override
   String get aboutHeaderSubtitle =>
       'Who I am, where I\'m headed, and how to reach me.';
-
-  @override
-  String get aboutTabProfile => 'Profile';
-
-  @override
-  String get aboutTabPlayground => 'Playground';
-
-  @override
-  String get aboutEngineerLabel => 'Engineer';
-
-  @override
-  String get aboutEngineerValue =>
-      'Flutter, Android and the systems around them';
 
   @override
   String get aboutExperienceLabel => 'Experience';
@@ -1128,13 +874,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String aboutExperienceValue(int years) {
     return '$years+ years in mobile';
   }
-
-  @override
-  String get aboutFocusLabel => 'Focus';
-
-  @override
-  String get aboutFocusValue =>
-      'Mobile systems, native integration, security, enterprise apps';
 
   @override
   String get aboutHoodHint => 'Select a capability to see how I use it.';
@@ -1223,81 +962,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hoodEnterpriseWhere => 'ESKADENIA Software';
 
   @override
-  String get playKdfTitle => 'Key derivation';
-
-  @override
-  String get playKdfIntro =>
-      'PBKDF2-HMAC-SHA256 running in your browser. More iterations make every password guess slower, for an attacker and for you.';
-
-  @override
-  String get playKdfPassword => 'Password';
-
-  @override
-  String get playKdfIterations => 'Iterations';
-
-  @override
-  String get playKdfRun => 'Derive key';
-
-  @override
-  String get playKdfRunning => 'Deriving…';
-
-  @override
-  String get playKdfResult => 'Derived key (256 bit)';
-
-  @override
-  String playKdfTime(int ms) {
-    return 'Took $ms ms on this device.';
-  }
-
-  @override
-  String get playKdfNote =>
-      'The salt is fixed for this demo. Real systems use a random salt per user.';
-
-  @override
-  String get playSyncTitle => 'Offline to online';
-
-  @override
-  String get playSyncIntro =>
-      'Submit claims while offline. They queue on the device and sync when you go back online, retrying with exponential backoff.';
-
-  @override
-  String get playSyncOnline => 'Online';
-
-  @override
-  String get playSyncOffline => 'Offline';
-
-  @override
-  String get playSyncFlaky => 'Flaky network';
-
-  @override
-  String get playSyncSubmit => 'Submit claim';
-
-  @override
-  String get playSyncEmpty => 'No claims yet. Submit one.';
-
-  @override
-  String get playSyncQueued => 'Queued';
-
-  @override
-  String get playSyncSending => 'Sending';
-
-  @override
-  String get playSyncSynced => 'Synced';
-
-  @override
-  String playSyncRetry(int seconds) {
-    return 'Retry in ${seconds}s';
-  }
-
-  @override
-  String playSyncClaim(int number) {
-    return 'Claim $number';
-  }
-
-  @override
-  String get playSyncNote => 'Simulation. No network is used.';
-
-  @override
   String get projectLblProblem => 'Problem';
 
   @override
@@ -1355,117 +1019,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Coordinated backend and frontend integration and resolved production issues.';
 
   @override
-  String get playAesTitle => 'Encrypt and decrypt';
-
-  @override
-  String get playAesIntro =>
-      'AES-256-CBC with a key derived from your password by PBKDF2. Everything runs in your browser.';
-
-  @override
-  String get playAesMessage => 'Message';
-
-  @override
-  String get playAesPassword => 'Password';
-
-  @override
-  String get playAesEncrypt => 'Encrypt';
-
-  @override
-  String get playAesDecryptWith => 'Decrypt with password';
-
-  @override
-  String get playAesDecrypt => 'Decrypt';
-
-  @override
-  String get playAesIv => 'IV';
-
-  @override
-  String get playAesCipher => 'Ciphertext';
-
-  @override
-  String get playAesPlain => 'Decrypted text';
-
-  @override
-  String get playAesWrongKey =>
-      'Wrong key: the padding is invalid, so decryption stops.';
-
-  @override
-  String get playAesNote =>
-      'CBC hides the message but does not detect tampering. Real systems add a MAC or use an AEAD mode such as GCM.';
-
-  @override
-  String get playApduTitle => 'Smart-card exchange';
-
-  @override
-  String get playApduIntro =>
-      'An ISO 7816 command APDU and the card\'s reply, byte by byte. The card here is simulated.';
-
-  @override
-  String get playApduSelect => 'Select application';
-
-  @override
-  String get playApduRead => 'Read 16 bytes';
-
-  @override
-  String get playApduUnknown => 'Select unknown application';
-
-  @override
-  String get playApduBadClass => 'Unsupported class';
-
-  @override
-  String get playApduCommand => 'Command';
-
-  @override
-  String get playApduResponse => 'Response';
-
-  @override
-  String get playApduData => 'Data';
-
-  @override
-  String get playApduStatus => 'Status';
-
-  @override
-  String get playApduNote =>
-      'Simulation. The status words are real ISO 7816-4 codes.';
-
-  @override
-  String get apduSw9000 => 'Success';
-
-  @override
-  String get apduSw6A82 => 'File or application not found';
-
-  @override
-  String get apduSw6E00 => 'Class not supported';
-
-  @override
-  String get playChanTitle => 'Platform channel message';
-
-  @override
-  String get playChanIntro =>
-      'A Flutter to Kotlin call is serialised into bytes before it crosses the boundary. These are the real bytes Flutter\'s standard codec produces.';
-
-  @override
-  String get playChanMethod => 'Method';
-
-  @override
-  String get playChanTimeout => 'Timeout (ms)';
-
-  @override
-  String playChanBytes(int count) {
-    return '$count bytes on the wire';
-  }
-
-  @override
-  String get playChanDecoded => 'Decoded on the native side';
-
-  @override
-  String get playChanNote => 'Encoded with StandardMethodCodec.';
-
-  @override
   String get aboutTryIt => 'Try it in the Playground';
-
-  @override
-  String get engBlueprint => 'Architecture blueprint';
 
   @override
   String engTiers(int count) {
@@ -1487,4 +1041,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'Capabilities';
+
+  @override
+  String projectCopyCaseStudyLink(String project) {
+    return 'Copy link to the $project case study';
+  }
+
+  @override
+  String get engResetZoom => 'Reset zoom';
+
+  @override
+  String get brandBackToTop => 'Abdallah Alhyari, back to top';
 }

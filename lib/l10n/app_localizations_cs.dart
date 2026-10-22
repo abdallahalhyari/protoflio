@@ -156,16 +156,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get scrollToTop => 'Přejít nahoru';
 
   @override
-  String goToSection(String section) {
-    return 'Přejít na sekci $section';
-  }
-
-  @override
-  String pageNumber(int number) {
-    return 'Stránka $number';
-  }
-
-  @override
   String resumeOpenError(Object publicUrl) {
     return 'Nepodařilo se otevřít životopis — navštivte $publicUrl';
   }
@@ -174,18 +164,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String projectOpenError(Object url) {
     return 'Nepodařilo se otevřít $url';
   }
-
-  @override
-  String get spreadAction => 'Rozložit';
-
-  @override
-  String get alignAction => 'Zarovnat';
-
-  @override
-  String get previousAction => 'Předchozí';
-
-  @override
-  String get nextAction => 'Další';
 
   @override
   String emailCopied(Object email) {
@@ -219,38 +197,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introRoleLine => 'Senior mobilní vývojář';
 
   @override
-  String get introSkillArchitecture => 'Architektura';
-
-  @override
-  String get introSkillProductDelivery => 'Dodávání produktů';
-
-  @override
   String get introWorkEligibility => 'Stěhování do Brna v únoru 2027';
 
   @override
   String get introAvailableContracts => 'K dispozici pro kontrakty';
 
   @override
-  String get contactEngagementScopes => 'Možnosti spolupráce';
-
-  @override
-  String get contactAtsVerified => 'ATS ověřeno, edice 2026';
-
-  @override
   String get contactPdfSize => 'PDF, 22 KB';
-
-  @override
-  String get contactCvDossierTitle => 'Exekutivní životopis a portfolio';
-
-  @override
-  String get contactCvDossierDesc =>
-      'Kompletní chronologický záznam, případové studie podnikové architektury a inženýrské kompetence.';
-
-  @override
-  String get contactDownloadCvPdf => 'Stáhnout životopis (PDF)';
-
-  @override
-  String get contactPreview => 'Náhled';
 
   @override
   String get footerRightsReserved => '© 2026 Abdallah Alhyari';
@@ -310,19 +263,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get contactCopy => 'Kopírovat';
-
-  @override
   String get contactLinkedin => 'LinkedIn';
 
   @override
-  String get contactProfile => 'Profil';
-
-  @override
   String get contactGithub => 'GitHub';
-
-  @override
-  String get contactVisit => 'Navštívit';
 
   @override
   String get semanticPortrait => 'Portrét Abdallaha Alhyariho';
@@ -342,9 +286,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introOpenForRoles => 'Otevřen pro seniorní role';
-
-  @override
-  String get introMasthead => 'Hlavička';
 
   @override
   String get navSectionCover => 'Úvod';
@@ -389,11 +330,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navSubContact => 'E-mail, telefon a profily';
 
   @override
-  String selectedRoleAnnouncement(String role) {
-    return 'Vybraná role: $role';
-  }
-
-  @override
   String copiedToClipboard(String value) {
     return 'Zkopírováno $value do schránky';
   }
@@ -414,16 +350,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get skillsClearSearch => 'Vymazat hledání';
-
-  @override
-  String get perspectivePrev => 'Předchozí role';
-
-  @override
-  String get perspectiveNext => 'Další role';
-
-  @override
-  String get perspectiveShortcutsHint =>
-      'Šipky nebo A / D k procházení · S zamíchat · R zarovnat';
 
   @override
   String get sectionSubtitleWork =>
@@ -488,12 +414,6 @@ class AppLocalizationsCs extends AppLocalizations {
       'Architektury za mými mobilními sadami: vrstvy, offline synchronizace, NFC a zabezpečení tokenů.';
 
   @override
-  String get flipHintTap => 'Klepněte a otočte';
-
-  @override
-  String get flipHintClick => 'Klikněte a otočte';
-
-  @override
   String get folioNext => 'Dále';
 
   @override
@@ -506,9 +426,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get continueAction => 'Pokračovat';
-
-  @override
-  String get quickProfile => 'Profil pro náboráře';
 
   @override
   String get quickProfileTitle => 'Shrnutí pro nábor';
@@ -841,42 +758,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get archTopicState => 'Reaktivní správa stavu (BLoC)';
 
   @override
-  String get uiComposeInquiry => 'Napsat zprávu';
-
-  @override
-  String get uiPresetsTitle => 'Začít ze šablony';
-
-  @override
-  String get uiActiveHours => 'Pracovní doba';
-
-  @override
-  String get uiStandbyAsync => 'Odpovídám do jednoho dne';
-
-  @override
-  String get uiRelocating => 'On-site v Brně a okolí';
-
-  @override
-  String get uiInquireTrack => 'Zeptat se';
-
-  @override
-  String get uiComposerTitle => 'Napsat zprávu';
-
-  @override
-  String get uiSelectTrack => 'O co jde?';
-
-  @override
-  String get uiCopyDraft => 'Kopírovat koncept';
-
-  @override
-  String get uiSending => 'Odesílání…';
-
-  @override
-  String get uiSendMessage => 'Odeslat zprávu';
-
-  @override
-  String get uiOpenEmailClient => 'Otevřít v e-mailu';
-
-  @override
   String get uiReadCaseStudy => 'Číst případovou studii';
 
   @override
@@ -892,9 +773,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get projectNameFais => 'Klienti pro m-commerce a streamování médií';
-
-  @override
-  String get uiScrollToExplore => 'Posuňte a prozkoumejte';
 
   @override
   String get uiPortfolioSections => 'Sekce portfolia';
@@ -914,72 +792,10 @@ class AppLocalizationsCs extends AppLocalizations {
   }
 
   @override
-  String get uiDragCardsHint =>
-      'Přetáhněte karty, kliknutím otočíte, zamícháním přeskupíte';
-
-  @override
-  String get uiTapSwipeHint => 'Klepnutím otočíte, přejetím změníte roli';
-
-  @override
-  String get uiTapToReturn => 'Klepnutím zpět';
-
-  @override
-  String get uiArchFlowchart => 'Diagram';
-
-  @override
   String get uiArchRationale => 'Proč tato volba';
 
   @override
   String get uiKeySafeguards => 'Pojistky';
-
-  @override
-  String get uiActiveTrace => 'Sledování';
-
-  @override
-  String badgeSkills(int count) {
-    return '$count disciplín';
-  }
-
-  @override
-  String badgeCaseStudies(int count) {
-    return '$count případové studie';
-  }
-
-  @override
-  String badgeArchitectures(int count) {
-    return '$count architektur';
-  }
-
-  @override
-  String badgeRoles(int count) {
-    return '$count role';
-  }
-
-  @override
-  String get coverName => 'Abdallah Alhyari';
-
-  @override
-  String get coverStatement =>
-      'Mobilní aplikace, které fungují offline, čtou čipové karty a chrání data pacientů.';
-
-  @override
-  String get coverLead =>
-      'Jsem senior Flutter a Android vývojář s pěti lety praxe na podnikových aplikacích pro zdravotnictví, vzdělávání a obchod. Žiji v Ammánu, v roce 2027 se stěhuji do Brna.';
-
-  @override
-  String get coverEmailPrefix => 'Nebo napište na';
-
-  @override
-  String get cardHintTap => 'Klepnutím na kartu přečtete čip';
-
-  @override
-  String get cardHintClick => 'Kliknutím na kartu přečtete čip';
-
-  @override
-  String get cardHintTurnBackTap => 'Dalším klepnutím kartu otočíte zpět';
-
-  @override
-  String get cardHintTurnBackClick => 'Dalším kliknutím kartu otočíte zpět';
 
   @override
   String get cardSurname => 'Alhyari';
@@ -997,9 +813,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get cardFieldRole => 'Role';
 
   @override
-  String get cardFieldBase => 'Bydliště';
-
-  @override
   String get cardRole => 'Senior mobilní vývojář';
 
   @override
@@ -1010,39 +823,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get coverWorkedAtValue => 'NatHealth, ESKADENIA, Solutions Now, FAIS';
-
-  @override
-  String get cardBackTitle => 'Přečteno z čipu';
-
-  @override
-  String get cardOutcome1 =>
-      'Papírové žádosti nahradilo bezkontaktní ověření čipové karty';
-
-  @override
-  String get cardOutcome2 =>
-      'Čtení NFC pod jednu sekundu na široké škále telefonů s Androidem';
-
-  @override
-  String get cardOutcome3 =>
-      'O 35 % méně pádů a stabilních 60 fps v nemocničních aplikacích s velkým objemem dat';
-
-  @override
-  String get cardSemantics =>
-      'Identifikační karta Abdallaha Alhyariho. Aktivací přečtete čip a kartu otočíte.';
-
-  @override
-  String get coverHintDrag =>
-      'Přetáhněte kartu na čtečku, nebo na ni klikněte.';
-
-  @override
-  String get coverHintTap => 'Klepnutím kartu přečtete.';
-
-  @override
-  String get coverGranted => 'Přístup povolen';
-
-  @override
-  String get introPitch =>
-      'Vyvíjím produkční aplikace ve Flutteru a Androidu: offline synchronizaci, NFC čipové karty, bezpečné přihlášení. Zůstávám u nich i po vydání.';
 
   @override
   String get projectFigureValueNatHealth => '400 000+';
@@ -1075,13 +855,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get heroFactBasedLabel => 'Působiště';
 
   @override
-  String get heroFactFocusLabel => 'Zaměření';
-
-  @override
-  String get heroFactFocusValue =>
-      'NFC čipové karty, offline synchronizace, bezpečné přihlášení';
-
-  @override
   String get heroFactLanguagesLabel => 'Jazyky';
 
   @override
@@ -1092,37 +865,11 @@ class AppLocalizationsCs extends AppLocalizations {
   String get heroFactStudyLabel => 'Studium';
 
   @override
-  String get introPitch2 =>
-      'Produkční Flutter a nativní Android: NFC čipové karty, kryptografie, offline synchronizace a podnikové integrace.';
-
-  @override
-  String get letsTalk => 'Pojďme si promluvit';
-
-  @override
-  String get downloadCv => 'Stáhnout CV';
-
-  @override
   String get aboutTitle => 'O mně';
-
-  @override
-  String get aboutSubtitle =>
-      'Jak pracuji jako inženýr, jaké problémy řeším a pár věcí, které si můžete sami vyzkoušet.';
 
   @override
   String get aboutHeaderSubtitle =>
       'Kdo jsem, kam směřuji a jak mě zastihnout.';
-
-  @override
-  String get aboutTabProfile => 'Profil';
-
-  @override
-  String get aboutTabPlayground => 'Hřiště';
-
-  @override
-  String get aboutEngineerLabel => 'Inženýr';
-
-  @override
-  String get aboutEngineerValue => 'Flutter, Android a systémy kolem nich';
 
   @override
   String get aboutExperienceLabel => 'Praxe';
@@ -1131,13 +878,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String aboutExperienceValue(int years) {
     return '$years+ let v mobilním vývoji';
   }
-
-  @override
-  String get aboutFocusLabel => 'Zaměření';
-
-  @override
-  String get aboutFocusValue =>
-      'Mobilní systémy, nativní integrace, bezpečnost, podnikové aplikace';
 
   @override
   String get aboutHoodHint => 'Vyberte schopnost a uvidíte, jak ji používám.';
@@ -1228,81 +968,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get hoodEnterpriseWhere => 'ESKADENIA Software';
 
   @override
-  String get playKdfTitle => 'Odvození klíče';
-
-  @override
-  String get playKdfIntro =>
-      'PBKDF2-HMAC-SHA256 běžící ve vašem prohlížeči. Více iterací zpomalí každý pokus o uhodnutí hesla, útočníkovi i vám.';
-
-  @override
-  String get playKdfPassword => 'Heslo';
-
-  @override
-  String get playKdfIterations => 'Iterace';
-
-  @override
-  String get playKdfRun => 'Odvodit klíč';
-
-  @override
-  String get playKdfRunning => 'Odvozuji…';
-
-  @override
-  String get playKdfResult => 'Odvozený klíč (256 bitů)';
-
-  @override
-  String playKdfTime(int ms) {
-    return 'Trvalo to $ms ms na tomto zařízení.';
-  }
-
-  @override
-  String get playKdfNote =>
-      'Sůl je v ukázce pevná. Skutečné systémy používají náhodnou sůl pro každého uživatele.';
-
-  @override
-  String get playSyncTitle => 'Z offline do online';
-
-  @override
-  String get playSyncIntro =>
-      'Odesílejte nároky offline. Čekají ve frontě v zařízení a po připojení se synchronizují, s opakováním s exponenciálním odstupem.';
-
-  @override
-  String get playSyncOnline => 'Online';
-
-  @override
-  String get playSyncOffline => 'Offline';
-
-  @override
-  String get playSyncFlaky => 'Nestabilní síť';
-
-  @override
-  String get playSyncSubmit => 'Odeslat nárok';
-
-  @override
-  String get playSyncEmpty => 'Zatím žádné nároky. Odešlete jeden.';
-
-  @override
-  String get playSyncQueued => 'Ve frontě';
-
-  @override
-  String get playSyncSending => 'Odesílá se';
-
-  @override
-  String get playSyncSynced => 'Synchronizováno';
-
-  @override
-  String playSyncRetry(int seconds) {
-    return 'Znovu za $seconds s';
-  }
-
-  @override
-  String playSyncClaim(int number) {
-    return 'Nárok $number';
-  }
-
-  @override
-  String get playSyncNote => 'Simulace. Nepoužívá se žádná síť.';
-
-  @override
   String get projectLblProblem => 'Problém';
 
   @override
@@ -1360,117 +1025,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Koordinoval jsem integraci backendu a frontendu a řešil produkční problémy.';
 
   @override
-  String get playAesTitle => 'Šifrování a dešifrování';
-
-  @override
-  String get playAesIntro =>
-      'AES-256-CBC s klíčem odvozeným z vašeho hesla přes PBKDF2. Vše běží ve vašem prohlížeči.';
-
-  @override
-  String get playAesMessage => 'Zpráva';
-
-  @override
-  String get playAesPassword => 'Heslo';
-
-  @override
-  String get playAesEncrypt => 'Zašifrovat';
-
-  @override
-  String get playAesDecryptWith => 'Dešifrovat heslem';
-
-  @override
-  String get playAesDecrypt => 'Dešifrovat';
-
-  @override
-  String get playAesIv => 'IV';
-
-  @override
-  String get playAesCipher => 'Šifrový text';
-
-  @override
-  String get playAesPlain => 'Dešifrovaný text';
-
-  @override
-  String get playAesWrongKey =>
-      'Špatný klíč: výplň je neplatná, dešifrování se zastaví.';
-
-  @override
-  String get playAesNote =>
-      'CBC zprávu skryje, ale nepozná úpravu. Skutečné systémy přidávají MAC nebo používají režim AEAD, například GCM.';
-
-  @override
-  String get playApduTitle => 'Výměna s čipovou kartou';
-
-  @override
-  String get playApduIntro =>
-      'Příkaz APDU podle ISO 7816 a odpověď karty, bajt po bajtu. Karta je zde simulovaná.';
-
-  @override
-  String get playApduSelect => 'Vybrat aplikaci';
-
-  @override
-  String get playApduRead => 'Přečíst 16 bajtů';
-
-  @override
-  String get playApduUnknown => 'Vybrat neznámou aplikaci';
-
-  @override
-  String get playApduBadClass => 'Nepodporovaná třída';
-
-  @override
-  String get playApduCommand => 'Příkaz';
-
-  @override
-  String get playApduResponse => 'Odpověď';
-
-  @override
-  String get playApduData => 'Data';
-
-  @override
-  String get playApduStatus => 'Stav';
-
-  @override
-  String get playApduNote =>
-      'Simulace. Stavová slova jsou skutečné kódy ISO 7816-4.';
-
-  @override
-  String get apduSw9000 => 'Úspěch';
-
-  @override
-  String get apduSw6A82 => 'Soubor nebo aplikace nenalezena';
-
-  @override
-  String get apduSw6E00 => 'Třída není podporována';
-
-  @override
-  String get playChanTitle => 'Zpráva platformního kanálu';
-
-  @override
-  String get playChanIntro =>
-      'Volání z Flutteru do Kotlinu se před překročením hranice serializuje na bajty. Toto jsou skutečné bajty standardního kodeku Flutteru.';
-
-  @override
-  String get playChanMethod => 'Metoda';
-
-  @override
-  String get playChanTimeout => 'Časový limit (ms)';
-
-  @override
-  String playChanBytes(int count) {
-    return '$count bajtů na drátě';
-  }
-
-  @override
-  String get playChanDecoded => 'Dekódováno na nativní straně';
-
-  @override
-  String get playChanNote => 'Zakódováno pomocí StandardMethodCodec.';
-
-  @override
   String get aboutTryIt => 'Vyzkoušet na hřišti';
-
-  @override
-  String get engBlueprint => 'Architektonický plán';
 
   @override
   String engTiers(int count) {
@@ -1493,4 +1048,15 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get engTabCapabilities => 'Schopnosti';
+
+  @override
+  String projectCopyCaseStudyLink(String project) {
+    return 'Zkopírovat odkaz na případovou studii $project';
+  }
+
+  @override
+  String get engResetZoom => 'Obnovit přiblížení';
+
+  @override
+  String get brandBackToTop => 'Abdallah Alhyari, zpět nahoru';
 }
