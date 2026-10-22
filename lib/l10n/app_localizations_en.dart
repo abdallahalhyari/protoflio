@@ -182,7 +182,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introSummary =>
-      'Senior mobile engineer. I build Flutter and native Android apps that keep working offline, read NFC smart cards and keep tokens secure.';
+      'Senior mobile engineer. I build Flutter and native Android apps that keep working offline, work with the device hardware and keep user data secure.';
 
   @override
   String get introAvailability =>

@@ -184,7 +184,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introSummary =>
-      'Senior mobilní inženýr. Stavím aplikace ve Flutteru a nativním Androidu, které fungují i offline, čtou čipové karty přes NFC a bezpečně uchovávají tokeny.';
+      'Senior mobilní vývojář. Stavím aplikace ve Flutteru a nativním Androidu, které fungují i offline, pracují s hardwarem zařízení a chrání data uživatelů.';
 
   @override
   String get introAvailability =>

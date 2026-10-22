@@ -181,7 +181,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introSummary =>
-      'مهندس تطبيقات جوّال أول. أبني تطبيقات Flutter وAndroid أصلية تعمل دون اتصال، وتقرأ البطاقات الذكية عبر NFC، وتحفظ الرموز بأمان.';
+      'مهندس تطبيقات جوّال أول. أبني تطبيقات Flutter وAndroid أصلية تعمل دون اتصال، وتتعامل مع عتاد الجهاز، وتحمي بيانات المستخدمين.';
 
   @override
   String get introAvailability =>
