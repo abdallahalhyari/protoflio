@@ -214,9 +214,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introEmailMe => 'Email me';
 
   @override
-  String get traceTitle => 'What happens when a card is tapped';
-
-  @override
   String get introRoleLine => 'Senior Flutter & Android engineer';
 
   @override
@@ -1033,6 +1030,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cardBase => 'Amman, Brno from 2027';
 
   @override
+  String get coverWorkedAtLabel => 'Worked at';
+
+  @override
+  String get coverWorkedAtValue => 'NatHealth, ESKADENIA, Solutions Now, FAIS';
+
+  @override
   String get cardBackTitle => 'Read from the chip';
 
   @override
@@ -1110,61 +1113,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get heroFactStudyLabel => 'Studying';
-
-  @override
-  String get traceCta => 'Trace a tap';
-
-  @override
-  String get traceAgain => 'Trace again';
-
-  @override
-  String get traceDone => 'Claim queued, synced and confirmed.';
-
-  @override
-  String get traceHint =>
-      'Follow one NFC claim through every layer. Hover a step to read what happens there.';
-
-  @override
-  String get traceNote =>
-      'Call names are illustrative. Flow simplified from my NFC claims work at NatHealth.';
-
-  @override
-  String get traceRunning => 'Tracing…';
-
-  @override
-  String get traceDetailFlutter =>
-      'A tap becomes a typed Dart call. The UI never touches hardware or keys.';
-
-  @override
-  String get traceDetailChannel =>
-      'Calls cross the Dart to Kotlin boundary as serialised messages. Failures come back as typed errors.';
-
-  @override
-  String get traceDetailNative =>
-      'Kotlin talks to the card over ISO-DEP: select, authenticate, read. This is the part Flutter cannot do alone.';
-
-  @override
-  String get traceDetailSecurity =>
-      'Tokens are signed with hardware-backed keys. With no network, the claim is queued and WorkManager retries it.';
-
-  @override
-  String get traceDetailBackend =>
-      'REST over HTTPS, authenticated with a JWT. The server\'s reply closes the loop for the queued claim.';
-
-  @override
-  String get traceStepFlutter => 'Flutter UI';
-
-  @override
-  String get traceStepChannel => 'Platform channel';
-
-  @override
-  String get traceStepNative => 'Native Android';
-
-  @override
-  String get traceStepSecurity => 'Security and sync';
-
-  @override
-  String get traceStepBackend => 'Backend';
 
   @override
   String get introPitch2 =>
@@ -1542,9 +1490,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutTryIt => 'Try it in the Playground';
-
-  @override
-  String get traceOpenPlayground => 'Run these layers yourself';
 
   @override
   String get engBlueprint => 'Architecture blueprint';

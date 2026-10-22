@@ -43,7 +43,7 @@ void main() {
     final l10n = lookupAppLocalizations(const Locale('ar'));
     expect(find.text(l10n.introSummary), findsOneWidget);
     expect(find.text(l10n.introAvailability), findsOneWidget);
-    expect(find.text(l10n.traceTitle), findsOneWidget);
+    expect(find.text(l10n.coverWorkedAtLabel), findsOneWidget);
     // No exceptions during layout.
     expect(tester.takeException(), isNull);
   });

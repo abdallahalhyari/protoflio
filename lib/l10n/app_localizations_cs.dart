@@ -216,9 +216,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introEmailMe => 'Napište mi';
 
   @override
-  String get traceTitle => 'Co se stane po přiložení karty';
-
-  @override
   String get introRoleLine => 'Senior mobilní vývojář';
 
   @override
@@ -1036,6 +1033,12 @@ class AppLocalizationsCs extends AppLocalizations {
   String get cardBase => 'Ammán, od 2027 Brno';
 
   @override
+  String get coverWorkedAtLabel => 'Pracoval v';
+
+  @override
+  String get coverWorkedAtValue => 'NatHealth, ESKADENIA, Solutions Now, FAIS';
+
+  @override
   String get cardBackTitle => 'Přečteno z čipu';
 
   @override
@@ -1114,61 +1117,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get heroFactStudyLabel => 'Studium';
-
-  @override
-  String get traceCta => 'Sledovat klepnutí';
-
-  @override
-  String get traceAgain => 'Sledovat znovu';
-
-  @override
-  String get traceDone => 'Nárok zařazen do fronty, synchronizován a potvrzen.';
-
-  @override
-  String get traceHint =>
-      'Sledujte jeden NFC nárok všemi vrstvami. Najetím na krok si přečtete, co se v něm děje.';
-
-  @override
-  String get traceNote =>
-      'Názvy volání jsou ilustrativní. Tok je zjednodušený z mé práce na NFC nárocích v NatHealth.';
-
-  @override
-  String get traceRunning => 'Sleduji…';
-
-  @override
-  String get traceDetailFlutter =>
-      'Klepnutí se změní na typované volání v Dartu. UI se nikdy nedotkne hardwaru ani klíčů.';
-
-  @override
-  String get traceDetailChannel =>
-      'Volání překračují hranici Dart a Kotlin jako serializované zprávy. Chyby se vracejí jako typované chyby.';
-
-  @override
-  String get traceDetailNative =>
-      'Kotlin komunikuje s kartou přes ISO-DEP: výběr, ověření, čtení. To Flutter sám nezvládne.';
-
-  @override
-  String get traceDetailSecurity =>
-      'Tokeny se podepisují hardwarově chráněnými klíči. Bez sítě se nárok zařadí do fronty a WorkManager to zkusí znovu.';
-
-  @override
-  String get traceDetailBackend =>
-      'REST přes HTTPS s ověřením JWT. Odpověď serveru uzavře smyčku pro zařazený nárok.';
-
-  @override
-  String get traceStepFlutter => 'Flutter UI';
-
-  @override
-  String get traceStepChannel => 'Platform channel';
-
-  @override
-  String get traceStepNative => 'Native Android';
-
-  @override
-  String get traceStepSecurity => 'Zabezpečení a synchronizace';
-
-  @override
-  String get traceStepBackend => 'Backend';
 
   @override
   String get introPitch2 =>
@@ -1547,9 +1495,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get aboutTryIt => 'Vyzkoušet na hřišti';
-
-  @override
-  String get traceOpenPlayground => 'Vyzkoušejte tyto vrstvy sami';
 
   @override
   String get engBlueprint => 'Architektonický plán';

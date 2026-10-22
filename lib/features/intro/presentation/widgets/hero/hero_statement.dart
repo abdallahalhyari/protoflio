@@ -5,9 +5,9 @@ import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 /// Left column of the cover: the name, one specific sentence about the
-/// work, and when you can hire me. The trace card beside it shows the work;
-/// this column only has to say who and when. Plays its slice of the
-/// cover's entrance via [reveal].
+/// work, and when you can hire me. The portrait and the screening facts
+/// sit beside it in the profile panel. Plays its slice of the cover's
+/// entrance via [reveal].
 class HeroStatement extends StatelessWidget {
   final Size size;
   final bool isDark;

@@ -213,9 +213,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introEmailMe => 'راسلني';
 
   @override
-  String get traceTitle => 'ماذا يحدث عند تمرير البطاقة';
-
-  @override
   String get introRoleLine => 'مهندس تطبيقات هواتف أول';
 
   @override
@@ -1025,6 +1022,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cardBase => 'عمّان، وبرنو ابتداءً من 2027';
 
   @override
+  String get coverWorkedAtLabel => 'عملت لدى';
+
+  @override
+  String get coverWorkedAtValue => 'NatHealth، ESKADENIA، Solutions Now، FAIS';
+
+  @override
   String get cardBackTitle => 'مقروء من الشريحة';
 
   @override
@@ -1101,61 +1104,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get heroFactStudyLabel => 'الدراسة';
-
-  @override
-  String get traceCta => 'تتبّع نقرة';
-
-  @override
-  String get traceAgain => 'تتبّع مجدداً';
-
-  @override
-  String get traceDone => 'أُدرجت المطالبة في الطابور وتمت مزامنتها وتأكيدها.';
-
-  @override
-  String get traceHint =>
-      'تابع مطالبة NFC واحدة عبر كل طبقة. مرّر المؤشر فوق خطوة لقراءة ما يحدث فيها.';
-
-  @override
-  String get traceNote =>
-      'أسماء الاستدعاءات توضيحية. التدفق مبسّط من عملي على مطالبات NFC في NatHealth.';
-
-  @override
-  String get traceRunning => 'جارٍ التتبّع…';
-
-  @override
-  String get traceDetailFlutter =>
-      'تتحول النقرة إلى استدعاء Dart مُنمَّط. لا تلمس الواجهة العتاد أو المفاتيح أبداً.';
-
-  @override
-  String get traceDetailChannel =>
-      'تعبر الاستدعاءات حدّ Dart إلى Kotlin كرسائل مُسلسلة. وتعود الإخفاقات كأخطاء مُنمَّطة.';
-
-  @override
-  String get traceDetailNative =>
-      'يتحدث Kotlin إلى البطاقة عبر ISO-DEP: تحديد، ثم مصادقة، ثم قراءة. هذا ما لا تستطيعه Flutter وحدها.';
-
-  @override
-  String get traceDetailSecurity =>
-      'تُوقَّع الرموز بمفاتيح مدعومة بالعتاد. وعند غياب الشبكة تُوضع المطالبة في طابور ويعيد WorkManager المحاولة.';
-
-  @override
-  String get traceDetailBackend =>
-      'REST عبر HTTPS بمصادقة JWT. ويغلق ردّ الخادم الحلقة للمطالبة المنتظرة.';
-
-  @override
-  String get traceStepFlutter => 'Flutter UI';
-
-  @override
-  String get traceStepChannel => 'Platform channel';
-
-  @override
-  String get traceStepNative => 'Native Android';
-
-  @override
-  String get traceStepSecurity => 'الأمان والمزامنة';
-
-  @override
-  String get traceStepBackend => 'Backend';
 
   @override
   String get introPitch2 =>
@@ -1528,9 +1476,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get aboutTryIt => 'جرّبه في ساحة التجارب';
-
-  @override
-  String get traceOpenPlayground => 'شغّل هذه الطبقات بنفسك';
 
   @override
   String get engBlueprint => 'مخطط معماري';

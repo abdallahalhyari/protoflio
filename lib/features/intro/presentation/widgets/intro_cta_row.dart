@@ -124,14 +124,18 @@ class IntroCtaRow extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
 
     final ctas = <Widget>[
-      PrimaryButton(
-        label: loc.viewMyWork,
-        isPill: true,
-        letterSpacing: 0.3,
-        onPressed: () {
-          SoundService.instance.playClick();
-          onViewWork();
-        },
+      // A node of its own, like the two actions after it; otherwise its
+      // button role lands on the row and the others read as inside it.
+      MergeSemantics(
+        child: PrimaryButton(
+          label: loc.viewMyWork,
+          isPill: true,
+          letterSpacing: 0.3,
+          onPressed: () {
+            SoundService.instance.playClick();
+            onViewWork();
+          },
+        ),
       ),
       ConstrainedBox(
         constraints: BoxConstraints(

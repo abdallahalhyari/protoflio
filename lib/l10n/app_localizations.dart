@@ -472,12 +472,6 @@ abstract class AppLocalizations {
   /// **'Email me'**
   String get introEmailMe;
 
-  /// No description provided for @traceTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'What happens when a card is tapped'**
-  String get traceTitle;
-
   /// Intro cover copy (the original design); introSeniorEngineer carries the site-wide wording.
   ///
   /// In en, this message translates to:
@@ -1918,6 +1912,18 @@ abstract class AppLocalizations {
   /// **'Amman, Brno from 2027'**
   String get cardBase;
 
+  /// No description provided for @coverWorkedAtLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Worked at'**
+  String get coverWorkedAtLabel;
+
+  /// No description provided for @coverWorkedAtValue.
+  ///
+  /// In en, this message translates to:
+  /// **'NatHealth, ESKADENIA, Solutions Now, FAIS'**
+  String get coverWorkedAtValue;
+
   /// No description provided for @cardBackTitle.
   ///
   /// In en, this message translates to:
@@ -2055,102 +2061,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Studying'**
   String get heroFactStudyLabel;
-
-  /// No description provided for @traceCta.
-  ///
-  /// In en, this message translates to:
-  /// **'Trace a tap'**
-  String get traceCta;
-
-  /// No description provided for @traceAgain.
-  ///
-  /// In en, this message translates to:
-  /// **'Trace again'**
-  String get traceAgain;
-
-  /// No description provided for @traceDone.
-  ///
-  /// In en, this message translates to:
-  /// **'Claim queued, synced and confirmed.'**
-  String get traceDone;
-
-  /// No description provided for @traceHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Follow one NFC claim through every layer. Hover a step to read what happens there.'**
-  String get traceHint;
-
-  /// No description provided for @traceNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Call names are illustrative. Flow simplified from my NFC claims work at NatHealth.'**
-  String get traceNote;
-
-  /// No description provided for @traceRunning.
-  ///
-  /// In en, this message translates to:
-  /// **'Tracing…'**
-  String get traceRunning;
-
-  /// No description provided for @traceDetailFlutter.
-  ///
-  /// In en, this message translates to:
-  /// **'A tap becomes a typed Dart call. The UI never touches hardware or keys.'**
-  String get traceDetailFlutter;
-
-  /// No description provided for @traceDetailChannel.
-  ///
-  /// In en, this message translates to:
-  /// **'Calls cross the Dart to Kotlin boundary as serialised messages. Failures come back as typed errors.'**
-  String get traceDetailChannel;
-
-  /// No description provided for @traceDetailNative.
-  ///
-  /// In en, this message translates to:
-  /// **'Kotlin talks to the card over ISO-DEP: select, authenticate, read. This is the part Flutter cannot do alone.'**
-  String get traceDetailNative;
-
-  /// No description provided for @traceDetailSecurity.
-  ///
-  /// In en, this message translates to:
-  /// **'Tokens are signed with hardware-backed keys. With no network, the claim is queued and WorkManager retries it.'**
-  String get traceDetailSecurity;
-
-  /// No description provided for @traceDetailBackend.
-  ///
-  /// In en, this message translates to:
-  /// **'REST over HTTPS, authenticated with a JWT. The server\'s reply closes the loop for the queued claim.'**
-  String get traceDetailBackend;
-
-  /// No description provided for @traceStepFlutter.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter UI'**
-  String get traceStepFlutter;
-
-  /// No description provided for @traceStepChannel.
-  ///
-  /// In en, this message translates to:
-  /// **'Platform channel'**
-  String get traceStepChannel;
-
-  /// No description provided for @traceStepNative.
-  ///
-  /// In en, this message translates to:
-  /// **'Native Android'**
-  String get traceStepNative;
-
-  /// No description provided for @traceStepSecurity.
-  ///
-  /// In en, this message translates to:
-  /// **'Security and sync'**
-  String get traceStepSecurity;
-
-  /// No description provided for @traceStepBackend.
-  ///
-  /// In en, this message translates to:
-  /// **'Backend'**
-  String get traceStepBackend;
 
   /// No description provided for @introPitch2.
   ///
@@ -2817,12 +2727,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try it in the Playground'**
   String get aboutTryIt;
-
-  /// No description provided for @traceOpenPlayground.
-  ///
-  /// In en, this message translates to:
-  /// **'Run these layers yourself'**
-  String get traceOpenPlayground;
 
   /// No description provided for @engBlueprint.
   ///

@@ -5,16 +5,16 @@ import 'package:profile/features/intro/presentation/widgets/intro_cta_row.dart';
 import 'package:profile/shared/widgets/scrollable_screen_shell.dart';
 
 import 'package:profile/features/intro/presentation/widgets/hero/hero_statement.dart';
-import 'package:profile/features/intro/presentation/widgets/hero/signal_trace.dart';
+import 'package:profile/features/intro/presentation/widgets/hero/profile_panel.dart';
 import 'package:profile/features/intro/presentation/widgets/hero_motion.dart';
 
 /// Cover: what a recruiter screens for, in one view.
 ///   statement   name, one sentence about the work, availability, actions
-///   trace       one NFC claim traced through every layer, as a live demo
+///   profile     portrait, then role, experience, base and employers
 /// Side by side on desktop, stacked on narrower screens. The name's reveal
 /// is the cover's one motion; nothing drifts behind it. On a first visit
 /// to the web build the boot screen has already shown the statement, so
-/// only the trace card enters.
+/// only the profile panel enters.
 class IntroPage extends StatefulWidget {
   final VoidCallback onScrollDown;
   final VoidCallback? onViewWork;
@@ -72,11 +72,16 @@ class _IntroPageState extends State<IntroPage>
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        HeroStatement(
-          size: size,
-          isDark: isDark,
-          isWide: isWide,
-          reveal: _statementReveal,
+        // Its own node: the name and sentences must not merge into the
+        // actions below and be read out as one long button.
+        Semantics(
+          container: true,
+          child: HeroStatement(
+            size: size,
+            isDark: isDark,
+            isWide: isWide,
+            reveal: _statementReveal,
+          ),
         ),
         SizedBox(
           height: isWide
@@ -96,11 +101,7 @@ class _IntroPageState extends State<IntroPage>
         ),
       ],
     );
-    final credential = SignalTrace(
-      isDark: isDark,
-      isWide: isWide,
-      reveal: _reveal,
-    );
+    final profile = ProfilePanel(isWide: isWide, reveal: _reveal);
 
     final body = isWide
         ? Row(
@@ -111,7 +112,7 @@ class _IntroPageState extends State<IntroPage>
                 flex: 4,
                 child: Align(
                   alignment: AlignmentDirectional.centerEnd,
-                  child: credential,
+                  child: profile,
                 ),
               ),
             ],
@@ -123,7 +124,7 @@ class _IntroPageState extends State<IntroPage>
               const SizedBox(height: AppSpacing.xl),
               Align(
                 alignment: AlignmentDirectional.centerStart,
-                child: credential,
+                child: profile,
               ),
             ],
           );
