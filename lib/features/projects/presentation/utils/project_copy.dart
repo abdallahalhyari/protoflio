@@ -13,18 +13,6 @@ String localizedProjectName(AppLocalizations loc, Project project) {
   };
 }
 
-/// The short claim badge on the card image, or null when there is none.
-String? localizedProjectMetricBadge(AppLocalizations loc, Project project) {
-  if (project.metricBadge == null) return null;
-  return switch (project.company) {
-    'NatHealth' => loc.projectBadgeNatHealth,
-    'ESKADENIA Software' => loc.projectBadgeEskadenia,
-    'Solutions Now IT' => loc.projectBadgeSolutions,
-    'Future Advanced Internet Solutions' => loc.projectBadgeFais,
-    _ => project.metricBadge,
-  };
-}
-
 String localizedProjectTagline(AppLocalizations loc, Project project) {
   return switch (project.company) {
     'NatHealth' => loc.projectTaglineNatHealth,

@@ -100,7 +100,7 @@ void main() {
       }
     });
 
-    test('$code: project card copy, titles and badges are localized', () {
+    test('$code: project card copy and titles are localized', () {
       final english = lookupAppLocalizations(const Locale('en'));
       for (final project in testProjects) {
         expect(
@@ -119,11 +119,6 @@ void main() {
         expect(
           localizedProjectName(localized, project),
           isNot(localizedProjectName(english, project)),
-          reason: project.company,
-        );
-        expect(
-          localizedProjectMetricBadge(localized, project),
-          isNot(localizedProjectMetricBadge(english, project)),
           reason: project.company,
         );
       }

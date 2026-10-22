@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:profile/features/projects/presentation/utils/project_copy.dart';
-import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/projects/domain/entities/project.dart';
 import 'package:profile/shared/widgets/retrying_asset_image.dart';
 
 import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_spotlight.dart';
-import 'package:profile/features/projects/presentation/widgets/card/hero/project_card_metric_badge.dart';
 
 class CardHeroImage extends StatelessWidget {
   const CardHeroImage({
@@ -99,64 +96,6 @@ class CardHeroImage extends StatelessWidget {
                 primary: scheme.primary,
                 isDark: isDark,
               ),
-            // Metric start, domain end; on a card too narrow for both
-            // the domain tag wraps under the metric instead of overlapping.
-            Positioned(
-              top: AppSpacing.sm,
-              left: AppSpacing.sm,
-              right: AppSpacing.sm,
-              child: Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                spacing: AppSpacing.sm,
-                runSpacing: 6,
-                children: [
-                  if (project.metricBadge != null)
-                    CardMetricBadge(
-                      text: localizedProjectMetricBadge(
-                        AppLocalizations.of(context)!,
-                        project,
-                      )!,
-                      primary: scheme.primary,
-                    ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 3.5),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.72),
-                      borderRadius: BorderRadius.circular(AppRadius.xs),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.20),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 5,
-                          height: 5,
-                          decoration: BoxDecoration(
-                            color: _domainAccent(project.domain, scheme),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                        const SizedBox(width: 5),
-                        Flexible(
-                          child: Text(
-                            _domainShortTag(
-                                AppLocalizations.of(context)!, project.domain),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: AppTypography.label,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Positioned(
               left: 0,
               right: 0,
@@ -172,31 +111,5 @@ class CardHeroImage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Color _domainAccent(String domain, ColorScheme scheme) {
-    switch (domain) {
-      case 'Healthcare & Smart Cards':
-        return AppColors.teal;
-      case 'Enterprise HIS & LMS':
-        return scheme.primary;
-      case 'Consumer & Social':
-        return AppColors.tealLight;
-      case 'M-Commerce & Streaming':
-        return AppColors.gold;
-      default:
-        return scheme.primary;
-    }
-  }
-
-  /// A short domain tag that fits on the image.
-  String _domainShortTag(AppLocalizations l10n, String domain) {
-    return switch (domain) {
-      'Healthcare & Smart Cards' => l10n.projectTagHealth,
-      'Enterprise HIS & LMS' => l10n.projectTagEnterprise,
-      'Consumer & Social' => l10n.projectTagConsumer,
-      'M-Commerce & Streaming' => l10n.projectTagCommerce,
-      _ => domain,
-    };
   }
 }

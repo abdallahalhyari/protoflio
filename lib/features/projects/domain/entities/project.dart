@@ -21,7 +21,6 @@ class Project {
 
   // Domain & Production Metrics
   final String domain;
-  final String? metricBadge;
 
   const Project({
     required this.name,
@@ -30,7 +29,6 @@ class Project {
     required this.highlights,
     required this.stack,
     this.domain = 'Enterprise Mobile',
-    this.metricBadge,
     this.url,
     this.linkedinUrl,
     this.problem,

@@ -74,10 +74,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('${topic.diagramSteps.length} tiers'), findsOneWidget);
-      expect(find.text('Latency target'), findsOneWidget);
+      // No per-layer timing figures: they weren't measurements.
+      expect(find.text('Latency target'), findsNothing);
       for (final step in topic.diagramSteps) {
         expect(find.text(step.title), findsOneWidget);
-        expect(find.text(step.latencyBudget!), findsOneWidget);
       }
     });
 

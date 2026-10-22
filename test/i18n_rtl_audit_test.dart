@@ -203,7 +203,6 @@ void main() {
       expect(find.text(l10n.sectionSubtitleWork), findsOneWidget);
       expect(find.text(l10n.projectNameNatHealth), findsOneWidget);
       expect(find.text(l10n.projectNameEskadenia), findsOneWidget);
-      expect(find.text(l10n.projectBadgeNatHealth), findsOneWidget);
     });
 
     testWidgets(

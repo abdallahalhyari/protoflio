@@ -112,8 +112,6 @@ class _DiagramTierState extends State<_DiagramTier> {
       ),
     );
 
-    final budget = step.latencyBudget;
-
     return Semantics(
       button: widget.onTap != null,
       selected: isActive,
@@ -198,36 +196,6 @@ class _DiagramTierState extends State<_DiagramTier> {
                             ],
                           ),
                         ),
-                        if (budget != null) ...[
-                          const SizedBox(width: 16),
-                          // A fixed quarter of the row, so figures line up
-                          // under the column head and a narrow phone at
-                          // large text size wraps instead of overflowing.
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 14),
-                              child: Text(
-                                ltrAlways(context, budget),
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  color: isActive
-                                      ? context.onSurface
-                                      : context.mutedText,
-                                  fontSize: isDesktop
-                                      ? AppTypography.title
-                                      : AppTypography.lead,
-                                  fontWeight: isActive
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
-                                  height: 1.1,
-                                  fontFeatures: const [
-                                    FontFeature.tabularFigures(),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                   ),

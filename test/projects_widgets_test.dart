@@ -167,7 +167,8 @@ void main() {
           find.byTooltip('Visit NatHealth official website'), findsOneWidget);
       expect(find.byTooltip('View NatHealth on LinkedIn'), findsOneWidget);
       expect(find.text('in'), findsOneWidget);
-      expect(find.text('100% Offline SLA'), findsOneWidget);
+      // No claim badge on the image: the card states its figure below.
+      expect(find.text('100% Offline SLA'), findsNothing);
     });
 
     testWidgets('InteractiveProjectCard shows the full case and every tag',

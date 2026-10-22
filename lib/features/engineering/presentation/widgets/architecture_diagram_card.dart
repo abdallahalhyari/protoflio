@@ -41,30 +41,12 @@ class ArchitectureDiagramCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Column heads for the stack below: what the rows are, and what
-        // the figure in the end margin of each row means. Insets and the
-        // 3:1 split mirror a tier's band in [DiagramList].
+        // What the rows are: the layers of this architecture, top down.
         Padding(
           padding: const EdgeInsetsDirectional.only(start: 38, end: 12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Text(
-                  ltrAlways(context, l10n.engTiers(topic.diagramSteps.length)),
-                  style: columnHead,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  l10n.uiLatencyBudget,
-                  textAlign: TextAlign.end,
-                  style: columnHead,
-                ),
-              ),
-            ],
+          child: Text(
+            ltrAlways(context, l10n.engTiers(topic.diagramSteps.length)),
+            style: columnHead,
           ),
         ),
         const SizedBox(height: 4),
