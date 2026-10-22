@@ -55,7 +55,7 @@ abstract class UrlSyncService {
   }
 
   static const String baseTitle =
-      'Abdallah Alhyari — Senior Flutter & Android engineer';
+      'Abdallah Alhyari — Senior mobile engineer, Flutter & Android';
 
   String titleForHash(String hash) {
     final clean = hash.replaceAll('#', '').toLowerCase();
@@ -64,13 +64,13 @@ abstract class UrlSyncService {
       case 'projects':
         return 'Selected Work & Case Studies · Abdallah Alhyari';
       case 'work/nathealth':
-        return 'NatHealth Smart-Card Case Study · Abdallah Alhyari';
+        return 'NatHealth Mobile Suite — case study by Abdallah Alhyari';
       case 'work/eskadenia':
-        return 'ESKADENIA Healthcare Case Study · Abdallah Alhyari';
+        return 'E-Learning & Healthcare Enterprise Suite — case study by Abdallah Alhyari';
       case 'work/solutions':
-        return 'Solutions Now Loyalty Case Study · Abdallah Alhyari';
+        return 'Loyalty Rewards & Ephemeral Social Media Apps — case study by Abdallah Alhyari';
       case 'work/fais':
-        return 'FAIS M-Commerce & Streaming Case Study · Abdallah Alhyari';
+        return 'M-Commerce & Media-Streaming Clients — case study by Abdallah Alhyari';
       case 'engineering':
         return 'Engineering & Systems Architecture · Abdallah Alhyari';
       case 'experience':

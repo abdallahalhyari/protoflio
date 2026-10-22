@@ -52,23 +52,23 @@ void main() {
 
       expect(
         service.titleForHash('work/nathealth'),
-        'NatHealth Smart-Card Case Study · Abdallah Alhyari',
+        'NatHealth Mobile Suite — case study by Abdallah Alhyari',
       );
       expect(
         service.titleForHash('#work/nathealth'),
-        'NatHealth Smart-Card Case Study · Abdallah Alhyari',
+        'NatHealth Mobile Suite — case study by Abdallah Alhyari',
       );
       expect(
         service.titleForHash('work/eskadenia'),
-        'ESKADENIA Healthcare Case Study · Abdallah Alhyari',
+        'E-Learning & Healthcare Enterprise Suite — case study by Abdallah Alhyari',
       );
       expect(
         service.titleForHash('work/solutions'),
-        'Solutions Now Loyalty Case Study · Abdallah Alhyari',
+        'Loyalty Rewards & Ephemeral Social Media Apps — case study by Abdallah Alhyari',
       );
       expect(
         service.titleForHash('work/fais'),
-        'FAIS M-Commerce & Streaming Case Study · Abdallah Alhyari',
+        'M-Commerce & Media-Streaming Clients — case study by Abdallah Alhyari',
       );
     });
   });
@@ -104,7 +104,7 @@ void main() {
       expect(
         indexHtml,
         contains(
-            '<title>Abdallah Alhyari — Senior Flutter &amp; Android engineer</title>'),
+            '<title>Abdallah Alhyari — Senior mobile engineer, Flutter &amp; Android</title>'),
       );
       expect(
         indexHtml,
@@ -114,7 +114,7 @@ void main() {
       expect(
         indexHtml,
         contains(
-            '<meta property="og:title" content="Abdallah Alhyari — Senior Flutter &amp; Android engineer">'),
+            '<meta property="og:title" content="Abdallah Alhyari — Senior mobile engineer, Flutter &amp; Android">'),
       );
     });
 
@@ -189,7 +189,7 @@ void main() {
       final person = nodeOf('Person');
       expect(person, isNotNull);
       expect(person!['name'], 'Abdallah Alhyari');
-      expect(person['jobTitle'], 'Senior Flutter & Android Engineer');
+      expect(person['jobTitle'], 'Senior Mobile Engineer');
       expect(person['email'], 'mailto:alhyariabdallh@gmail.com');
       expect(
           (person['worksFor'] as Map<String, dynamic>?)?['name'], 'NatHealth');
@@ -204,12 +204,16 @@ void main() {
           .toList();
       expect(softwareApps.length, 4,
           reason: 'Must document all 4 featured production apps');
-      final appNames =
-          softwareApps.map((app) => app['name'].toString()).toList();
-      expect(appNames.any((n) => n.contains('NatHealth')), isTrue);
-      expect(appNames.any((n) => n.contains('ESKADENIA')), isTrue);
-      expect(appNames.any((n) => n.contains('Solutions Now')), isTrue);
-      expect(appNames.any((n) => n.contains('FAIS')), isTrue);
+      // Each app names the company it was built at.
+      final publishers = softwareApps
+          .map((app) => (app['publisher'] as Map<String, dynamic>)['name'])
+          .toSet();
+      expect(publishers, {
+        'NatHealth',
+        'ESKADENIA Software',
+        'Solutions Now IT',
+        'Future Advanced Internet Solutions',
+      });
     });
 
     test(

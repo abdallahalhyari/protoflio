@@ -69,7 +69,7 @@ class FaisCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
-            'Mobile Developer across Flutter and native Android (Kotlin/Java), coordinating end-to-end frontend-to-backend API integrations and checkout reliability.',
+            'Mobile developer across Flutter and native Android (Kotlin/Java), coordinating end-to-end frontend-to-backend API integrations and checkout reliability.',
             'Engineered transactional checkout flows with client-side idempotency keys and state reconciliation to eliminate duplicate customer billing.',
             'Architected the media streaming buffer manager and native Android foreground service lifecycle for uninterrupted playback.',
             'Analyzed production telemetry, error crash logs, and network latency metrics to diagnose and resolve critical live runtime bottlenecks.',

@@ -19,32 +19,32 @@ class RelatedCaseStudies extends StatelessWidget {
   final String currentSlug;
   final bool isDesktop;
 
-  static const Map<String, ({String title, String subtitle})> _summary = {
-    'nathealth': (
-      title: 'NatHealth NFC Platform',
-      subtitle: 'ISO-7816 APDU, WorkManager, JWT Keystore',
-    ),
-    'eskadenia': (
-      title: 'ESKADENIA Enterprise Suite',
-      subtitle: 'MVVM refactor, 60fps, -35% crashes',
-    ),
-    'solutions': (
-      title: 'Loyalty + Ephemeral Social',
-      subtitle: 'Design system, Camera pipeline, AWS S3',
-    ),
-    'fais': (
-      title: 'M-Commerce & Streaming',
-      subtitle: 'Checkout funnel, Idempotent APIs, Media',
-    ),
+  /// The stack each study is about. Titles are the Work cards' own,
+  /// translated, so a project goes by one name everywhere.
+  static const Map<String, String> _subtitles = {
+    'nathealth': 'ISO-7816 APDU, WorkManager, JWT Keystore',
+    'eskadenia': 'MVVM refactor, 60fps, -35% crashes',
+    'solutions': 'Design system, Camera pipeline, AWS S3',
+    'fais': 'Checkout funnel, Idempotent APIs, Media',
   };
+
+  static String _title(AppLocalizations l10n, String slug) => switch (slug) {
+        'nathealth' => l10n.projectNameNatHealth,
+        'eskadenia' => l10n.projectNameEskadenia,
+        'solutions' => l10n.projectNameSolutions,
+        _ => l10n.projectNameFais,
+      };
 
   @override
   Widget build(BuildContext context) {
-    final siblings = _summary.keys.where((s) => s != currentSlug).toList();
+    final l10n = AppLocalizations.of(context)!;
+    ({String title, String subtitle}) data(String slug) =>
+        (title: _title(l10n, slug), subtitle: _subtitles[slug]!);
+    final siblings = _subtitles.keys.where((s) => s != currentSlug).toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ChapterHeading(AppLocalizations.of(context)!.studyMore),
+        ChapterHeading(l10n.studyMore),
         const SizedBox(height: AppSpacing.md),
         if (isDesktop)
           // Equal-height cards: titles wrap to one or two lines, which
@@ -56,7 +56,7 @@ class RelatedCaseStudies extends StatelessWidget {
                 for (int i = 0; i < siblings.length; i++) ...[
                   Expanded(
                       child: _RelatedCard(
-                          slug: siblings[i], data: _summary[siblings[i]]!)),
+                          slug: siblings[i], data: data(siblings[i]))),
                   if (i < siblings.length - 1)
                     const SizedBox(width: AppSpacing.md),
                 ],
@@ -67,7 +67,7 @@ class RelatedCaseStudies extends StatelessWidget {
           Column(
             children: [
               for (final s in siblings) ...[
-                _RelatedCard(slug: s, data: _summary[s]!),
+                _RelatedCard(slug: s, data: data(s)),
                 if (s != siblings.last) const SizedBox(height: AppSpacing.md),
               ],
             ],

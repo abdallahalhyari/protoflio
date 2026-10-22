@@ -200,7 +200,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introDownloadResume => 'Download CV';
 
   @override
-  String get introSeniorEngineer => 'Senior Flutter & Android engineer';
+  String get introSeniorEngineer => 'Senior mobile engineer';
 
   @override
   String get introSummary =>

@@ -139,7 +139,7 @@ def home_card():
     name = ImageFont.truetype(DISPLAY, 92)
     d.text((x, 118), 'ABDALLAH', font=name, fill=TEXT)
     d.text((x, 208), 'ALHYARI', font=name, fill=GOLD)
-    d.text((x, 338), 'Senior Flutter & Android engineer',
+    d.text((x, 338), 'Senior mobile engineer, Flutter & Android',
            font=sans(36, 'SemiBold'), fill=TEXT)
     y = 394
     for line in wrap(d, 'Available now for remote and contract work. '
@@ -177,7 +177,7 @@ PAGE = """<!DOCTYPE html>
   <meta name="description" content="{summary}">
   <link rel="canonical" href="{url}">
   <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Abdallah Alhyari — Senior Flutter &amp; Android engineer">
+  <meta property="og:site_name" content="Abdallah Alhyari — Senior mobile engineer, Flutter &amp; Android">
   <meta property="og:title" content="{title} — case study">
   <meta property="og:description" content="{summary}">
   <meta property="og:url" content="{url}">

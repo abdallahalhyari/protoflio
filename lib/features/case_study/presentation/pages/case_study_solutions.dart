@@ -69,7 +69,7 @@ class SolutionsCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const BulletList(items: [
-            'Flutter Developer responsible for client app engineering, camera pipeline optimization, and multi-tenant UI design system implementation.',
+            'Flutter developer responsible for client app engineering, camera pipeline optimization, and multi-tenant UI design system implementation.',
             'Offloaded high-resolution image compression and EXIF metadata stripping to background Dart Isolates, restoring fluid 60 FPS UI responsiveness.',
             'Architected a modular multi-merchant design system with dynamic brand tokens, dark/light theme switching, and reusable widget libraries.',
             'Engineered camera capture workflows with hardware-accelerated preview controllers, flash toggles, and direct S3 multipart upload pipelines.',

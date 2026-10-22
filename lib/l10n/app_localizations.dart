@@ -451,7 +451,7 @@ abstract class AppLocalizations {
   /// No description provided for @introSeniorEngineer.
   ///
   /// In en, this message translates to:
-  /// **'Senior Flutter & Android engineer'**
+  /// **'Senior mobile engineer'**
   String get introSeniorEngineer;
 
   /// No description provided for @introSummary.

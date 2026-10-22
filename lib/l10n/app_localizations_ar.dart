@@ -199,7 +199,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introDownloadResume => 'تحميل السيرة الذاتية';
 
   @override
-  String get introSeniorEngineer => 'مهندس تطبيقات هواتف أول';
+  String get introSeniorEngineer => 'مهندس تطبيقات جوال أول';
 
   @override
   String get introSummary =>

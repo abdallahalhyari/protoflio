@@ -135,7 +135,7 @@ void main() {
     expect(copied, isNotNull);
     expect(copied, startsWith('Abdallah Alhyari\n'));
     expect(copied, contains('${CareerFacts.yearsOfExperience()}+ years'));
-    expect(copied, contains('Senior Mobile Engineer, NatHealth'));
+    expect(copied, contains('Senior mobile engineer, NatHealth'));
     expect(copied, contains('alhyariabdallh@gmail.com'));
     expect(copied,
         contains('https://www.linkedin.com/in/abdallah-alhyari-0294791a0/'));

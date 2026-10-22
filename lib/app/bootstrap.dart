@@ -347,17 +347,15 @@ class _StartupLoadingScreenState extends State<_StartupLoadingScreen>
                           'Abdallah Alhyari',
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.w800,
-                            letterSpacing: 1.5,
                             color: Colors.white,
                           ),
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          'Senior Mobile Engineer · Flutter & Android',
+                          'Senior mobile engineer, Flutter & Android',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: AppColors.goldSoft,
                             fontWeight: FontWeight.w600,
-                            letterSpacing: 0.8,
                           ),
                         ),
                         const SizedBox(height: 20),

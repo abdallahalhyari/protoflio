@@ -90,7 +90,7 @@
   "@introDownloadResume": {
     "description": "Intro cover copy (the original design); downloadResume carries the site-wide wording."
   },
-  "introSeniorEngineer": "Senior Flutter & Android engineer",
+  "introSeniorEngineer": "Senior mobile engineer",
   "introSummary": "Senior mobile engineer. I build Flutter and native Android apps that keep working offline, read NFC smart cards and keep tokens secure.",
   "introAvailability": "Available now for remote and contract work. On-site in Brno from February 2027.",
   "introEmailMe": "Email me",
