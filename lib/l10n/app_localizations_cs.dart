@@ -1018,19 +1018,12 @@ class AppLocalizationsCs extends AppLocalizations {
       'Koordinoval jsem integraci backendu a frontendu a řešil produkční problémy.';
 
   @override
-  String get aboutTryIt => 'Vyzkoušet na hřišti';
-
-  @override
   String engTiers(int count) {
     return 'Vrstev: $count';
   }
 
   @override
   String get engInspectDiagram => 'Zvětšit diagram';
-
-  @override
-  String get engTryDemos =>
-      'Vyzkoušejte ukázky NFC, kryptografie a synchronizace';
 
   @override
   String get aboutStoryShort =>

@@ -93,6 +93,9 @@ void main() {
 
       // The heading is the topic's display name.
       expect(find.text('Offline-first sync'), findsOneWidget);
+      // There is no playground to send anyone to, so no demo button.
+      expect(find.textContaining('demos'), findsNothing);
+      expect(find.byType(OutlinedButton), findsNothing);
       expect(find.text('Why this choice'), findsOneWidget);
       expect(find.text('Safeguards'), findsOneWidget);
       expect(find.text(topic.summary), findsOneWidget);

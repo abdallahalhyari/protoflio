@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:profile/core/services/sound_service.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/core/theme/tokens.dart';
 import 'package:profile/features/engineering/domain/entities/architecture_topic.dart';
 import 'package:profile/features/engineering/presentation/utils/architecture_labels.dart';
-import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 import 'package:profile/l10n/app_localizations.dart';
 import 'package:profile/shared/utils/bidi.dart';
 
@@ -55,27 +53,6 @@ class ArchitectureDetailsCard extends StatelessWidget {
       _Subhead(l10n.uiKeySafeguards),
       for (final item in topic.technicalHighlights)
         _Safeguard(text: ltrContent(context, item), style: body),
-      const SizedBox(height: AppSpacing.md),
-      Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: OutlinedButton.icon(
-          onPressed: () {
-            SoundService.instance.playClick();
-            HomeController.maybeOf(context)?.goTo(5);
-          },
-          icon: const Icon(Icons.play_circle_fill_rounded, size: 16),
-          label: Text(l10n.engTryDemos),
-          style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            side: BorderSide(
-              color: scheme.primary.withValues(alpha: isDark ? 0.6 : 0.4),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-            ),
-          ),
-        ),
-      ),
     ];
 
     final Widget content = isDesktop

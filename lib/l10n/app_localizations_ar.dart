@@ -1004,18 +1004,12 @@ class AppLocalizationsAr extends AppLocalizations {
       'نسّقت التكامل بين الخلفية والواجهة وحللت مشكلات الإنتاج.';
 
   @override
-  String get aboutTryIt => 'جرّبه في ساحة التجارب';
-
-  @override
   String engTiers(int count) {
     return '$count طبقات';
   }
 
   @override
   String get engInspectDiagram => 'تكبير المخطط';
-
-  @override
-  String get engTryDemos => 'جرّب عروض NFC والتشفير والمزامنة';
 
   @override
   String get aboutStoryShort =>

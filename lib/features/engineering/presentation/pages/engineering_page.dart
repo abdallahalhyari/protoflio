@@ -19,7 +19,6 @@ import 'package:profile/shared/widgets/screen_shell.dart';
 import 'package:profile/shared/widgets/text_tabs.dart';
 import 'package:profile/core/theme/surface_tone.dart';
 import 'package:profile/features/engineering/presentation/widgets/capabilities_view.dart';
-import 'package:profile/features/shell/presentation/controllers/home_controller.dart';
 
 class EngineeringPage extends StatelessWidget {
   final bool isContinuousMobile;
@@ -138,18 +137,12 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
             const SizedBox(height: AppSpacing.sm),
             if (_view == 1) ...[
               if (widget.isContinuousMobile)
-                CapabilitiesView(
-                  isDesktop: isDesktop,
-                  onTryDemo: _openPlayground,
-                )
+                CapabilitiesView(isDesktop: isDesktop)
               else
                 Expanded(
                   child: SingleChildScrollView(
                     primary: false,
-                    child: CapabilitiesView(
-                      isDesktop: isDesktop,
-                      onTryDemo: _openPlayground,
-                    ),
+                    child: CapabilitiesView(isDesktop: isDesktop),
                   ),
                 ),
             ] else ...[
@@ -335,10 +328,5 @@ class _EngineeringPageViewState extends State<_EngineeringPageView>
         ),
       ),
     );
-  }
-
-  void _openPlayground() {
-    SoundService.instance.playClick();
-    HomeController.maybeOf(context)?.goTo(5);
   }
 }

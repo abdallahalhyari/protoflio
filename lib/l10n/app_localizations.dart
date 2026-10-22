@@ -1864,12 +1864,6 @@ abstract class AppLocalizations {
   /// **'Coordinated backend and frontend integration and resolved production issues.'**
   String get projectRoleFais;
 
-  /// No description provided for @aboutTryIt.
-  ///
-  /// In en, this message translates to:
-  /// **'Try it in the Playground'**
-  String get aboutTryIt;
-
   /// No description provided for @engTiers.
   ///
   /// In en, this message translates to:
@@ -1881,12 +1875,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zoom diagram'**
   String get engInspectDiagram;
-
-  /// No description provided for @engTryDemos.
-  ///
-  /// In en, this message translates to:
-  /// **'Try the NFC, crypto and sync demos'**
-  String get engTryDemos;
 
   /// No description provided for @aboutStoryShort.
   ///

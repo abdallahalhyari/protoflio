@@ -6,9 +6,7 @@ import 'package:profile/features/about/presentation/widgets/about_card.dart';
 import 'package:profile/l10n/app_localizations.dart';
 
 class _Capability {
-  const _Capability(this.mono, this.title, this.tag, this.detail, this.where,
-      {this.hasDemo = false});
-  final bool hasDemo;
+  const _Capability(this.mono, this.title, this.tag, this.detail, this.where);
 
   /// The tools or standards involved, in plain text.
   final String mono;
@@ -21,12 +19,9 @@ class _Capability {
 /// The capabilities behind the architectures: the kinds of problem I solve. Hover or tap a
 /// capability to read what it means and where I used it.
 class CapabilitiesView extends StatefulWidget {
-  const CapabilitiesView({super.key, required this.isDesktop, this.onTryDemo});
+  const CapabilitiesView({super.key, required this.isDesktop});
 
   final bool isDesktop;
-
-  /// Opens the Playground, for the capabilities that have a live demo.
-  final VoidCallback? onTryDemo;
 
   @override
   State<CapabilitiesView> createState() => _CapabilitiesViewState();
@@ -42,11 +37,9 @@ class _CapabilitiesViewState extends State<CapabilitiesView> {
 
     final items = [
       _Capability('ISO 7816, APDU', l10n.hoodNfcTitle, l10n.hoodNfcTag,
-          l10n.hoodNfcDetail, l10n.hoodNfcWhere,
-          hasDemo: true),
+          l10n.hoodNfcDetail, l10n.hoodNfcWhere),
       _Capability('RSA, AES, PBKDF2', l10n.hoodCryptoTitle, l10n.hoodCryptoTag,
-          l10n.hoodCryptoDetail, l10n.hoodCryptoWhere,
-          hasDemo: true),
+          l10n.hoodCryptoDetail, l10n.hoodCryptoWhere),
       _Capability(
           'WorkManager',
           l10n.hoodBackgroundTitle,
@@ -54,11 +47,9 @@ class _CapabilitiesViewState extends State<CapabilitiesView> {
           l10n.hoodBackgroundDetail,
           l10n.hoodBackgroundWhere),
       _Capability('Queue, retry, sync', l10n.hoodOfflineTitle,
-          l10n.hoodOfflineTag, l10n.hoodOfflineDetail, l10n.hoodOfflineWhere,
-          hasDemo: true),
+          l10n.hoodOfflineTag, l10n.hoodOfflineDetail, l10n.hoodOfflineWhere),
       _Capability('MethodChannel', l10n.hoodNativeTitle, l10n.hoodNativeTag,
-          l10n.hoodNativeDetail, l10n.hoodNativeWhere,
-          hasDemo: true),
+          l10n.hoodNativeDetail, l10n.hoodNativeWhere),
       _Capability(
           'HIS, ERP, LMS',
           l10n.hoodEnterpriseTitle,
@@ -179,13 +170,6 @@ class _CapabilitiesViewState extends State<CapabilitiesView> {
                 color: context.onSurface,
               ),
             ),
-            if (sel.hasDemo && widget.onTryDemo != null) ...[
-              const SizedBox(height: AppSpacing.md),
-              OutlinedButton(
-                onPressed: widget.onTryDemo,
-                child: Text(l10n.aboutTryIt),
-              ),
-            ],
           ],
         ),
       ),

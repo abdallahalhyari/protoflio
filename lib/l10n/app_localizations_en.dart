@@ -1010,18 +1010,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Coordinated backend and frontend integration and resolved production issues.';
 
   @override
-  String get aboutTryIt => 'Try it in the Playground';
-
-  @override
   String engTiers(int count) {
     return '$count tiers';
   }
 
   @override
   String get engInspectDiagram => 'Zoom diagram';
-
-  @override
-  String get engTryDemos => 'Try the NFC, crypto and sync demos';
 
   @override
   String get aboutStoryShort =>

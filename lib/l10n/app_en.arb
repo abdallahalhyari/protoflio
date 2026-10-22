@@ -449,7 +449,6 @@
   "projectProblemFais": "Multi-step checkout and continuous media streaming had to run without memory leaks or state races.",
   "projectSystemFais": "End-to-end checkout API integration with idempotency keys, and live issue diagnosis from telemetry.",
   "projectRoleFais": "Coordinated backend and frontend integration and resolved production issues.",
-  "aboutTryIt": "Try it in the Playground",
   "engTiers": "{count} tiers",
   "@engTiers": {
     "placeholders": {
@@ -459,7 +458,6 @@
     }
   },
   "engInspectDiagram": "Zoom diagram",
-  "engTryDemos": "Try the NFC, crypto and sync demos",
   "aboutStoryShort": "I started in mobile in 2021. Since then my work has moved steadily down the stack, from screens to the native, security and sync layers underneath. I am comfortable inheriting a complicated legacy system and leaving it modular and testable.",
   "engTabArchitectures": "Architectures",
   "engTabCapabilities": "Capabilities",
