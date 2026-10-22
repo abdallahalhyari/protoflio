@@ -471,7 +471,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (syncUrl) {
       _scheduleSettle(target);
     } else {
-      // Deep-link / Back jumps skip settle; still remember the section.
+      // Deep-link / Back jumps skip settle: the URL already names this
+      // section. Drop any settle an earlier jump left queued, or it would
+      // publish that section over the URL that brought us here.
+      _settleTimer?.cancel();
       unawaited(_rememberSection(target));
     }
     if (target == 0 && _mobileScrollController.hasClients) {

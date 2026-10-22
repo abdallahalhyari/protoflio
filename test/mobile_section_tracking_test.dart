@@ -133,4 +133,31 @@ void main() {
       reason: 'the URL must name the section on screen after the switch',
     );
   });
+
+  testWidgets('a link that lands mid-jump keeps its own URL', (tester) async {
+    final titles = _recordTitles(tester);
+    _setSize(tester, const Size(390, 844));
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(_wrapHome());
+    await _settle(tester);
+    titles.clear();
+
+    final controller =
+        HomeController.of(tester.element(find.byType(MobileHomeLayout)));
+    // A jump that will publish its section once it settles (the layout
+    // switch re-publishing Contact)...
+    controller.scrollToMobileSection(6);
+    // ...overtaken by a link the URL already names (#engineering), which
+    // must not be overwritten by the first jump's late publish.
+    controller.scrollToMobileSection(4, syncUrl: false);
+    await _settle(tester);
+
+    expect(controller.pageIndex.value, 4);
+    expect(
+      titles,
+      isNot(contains(UrlSyncService.instance.titleForHash('contact'))),
+      reason: 'the URL must keep naming the section on screen',
+    );
+  });
 }
