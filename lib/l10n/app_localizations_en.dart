@@ -273,7 +273,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cardFactBasedValue => 'Amman, Jordan; Brno from February 2027';
 
   @override
-  String get cardFactStudyValue => 'M.Sc. Open Informatics, Mendel University';
+  String get cardFactStudyValue =>
+      'M.Sc. Open Informatics, Mendel University, from February 2027';
 
   @override
   String get cardFactPermitValue =>

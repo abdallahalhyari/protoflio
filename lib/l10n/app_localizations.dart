@@ -589,7 +589,7 @@ abstract class AppLocalizations {
   /// No description provided for @cardFactStudyValue.
   ///
   /// In en, this message translates to:
-  /// **'M.Sc. Open Informatics, Mendel University'**
+  /// **'M.Sc. Open Informatics, Mendel University, from February 2027'**
   String get cardFactStudyValue;
 
   /// No description provided for @cardFactPermitValue.

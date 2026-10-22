@@ -275,7 +275,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get cardFactStudyValue =>
-      'M.Sc. Open Informatics, Mendelova univerzita';
+      'M.Sc. Open Informatics, Mendelova univerzita, od února 2027';
 
   @override
   String get cardFactPermitValue =>

@@ -272,7 +272,8 @@ class AppLocalizationsAr extends AppLocalizations {
       'عمّان، الأردن؛ برنو اعتباراً من فبراير 2027';
 
   @override
-  String get cardFactStudyValue => 'ماجستير المعلوماتية المفتوحة، جامعة مندل';
+  String get cardFactStudyValue =>
+      'ماجستير المعلوماتية المفتوحة، جامعة مندل، اعتباراً من فبراير 2027';
 
   @override
   String get cardFactPermitValue =>
