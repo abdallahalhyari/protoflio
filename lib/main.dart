@@ -131,8 +131,7 @@ class PortfolioApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               scrollBehavior: const _SmoothScrollBehavior(),
-              title:
-                  'Abdallah Alhyari — Mobile Engineer: Flutter, Android, NFC',
+              title: 'Abdallah Alhyari — Senior Flutter & Android engineer',
               themeMode: themeMode,
               theme: AppTheme.light(),
               darkTheme: AppTheme.dark(),

@@ -33,7 +33,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get navResume => 'Životopis';
 
   @override
-  String get introLocation => 'Ammán → Brno · 2027';
+  String get introLocation => 'Ammán, Jordánsko; Brno od února 2027';
 
   @override
   String get sectionEducation => 'Vzdělání';
@@ -210,7 +210,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get introAvailability =>
-      'Dostupný pro remote / kontrakt nyní; on-site v Brně a okolí.';
+      'Nyní k dispozici pro práci na dálku a zakázky. On-site v Brně od února 2027.';
 
   @override
   String get introEmailMe => 'Napište mi';
@@ -225,7 +225,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get introSkillProductDelivery => 'Dodávání produktů';
 
   @override
-  String get introWorkEligibility => 'Přesídlení do Brna v roce 2027';
+  String get introWorkEligibility => 'Stěhování do Brna v únoru 2027';
 
   @override
   String get introAvailableContracts => 'K dispozici pro kontrakty';
@@ -268,10 +268,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get contactWhatsapp => 'WhatsApp';
 
   @override
-  String get cardFactAvailableValue => 'Nyní na dálku nebo na částečný úvazek';
+  String get cardFactAvailableValue => 'Práce na dálku a zakázky, hned';
 
   @override
-  String get cardFactBasedValue => 'Ammán, Jordánsko • On-site v Brně a okolí';
+  String get cardFactBasedValue => 'Ammán, Jordánsko; Brno od února 2027';
 
   @override
   String get cardFactStudyValue =>
@@ -880,18 +880,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get uiReadCaseStudy => 'Číst případovou studii';
 
   @override
-  String get projectTagHealth => 'NFC / Zdravotnictví';
-
-  @override
-  String get projectTagEnterprise => 'HIS / LMS';
-
-  @override
-  String get projectTagConsumer => 'Věrnost / Sociální sítě';
-
-  @override
-  String get projectTagCommerce => 'Streamování';
-
-  @override
   String get projectNameNatHealth => 'Mobilní sada NatHealth';
 
   @override
@@ -904,18 +892,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get projectNameFais => 'Klienti pro m-commerce a streamování médií';
-
-  @override
-  String get projectBadgeNatHealth => '100% offline provoz';
-
-  @override
-  String get projectBadgeEskadenia => 'Stabilních 60 FPS';
-
-  @override
-  String get projectBadgeSolutions => 'Fronty v reálném čase';
-
-  @override
-  String get projectBadgeFais => 'Vysoká propustnost';
 
   @override
   String get uiScrollToExplore => 'Posuňte a prozkoumejte';
@@ -955,9 +931,6 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get uiKeySafeguards => 'Pojistky';
-
-  @override
-  String get uiLatencyBudget => 'Cílová latence';
 
   @override
   String get uiActiveTrace => 'Sledování';
@@ -1030,7 +1003,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get cardRole => 'Senior mobilní vývojář';
 
   @override
-  String get cardBase => 'Ammán, od 2027 Brno';
+  String get cardBase => 'Ammán; Brno od února 2027';
 
   @override
   String get coverWorkedAtLabel => 'Pracoval v';

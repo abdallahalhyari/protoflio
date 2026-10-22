@@ -47,8 +47,9 @@ class NatHealthCaseStudy extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Prose(
-            'NatHealth processes medical claims for over two million beneficiaries '
-            'across thousands of clinics, pharmacies, and hospitals. Before the mobile '
+            'NatHealth processes medical claims for more than 400,000 beneficiaries '
+            'across Jordan, Palestine and Iraq, through thousands of clinics, '
+            'pharmacies and hospitals. Before the mobile '
             'suite, claim verification relied on manual paperwork, physical vouchers, '
             'or desktop portals with intermittent internet connectivity in remote '
             'care centers. Verification delays stalled patient check-in, invited fraud, '
@@ -175,10 +176,11 @@ class NatHealthCaseStudy extends StatelessWidget {
           OutcomeGrid(
             isDesktop: isDesktop,
             items: [
-              ('2M+', l10n.studyNatOutcome1),
+              // Each figure is the one studyNatResult states.
+              ('< 1s', l10n.studyNatOutcome1),
               ('100%', l10n.studyNatOutcome2),
-              ('< 1.2s', l10n.studyNatOutcome3),
-              ('0', l10n.studyNatOutcome4),
+              ('0', l10n.studyNatOutcome3),
+              ('3', l10n.studyNatOutcome4),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),

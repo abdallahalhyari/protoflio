@@ -55,7 +55,7 @@ void main() {
           reason: 'run python3 tool/make_og_cards.py');
       final html = file.readAsStringSync();
       expect(_meta(html, 'og:url'), 'https://alhyari.web.app/work/$slug/');
-      expect(_meta(html, 'og:title'), contains('Case Study'));
+      expect(_meta(html, 'og:title'), contains('case study'));
       expect(_meta(html, 'og:description'), isNotEmpty);
       expect(html, contains("#work/$slug')"));
       _expectImageMatches(html);

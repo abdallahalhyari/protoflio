@@ -44,7 +44,7 @@ void main() {
       expect(find.text('System architecture'), findsOneWidget);
       expect(find.widgetWithText(ChapterHeading, 'Outcomes'), findsOneWidget);
       expect(find.widgetWithText(ChapterHeading, 'Lessons'), findsOneWidget);
-      expect(find.text('2M+'), findsOneWidget);
+      expect(find.text('< 1s'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
           scrollable: find.byType(Scrollable).first);
       expect(find.text('Back to portfolio'), findsOneWidget);
@@ -106,7 +106,7 @@ void main() {
       expect(find.text('System architecture'), findsOneWidget);
       expect(find.widgetWithText(ChapterHeading, 'Outcomes'), findsOneWidget);
       expect(find.widgetWithText(ChapterHeading, 'Lessons'), findsOneWidget);
-      expect(find.text('50k+'), findsOneWidget);
+      expect(find.text('4.7+'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('Back to portfolio'), 800,
           scrollable: find.byType(Scrollable).first);
       expect(find.text('Back to portfolio'), findsOneWidget);

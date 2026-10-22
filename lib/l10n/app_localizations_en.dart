@@ -33,7 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navResume => 'CV';
 
   @override
-  String get introLocation => 'Amman → Brno · 2027';
+  String get introLocation => 'Amman, Jordan; Brno from February 2027';
 
   @override
   String get sectionEducation => 'Education';
@@ -208,7 +208,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introAvailability =>
-      'Available for remote/contract now; on-site in Brno and surrounding region.';
+      'Available now for remote and contract work. On-site in Brno from February 2027.';
 
   @override
   String get introEmailMe => 'Email me';
@@ -223,7 +223,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get introSkillProductDelivery => 'Product delivery';
 
   @override
-  String get introWorkEligibility => 'Relocating to Brno in 2027';
+  String get introWorkEligibility => 'Moving to Brno in February 2027';
 
   @override
   String get introAvailableContracts => 'Available for contracts';
@@ -267,11 +267,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactWhatsapp => 'WhatsApp';
 
   @override
-  String get cardFactAvailableValue => 'Remote or part-time now';
+  String get cardFactAvailableValue => 'Remote and contract work, now';
 
   @override
-  String get cardFactBasedValue =>
-      'Amman, Jordan • On-site in Brno & surrounding region';
+  String get cardFactBasedValue => 'Amman, Jordan; Brno from February 2027';
 
   @override
   String get cardFactStudyValue => 'M.Sc. Open Informatics, Mendel University';
@@ -878,18 +877,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uiReadCaseStudy => 'Read case study';
 
   @override
-  String get projectTagHealth => 'NFC / Health';
-
-  @override
-  String get projectTagEnterprise => 'HIS / LMS';
-
-  @override
-  String get projectTagConsumer => 'Loyalty / Social';
-
-  @override
-  String get projectTagCommerce => 'Streaming';
-
-  @override
   String get projectNameNatHealth => 'NatHealth Mobile Suite';
 
   @override
@@ -901,18 +888,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get projectNameFais => 'M-Commerce & Media-Streaming Clients';
-
-  @override
-  String get projectBadgeNatHealth => '100% Offline SLA';
-
-  @override
-  String get projectBadgeEskadenia => 'Sustained 60 FPS';
-
-  @override
-  String get projectBadgeSolutions => 'Real-Time Queues';
-
-  @override
-  String get projectBadgeFais => 'High-Throughput';
 
   @override
   String get uiScrollToExplore => 'Scroll to explore';
@@ -952,9 +927,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uiKeySafeguards => 'Safeguards';
-
-  @override
-  String get uiLatencyBudget => 'Latency target';
 
   @override
   String get uiActiveTrace => 'Tracing';
@@ -1027,7 +999,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cardRole => 'Senior mobile engineer';
 
   @override
-  String get cardBase => 'Amman, Brno from 2027';
+  String get cardBase => 'Amman; Brno from February 2027';
 
   @override
   String get coverWorkedAtLabel => 'Worked at';

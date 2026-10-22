@@ -179,10 +179,11 @@ class SolutionsCaseStudy extends StatelessWidget {
           OutcomeGrid(
             isDesktop: isDesktop,
             items: [
-              ('60 FPS', l10n.studySolOutcome1),
-              ('-60%', l10n.studySolOutcome2),
-              ('< 300ms', l10n.studySolOutcome3),
-              ('50k+', l10n.studySolOutcome4),
+              // Each figure is the one studySolResult states.
+              ('4.7+', l10n.studySolOutcome1),
+              ('-40%', l10n.studySolOutcome2),
+              ('0', l10n.studySolOutcome3),
+              ('2', l10n.studySolOutcome4),
             ],
           ),
           const SizedBox(height: AppSpacing.xxl),

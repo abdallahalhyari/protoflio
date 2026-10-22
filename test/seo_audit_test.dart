@@ -104,7 +104,7 @@ void main() {
       expect(
         indexHtml,
         contains(
-            '<title>Abdallah Alhyari | Senior Flutter &amp; Android Engineer</title>'),
+            '<title>Abdallah Alhyari — Senior Flutter &amp; Android engineer</title>'),
       );
       expect(
         indexHtml,
@@ -114,7 +114,7 @@ void main() {
       expect(
         indexHtml,
         contains(
-            '<meta property="og:title" content="Abdallah Alhyari | Senior Flutter &amp; Android Engineer">'),
+            '<meta property="og:title" content="Abdallah Alhyari — Senior Flutter &amp; Android engineer">'),
       );
     });
 

@@ -151,7 +151,7 @@ abstract class AppLocalizations {
   /// No description provided for @introLocation.
   ///
   /// In en, this message translates to:
-  /// **'Amman → Brno · 2027'**
+  /// **'Amman, Jordan; Brno from February 2027'**
   String get introLocation;
 
   /// No description provided for @sectionEducation.
@@ -463,7 +463,7 @@ abstract class AppLocalizations {
   /// No description provided for @introAvailability.
   ///
   /// In en, this message translates to:
-  /// **'Available for remote/contract now; on-site in Brno and surrounding region.'**
+  /// **'Available now for remote and contract work. On-site in Brno from February 2027.'**
   String get introAvailability;
 
   /// No description provided for @introEmailMe.
@@ -493,7 +493,7 @@ abstract class AppLocalizations {
   /// No description provided for @introWorkEligibility.
   ///
   /// In en, this message translates to:
-  /// **'Relocating to Brno in 2027'**
+  /// **'Moving to Brno in February 2027'**
   String get introWorkEligibility;
 
   /// No description provided for @introAvailableContracts.
@@ -577,13 +577,13 @@ abstract class AppLocalizations {
   /// No description provided for @cardFactAvailableValue.
   ///
   /// In en, this message translates to:
-  /// **'Remote or part-time now'**
+  /// **'Remote and contract work, now'**
   String get cardFactAvailableValue;
 
   /// No description provided for @cardFactBasedValue.
   ///
   /// In en, this message translates to:
-  /// **'Amman, Jordan • On-site in Brno & surrounding region'**
+  /// **'Amman, Jordan; Brno from February 2027'**
   String get cardFactBasedValue;
 
   /// No description provided for @cardFactStudyValue.
@@ -1636,30 +1636,6 @@ abstract class AppLocalizations {
   /// **'Read case study'**
   String get uiReadCaseStudy;
 
-  /// No description provided for @projectTagHealth.
-  ///
-  /// In en, this message translates to:
-  /// **'NFC / Health'**
-  String get projectTagHealth;
-
-  /// No description provided for @projectTagEnterprise.
-  ///
-  /// In en, this message translates to:
-  /// **'HIS / LMS'**
-  String get projectTagEnterprise;
-
-  /// No description provided for @projectTagConsumer.
-  ///
-  /// In en, this message translates to:
-  /// **'Loyalty / Social'**
-  String get projectTagConsumer;
-
-  /// No description provided for @projectTagCommerce.
-  ///
-  /// In en, this message translates to:
-  /// **'Streaming'**
-  String get projectTagCommerce;
-
   /// No description provided for @projectNameNatHealth.
   ///
   /// In en, this message translates to:
@@ -1683,30 +1659,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'M-Commerce & Media-Streaming Clients'**
   String get projectNameFais;
-
-  /// No description provided for @projectBadgeNatHealth.
-  ///
-  /// In en, this message translates to:
-  /// **'100% Offline SLA'**
-  String get projectBadgeNatHealth;
-
-  /// No description provided for @projectBadgeEskadenia.
-  ///
-  /// In en, this message translates to:
-  /// **'Sustained 60 FPS'**
-  String get projectBadgeEskadenia;
-
-  /// No description provided for @projectBadgeSolutions.
-  ///
-  /// In en, this message translates to:
-  /// **'Real-Time Queues'**
-  String get projectBadgeSolutions;
-
-  /// No description provided for @projectBadgeFais.
-  ///
-  /// In en, this message translates to:
-  /// **'High-Throughput'**
-  String get projectBadgeFais;
 
   /// No description provided for @uiScrollToExplore.
   ///
@@ -1779,12 +1731,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Safeguards'**
   String get uiKeySafeguards;
-
-  /// No description provided for @uiLatencyBudget.
-  ///
-  /// In en, this message translates to:
-  /// **'Latency target'**
-  String get uiLatencyBudget;
 
   /// No description provided for @uiActiveTrace.
   ///
@@ -1909,7 +1855,7 @@ abstract class AppLocalizations {
   /// No description provided for @cardBase.
   ///
   /// In en, this message translates to:
-  /// **'Amman, Brno from 2027'**
+  /// **'Amman; Brno from February 2027'**
   String get cardBase;
 
   /// No description provided for @coverWorkedAtLabel.

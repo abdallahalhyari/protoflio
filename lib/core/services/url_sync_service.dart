@@ -55,7 +55,7 @@ abstract class UrlSyncService {
   }
 
   static const String baseTitle =
-      'Abdallah Alhyari — Mobile Engineer: Flutter, Android, NFC';
+      'Abdallah Alhyari — Senior Flutter & Android engineer';
 
   String titleForHash(String hash) {
     final clean = hash.replaceAll('#', '').toLowerCase();

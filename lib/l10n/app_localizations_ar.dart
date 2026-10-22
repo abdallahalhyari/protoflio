@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navResume => 'السيرة الذاتية';
 
   @override
-  String get introLocation => 'عمان → برنو · 2027';
+  String get introLocation => 'عمّان، الأردن؛ برنو اعتباراً من فبراير 2027';
 
   @override
   String get sectionEducation => 'التعليم';
@@ -207,7 +207,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get introAvailability =>
-      'متاح للعمل عن بُعد أو العقود حالياً؛ وحضورياً في برنو وما حولها.';
+      'متاح الآن للعمل عن بُعد وبالعقود. وحضورياً في برنو اعتباراً من فبراير 2027.';
 
   @override
   String get introEmailMe => 'راسلني';
@@ -222,7 +222,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get introSkillProductDelivery => 'تسليم المنتجات';
 
   @override
-  String get introWorkEligibility => 'الانتقال إلى برنو في 2027';
+  String get introWorkEligibility => 'الانتقال إلى برنو في فبراير 2027';
 
   @override
   String get introAvailableContracts => 'متاح للعقود';
@@ -265,10 +265,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactWhatsapp => 'واتساب';
 
   @override
-  String get cardFactAvailableValue => 'عن بُعد أو بدوام جزئي الآن';
+  String get cardFactAvailableValue => 'عمل عن بُعد وبالعقود، الآن';
 
   @override
-  String get cardFactBasedValue => 'عمّان، الأردن • حضورياً في برنو وما حولها';
+  String get cardFactBasedValue =>
+      'عمّان، الأردن؛ برنو اعتباراً من فبراير 2027';
 
   @override
   String get cardFactStudyValue => 'ماجستير المعلوماتية المفتوحة، جامعة مندل';
@@ -870,18 +871,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uiReadCaseStudy => 'قراءة دراسة الحالة';
 
   @override
-  String get projectTagHealth => 'NFC / الصحة';
-
-  @override
-  String get projectTagEnterprise => 'HIS / LMS';
-
-  @override
-  String get projectTagConsumer => 'الولاء / التواصل';
-
-  @override
-  String get projectTagCommerce => 'البث';
-
-  @override
   String get projectNameNatHealth => 'منظومة NatHealth للهواتف';
 
   @override
@@ -893,18 +882,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get projectNameFais => 'تطبيقات التجارة عبر الجوال وبث الوسائط';
-
-  @override
-  String get projectBadgeNatHealth => 'يعمل دون اتصال 100%';
-
-  @override
-  String get projectBadgeEskadenia => '60 إطارًا/ثانية بثبات';
-
-  @override
-  String get projectBadgeSolutions => 'طوابير فورية';
-
-  @override
-  String get projectBadgeFais => 'إنتاجية عالية';
 
   @override
   String get uiScrollToExplore => 'مرّر للاستكشاف';
@@ -944,9 +921,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get uiKeySafeguards => 'ضمانات التنفيذ الأساسية';
-
-  @override
-  String get uiLatencyBudget => 'زمن الاستجابة المستهدف';
 
   @override
   String get uiActiveTrace => 'المسار النشط';
@@ -1019,7 +993,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cardRole => 'مهندس تطبيقات جوال أول';
 
   @override
-  String get cardBase => 'عمّان، وبرنو ابتداءً من 2027';
+  String get cardBase => 'عمّان؛ برنو اعتباراً من فبراير 2027';
 
   @override
   String get coverWorkedAtLabel => 'عملت لدى';
