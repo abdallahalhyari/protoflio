@@ -57,7 +57,7 @@ class Prose extends StatelessWidget {
   }
 }
 
-/// Vertical bullet list with primary-tinted markers.
+/// Vertical bullet list. The markers are muted: gold means tappable.
 class BulletList extends StatelessWidget {
   const BulletList({super.key, required this.items});
   final List<String> items;
@@ -80,7 +80,7 @@ class BulletList extends StatelessWidget {
                           width: 6,
                           height: 6,
                           decoration: BoxDecoration(
-                            color: context.adaptiveAccentText(scheme.primary),
+                            color: context.mutedText,
                             borderRadius: BorderRadius.circular(AppRadius.xxs),
                           ),
                         ),
