@@ -168,14 +168,12 @@ void main() {
   });
 
   group('Interactive Widgets Motion & Reduced-Motion Response', () {
-    testWidgets(
-        'InteractiveProjectCard does not scale on hover when reduceMotion is active',
+    testWidgets('Work card does not move on hover; its border answers',
         (tester) async {
       final project = testProjects.first;
 
       await tester.pumpWidget(
         _wrapWithMedia(
-          disableAnimations: true,
           // Cards take their natural height; give it room to scroll.
           child: SingleChildScrollView(
             child: InteractiveProjectCard(
@@ -190,24 +188,22 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Trigger hover
       final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
       await gesture.addPointer(location: Offset.zero);
       await gesture
           .moveTo(tester.getCenter(find.byType(InteractiveProjectCard)));
-      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pumpAndSettle();
 
-      final animatedScale = tester.widget<AnimatedScale>(
-        find
-            .descendant(
-              of: find.byType(InteractiveProjectCard),
-              matching: find.byType(AnimatedScale),
-            )
-            .first,
-      );
-
-      // Scale should remain locked to 1.0 under reduced motion
-      expect(animatedScale.scale, 1.0);
+      // No tilt, no zoom: every scale on the card stays at rest.
+      final card = find.byType(InteractiveProjectCard);
+      for (final scale in tester.widgetList<AnimatedScale>(
+          find.descendant(of: card, matching: find.byType(AnimatedScale)))) {
+        expect(scale.scale, 1.0);
+      }
+      for (final t in tester.widgetList<Transform>(
+          find.descendant(of: card, matching: find.byType(Transform)))) {
+        expect(t.transform.isIdentity(), isTrue);
+      }
       expect(tester.takeException(), isNull);
     });
 

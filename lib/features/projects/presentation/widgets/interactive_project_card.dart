@@ -36,13 +36,6 @@ class InteractiveProjectCard extends StatefulWidget {
 class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
   bool _isHovered = false;
   bool _isFocused = false;
-  final ValueNotifier<Offset> _mousePos = ValueNotifier<Offset>(Offset.zero);
-
-  @override
-  void dispose() {
-    _mousePos.dispose();
-    super.dispose();
-  }
 
   void _openStudy() {
     SoundService.instance.playClick();
@@ -61,19 +54,11 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDarkMode;
-    final reduceMotion = AppMedia.reduceMotion(context);
-    final hovered = _isHovered && widget.isDesktop && !reduceMotion;
-    final isInteractive = (hovered || _isFocused) && !reduceMotion;
+    // Pointer over the card or keyboard focus inside it: the border turns
+    // gold, since the whole card opens its case study. Nothing moves.
+    final isActive = _isHovered || _isFocused;
     final caseStudySlug =
         CaseStudyRouter.slugForCompany(widget.project.company);
-
-    final domainAccent = switch (widget.project.domain) {
-      'Healthcare & Smart Cards' => AppColors.tealLight,
-      'Enterprise HIS & LMS' => widget.scheme.primary,
-      'Consumer & Social' => AppColors.teal,
-      'M-Commerce & Streaming' => AppColors.goldSoft,
-      _ => widget.scheme.primary,
-    };
 
     final pinFoot = widget.fillHeight;
     final body = CardBodyContent(
@@ -94,97 +79,56 @@ class _InteractiveProjectCardState extends State<InteractiveProjectCard> {
         child: MouseRegion(
           onEnter: (_) => setState(() => _isHovered = true),
           onExit: (_) => setState(() => _isHovered = false),
-          onHover: (e) {
-            if ((e.localPosition - _mousePos.value).distanceSquared > 4) {
-              _mousePos.value = e.localPosition;
-            }
-          },
-          child: AnimatedScale(
-            scale: isInteractive ? 1.005 : 1.0,
+          child: AnimatedContainer(
             duration: AppMotion.cardHover,
             curve: AppMotion.emphasized,
-            child: AnimatedContainer(
-              duration: AppMotion.cardHover,
-              curve: AppMotion.emphasized,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                gradient: isInteractive && isDark
-                    ? RadialGradient(
-                        center: Alignment(
-                          (_mousePos.value.dx /
-                                      (widget.isDesktop ? 400 : 300)) *
-                                  2 -
-                              1,
-                          (_mousePos.value.dy / 500) * 2 - 1,
-                        ),
-                        radius: 1.5,
-                        colors: [
-                          domainAccent.withValues(alpha: 0.14),
-                          context.cardGlassHover,
-                        ],
-                        stops: const [0.0, 0.55],
-                      )
-                    : null,
-                color: isInteractive && !isDark
-                    ? context.cardGlassHover
-                    : (isInteractive ? null : context.cardGlass),
-                border: Border.all(
-                  color: isInteractive
-                      ? (isDark
-                          ? domainAccent.withValues(alpha: 0.85)
-                          : widget.scheme.primary.withValues(alpha: 0.75))
-                      : (isDark
-                          ? Colors.white.withValues(alpha: 0.14)
-                          : AppColors.ink200),
-                  width: isInteractive ? 1.5 : 1.0,
-                ),
-                boxShadow: isInteractive
-                    ? [
-                        BoxShadow(
-                          color: (isDark ? domainAccent : AppColors.shadowSoft)
-                              .withValues(alpha: isDark ? 0.1 : 0.65),
-                          blurRadius: isDark ? 14 : 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ]
-                    : null,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              color: context.cardGlass,
+              border: Border.all(
+                color: isActive
+                    ? widget.scheme.primary.withValues(alpha: 0.7)
+                    : context.glassBorderStrong,
+                // Thicker too, so keyboard focus reads without colour.
+                width: isActive ? 1.5 : 1.0,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppRadius.card),
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    canRequestFocus: false,
-                    excludeFromSemantics: true,
-                    onTap: _openStudy,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: widget.isDesktop ? 300 : 270,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          if (widget.project.heroImagePath != null)
-                            CardHeroImage(
-                              project: widget.project,
-                              scheme: widget.scheme,
-                              isDesktop: widget.isDesktop,
-                              hovered: hovered,
-                              isDark: isDark,
-                              mousePos: _mousePos,
-                              caseStudySlug: caseStudySlug,
-                            )
-                          else
-                            CardFallbackPlaceholder(
-                              project: widget.project,
-                              scheme: widget.scheme,
-                              isDesktop: widget.isDesktop,
-                              isDark: isDark,
-                              caseStudySlug: caseStudySlug,
-                            ),
-                          if (pinFoot) Expanded(child: body) else body,
-                        ],
-                      ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.card),
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  canRequestFocus: false,
+                  excludeFromSemantics: true,
+                  // The gold border and title mark hover; no tint over
+                  // the whole card on top of them.
+                  hoverColor: Colors.transparent,
+                  onTap: _openStudy,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: widget.isDesktop ? 300 : 270,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (widget.project.heroImagePath != null)
+                          CardHeroImage(
+                            project: widget.project,
+                            scheme: widget.scheme,
+                            isDesktop: widget.isDesktop,
+                            isDark: isDark,
+                            caseStudySlug: caseStudySlug,
+                          )
+                        else
+                          CardFallbackPlaceholder(
+                            project: widget.project,
+                            scheme: widget.scheme,
+                            isDesktop: widget.isDesktop,
+                            isDark: isDark,
+                            caseStudySlug: caseStudySlug,
+                          ),
+                        if (pinFoot) Expanded(child: body) else body,
+                      ],
                     ),
                   ),
                 ),
