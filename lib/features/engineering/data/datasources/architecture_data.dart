@@ -9,15 +9,15 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     title: 'Clean Mobile Architecture',
     category: 'System design',
     summary:
-        'Strict 3-tier boundary separation decoupling presentation widgets from business use-cases and hardware data sources.',
+        'Four layers and one rule: code depends inward only. The screens know the business rules; the business rules know nothing about Flutter, NFC or the network.',
     whyChosen:
-        'Prevents UI framework lock-in, enables independent automated unit testing of core business rules without Flutter mocks, and isolates platform-specific native plugins (like NFC and Keystore).',
+        'At NatHealth the card reader, the Keystore and the sync queue are hardware and OS code that a Flutter test cannot run. Behind repository interfaces, the claim rules test in plain Dart and widget tests use a fake card reader. The cost is more files and mapping code per feature.',
     diagramSteps: [
       DiagramStep(
         layer: 'Presentation layer',
         title: 'Flutter UI & state controllers',
         details:
-            'Declarative widgets, BLoC / ValueNotifiers, input validation & 60fps view rendering.',
+            'Widgets and BLoCs: show state, validate input, send user actions. No network or hardware calls here.',
         icon: Icons.layers_rounded,
         color: AppColors.teal,
       ),
@@ -25,7 +25,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Domain layer (core)',
         title: 'Use cases & business entities',
         details:
-            'Pure Dart entities, business rules, repository contracts. Zero external framework dependencies.',
+            'Entities, business rules and the repository interfaces, in plain Dart with no Flutter imports.',
         icon: Icons.account_tree_rounded,
         color: AppColors.teal,
       ),
@@ -33,7 +33,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Data layer',
         title: 'Repository implementations & DTOs',
         details:
-            'Coordination between local cache and remote sources, serialization, and error translation.',
+            'Repositories choose between the local cache and the server, turn JSON into entities and failures into typed errors.',
         icon: Icons.storage_rounded,
         color: AppColors.tealLight,
       ),
@@ -41,15 +41,15 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Data sources / hardware',
         title: 'SQLite cache & REST / NFC APIs',
         details:
-            'Native Android NFC Adapter, SQLite persistent storage, and secure HTTPS REST endpoints.',
+            "Android's NFC adapter through a Kotlin channel, SQLite on the device and the REST API over HTTPS.",
         icon: Icons.settings_ethernet_rounded,
         color: AppColors.gold,
       ),
     ],
     technicalHighlights: [
-      'Repository Pattern decouples native NFC hardware channels from presentation views.',
-      'Pure Domain entities can be tested without any UI harness.',
-      'Immutable Data Transfer Objects (DTOs) with defensive parsing prevent runtime crashes from unexpected null payloads.',
+      'Screens never talk to the card hardware: the NFC reader sits behind a repository.',
+      'Business rules are tested in plain Dart, without a device or a widget harness.',
+      'Server responses become immutable objects that reject missing fields when parsed, instead of crashing a screen later.',
     ],
   ),
   const ArchitectureTopic(
@@ -57,15 +57,15 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     title: 'Offline-First Synchronization',
     category: 'Data persistence',
     summary:
-        'Reliable delivery through persistent local queueing, atomic SQLite writes, and Android WorkManager background sync.',
+        'A claim is saved on the phone first and sent when the network allows. The screen never waits for the server, and nothing is lost if the app is closed.',
     whyChosen:
-        'Healthcare practitioners and clinic staff operate in areas with fluctuating cellular connectivity. Claims and patient validations must never be lost or blocked by network drops.',
+        'NatHealth clinics include remote care centres with unreliable connections, and a claim cannot be lost or block a patient check-in. Saving locally and syncing in the background made the network optional at the counter. The cost is handling conflicts and duplicates on the way back.',
     diagramSteps: [
       DiagramStep(
         layer: 'Step 1: user action',
         title: 'Optimistic UI dispatch',
         details:
-            'Immediate user feedback with transactional state marked as PENDING_SYNC.',
+            'The screen confirms at once and marks the claim as waiting to sync.',
         icon: Icons.touch_app_rounded,
         color: AppColors.teal,
       ),
@@ -73,7 +73,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Step 2: local atomic commit',
         title: 'SQLite / encrypted database',
         details:
-            'Record stored locally within an ACID database transaction. Never held in volatile memory.',
+            'The claim is written to an encrypted SQLite database (SQLCipher) in one transaction, before anything is sent.',
         icon: Icons.save_rounded,
         color: AppColors.teal,
       ),
@@ -81,7 +81,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Step 3: job scheduler',
         title: 'Android WorkManager pipeline',
         details:
-            'OS-managed background worker triggered with NETWORK_CONNECTED constraints & exponential backoff.',
+            'A WorkManager job waits for a connection and retries with exponential backoff, even after the app is closed.',
         icon: Icons.schedule_rounded,
         color: AppColors.gold,
       ),
@@ -89,15 +89,15 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Step 4: remote reconciliation',
         title: 'Server ACK & conflict resolution',
         details:
-            'Idempotency keys prevent duplicate transactions; server timestamp updates local state to SYNCED.',
+            "Each claim carries an idempotency key, so a retry can't file it twice. The server's reply marks it synced.",
         icon: Icons.cloud_done_rounded,
         color: AppColors.tealLight,
       ),
     ],
     technicalHighlights: [
-      'Idempotent dispatch tokens prevent duplicate claims on flaky network reconnects.',
-      'Survives complete app process termination via Android WorkManager native OS execution.',
-      'Client-side error protocols implement exponential backoff with jitter to protect backend infrastructure.',
+      'Retries on a flaky connection never create a duplicate claim.',
+      'Queued claims still go out after the app is closed or the phone restarts.',
+      'Failures follow one retry policy with exponential backoff, instead of each screen deciding.',
     ],
   ),
   const ArchitectureTopic(
@@ -105,15 +105,15 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     title: 'ISO-7816 Smart-Card & NFC Pipeline',
     category: 'Hardware integration',
     summary:
-        'Direct low-level contactless smart-card interaction via ISO/IEC 7816-4 APDU command chains over Android NFC.',
+        'The app reads health smart cards over NFC by sending ISO 7816 APDU commands from native Kotlin, then passes the result to Flutter.',
     whyChosen:
-        'Enables paperless, high-security smart-card verification for national health insurance schemes with millisecond validation speed and zero physical contact.',
+        "NatHealth replaced paper claims with contactless card checks. Flutter can't talk to the card at this level, so the card work runs in Kotlin and Flutter only sees typed results. The hard part was the range of phones: the same commands had to work across more than 40 NFC controllers.",
     diagramSteps: [
       DiagramStep(
         layer: 'Discovery',
         title: 'NFC adapter & tag dispatch',
         details:
-            'Foreground dispatch filter captures IsoDep / Mifare smart-cards within milliseconds.',
+            'While the screen is open, the app claims any card that is tapped and opens an IsoDep connection.',
         icon: Icons.nfc_rounded,
         color: AppColors.teal,
       ),
@@ -121,7 +121,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Native channel',
         title: 'Kotlin MethodChannel bridge',
         details:
-            'High-speed binary transport bridging Flutter runtime to native Android IsoDep transceive buffer.',
+            'A platform channel carries the request from Flutter to Kotlin and the response back, with typed errors.',
         icon: Icons.cable_rounded,
         color: AppColors.teal,
       ),
@@ -129,23 +129,23 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Command chain',
         title: 'ISO-7816 APDU handshake',
         details:
-            'Select Application (AID), Mutual Authentication, and encrypted binary block read.',
+            'SELECT the card application, VERIFY the PIN, then READ BINARY to get the data.',
         icon: Icons.security_rounded,
         color: AppColors.gold,
       ),
       DiagramStep(
         layer: 'Verification',
-        title: 'Cryptographic claim verification',
+        title: 'Parse and sign the read',
         details:
-            'Card payload parsed and cryptographically validated against digital certificate authorities.',
+            'The card data is parsed into a claim, and the read is signed with a hardware-backed key before it is sent.',
         icon: Icons.verified_user_rounded,
         color: AppColors.teal,
       ),
     ],
     technicalHighlights: [
-      'Abstract NFCCardReader interface allows swapping physical card vendors without modifying app logic.',
-      'Defensive state machine handles card displacement before APDU command sequence completion.',
-      'Optimized transceive buffers achieve complete contactless card verification in under 750ms.',
+      'An NFCCardReader interface supports several card technologies without changing the app logic.',
+      'Pulling the card away mid-read is retried and reconciled instead of failing the claim.',
+      'A card check takes under a second, on flagship and budget phones alike.',
     ],
   ),
   const ArchitectureTopic(
@@ -153,15 +153,15 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     title: 'Hardware-Backed Keystore & JWT Lifecycle',
     category: 'Application security',
     summary:
-        'Defense-in-depth security framework combining hardware-bound cryptographic keys, biometric auth, and dual-token JWT rotation.',
+        'Sign-in tokens are issued in two steps, bound to the device and stored with keys the phone keeps in secure hardware.',
     whyChosen:
-        'Enterprise healthcare and financial data requires zero-trust security. Protecting credentials against extraction on compromised or rooted devices is mandatory.',
+        'The apps handle health claims, so a copied token must be useless on another phone. Keeping keys in the Keystore and binding tokens to the device does that. The cost is a re-login when the device binding changes.',
     diagramSteps: [
       DiagramStep(
         layer: 'Authentication',
         title: 'Biometric + hardware challenge',
         details:
-            'Fingerprint / Face Unlock verified via Android BiometricPrompt with StrongBox / TEE backing.',
+            'The user confirms with fingerprint or face before the stored key is used.',
         icon: Icons.fingerprint_rounded,
         color: AppColors.teal,
       ),
@@ -169,7 +169,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Storage',
         title: 'Android Keystore / iOS Keychain',
         details:
-            'Hardware-backed AES-256 GCM key encryption. Private keys never leave secure hardware enclave.',
+            "Keys are created inside the Android Keystore or iOS Keychain and never leave it; the app only asks it to sign.",
         icon: Icons.lock_outline_rounded,
         color: AppColors.gold,
       ),
@@ -177,7 +177,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Exchange',
         title: 'Two-tier JWT token protocol',
         details:
-            'Short-lived access token (15 min) + hardware GUID-bound refresh token stored securely.',
+            'A short-lived access token, and a refresh token bound to the device ID, issued in two steps.',
         icon: Icons.vpn_key_rounded,
         color: AppColors.teal,
       ),
@@ -185,15 +185,15 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Rotation',
         title: 'Atomic silent refresh & revocation',
         details:
-            'Automatic token refresh on HTTP 401 with immediate local cache purge upon revocation.',
+            'An expired token is refreshed in the background; a revoked one signs the user out and clears local data.',
         icon: Icons.sync_lock_rounded,
         color: AppColors.teal,
       ),
     ],
     technicalHighlights: [
-      'Hardware GUID binding prevents token replay even if refresh token is intercepted on untrusted devices.',
-      'Strict in-memory cleanup: sensitive credentials explicitly zeroed out after cryptographic operations.',
-      'Proactive SSL Pinning protects network transport against rogue proxy or man-in-the-middle attacks.',
+      'A refresh token copied to another device is rejected: it is bound to the one it was issued to.',
+      'Every card read is signed with a hardware-backed key, so a replayed read is detected.',
+      'Tokens are kept only in secure storage, never in plain app preferences.',
     ],
   ),
   const ArchitectureTopic(
@@ -201,23 +201,22 @@ final List<ArchitectureTopic> kArchitectureTopics = [
     title: 'Reactive State Management (BLoC)',
     category: 'State architecture',
     summary:
-        'Predictable, highly-testable reactive state container using the BLoC pattern with unidirectional data flow and strict event-to-state mapping.',
+        'Screens send events to a BLoC and redraw from the states it emits. State only changes in one place, in one direction.',
     whyChosen:
-        'Isolates UI from complex business logic. Makes state changes easy to trace and test, so the presentation layer reflects the current state without side effects.',
+        'With NFC reads, offline queues and token refreshes all changing the same screens, state needed one owner. A BLoC per feature makes every change traceable and testable without widgets. The cost is boilerplate: events, states and handlers for small features too.',
     diagramSteps: [
       DiagramStep(
         layer: 'UI / presentation',
         title: 'BlocBuilder & BlocListener',
         details:
-            'Widget tree reacts instantly to state emissions while handling side-effects (navigation, dialogs) through listeners.',
+            'Builders redraw from the current state; listeners handle one-off effects such as navigation and dialogs.',
         icon: Icons.view_quilt_rounded,
         color: AppColors.teal,
       ),
       DiagramStep(
         layer: 'Event dispatch',
         title: 'Unidirectional data flow',
-        details:
-            'User actions are transformed into strictly typed Events pushed into the BLoC sink.',
+        details: 'Each user action becomes a typed event sent to the BLoC.',
         icon: Icons.alt_route_rounded,
         color: AppColors.gold,
       ),
@@ -225,7 +224,7 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'Business logic component',
         title: 'Event-to-state mapping',
         details:
-            'Asynchronous generators process events, interact with Domain use-cases, and yield immutable State objects.',
+            'Event handlers call the domain use cases and emit new states.',
         icon: Icons.memory_rounded,
         color: AppColors.teal,
       ),
@@ -233,15 +232,15 @@ final List<ArchitectureTopic> kArchitectureTopics = [
         layer: 'State / emission',
         title: 'Immutable state classes',
         details:
-            'Data classes with strictly defined properties and value equality (Equatable) preventing unnecessary widget rebuilds.',
+            'States are immutable with value equality, so an unchanged state does not redraw the screen.',
         icon: Icons.stream_rounded,
         color: AppColors.teal,
       ),
     ],
     technicalHighlights: [
-      'Immutable value objects with value equality and copyWith updates.',
-      'Complex asynchronous race conditions solved via restartable, sequential, and droppable event transformers (RxDart).',
-      'Flawless automated unit testing achieved using bloc_test to verify precise event-state trajectories.',
+      'States change only through copyWith on immutable objects.',
+      'Overlapping requests are handled by choosing per event whether to restart, queue or drop.',
+      'BLoCs are unit tested with bloc_test: given these events, expect these states.',
     ],
   ),
 ];
